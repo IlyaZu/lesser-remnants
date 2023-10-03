@@ -43,7 +43,6 @@ import rotp.model.galaxy.Transport;
 import rotp.model.game.IGameOptions;
 import rotp.model.game.MOO1GameOptions;
 import rotp.model.planet.PlanetFactory;
-import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipLibrary;
 import rotp.model.tech.TechCategory;
 import rotp.model.tech.TechLibrary;
@@ -791,7 +790,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     public class SideBarPane extends BasePanel {
         private static final long serialVersionUID = 1L;
-        private final Color hazeC = new Color(0,0,0,64);
         public SideBarPane() {
             setOpaque(false);
             setBackground(Color.black);
