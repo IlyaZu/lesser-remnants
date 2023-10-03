@@ -569,6 +569,9 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         else if (map.parent().isHovering(this)) 
             drawHovering(g2, map, x0, y0);
 
+        if (map.inOverview())
+            return;
+        
         // draw shield?
         if ((emp != null) && map.parent().drawShield(this))
             drawShield(g2, pl.sv.shieldLevel(id), x0, y0, map.scale(0.25f));
@@ -576,18 +579,16 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         // draw stargate icon (AFTER selection box)
         boolean colonized = (emp != null) && pl.sv.isColonized(id);
         if (colonized && map.parent().drawStargate(this) && pl.sv.hasStargate(id)) {
-            if (map.scaleX() <= GalaxyMapPanel.MAX_STARGATE_SCALE) {
-                float mult = max(4, min(60,map.scaleX()));
-                int x1 = x0+(int)(scaled(200)/mult);
-                int y1 = y0-(int)(scaled(500)/mult);
-                Image img = ShipLibrary.current().stargate.getImage();
-                int w = img.getWidth(null);
-                int h = img.getHeight(null);
-                g2.drawImage(img, x1, y1, x1+BasePanel.s14, y1+BasePanel.s14, 0, 0, w, h, map);
-            }
+            float mult = max(4, min(60,map.scaleX()));
+            int x1 = x0+(int)(scaled(200)/mult);
+            int y1 = y0-(int)(scaled(500)/mult);
+            Image img = ShipLibrary.current().stargate.getImage();
+            int w = img.getWidth(null);
+            int h = img.getHeight(null);
+            g2.drawImage(img, x1, y1, x1+BasePanel.s14, y1+BasePanel.s14, 0, 0, w, h, map);
         }
         
-        if (map.parent().drawFlag(this) && (map.scaleX() <= GalaxyMapPanel.MAX_FLAG_SCALE)) {
+        if (map.parent().drawFlag(this)) {
             Image flag = pl.sv.mapFlagImage(id);
             if (flag != null) {
                 int sz = BasePanel.s30;
@@ -599,13 +600,8 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         Rectangle box = nameBox();
         box.width = 0;
         box.height = 0;
-
+        
         int fontSize = fontSize(map);
-        int realFontSize = unscaled(fontSize);
-        
-        if (realFontSize < 8)
-            return;
-        
         if (!colonized) {
             String s1 = map.parent().systemLabel(this);
             String s2 = map.parent().systemLabel2(this);
@@ -820,9 +816,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     }
     public static void drawShield(Graphics2D g, int shieldLevel, int x, int y, int r) {
         if (shieldLevel == 0)
-            return;
-
-        if (r < 10)
             return;
         
         Stroke prevStroke = g.getStroke();

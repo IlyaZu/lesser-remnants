@@ -339,11 +339,9 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     @Override
     public int mapY(GalaxyMapPanel map)         { return launched() ? map.mapY(source().y())+BasePanel.s10 : map.mapY(source().y()); }
     @Override
-    public int maxMapScale()                    { return GalaxyMapPanel.MAX_FLEET_TRANSPORT_SCALE;  }
-    @Override
     public void setDisplayed(GalaxyMapPanel map) {
         displayed = false;
-        if (map.scaleX() > maxMapScale())
+        if (map.inOverview())
             return;
         displayed = true;
     }

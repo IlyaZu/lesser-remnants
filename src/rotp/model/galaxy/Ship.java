@@ -39,7 +39,6 @@ public interface Ship extends IMappedObject {
     public boolean inTransit();
     public boolean deployed();
     public FlightPathSprite pathSprite();
-    public int maxMapScale();
     public void setDisplayed(GalaxyMapPanel map);
     public boolean displayed();
 

@@ -62,15 +62,6 @@ import rotp.ui.sprites.ZoomOutWidgetSprite;
 
 public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseListener, MouseWheelListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
-
-    public static final int MAX_FLAG_SCALE = 80;
-    public static final int MAX_STARGATE_SCALE = 40;
-    public static final int MAX_RALLY_SCALE = 100;
-    public static final int MAX_FLEET_UNARMED_SCALE = 40;
-    public static final int MAX_FLEET_TRANSPORT_SCALE = 60;
-    public static final int MAX_FLEET_SMALL_SCALE = 60;
-    public static final int MAX_FLEET_LARGE_SCALE = 80;
-    public static final int MAX_FLEET_HUGE_SCALE = 100;
     
     private static final Color unreachableBackground = new Color(0,0,0);
 
@@ -136,6 +127,8 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     public float scaleY()            { return scaleY; }
     public void scaleX(float s)      { scaleX = s; }
     public void scaleY(float s)      { scaleY = s; }
+
+    public boolean inOverview() { return 80f <= scaleX; }
 
     public boolean displays(IMappedObject obj) {
         if (center() == null)
@@ -511,7 +504,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     }
     public void drawEmpireNames(Graphics2D g) {
         for (Empire emp: galaxy().empires()) {
-            if (parent.shouldDrawEmpireName(emp, scaleX())) 
+            if (parent.shouldDrawEmpireName(emp) && inOverview()) 
                 parent.drawEmpireName(emp, this, g);
         }
     }
@@ -608,7 +601,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         Galaxy gal = galaxy();
         Empire pl = player();
         List<Ship> ships = null;
-        if (scaleX() <= MAX_FLEET_HUGE_SCALE) {
+        if (!inOverview()) {
             if (parent.hoverOverFleets()) {
                 ships = new ArrayList<>(pl.visibleShips());
                 ships.sort(EMPIRE_ID);
@@ -645,7 +638,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
             if (path.isSelectableAt(this,x1,y1))
                 return path;
         }
-        if (scaleX() <= MAX_FLEET_HUGE_SCALE) {
+        if (!inOverview()) {
             if (parent.hoverOverFlightPaths()) {
                 if (ships == null)
                     ships = new ArrayList<>(pl.visibleShips());
