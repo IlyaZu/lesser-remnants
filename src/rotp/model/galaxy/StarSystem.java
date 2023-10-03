@@ -573,12 +573,12 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             return;
         
         // draw shield?
-        if ((emp != null) && map.parent().drawShield(this))
+        if ((emp != null) && map.parent().drawShield())
             drawShield(g2, pl.sv.shieldLevel(id), x0, y0, map.scale(0.25f));
 
         // draw stargate icon (AFTER selection box)
         boolean colonized = (emp != null) && pl.sv.isColonized(id);
-        if (colonized && map.parent().drawStargate(this) && pl.sv.hasStargate(id)) {
+        if (colonized && map.parent().drawStargate() && pl.sv.hasStargate(id)) {
             float mult = max(4, min(60,map.scaleX()));
             int x1 = x0+(int)(scaled(200)/mult);
             int y1 = y0-(int)(scaled(500)/mult);
@@ -588,7 +588,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             g2.drawImage(img, x1, y1, x1+BasePanel.s14, y1+BasePanel.s14, 0, 0, w, h, map);
         }
         
-        if (map.parent().drawFlag(this)) {
+        if (map.parent().drawFlag()) {
             Image flag = pl.sv.mapFlagImage(id);
             if (flag != null) {
                 int sz = BasePanel.s30;
