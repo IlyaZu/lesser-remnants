@@ -97,13 +97,13 @@ public interface IMapHandler {
     default boolean showOwnerReach(StarSystem s)         { return false; }
     default boolean showOwnership(StarSystem s)          { return true; }
     default float ownerReach(StarSystem s)               { return 0; }
-    default boolean drawShield(StarSystem s)             { return true; } 
+    default boolean drawShield()                         { return true; } 
     default boolean shouldDrawEmpireName(Empire e)  { 
         return e.isPlayer() || Empire.thePlayer().hasContacted(e.id);
     }
     default void drawEmpireName(Empire e, GalaxyMapPanel ui, Graphics2D g)  { e.draw(ui,g); }
-    default boolean drawStargate(StarSystem s)           { return true; }
-    default boolean drawFlag(StarSystem s)               { return true; }
+    default boolean drawStargate()                       { return true; }
+    default boolean drawFlag()                           { return true; }
     default boolean shouldDrawSprite(Sprite s)           { return true; }
     default boolean canChangeMapScales()                 { return true; }
     default boolean displayNextTurnNotice()              { return false; }
