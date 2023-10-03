@@ -153,46 +153,6 @@ public class ShipLibrary implements Base {
         g.dispose();
         return destImg;
     }
-    public BufferedImage shipImageHuge(Integer colorId) {
-         int destH = BasePanel.s20;
-        int destW = BasePanel.s30;
-        int[] pX = new int[3];
-        int[] pY = new int[3];
-        
-        int s1 = BasePanel.s1;
-        int s2 = BasePanel.s2;
-        int s3 = BasePanel.s3;
-        int s6 = BasePanel.s6;
-        int s10 = BasePanel.s10;
-        int s14 = BasePanel.s14;
-        int s17 = BasePanel.s17;
-        
-        pX[0] = BasePanel.s4;
-        pX[1] = BasePanel.s4;
-        pX[2] = BasePanel.s28;
-        pY[0] = BasePanel.s1;
-        pY[1] = BasePanel.s19;
-        pY[2] = BasePanel.s10;
-        
-        BufferedImage destImg = newBufferedImage(destW, destH);
-        Graphics2D g = (Graphics2D) destImg.getGraphics();
-        setFontHints(g);
-        Color c0 = options().color(colorId);
-        g.setColor(c0);
-        g.fillPolygon(pX, pY, 3);
-        g.setStroke(BasePanel.stroke2);
-        g.setColor(Color.yellow);
-        g.fillRect( 0, s10, s3, s1);
-        g.setColor(Color.orange);
-        g.fillRect(s1, s3, s2, s1);
-        g.fillRect(s1, s6, s2, s1);
-        g.fillRect(s1, s14, s2, s1);
-        g.fillRect(s1, s17, s2, s1);
-        g.setColor(Color.black);
-        g.drawPolygon(pX, pY, 3);
-        g.dispose();
-        return destImg;
-    }
     public BufferedImage transportImage(Integer colorId) {
         int destH = BasePanel.s7;
         int destW = BasePanel.s16;
