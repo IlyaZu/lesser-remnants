@@ -137,7 +137,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     private transient Race dataRace;
     private transient BufferedImage shipImage;
     private transient BufferedImage shipImageLarge;
-    private transient BufferedImage shipImageHuge;
     private transient BufferedImage scoutImage;
     private transient BufferedImage transportImage;
     private transient Color nameColor;
@@ -261,7 +260,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         scoutBorderColor = null;
         shipImage = null;
         shipImageLarge = null;
-        shipImageHuge = null;
         scoutImage = null;
         transportImage = null;
     }
@@ -298,11 +296,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         if (shipImageLarge == null)
             shipImageLarge = ShipLibrary.current().shipImageLarge(shipColorId());
         return shipImageLarge;
-    }
-    public BufferedImage shipImageHuge() {
-        if (shipImageHuge == null)
-            shipImageHuge = ShipLibrary.current().shipImageHuge(shipColorId());
-        return shipImageHuge;
     }
     public BufferedImage transportImage() {
         if (transportImage == null)
