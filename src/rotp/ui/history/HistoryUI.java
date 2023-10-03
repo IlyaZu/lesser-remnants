@@ -703,9 +703,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public boolean drawBackgroundStars()           { return false; }
         @Override
-        public boolean shouldDrawEmpireName(Empire e, float scale)  { 
-            if (scale == 0)
-                return false;
+        public boolean shouldDrawEmpireName(Empire e)  {
             int i = empIndex(e.id, turn);
             return (sysCount[i] > 0);
         }

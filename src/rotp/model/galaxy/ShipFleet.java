@@ -958,26 +958,11 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         return mapY(map) + BasePanel.s5;
     }
     @Override
-    public int maxMapScale() {
-        float size = hullPoints();
-        if (size >= 10000)
-            return GalaxyMapPanel.MAX_FLEET_HUGE_SCALE;
-        else if (size >= 100)
-            return GalaxyMapPanel.MAX_FLEET_LARGE_SCALE;
-        else
-            return GalaxyMapPanel.MAX_FLEET_SMALL_SCALE;
-    }
-    @Override
     public void setDisplayed(GalaxyMapPanel map) {
         displayed = false;
         if (!map.displays(this))
             return;
-        if (map.scaleX() > maxMapScale())
-            return;
-
-        boolean armed = isPotentiallyArmed(player());            
-        // stop drawing unarmed AI fleets at a certain zoom level
-        if (!armed && !empire().isPlayerControlled() && (map.scaleX() > GalaxyMapPanel.MAX_FLEET_UNARMED_SCALE))
+        if (map.inOverview())
             return;
 
         // because fleets can be disbanded asynchronously to the ui thread,
@@ -994,37 +979,19 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
         if (!displayed)
             return;
-        float size = hullPoints();
-        int imgSize = 1;
-        if (size >= 100)
-            imgSize = 2;
-        else if (size >= 10000)
-            imgSize = 3;
         
-        if (map.scaleX() > GalaxyMapPanel.MAX_FLEET_LARGE_SCALE) 
-            imgSize--;
-        if (map.scaleX() > GalaxyMapPanel.MAX_FLEET_SMALL_SCALE)
-            imgSize--;
-        
-        // are we zoomed out too far to show a fleet of this size?
-        if (imgSize < 1)
+        if (map.inOverview())
             return;
         
         int x = mapX(map);
         int y = mapY(map);
         BufferedImage img;
-        
-        boolean armed = isPotentiallyArmed(player());    
-        if (armed) {
-            if (imgSize == 1)
-                img = empire().shipImage();
-            else if (imgSize == 2)
-                img = empire().shipImageLarge();
-            else
-                img = empire().shipImageHuge();
-        }
+        if (!isPotentiallyArmed(player()))
+        	img = empire().scoutImage();
+        else if (hullPoints() >= 400)
+            img = empire().shipImageLarge();
         else
-            img = empire().scoutImage();
+            img = empire().shipImage();
 
         int w = img.getWidth();
         int h = img.getHeight();
