@@ -1490,8 +1490,6 @@ public class AIDiplomat implements Base, Diplomat {
             return castVoteFor(civ2);
 
         // if at war with one, vote for other (if contacted)
-		// modnar: add in condition to at least have contact with candidate B (most useful in first vote)
-		// otherwise abstain, even if in war with candidate A
         if (cv1.embassy().anyWar() && !cv2.embassy().anyWar()) {
             if (cv2.embassy().contact())
                 return castVoteFor(civ2);
