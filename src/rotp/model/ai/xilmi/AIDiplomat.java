@@ -185,13 +185,11 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public boolean canExchangeTechnology(Empire e) { 
         // to trade technology with another empire, all of the following must be true:
-        // 1 - the game setup options allow it 
-        // 2 - we have diplomats active
-        // 3 - we are not at war
-        // 4 - we are in economic range
-        // 5 - they have techs they are willing to trade to us (i.e. do we have compensation)
-        return options().canTradeTechs(empire, e) 
-                && diplomats(id(e)) 
+        // 1 - we have diplomats active
+        // 2 - we are not at war
+        // 3 - we are in economic range
+        // 4 - they have techs they are willing to trade to us (i.e. do we have compensation)
+        return diplomats(id(e)) 
                 && !empire.atWarWith(id(e)) 
                 && empire.inEconomicRange(id(e)) 
                 && !techsAvailableForRequest(e).isEmpty();
