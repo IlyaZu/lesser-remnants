@@ -49,7 +49,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     
     private String selectedGalaxyAge;
     private String selectedGameDifficulty;
-    private String selectedTechTradeOption;
     private String selectedRandomEventOption;
     private String selectedNebulaeOption;
     private int selectedNumberOpponents;
@@ -117,10 +116,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedGameDifficulty()       { return selectedGameDifficulty; }
     @Override
     public void selectedGameDifficulty(String s) { selectedGameDifficulty = s; }
-    @Override
-    public String selectedTechTradeOption()         { return selectedTechTradeOption == null ? TECH_TRADING_YES : selectedTechTradeOption; }
-    @Override
-    public void selectedTechTradeOption(String s)   { selectedTechTradeOption = s; }
     @Override
     public String selectedRandomEventOption()       { return selectedRandomEventOption == null ? RANDOM_EVENTS_ON : selectedRandomEventOption; }
     @Override
@@ -229,7 +224,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
         selectedGalaxyAge = opt.selectedGalaxyAge;
-        selectedTechTradeOption = opt.selectedTechTradeOption;
         selectedRandomEventOption = opt.selectedRandomEventOption;
         selectedNebulaeOption = opt.selectedNebulaeOption;
         selectedStarDensityOption = opt.selectedStarDensityOption;
@@ -394,16 +388,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             case AI_HOSTILITY_HIGHEST: return -30;
             default: return 0;
         } 
-    }
-
-    @Override
-    public boolean canTradeTechs(Empire e1, Empire e2) {
-        switch(selectedTechTradeOption()) {
-            case TECH_TRADING_YES: return true;
-            case TECH_TRADING_NO:  return false;
-            case TECH_TRADING_ALLIES: return e1.alliedWith(e2.id);
-        }
-        return true;
     }
     @Override
     public boolean allowRandomEvent(RandomEvent ev) {
@@ -606,14 +590,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> techTradingOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(TECH_TRADING_YES);
-        list.add(TECH_TRADING_ALLIES);
-        list.add(TECH_TRADING_NO);
-        return list;
-    }
-    @Override
     public List<String> randomEventOptions() {
         List<String> list = new ArrayList<>();
         list.add(RANDOM_EVENTS_ON);
@@ -745,7 +721,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedPlanetQualityOption = PLANET_QUALITY_NORMAL;
         selectedTerraformingOption = TERRAFORMING_NORMAL;
         selectedColonizingOption = COLONIZING_NORMAL;
-        selectedTechTradeOption = TECH_TRADING_YES;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
         selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;

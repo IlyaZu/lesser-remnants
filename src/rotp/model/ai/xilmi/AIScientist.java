@@ -502,8 +502,6 @@ public class AIScientist implements Base, Scientist {
         {
             if(!ev.inEconomicRange())
                 continue;
-            if(!galaxy().options().canTradeTechs(empire, ev.empire()))
-                continue;
             if(ev.empire().race().internalSecurityAdj() > empire.race().spyInfiltrationAdj())
                 continue;
             if(isImportant(t))

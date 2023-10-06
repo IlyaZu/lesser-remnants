@@ -59,10 +59,6 @@ public interface IGameOptions {
     public static final String DIFFICULTY_HARDER  = "SETUP_DIFFICULTY_HARDER";
     public static final String DIFFICULTY_HARDEST = "SETUP_DIFFICULTY_HARDEST";
     
-    public static final String TECH_TRADING_YES     = "SETUP_TECH_TRADING_YES";
-    public static final String TECH_TRADING_ALLIES  = "SETUP_TECH_TRADING_ALLIES";
-    public static final String TECH_TRADING_NO      = "SETUP_TECH_TRADING_NO";
-    
     public static final String GALAXY_AGE_NORMAL = "SETUP_GALAXY_AGE_NORMAL";
     public static final String GALAXY_AGE_YOUNG  = "SETUP_GALAXY_AGE_YOUNG";
     public static final String GALAXY_AGE_OLD    = "SETUP_GALAXY_AGE_OLD";
@@ -134,7 +130,6 @@ public interface IGameOptions {
     public int numberNebula();
     public default float nebulaSizeMult()                { return 1.0f; }
     public List<Integer> possibleColors();
-    public boolean canTradeTechs(Empire e1, Empire e2);
     public boolean allowRandomEvent(RandomEvent ev);
     public String randomStarType();
     public String randomPlayerStarType(Race r);
@@ -157,7 +152,6 @@ public interface IGameOptions {
     public List<String> galaxyShapeOptions1();
     public List<String> galaxyShapeOptions2();
     public List<String> galaxyAgeOptions();
-    public List<String> techTradingOptions();
     public List<String> randomEventOptions();
     public List<String> nebulaeOptions();
     public List<String> starDensityOptions();
@@ -180,8 +174,6 @@ public interface IGameOptions {
     public void selectedGalaxyShape(String s);
     public String selectedGalaxyAge();
     public void selectedGalaxyAge(String s);
-    public String selectedTechTradeOption();
-    public void selectedTechTradeOption(String s);
     public String selectedRandomEventOption();
     public void selectedRandomEventOption(String s);
     public String selectedNebulaeOption();
@@ -307,11 +299,6 @@ public interface IGameOptions {
         List<String> opts = opponentAIOptions();
         int index = opts.indexOf(selectedOpponentAIOption())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default String nextTechTradeOption() {
-        List<String> opts = techTradingOptions();
-        int index = opts.indexOf(selectedTechTradeOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextRandomEventOption() {
         List<String> opts = randomEventOptions();
