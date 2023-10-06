@@ -94,14 +94,6 @@ public interface IGameOptions {
         
     public static final String COLONIZING_NORMAL      = "SETUP_COLONIZING_NORMAL";
     public static final String COLONIZING_RESTRICTED  = "SETUP_COLONIZING_RESTRICTED";
-
-    public static final String AI_HOSTILITY_LOWEST   = "SETUP_AI_HOSTILITY_LOWEST";
-    public static final String AI_HOSTILITY_LOWER    = "SETUP_AI_HOSTILITY_LOWER";
-    public static final String AI_HOSTILITY_LOW      = "SETUP_AI_HOSTILITY_LOW";
-    public static final String AI_HOSTILITY_NORMAL   = "SETUP_AI_HOSTILITY_NORMAL";
-    public static final String AI_HOSTILITY_HIGH     = "SETUP_AI_HOSTILITY_HIGH";
-    public static final String AI_HOSTILITY_HIGHER   = "SETUP_AI_HOSTILITY_HIGHER";
-    public static final String AI_HOSTILITY_HIGHEST  = "SETUP_AI_HOSTILITY_HIGHEST";
     
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_MODNAR     = "SETUP_OPPONENT_AI_MODNAR";
@@ -155,7 +147,6 @@ public interface IGameOptions {
     public List<String> randomEventOptions();
     public List<String> nebulaeOptions();
     public List<String> starDensityOptions();
-    public List<String> aiHostilityOptions();
     public List<String> planetQualityOptions();
     public List<String> terraformingOptions();
     public List<String> colonizingOptions();
@@ -180,8 +171,6 @@ public interface IGameOptions {
     public void selectedNebulaeOption(String s);
     public String selectedStarDensityOption();
     public void selectedStarDensityOption(String s);
-    public String selectedAIHostilityOption();
-    public void selectedAIHostilityOption(String s);
     public String selectedPlanetQualityOption();
     public void selectedPlanetQualityOption(String s);
     public String selectedTerraformingOption();
@@ -313,11 +302,6 @@ public interface IGameOptions {
     default String nextStarDensityOption() {
         List<String> opts = starDensityOptions();
         int index = opts.indexOf(selectedStarDensityOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextAIHostilityOption() {
-        List<String> opts = aiHostilityOptions();
-        int index = opts.indexOf(selectedAIHostilityOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextPlanetQualityOption() {

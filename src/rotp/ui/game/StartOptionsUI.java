@@ -51,7 +51,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     BaseText terraformingText;
     BaseText colonizingText;
     BaseText autoplayText;
-    BaseText aiHostilityText;
     
     public StartOptionsUI() {
         setOpaque(false);
@@ -64,7 +63,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         terraformingText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         colonizingText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         autoplayText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        aiHostilityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
     }
@@ -77,7 +75,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         terraformingText.displayText(terraformingStr());
         colonizingText.displayText(colonizingStr());
         autoplayText.displayText(autoplayStr());
-        aiHostilityText.displayText(aiHostilityStr());
     }
     public void open(BasePanel p) {
         parent = p;
@@ -242,22 +239,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             drawString(g,line, x2+s20, y3);
         }
         
-        y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, aiHostilityText.stringWidth(g)+s10,s30);
-        aiHostilityText.setScaledXY(x2+s20, y2+s7);
-        aiHostilityText.draw(g);
-        desc = text("SETTINGS_AI_HOSTILITY_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }       
+        // Gap made by AI hostility settings removal
+        y2 += (h2+s20);     
        
         // Gap made by Council rebellion removal
         y2 += (h2+s20);
@@ -384,10 +367,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedAutoplayOption());
         return text("SETTINGS_AUTOPLAY", opt)+" ";
     }
-    private String aiHostilityStr() {
-        String opt = text(newGameOptions().selectedAIHostilityOption());
-        return text("SETTINGS_AI_HOSTILITY", opt)+"   ";
-    }
     private void toggleGalaxyAge() {
         softClick();
         newGameOptions().selectedGalaxyAge(newGameOptions().nextGalaxyAge());
@@ -397,11 +376,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedStarDensityOption(newGameOptions().nextStarDensityOption());
         starDensityText.repaint(starDensityStr());
-    }
-    private void toggleAIHostility() {
-        softClick();
-        newGameOptions().selectedAIHostilityOption(newGameOptions().nextAIHostilityOption());
-        aiHostilityText.repaint(aiHostilityStr());
     }
     private void toggleNebulae(MouseEvent e) {
         softClick();
@@ -468,8 +442,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = colonizingText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
-        else if (aiHostilityText.contains(x,y))
-            hoverBox = aiHostilityText.bounds();
         else if (autoplayText.contains(x,y))
             hoverBox = autoplayText.bounds();
         else if (okBox.contains(x,y))
@@ -492,8 +464,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 colonizingText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
-            else if (prevHover == aiHostilityText.bounds())
-                aiHostilityText.mouseExit();
             else if (prevHover == autoplayText.bounds())
                 autoplayText.mouseExit();
             if (hoverBox == galaxyAgeText.bounds())
@@ -510,8 +480,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 colonizingText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
-            else if (hoverBox == aiHostilityText.bounds())
-                aiHostilityText.mouseEnter();
             else if (hoverBox == autoplayText.bounds())
                 autoplayText.mouseEnter();
             if (prevHover != null)
@@ -544,8 +512,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             toggleColonizing();
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
-        else if (hoverBox == aiHostilityText.bounds())
-            toggleAIHostility();
         else if (hoverBox == autoplayText.bounds())
             toggleAutoplay(e);
         else if (hoverBox == okBox)
