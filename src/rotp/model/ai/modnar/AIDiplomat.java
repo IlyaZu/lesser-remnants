@@ -1434,8 +1434,7 @@ public class AIDiplomat implements Base, Diplomat {
         
         // modnar: scale war threshold by number of our wars vs. number of their wars
         // try not to get into too many wars, and pile on if target is in many wars
-        float enemyMod = (float) ((empire.numEnemies() + 1) / (v.empire().numEnemies() + 1));
-        
+        float enemyMod = (float)(empire.numEnemies() + 1) / (v.empire().numEnemies() + 1);
         float warThreshold = baseThreshold * techMod * enemyMod * treatyMod * v.owner().diplomatAI().leaderExploitWeakerEmpiresRatio();
         
         return (myPower/otherPower) > warThreshold;
