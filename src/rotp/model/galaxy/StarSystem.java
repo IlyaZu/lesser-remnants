@@ -819,8 +819,8 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             return;
         
         Stroke prevStroke = g.getStroke();
-        Stroke shieldStroke = BasePanel.stroke4; // modnar: thicker shield strokes
-        Stroke shieldBorderStroke = BasePanel.stroke6; // modnar: thicker shield strokes
+        Stroke shieldStroke = BasePanel.stroke4;
+        Stroke shieldBorderStroke = BasePanel.stroke6;
         
         if (r < 16) {
             shieldStroke = BasePanel.stroke2;
@@ -859,10 +859,10 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             case 20:
                 g.setColor(Color.black);
                 g.setStroke(shieldBorderStroke);
-                g.drawArc(x-r, y-r, r+r, r+r, 0, 360); // modnar: make shield-20 full circle
+                g.drawArc(x-r, y-r, r+r, r+r, 0, 360);
                 g.setColor(shield20C);
                 g.setStroke(shieldStroke);
-                g.drawArc(x-r, y-r, r+r, r+r, 0, 360); // modnar: make shield-20 full circle
+                g.drawArc(x-r, y-r, r+r, r+r, 0, 360);
                 break;
         }
         g.setStroke(prevStroke);
