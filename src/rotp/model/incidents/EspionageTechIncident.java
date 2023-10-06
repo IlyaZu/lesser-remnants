@@ -40,9 +40,6 @@ public class EspionageTechIncident extends DiplomaticIncident {
         empThief = m.thief().id;
         techId = m.stolenTech();
         m.incident(this);
-        
-        if (ev.owner().diplomatAI().setSeverityAndDuration(this, ev.embassy().currentSpyIncidentSeverity()))
-            return;
         severity = max(-20,-10+ev.embassy().currentSpyIncidentSeverity());
         duration = ev.empire().leader().isTechnologist()? 20 : 10;
     }
