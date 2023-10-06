@@ -34,9 +34,6 @@ public class TradeIncomeIncident extends DiplomaticIncident {
         dateOccurred = galaxy().currentYear();
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        
-        if (ev.owner().diplomatAI().setSeverityAndDuration(this))
-            return;
         duration = 3;
     }
     private DiplomaticEmbassy embassy() {

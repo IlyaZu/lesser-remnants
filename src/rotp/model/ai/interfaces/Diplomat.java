@@ -21,11 +21,6 @@ import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.Leader.Personality;
 import rotp.model.incidents.DiplomaticIncident;
-// modnar: add incidents for modnar-AI
-import rotp.model.incidents.EspionageTechIncident;
-import rotp.model.incidents.FinancialAidIncident;
-import rotp.model.incidents.SpyConfessionIncident;
-import rotp.model.incidents.TradeIncomeIncident;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DiplomaticCounterReply;
@@ -108,15 +103,6 @@ public interface Diplomat {
     float leaderPreserveTreatyMod();
     float leaderAffinityMod(Personality p1, Personality p2);
     boolean leaderHatesAllSpies();
-    
-    // generic api for overriding diplomat incident settings
-    // create as needed for incidents, but always set default return false to false
-    // when overriding, set return to true.
-    // modnar: add incidents for modnar-AI
-    default boolean setSeverityAndDuration(EspionageTechIncident inc, float spySeverity)  { return false; }
-    default boolean setSeverityAndDuration(FinancialAidIncident inc)  { return false; }
-    default boolean setSeverityAndDuration(SpyConfessionIncident inc, float spySeverity)  { return false; }
-    default boolean setSeverityAndDuration(TradeIncomeIncident inc)  { return false; }
     
     //Xilmi-AI:
     default int popCapRank(Empire etc, boolean inAttackRange) { return 1; }

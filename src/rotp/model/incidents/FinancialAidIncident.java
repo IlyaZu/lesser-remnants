@@ -47,9 +47,6 @@ public class FinancialAidIncident extends DiplomaticIncident {
         empMe = emp.id;
         setAmount(emp, amt);
         dateOccurred = galaxy().currentYear();
-        
-        if (emp.diplomatAI().setSeverityAndDuration(this))
-            return;
         duration = 3;
     }
     private void setAmount(Empire emp, int amt) {

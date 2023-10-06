@@ -1979,12 +1979,6 @@ public class AIDiplomat implements Base, Diplomat {
         return false;
     }
     @Override
-    public boolean setSeverityAndDuration(SpyConfessionIncident inc, float spySeverity)  { 
-        inc.severity = max(-40, -10+spySeverity); // modnar: increase spy confession severity
-        inc.duration = 15; // modnar: increase spy confession duration
-        return true;
-    }
-    @Override
     public boolean wantsToReviewCounterOffers() {
         return true;
     }
