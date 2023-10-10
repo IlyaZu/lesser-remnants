@@ -91,9 +91,6 @@ public interface IGameOptions {
     public static final String TERRAFORMING_NORMAL   = "SETUP_TERRAFORMING_NORMAL";
     public static final String TERRAFORMING_REDUCED  = "SETUP_TERRAFORMING_REDUCED";
     public static final String TERRAFORMING_NONE     = "SETUP_TERRAFORMING_NONE";
-        
-    public static final String COLONIZING_NORMAL      = "SETUP_COLONIZING_NORMAL";
-    public static final String COLONIZING_RESTRICTED  = "SETUP_COLONIZING_RESTRICTED";
     
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_MODNAR     = "SETUP_OPPONENT_AI_MODNAR";
@@ -112,7 +109,6 @@ public interface IGameOptions {
     public default void communityAI(boolean b)   { }
     public default int maxOpponents()            { return MAX_OPPONENTS; }
     public default float hostileTerraformingPct() { return 1.0f; }
-    public default boolean restrictedColonization() { return selectedColonizingOption().equals(COLONIZING_RESTRICTED); }
     public default int baseAIRelationsAdj()       { return 0; }
     public default int selectedAI(Empire e)       { return AI.BASE; }
     public String name();
@@ -149,7 +145,6 @@ public interface IGameOptions {
     public List<String> starDensityOptions();
     public List<String> planetQualityOptions();
     public List<String> terraformingOptions();
-    public List<String> colonizingOptions();
     public List<String> autoplayOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -175,8 +170,6 @@ public interface IGameOptions {
     public void selectedPlanetQualityOption(String s);
     public String selectedTerraformingOption();
     public void selectedTerraformingOption(String s);
-    public String selectedColonizingOption();
-    public void selectedColonizingOption(String s);
     public String selectedOpponentAIOption();
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
@@ -312,11 +305,6 @@ public interface IGameOptions {
     default String nextTerraformingOption() {
         List<String> opts = terraformingOptions();
         int index = opts.indexOf(selectedTerraformingOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextColonizingOption() {
-        List<String> opts = colonizingOptions();
-        int index = opts.indexOf(selectedColonizingOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextAutoplayOption() {

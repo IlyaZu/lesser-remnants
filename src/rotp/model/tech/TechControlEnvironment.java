@@ -66,9 +66,6 @@ public final class TechControlEnvironment extends Tech {
     public float baseSize(ShipDesign d) { return 700; }
     @Override
     public boolean isObsolete(Empire c) {
-        if (options().restrictedColonization())
-            return c.tech().knowsTechForHostility(hostilityAllowed);
-        
         TechControlEnvironment topTech = c.tech().topControlEnvironmentTech();        
         return (topTech != null) && (topTech.environment() > environment()) ;
     }
