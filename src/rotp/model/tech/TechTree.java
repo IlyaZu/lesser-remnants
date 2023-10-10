@@ -351,34 +351,21 @@ public final class TechTree implements Base, Serializable {
         }
     }
     public boolean canColonize(PlanetType pt) {
-        if (options().restrictedColonization())
-            return knowsTechForHostility(pt.hostility());
-        else
-            return pt.hostility() <= topHostilityAllowed();
+        return pt.hostility() <= topHostilityAllowed();
     }
     public boolean canColonize(PlanetType pt, int newHostilityLevel) {
         int ptHostility = pt.hostility();
-        if (options().restrictedColonization())
-            return (ptHostility == newHostilityLevel) || knowsTechForHostility(ptHostility);
-        else
-            return (ptHostility <= newHostilityLevel) || (ptHostility <= topHostilityAllowed());
+        return (ptHostility <= newHostilityLevel) || (ptHostility <= topHostilityAllowed());
     }
     public boolean isLearningToColonize(PlanetType pt) {
         int hostility = pt.hostility();
-        if (options().restrictedColonization()) 
-            return knowsTechForHostility(hostility) || (hostility == researchingHostilityAllowed());
-        
         return (hostility <= topHostilityAllowed()) || (hostility <= researchingHostilityAllowed());
     }
     public boolean canLearnToColonize(PlanetType pt) {
-        return learnableHostilityAllowed(pt.hostility(), options().restrictedColonization());
+        return learnableHostilityAllowed(pt.hostility());
     }
     public float minColonyLevel() {
         return topControlEnvironmentTech == null ? PlanetType.HOSTILITY_MINIMAL : topControlEnvironmentTech().environment();
-    }
-    public boolean knowsTechForHostility(int h) {
-        boolean[] hostility = colonizableHostility();   
-        return (h < hostility.length) && hostility[h];
     }
     public void learnToColonizeHostility(int h) {
         boolean[] hostility = colonizableHostility();     
@@ -400,14 +387,13 @@ public final class TechTree implements Base, Serializable {
         }
         return 0;
     }
-    private boolean learnableHostilityAllowed(int h, boolean restricted) {
+    private boolean learnableHostilityAllowed(int h) {
         String currId = planetology().currentTech();
         if (currId != null) {
             Tech t = tech(currId);
             if (t.isControlEnvironmentTech()) {
                 TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if ((t0.hostilityAllowed() == h) 
-                || (!restricted && t0.hostilityAllowed() >= h))
+                if (t0.hostilityAllowed() >= h)
                     return true;
             }
         }
@@ -416,8 +402,7 @@ public final class TechTree implements Base, Serializable {
             Tech t = tech(id);
             if (t.isControlEnvironmentTech()) {
                 TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if ((t0.hostilityAllowed() == h) 
-                || (!restricted && t0.hostilityAllowed() >= h))
+                if (t0.hostilityAllowed() >= h)
                     return true;
             }
         }
@@ -481,13 +466,12 @@ public final class TechTree implements Base, Serializable {
         return range;
     }
     public String environmentTechNeededToColonize(int hostility) {
-        boolean restricted = options().restrictedColonization();
         // returns the id of the currently unknown ecology tech we need 
         // to research in order to colonize planets of a certain hostitily level
         // if no tech is needed or it is impossible, return null
         int hostilityAllowed = topHostilityAllowed();
 
-        if (!restricted && (hostilityAllowed >= hostility))
+        if (hostilityAllowed >= hostility)
             return null;
         
         // check current research tech first
@@ -498,8 +482,7 @@ public final class TechTree implements Base, Serializable {
         Tech t = tech(currentId);
         if (t.isControlEnvironmentTech()) {
             TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if ((t0.hostilityAllowed() == hostility) 
-                || (!restricted && t0.hostilityAllowed() >= hostility))
+                if (t0.hostilityAllowed() >= hostility)
                     return currentId;
         }
         
@@ -507,8 +490,7 @@ public final class TechTree implements Base, Serializable {
             t = tech(id);
             if (t.isControlEnvironmentTech()) {
                 TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if ((t0.hostilityAllowed() == hostility) 
-                || (!restricted && t0.hostilityAllowed() >= hostility))
+                if (t0.hostilityAllowed() >= hostility)
                     return id;            
             }
         }

@@ -49,7 +49,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     BaseText randomEventsText;
     BaseText planetQualityText;
     BaseText terraformingText;
-    BaseText colonizingText;
     BaseText autoplayText;
     
     public StartOptionsUI() {
@@ -61,7 +60,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         planetQualityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         terraformingText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        colonizingText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         autoplayText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -73,7 +71,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         randomEventsText.displayText(randomEventsStr());
         planetQualityText.displayText(planetQualityStr());
         terraformingText.displayText(terraformingStr());
-        colonizingText.displayText(colonizingStr());
         autoplayText.displayText(autoplayStr());
     }
     public void open(BasePanel p) {
@@ -280,22 +277,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         // Gap made by tech trading settings removal
         y2 += (h2+s20);
 
+        // Gap made by colonisation restriction settings removal
         y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, colonizingText.stringWidth(g)+s10,s30);
-        colonizingText.setScaledXY(x2+s20, y2+s7);
-        colonizingText.draw(g);
-        desc = text("SETTINGS_COLONIZING_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }
 
         g.setStroke(prev);
 
@@ -359,10 +342,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedTerraformingOption());
         return text("SETTINGS_TERRAFORMING", opt)+"   ";
     }
-    private String colonizingStr() {
-        String opt = text(newGameOptions().selectedColonizingOption());
-        return text("SETTINGS_COLONIZING", opt)+"   ";
-    }
     private String autoplayStr() {
         String opt = text(newGameOptions().selectedAutoplayOption());
         return text("SETTINGS_AUTOPLAY", opt)+" ";
@@ -396,11 +375,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedTerraformingOption(newGameOptions().nextTerraformingOption());
         terraformingText.repaint(terraformingStr());
-    }
-    private void toggleColonizing() {
-        softClick();
-        newGameOptions().selectedColonizingOption(newGameOptions().nextColonizingOption());
-        colonizingText.repaint(colonizingStr());
     }
     private void toggleAutoplay(MouseEvent e) {
         softClick();
@@ -438,8 +412,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = planetQualityText.bounds();
         else if (terraformingText.contains(x,y))
             hoverBox = terraformingText.bounds();
-        else if (colonizingText.contains(x,y))
-            hoverBox = colonizingText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
         else if (autoplayText.contains(x,y))
@@ -460,8 +432,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 planetQualityText.mouseExit();
             else if (prevHover == terraformingText.bounds())
                 terraformingText.mouseExit();
-            else if (prevHover == colonizingText.bounds())
-                colonizingText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
             else if (prevHover == autoplayText.bounds())
@@ -476,8 +446,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 planetQualityText.mouseEnter();
             else if (hoverBox == terraformingText.bounds())
                 terraformingText.mouseEnter();
-            else if (hoverBox == colonizingText.bounds())
-                colonizingText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
             else if (hoverBox == autoplayText.bounds())
@@ -508,8 +476,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             togglePlanetQuality();
         else if (hoverBox == terraformingText.bounds())
             toggleTerraforming();
-        else if (hoverBox == colonizingText.bounds())
-            toggleColonizing();
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
         else if (hoverBox == autoplayText.bounds())

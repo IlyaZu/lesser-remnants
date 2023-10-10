@@ -56,7 +56,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedStarDensityOption;
     private String selectedPlanetQualityOption;
     private String selectedTerraformingOption;
-    private String selectedColonizingOption;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
     private String selectedAutoplayOption;
@@ -135,10 +134,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedTerraformingOption()       { return selectedTerraformingOption == null ? TERRAFORMING_NORMAL : selectedTerraformingOption; }
     @Override
     public void selectedTerraformingOption(String s) { selectedTerraformingOption = s; }
-    @Override
-    public String selectedColonizingOption()       { return selectedColonizingOption == null ? COLONIZING_NORMAL : selectedColonizingOption; }
-    @Override
-    public void selectedColonizingOption(String s) { selectedColonizingOption = s; }
     @Override
     public String selectedAutoplayOption()          { return selectedAutoplayOption == null ? AUTOPLAY_OFF : selectedAutoplayOption; }
     @Override
@@ -225,7 +220,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedPlanetQualityOption = opt.selectedPlanetQualityOption;
         selectedTerraformingOption = opt.selectedTerraformingOption;
         selectedAutoplayOption = opt.selectedAutoplayOption;
-        selectedColonizingOption = opt.selectedColonizingOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
         if (opt.specificOpponentAIOption != null) {
@@ -621,13 +615,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> colonizingOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(COLONIZING_NORMAL);
-        list.add(COLONIZING_RESTRICTED);
-        return list;
-    }
-    @Override
     public List<String> autoplayOptions() {
         List<String> list = new ArrayList<>();
         list.add(AUTOPLAY_OFF);
@@ -690,7 +677,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedGalaxyAge = GALAXY_AGE_NORMAL;
         selectedPlanetQualityOption = PLANET_QUALITY_NORMAL;
         selectedTerraformingOption = TERRAFORMING_NORMAL;
-        selectedColonizingOption = COLONIZING_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
         selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;
