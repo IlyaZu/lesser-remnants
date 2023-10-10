@@ -682,7 +682,6 @@ public final class TechTree implements Base, Serializable {
         return r;
     }
     public void acquireTechThroughTrade(String techId, int empId) {
-        Tech t = tech(techId);
         tradedTechs().add(techId);
         if (empire().isPlayerControlled())
             tradedTechNotifs().add(TradeTechNotification.create(techId, empId));
