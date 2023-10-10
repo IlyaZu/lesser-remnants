@@ -289,8 +289,7 @@ public class Race implements Base, Serializable {
     public float defaultRaceRelations()       { return defaultRaceRelations; }
     public void defaultRaceRelations(int d)   { defaultRaceRelations = d; }
     public float baseRelations(Race r) {
-        float definedRelations = raceRelations.containsKey(r.id) ? raceRelations.get(r.id) : defaultRaceRelations();
-        return definedRelations + options().baseAIRelationsAdj();
+    	return raceRelations.containsKey(r.id) ? raceRelations.get(r.id) : defaultRaceRelations();
     }
     public void baseRelations(String key, int d) { raceRelations.put(key, d); }
     public float labFlagX()                   { return labFlagX; }

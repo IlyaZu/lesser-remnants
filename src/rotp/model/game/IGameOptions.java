@@ -104,7 +104,6 @@ public interface IGameOptions {
     public default boolean usingExtendedRaces()  { return (selectedNumberOpponents()+1) > startingRaceOptions().size(); }
     public default void communityAI(boolean b)   { }
     public default int maxOpponents()            { return MAX_OPPONENTS; }
-    public default int baseAIRelationsAdj()       { return 0; }
     public default int selectedAI(Empire e)       { return AI.BASE; }
     public String name();
     public void setToDefault();
