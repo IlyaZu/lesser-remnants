@@ -724,47 +724,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;       
         if (v.embassy().alliedWithEnemy())
             return false;
-        if(galaxy().options().baseAIRelationsAdj() > 0)
-        {
-            //System.out.println(empire.galaxy().currentTurn()+" "+ empire.name()+" <3 "+e.name()+" ally-Popratio: "+popRatioOfAllianceAmongstContatacts(empire)+" agree when below: "+(galaxy().options().baseAIRelationsAdj() * 3.33 + personalityAllianceMod) / 100.0);
-            if(popRatioOfAllianceAmongstContatacts(empire) < (galaxy().options().baseAIRelationsAdj() * 3.33) / 100.0)
-                return true;
-        }
-        /*
-        if(UserPreferences.xilmiRoleplayMode() && empire.leader().isPacifist())
-        {
-            if(!e.atWar())
-                return true;
-        }
-        if(UserPreferences.xilmiRoleplayMode() && empire.leader().isHonorable())
-        {
-            for(Empire enemy : empire.enemies())
-            {
-                if(v.empire().warEnemies().contains(enemy))
-                    return true;
-            }
-        }
-        */
-        /*if(e == bestAlly())
-            return true;*/
         return false;
-    }
-    public float popRatioOfAllianceAmongstContatacts(Empire e)
-    {
-        float totalPop = 0;
-        float alliedPop = 0;
-        for(EmpireView ev : empire.contacts())
-        {
-            if(!ev.inEconomicRange())
-                continue;
-            Empire emp = ev.empire();
-            totalPop += emp.totalPlanetaryPopulation();
-            if(e.allies().contains(emp))
-                alliedPop += emp.totalPlanetaryPopulation();
-        }
-        alliedPop += e.totalPlanetaryPopulation();
-        totalPop += e.totalPlanetaryPopulation();
-        return alliedPop / totalPop;
     }
 //-----------------------------------
 //  JOINT WARS
@@ -1399,8 +1359,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
         if(!empire.inShipRange(v.empId()))
             return false;
-        if(galaxy().options().baseAIRelationsAdj() <= -30)
-            return true;
         if (!empire.enemies().isEmpty())
             return false;
         if(readyForWar())
@@ -1668,9 +1626,6 @@ public class AIDiplomat implements Base, Diplomat {
             //System.out.println(galaxy().currentTurn()+" "+empire.name()+" is war-weary because "+v.empire().name()+" is not in range.");
             return true;
         }
-        //ail: no war-weariness in always-war-mode
-        if(galaxy().options().baseAIRelationsAdj() <= -30)
-            return false;
         //new: If we are strong enough, we are okay with fighting the wrong target or several enemies at once
         float enemyPower = 0;
         for(Empire enemy : empire.enemies())
