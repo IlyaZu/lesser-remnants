@@ -55,7 +55,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private boolean disableRandomEvents = false;
     private String selectedStarDensityOption;
     private String selectedPlanetQualityOption;
-    private String selectedTerraformingOption;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
     private String selectedAutoplayOption;
@@ -130,10 +129,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedPlanetQualityOption()       { return selectedPlanetQualityOption == null ? PLANET_QUALITY_NORMAL : selectedPlanetQualityOption; }
     @Override
     public void selectedPlanetQualityOption(String s) { selectedPlanetQualityOption = s; }
-    @Override
-    public String selectedTerraformingOption()       { return selectedTerraformingOption == null ? TERRAFORMING_NORMAL : selectedTerraformingOption; }
-    @Override
-    public void selectedTerraformingOption(String s) { selectedTerraformingOption = s; }
     @Override
     public String selectedAutoplayOption()          { return selectedAutoplayOption == null ? AUTOPLAY_OFF : selectedAutoplayOption; }
     @Override
@@ -218,7 +213,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedNebulaeOption = opt.selectedNebulaeOption;
         selectedStarDensityOption = opt.selectedStarDensityOption;
         selectedPlanetQualityOption = opt.selectedPlanetQualityOption;
-        selectedTerraformingOption = opt.selectedTerraformingOption;
         selectedAutoplayOption = opt.selectedAutoplayOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
@@ -356,14 +350,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             }
         }
         return AI.BASE;
-    }
-    @Override
-    public float hostileTerraformingPct() { 
-        switch(selectedTerraformingOption()) {
-            case TERRAFORMING_NONE:  return 0.0f;
-            case TERRAFORMING_REDUCED: return 0.5f;
-            default:  return 1.0f;
-        }
     }
     @Override
     public boolean allowRandomEvent(RandomEvent ev) {
@@ -607,14 +593,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> terraformingOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(TERRAFORMING_NORMAL);
-        list.add(TERRAFORMING_REDUCED);
-        list.add(TERRAFORMING_NONE);
-        return list;
-    }
-    @Override
     public List<String> autoplayOptions() {
         List<String> list = new ArrayList<>();
         list.add(AUTOPLAY_OFF);
@@ -676,7 +654,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public void setToDefault() {
         selectedGalaxyAge = GALAXY_AGE_NORMAL;
         selectedPlanetQualityOption = PLANET_QUALITY_NORMAL;
-        selectedTerraformingOption = TERRAFORMING_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
         selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;

@@ -87,10 +87,6 @@ public interface IGameOptions {
     public static final String PLANET_QUALITY_NORMAL = "SETUP_PLANET_QUALITY_NORMAL";
     public static final String PLANET_QUALITY_GOOD   = "SETUP_PLANET_QUALITY_GOOD";
     public static final String PLANET_QUALITY_GREAT  = "SETUP_PLANET_QUALITY_GREAT";
-        
-    public static final String TERRAFORMING_NORMAL   = "SETUP_TERRAFORMING_NORMAL";
-    public static final String TERRAFORMING_REDUCED  = "SETUP_TERRAFORMING_REDUCED";
-    public static final String TERRAFORMING_NONE     = "SETUP_TERRAFORMING_NONE";
     
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_MODNAR     = "SETUP_OPPONENT_AI_MODNAR";
@@ -108,7 +104,6 @@ public interface IGameOptions {
     public default boolean usingExtendedRaces()  { return (selectedNumberOpponents()+1) > startingRaceOptions().size(); }
     public default void communityAI(boolean b)   { }
     public default int maxOpponents()            { return MAX_OPPONENTS; }
-    public default float hostileTerraformingPct() { return 1.0f; }
     public default int baseAIRelationsAdj()       { return 0; }
     public default int selectedAI(Empire e)       { return AI.BASE; }
     public String name();
@@ -144,7 +139,6 @@ public interface IGameOptions {
     public List<String> nebulaeOptions();
     public List<String> starDensityOptions();
     public List<String> planetQualityOptions();
-    public List<String> terraformingOptions();
     public List<String> autoplayOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -168,8 +162,6 @@ public interface IGameOptions {
     public void selectedStarDensityOption(String s);
     public String selectedPlanetQualityOption();
     public void selectedPlanetQualityOption(String s);
-    public String selectedTerraformingOption();
-    public void selectedTerraformingOption(String s);
     public String selectedOpponentAIOption();
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
@@ -300,11 +292,6 @@ public interface IGameOptions {
     default String nextPlanetQualityOption() {
         List<String> opts = planetQualityOptions();
         int index = opts.indexOf(selectedPlanetQualityOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextTerraformingOption() {
-        List<String> opts = terraformingOptions();
-        int index = opts.indexOf(selectedTerraformingOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextAutoplayOption() {
