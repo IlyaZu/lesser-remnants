@@ -872,10 +872,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             forcePct(ECOLOGY, pct);
     }
     public float maxSize() {
-        float terraformAdj = tech().terraformAdj();
-        if (planet.isEnvironmentHostile())
-            terraformAdj *= options().hostileTerraformingPct();
-        return max(planet.currentSize(), planet.baseSize()+terraformAdj);
+        return max(planet.currentSize(), planet.baseSize()+tech().terraformAdj());
     }
     public float maxUseableFactories() {
         return workingPopulation() * empire().maxRobotControls();

@@ -48,7 +48,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     BaseText nebulaeText;
     BaseText randomEventsText;
     BaseText planetQualityText;
-    BaseText terraformingText;
     BaseText autoplayText;
     
     public StartOptionsUI() {
@@ -59,7 +58,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         nebulaeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         planetQualityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        terraformingText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         autoplayText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -70,7 +68,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         nebulaeText.displayText(nebulaeStr());
         randomEventsText.displayText(randomEventsStr());
         planetQualityText.displayText(planetQualityStr());
-        terraformingText.displayText(terraformingStr());
         autoplayText.displayText(autoplayStr());
     }
     public void open(BasePanel p) {
@@ -198,23 +195,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             drawString(g,line, x2+s20, y3);
         }
         
-        
+        // Gap made by terraforming settings removal
         y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, terraformingText.stringWidth(g)+s10,s30);
-        terraformingText.setScaledXY(x2+s20, y2+s7);
-        terraformingText.draw(g);
-        desc = text("SETTINGS_TERRAFORMING_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }
         
         // middle column
         y2 = topM+scaled(110);
@@ -338,10 +320,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedPlanetQualityOption());
         return text("SETTINGS_PLANET_QUALITY", opt)+"   ";
     }
-    private String terraformingStr() {
-        String opt = text(newGameOptions().selectedTerraformingOption());
-        return text("SETTINGS_TERRAFORMING", opt)+"   ";
-    }
     private String autoplayStr() {
         String opt = text(newGameOptions().selectedAutoplayOption());
         return text("SETTINGS_AUTOPLAY", opt)+" ";
@@ -370,11 +348,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedPlanetQualityOption(newGameOptions().nextPlanetQualityOption());
         planetQualityText.repaint(planetQualityStr());
-    }
-    private void toggleTerraforming() {
-        softClick();
-        newGameOptions().selectedTerraformingOption(newGameOptions().nextTerraformingOption());
-        terraformingText.repaint(terraformingStr());
     }
     private void toggleAutoplay(MouseEvent e) {
         softClick();
@@ -410,8 +383,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = nebulaeText.bounds();
         else if (planetQualityText.contains(x,y))
             hoverBox = planetQualityText.bounds();
-        else if (terraformingText.contains(x,y))
-            hoverBox = terraformingText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
         else if (autoplayText.contains(x,y))
@@ -430,8 +401,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 nebulaeText.mouseExit();
             else if (prevHover == planetQualityText.bounds())
                 planetQualityText.mouseExit();
-            else if (prevHover == terraformingText.bounds())
-                terraformingText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
             else if (prevHover == autoplayText.bounds())
@@ -444,8 +413,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 nebulaeText.mouseEnter();
             else if (hoverBox == planetQualityText.bounds())
                 planetQualityText.mouseEnter();
-            else if (hoverBox == terraformingText.bounds())
-                terraformingText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
             else if (hoverBox == autoplayText.bounds())
@@ -474,8 +441,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             toggleNebulae(e);
         else if (hoverBox == planetQualityText.bounds())
             togglePlanetQuality();
-        else if (hoverBox == terraformingText.bounds())
-            toggleTerraforming();
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
         else if (hoverBox == autoplayText.bounds())
