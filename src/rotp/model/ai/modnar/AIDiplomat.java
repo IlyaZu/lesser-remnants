@@ -338,11 +338,11 @@ public class AIDiplomat implements Base, Diplomat {
     }
     private float techDealValue(EmpireView v) {
         if (v.embassy().alliance())
-            return 0.95f; // modnar: reduce acceptable tech value
+            return 1.0f;
         else if (v.embassy().pact())
-            return 0.85f; // modnar: reduce acceptable tech value
+            return 0.9f;
         else
-            return 0.75f; // modnar: reduce acceptable tech value
+            return 0.8f;
     }
     //-----------------------------------
     //  TRADE TREATIES
