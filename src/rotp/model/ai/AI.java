@@ -67,7 +67,7 @@ public class AI implements Base {
                 governor =       new rotp.model.ai.base.AIGovernor(empire);
                 scientist =      new rotp.model.ai.base.AIScientist(empire);
                 diplomat =       new rotp.model.ai.base.AIDiplomat(empire);
-                shipDesigner =   new rotp.model.ai.modnar.AIShipDesigner(empire);
+                shipDesigner =   new rotp.model.ai.base.AIShipDesigner(empire);
                 fleetCommander = new rotp.model.ai.base.AIFleetCommander(empire);
                 spyMaster =      new rotp.model.ai.base.AISpyMaster(empire);
                 treasurer =      new rotp.model.ai.base.AITreasurer(empire);

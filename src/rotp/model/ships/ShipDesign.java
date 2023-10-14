@@ -422,14 +422,7 @@ public final class ShipDesign extends Design {
         return kills;
     }
     public float availableSpace()                { return totalSpace() - spaceUsed(); }
-    public float availableSpace(int newSize)     { return totalSpace(newSize) - spaceUsed(newSize); }
-    public float availableSpaceForComputerSlot() { return availableSpace() + computer().space(this); }
-    public float availableSpaceForShieldSlot()   { return availableSpace() + shield().space(this); }
-    public float availableSpaceForECMSlot()      { return availableSpace() + ecm().space(this); }
-    public float availableSpaceForArmorSlot()    { return availableSpace() + armor().space(this); }
-    public float availableSpaceForManeuverSlot() { return availableSpace() + maneuver().space(this); }
     public float availableSpaceForWeaponSlot(int i)  { return availableSpace() + (wpnCount(i) * weapon(i).space(this)); }
-    public float availableSpaceForSpecialSlot(int i) { return availableSpace() + special(i).space(this); }
     public List<ShipSpecial> availableSpecialsForSlot(int slot) {
         List<ShipSpecial> knownSpecials = lab().specials();
         List<ShipSpecial> allowedSpecials = new ArrayList<>();
@@ -468,7 +461,6 @@ public final class ShipDesign extends Design {
                 return;
         }
     }
-    public int weaponMax(int i) { return (int)Math.max(0, weapon(i).max(this, i));  }
     public int baseHits() {
         switch(size()) {
             case SMALL  : return 3;
