@@ -123,29 +123,6 @@ public class FleetPlan implements Base, Serializable {
         }
         return true;
     }
-    public void fillFrom(ShipFleet fleet) {
-        ShipDesign bestDesign;
-        FleetOrders orders = fleet.orders();
-
-        for (int i=0;i<needed.length;i++) {
-            if (needed[i] > 0) {
-                boolean stackFilled = false;
-                int neededMission = lab.design(i).mission();
-                while (!stackFilled){
-                    bestDesign = orders.newestOfType(neededMission);
-                    if (bestDesign != null) {
-                        int numAvail = orders.numAvailable(bestDesign);
-                        int numShips = min(needed[i], numAvail);
-                        if (numShips > 0) {
-                            orders.reassignShip(bestDesign, destId, numShips);
-                            needed[i] -= numShips;
-                        }
-                    }
-                    stackFilled = ((bestDesign == null) || (needed[i]<=0));
-                }
-            }
-        }
-    }
     public int numNeededShips() {
         int num = 0;
         for (int i=0;i<needed.length;i++)
