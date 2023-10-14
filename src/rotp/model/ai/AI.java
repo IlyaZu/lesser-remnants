@@ -42,7 +42,6 @@ import rotp.util.Base;
 
 public class AI implements Base {
     public static final int BASE = 0;
-    public static final int MODNAR = 1;
     public static final int XILMI = 2;
     
     private final Empire empire;
@@ -61,17 +60,6 @@ public class AI implements Base {
         empire = e;
         
         switch(aiType) {
-            case MODNAR:
-                general =        new rotp.model.ai.base.AIGeneral(empire);
-                captain =        new rotp.model.ai.base.AIShipCaptain(empire);
-                governor =       new rotp.model.ai.base.AIGovernor(empire);
-                scientist =      new rotp.model.ai.base.AIScientist(empire);
-                diplomat =       new rotp.model.ai.base.AIDiplomat(empire);
-                shipDesigner =   new rotp.model.ai.base.AIShipDesigner(empire);
-                fleetCommander = new rotp.model.ai.base.AIFleetCommander(empire);
-                spyMaster =      new rotp.model.ai.base.AISpyMaster(empire);
-                treasurer =      new rotp.model.ai.base.AITreasurer(empire);
-                break;
             case XILMI:
                 general =        new rotp.model.ai.xilmi.AIGeneral(empire);
                 captain =        new rotp.model.ai.xilmi.AIShipCaptain(empire);
