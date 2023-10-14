@@ -63,7 +63,7 @@ public class AI implements Base {
         switch(aiType) {
             case MODNAR:
                 general =        new rotp.model.ai.base.AIGeneral(empire);
-                captain =        new rotp.model.ai.modnar.AIShipCaptain(empire);
+                captain =        new rotp.model.ai.base.AIShipCaptain(empire);
                 governor =       new rotp.model.ai.base.AIGovernor(empire);
                 scientist =      new rotp.model.ai.base.AIScientist(empire);
                 diplomat =       new rotp.model.ai.base.AIDiplomat(empire);
