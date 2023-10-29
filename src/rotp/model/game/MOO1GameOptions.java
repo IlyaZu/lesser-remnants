@@ -27,7 +27,6 @@ import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyEllipticalShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
 import rotp.model.galaxy.GalaxyShape;
-import rotp.model.galaxy.GalaxySpiralShape;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.StarType;
 import rotp.model.planet.Planet;
@@ -240,8 +239,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         switch(selectedGalaxyShape) {
             case SHAPE_ELLIPTICAL:
                 galaxyShape = new GalaxyEllipticalShape(this); break;
-            case SHAPE_SPIRAL:
-                galaxyShape = new GalaxySpiralShape(this); break;
             case SHAPE_RECTANGLE:
             default:
                 galaxyShape = new GalaxyRectangularShape(this);
@@ -520,7 +517,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         List<String> list = new ArrayList<>();
         list.add(SHAPE_RECTANGLE);
         list.add(SHAPE_ELLIPTICAL);
-        list.add(SHAPE_SPIRAL);
         return list;
     }
 	
