@@ -19,7 +19,6 @@ import java.util.List;
 import rotp.model.combat.ShipCombatResults;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.empires.Leader.Personality;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.model.tech.Tech;
@@ -78,7 +77,6 @@ public interface Diplomat {
     DiplomaticReply acceptOfferJointWar(Empire e, Empire target);
     DiplomaticReply refuseOfferJointWar(Empire e, Empire target);
 
-    boolean willingToOfferAlliance(Empire e);
     boolean wantToDeclareWarOfHate(EmpireView v);
     boolean wantToDeclareWarOfOpportunity(EmpireView v);
     
@@ -88,20 +86,14 @@ public interface Diplomat {
     DiplomaticReply receiveCounterOfferTech(Empire e, Tech counter, Tech wanted);
     float leaderExploitWeakerEmpiresRatio();
     float leaderRetreatRatio(Empire c);
-    float leaderContemptDeclareWarMod(Empire e);
-    float leaderContemptAcceptPeaceMod(Empire e);
     int leaderGenocideDurationMod();
     int leaderOathBreakerDuration();
     float leaderDiplomacyAnnoyanceMod(EmpireView v);
-    float leaderDeclareWarMod();
-    float leaderAcceptPeaceTreatyMod();
     float leaderAcceptPactMod(Empire other);
     float leaderAcceptAllianceMod(Empire other);
     float leaderAcceptTradeMod();
     float leaderHateWarThreshold();
-    float leaderAcceptJointWarMod();
     float leaderPreserveTreatyMod();
-    float leaderAffinityMod(Personality p1, Personality p2);
     boolean leaderHatesAllSpies();
     
     //Xilmi-AI:

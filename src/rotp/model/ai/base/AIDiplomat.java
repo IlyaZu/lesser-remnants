@@ -26,7 +26,6 @@ import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import static rotp.model.empires.EmpireStatus.FLEET;
 import rotp.model.empires.EmpireView;
-import rotp.model.empires.Leader;
 import rotp.model.empires.SpyNetwork.Mission;
 import rotp.model.empires.SpyReport;
 import rotp.model.empires.TreatyWar;
@@ -713,8 +712,7 @@ public class AIDiplomat implements Base, Diplomat {
         v.embassy().resetAllianceTimer();
         return DiplomaticReply.answer(false, declineReasonText(v));
     }
-    @Override
-    public boolean willingToOfferAlliance(Empire e) {
+    private boolean willingToOfferAlliance(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
         // if we are asking the player, respect the alliance-countdown
         // timer to avoid spamming player with requests
@@ -1791,15 +1789,7 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public float leaderRetreatRatio(Empire c){ 
         return empire.leader().retreatRatio(c);
-    } 
-    @Override
-    public float leaderContemptDeclareWarMod(Empire e){ 
-        return empire.leader().contemptDeclareWarMod(e);
-    } 
-    @Override
-    public float leaderContemptAcceptPeaceMod(Empire e){ 
-        return empire.leader().contemptAcceptPeaceMod(e);
-    } 
+    }
     @Override
     public int leaderGenocideDurationMod() { 
         return empire.leader().genocideDurationMod();
@@ -1811,15 +1801,7 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public float leaderDiplomacyAnnoyanceMod(EmpireView v) { 
         return empire.leader().diplomacyAnnoyanceMod(v);
-    }     
-    @Override
-    public float leaderDeclareWarMod() { 
-        return empire.leader().declareWarMod();
-    } 
-    @Override
-    public float leaderAcceptPeaceTreatyMod() { 
-        return empire.leader().acceptPeaceTreatyMod();
-    } 
+    }
     @Override
     public float leaderAcceptPactMod(Empire other) { 
         return empire.leader().acceptPactMod(other);
@@ -1837,16 +1819,8 @@ public class AIDiplomat implements Base, Diplomat {
         return empire.leader().hateWarThreshold();
     } 
     @Override
-    public float leaderAcceptJointWarMod() { 
-        return empire.leader().acceptJointWarMod();
-    } 
-    @Override
     public float leaderPreserveTreatyMod() { 
         return empire.leader().preserveTreatyMod();
-    } 
-    @Override
-    public float leaderAffinityMod(Leader.Personality p1, Leader.Personality p2) {
-        return empire.leader().affinityMod(p1,p2); 
     }
     @Override
     public  boolean leaderHatesAllSpies() { return empire.leader().isXenophobic(); }
