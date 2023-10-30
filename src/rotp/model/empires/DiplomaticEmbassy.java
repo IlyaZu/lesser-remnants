@@ -643,7 +643,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         clearForgottenIncidents();
 
         List<DiplomaticIncident> newEventsAll = new ArrayList<>();
-        owner().diplomatAI().noticeNoRelationIncident(view, newEventsAll);
         owner().diplomatAI().noticeAtWarWithAllyIncidents(view, newEventsAll);
         owner().diplomatAI().noticeAlliedWithEnemyIncidents(view, newEventsAll);
         owner().diplomatAI().noticeTrespassingIncidents(view, newEventsAll);

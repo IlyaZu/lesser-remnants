@@ -42,7 +42,6 @@ public interface Diplomat {
     void makeDiplomaticOffers(EmpireView ev);
     Empire councilVoteFor(Empire emp1, Empire emp2);
     
-    void noticeNoRelationIncident(EmpireView v, List<DiplomaticIncident> incidents);
     void noticeAtWarWithAllyIncidents(EmpireView v, List<DiplomaticIncident> incidents);
     void noticeAlliedWithEnemyIncidents(EmpireView v, List<DiplomaticIncident> incidents);
     void noticeTrespassingIncidents(EmpireView v, List<DiplomaticIncident> incidents);
