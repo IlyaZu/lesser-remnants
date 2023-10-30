@@ -51,7 +51,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedRandomEventOption;
     private String selectedNebulaeOption;
     private int selectedNumberOpponents;
-    private boolean disableRandomEvents = false;
     private String selectedStarDensityOption;
     private String selectedPlanetQualityOption;
     private String selectedOpponentAIOption;
@@ -78,10 +77,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public int numColors()                       { return 10; }
     @Override
     public NewPlayer selectedPlayer()            { return player; }
-    @Override
-    public boolean disableRandomEvents()         { return disableRandomEvents; }
-    @Override
-    public void disableRandomEvents(boolean b)   { disableRandomEvents = b; }
     @Override
     public String selectedGalaxySize()           { return selectedGalaxySize; }
     @Override
