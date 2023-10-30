@@ -52,13 +52,10 @@ import rotp.util.Base;
 public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     private static final long serialVersionUID = 1L;
     private static final float clickRadius = 0.9f;
-	// modnar: change shield colors to color-coded loot rarity
-	// shield-5 --> shield-10 --> shield-15 --> shield-20
-	//    green -->      blue -->    purple --> orange
-    private static final Color shield5C = new Color(32,255,0); 
-    private static final Color shield10C = new Color(0,112,224); 
-    private static final Color shield15C = new Color(160,48,240);
-    private static final Color shield20C = new Color(255,128,0);
+    private static final Color shield5C = new Color(32,255,0); // Green
+    private static final Color shield10C = new Color(0,112,224); // Blue
+    private static final Color shield15C = new Color(160,48,240); // Purple
+    private static final Color shield20C = new Color(255,128,0); // Orange
     private static final Color selectionC = new Color(160,160,0);
     private static final Color systemNameBackC = Color.BLACK;
     public static final int NULL_ID = -1;
