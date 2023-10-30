@@ -688,19 +688,6 @@ public class AIGeneral implements Base, General {
         return totalKillTime;
     }
     @Override
-    public float warROI() {
-        if(warROI > -1)
-            return warROI;
-        warROI = Float.MAX_VALUE;
-        float totalTime = 0;
-        for(Empire enemy : empire.enemies())
-        {
-            totalTime += 1 / timeToKill(enemy, empire);
-        }
-        warROI = 3 / totalTime;
-        return warROI;
-    }
-    @Override
     public Empire bestVictim() {
         if(searchedVictimThisTurn)
         {
@@ -1065,8 +1052,7 @@ public class AIGeneral implements Base, General {
         }
         return false;
     }
-    @Override
-    public boolean isInvader()
+    private boolean isInvader()
     {
         if(empire.race().groundAttackBonus() > 0 || empire.race().growthRateMod() > 1)
             return true;
@@ -1083,33 +1069,11 @@ public class AIGeneral implements Base, General {
         return false;
     }
     @Override
-    public boolean isExpander()
-    {
-        if(empire.race().ignoresPlanetEnvironment() || empire.race().growthRateMod() > 1)
-            return true;
-        return false;
-    }
-    @Override
-    public boolean isSpy()
-    {
-        if(empire.race().spyInfiltrationAdj() > 0 || empire.leader().isTechnologist() || empire.leader().isPacifist())
-            return true;
-        return false;
-    }
-    @Override
-    public boolean isTrader()
-    {
-        if(empire.race().tradePctBonus() > 0 || empire.leader().isDiplomat() || empire.leader().isPacifist())
-            return true;
-        return false;
-    }
-    @Override
     public int minTransportSize()
     {
         return 1;
     }
-    @Override
-    public Location fleetCenter(Empire emp)
+    private Location fleetCenter(Empire emp)
     {
         float x = 0;
         float y = 0;

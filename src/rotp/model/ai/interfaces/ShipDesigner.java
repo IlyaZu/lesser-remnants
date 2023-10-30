@@ -42,7 +42,6 @@ public interface ShipDesigner {
     default float fightingAdapted(ShipDesign d) { return d.isFighter() ? 1.0f : 0; }
     default float bombingAdapted(ShipDesign d) { return d.isBomber() ? 1.0f : 0; }
     default boolean wantHybrid() { return false; }
-    default boolean MaintenanceLimitReached(ShipDesign d) { return false; }
     default ShipDesign BestDesignToScout() { return empire().shipLab().scoutDesign(); }
     default ShipDesign BestDesignToColonize() { return empire().shipLab().colonyDesign(); }
     default ShipDesign BestDesignToFight() { return empire().shipLab().fighterDesign(); }

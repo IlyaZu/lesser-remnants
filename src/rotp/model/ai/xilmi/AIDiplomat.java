@@ -1910,8 +1910,7 @@ public class AIDiplomat implements Base, Diplomat {
         //System.out.println(galaxy().currentTurn()+" "+empire.name()+" techLevelRank(): " +techLevelRank()+" popCapRank: "+popCapRank+" has good RP-ROI: "+reseachHasGoodROI+" war Allowed: "+warAllowed);
         return warAllowed;
     }
-    @Override
-    public boolean willingToTradeTech(Tech tech, Empire tradePartner)
+    private boolean willingToTradeTech(Tech tech, Empire tradePartner)
     {
         //The player can decide for themselves what they want to give away!
         if(!empire.isAIControlled())
@@ -1930,10 +1929,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
         //System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" is not willing to trade "+tech.name());
         return false;
-    }
-    @Override
-    public boolean wantsToReviewCounterOffers() {
-        return true;
     }
 }
 
