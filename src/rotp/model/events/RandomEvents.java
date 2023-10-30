@@ -90,7 +90,6 @@ public class RandomEvents implements Base, Serializable {
         addEvent(new RandomEventComet());
         addEvent(new RandomEventSpaceAmoeba());
         addEvent(new RandomEventSpaceCrystal());
-        // addEvent(new RandomEventGenric("EventKey1"));
     }
     private void addEvent(RandomEvent ev) {
         if (options().allowRandomEvent(ev))

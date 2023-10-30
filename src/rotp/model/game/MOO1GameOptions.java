@@ -60,9 +60,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private transient GalaxyShape galaxyShape;
 
     public MOO1GameOptions() {
-        init();
-    }
-    private void init() {
         initOpponentRaces();
         randomizeColors();
         setDefaultOptionValues();
