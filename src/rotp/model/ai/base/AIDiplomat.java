@@ -1607,10 +1607,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
     }
     @Override
-    public void noticeNoRelationIncident(EmpireView view, List<DiplomaticIncident> events) {
-
-    }
-    @Override
     public void noticeAtWarWithAllyIncidents(EmpireView view, List<DiplomaticIncident> events) {
         for (Empire ally: empire.allies()) {
             if (ally.atWarWith(view.empId())) 
