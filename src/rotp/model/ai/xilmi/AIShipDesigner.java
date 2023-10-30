@@ -723,8 +723,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         if(lab().canScrapADesign())
             lab().scrapDesign(d);
     }
-    @Override
-    public boolean MaintenanceLimitReached(ShipDesign d)
+    private boolean MaintenanceLimitReached(ShipDesign d)
     {
         boolean reached = false;
         if(empire.totalFleetCost() > 0)
