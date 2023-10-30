@@ -120,21 +120,6 @@ public class Leader implements Base, Serializable {
 
         return baseRatio;
     }
-    public float contemptDeclareWarMod(Empire e) {
-        float power = empire.viewForEmpire(e).empirePower();
-        // e's power is > than this empire's power, so decrease chance for declaration
-        if (power >= 1)
-            return (power-1)*-20;
-        else
-            return ((1/power)-1)*20;
-    }
-    public float contemptAcceptPeaceMod(Empire e) {
-        float power = sqrt(empire.viewForEmpire(e).empirePower());
-        if (power >= 1)
-            return (power-1)*30;
-        else
-            return ((1/power)-1)*-20;
-    }
     public int genocideDurationMod() {
         switch(personality) {
             case PACIFIST:   return 999999;
@@ -188,50 +173,6 @@ public class Leader implements Base, Serializable {
             case AGGRESSIVE: return -10*addl;
             default:         return -10*addl;
         }
-    }
-    public float declareWarMod() {
-        int a, b;
-        switch(personality) {
-            case PACIFIST:      a = -20; break;
-            case HONORABLE:     a = 0; break;
-            case XENOPHOBIC:    a = -10; break;
-            case RUTHLESS:      a = 10; break;
-            case AGGRESSIVE:    a = 20; break;
-            case ERRATIC:       a = 10*roll(-2,2); break;
-            default:            a = 0; break;
-        }
-        switch(objective) {
-            case DIPLOMAT:      b = -20; break;
-            case MILITARIST:    b = 20; break;
-            case ECOLOGIST:     b = 0; break;
-            case INDUSTRIALIST: b = 0; break;
-            case EXPANSIONIST:  b = 10; break;
-            case TECHNOLOGIST:  b = -10; break;
-            default:            b = 0; break;
-        }        
-        return a+b;
-    }
-    public float acceptPeaceTreatyMod() {
-        int a, b;
-        switch(personality) {
-            case PACIFIST:      a = 10; break;
-            case HONORABLE:     a = 0; break;
-            case XENOPHOBIC:    a = 5; break;
-            case RUTHLESS:      a = -5; break;
-            case AGGRESSIVE:    a = -10; break;
-            case ERRATIC:       a = 0; break;
-            default:            a = 0; break;
-        }
-        switch(objective) {
-            case DIPLOMAT:      b = 10; break;
-            case MILITARIST:    b = -10; break;
-            case ECOLOGIST:     b = 0; break;
-            case INDUSTRIALIST: b = 0; break;
-            case EXPANSIONIST:  b = -5; break;
-            case TECHNOLOGIST:  b = 5; break;
-            default:            b = 0; break;
-        }        
-        return a+b;
     }
     public float acceptPactMod(Empire other) {
         int a, b, c;
@@ -312,28 +253,6 @@ public class Leader implements Base, Serializable {
             default:         return -80;
         }
     }
-    public float acceptJointWarMod() {
-        int a, b;
-        switch(personality) {
-            case PACIFIST:      a = -20; break;
-            case HONORABLE:     a = 0; break;
-            case XENOPHOBIC:    a = -10; break;
-            case RUTHLESS:      a = 10; break;
-            case AGGRESSIVE:    a = 20; break;
-            case ERRATIC:       a = 0; break;
-            default:            a = 0; break;
-        }
-        switch(objective) {
-            case DIPLOMAT:      b = -20; break;
-            case MILITARIST:    b = 20; break;
-            case ECOLOGIST:     b = 0; break;
-            case INDUSTRIALIST: b = 0; break;
-            case EXPANSIONIST:  b = 10; break;
-            case TECHNOLOGIST:  b = -10; break;
-            default:            b = 0; break;
-        }        
-        return a+b;
-    }
     public float preserveTreatyMod() {
         int a, b;
         switch(personality) {
@@ -356,7 +275,7 @@ public class Leader implements Base, Serializable {
         }        
         return a+b;
     }
-    public int affinityMod(Personality p1, Personality p2) {
+    private int affinityMod(Personality p1, Personality p2) {
         int love = 2;
         int like = 1;
         int neutral = 0;
