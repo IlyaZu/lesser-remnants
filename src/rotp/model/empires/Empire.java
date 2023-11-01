@@ -66,7 +66,6 @@ import rotp.model.tech.Tech;
 import rotp.model.tech.TechRoboticControls;
 import rotp.model.tech.TechTree;
 import rotp.ui.NoticeMessage;
-import rotp.ui.UserPreferences;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.main.GalaxyMapPanel;
@@ -360,7 +359,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         sv = new SystemInfo(this);
         // many things need to know if this is the player civ, so set it early
         if (empId == Empire.PLAYER_ID) {
-            divertColonyExcessToResearch = UserPreferences.divertColonyExcessToResearch();
             g.player(this);
         }
 
