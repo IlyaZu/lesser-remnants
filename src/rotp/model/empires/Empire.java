@@ -1749,16 +1749,6 @@ public final class Empire implements Base, NamedObject, Serializable {
             return false;
         return v.trade().active();
     }
-    public int contactAge(Empire c) {
-        if (c == this) return 0;
-        if (c == null) return 0;
-        if (c.extinct) return 0;
-
-        EmpireView v = viewForEmpire(c);
-        if (v == null)
-            return 0;
-        return v.embassy().contactAge();
-    }
     public void shareSystemInfoWithAlly(Empire c) {
         sv.shareAllyData(c.sv);
     }
