@@ -49,7 +49,6 @@ public class Galaxy implements Base, Serializable {
     private final List<StarSystem> abandonedSystems = new ArrayList<>();
 
     private Empire playerEmpire;
-    private Empire orionEmpire; //unused
     private final int widthLY;
     private final int heightLY;
     private float maxScaleAdj = 1.0f;

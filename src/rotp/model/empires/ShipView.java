@@ -39,7 +39,6 @@ public class ShipView implements Base,Serializable {
     private final Empire owner;
     private final Empire empire;
     private final ShipDesign design;
-    private boolean detected = false;
     private boolean encountered = false;
     private boolean scanned = false;
     private int armedFlag = UNKNOWN;
@@ -62,14 +61,12 @@ public class ShipView implements Base,Serializable {
     private final boolean[] spcKnown = new boolean[ShipDesign.maxSpecials()];
 
     // historical data
-    private int firstViewTurn = 0;
     private int lastViewTurn = 0;
     private int totalKilled = 0;
     private int totalKills = 0;
 
     public Empire empire()                { return empire; }
     public ShipDesign design()            { return design; }
-    public int firstViewTurn()            { return firstViewTurn; }
     public Integer lastViewTurn()         { return lastViewTurn; }
     public int totalKills()               { return totalKills; }
     public void addTotalKills(int i)      { totalKills += i; }
@@ -102,8 +99,6 @@ public class ShipView implements Base,Serializable {
     public boolean isPotentiallyArmed() { return armedFlag != UNARMED; }
 
     public void setViewDate() {
-        if (firstViewTurn == 0)
-            firstViewTurn = galaxy().currentTurn();
         lastViewTurn = galaxy().currentTurn();
     }
 
@@ -130,10 +125,6 @@ public class ShipView implements Base,Serializable {
     // detect is for long-range scanning
     public void detect() {
         lastViewTurn = galaxy().currentTurn();
-        if (!detected)
-            firstViewTurn = galaxy().currentTurn();
-
-        detected = true;
     }
     // encounter is for same orbit
     public void encounter() {

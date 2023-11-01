@@ -25,11 +25,6 @@ public class YearDisplaySprite extends MapSprite {
     private int minMapX, maxButtonW;
     private final MainUI parent;
 
-    protected int mapX()      { return mapX; }
-    protected int mapY()      { return mapY; }
-    public void mapX(int i)   { mapX = i; }
-    public void mapY(int i)   { mapY = i; }
-
     public YearDisplaySprite(MainUI p)  { parent = p; }
 
     @Override
@@ -38,8 +33,8 @@ public class YearDisplaySprite extends MapSprite {
             return false;
         hovering = x >= mapX
                     && x <= mapX+buttonW
-                    && y >= mapY()-buttonH-scaled(5)
-                    && y <= mapY();
+                    && y >= mapY-buttonH-scaled(5)
+                    && y <= mapY;
         return hovering;
     }
     @Override
