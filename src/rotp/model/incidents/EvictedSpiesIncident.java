@@ -30,7 +30,7 @@ public class EvictedSpiesIncident extends DiplomaticIncident {
         empBreaker = e1.id;
         empMe = e2.id;
         severity = -10;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

@@ -33,7 +33,7 @@ public class GNNRankingNoticeCheck implements Base {
     public void trigger() {
         boolean showRanking = (galaxy().activeEmpires().size() > 1)
                         && !galaxy().council().inactive()
-                        && ((galaxy().currentYear() % 25) == 0);
+                        && ((galaxy().currentTurn() % 25) == 0);
         if (showRanking)
             showRanking();
     }

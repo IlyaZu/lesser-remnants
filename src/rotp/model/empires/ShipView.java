@@ -62,15 +62,15 @@ public class ShipView implements Base,Serializable {
     private final boolean[] spcKnown = new boolean[ShipDesign.maxSpecials()];
 
     // historical data
-    private int firstViewDate = 0;
-    private int lastViewDate = 0;
+    private int firstViewTurn = 0;
+    private int lastViewTurn = 0;
     private int totalKilled = 0;
     private int totalKills = 0;
 
     public Empire empire()                { return empire; }
     public ShipDesign design()            { return design; }
-    public int firstViewDate()            { return firstViewDate; }
-    public Integer lastViewDate()         { return lastViewDate; }
+    public int firstViewTurn()            { return firstViewTurn; }
+    public Integer lastViewTurn()         { return lastViewTurn; }
     public int totalKills()               { return totalKills; }
     public void addTotalKills(int i)      { totalKills += i; }
     public int totalKilled()              { return totalKilled; }
@@ -102,12 +102,12 @@ public class ShipView implements Base,Serializable {
     public boolean isPotentiallyArmed() { return armedFlag != UNARMED; }
 
     public void setViewDate() {
-        if (firstViewDate == 0)
-            firstViewDate = galaxy().currentYear();
-        lastViewDate = galaxy().currentYear();
+        if (firstViewTurn == 0)
+            firstViewTurn = galaxy().currentTurn();
+        lastViewTurn = galaxy().currentTurn();
     }
 
-    public static Comparator<ShipView> VIEW_DATE = (ShipView o1, ShipView o2) -> o2.lastViewDate().compareTo(o1.lastViewDate());
+    public static Comparator<ShipView> VIEW_DATE = (ShipView o1, ShipView o2) -> o2.lastViewTurn().compareTo(o1.lastViewTurn());
     public static Comparator<ShipView> VIEW_ACTIVE = new Comparator<ShipView>() {
         @Override
         public int compare(ShipView o1, ShipView o2) {
@@ -129,15 +129,15 @@ public class ShipView implements Base,Serializable {
     public boolean matches(Design d) { return design == d;  }
     // detect is for long-range scanning
     public void detect() {
-        lastViewDate = galaxy().currentYear();
+        lastViewTurn = galaxy().currentTurn();
         if (!detected)
-            firstViewDate = galaxy().currentYear();
+            firstViewTurn = galaxy().currentTurn();
 
         detected = true;
     }
     // encounter is for same orbit
     public void encounter() {
-        lastViewDate = galaxy().currentYear();
+        lastViewTurn = galaxy().currentTurn();
 
         if (encountered) return;
 
@@ -152,7 +152,7 @@ public class ShipView implements Base,Serializable {
     }
     // scanned is when battle scanned
     public void scan() {
-        lastViewDate = galaxy().currentYear();
+        lastViewTurn = galaxy().currentTurn();
         scanned = true;
 
         encounter();

@@ -51,7 +51,7 @@ public class BioweaponIncident extends DiplomaticIncident {
         empAttacker = a.id;
         empVictim = v.id;
         sysId = sys.id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
               
         severity = max(-30, -20*n.leader().bioweaponMod());
         duration = 50;

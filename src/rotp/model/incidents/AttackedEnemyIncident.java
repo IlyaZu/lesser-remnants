@@ -50,7 +50,7 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
         empEnemy = e2.id;
         empMe = e3.id;
         severity = max(-10, sev);
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     @Override
@@ -61,7 +61,7 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
     public String praiseMessageId() { return DialogueManager.PRAISE_ATTACKED_ENEMY; }
     @Override
     public String key() {
-        return concat(str(dateOccurred), ":AttackedEnemy:", str(empEnemy));
+        return concat(str(turnOccurred), ":AttackedEnemy:", str(empEnemy));
     }
     @Override
     public String decode(String s) {

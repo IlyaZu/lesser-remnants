@@ -57,7 +57,6 @@ public class UserPreferences {
     private static boolean playSounds = true;
     private static int musicVolume = 10;
     private static int soundVolume = 10;
-    private static boolean displayYear = true;
     private static boolean autoColonize = false;
     private static String autoBombardMode = AUTOBOMBARD_NO;
     private static String displayMode = WINDOW_MODE;
@@ -190,9 +189,7 @@ public class UserPreferences {
             backupTurns++;
         save();
     }
-    public static void toggleYearDisplay()    { displayYear = !displayYear; save(); }
-    public static boolean displayYear()       { return displayYear; }
-
+    
     
     public static void loadAndSave() {
         load();
@@ -232,7 +229,6 @@ public class UserPreferences {
             out.println(keyFormat("AUTOCOLONIZE")+ yesOrNo(autoColonize));
             out.println(keyFormat("AUTOBOMBARD")+autoBombardToSettingName(autoBombardMode));
             out.println(keyFormat("SENSITIVITY")+sensitivityToSettingName(sensitivityMode));
-            out.println(keyFormat("DISPLAY_YEAR")+ yesOrNo(displayYear));
             out.println(keyFormat("SCREEN_SIZE_PCT")+ screenSizePct());
             out.println(keyFormat("LANGUAGE")+ languageDir());
             return 0;
@@ -275,7 +271,6 @@ public class UserPreferences {
             case "AUTOCOLONIZE": autoColonize = yesOrNo(val); return;
             case "AUTOBOMBARD":  autoBombardMode = autoBombardFromSettingName(val); return;
             case "SENSITIVITY":  sensitivityMode = sensitivityFromSettingName(val); return;
-            case "DISPLAY_YEAR": displayYear = yesOrNo(val); return;
             case "SCREEN_SIZE_PCT": screenSizePct(Integer.valueOf(val)); return;
             case "LANGUAGE":     selectLanguage(val); return;
             default:

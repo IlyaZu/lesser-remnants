@@ -29,7 +29,7 @@ public class BreakTradeIncident extends DiplomaticIncident {
         empBreaker = e1.id;
         empMe = e2.id;
         severity = -5;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

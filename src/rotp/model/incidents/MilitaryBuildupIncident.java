@@ -29,7 +29,7 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 3;
         severity = max(-10, sev);
     }
@@ -41,7 +41,7 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_BUILDUP; }
     @Override
-    public String key()              { return concat(str(dateOccurred), ":MilitaryBuildup:", systemName()); }
+    public String key()              { return concat(str(turnOccurred), ":MilitaryBuildup:", systemName()); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

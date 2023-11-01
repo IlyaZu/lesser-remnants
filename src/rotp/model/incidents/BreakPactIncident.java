@@ -31,7 +31,7 @@ public class BreakPactIncident extends DiplomaticIncident {
         empMe = e2.id;
         spying = spy;
         severity = -15;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

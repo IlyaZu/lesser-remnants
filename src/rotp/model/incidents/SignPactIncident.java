@@ -30,7 +30,7 @@ public class SignPactIncident extends DiplomaticIncident {
         empYou = e2.id;
         severity = 5;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

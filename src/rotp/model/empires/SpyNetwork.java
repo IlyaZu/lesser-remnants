@@ -62,7 +62,7 @@ public final class SpyNetwork implements Base, Serializable {
     private int allocation = 0;
     private float allocationBC = 0;
     private Mission mission = Mission.HIDE;
-    private int lastSpyDate = -1;
+    private int lastSpyTurn = -1;
 
     private final FleetView fleetView  = new FleetView();
     private List<String> possibleTechs = new ArrayList<>();
@@ -96,7 +96,7 @@ public final class SpyNetwork implements Base, Serializable {
 
     public Empire owner()            { return view.owner(); }
     public Empire empire()           { return view.empire(); }
-    public int lastSpyDate()         { return lastSpyDate; }
+    public int lastSpyTurn()         { return lastSpyTurn; }
     public TechTree tech()           { return tech; }
     public List<ShipView> ships()    { return shipViews; }
     public void beginHide()          {  mission = Mission.HIDE; }
@@ -206,7 +206,7 @@ public final class SpyNetwork implements Base, Serializable {
         allocation(MAX_SPENDING_TICKS);
     }
     public int reportAge() {
-        return lastSpyDate < 0 ? -1 : galaxy().currentYear() - lastSpyDate;
+        return lastSpyTurn < 0 ? -1 : galaxy().currentTurn() - lastSpyTurn;
     }
     public String newSpiesExpected() {
         if (allocationCostPct() == 0)
@@ -246,7 +246,7 @@ public final class SpyNetwork implements Base, Serializable {
         
         // data automatically updates for allies
         if (view.embassy().alliance()) {
-            lastSpyDate = galaxy().currentYear();
+            lastSpyTurn = galaxy().currentTurn();
             view.refreshSystemSpyViews();
             updateTechList();
         }
@@ -276,7 +276,7 @@ public final class SpyNetwork implements Base, Serializable {
         if (activeSpies.size() >= MIN_SPIES_FOR_FLEET_VIEW)
             updateFleetView(empire());
 
-        lastSpyDate = galaxy().currentYear();
+        lastSpyTurn = galaxy().currentTurn();
         updateTechList();
 
         boolean spyConfessed = sendSpiesToInfiltrate();
@@ -633,7 +633,7 @@ public final class SpyNetwork implements Base, Serializable {
         return sv;
     }
     private void updateFleetView(Empire e) {
-        fleetView.date(galaxy().currentYear());
+        fleetView.turn(galaxy().currentTurn());
         fleetView.small(e.shipCount(ShipDesign.SMALL));
         fleetView.medium(e.shipCount(ShipDesign.MEDIUM));
         fleetView.large(e.shipCount(ShipDesign.LARGE));
@@ -641,9 +641,9 @@ public final class SpyNetwork implements Base, Serializable {
     }
     public class FleetView implements Serializable {
         private static final long serialVersionUID = 1L;
-        private int small, medium, large, huge, date;
-        public int date()         { return date; }
-        public void date(int i)   { date = i; }
+        private int small, medium, large, huge, turn;
+        public int turn()         { return turn; }
+        public void turn(int i)   { turn = i; }
         public int small()        { return small; }
         public void small(int i)  { small = i; }
         public int medium()       { return medium; }
@@ -652,7 +652,7 @@ public final class SpyNetwork implements Base, Serializable {
         public void large(int i)  { large = i; }
         public int huge()         { return huge; }
         public void huge(int i)   { huge = i; }
-        public boolean noReport() { return date == 0; }
-        public int reportAge()    { return galaxy().currentYear() - date; }
+        public boolean noReport() { return turn == 0; }
+        public int reportAge()    { return galaxy().currentTurn() - turn; }
     }
 }

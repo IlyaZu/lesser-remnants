@@ -29,7 +29,7 @@ public class DeclareWarIncident extends DiplomaticIncident {
         severity = -70;
         empAggressor = e1.id;
         empVictim = e2.id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

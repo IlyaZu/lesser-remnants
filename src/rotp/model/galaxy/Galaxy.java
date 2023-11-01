@@ -59,7 +59,6 @@ public class Galaxy implements Base, Serializable {
     private transient Map<String, List<String>> raceSystemNames = new HashMap<>();
     private transient Map<String, Integer> raceSystemCtr = new HashMap<>();
 
-    public int beginningYear()               { return player().race().startingYear; }
     public float currentTime()               { return currentTime; }
     public GalacticCouncil council()         { return council; }
     public RandomEvents events()       		 { return events; }
@@ -302,9 +301,6 @@ public class Galaxy implements Base, Serializable {
     public void validate() {
        for (Empire emp: empires())
             emp.validate();
-    }
-    public int currentYear() {
-        return beginningYear() + (int) currentTime;
     }
     public int numberTurns() { return (int) currentTime; }
     public int currentTurn() { return (int) currentTime+1; }

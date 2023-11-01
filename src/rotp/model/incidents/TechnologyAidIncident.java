@@ -51,7 +51,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         empMe = emp.id;
         techId = tId;
         addTech(emp, tId);
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     private List<String> techIds() {
@@ -85,7 +85,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
             return decode(text("INC_TECHNOLOGY_AID_DESC_MULT")); 
     }
     @Override
-    public String key()          { return "Technology Aid:"+dateOccurred; }
+    public String key()          { return "Technology Aid:"+turnOccurred; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

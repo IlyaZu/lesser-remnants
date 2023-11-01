@@ -44,14 +44,14 @@ public class AssassinationIncident extends DiplomaticIncident {
         empAssassin = ass.id;
         empVictim = vic.id;
         severity = -50;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 20;
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
         empAssassin = ass.id;
         empVictim = vic.id;
         severity = 50;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

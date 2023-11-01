@@ -550,7 +550,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
                 status = text("RACES_MILITARY_ACTIVE");
         }
         else {
-            int age = galaxy().currentYear() - view.lastViewDate();
+            int age = galaxy().currentTurn() - view.lastViewTurn();
             if (age < 1) 
                 status = text("RACES_MILITARY_ACTIVE");
             else {

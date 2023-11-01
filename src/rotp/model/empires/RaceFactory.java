@@ -125,7 +125,6 @@ public enum RaceFactory implements Base {
 
         if (key.equalsIgnoreCase("key"))              { r.id = value; return; }
         if (key.equalsIgnoreCase("langKey"))          { r.langKey = value; return; }
-        if (key.equalsIgnoreCase("year"))             { r.startingYear = parseInt(value); return; }
         if (key.equalsIgnoreCase("homestarType"))     { r.homeworldStarType = value; return; }
         if (key.equalsIgnoreCase("homeworldType"))    { r.homeworldPlanetType = value; return; }
         if (key.equalsIgnoreCase("homeworldKey"))     { r.homeworldKey(parseInt(value)); return; }

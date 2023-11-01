@@ -32,7 +32,7 @@ public class SignBreakAllianceIncident extends DiplomaticIncident {
         empOther = t.id;
         severity = 0;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     @Override
@@ -41,7 +41,7 @@ public class SignBreakAllianceIncident extends DiplomaticIncident {
     public String key()      { return concat("BreakAlliance:", str(empOther)); }
     @Override
     public String decode(String s) {
-        String s1 = s.replace("[year]", str(dateOccurred));
+        String s1 = s.replace("[year]", str(turnOccurred));
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");
         s1 = galaxy().empire(empOther).replaceTokens(s1, "other");

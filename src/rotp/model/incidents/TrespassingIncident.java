@@ -32,7 +32,7 @@ public class TrespassingIncident extends DiplomaticIncident {
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 2;
 
         float multiplier = -1.0f;
@@ -59,7 +59,7 @@ public class TrespassingIncident extends DiplomaticIncident {
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String key() {
-        return concat(systemName(), ":", str(dateOccurred));
+        return concat(systemName(), ":", str(turnOccurred));
     }
     @Override
     public String decode(String s) {

@@ -17,15 +17,12 @@ package rotp.ui.sprites;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import rotp.ui.UserPreferences;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
-import rotp.ui.main.SystemPanel;
 
 public class YearDisplaySprite extends MapSprite {
     private int mapX, mapY, buttonW, buttonH;
     private int minMapX, maxButtonW;
-    private int lastMouseX, lastMouseY;
     private final MainUI parent;
 
     protected int mapX()      { return mapX; }
@@ -39,8 +36,6 @@ public class YearDisplaySprite extends MapSprite {
     public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
         if (session().currentAlert() != null)
             return false;
-        lastMouseX = x;
-        lastMouseY = y;
         hovering = x >= mapX
                     && x <= mapX+buttonW
                     && y >= mapY()-buttonH-scaled(5)
@@ -63,12 +58,7 @@ public class YearDisplaySprite extends MapSprite {
         buttonW = sw+s5+s5;
         buttonH = scaled(20);
         mapY = map.getHeight()-scaled(75);
-        Color textC;
-
-        if (isSelectableAt(map, lastMouseX, lastMouseY))
-            textC = SystemPanel.yellowText;
-        else
-            textC = Color.gray;
+        Color textC = Color.gray;
 
         drawShadowedString(g, s, 2, mapX, mapY-s5, Color.black, textC);
     }
@@ -76,13 +66,9 @@ public class YearDisplaySprite extends MapSprite {
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
         if (session().currentAlert() != null)
             return;
-        if (click)
-            softClick();
         minMapX = min(mapX, minMapX);
         maxButtonW = max(buttonW, maxButtonW);
         hovering = true;
-
-        UserPreferences.toggleYearDisplay();
     }
     @Override
     public void repaint(GalaxyMapPanel map)     {

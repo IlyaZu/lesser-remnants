@@ -49,7 +49,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageFactoriesIncident(otherView, m));
     }
     private SabotageFactoriesIncident(EmpireView ev, SabotageMission m) {
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = ev.empire().leader().isIndustrialist() ? 20 : 10;
 
         empVictim = ev.owner().id;
@@ -83,7 +83,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
-    public String key()              { return str(dateOccurred)+":Sabotage:"+sysId; }
+    public String key()              { return str(turnOccurred)+":Sabotage:"+sysId; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

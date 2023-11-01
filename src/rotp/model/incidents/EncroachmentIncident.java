@@ -32,7 +32,7 @@ public class EncroachmentIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         sysId = sys.id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         severity = max(-10, sev);
         duration = 3;
         if (ev.owner().leader().isXenophobic())
@@ -49,7 +49,7 @@ public class EncroachmentIncident extends DiplomaticIncident {
     public String warningMessageId() { return DialogueManager.WARNING_ENCROACHING; }
     @Override
     public String key() {
-        return concat("EmpireGrowth:", str(dateOccurred));
+        return concat("EmpireGrowth:", str(turnOccurred));
     }
     @Override
     public String decode(String s) {

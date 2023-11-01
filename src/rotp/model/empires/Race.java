@@ -120,7 +120,6 @@ public class Race implements Base, Serializable {
     private final HashMap<String, Integer> raceRelations = new HashMap<>();
     private LabelManager labels;
 
-    public int startingYear;
     public int speciesType;
     public String homeworldStarType;
     public String homeworldPlanetType;

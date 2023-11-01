@@ -48,7 +48,7 @@ public class SabotageBasesIncident extends DiplomaticIncident {
     }
     private SabotageBasesIncident(EmpireView ev, SabotageMission m) {
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = ev.empire().leader().isPacifist() ? 20 : 10;
 
         empVictim = ev.owner().id;
@@ -84,7 +84,7 @@ public class SabotageBasesIncident extends DiplomaticIncident {
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
-    public String key()         { return  str(dateOccurred)+":Sabotage:"+sysId; }
+    public String key()         { return  str(turnOccurred)+":Sabotage:"+sysId; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

@@ -295,7 +295,7 @@ public final class GameSession implements Base, Serializable {
                 NoticeMessage.setStatus(turnTitle, text("TURN_SAVING"));
                 FlightPathSprite.clearWorkingPaths();
                 RotPUI.instance().mainUI().saveMapState();
-                log("Next Turn - BEGIN: ", str(galaxy.currentYear()));
+                log("Next Turn - BEGIN: ", str(galaxy.currentTurn()));
                 log("Autosaving pre-turn");
                 instance.saveRecentSession(false);
                 
@@ -392,7 +392,7 @@ public final class GameSession implements Base, Serializable {
                     } catch (InterruptedException e) { }
                 }
                 RotPUI.instance().repaint();
-                log("Next Turn - END: ", str(galaxy.currentYear()));
+                log("Next Turn - END: ", str(galaxy.currentTurn()));
             }
             catch(Exception e) {
                 err("Unexpected error during Next Turn:", e.toString());
@@ -677,10 +677,7 @@ public final class GameSession implements Base, Serializable {
         }
     }
     private String nextTurnTitle() {
-        if (UserPreferences.displayYear())
-            return text("MAIN_ADVANCING_YEAR", galaxy().currentYear()+1);
-        else
-            return text("MAIN_ADVANCING_TURN", galaxy().currentTurn()+1);
+    	return text("MAIN_ADVANCING_YEAR", galaxy().currentTurn()+1);
     }
     public void saveSession(String filename, boolean backup) throws Exception {
         log("Saving game as file: ", filename, "  backup: "+backup);
