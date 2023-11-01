@@ -30,7 +30,7 @@ public class KillGuardianIncident extends DiplomaticIncident {
         monsterKey = key;
         severity = 100;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 50;
     }
     @Override

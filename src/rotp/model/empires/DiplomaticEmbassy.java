@@ -68,7 +68,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private transient List<DiplomaticIncident> newIncidents = new ArrayList<>();
 
     private boolean contact = false;
-    private int contactYear = 0;
+    private int contactTurn = 0;
     private float treatyDate = -1;
     private boolean warFooting = false;
     // using 'casus belli' as variable name since using that word means I made a smart AI
@@ -264,7 +264,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     
     public boolean tooManyRequests()        { return requestCount > currentMaxRequests; }
     public float otherRelations()          { return otherEmbassy().relations(); }
-    public int contactAge()                 { return (galaxy().currentYear() - contactYear); }
+    public int contactAge()                 { return (galaxy().currentTurn() - contactTurn); }
     public DiplomaticEmbassy otherEmbassy() { return view.otherView().embassy(); }
     public boolean tradePraised()           { return tradePraised; }
     public void tradePraised(boolean b)     { tradePraised = b; }
@@ -596,7 +596,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void setContact() {
         if (!contact()) {
-            contactYear = galaxy().currentYear();
+            contactTurn = galaxy().currentTurn();
             contact(true);
         }
     }
@@ -654,7 +654,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
         // make special list of incidents added in this turn
         for (DiplomaticIncident ev: incidents.values()) {
-            if ((galaxy().currentYear() - ev.dateOccurred()) < 1)
+            if ((galaxy().currentTurn() - ev.turnOccurred()) < 1)
                 newIncidents().add(ev);
         }
     }

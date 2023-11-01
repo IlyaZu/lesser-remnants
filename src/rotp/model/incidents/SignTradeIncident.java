@@ -32,7 +32,7 @@ public class SignTradeIncident extends DiplomaticIncident {
         amount = amt;
         severity = 5;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

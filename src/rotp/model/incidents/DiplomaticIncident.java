@@ -24,7 +24,7 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     public float severity;
     public int duration;
-    public int dateOccurred;
+    public int turnOccurred;
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered
     public abstract String key();
@@ -36,19 +36,18 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String breakTreatyId()        { return ""; }
     public String declareWarId()         { return ""; }
     public int duration()	 	 { return duration; }
-    public Integer dateOccurred()	 { return dateOccurred; }
-    public Integer turnOccurred()	 { return dateOccurred - galaxy().beginningYear(); }
+    public Integer turnOccurred()	 { return turnOccurred; }
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
     @Override
-    public String toString() {  return concat(str(dateOccurred), ": ", title(), " = ", fmt(currentSeverity(),1)); }
+    public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(currentSeverity(),1)); }
     public boolean moreSevere(DiplomaticIncident inc) {
         if  (inc == null)
             return true;
         return Math.abs(currentSeverity()) > Math.abs(inc.currentSeverity());
     }
 
-    public String decode(String s)       { return s.replace("[year]", str(dateOccurred)); }
+    public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
     public String displayOrder() { return TurnNotification.DIPLOMATIC_MESSAGE; }
     public float currentSeverity()	     { return severity*remainingTime()/duration(); }
 
@@ -63,7 +62,7 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public boolean triggersWar()         { return !declareWarId().isEmpty(); }
 
     private float remainingTime() {
-            return Math.max(0, (dateOccurred() + duration() - galaxy().currentYear()));
+            return Math.max(0, (turnOccurred() + duration() - galaxy().currentTurn()));
     }
-    public static Comparator<DiplomaticIncident> DATE = (DiplomaticIncident o1, DiplomaticIncident o2) -> o2.dateOccurred().compareTo(o1.dateOccurred());
+    public static Comparator<DiplomaticIncident> DATE = (DiplomaticIncident o1, DiplomaticIncident o2) -> o2.turnOccurred().compareTo(o1.turnOccurred());
 }

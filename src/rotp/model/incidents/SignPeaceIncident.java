@@ -21,7 +21,7 @@ public class SignPeaceIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empMe;
     final int empYou;
-    private final int endDate;
+    private final int endTurn;
     public static SignPeaceIncident create(Empire e1, Empire e2, int dur) {
         SignPeaceIncident inc = new SignPeaceIncident(e1, e2, dur);
         return inc;
@@ -31,8 +31,8 @@ public class SignPeaceIncident extends DiplomaticIncident {
         empYou = e2.id;
         severity = 20;
 
-        dateOccurred = galaxy().currentYear();
-        endDate = dateOccurred+dur;
+        turnOccurred = galaxy().currentTurn();
+        endTurn = turnOccurred+dur;
         duration = dur;
     }
     @Override
@@ -46,7 +46,7 @@ public class SignPeaceIncident extends DiplomaticIncident {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");
-        s1 = s1.replace("[endYear]", str(endDate));
+        s1 = s1.replace("[endYear]", str(endTurn));
         return s1;
     }
 }

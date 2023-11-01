@@ -60,7 +60,7 @@ public class SpyConfessionIncident extends DiplomaticIncident {
         if (ev.owner().diplomatAI().leaderHatesAllSpies())
             duration *= 2;
         
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public boolean isSpying()           { return (missionType > 0) || galaxy().empire(empVictim).diplomatAI().leaderHatesAllSpies() ; }
@@ -96,7 +96,7 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
     public String key() {
-        return concat(str(dateOccurred), ":SpyConfession");
+        return concat(str(turnOccurred), ":SpyConfession");
     }
     @Override
     public String decode(String s) {

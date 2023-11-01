@@ -246,7 +246,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
     }
     private String gameOverText() {
         Empire pl = player();
-        String year = str(galaxy().currentYear());
+        String year = str(galaxy().currentTurn());
         String pName = pl.leader().name();
         String pRace = pl.raceName();
         String pEmpire = pl.name();

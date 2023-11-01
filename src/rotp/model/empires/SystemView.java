@@ -59,8 +59,8 @@ public class SystemView implements IMappedObject, Base, Serializable {
     private StarSystem relocationSystem;
     private float hostilityLevel = 0;
     private int locationSecurity = INNER_SYSTEM;
-    private float scoutTime = 0;
-    private float spyTime = 0;
+    private int scoutTurn = 0;
+    private int spyTurn = 0;
 
     // viewed variables
     private Empire vEmpire;
@@ -113,12 +113,8 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public Planet planet()                   { return vPlanet; }
     public int locationSecurity()            { return locationSecurity; }
     public float hostilityLevel()            { return hostilityLevel; }
-    public float spyTime()                   { return spyTime; }
-    public float scoutTime()                 { return scoutTime; }
     public boolean isGuarded()               { return vGuarded; }
     public StarSystem rallySystem()          { return relocationSystem; }
-    public float spyTurn()                   { return spyTime - galaxy().beginningYear(); }
-    public float scoutTurn()                 { return scoutTime - galaxy().beginningYear(); }
     public void rallySystem(StarSystem sys)  {
         relocationSystem = (sys == system()) ? null : sys;
         system().rallySprite().clear();
@@ -218,8 +214,8 @@ public class SystemView implements IMappedObject, Base, Serializable {
                     system().addEvent(new SystemScoutedEvent(player().id));
             }
         }
-        scoutTime = galaxy().currentYear();
-        spyTime = galaxy().currentYear();
+        scoutTurn = galaxy().currentTurn();
+        spyTurn = galaxy().currentTurn();
         setName();
         setEmpire();
         setPlanetData();
@@ -236,7 +232,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
             session().addSystemScoutedByAllies(system());
         }
 
-        scoutTime = galaxy().currentYear();
+        scoutTurn = galaxy().currentTurn();
         setName();
         setEmpire();
         setPlanetData();
@@ -249,7 +245,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
                 session().addSystemScoutedByAstronomers(system());
         }
 
-        scoutTime = galaxy().currentYear();
+        scoutTurn = galaxy().currentTurn();
         setName();
         setEmpire();
         setPlanetData();
@@ -263,7 +259,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
                 session().addSystemScouted(system());
         }
 
-        scoutTime = galaxy().currentYear();
+        scoutTurn = galaxy().currentTurn();
         setName();
         setEmpire();
         setPlanetData();
@@ -273,14 +269,14 @@ public class SystemView implements IMappedObject, Base, Serializable {
         setName();
         setEmpire();
         setColonyData();
-        spyTime = galaxy().currentYear();
+        spyTurn = galaxy().currentTurn();
     }
     public void setEmpire() {
         // if the empire has changed, reset the spy time
         Empire prevEmpire = vEmpire;
         vEmpire = system().empire();
         if (vEmpire != prevEmpire)
-            spyTime = 0;
+            spyTurn = 0;
         
         if (!owner().aggressiveWith(id(vEmpire)))
             clearHostility();
@@ -416,11 +412,10 @@ public class SystemView implements IMappedObject, Base, Serializable {
         return true;
     }
 
-    public boolean scouted()                 { return (owner() == empire()) || (scoutTime() > 0); }
-    public boolean spied()                   { return (owner() == empire()) || (spyTime() > 0); }
-    public int lastReportYear()              { return (owner() == empire()) ? galaxy().currentYear() : (int) spyTime(); }
-    public int lastReportTurn()              { return (int) max(spyTurn(), scoutTurn()); }
-    public int spyReportAge()                { return galaxy().currentYear() - lastReportYear(); }
+    public boolean scouted()                 { return (owner() == empire()) || (scoutTurn > 0); }
+    public boolean spied()                   { return (owner() == empire()) || (spyTurn > 0); }
+    public int lastReportTurn()              { return (int) max(spyTurn, scoutTurn); }
+    public int spyReportAge()                { return galaxy().currentTurn() - lastReportTurn(); }
 
     public float distanceTo(SystemView v)   { return system().distanceTo(v.system()); }
 

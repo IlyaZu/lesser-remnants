@@ -33,7 +33,7 @@ public class GenocideIncident extends DiplomaticIncident {
         empAttacker = att.id;
         empVictim = vic.id;
         severity = -50;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = obs.diplomatAI().leaderGenocideDurationMod();
         
         if (att.alliedWith(obs.id) && obs.atWarWith(vic.id)) 

@@ -35,7 +35,7 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
         given = give.id();
         severity = 5;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 3;
     }
     @Override

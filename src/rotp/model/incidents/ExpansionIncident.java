@@ -32,7 +32,7 @@ public class ExpansionIncident extends DiplomaticIncident {
         numSystems = num;
         maxSystems = max;
         empYou = ev.empire().id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 1;
 
         float multiplier = 1.0f;
@@ -67,7 +67,7 @@ public class ExpansionIncident extends DiplomaticIncident {
     public String warningMessageId() { return  galaxy().empire(empYou).newSystems().isEmpty() ? "" :DialogueManager.WARNING_EXPANSION; }
     @Override
     public String key() {
-        return concat("EmpireGrowth:", str(dateOccurred));
+        return concat("EmpireGrowth:", str(turnOccurred));
     }
     @Override
     public String decode(String s) {

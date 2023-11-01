@@ -31,7 +31,7 @@ public class BreakAllianceIncident extends DiplomaticIncident {
         empMe = e2.id;
         spying = spy;
         severity = -30;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

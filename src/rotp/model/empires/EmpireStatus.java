@@ -97,9 +97,9 @@ public class EmpireStatus implements Base, Serializable {
         if (empire == viewer)
             return galaxy().numberTurns();
 
-        int lastSpyDate = viewer.viewForEmpire(empire).spies().lastSpyDate();
+        int lastSpyTurn = viewer.viewForEmpire(empire).spies().lastSpyTurn();
 
-        return lastSpyDate < 0 ? -1 : lastSpyDate - galaxy().beginningYear();
+        return lastSpyTurn < 0 ? -1 : lastSpyTurn;
     }
     private void growLists() {
         fleetStrength = larger(fleetStrength);

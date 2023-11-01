@@ -32,7 +32,7 @@ public class DemandTributeIncident extends DiplomaticIncident {
         demanding = b;
         severity = demanding ? 0 : 10;
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 3;
     }
     @Override
@@ -41,7 +41,7 @@ public class DemandTributeIncident extends DiplomaticIncident {
     public String key()                 { return "Demand Tribute"; }
     @Override
     public String decode(String s) {
-        String s1 = s.replace("[year]", str(dateOccurred));
+        String s1 = s.replace("[year]", str(turnOccurred));
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");
         return s1;

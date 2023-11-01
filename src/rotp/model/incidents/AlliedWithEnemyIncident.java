@@ -28,7 +28,7 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 1;
         severity = -10;
     }

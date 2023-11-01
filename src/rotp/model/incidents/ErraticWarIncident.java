@@ -30,7 +30,7 @@ public class ErraticWarIncident extends DiplomaticIncident {
         severity = -50;
         empAggressor = e1.id;
         empVictim = e2.id;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override

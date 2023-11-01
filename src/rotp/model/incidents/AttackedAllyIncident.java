@@ -44,7 +44,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
         empAlly = e2.id;
         empMe = e3.id;
         severity = max(-20, sev);
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     @Override
@@ -55,7 +55,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     public String warningMessageId() { return DialogueManager.WARNING_ATTACKED_ALLY; }
     @Override
     public String key() {
-        return concat(str(dateOccurred), ":AttackedAlly:", str(empAlly));
+        return concat(str(turnOccurred), ":AttackedAlly:", str(empAlly));
     }
     @Override
     public String decode(String s) {

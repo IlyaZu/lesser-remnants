@@ -62,7 +62,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         empEnemy = enemy.id;
         setAmount(emp, amt);
         techId = null;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     private void setAmount(Empire emp, int amt) {
@@ -83,7 +83,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         float pct = rpValue / enemy.totalPlanetaryProduction();
         float sev = min(10,15*pct);
         severity = -sev;
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 5;
     }
     @Override

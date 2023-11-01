@@ -41,7 +41,7 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         empCandidate = ev.owner().id;
         empRival = rival.id;
         severity = calculateSeverity();
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     @Override
@@ -95,7 +95,7 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     public String warningMessageId() {  return severity < 0 ? DialogueManager.WARNING_COUNCIL_VOTE : ""; }
     @Override
     public String key() {
-        return concat(str(dateOccurred), ":CouncilVote");
+        return concat(str(turnOccurred), ":CouncilVote");
     }
     @Override
     public String decode(String s) {

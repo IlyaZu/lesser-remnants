@@ -484,10 +484,7 @@ public interface Base {
         return concat(str(year), ".", monthName[month], ".", str(++day));
     }
     public default String displayYearOrTurn() {
-        if (UserPreferences.displayYear())
-            return text("MAIN_YEAR_DISPLAY", galaxy().currentYear());
-        else
-            return text("MAIN_TURN_DISPLAY", galaxy().currentTurn());
+    	return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
     }
     public default boolean equal(float d1, float d2, float precision) {
         return Math.abs(d1-d2) < precision;

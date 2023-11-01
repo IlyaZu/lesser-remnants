@@ -40,7 +40,7 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
         popLost = r.popDestroyed();
         severity = -20 + max(-40, -popLost);
 
-        dateOccurred = galaxy().currentYear();
+        turnOccurred = galaxy().currentTurn();
         duration = 10;
     }
     private String systemName() { return player().sv.name(sysId); }
@@ -56,7 +56,7 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String key() {
-        return concat(systemName(), ":", str(dateOccurred));
+        return concat(systemName(), ":", str(turnOccurred));
     }
     @Override
     public String decode(String s) {

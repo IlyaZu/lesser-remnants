@@ -120,11 +120,11 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         defenderEmp = colony.empire();
         sysName = player().sv.name(colony.starSystem().id);
         if (defenderEmp == attackerEmp) {
-            title = text("INVASION_BATTLE_REBELS", str(galaxy().currentYear()), sysName);
+            title = text("INVASION_BATTLE_REBELS", str(galaxy().currentTurn()), sysName);
             title = attackerEmp.replaceTokens(title, "attacker");
         }
         else {
-            title = text("INVASION_BATTLE", str(galaxy().currentYear()), sysName);
+            title = text("INVASION_BATTLE", str(galaxy().currentTurn()), sysName);
             title = attackerEmp.replaceTokens(title, "attacker");
             title = defenderEmp.replaceTokens(title, "defender");
         }
