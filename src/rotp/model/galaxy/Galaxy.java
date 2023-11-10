@@ -149,13 +149,7 @@ public class Galaxy implements Base, Serializable {
             if (existingNeb.contains(neb.centerX(), neb.centerY()))
                 return false;
         }
-            
-        /*
-        for (EmpireSystem sys : shape.empSystems) {
-            if (sys.inNebula(neb))
-                return false;
-        }
-        */
+
         nebulas.add(neb);
         return true;
     }
