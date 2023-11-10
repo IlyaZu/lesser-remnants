@@ -37,9 +37,8 @@ import rotp.util.Base;
 public class Galaxy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     public static Galaxy current()   { return GameSession.instance().galaxy(); }
-    private static final float TIME_PER_TURN = 1;
 
-    private float currentTime = 0;
+    private int currentTurn = 0;
     private final GalacticCouncil council = new GalacticCouncil();
     private final RandomEvents events = new RandomEvents();
     public final Ships ships = new Ships();
@@ -59,7 +58,6 @@ public class Galaxy implements Base, Serializable {
     private transient Map<String, List<String>> raceSystemNames = new HashMap<>();
     private transient Map<String, Integer> raceSystemCtr = new HashMap<>();
 
-    public float currentTime()               { return currentTime; }
     public GalacticCouncil council()         { return council; }
     public RandomEvents events()       		 { return events; }
     public List<Nebula> nebulas()            { return nebulas; }
@@ -111,7 +109,7 @@ public class Galaxy implements Base, Serializable {
         starSystems = new StarSystem[sh.totalStarSystems()];
         empires = new Empire[options().selectedNumberOpponents()+1];
     }
-    public void advanceTime() { currentTime += TIME_PER_TURN; }
+    public void advanceTime() { currentTurn++; }
     public boolean addNebula(GalaxyShape shape, float nebSize) {
         // each nebula creates a buffered image for display
         // after we have created 5 nebulas, start cloning
@@ -296,8 +294,8 @@ public class Galaxy implements Base, Serializable {
        for (Empire emp: empires())
             emp.validate();
     }
-    public int numberTurns() { return (int) currentTime; }
-    public int currentTurn() { return (int) currentTime+1; }
+    public int numberTurns() { return (int) currentTurn; }
+    public int currentTurn() { return (int) currentTurn+1; }
 
     public Empire empire(int i)     {
         return (i < 0) || (i >= empires.length) ? null : empires[i];
@@ -328,7 +326,7 @@ public class Galaxy implements Base, Serializable {
         List<Transport> incoming = new ArrayList<>(transports);
         Collections.sort(incoming, Ship.ARRIVAL_TIME);
         for (Transport sh: incoming) {
-            if (sh.arrivalTime() > currentTime)
+            if (sh.arrivalTime() > currentTurn)
                 break;
             arrivingTransports.add(sh);
             sh.arrive();
@@ -339,7 +337,7 @@ public class Galaxy implements Base, Serializable {
         List<ShipFleet> incomingFleets = ships.inTransitFleets();
         Collections.sort(incomingFleets, Ship.ARRIVAL_TIME);
         for (ShipFleet sh: incomingFleets) {
-            if (sh.arrivalTime() > currentTime)
+            if (sh.arrivalTime() > currentTurn)
                 break;
             galaxy().ships.arriveFleet(sh);
         }

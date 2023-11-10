@@ -1180,7 +1180,7 @@ public class AIDiplomat implements Base, Diplomat {
         // check for a war incident if we are not at peace, or the start
         // date of our peace treaty precedes the current time
         if (!view.embassy().atPeace()
-        || (view.embassy().treatyDate() < galaxy().currentTime())) {
+        || (view.embassy().treatyTurn() < galaxy().currentTurn())) {
             for (DiplomaticIncident ev: view.embassy().newIncidents()) {
                 if (!ev.declareWarId().isEmpty()) {
                     if (ev.triggersWar()) {

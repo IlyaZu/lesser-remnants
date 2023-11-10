@@ -70,7 +70,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
     private boolean contact = false;
     private int contactTurn = 0;
-    private float treatyDate = -1;
+    private int treatyTurn = -1;
     private boolean warFooting = false;
     // using 'casus belli' as variable name since using that word means I made a smart AI
     private String casusBelli;
@@ -99,7 +99,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
     public Empire empire()                               { return view.empire(); }
     public Empire owner()                                { return view.owner(); }
-    public float treatyDate()                            { return treatyDate; }
+    public int treatyTurn()                            { return treatyTurn; }
     public DiplomaticTreaty treaty()                     { return treaty; }
     public String treatyStatus()                         { return treaty.status(owner()); }
     public Collection<DiplomaticIncident> allIncidents() { return incidents.values(); }
@@ -680,12 +680,12 @@ public class DiplomaticEmbassy implements Base, Serializable {
             return 0;
     }
     private void beginTreaty() {
-        treatyDate = galaxy().currentTime();
-        otherEmbassy().treatyDate = galaxy().currentTime();
+        treatyTurn = galaxy().currentTurn();
+        otherEmbassy().treatyTurn = galaxy().currentTurn();
     }
     private void endTreaty() {
-        treatyDate = -1;
-        otherEmbassy().treatyDate = -1;
+        treatyTurn = -1;
+        otherEmbassy().treatyTurn = -1;
         resetPactTimer();
         resetAllianceTimer();
         otherEmbassy().resetPactTimer();
