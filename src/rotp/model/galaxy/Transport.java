@@ -49,7 +49,7 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     private float combatSpeed;
     private float combatTransportPct;
     private float combatAdj = 0;
-    private float launchTime = NOT_LAUNCHED;
+    private int launchTurn = NOT_LAUNCHED;
     private float travelSpeed = 0;
     private float arrivalTime = Float.MAX_VALUE;
 
@@ -120,7 +120,7 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     public float hitPoints()          { return hitPoints; }
     public float combatTransportPct() { return combatTransportPct; }
     public float combatAdj()          { return combatAdj; }
-    public float launchTime()         { return launchTime; }
+    public int launchTurn()         { return launchTurn; }
     public Empire targetCiv()          { return targetEmp; }
     public void travelSpeed(float d)  { travelSpeed = d; }
 
@@ -156,9 +156,9 @@ public class Transport implements Base, Ship, Sprite, Serializable {
         return from.y() + (p*(dest.y() - from.y()));
     }
     private float travelPct() {
-        return (galaxy().currentTime()-launchTime) / (arrivalTime-launchTime);
+        return (galaxy().currentTurn()-launchTurn) / (arrivalTime-launchTurn);
     }
-    public boolean launched()       { return launchTime > NOT_LAUNCHED; }
+    public boolean launched()       { return launchTurn > NOT_LAUNCHED; }
     @Override
     public boolean deployed()       { return launched(); }
     @Override
@@ -184,7 +184,7 @@ public class Transport implements Base, Ship, Sprite, Serializable {
         // one last sanity check on size
         size = min(size, (int) Math.ceil(from.colony().population()));
         originalSize = size;
-        launchTime = gal.currentTime();
+        launchTurn = gal.currentTurn();
         targetEmp = dest.empire();
         speed = empire.tech().transportTravelSpeed();
         combatSpeed = empire.tech().transportCombatSpeed();
@@ -252,14 +252,14 @@ public class Transport implements Base, Ship, Sprite, Serializable {
         }
         return normalTime;
     }
-    public int travelTurnsRemaining()     { return !inTransit() ? 0 : (int)Math.ceil(arrivalTime-galaxy().currentTime()); }
+    public int travelTurnsRemaining()     { return !inTransit() ? 0 : (int)Math.ceil(arrivalTime-galaxy().currentTurn()); }
     public void setArrivalTime() {
         // direct time is if we go straight there at empire's tech transport speed
         float directTime = travelTime(dest);
         // set time is if we have travelSpeed alrady set, by synching transports
         float setTime = travelSpeed > 0 ? distanceTo(dest)/travelSpeed : directTime;
         // take the worst time
-        arrivalTime = galaxy().currentTime() + max(setTime, directTime);
+        arrivalTime = galaxy().currentTurn() + max(setTime, directTime);
     }
     public boolean  changeDestination(StarSystem to) {
         if (inTransit()

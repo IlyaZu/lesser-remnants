@@ -51,7 +51,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
 
     private boolean retreating = false;
     private float fromX, fromY, destX, destY;
-    private float launchTime = NOT_LAUNCHED;
+    private int launchTurn = NOT_LAUNCHED;
     private float arrivalTime = Float.MAX_VALUE;
 
     private transient FleetOrders orders;
@@ -117,10 +117,10 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     @Override
     public boolean isRallied()          { return rallySysId != StarSystem.NULL_ID; }
     public boolean isRalliedThisTurn()  {
-        return isRallied() && (launchTime == galaxy().currentTime()); 
+        return isRallied() && (launchTurn == galaxy().currentTurn()); 
     }
     public boolean isRetreatingThisTurn() {
-        return retreating() && (launchTime == galaxy().currentTime()); 
+        return retreating() && (launchTurn == galaxy().currentTurn()); 
     }
     public boolean hasDestination()     { return destSysId != StarSystem.NULL_ID; }
     
@@ -198,7 +198,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         destX = f.destX;
         destY = f.destY;
         status = f.status;
-        launchTime = f.launchTime;
+        launchTurn = f.launchTurn;
         
         reloadBombs();
     }
@@ -266,11 +266,11 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         return fromY + (p*(destY - fromY));
     }
     private float travelPct() {
-        float currTime = galaxy().currentTime();
-        if ((launchTime == NOT_LAUNCHED) || (launchTime == currTime))
+        float currTurn = galaxy().currentTurn();
+        if ((launchTurn == NOT_LAUNCHED) || (launchTurn == currTurn))
             return 0;
         else 
-            return (currTime-launchTime) / (arrivalTime-launchTime);
+            return (currTurn-launchTurn) / (arrivalTime-launchTurn);
     }
     public void launch() {
         StarSystem sys = system();
@@ -279,7 +279,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public void launch(float x, float y)  {
         fromX = x;
         fromY = y;
-        launchTime = galaxy().currentTime();
+        launchTurn = galaxy().currentTurn();
         setArrivalTime();
         makeInTransit();
     }
@@ -291,7 +291,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         
         destSysId = StarSystem.NULL_ID;
         rallySysId = StarSystem.NULL_ID;
-        launchTime = NOT_LAUNCHED;
+        launchTurn = NOT_LAUNCHED;
         makeOrbiting();
         if (scan)
             empire().sv.view(sys.id).refreshSystemEntryScan();
@@ -299,7 +299,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public boolean inOrbit()        { return isOrbiting(); }
     @Override
     public boolean deployed()       { return isDeployed(); }
-    public boolean launched()       { return launchTime > NOT_LAUNCHED; }
+    public boolean launched()       { return launchTurn > NOT_LAUNCHED; }
     public boolean canUndeploy()    { 
         if (isRalliedThisTurn())
             return true;
@@ -518,10 +518,10 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             return (d == null) || !d.active() ? false : num[d.id()] > 0;
     }
     public void setArrivalTime() {
-        arrivalTime = galaxy().currentTime();
+        arrivalTime = galaxy().currentTurn();
         if (hasDestination())
             arrivalTime += travelTime(destination());
-        if (arrivalTime <= galaxy().currentTime()) 
+        if (arrivalTime <= galaxy().currentTurn()) 
             log("Error: ship arrivalTime <= currentTime");
     }
     public FleetOrders newOrders() {
@@ -706,7 +706,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         return currTurns+nextTurns;
     }
     public int travelTurnsRemaining()     { 
-        return (int)Math.ceil(arrivalTime - galaxy().currentTime());
+        return (int)Math.ceil(arrivalTime - galaxy().currentTurn());
     }
     public int numScouts()   { return numShipType(ShipDesign.SCOUT); }
     public int numFighters() { return numShipType(ShipDesign.FIGHTER); }
