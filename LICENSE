@@ -18,8 +18,9 @@ All java files created by Ray Fowler:
 
 What this essentially means (read the license for full info):
  1. You are free to edit this source code and create a new game from it, with the following requirements:
-    - a. You must make all of your source code available with the game (just like this game)
+    - a. You must make all of your source code available with the game (just like this game).
     - b. You cannot protect your source code with a license more restrictive than this one.
+    - c. You must add a notice that you have modified the source code, if you have.
  
 
 The /src/rotp/model/planet/PlanetHeightMap.java file:
