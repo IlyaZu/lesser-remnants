@@ -25,16 +25,13 @@ public class DiplomaticTreaty implements Base, Serializable {
     int empire1;
     int empire2;
     String statusKey;
-    float date;
     public DiplomaticTreaty() { }
     public DiplomaticTreaty(Empire e1, Empire e2, String key) {
         empire1 = e1.id;
         empire2 = e2.id;
         statusKey = key;
-        date = galaxy().currentTime();
     }
     public String status(Empire e)        { return text(statusKey); }
-    public float date()                   { return date; }
     public void nextTurn(Empire emp)      { }
     public void noticeIncident(DiplomaticIncident inc) { }
     public boolean wantToBreak(Empire e)  { return false; }
