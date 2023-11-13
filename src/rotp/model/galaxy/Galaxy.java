@@ -295,7 +295,7 @@ public class Galaxy implements Base, Serializable {
             emp.validate();
     }
     public int numberTurns() { return (int) currentTurn; }
-    public int currentTurn() { return (int) currentTurn+1; }
+    public int currentTurn() { return (int) currentTurn; }
 
     public Empire empire(int i)     {
         return (i < 0) || (i >= empires.length) ? null : empires[i];
