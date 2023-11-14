@@ -185,7 +185,7 @@ public class MapOverlayColonizePrompt extends MapOverlay {
 
         // draw header info
         int leftW = boxW * 2/5;
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int x0 = boxX+((leftW-sw)/2);

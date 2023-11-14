@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -187,7 +188,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
 
         // draw header info
         int leftW = boxW * 2/5;
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int x0 = boxX+((leftW-sw)/2);
