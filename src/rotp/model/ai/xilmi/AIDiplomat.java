@@ -1816,11 +1816,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
         return factories / factoryCap;
     }
-    @Override
-    public int popLossToTriggerWar()
-    {
-        return 1;
-    }
     public void updatePersonality()
     {
         empire.leader().personality = XENOPHOBIC;
