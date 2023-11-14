@@ -484,7 +484,7 @@ public interface Base {
 
         return concat(str(year), ".", monthName[month], ".", str(++day));
     }
-    public default String displayYearOrTurn() {
+    public default String displayYear() {
     	return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
     }
     public default boolean equal(float d1, float d2, float precision) {

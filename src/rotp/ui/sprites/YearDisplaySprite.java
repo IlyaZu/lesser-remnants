@@ -45,7 +45,7 @@ public class YearDisplaySprite extends MapSprite {
         if (session().currentAlert() != null)
             return;
 
-        String s = displayYearOrTurn();
+        String s = displayYear();
         g.setFont(narrowFont(24));
 
         int s5 = scaled(5);

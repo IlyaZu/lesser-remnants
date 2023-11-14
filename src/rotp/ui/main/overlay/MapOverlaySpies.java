@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -195,7 +196,7 @@ public class MapOverlaySpies extends MapOverlay {
         threatenButton.setBounds(threatX,buttonY,threatW,buttonH);
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int x1a = x1+((leftW-sw)/2);

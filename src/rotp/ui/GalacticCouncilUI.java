@@ -168,7 +168,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1b, w1, h1b);
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = w1*4/9;
@@ -351,7 +351,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1b, w1, h1b);
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = w1/2;
@@ -517,7 +517,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = w1*4/9;
@@ -606,7 +606,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1b, w1, h1b);
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = w1*4/9;
@@ -705,7 +705,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1, w1, h1);
         
         // draw year/turn info
-        String yearStr = displayYearOrTurn();
+        String yearStr = displayYear();
         g.setFont(narrowFont(40));
         int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = w1/2;
