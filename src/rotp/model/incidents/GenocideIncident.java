@@ -35,7 +35,7 @@ public class GenocideIncident extends DiplomaticIncident {
         empVictim = vic.id;
         severity = -50;
         turnOccurred = galaxy().currentTurn();
-        duration = obs.diplomatAI().leaderGenocideDurationMod();
+        duration = obs.leader().genocideDurationMod();
         
         if (att.alliedWith(obs.id) && obs.atWarWith(vic.id)) 
             severity /= 2;
