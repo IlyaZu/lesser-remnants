@@ -52,7 +52,7 @@ public class ColonyAttackedIncident extends DiplomaticIncident {
     @Override
     public boolean isAttacking()        { return true; }
     @Override
-    public boolean triggersWar()        { return popLost >= galaxy().empire(empDefender).diplomatAI().popLossToTriggerWar(); }
+    public boolean triggersWar()        { return popLost > 0; }
     @Override
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
