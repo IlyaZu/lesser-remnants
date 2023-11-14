@@ -94,14 +94,7 @@ public class MapOverlayEspionageMission extends MapOverlay {
         if (o instanceof TechCategorySprite)
             techCategoryHoverButton = ((TechCategorySprite) o).categoryNum();
         if (prevHover != techCategoryHoverButton) {
-            Graphics2D g = (Graphics2D) parent.map().getGraphics();
             parent.map().repaint();
-            /*
-            if (prevHover >= 0)
-                paintTechCategoryButton(g, categorySprites[prevHover]);
-            if (techCategoryHoverButton >= 0)
-                paintTechCategoryButton(g, categorySprites[techCategoryHoverButton]);
-            */
         }
         return true;
     }

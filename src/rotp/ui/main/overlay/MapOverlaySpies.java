@@ -146,7 +146,6 @@ public class MapOverlaySpies extends MapOverlay {
         if (!drawSprites)
             return;
         
-        int w = ui.getWidth()-scaled(150);
         int h = ui.getHeight()-BasePanel.s30;
         Empire pl = player();
         
@@ -471,7 +470,6 @@ public class MapOverlaySpies extends MapOverlay {
             if (!parent.drawSprites())
                 return;
 
-            int s5 = BasePanel.s5;
             int cnr = scaled(fontSize/2);
             
             g.setFont(narrowFont(fontSize));
