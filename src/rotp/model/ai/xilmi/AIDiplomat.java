@@ -1672,18 +1672,6 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public float leaderRetreatRatio(Empire c){ 
         return empire.leader().retreatRatio(c);
-    } 
-    @Override
-    public int leaderGenocideDurationMod() {
-        switch(empire.leader().personality) {
-            case PACIFIST:   return 150;
-            case HONORABLE:  return 50;
-            case XENOPHOBIC: return 100;
-            case RUTHLESS:   return 10;
-            case AGGRESSIVE: return 0;
-            case ERRATIC:    return 25;
-            default:         return 25;
-        }
     }
     @Override
     public int leaderOathBreakerDuration() { 

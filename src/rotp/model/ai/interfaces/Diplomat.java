@@ -86,7 +86,6 @@ public interface Diplomat {
     DiplomaticReply receiveCounterOfferTech(Empire e, Tech counter, Tech wanted);
     float leaderExploitWeakerEmpiresRatio();
     float leaderRetreatRatio(Empire c);
-    int leaderGenocideDurationMod();
     int leaderOathBreakerDuration();
     float leaderDiplomacyAnnoyanceMod(EmpireView v);
     float leaderAcceptPactMod(Empire other);
