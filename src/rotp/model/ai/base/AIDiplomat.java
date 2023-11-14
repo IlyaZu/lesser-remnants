@@ -1788,10 +1788,6 @@ public class AIDiplomat implements Base, Diplomat {
         return empire.leader().retreatRatio(c);
     }
     @Override
-    public int leaderOathBreakerDuration() { 
-        return empire.leader().oathBreakerDuration();
-    } 
-    @Override
     public float leaderDiplomacyAnnoyanceMod(EmpireView v) { 
         return empire.leader().diplomacyAnnoyanceMod(v);
     }

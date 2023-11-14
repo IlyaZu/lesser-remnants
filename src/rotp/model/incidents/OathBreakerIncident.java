@@ -68,7 +68,7 @@ public class OathBreakerIncident extends DiplomaticIncident {
         turnOccurred = galaxy().currentTurn();
         notify = vic == obs;
         
-        duration = obs.diplomatAI().leaderOathBreakerDuration();
+        duration = obs.leader().oathBreakerDuration();
         
         // zero duration means zero severity. That's ruthless!
         if (duration == 0) {
