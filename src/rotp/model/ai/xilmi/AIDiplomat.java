@@ -413,7 +413,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
-            if (random(100) < leaderDiplomacyAnnoyanceMod(v)) {
+            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
                 //v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -532,7 +532,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         int bonus = requestor.diplomacyBonus();
         EmpireView v = empire.viewForEmpire(requestor);
-        if ((bonus+random(100)) < leaderDiplomacyAnnoyanceMod(v)) {
+        if ((bonus+random(100)) < empire.leader().diplomacyAnnoyanceMod(v)) {
             //v.embassy().withdrawAmbassador();
             return v.refuse(DialogueManager.DECLINE_ANNOYED);
         }
@@ -600,7 +600,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
 
         if (requestor.isPlayerControlled()) {
-            if (random(100) < leaderDiplomacyAnnoyanceMod(v)) {
+            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
                 //v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -674,7 +674,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
-            if (random(100) < leaderDiplomacyAnnoyanceMod(v)) {
+            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
                 //v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -1216,7 +1216,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
         
         // from -70 to -90
-        float warThreshold = v.empire().diplomatAI().leaderHateWarThreshold();
+        float warThreshold = v.empire().leader().hateWarThreshold();
         
         // modnar: change war threshold by number of our wars vs. number of their wars
         // try not to get into too many wars, and pile on if target is in many wars
@@ -1661,41 +1661,6 @@ public class AIDiplomat implements Base, Diplomat {
         if(everythingUnderSiege)
             return true;
         return false;
-    }
-    /*
-      Interfaces to allow overriding of default leader behavior
-    */
-    @Override
-    public float leaderExploitWeakerEmpiresRatio(){ 
-        return empire.leader().exploitWeakerEmpiresRatio();
-    } 
-    @Override
-    public float leaderRetreatRatio(Empire c){ 
-        return empire.leader().retreatRatio(c);
-    } 
-    @Override
-    public float leaderDiplomacyAnnoyanceMod(EmpireView v) { 
-        return empire.leader().diplomacyAnnoyanceMod(v);
-    } 
-    @Override
-    public float leaderAcceptPactMod(Empire other) { 
-        return empire.leader().acceptPactMod(other);
-    } 
-    @Override
-    public float leaderAcceptAllianceMod(Empire other) { 
-        return empire.leader().acceptAllianceMod(other);
-    } 
-    @Override
-    public float leaderAcceptTradeMod() { 
-        return empire.leader().acceptTradeMod();
-    } 
-    @Override
-    public float leaderHateWarThreshold() { 
-        return empire.leader().hateWarThreshold();
-    }
-    @Override
-    public float leaderPreserveTreatyMod() { 
-        return empire.leader().preserveTreatyMod();
     }
     @Override
     public int popCapRank(Empire etc, boolean inAttackRange)

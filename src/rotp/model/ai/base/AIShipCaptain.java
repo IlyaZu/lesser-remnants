@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -432,7 +433,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         else if (allyKills == 0)
             return true;
         else {
-            float retreatRatio = stack.empire.diplomatAI().leaderRetreatRatio(combat().system().empire());
+            float retreatRatio = stack.empire.leader().retreatRatio(combat().system().empire());
             log("retreat ratio: "+retreatRatio+"   enemyKillValue:"+enemyKills+"  allyKillValue:"+allyKills);
             return ((enemyKills / allyKills) > retreatRatio/1.2f); // modnar: adjust AI to accept less losses, more likely to retreat
         }

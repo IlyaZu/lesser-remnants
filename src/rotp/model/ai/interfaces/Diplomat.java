@@ -84,14 +84,6 @@ public interface Diplomat {
     List<Tech> techsRequestedForCounter(Empire emp, Tech t);
     DiplomaticReply receiveRequestTech(Empire emp, Tech t);
     DiplomaticReply receiveCounterOfferTech(Empire e, Tech counter, Tech wanted);
-    float leaderExploitWeakerEmpiresRatio();
-    float leaderRetreatRatio(Empire c);
-    float leaderDiplomacyAnnoyanceMod(EmpireView v);
-    float leaderAcceptPactMod(Empire other);
-    float leaderAcceptAllianceMod(Empire other);
-    float leaderAcceptTradeMod();
-    float leaderHateWarThreshold();
-    float leaderPreserveTreatyMod();
     
     //Xilmi-AI:
     default int popCapRank(Empire etc, boolean inAttackRange) { return 1; }
