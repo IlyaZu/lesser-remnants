@@ -92,7 +92,6 @@ public interface Diplomat {
     float leaderAcceptTradeMod();
     float leaderHateWarThreshold();
     float leaderPreserveTreatyMod();
-    boolean leaderHatesAllSpies();
     
     //Xilmi-AI:
     default int popCapRank(Empire etc, boolean inAttackRange) { return 1; }

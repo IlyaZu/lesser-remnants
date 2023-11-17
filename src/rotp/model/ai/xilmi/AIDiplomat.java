@@ -1698,8 +1698,6 @@ public class AIDiplomat implements Base, Diplomat {
         return empire.leader().preserveTreatyMod();
     }
     @Override
-    public  boolean leaderHatesAllSpies() { return false; }
-    @Override
     public int popCapRank(Empire etc, boolean inAttackRange)
     {
         int rank = 1;

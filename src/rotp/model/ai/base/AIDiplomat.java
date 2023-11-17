@@ -1811,7 +1811,4 @@ public class AIDiplomat implements Base, Diplomat {
     public float leaderPreserveTreatyMod() { 
         return empire.leader().preserveTreatyMod();
     }
-    @Override
-    public  boolean leaderHatesAllSpies() { return empire.leader().isXenophobic(); }
-
 }
