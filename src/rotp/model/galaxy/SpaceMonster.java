@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import rotp.model.combat.CombatStack;
 import rotp.model.empires.Empire;
-import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.KillMonsterIncident;
 import rotp.util.Base;
 
 public class SpaceMonster implements Base, NamedObject, Serializable {
@@ -57,17 +56,5 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
         }
         return alive;
     }
-    public void plunder() { notifyGalaxy(); }
-    
-    protected DiplomaticIncident killIncident(Empire emp) { return KillMonsterIncident.create(emp.id, lastAttackerId, nameKey); }
-    
-    private void notifyGalaxy() {
-        Empire slayerEmp = lastAttacker();
-        for (Empire emp: galaxy().empires()) {
-            if ((emp.id != lastAttackerId) && emp.knowsOf(slayerEmp)) {
-                DiplomaticIncident inc = killIncident(emp);
-                emp.diplomatAI().noticeIncident(inc, slayerEmp);
-            }
-        }
-    }
+    public void plunder() { }
 }
