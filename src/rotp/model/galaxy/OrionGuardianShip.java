@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +41,7 @@ public class OrionGuardianShip extends SpaceMonster {
     @Override
     public void plunder() { 
         super.plunder();
+        notifyGalaxy();
         Empire emp = this.lastAttacker();
         for (String techId: techs)
             emp.plunderShipTech(tech(techId), -2); 
@@ -56,8 +58,15 @@ public class OrionGuardianShip extends SpaceMonster {
         // all empires now know this system is no longer guarded
         for (Empire emp1: galaxy().empires()) 
             emp1.sv.view(sysId).refreshSystemEntryScan();
-    } 
-    @Override
-    protected DiplomaticIncident killIncident(Empire emp) { return KillGuardianIncident.create(emp.id, lastAttackerId, nameKey); }
+    }
 
+    private void notifyGalaxy() {
+        Empire slayerEmp = lastAttacker();
+        for (Empire emp: galaxy().empires()) {
+            if ((emp.id != lastAttackerId) && emp.knowsOf(slayerEmp)) {
+                DiplomaticIncident inc = KillGuardianIncident.create(emp.id, lastAttackerId, nameKey);
+                emp.diplomatAI().noticeIncident(inc, slayerEmp);
+            }
+        }
+    }
 }
