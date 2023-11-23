@@ -414,7 +414,7 @@ public class AIDiplomat implements Base, Diplomat {
         EmpireView v = empire.viewForEmpire(requestor);
         int bonus = requestor.diplomacyBonus();
         if ((baseChanceForTrade(v)+bonus) < 0) {
-            return DiplomaticReply.answer(false, declineReasonText(v));
+            return new DiplomaticReply(false, declineReasonText(v));
         }
         return null;
     }
@@ -428,7 +428,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferTrade(Empire requestor, int level) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetTradeTimer(level);
-        return DiplomaticReply.answer(false, declineReasonText(v));
+        return new DiplomaticReply(false, declineReasonText(v));
     }
     private boolean willingToOfferTrade(EmpireView v, int level) {
         if (!canOfferTradeTreaty(v.empire()))
@@ -539,7 +539,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferPeace(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetPeaceTimer();
-        return DiplomaticReply.answer(false, declineReasonText(v));
+        return new DiplomaticReply(false, declineReasonText(v));
     }
     private boolean willingToOfferPeace(EmpireView v) {
         if (!v.embassy().war())
@@ -612,7 +612,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferPact(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetPactTimer();
-        return DiplomaticReply.answer(false, declineReasonText(v));
+        return new DiplomaticReply(false, declineReasonText(v));
     }
     private boolean willingToOfferPact(EmpireView v) {
         // if asking player, check that we don't spam him
@@ -702,7 +702,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferAlliance(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetAllianceTimer();
-        return DiplomaticReply.answer(false, declineReasonText(v));
+        return new DiplomaticReply(false, declineReasonText(v));
     }
     private boolean willingToOfferAlliance(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
@@ -767,7 +767,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
 
         if (empire.atWarWith(target.id))
-            return DiplomaticReply.answer(false, "Already at war with that empire");
+            return new DiplomaticReply(false, "Already at war with that empire");
 
         EmpireView v = empire.viewForEmpire(requestor);
 
@@ -824,9 +824,9 @@ public class AIDiplomat implements Base, Diplomat {
         for (String techId: counter.techs()) 
             empire.tech().acquireTechThroughTrade(techId, requestor.id);
         
-        if (counter.bribeAmt() > 0) {
-            empire.addToTreasury(counter.bribeAmt());
-            requestor.addToTreasury(0-counter.bribeAmt());
+        if (counter.bribe() > 0) {
+            empire.addToTreasury(counter.bribe());
+            requestor.addToTreasury(0-counter.bribe());
         }
         return agreeToJointWar(requestor, counter.target());
     }
@@ -921,7 +921,7 @@ public class AIDiplomat implements Base, Diplomat {
         EmpireView v = empire.viewForEmpire(id(e));
         v.embassy().noteRequest();
         if (random() > chanceToGiveTribute(v))
-            return DiplomaticReply.answer(false, declineReasonText(v));
+            return new DiplomaticReply(false, declineReasonText(v));
 
         DiplomaticIncident inc = v.otherView().embassy().demandTribute();
         return v.accept(DialogueManager.ACCEPT_JOINT_WAR, inc);

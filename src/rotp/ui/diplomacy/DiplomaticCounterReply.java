@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +20,18 @@ import java.util.List;
 import rotp.model.empires.Empire;
 
 public class DiplomaticCounterReply extends DiplomaticReply {
-    List<String> techs;
-    int bribe;
-    int targetEmpId;
-    public static DiplomaticCounterReply answer(boolean b, String s,  int empId, List<String> techList, float bribeAmt) {
-        DiplomaticCounterReply reply = new DiplomaticCounterReply();
-        reply.accepted(b);
-        reply.remark(s);
-        reply.targetEmpId = empId;
-        reply.techs = techList;
-        reply.bribe = bribeAmt < 100 ? 0: ((int) bribeAmt/100)*100;
-        return reply;
-    }    
-    public Empire target() {
-        return galaxy().empire(targetEmpId);
+    private final List<String> techs;
+    private final int bribe;
+    private final Empire targetEmp;
+
+    public DiplomaticCounterReply(boolean accept, String remark,  Empire emp, List<String> techList, float bribeAmt) {
+        super(accept, remark);
+        targetEmp = emp;
+        techs = techList;
+        bribe = bribeAmt < 100 ? 0: ((int) bribeAmt/100)*100;
     }
-    public List<String> techs()  { return techs; }
-    public int bribeAmt()        { return bribe; }
+
+    public List<String> techs() { return techs; }
+    public int bribe() { return bribe; }
+    public Empire target() { return targetEmp; }
 }

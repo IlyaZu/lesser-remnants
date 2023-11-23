@@ -241,22 +241,22 @@ public final class EmpireView implements Base, Serializable {
         return decode(inc.decode(DialogueManager.current().randomMessage(key, this)));
     }
     public DiplomaticReply refuse(String reason) {
-        return DiplomaticReply.answer(false, decodedMessage(reason));
+        return new DiplomaticReply(false, decodedMessage(reason));
     }
     public DiplomaticReply refuse(String reason, Empire otherEmp) {
-        return DiplomaticReply.answer(false, decodedMessage(reason, otherEmp));
+        return new DiplomaticReply(false, decodedMessage(reason, otherEmp));
     }
     public DiplomaticReply accept(String reason) {
-        return DiplomaticReply.answer(true, decodedMessage(reason));
+        return new DiplomaticReply(true, decodedMessage(reason));
     }
     public DiplomaticReply accept(String reason, Empire speaker) {
-        return DiplomaticReply.answer(true, decodedMessage(reason, speaker, null));
+        return new DiplomaticReply(true, decodedMessage(reason, speaker, null));
     }
     public DiplomaticReply accept(String reason, DiplomaticIncident inc) {
-        return DiplomaticReply.answer(true, decodedMessage(reason, inc));
+        return new DiplomaticReply(true, decodedMessage(reason, inc));
     }
     public DiplomaticReply counter(String reason, Empire target, List<String> techs, float bribeAmt) {
-        return DiplomaticCounterReply.answer(true, decodedMessage(reason, target), id(target), techs, bribeAmt);
+        return new DiplomaticCounterReply(true, decodedMessage(reason, target), target, techs, bribeAmt);
     }
     public static Comparator<EmpireView> PLAYER_LIST_ORDER = (EmpireView o1, EmpireView o2) -> o1.listOrder().compareTo(o2.listOrder());
     public static Comparator<EmpireView> BY_RACENAME       = (EmpireView o1, EmpireView o2) -> o1.empire().raceName().compareTo(o2.empire().raceName());
