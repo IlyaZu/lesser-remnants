@@ -16,6 +16,8 @@
  */
 package rotp.model.incidents;
 
+import java.util.List;
+
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.ShipFleet;
@@ -28,8 +30,20 @@ public class TrespassingIncident extends DiplomaticIncident {
     final int sysId;
     final int empMe;
     final int empYou;
+    
+    public static void create(EmpireView view) {
+        if (view.empire().alliedWith(view.owner().id))
+            return;
+        for (StarSystem sys: view.owner().allColonizedSystems()) {
+            List<ShipFleet> fleets = sys.orbitingFleets();
+            for (ShipFleet fl: fleets) {
+                if (!fl.retreating() && (fl.empire() == view.empire()))
+                    view.embassy().addIncident(new TrespassingIncident(view,sys,fl));
+            }
+        }
+    }
 
-    public TrespassingIncident(EmpireView ev, StarSystem sys, ShipFleet fl) {
+    private TrespassingIncident(EmpireView ev, StarSystem sys, ShipFleet fl) {
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import rotp.model.galaxy.StarSystem;
+import rotp.model.incidents.AlliedWithEnemyIncident;
+import rotp.model.incidents.AtWarWithAllyIncident;
 import rotp.model.incidents.BreakAllianceIncident;
 import rotp.model.incidents.BreakPactIncident;
 import rotp.model.incidents.BreakTradeIncident;
@@ -32,6 +34,8 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.EncroachmentIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
+import rotp.model.incidents.ExpansionIncident;
+import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SignAllianceIncident;
 import rotp.model.incidents.SignBreakAllianceIncident;
@@ -39,6 +43,7 @@ import rotp.model.incidents.SignDeclareWarIncident;
 import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
 import rotp.model.incidents.SignTradeIncident;
+import rotp.model.incidents.TrespassingIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.notifications.DiplomaticNotification;
@@ -642,16 +647,12 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private void checkForIncidents() {
         newIncidents().clear();
         clearForgottenIncidents();
-
-        List<DiplomaticIncident> newEventsAll = new ArrayList<>();
-        owner().diplomatAI().noticeAtWarWithAllyIncidents(view, newEventsAll);
-        owner().diplomatAI().noticeAlliedWithEnemyIncidents(view, newEventsAll);
-        owner().diplomatAI().noticeTrespassingIncidents(view, newEventsAll);
-        owner().diplomatAI().noticeExpansionIncidents(view, newEventsAll);
-        owner().diplomatAI().noticeBuildupIncidents(view, newEventsAll);
-
-        for (DiplomaticIncident ev: newEventsAll)
-            addIncident(ev);
+        
+        AtWarWithAllyIncident.create(view);
+        AlliedWithEnemyIncident.create(view);
+        TrespassingIncident.create(view);
+        ExpansionIncident.create(view);
+        MilitaryBuildupIncident.create(view);
 
         // make special list of incidents added in this turn
         for (DiplomaticIncident ev: incidents.values()) {

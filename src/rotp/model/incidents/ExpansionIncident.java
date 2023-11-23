@@ -17,6 +17,7 @@
 package rotp.model.incidents;
 
 import rotp.model.empires.EmpireView;
+import rotp.model.galaxy.Galaxy;
 import rotp.ui.diplomacy.DialogueManager;
 
 public class ExpansionIncident extends DiplomaticIncident {
@@ -24,8 +25,41 @@ public class ExpansionIncident extends DiplomaticIncident {
     int numSystems;
     float maxSystems;
     final int empYou;
-    public static ExpansionIncident create(EmpireView ev, int num, float max) {
-        return new ExpansionIncident(ev, num, max);
+    public static void create(EmpireView view) {
+        int numberSystems = view.empire().numSystemsForCiv(view.empire());
+        if (numberSystems < 6)
+            return;
+
+        Galaxy gal = Galaxy.current();
+        int allSystems = gal.numColonizedSystems();
+        int numCivs = gal.numActiveEmpires();
+
+        // modnar: scale expansion penalty with ~1/[(numCivs)^(0.75)] rather than 1/numCivs
+        // this allows empires to be somewhat bigger than average before the diplomatic size penalty kicks in
+        // not linear with numCivs to account for expected fluctuation of empire sizes with larger number of empires
+        // at the max number of empires (50), you can be ~2 times as large as average before being penalized
+        // use a denominator coefficient factor of ~1.44225 (3^(1/3)) to maps the expression
+        // back to the equal 1/3 "share" of planets when only three empires are remaining
+        // (and when only two are remaining, they won't like you even if you have slightly less planets than they do)
+        //
+        // numCivs(X)   1/X     1/[(1.44225*X)^(0.75)]
+        //      2       50.00%  45.18%
+        //      3       33.33%  33.33%
+        //      4       25.00%  26.86%
+        //      5       20.00%  22.72%
+        //      6       16.67%  19.82%
+        //      8       12.50%  15.97%
+        //      10      10.00%  13.51%
+        //      15      6.67%   9.97%
+        //      20      5.00%   8.03%
+        //      30      3.33%   5.93%
+        //      50      2.00%   4.04%
+        //
+        //int maxSystemsWithoutPenalty = max(5, (allSystems /numCivs)+1);
+        int maxSystemsWithoutPenalty = Math.max(5, (int) Math.ceil(allSystems / Math.pow(1.44225*numCivs, 0.75)));
+
+        if (numberSystems > maxSystemsWithoutPenalty)
+        	view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
     }
     @Override
     public boolean triggeredByAction()   { return false; }

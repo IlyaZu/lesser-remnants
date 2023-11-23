@@ -21,8 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import rotp.model.ai.interfaces.Diplomat;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.ShipCombatResults;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
@@ -39,8 +37,6 @@ import rotp.model.galaxy.Galaxy;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
-import rotp.model.incidents.AlliedWithEnemyIncident;
-import rotp.model.incidents.AtWarWithAllyIncident;
 import rotp.model.incidents.ColonyAttackedIncident;
 import rotp.model.incidents.ColonyCapturedIncident;
 import rotp.model.incidents.ColonyDestroyedIncident;
@@ -58,8 +54,6 @@ import rotp.model.incidents.SabotageFactoriesIncident;
 import rotp.model.incidents.SkirmishIncident;
 import rotp.model.incidents.SpyConfessionIncident;
 import rotp.model.incidents.TechnologyAidIncident;
-import rotp.model.incidents.TrespassingIncident;
-import rotp.model.ships.ShipDesign;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
@@ -1455,157 +1449,6 @@ public class AIDiplomat implements Base, Diplomat {
 
         if (inc.triggersWar() && !view.embassy().anyWar())
             beginIncidentWar(view, inc);
-    }
-    @Override
-    public DiplomaticIncident noticeSkirmishIncident(ShipCombatResults res) {
-        DiplomaticIncident inc = null;
-        for (Empire emp: res.empires()) {
-            if  (!empire.alliedWith(emp.id)) {
-                float winModifier = victoryModifier(res);
-                float skirmishSeverity = skirmishSeverity(res);
-                float severity = min(-1.0f, winModifier*skirmishSeverity);
-                EmpireView view = empire.viewForEmpire(emp.id);
-                inc = new SkirmishIncident(view, res, severity);
-                view.embassy().addIncident(inc);
-            }
-        }
-        return inc;
-    }
-    @Override
-    public void noticeExpansionIncidents(EmpireView view, List<DiplomaticIncident> events) {
-        int numberSystems = view.empire().numSystemsForCiv(view.empire());
-        if (numberSystems < 6)
-            return;
-
-        Galaxy gal = Galaxy.current();
-        int allSystems = gal.numColonizedSystems();
-        int numCivs = gal.numActiveEmpires();
-
-        // modnar: scale expansion penalty with ~1/[(numCivs)^(0.75)] rather than 1/numCivs
-        // this allows empires to be somewhat bigger than average before the diplomatic size penalty kicks in
-        // not linear with numCivs to account for expected fluctuation of empire sizes with larger number of empires
-        // at the max number of empires (50), you can be ~2 times as large as average before being penalized
-        // use a denominator coefficient factor of ~1.44225 (3^(1/3)) to maps the expression
-        // back to the equal 1/3 "share" of planets when only three empires are remaining
-        // (and when only two are remaining, they won't like you even if you have slightly less planets than they do)
-        //
-        // numCivs(X)   1/X     1/[(1.44225*X)^(0.75)]
-        //      2       50.00%  45.18%
-        //      3       33.33%  33.33%
-        //      4       25.00%  26.86%
-        //      5       20.00%  22.72%
-        //      6       16.67%  19.82%
-        //      8       12.50%  15.97%
-        //      10      10.00%  13.51%
-        //      15      6.67%   9.97%
-        //      20      5.00%   8.03%
-        //      30      3.33%   5.93%
-        //      50      2.00%   4.04%
-        //
-        //int maxSystemsWithoutPenalty = max(5, (allSystems /numCivs)+1);
-        int maxSystemsWithoutPenalty = max(5, (int) Math.ceil(allSystems / Math.pow(1.44225*numCivs, 0.75)));
-
-        if (numberSystems > maxSystemsWithoutPenalty)
-            events.add(ExpansionIncident.create(view,numberSystems, maxSystemsWithoutPenalty));
-    }
-    @Override
-    public void noticeTrespassingIncidents(EmpireView view, List<DiplomaticIncident> events) {
-        if (view.empire().alliedWith(empire.id))
-            return;
-        for (StarSystem sys: empire.allColonizedSystems()) {
-            List<ShipFleet> fleets = sys.orbitingFleets();
-            for (ShipFleet fl: fleets) {
-                if (!fl.retreating() && (fl.empire() == view.empire()))
-                    events.add(new TrespassingIncident(view,sys,fl));
-            }
-        }
-    }
-    @Override
-    public void noticeAtWarWithAllyIncidents(EmpireView view, List<DiplomaticIncident> events) {
-        for (Empire ally: empire.allies()) {
-            if (ally.atWarWith(view.empId())) 
-                events.add(new AtWarWithAllyIncident(view, ally));
-        }
-    }
-    @Override
-    public void noticeAlliedWithEnemyIncidents(EmpireView view, List<DiplomaticIncident> events) {
-        for (Empire ally: view.empire().allies()) {
-            if (empire.atWarWith(ally.id)) 
-                events.add(new AlliedWithEnemyIncident(view, ally));
-        }
-    }
-    @Override
-    public void noticeBuildupIncidents(EmpireView view, List<DiplomaticIncident> events) {
-        float shipRange = view.owner().shipRange();
-
-        float multiplier = -0.05f;
-        if (view.owner().atWarWith(view.empId()))
-            multiplier *= 2;
-        else if (view.owner().pactWith(view.empId()))
-            multiplier /= 8;
-        else if (view.owner().alliedWith(view.empId()))
-            multiplier /= 64;
-
-        if (view.owner().leader().isXenophobic())
-            multiplier *= 2;
-
-        for (StarSystem sys: view.owner().allColonizedSystems()) {
-            float systemSeverity = 0;
-            for (ShipFleet fl: view.owner().fleetsForEmpire(view.empire())) {
-                if (fl.isActive() && (sys.distanceTo(fl) <= shipRange)) {
-                    float fleetThreat = fl.visibleFirepower(view.owner().id, sys.colony().defense().missileShieldLevel());
-                    systemSeverity += (multiplier*fleetThreat);
-                }
-            }
-            if (systemSeverity > 0)
-                events.add(new MilitaryBuildupIncident(view,sys, systemSeverity));
-        }
-    }
-    //
-    // PRIVATE
-    //
-    private float victoryModifier(ShipCombatResults res) {
-        // how much do we magnify lost ships when we lose
-        // how much do we minimize lost ships when we lose
-
-        //  do we hate everyone else?
-        float multiplier = 1.0f;
-        if (empire.leader().isXenophobic())
-            multiplier *= 2;
-
-        // did we win? if aggressive stacks still active, then no
-        boolean won = true;
-        for (CombatStack st: res.activeStacks()) {
-            if (st.empire.aggressiveWith(empire.id))
-                won = false;
-        }
-        // if we won, then losses don't seem as bad
-        if (won)
-                    multiplier /= 2;
-
-        // was this attack at our colonies?
-        if (res.defender() == empire)
-            multiplier *= 2;
-
-        return multiplier;
-    }
-    private float skirmishSeverity(ShipCombatResults res) {
-        float lostBC = 0;
-        // how many ships & bases were lost, relative to empire production
-        for (ShipDesign d: res.shipsDestroyed().keySet()) {
-            if (d.empire() == empire) {
-                int num = res.shipsDestroyed().get(d);
-                lostBC += (num * d.cost());
-            }
-        }
-        if (res.defender() == empire) {
-            lostBC += (res.basesDestroyed() * empire.tech().newMissileBaseCost());
-            lostBC += (res.factoriesDestroyed() * empire.tech().maxFactoryCost());
-        }
-        float totalIndustry = empire.totalPlanetaryProduction();
-
-        // -1 severity for each 1% of total production lost
-        return -1.0f*lostBC*100/totalIndustry;
     }
    private boolean warWeary(EmpireView v) {
         if (galaxy().activeEmpires().size() < 3)
