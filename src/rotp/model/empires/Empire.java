@@ -408,14 +408,14 @@ public final class Empire implements Base, NamedObject, Serializable {
         message = listener.replaceTokens(message, "your");
         if (other != null)
             message = other.replaceTokens(message, otherName);
-        return DiplomaticReply.answer(true, message);
+        return new DiplomaticReply(true, message);
     }
     public DiplomaticReply respond(String reason, DiplomaticIncident inc, Empire listener) {
         String message = DialogueManager.current().randomMessage(reason, this);
         message = replaceTokens(message, "my");
         message = listener.replaceTokens(message, "your");
         message = inc.decode(message);
-        return DiplomaticReply.answer(true, message);
+        return new DiplomaticReply(true, message);
     }
     public void chooseNewCapital() {
         // make list of every colony that is not the current capital

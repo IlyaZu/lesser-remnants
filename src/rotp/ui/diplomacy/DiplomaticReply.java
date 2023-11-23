@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,33 +16,28 @@
  */
 package rotp.ui.diplomacy;
 
-import rotp.util.Base;
+public class DiplomaticReply {
 
-public class DiplomaticReply implements Base {
-    public static DiplomaticReply answer(boolean b, String s) {
-        DiplomaticReply reply = new DiplomaticReply();
-        reply.accepted(b);
-        reply.remark(s);
-        return reply;
+    private final boolean accepted;
+    private String remark;
+    private String returnMenu;
+    private boolean resumeTurn;
+    private boolean returnToMap;
+
+    public DiplomaticReply(boolean accept, String remark) {
+    	this.accepted = accept;
+        this.remark = remark;
     }
-    boolean accepted = false;
-    String remark;
-    String returnMenu;
-    boolean resumeTurn = false;
-    boolean returnToMap = false;
-
-    public boolean accepted()         { return accepted; }
-    public void accepted(boolean b)   { accepted = b; }
+    
+    public boolean accepted() { return accepted; }
+    public String remark() { return remark; }
+    public String returnMenu() { return returnMenu; }
+    public void returnMenu(String s) { returnMenu = s; }
+    public boolean resumeTurn(){ return resumeTurn; }
     public void resumeTurn(boolean b) { resumeTurn = b; }
-    public String remark()            { return remark; }
-    public String text() {
-        return remark;
-    }
-    public void remark(String s)      { remark = s; }
-    public String returnMenu()        { return returnMenu; }
-    public void returnMenu(String s)  { returnMenu = s; }
+    public boolean returnToMap() { return returnToMap; }
     public void returnToMap(boolean b) { returnToMap = b; }
-
+    
     public void decode(String key, String value) {
         remark = remark.replace(key, value);
     }	

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +39,8 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     public boolean showTalking()        { return false; }
     @Override
     public int numDataLines()  {
-        int lines = reply().techs.size();
-        if (reply().bribe >= 100)
+        int lines = reply().techs().size();
+        if (reply().bribe() >= 100)
             lines++;
         return lines;
     }
@@ -49,7 +50,7 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     public String reply(int i)          {
         switch(i) {
             case 0: 
-                if (player().totalReserve() < reply().bribe)
+                if (player().totalReserve() < reply().bribe())
                     return text("DIPLOMACY_MENU_ACCEPT_NEED_BC");
                 else
                     return text("DIPLOMACY_MENU_ACCEPT");
@@ -61,8 +62,8 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     public String dataLine(int i) { 
         if (i >= numDataLines())
             return ""; 
-        List<String> techs = reply().techs;
-        int bribe = reply().bribe;
+        List<String> techs = reply().techs();
+        int bribe = reply().bribe();
         if (i < techs.size())
             return tech(techs.get(i)).name();
         if (bribe > 0)
@@ -72,7 +73,7 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     @Override
     public boolean enabled(int i) {
         switch(i) {
-            case 0: return player().totalReserve() >= reply().bribe;
+            case 0: return player().totalReserve() >= reply().bribe();
             case 1: return true;
             default: return false;
         }

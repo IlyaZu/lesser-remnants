@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +34,9 @@ public class DiplomacyRequestReply extends DiplomaticMessage {
     public void escape()                         { select(0); }
     @Override
     public void select(int i) {
-        if (reply.resumeTurn) 
+        if (reply.resumeTurn()) 
             session().resumeNextTurnProcessing();
-        else if (reply.returnToMap)
+        else if (reply.returnToMap())
             RotPUI.instance().selectMainPanel();
         else if (reply.returnMenu() == null)
             RotPUI.instance().selectRacesPanel();
