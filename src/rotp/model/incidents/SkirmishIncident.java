@@ -16,10 +16,12 @@
  */
 package rotp.model.incidents;
 
+import rotp.model.combat.CombatStack;
 import rotp.model.combat.ShipCombatResults;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
+import rotp.model.ships.ShipDesign;
 import rotp.ui.diplomacy.DialogueManager;
 
 public class SkirmishIncident extends DiplomaticIncident {
@@ -28,15 +30,62 @@ public class SkirmishIncident extends DiplomaticIncident {
     final int empMe;
     final int empYou;
     
-    public static void create(ShipCombatResults r) {
-        if (r.defender() != null)
-            r.defender().diplomatAI().noticeSkirmishIncident(r);
-        else {
-            for (Empire combatant: r.empires())
-                combatant.diplomatAI().noticeSkirmishIncident(r);
+    public static void create(ShipCombatResults result, Empire empire) {
+        for (Empire emp: result.empires()) {
+            if  (!empire.alliedWith(emp.id)) {
+                float winModifier = victoryModifier(result, empire);
+                float skirmishSeverity = skirmishSeverity(result, empire);
+                float severity = Math.min(-1.0f, winModifier*skirmishSeverity);
+                EmpireView view = empire.viewForEmpire(emp.id);
+                view.embassy().addIncident(new SkirmishIncident(view, result, severity));
+            }
         }
     }
-    public SkirmishIncident(EmpireView ev,ShipCombatResults res, float sev) {
+    private static float victoryModifier(ShipCombatResults res, Empire empire) {
+        // how much do we magnify lost ships when we lose
+        // how much do we minimize lost ships when we lose
+
+        //  do we hate everyone else?
+        float multiplier = 1.0f;
+        if (empire.leader().isXenophobic())
+            multiplier *= 2;
+
+        // did we win? if aggressive stacks still active, then no
+        boolean won = true;
+        for (CombatStack st: res.activeStacks()) {
+            if (st.empire.aggressiveWith(empire.id))
+                won = false;
+        }
+        // if we won, then losses don't seem as bad
+        if (won)
+                    multiplier /= 2;
+
+        // was this attack at our colonies?
+        if (res.defender() == empire)
+            multiplier *= 2;
+
+        return multiplier;
+    }
+    private static float skirmishSeverity(ShipCombatResults res, Empire empire) {
+        float lostBC = 0;
+        // how many ships & bases were lost, relative to empire production
+        for (ShipDesign d: res.shipsDestroyed().keySet()) {
+            if (d.empire() == empire) {
+                int num = res.shipsDestroyed().get(d);
+                lostBC += (num * d.cost());
+            }
+        }
+        if (res.defender() == empire) {
+            lostBC += (res.basesDestroyed() * empire.tech().newMissileBaseCost());
+            lostBC += (res.factoriesDestroyed() * empire.tech().maxFactoryCost());
+        }
+        float totalIndustry = empire.totalPlanetaryProduction();
+
+        // -1 severity for each 1% of total production lost
+        return -1.0f*lostBC*100/totalIndustry;
+    }
+    
+    private SkirmishIncident(EmpireView ev,ShipCombatResults res, float sev) {
         sysId = res.system().id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

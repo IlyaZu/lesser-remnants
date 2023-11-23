@@ -17,6 +17,7 @@
 package rotp.model.incidents;
 
 import rotp.model.empires.EmpireView;
+import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
 import rotp.ui.diplomacy.DialogueManager;
 
@@ -26,7 +27,34 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     final int empMe;
     final int empYou;
 
-    public MilitaryBuildupIncident(EmpireView ev, StarSystem sys, float sev) {
+    public static void create(EmpireView view) {
+        float shipRange = view.owner().shipRange();
+
+        float multiplier = -0.05f;
+        if (view.owner().atWarWith(view.empId()))
+            multiplier *= 2;
+        else if (view.owner().pactWith(view.empId()))
+            multiplier /= 8;
+        else if (view.owner().alliedWith(view.empId()))
+            multiplier /= 64;
+
+        if (view.owner().leader().isXenophobic())
+            multiplier *= 2;
+
+        for (StarSystem sys: view.owner().allColonizedSystems()) {
+            float systemSeverity = 0;
+            for (ShipFleet fl: view.owner().fleetsForEmpire(view.empire())) {
+                if (fl.isActive() && (sys.distanceTo(fl) <= shipRange)) {
+                    float fleetThreat = fl.visibleFirepower(view.owner().id, sys.colony().defense().missileShieldLevel());
+                    systemSeverity += (multiplier*fleetThreat);
+                }
+            }
+            if (systemSeverity > 0)
+            	view.embassy().addIncident(new MilitaryBuildupIncident(view,sys, systemSeverity));
+        }
+    }
+    
+    private MilitaryBuildupIncident(EmpireView ev, StarSystem sys, float sev) {
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

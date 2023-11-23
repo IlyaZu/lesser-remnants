@@ -17,7 +17,6 @@
 package rotp.model.ai.interfaces;
 
 import java.util.List;
-import rotp.model.combat.ShipCombatResults;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.incidents.DiplomaticIncident;
@@ -42,13 +41,6 @@ public interface Diplomat {
     void noticeIncident(DiplomaticIncident inc, Empire e);
     void makeDiplomaticOffers(EmpireView ev);
     Empire councilVoteFor(Empire emp1, Empire emp2);
-    
-    void noticeAtWarWithAllyIncidents(EmpireView v, List<DiplomaticIncident> incidents);
-    void noticeAlliedWithEnemyIncidents(EmpireView v, List<DiplomaticIncident> incidents);
-    void noticeTrespassingIncidents(EmpireView v, List<DiplomaticIncident> incidents);
-    void noticeExpansionIncidents(EmpireView v, List<DiplomaticIncident> incidents);
-    void noticeBuildupIncidents(EmpireView v, List<DiplomaticIncident> incidents);
-    DiplomaticIncident noticeSkirmishIncident(ShipCombatResults res);
     
     DiplomaticReply receiveFinancialAid(Empire e, int amt);
     DiplomaticReply receiveTechnologyAid(Empire e, String techId);

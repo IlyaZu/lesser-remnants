@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -238,7 +239,8 @@ public final class ShipCombatResults implements Base {
         }
         // if a neutral system, then a skirmish for all
         if (defender == null)
-            SkirmishIncident.create(this);
+            for (Empire combatant: empires)
+            	SkirmishIncident.create(this, combatant);
         // if genocide, incidents already created at extinction time
         else if (defender.extinct())
                 return;
@@ -249,7 +251,7 @@ public final class ShipCombatResults implements Base {
                 ColonyAttackedIncident.create(this);
         }
         else
-            SkirmishIncident.create(this);
+            SkirmishIncident.create(this, defender);
 
         // attack enemy/ally incidents only trigger in a
         // defended system
