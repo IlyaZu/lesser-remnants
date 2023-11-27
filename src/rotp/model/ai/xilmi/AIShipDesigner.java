@@ -540,8 +540,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         }
         
         float rangeTechLevelThreshold = 9;
-        
-        rangeTechLevelThreshold /= max(1.0f, session().researchMapSizeAdjustment());
             
         if(empire.uncolonizedPlanetsInRange(empire.shipRange()).isEmpty() 
                 && empire.enemies().isEmpty()

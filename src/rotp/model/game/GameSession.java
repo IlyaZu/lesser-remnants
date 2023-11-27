@@ -158,12 +158,6 @@ public final class GameSession implements Base, Serializable {
     public float populationBonus()      { return 1.0f; }
     public float damageBonus()          { return 1.0f; }
     public float researchBonus()        { return 1.0f; }
-    public float researchMapSizeAdjustment() {
-        float stars = galaxy().numStarSystems();
-        int races = options().selectedNumberOpponents()+2;
-        float targetRatio = 12.0f;
-        return sqrt(stars/races/targetRatio);
-    }
     public void enableSpyReport() {
         spyActivity = true;
     }
