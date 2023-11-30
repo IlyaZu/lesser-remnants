@@ -49,7 +49,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     BaseText nebulaeText;
     BaseText randomEventsText;
     BaseText planetQualityText;
-    BaseText autoplayText;
     
     public StartOptionsUI() {
         setOpaque(false);
@@ -59,7 +58,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         nebulaeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         planetQualityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        autoplayText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
     }
@@ -69,7 +67,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         nebulaeText.displayText(nebulaeStr());
         randomEventsText.displayText(randomEventsStr());
         planetQualityText.displayText(planetQualityStr());
-        autoplayText.displayText(autoplayStr());
     }
     public void open(BasePanel p) {
         parent = p;
@@ -228,22 +225,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         // Gap made by AI ability/personality randomisation options
         y2 += (h2+s20);
         
+        // Gap made by autoplay removal
         y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, autoplayText.stringWidth(g)+s30,s30);
-        autoplayText.setScaledXY(x2+s20, y2+s7);
-        autoplayText.draw(g);
-        desc = text("SETTINGS_AUTOPLAY_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }
         
         // right side
         // Gap made by research speed settings removal
@@ -321,10 +304,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedPlanetQualityOption());
         return text("SETTINGS_PLANET_QUALITY", opt)+"   ";
     }
-    private String autoplayStr() {
-        String opt = text(newGameOptions().selectedAutoplayOption());
-        return text("SETTINGS_AUTOPLAY", opt)+" ";
-    }
     private void toggleGalaxyAge() {
         softClick();
         newGameOptions().selectedGalaxyAge(newGameOptions().nextGalaxyAge());
@@ -349,11 +328,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedPlanetQualityOption(newGameOptions().nextPlanetQualityOption());
         planetQualityText.repaint(planetQualityStr());
-    }
-    private void toggleAutoplay(MouseEvent e) {
-        softClick();
-        newGameOptions().selectedAutoplayOption(newGameOptions().nextAutoplayOption());
-        autoplayText.repaint(autoplayStr());
     }
 
     @Override
@@ -386,8 +360,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = planetQualityText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
-        else if (autoplayText.contains(x,y))
-            hoverBox = autoplayText.bounds();
         else if (okBox.contains(x,y))
             hoverBox = okBox;
         else if (defaultBox.contains(x,y))
@@ -404,8 +376,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 planetQualityText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
-            else if (prevHover == autoplayText.bounds())
-                autoplayText.mouseExit();
             if (hoverBox == galaxyAgeText.bounds())
                 galaxyAgeText.mouseEnter();
             else if (hoverBox == starDensityText.bounds())
@@ -416,8 +386,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 planetQualityText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
-            else if (hoverBox == autoplayText.bounds())
-                autoplayText.mouseEnter();
             if (prevHover != null)
                 repaint(prevHover);
             if (hoverBox != null)
@@ -444,8 +412,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             togglePlanetQuality();
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
-        else if (hoverBox == autoplayText.bounds())
-            toggleAutoplay(e);
         else if (hoverBox == okBox)
             close();
         else if (hoverBox == defaultBox)

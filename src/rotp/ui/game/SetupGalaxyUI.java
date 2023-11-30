@@ -36,7 +36,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import javax.swing.SwingUtilities;
 import rotp.model.empires.Race;
 import rotp.model.galaxy.GalaxyShape;
@@ -283,19 +282,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         int diffSW = g.getFontMetrics().stringWidth(diffLbl);
         int x5c =diffBox.x+((diffBox.width-diffSW)/2);
         drawString(g,diffLbl, x5c, y5);
-        
-        // draw autoplay warning
-        if (newGameOptions().isAutoPlay()) {
-            g.setFont(narrowFont(16));
-            String warning = text("SETTINGS_AUTOPLAY_WARNING");
-            List<String> warnLines = this.wrappedLines(g, warning, galaxyW);
-            g.setColor(Color.white);
-            int warnY = y5+s60;
-            for (String line: warnLines) {
-                drawString(g,line, galaxyX, warnY);
-                warnY += s18;
-            }
-        }
 
         // settings button
         int cnr = s5;
