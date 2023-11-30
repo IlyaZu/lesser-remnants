@@ -92,11 +92,7 @@ public interface IGameOptions {
     public static final String OPPONENT_AI_XILMI      = "SETUP_OPPONENT_AI_XILMI";
     public static final String OPPONENT_AI_SELECTABLE = "SETUP_OPPONENT_AI_SELECT";
     
-    public static final String AUTOPLAY_OFF           = "SETUP_AUTOPLAY_OFF";
-    public static final String AUTOPLAY_AI_BASE       = "SETUP_AUTOPLAY_AI_BASE";
-    public static final String AUTOPLAY_AI_XILMI      = "SETUP_AUTOPLAY_AI_XILMI";
-    
-    public default boolean isAutoPlay()          { return !selectedAutoplayOption().equals(AUTOPLAY_OFF); }
+    public boolean isAutoPlay();
     public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
     public default boolean usingExtendedRaces()  { return (selectedNumberOpponents()+1) > startingRaceOptions().size(); }
     public default int maxOpponents()            { return MAX_OPPONENTS; }
@@ -132,7 +128,6 @@ public interface IGameOptions {
     public List<String> nebulaeOptions();
     public List<String> starDensityOptions();
     public List<String> planetQualityOptions();
-    public List<String> autoplayOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
 	
@@ -159,8 +154,6 @@ public interface IGameOptions {
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
     public void specificOpponentAIOption(String s, int empId);
-    public String selectedAutoplayOption();
-    public void selectedAutoplayOption(String s);
 	
     public String selectedGalaxyShapeOption1();
     public void selectedGalaxyShapeOption1(String s);
@@ -285,11 +278,6 @@ public interface IGameOptions {
     default String nextPlanetQualityOption() {
         List<String> opts = planetQualityOptions();
         int index = opts.indexOf(selectedPlanetQualityOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextAutoplayOption() {
-        List<String> opts = autoplayOptions();
-        int index = opts.indexOf(selectedAutoplayOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default void nextSpecificOpponentAI(int i) {

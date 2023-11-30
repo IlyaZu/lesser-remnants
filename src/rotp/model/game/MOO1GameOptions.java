@@ -37,6 +37,10 @@ import rotp.util.Base;
 
 public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private static final long serialVersionUID = 1L;
+    
+    /** Set to a constant from AI class to enable the AI to play as the player */
+    private final Integer autoPlayAIType = null;
+    
     private final String[] opponentRaces = new String[MAX_OPPONENTS];
     private final List<Integer> colors = new ArrayList<>();
     private final List<Color> empireColors = new ArrayList<>();
@@ -56,7 +60,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedPlanetQualityOption;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
-    private String selectedAutoplayOption;
     
     private transient GalaxyShape galaxyShape;
 
@@ -121,10 +124,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedPlanetQualityOption()       { return selectedPlanetQualityOption == null ? PLANET_QUALITY_NORMAL : selectedPlanetQualityOption; }
     @Override
     public void selectedPlanetQualityOption(String s) { selectedPlanetQualityOption = s; }
-    @Override
-    public String selectedAutoplayOption()          { return selectedAutoplayOption == null ? AUTOPLAY_OFF : selectedAutoplayOption; }
-    @Override
-    public void selectedAutoplayOption(String s)    { selectedAutoplayOption = s; }
     @Override
     public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; }
     @Override
@@ -205,7 +204,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedNebulaeOption = opt.selectedNebulaeOption;
         selectedStarDensityOption = opt.selectedStarDensityOption;
         selectedPlanetQualityOption = opt.selectedPlanetQualityOption;
-        selectedAutoplayOption = opt.selectedAutoplayOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
         if (opt.specificOpponentAIOption != null) {
@@ -314,15 +312,18 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             return min(10,sqrt(nStars/200f));
     }
     @Override
+    public boolean isAutoPlay() {
+    	return autoPlayAIType != null;
+    }
+    @Override
     public int selectedAI(Empire e) {
         if (e.isPlayer()) {
-            switch(selectedAutoplayOption()) {
-                case AUTOPLAY_AI_BASE:   return AI.BASE;
-                case AUTOPLAY_AI_XILMI:  return AI.XILMI;
-                case AUTOPLAY_OFF:
-                default:
-                    return AI.BASE;  // doesn't matter; won't be used if autoplay off
-            }
+        	if (isAutoPlay()) {
+        		return autoPlayAIType;
+        	} 
+        	else {
+        		return AI.BASE;  // doesn't matter; won't be used if autoplay off
+        	}
         }
         else {
             switch(selectedOpponentAIOption()) {
@@ -579,14 +580,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> autoplayOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(AUTOPLAY_OFF);
-        list.add(AUTOPLAY_AI_BASE);
-        list.add(AUTOPLAY_AI_XILMI);
-        return list;
-    }
-    @Override
     public List<String> opponentAIOptions() {
         List<String> list = new ArrayList<>();
         list.add(OPPONENT_AI_BASE);
@@ -640,7 +633,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedRandomEventOption = RANDOM_EVENTS_ON;
         selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;
-        selectedAutoplayOption = AUTOPLAY_OFF;
     }
     private void generateGalaxy() {
         galaxyShape().quickGenerate();
