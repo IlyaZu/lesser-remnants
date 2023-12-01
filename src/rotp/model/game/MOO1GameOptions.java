@@ -62,7 +62,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private transient GalaxyShape galaxyShape;
 
     public MOO1GameOptions() {
-        initOpponentRaces();
         randomizeColors();
         setDefaultOptionValues();
     }
@@ -636,8 +635,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         colors.addAll(list3);
         colors.addAll(list4);
         colors.addAll(list5);
-    }
-    private void initOpponentRaces() {
     }
     private void checkForHostileEnvironment(Planet p, StarSystem s) {
         // these planet types and no chance for poor resources -- skip

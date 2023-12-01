@@ -36,8 +36,8 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String warningMessageId()     { return ""; }
     public String breakTreatyId()        { return ""; }
     public String declareWarId()         { return ""; }
-    public int duration()	 	 { return duration; }
-    public Integer turnOccurred()	 { return turnOccurred; }
+    public int duration()                { return duration; }
+    public int turnOccurred()            { return turnOccurred; }
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
     @Override
@@ -49,7 +49,7 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     }
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
-    public String displayOrder() { return TurnNotification.DIPLOMATIC_MESSAGE; }
+    public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
     public float currentSeverity()	     { return severity*remainingTime()/duration(); }
 
     public boolean isForgotten()         { return remainingTime() <= 0; }
@@ -59,11 +59,11 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public boolean triggersPraise()      { return !praiseMessageId().isEmpty(); }
     public boolean triggersWarning()     { return !warningMessageId().isEmpty(); }
     public boolean triggersBreakTreaty() { return false; }
-    public boolean triggersImmediateWar() { return false; }
+    public boolean triggersImmediateWar(){ return false; }
     public boolean triggersWar()         { return !declareWarId().isEmpty(); }
 
     private float remainingTime() {
             return Math.max(0, (turnOccurred() + duration() - galaxy().currentTurn()));
     }
-    public static Comparator<DiplomaticIncident> DATE = (DiplomaticIncident o1, DiplomaticIncident o2) -> o2.turnOccurred().compareTo(o1.turnOccurred());
+    public static Comparator<DiplomaticIncident> DATE = (DiplomaticIncident o1, DiplomaticIncident o2) -> Integer.compare(o2.turnOccurred(), o1.turnOccurred());
 }
