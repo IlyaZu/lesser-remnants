@@ -23,7 +23,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -85,7 +84,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public transient SystemTransportSprite transportSprite;
     public transient ShipRelocationSprite rallySprite;
     private transient StarType starType;
-    private transient Rectangle nameBox;
     private transient boolean hovering;
     private transient int twinkleCycle, twinkleOffset, drawRadius;
     private transient boolean displayed = false;
@@ -496,11 +494,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     //
     // SUPPORTING BEHAVIOR FOR SPRITES
     //
-    private Rectangle nameBox() {
-        if (nameBox == null)
-            nameBox = new Rectangle();
-        return nameBox;
-    }
     private int twinkleCycle() {
         if (twinkleCycle == 0)
             twinkleCycle = roll(20,50);
@@ -595,10 +588,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         }
 
         // draw star name
-        Rectangle box = nameBox();
-        box.width = 0;
-        box.height = 0;
-        
         int fontSize = fontSize(map);
         if (!colonized) {
             String s1 = map.parent().systemLabel(this);
@@ -623,10 +612,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                 }
 
                 g2.setFont(prevFont);
-                box.x = x0-(sw/2);
-                box.y = y0+yAdj - BasePanel.s20;
-                box.width = sw;
-                box.height = BasePanel.s20;
             }
         }
         else {
@@ -662,10 +647,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                     drawString(g2,label2, x0-(sw2/2), y0+yAdj+fontH+s2);
                 }
                 g2.setFont(prevFont);
-                box.x = x0-(sw/2);
-                box.y = y0+yAdj - BasePanel.s20;
-                box.width = sw;
-                box.height = BasePanel.s20;
             }
         }
     }
@@ -683,8 +664,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public boolean isSelectableAt(GalaxyMapPanel map, int mapX, int mapY) {
         if (!displayed)
             return false;
-        if (nameBox().contains(mapX, mapY)) 
-            return true;
         int spriteX = map.mapX(x());
         int spriteY = map.mapY(y());
         float clickR = map.scale(clickRadius);
