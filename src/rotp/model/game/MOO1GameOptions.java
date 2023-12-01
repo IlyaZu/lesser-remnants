@@ -54,7 +54,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGalaxyAge;
     private String selectedGameDifficulty;
     private String selectedRandomEventOption;
-    private String selectedNebulaeOption;
     private int selectedNumberOpponents;
     private String selectedStarDensityOption;
     private String selectedOpponentAIOption;
@@ -111,10 +110,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedRandomEventOption()       { return selectedRandomEventOption == null ? RANDOM_EVENTS_ON : selectedRandomEventOption; }
     @Override
     public void selectedRandomEventOption(String s) { selectedRandomEventOption = s; }
-    @Override
-    public String selectedNebulaeOption()           { return selectedNebulaeOption == null ? NEBULAE_NORMAL : selectedNebulaeOption; }
-    @Override
-    public void selectedNebulaeOption(String s)     { selectedNebulaeOption = s; }
     @Override
     public String selectedStarDensityOption()       { return selectedStarDensityOption == null ? STAR_DENSITY_NORMAL : selectedStarDensityOption; }
     @Override
@@ -196,7 +191,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
         selectedGalaxyAge = opt.selectedGalaxyAge;
         selectedRandomEventOption = opt.selectedRandomEventOption;
-        selectedNebulaeOption = opt.selectedNebulaeOption;
         selectedStarDensityOption = opt.selectedStarDensityOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
@@ -270,16 +264,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public int numberNebula() {
-        if (selectedNebulaeOption().equals(NEBULAE_NONE))
-            return 0;
-        
         float freq = 1.0f;
-        switch(selectedNebulaeOption()) {
-            case NEBULAE_RARE:     freq = 0.25f; break;
-            case NEBULAE_UNCOMMON: freq = 0.5f; break;
-            case NEBULAE_COMMON:   freq = 2.0f; break;
-            case NEBULAE_FREQUENT: freq = 4.0f; break;
-        }
         // MOO Strategy Guide, Table 3-3, p.51
         /*
         switch (selectedGalaxySize()) {
@@ -533,17 +518,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> nebulaeOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(NEBULAE_NONE);
-        list.add(NEBULAE_RARE);
-        list.add(NEBULAE_UNCOMMON);
-        list.add(NEBULAE_NORMAL);
-        list.add(NEBULAE_COMMON);
-        list.add(NEBULAE_FREQUENT);
-        return list;
-    }
-    @Override
     public List<String> starDensityOptions() {
         List<String> list = new ArrayList<>();
         list.add(STAR_DENSITY_LOWEST);
@@ -606,7 +580,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public void setToDefault() {
         selectedGalaxyAge = GALAXY_AGE_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
-        selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;
     }
     private void generateGalaxy() {
