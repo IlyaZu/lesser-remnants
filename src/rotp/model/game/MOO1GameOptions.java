@@ -57,7 +57,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedNebulaeOption;
     private int selectedNumberOpponents;
     private String selectedStarDensityOption;
-    private String selectedPlanetQualityOption;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
     
@@ -120,10 +119,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedStarDensityOption()       { return selectedStarDensityOption == null ? STAR_DENSITY_NORMAL : selectedStarDensityOption; }
     @Override
     public void selectedStarDensityOption(String s) { selectedStarDensityOption = s; }
-    @Override
-    public String selectedPlanetQualityOption()       { return selectedPlanetQualityOption == null ? PLANET_QUALITY_NORMAL : selectedPlanetQualityOption; }
-    @Override
-    public void selectedPlanetQualityOption(String s) { selectedPlanetQualityOption = s; }
     @Override
     public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; }
     @Override
@@ -203,7 +198,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedRandomEventOption = opt.selectedRandomEventOption;
         selectedNebulaeOption = opt.selectedNebulaeOption;
         selectedStarDensityOption = opt.selectedStarDensityOption;
-        selectedPlanetQualityOption = opt.selectedPlanetQualityOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
         if (opt.specificOpponentAIOption != null) {
@@ -411,14 +405,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         }
 
         float r = random();
-        switch(selectedPlanetQualityOption()) {
-            case PLANET_QUALITY_POOR:     r = random() * 0.8f; break;
-            case PLANET_QUALITY_MEDIOCRE: r = random() * 0.9f; break;
-            case PLANET_QUALITY_NORMAL:   r = random(); break;
-            case PLANET_QUALITY_GOOD:     r = 0.1f + (random() * 0.9f); break;
-            case PLANET_QUALITY_GREAT:    r = 0.2f + (random() * 0.8f); break;
-        }
-        
         for (int i=0;i<pcts.length;i++) {
             if (r <= pcts[i]) {
                 typeIndex = i;
@@ -570,16 +556,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> planetQualityOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(PLANET_QUALITY_POOR);
-        list.add(PLANET_QUALITY_MEDIOCRE);
-        list.add(PLANET_QUALITY_NORMAL);
-        list.add(PLANET_QUALITY_GOOD);
-        list.add(PLANET_QUALITY_GREAT);
-        return list;
-    }
-    @Override
     public List<String> opponentAIOptions() {
         List<String> list = new ArrayList<>();
         list.add(OPPONENT_AI_BASE);
@@ -629,7 +605,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public void setToDefault() {
         selectedGalaxyAge = GALAXY_AGE_NORMAL;
-        selectedPlanetQualityOption = PLANET_QUALITY_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
         selectedNebulaeOption = NEBULAE_NORMAL;
         selectedStarDensityOption = STAR_DENSITY_NORMAL;
