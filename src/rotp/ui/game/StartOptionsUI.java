@@ -46,7 +46,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     BasePanel parent;
     BaseText galaxyAgeText;
     BaseText starDensityText;
-    BaseText nebulaeText;
     BaseText randomEventsText;
     
     public StartOptionsUI() {
@@ -54,7 +53,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         Color textC = SystemPanel.whiteText;
         galaxyAgeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         starDensityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        nebulaeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -62,7 +60,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     public void init() {
         galaxyAgeText.displayText(galaxyAgeStr());
         starDensityText.displayText(starDensityStr());
-        nebulaeText.displayText(nebulaeStr());
         randomEventsText.displayText(randomEventsStr());
     }
     public void open(BasePanel p) {
@@ -156,22 +153,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             drawString(g,line, x2+s20, y3);
         }       
        
+        // Gap made by nebula frequency settings removal
         y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, nebulaeText.stringWidth(g)+s10,s30);
-        nebulaeText.setScaledXY(x2+s20, y2+s7);
-        nebulaeText.draw(g);
-        desc = text("SETTINGS_NEBULAE_DESC");
-         g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }
         
         // Gap made by planet quality settings removal
         y2 += (h2+s20);
@@ -275,10 +258,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedStarDensityOption());
         return text("SETTINGS_STAR_DENSITY", opt)+"   ";
     }
-    private String nebulaeStr() {
-        String opt = text(newGameOptions().selectedNebulaeOption());
-        return text("SETTINGS_NEBULAE", opt)+"   ";
-    }
     private String randomEventsStr() {
         String opt = text(newGameOptions().selectedRandomEventOption());
         return text("SETTINGS_RANDOM_EVENTS", opt)+"   ";
@@ -292,11 +271,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedStarDensityOption(newGameOptions().nextStarDensityOption());
         starDensityText.repaint(starDensityStr());
-    }
-    private void toggleNebulae(MouseEvent e) {
-        softClick();
-        newGameOptions().selectedNebulaeOption(newGameOptions().nextNebulaeOption());
-        nebulaeText.repaint(nebulaeStr());
     }
     private void toggleRandomEvents() {
         softClick();
@@ -328,8 +302,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = galaxyAgeText.bounds();
         else if (starDensityText.contains(x,y))
             hoverBox = starDensityText.bounds();
-        else if (nebulaeText.contains(x,y))
-            hoverBox = nebulaeText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
         else if (okBox.contains(x,y))
@@ -342,16 +314,12 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
                 galaxyAgeText.mouseExit();
             else if (prevHover == starDensityText.bounds())
                 starDensityText.mouseExit();
-            else if (prevHover == nebulaeText.bounds())
-                nebulaeText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
             if (hoverBox == galaxyAgeText.bounds())
                 galaxyAgeText.mouseEnter();
             else if (hoverBox == starDensityText.bounds())
                 starDensityText.mouseEnter();
-            else if (hoverBox == nebulaeText.bounds())
-                nebulaeText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
             if (prevHover != null)
@@ -374,8 +342,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             toggleGalaxyAge();
         else if (hoverBox == starDensityText.bounds())
             toggleStarDensity();
-        else if (hoverBox == nebulaeText.bounds())
-            toggleNebulae(e);
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
         else if (hoverBox == okBox)

@@ -67,13 +67,6 @@ public interface IGameOptions {
     public static final String RANDOM_EVENTS_OFF = "SETUP_RANDOM_EVENTS_OFF";
     public static final String RANDOM_EVENTS_NO_MONSTERS = "SETUP_RANDOM_EVENTS_NO_MONSTERS";
     
-    public static final String NEBULAE_NONE      = "SETUP_NEBULA_NONE";
-    public static final String NEBULAE_RARE      = "SETUP_NEBULA_RARE";
-    public static final String NEBULAE_UNCOMMON  = "SETUP_NEBULA_UNCOMMON";
-    public static final String NEBULAE_NORMAL    = "SETUP_NEBULA_NORMAL";
-    public static final String NEBULAE_COMMON    = "SETUP_NEBULA_COMMON";
-    public static final String NEBULAE_FREQUENT  = "SETUP_NEBULA_FREQUENT";
-    
     public static final String STAR_DENSITY_LOWEST   = "SETUP_STAR_DENSITY_LOWEST";
     public static final String STAR_DENSITY_LOWER    = "SETUP_STAR_DENSITY_LOWER";
     public static final String STAR_DENSITY_LOW      = "SETUP_STAR_DENSITY_LOW";
@@ -119,7 +112,6 @@ public interface IGameOptions {
     public List<String> galaxyShapeOptions2();
     public List<String> galaxyAgeOptions();
     public List<String> randomEventOptions();
-    public List<String> nebulaeOptions();
     public List<String> starDensityOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -137,8 +129,6 @@ public interface IGameOptions {
     public void selectedGalaxyAge(String s);
     public String selectedRandomEventOption();
     public void selectedRandomEventOption(String s);
-    public String selectedNebulaeOption();
-    public void selectedNebulaeOption(String s);
     public String selectedStarDensityOption();
     public void selectedStarDensityOption(String s);
     public String selectedOpponentAIOption();
@@ -254,11 +244,6 @@ public interface IGameOptions {
     default String nextRandomEventOption() {
         List<String> opts = randomEventOptions();
         int index = opts.indexOf(selectedRandomEventOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextNebulaeOption() {
-        List<String> opts = nebulaeOptions();
-        int index = opts.indexOf(selectedNebulaeOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextStarDensityOption() {
