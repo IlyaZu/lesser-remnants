@@ -67,14 +67,6 @@ public interface IGameOptions {
     public static final String RANDOM_EVENTS_OFF = "SETUP_RANDOM_EVENTS_OFF";
     public static final String RANDOM_EVENTS_NO_MONSTERS = "SETUP_RANDOM_EVENTS_NO_MONSTERS";
     
-    public static final String STAR_DENSITY_LOWEST   = "SETUP_STAR_DENSITY_LOWEST";
-    public static final String STAR_DENSITY_LOWER    = "SETUP_STAR_DENSITY_LOWER";
-    public static final String STAR_DENSITY_LOW      = "SETUP_STAR_DENSITY_LOW";
-    public static final String STAR_DENSITY_NORMAL   = "SETUP_STAR_DENSITY_NORMAL";
-    public static final String STAR_DENSITY_HIGH     = "SETUP_STAR_DENSITY_HIGH";
-    public static final String STAR_DENSITY_HIGHER   = "SETUP_STAR_DENSITY_HIGHER";
-    public static final String STAR_DENSITY_HIGHEST  = "SETUP_STAR_DENSITY_HIGHEST";
-    
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_XILMI      = "SETUP_OPPONENT_AI_XILMI";
     public static final String OPPONENT_AI_SELECTABLE = "SETUP_OPPONENT_AI_SELECT";
@@ -112,7 +104,6 @@ public interface IGameOptions {
     public List<String> galaxyShapeOptions2();
     public List<String> galaxyAgeOptions();
     public List<String> randomEventOptions();
-    public List<String> starDensityOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
 	
@@ -129,8 +120,6 @@ public interface IGameOptions {
     public void selectedGalaxyAge(String s);
     public String selectedRandomEventOption();
     public void selectedRandomEventOption(String s);
-    public String selectedStarDensityOption();
-    public void selectedStarDensityOption(String s);
     public String selectedOpponentAIOption();
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
@@ -244,11 +233,6 @@ public interface IGameOptions {
     default String nextRandomEventOption() {
         List<String> opts = randomEventOptions();
         int index = opts.indexOf(selectedRandomEventOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String nextStarDensityOption() {
-        List<String> opts = starDensityOptions();
-        int index = opts.indexOf(selectedStarDensityOption())+1;
         return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default void nextSpecificOpponentAI(int i) {
