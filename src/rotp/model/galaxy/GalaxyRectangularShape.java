@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,14 +62,6 @@ public class GalaxyRectangularShape extends GalaxyShape {
     @Override
     protected float sizeFactor(String size) {
         float adj = 1.0f;
-        switch (opts.selectedStarDensityOption()) {
-            case IGameOptions.STAR_DENSITY_LOWEST:  adj = 1.3f; break;
-            case IGameOptions.STAR_DENSITY_LOWER:   adj = 1.2f; break;
-            case IGameOptions.STAR_DENSITY_LOW:     adj = 1.1f; break;
-            case IGameOptions.STAR_DENSITY_HIGH:    adj = 0.9f; break;
-            case IGameOptions.STAR_DENSITY_HIGHER:  adj = 0.8f; break;
-            case IGameOptions.STAR_DENSITY_HIGHEST: adj = 0.7f; break;
-        }
         switch (opts.selectedGalaxySize()) {
             case IGameOptions.SIZE_TINY:      return adj*10; 
             case IGameOptions.SIZE_SMALL:     return adj*15; 

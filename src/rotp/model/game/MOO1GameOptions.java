@@ -55,7 +55,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGameDifficulty;
     private String selectedRandomEventOption;
     private int selectedNumberOpponents;
-    private String selectedStarDensityOption;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
     
@@ -109,10 +108,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedRandomEventOption()       { return selectedRandomEventOption == null ? RANDOM_EVENTS_ON : selectedRandomEventOption; }
     @Override
     public void selectedRandomEventOption(String s) { selectedRandomEventOption = s; }
-    @Override
-    public String selectedStarDensityOption()       { return selectedStarDensityOption == null ? STAR_DENSITY_NORMAL : selectedStarDensityOption; }
-    @Override
-    public void selectedStarDensityOption(String s) { selectedStarDensityOption = s; }
     @Override
     public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; }
     @Override
@@ -190,7 +185,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
         selectedGalaxyAge = opt.selectedGalaxyAge;
         selectedRandomEventOption = opt.selectedRandomEventOption;
-        selectedStarDensityOption = opt.selectedStarDensityOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
         if (opt.specificOpponentAIOption != null) {
@@ -517,18 +511,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> starDensityOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(STAR_DENSITY_LOWEST);
-        list.add(STAR_DENSITY_LOWER);
-        list.add(STAR_DENSITY_LOW);
-        list.add(STAR_DENSITY_NORMAL);
-        list.add(STAR_DENSITY_HIGH);
-        list.add(STAR_DENSITY_HIGHER);
-        list.add(STAR_DENSITY_HIGHEST);
-        return list;
-    }
-    @Override
     public List<String> opponentAIOptions() {
         List<String> list = new ArrayList<>();
         list.add(OPPONENT_AI_BASE);
@@ -579,7 +561,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public void setToDefault() {
         selectedGalaxyAge = GALAXY_AGE_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
-        selectedStarDensityOption = STAR_DENSITY_NORMAL;
     }
     private void generateGalaxy() {
         galaxyShape().quickGenerate();

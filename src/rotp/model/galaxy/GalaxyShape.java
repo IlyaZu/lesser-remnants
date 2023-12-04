@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,14 +91,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     public String defaultOption2()            { return ""; }
 
     public float systemBuffer() {
-        switch (opts.selectedStarDensityOption()) {
-            case IGameOptions.STAR_DENSITY_LOWEST:  return 2.5f;
-            case IGameOptions.STAR_DENSITY_LOWER:   return 2.3f;
-            case IGameOptions.STAR_DENSITY_LOW:     return 2.1f;
-            case IGameOptions.STAR_DENSITY_HIGH:    return 1.7f;
-            case IGameOptions.STAR_DENSITY_HIGHER:  return 1.5f;
-            case IGameOptions.STAR_DENSITY_HIGHEST: return 1.3f;
-        }
         return 1.9f;
     }
     public void fullInit() {

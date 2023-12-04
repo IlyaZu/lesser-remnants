@@ -45,21 +45,18 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     Rectangle defaultBox = new Rectangle();
     BasePanel parent;
     BaseText galaxyAgeText;
-    BaseText starDensityText;
     BaseText randomEventsText;
     
     public StartOptionsUI() {
         setOpaque(false);
         Color textC = SystemPanel.whiteText;
         galaxyAgeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        starDensityText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
     }
     public void init() {
         galaxyAgeText.displayText(galaxyAgeStr());
-        starDensityText.displayText(starDensityStr());
         randomEventsText.displayText(randomEventsStr());
     }
     public void open(BasePanel p) {
@@ -136,22 +133,8 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             drawString(g,line, x2+s20, y3);
         }
         
-        y2 += (h2+s20);
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, starDensityText.stringWidth(g)+s10,s30);
-        starDensityText.setScaledXY(x2+s20, y2+s7);
-        starDensityText.draw(g);
-        desc = text("SETTINGS_STAR_DENSITY_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }       
+        // Gap made by star density removal
+        y2 += (h2+s20);      
        
         // Gap made by nebula frequency settings removal
         y2 += (h2+s20);
@@ -254,10 +237,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         String opt = text(newGameOptions().selectedGalaxyAge());
         return text("SETTINGS_GALAXY_AGE", opt)+"   ";
     }
-    private String starDensityStr() {
-        String opt = text(newGameOptions().selectedStarDensityOption());
-        return text("SETTINGS_STAR_DENSITY", opt)+"   ";
-    }
     private String randomEventsStr() {
         String opt = text(newGameOptions().selectedRandomEventOption());
         return text("SETTINGS_RANDOM_EVENTS", opt)+"   ";
@@ -266,11 +245,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         softClick();
         newGameOptions().selectedGalaxyAge(newGameOptions().nextGalaxyAge());
         galaxyAgeText.repaint(galaxyAgeStr());
-    }
-    private void toggleStarDensity() {
-        softClick();
-        newGameOptions().selectedStarDensityOption(newGameOptions().nextStarDensityOption());
-        starDensityText.repaint(starDensityStr());
     }
     private void toggleRandomEvents() {
         softClick();
@@ -300,8 +274,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         hoverBox = null;
         if (galaxyAgeText.contains(x,y))
             hoverBox = galaxyAgeText.bounds();
-        else if (starDensityText.contains(x,y))
-            hoverBox = starDensityText.bounds();
         else if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
         else if (okBox.contains(x,y))
@@ -312,14 +284,10 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         if (hoverBox != prevHover) {
             if (prevHover == galaxyAgeText.bounds())
                 galaxyAgeText.mouseExit();
-            else if (prevHover == starDensityText.bounds())
-                starDensityText.mouseExit();
             else if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
             if (hoverBox == galaxyAgeText.bounds())
                 galaxyAgeText.mouseEnter();
-            else if (hoverBox == starDensityText.bounds())
-                starDensityText.mouseEnter();
             else if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
             if (prevHover != null)
@@ -340,8 +308,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             return;
         if (hoverBox == galaxyAgeText.bounds())
             toggleGalaxyAge();
-        else if (hoverBox == starDensityText.bounds())
-            toggleStarDensity();
         else if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
         else if (hoverBox == okBox)
