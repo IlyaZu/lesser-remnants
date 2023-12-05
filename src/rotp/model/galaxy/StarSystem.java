@@ -589,45 +589,26 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
 
         // draw star name
         int fontSize = fontSize(map);
-        if (!colonized) {
-            String s1 = map.parent().systemLabel(this);
-            String s2 = map.parent().systemLabel2(this);
-            if (s2.isEmpty())
-                s2 = name2(map);
-            if (!s1.isEmpty() || !s2.isEmpty()) {
-                Font prevFont = g2.getFont();
-                g2.setFont(narrowFont(fontSize));
+        String label1 = map.parent().systemLabel(this);
+        String label2 = map.parent().systemLabel2(this);
+        if (label2.isEmpty())
+            label2 = name2(map);
+        if (!label1.isEmpty() || !label2.isEmpty()) {
+            Font prevFont = g2.getFont();
+            g2.setFont(narrowFont(fontSize));
+            int yAdj = drawStar ? scaled(fontSize)+r0 : scaled(fontSize)/2;
+            int sw = g2.getFontMetrics().stringWidth(label1);
+            if (!colonized) {
                 g2.setColor(map.parent().systemLabelColor(this));
-                int sw = g2.getFontMetrics().stringWidth(s1);
-                int boxSize = r0;
-                int yAdj = drawStar ? scaled(fontSize)+boxSize : scaled(fontSize)/2;
-                if (!s1.isEmpty()) {
-                    drawString(g2,s1, x0-(sw/2), y0+yAdj);
+                if (!label1.isEmpty()) {
+                    drawString(g2,label1, x0-(sw/2), y0+yAdj);
                     y0 += scaled(fontSize-2);
                 }
-                if (!s2.isEmpty()) {
-                    g2.setFont(narrowFont(fontSize-2));
-                    int sw2 = g2.getFontMetrics().stringWidth(s2);
-                    drawString(g2,s2, x0-(sw2/2), y0+yAdj);
-                }
-
-                g2.setFont(prevFont);
             }
-        }
-        else {
-            String label1 = map.parent().systemLabel(this);
-            String label2 = map.parent().systemLabel2(this);
-            if (label2.isEmpty())
-                label2 = name2(map);
-            if (!label1.isEmpty() || !label2.isEmpty()) {
+            else {
             	int s1 = BasePanel.s1;
                 int s2 = BasePanel.s2;
-                Font prevFont = g2.getFont();
-                g2.setFont(narrowFont(fontSize));
-                int sw = g2.getFontMetrics().stringWidth(label1);
                 int boxW = sw + BasePanel.s8;
-                int boxSize = r0;
-                int yAdj = drawStar ? scaled(fontSize)+boxSize : scaled(fontSize)/2;
                 int fontH = scaled(fontSize);
                 int cnr = fontH/2;
                 int x0a = x0-(boxW/2);
@@ -640,14 +621,15 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                 g2.setStroke(prevStroke);
                 if (!label1.isEmpty()) {
                     drawString(g2,label1, x0-(sw/2), y0+yAdj+s1);
+                    y0 += fontH+s2;
                 }
-                if (!label2.isEmpty()) {
-                    g2.setFont(narrowFont(fontSize-2));
-                    int sw2 = g2.getFontMetrics().stringWidth(label2);
-                    drawString(g2,label2, x0-(sw2/2), y0+yAdj+fontH+s2);
-                }
-                g2.setFont(prevFont);
             }
+            if (!label2.isEmpty()) {
+                g2.setFont(narrowFont(fontSize-2));
+                int sw2 = g2.getFontMetrics().stringWidth(label2);
+                drawString(g2,label2, x0-(sw2/2), y0+yAdj);
+            }
+            g2.setFont(prevFont);
         }
     }
     private String name2(GalaxyMapPanel map) {
