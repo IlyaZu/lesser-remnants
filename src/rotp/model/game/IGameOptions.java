@@ -58,10 +58,6 @@ public interface IGameOptions {
     public static final String DIFFICULTY_HARD    = "SETUP_DIFFICULTY_HARD";
     public static final String DIFFICULTY_HARDER  = "SETUP_DIFFICULTY_HARDER";
     public static final String DIFFICULTY_HARDEST = "SETUP_DIFFICULTY_HARDEST";
-    
-    public static final String GALAXY_AGE_NORMAL = "SETUP_GALAXY_AGE_NORMAL";
-    public static final String GALAXY_AGE_YOUNG  = "SETUP_GALAXY_AGE_YOUNG";
-    public static final String GALAXY_AGE_OLD    = "SETUP_GALAXY_AGE_OLD";
 
     public static final String RANDOM_EVENTS_ON  = "SETUP_RANDOM_EVENTS_ON";
     public static final String RANDOM_EVENTS_OFF = "SETUP_RANDOM_EVENTS_OFF";
@@ -102,7 +98,6 @@ public interface IGameOptions {
     public List<String> galaxyShapeOptions();
     public List<String> galaxyShapeOptions1();
     public List<String> galaxyShapeOptions2();
-    public List<String> galaxyAgeOptions();
     public List<String> randomEventOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -116,8 +111,6 @@ public interface IGameOptions {
     public void selectedGalaxySize(String s);
     public String selectedGalaxyShape();
     public void selectedGalaxyShape(String s);
-    public String selectedGalaxyAge();
-    public void selectedGalaxyAge(String s);
     public String selectedRandomEventOption();
     public void selectedRandomEventOption(String s);
     public String selectedOpponentAIOption();
@@ -204,11 +197,6 @@ public interface IGameOptions {
             return "";
         int index = opts.indexOf(selectedGalaxyShapeOption2())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default String nextGalaxyAge() {
-        List<String> opts = galaxyAgeOptions();
-        int index = opts.indexOf(selectedGalaxyAge())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default String nextGameDifficulty() {
         List<String> opts = gameDifficultyOptions();

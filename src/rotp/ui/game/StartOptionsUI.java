@@ -44,19 +44,16 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     Rectangle okBox = new Rectangle();
     Rectangle defaultBox = new Rectangle();
     BasePanel parent;
-    BaseText galaxyAgeText;
     BaseText randomEventsText;
     
     public StartOptionsUI() {
         setOpaque(false);
         Color textC = SystemPanel.whiteText;
-        galaxyAgeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
     }
     public void init() {
-        galaxyAgeText.displayText(galaxyAgeStr());
         randomEventsText.displayText(randomEventsStr());
     }
     public void open(BasePanel p) {
@@ -113,25 +110,11 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
 
         
         // left column
+        // Gap made by galaxy age setting removal
         int y2 = topM+scaled(110);
         int x2 = leftM+s10;
         int w2 = (w1/numColumns)-columnPad;
         int h2 = s90;
-        g.setColor(SystemPanel.blackText);
-        g.drawRect(x2, y2, w2, h2);
-        g.setPaint(GameUI.settingsSetupBackground(w));
-        g.fillRect(x2+s10, y2-s10, galaxyAgeText.stringWidth(g)+s10,s30);
-        galaxyAgeText.setScaledXY(x2+s20, y2+s7);
-        galaxyAgeText.draw(g);
-        String desc = text("SETTINGS_GALAXY_AGE_DESC");
-        g.setColor(SystemPanel.blackText);
-        g.setFont(descFont);
-        List<String> lines = this.wrappedLines(g,desc, w2-s30);
-        int y3 = y2+s10;
-        for (String line: lines) {
-            y3 += lineH;
-            drawString(g,line, x2+s20, y3);
-        }
         
         // Gap made by star density removal
         y2 += (h2+s20);      
@@ -148,18 +131,17 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         // middle column
         y2 = topM+scaled(110);
         x2 = x2+w2+s20;
-        h2 = s90;
         g.setColor(SystemPanel.blackText);
         g.drawRect(x2, y2, w2, h2);
         g.setPaint(GameUI.settingsSetupBackground(w));
         g.fillRect(x2+s10, y2-s10, randomEventsText.stringWidth(g)+s10,s30);
         randomEventsText.setScaledXY(x2+s20, y2+s7);
         randomEventsText.draw(g);
-        desc = text("SETTINGS_RANDOM_EVENTS_DESC");
+        String desc = text("SETTINGS_RANDOM_EVENTS_DESC");
         g.setColor(SystemPanel.blackText);
         g.setFont(descFont);
-        lines = this.wrappedLines(g,desc, w2-s30);
-        y3 = y2+s10;
+        List<String> lines = this.wrappedLines(g,desc, w2-s30);
+        int y3 = y2+s10;
         for (String line: lines) {
             y3 += lineH;
             drawString(g,line, x2+s20, y3);
@@ -180,7 +162,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         // right side
         // Gap made by research speed settings removal
         y2 = topM+scaled(110);
-        h2 = s90;
         x2 = x2+w2+s20;
         
         // Gap made by warp speed settings removal
@@ -233,18 +214,9 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         g.drawRoundRect(defaultBox.x, defaultBox.y, defaultBox.width, defaultBox.height, cnr, cnr);
         g.setStroke(prev);
     }
-    private String galaxyAgeStr() {
-        String opt = text(newGameOptions().selectedGalaxyAge());
-        return text("SETTINGS_GALAXY_AGE", opt)+"   ";
-    }
     private String randomEventsStr() {
         String opt = text(newGameOptions().selectedRandomEventOption());
         return text("SETTINGS_RANDOM_EVENTS", opt)+"   ";
-    }
-    private void toggleGalaxyAge() {
-        softClick();
-        newGameOptions().selectedGalaxyAge(newGameOptions().nextGalaxyAge());
-        galaxyAgeText.repaint(galaxyAgeStr());
     }
     private void toggleRandomEvents() {
         softClick();
@@ -272,9 +244,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         int y = e.getY();
         Rectangle prevHover = hoverBox;
         hoverBox = null;
-        if (galaxyAgeText.contains(x,y))
-            hoverBox = galaxyAgeText.bounds();
-        else if (randomEventsText.contains(x,y))
+        if (randomEventsText.contains(x,y))
             hoverBox = randomEventsText.bounds();
         else if (okBox.contains(x,y))
             hoverBox = okBox;
@@ -282,13 +252,9 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = defaultBox;
 		
         if (hoverBox != prevHover) {
-            if (prevHover == galaxyAgeText.bounds())
-                galaxyAgeText.mouseExit();
-            else if (prevHover == randomEventsText.bounds())
+            if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();
-            if (hoverBox == galaxyAgeText.bounds())
-                galaxyAgeText.mouseEnter();
-            else if (hoverBox == randomEventsText.bounds())
+            if (hoverBox == randomEventsText.bounds())
                 randomEventsText.mouseEnter();
             if (prevHover != null)
                 repaint(prevHover);
@@ -306,9 +272,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             return;
         if (hoverBox == null)
             return;
-        if (hoverBox == galaxyAgeText.bounds())
-            toggleGalaxyAge();
-        else if (hoverBox == randomEventsText.bounds())
+        if (hoverBox == randomEventsText.bounds())
             toggleRandomEvents();
         else if (hoverBox == okBox)
             close();

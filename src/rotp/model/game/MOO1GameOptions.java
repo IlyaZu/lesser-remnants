@@ -51,7 +51,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGalaxyShapeOption1;
     private String selectedGalaxyShapeOption2;
     
-    private String selectedGalaxyAge;
     private String selectedGameDifficulty;
     private String selectedRandomEventOption;
     private int selectedNumberOpponents;
@@ -96,10 +95,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedGalaxyShapeOption2()       { return selectedGalaxyShapeOption2; }
     @Override
     public void selectedGalaxyShapeOption2(String s) { selectedGalaxyShapeOption2 = s; }
-    @Override
-    public String selectedGalaxyAge()           { return selectedGalaxyAge; }
-    @Override
-    public void selectedGalaxyAge(String s)     { selectedGalaxyAge = s; }
     @Override
     public String selectedGameDifficulty()       { return selectedGameDifficulty; }
     @Override
@@ -183,7 +178,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedGameDifficulty = opt.selectedGameDifficulty;
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
-        selectedGalaxyAge = opt.selectedGalaxyAge;
         selectedRandomEventOption = opt.selectedRandomEventOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
@@ -322,20 +316,11 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public String randomStarType() {
-        float[] pcts;
-
-        // normalPcts represents star type distribution per MOO1 Official Strategy Guide
-        //                     RED, ORANG, YELL, BLUE,WHITE, PURP
-        float[] normalPcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
-        float[] youngPcts  = { .20f, .40f, .55f, .85f, .95f, 1.0f };
-        float[] oldPcts    = { .50f, .65f, .75f, .80f, .85f, 1.0f };
-
+        // pcts represents star type distribution per MOO1 Official Strategy Guide
+        //                RED, ORANG, YELL, BLUE,WHITE, PURP
+        float[] pcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
+        
         int typeIndex = 0;
-        switch(selectedGalaxyAge()) {
-            case GALAXY_AGE_YOUNG:  pcts = youngPcts; break;
-            case GALAXY_AGE_OLD:    pcts = oldPcts; break;
-            default:                pcts = normalPcts; break;
-        }
         float r = random();
         for (int i=0;i<pcts.length;i++) {
             if (r <= pcts[i]) {
@@ -483,14 +468,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public List<String> galaxyShapeOptions2() { return galaxyShape.options2(); }
     @Override
-    public List<String> galaxyAgeOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(GALAXY_AGE_YOUNG);
-        list.add(GALAXY_AGE_NORMAL);
-        list.add(GALAXY_AGE_OLD);
-        return list;
-    }
-    @Override
     public List<String> gameDifficultyOptions() {
         List<String> list = new ArrayList<>();
         list.add(DIFFICULTY_EASIEST);
@@ -547,7 +524,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     protected void setDefaultOptionValues() {
         selectedGalaxySize = SIZE_SMALL;
         selectedGalaxyShape = galaxyShapeOptions().get(0);
-        selectedGalaxyAge = galaxyAgeOptions().get(1);
         selectedNumberOpponents = defaultOpponentsOptions();
         selectedPlayerRace(random(startingRaceOptions()));
         selectedGameDifficulty = DIFFICULTY_EASY;
@@ -559,7 +535,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public void setToDefault() {
-        selectedGalaxyAge = GALAXY_AGE_NORMAL;
         selectedRandomEventOption = RANDOM_EVENTS_ON;
     }
     private void generateGalaxy() {
