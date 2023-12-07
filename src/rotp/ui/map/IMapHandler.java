@@ -94,7 +94,6 @@ public interface IMapHandler {
     default Image mapFlagImage(StarSystem s)             { return Empire.thePlayer().sv.mapFlagImage(s.id); }
     default Image flagHover(StarSystem s)                { return ImageManager.current().image("Flag_Hover"); }
     default Image flagHaze(StarSystem s)                 { return ImageManager.current().image("Flag_Haze"); }
-    default boolean drawStar(StarSystem s)               { return true; }
     default boolean showOwnerReach(StarSystem s)         { return false; }
     default boolean showOwnership(StarSystem s)          { return true; }
     default float ownerReach(StarSystem s)               { return 0; }

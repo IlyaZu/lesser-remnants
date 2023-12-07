@@ -692,8 +692,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public boolean canChangeMapScales()            { return true; }
         @Override
-        public boolean drawStar(StarSystem s)          { return sysData(s.id, turn) == Empire.NULL_ID; }
-        @Override
         public boolean drawFlag()                      { return false; }
         @Override
         public boolean drawShield()                    { return false; }
