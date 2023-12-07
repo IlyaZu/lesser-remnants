@@ -543,16 +543,13 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         if ((emp != null) && map.parent().showOwnerReach(this))
             drawOwnerReach(g2, map, emp, x0, y0);
 
-        boolean drawStar = map.parent().drawStar(this);
-        if (drawStar) {
-            if (!session().performingTurn()) {
-                SystemView sv = pl.sv.view(id);
-                Color c0 = map.parent().alertColor(sv);
-                if (c0 != null) 
-                    drawAlert(map, g2, c0, x0, y0);
-            }
-            drawStar(map, g2, x0, y0);
+        if (!session().performingTurn()) {
+            SystemView sv = pl.sv.view(id);
+            Color c0 = map.parent().alertColor(sv);
+            if (c0 != null) 
+                drawAlert(map, g2, c0, x0, y0);
         }
+        drawStar(map, g2, x0, y0);
         
         if (map.parent().isClicked(this)
         || map.parent().isClicked(transportSprite())) 
@@ -596,7 +593,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         if (!label1.isEmpty() || !label2.isEmpty()) {
             Font prevFont = g2.getFont();
             g2.setFont(narrowFont(fontSize));
-            int yAdj = drawStar ? scaled(fontSize)+r0 : scaled(fontSize)/2;
+            int yAdj = scaled(fontSize)+r0;
             int sw = g2.getFontMetrics().stringWidth(label1);
             if (!colonized) {
                 g2.setColor(map.parent().systemLabelColor(this));
