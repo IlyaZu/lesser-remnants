@@ -633,7 +633,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         newSystems.add(sys);
         addColonizedSystem(sys);
         sys.becomeColonized(sys.name(), this);
-        sys.colony().setPopulation(min(sys.planet().currentSize(),tr.size()));
+        sys.colony().population(min(sys.planet().currentSize(),tr.size()));
         tr.size(0);
     }
     public Colony colonize(String sysName, StarSystem sys) {

@@ -121,7 +121,7 @@ public class RandomEventPlague implements Base, Serializable, RandomEvent, Colon
         
         float popLossPct = roll(5,10)/100.0f;
         float newPop = targetColony.population() * (1-popLossPct);
-        targetColony.setPopulation(newPop);
+        targetColony.population(newPop);
     }
     private String continuingText() {
         String s1 = text("EVENT_PLAGUE_2");

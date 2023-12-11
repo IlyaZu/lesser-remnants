@@ -185,7 +185,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         for (int i = 0; i < spending.length; i++)
             spending[i].init(this);
 
-        setPopulation(2);
+        population(2);
         shipyard().goToNextDesign();
         defense().updateMissileBase();
         defense().maxBases(empire().defaultMaxBases());
@@ -269,8 +269,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
     public int displayPopulation()          { return population < 1 ? (int) Math.ceil(population) : (int) population; }
     public float population()               { return population; }
-    public void setPopulation(float pop)    { population = pop; }
-    public void adjustPopulation(float pop) { population += pop; }
+    public void population(float pop)       { population = pop; }
     public int rebels()                      { return rebels; }
     public void rebels(int i)                { rebels = i; }
     public int deltaPopulation()             { return (int) population - (int) previousPopulation - (int) inTransport(); }
@@ -377,7 +376,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     }
 
     public void setHomeworldValues() {
-        setPopulation(50);
+        population(50);
         previousPopulation = population();
         industry().factories(30);
         industry().previousFactories(30);
@@ -937,7 +936,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
                 abandon();
                 return;
             }
-            setPopulation(population() - transport().size());
+            population(population() - transport().size());
             transport = new Transport(starSystem());
             if (empire.isPlayerControlled())
                 starSystem().transportSprite().launch();
@@ -977,7 +976,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             t.size(0);
             return;
         }
-        setPopulation(min(planet.currentSize(), (population() + t.size())));
+        population(min(planet.currentSize(), (population() + t.size())));
         log("Accepting ", str(t.size()), " transports at: ", starSystem().name(), ". New pop:", fmt(population(), 2));
         t.size(0);
     }
@@ -995,7 +994,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         }
         
         captives = population() - rebels;
-        setPopulation(rebels);
+        population(rebels);
 
         if (population() > 0) {
             if (empire.isPlayerControlled() || tr.empire().isPlayerControlled())
@@ -1005,7 +1004,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         }
 
         rebels = (int) population();
-        setPopulation(rebels + captives);
+        population(rebels + captives);
         captives = 0;
 
         // are there rebels left?
@@ -1014,7 +1013,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         empire.setRecalcDistances();
         rebellion = false;
-        setPopulation(max(1, tr.size() + population));
+        population(max(1, tr.size() + population));
         tr.size(0);
     }
     public void resistTransport(Transport tr) {
@@ -1141,10 +1140,10 @@ public final class Colony implements Base, IMappedObject, Serializable {
         if (attRoll < defRoll)
             tr.size(tr.size() - 1);
         else
-            setPopulation(population() - 1);
+            population(population() - 1);
 
         if (population() <= 0)
-            setPopulation(0);
+            population(0);
 
         // true: attacker defeated
         // false: defender defeated
@@ -1185,7 +1184,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             }
         }
 
-        setPopulation(min(planet.currentSize(),tr.size()));
+        population(min(planet.currentSize(),tr.size()));
         tr.size(0);
         shipyard().capturedBy(tr.empire());
         industry().capturedBy(tr.empire());
@@ -1234,7 +1233,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         float newPop = max(0, population() - (damage / TARGETED_DAMAGE_FOR_POPLOSS));
         float newFact = max(0, industry().factories() - (damage / TARGETED_DAMAGE_FOR_FACTLOSS));
 
-        setPopulation(newPop);
+        population(newPop);
         industry().factories(newFact);
 
         if (population() <= 0)
@@ -1244,7 +1243,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         float newPop = max(0, population() - (damage / UNTARGETED_DAMAGE_FOR_POPLOSS));
         float newFact = max(0, industry().factories() - (damage / UNTARGETED_DAMAGE_FOR_FACTLOSS));
 
-        setPopulation(newPop);
+        population(newPop);
         industry().factories(newFact);
 
         if (population() <= 0)
@@ -1253,7 +1252,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public void takeBioweaponDamage(float damage) {
         float popLost = max(0, damage - tech().antidoteLevel());
 
-        setPopulation(max(0, population() - popLost));
+        population(max(0, population() - popLost));
 
         float newWaste = popLost * 10;
         ecology().addWaste(newWaste);
@@ -1270,7 +1269,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         sys.addEvent(new SystemAbandonedEvent(empire.id));
         sys.abandoned(true);
 
-        setPopulation(0);
+        population(0);
         rebels = 0;
         captives = 0;
         rebellion = false;
@@ -1299,7 +1298,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         StarSystem sys = starSystem();
         sys.addEvent(new SystemDestroyedEvent(empire.lastAttacker()));
 
-        setPopulation(0);
+        population(0);
         rebels = 0;
         captives = 0;
         rebellion = false;

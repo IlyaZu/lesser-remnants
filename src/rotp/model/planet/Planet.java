@@ -192,7 +192,7 @@ public class Planet implements Base, IMappedObject, Serializable {
 
         if (colony != null) {
             systemEmp = colony.empire();
-            colony.setPopulation(min(baseSize, colony.population()));
+            colony.population(min(baseSize, colony.population()));
             colony.empire().sv.refreshFullScan(starSystem().id);
         }
 

@@ -305,10 +305,6 @@ public final class GameSession implements Base, Serializable {
                 
                 if (!inProgress())
                     return;
-
-                // REMOVE THIS CODE
-                //playerViewAllSystems();
-                //playerViewAllHomeSystems();
                
                 // all intra-empire events: civ turns, ship movement, etc
                 gal.advanceTime();
@@ -322,9 +318,6 @@ public final class GameSession implements Base, Serializable {
                 GNNExpansionEvent.nextTurn();
                 gal.nextEmpireTurns();
                 player().setVisibleShips();
-                
-                // test game over conditions
-                //randomlyEndGame();
                 
                 if (!inProgress())
                     return;
@@ -420,29 +413,6 @@ public final class GameSession implements Base, Serializable {
         RotPUI.instance().processNotifications(notifs);
         clearScoutedSystems();
         return true;
-    }
-    public void startGroundCombat() {
-        for (EmpireView v : player().empireViews()) {
-            if ((v!= null) && !v.embassy().contact()) {
-                v.embassy().makeFirstContact();
-                v.embassy().declareWar();
-                break;
-            }
-        }
-
-        if (galaxy().currentTurn() > 2)
-            return;
-        Empire pl = player();
-        if (pl.hostiles().isEmpty())
-            return;
-        Empire emp = random(pl.hostiles()).empire();
-        StarSystem sys = galaxy().system(pl.homeSysId());
-
-        Transport tr = emp.allColonizedSystems().get(0).colony().transport();
-        tr.setDest(sys);
-        tr.size(30); // better hope you're playing the Bulrathi
-        tr.launch();
-        tr.arrive();
     }
     public void startShipCombat() {
         if (galaxy().currentTurn() > 2)
@@ -653,22 +623,6 @@ public final class GameSession implements Base, Serializable {
             Spy spy = (new Spy(view.spies())).makeSuper();
             SabotageMission mission = new SabotageMission(view.spies(), spy);
             SabotageNotification.addMission(mission, sys.id);
-        }
-    }
-    public void playerViewAllHomeSystems() {
-        // for testing the minimum empire distance code
-        for (Empire emp: galaxy().empires()) {
-            player().sv.refreshFullScan(emp.homeSysId());
-        }
-        for (StarSystem sys: galaxy().starSystems()) {
-            if (sys.hasMonster())
-                player().sv.refreshFullScan(sys.id);
-        }
-    }
-    public void playerViewAllSystems() {
-        // for testing the minimum empire distance code
-        for (StarSystem sys: galaxy().starSystems()) {
-                player().sv.refreshFullScan(sys.id);
         }
     }
     private String nextTurnTitle() {

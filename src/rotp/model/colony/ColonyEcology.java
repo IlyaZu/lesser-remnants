@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -229,7 +230,7 @@ public class ColonyEcology extends ColonySpendingCategory {
     public void commitTurn() {
         Colony c = colony();
         addWaste(-wasteCleaned);
-        c.setPopulation(c.population() + newGrownPopulation + newPurchasedPopulation);
+        c.population(c.population() + newGrownPopulation + newPurchasedPopulation);
         populationGrowthCompleted = ((newGrownPopulation+newPurchasedPopulation) > 0) && (c.population() >= c.maxSize());
 
         // if affected by waste, deduct population due to decreased planet size
@@ -240,7 +241,7 @@ public class ColonyEcology extends ColonySpendingCategory {
                 float over = pop - size;
                 float loss= over/pop * .1f * over;
                 loss=min(loss,over);
-                c.setPopulation(c.population()-loss);
+                c.population(c.population()-loss);
             }
         }
         if (colony().population() < 0)

@@ -70,7 +70,7 @@ public class RandomEventEarthquake implements Base, Serializable, RandomEvent {
 
         popKilled = max(1, (int) prevPop - (int) newPop);
 
-        targetColony.setPopulation(newPop);
+        targetColony.population(newPop);
         targetColony.industry().factories(newFact);
         if (player().knowsOf(empId)
         && !player().sv.name(sysId).isEmpty())
