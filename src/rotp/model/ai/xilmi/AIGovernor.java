@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -175,18 +176,18 @@ public class AIGovernor implements Base, Governor {
             col.addAllocation(SHIP, col.allocationRemaining());
         
         // SPEND THE EXCESS
-        // if there is industry left to build, go there first
+        // if there is industry left to build, go there
         if (!col.locked(INDUSTRY))
             col.setAllocation(INDUSTRY, maxInd);
-        // if there is terraforming left to build, go there first
+        // if there is terraforming left to build, go there
         if (!col.locked(ECOLOGY))
             col.setAllocation(ECOLOGY, maxEco);
-        // if there is defense left to build, go there next
-        if (!col.locked(DEFENSE))
-            col.setAllocation(DEFENSE, maxDef);
         // if there is population to grow, go there
         if (!col.locked(ECOLOGY))
             col.setAllocation(ECOLOGY, maxEco2);
+        // if there is defense left to build, go there
+        if (!col.locked(DEFENSE))
+            col.setAllocation(DEFENSE, maxDef);
         
         // if research not locked go there
         if (!col.locked(RESEARCH))
