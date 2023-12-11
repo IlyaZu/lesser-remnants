@@ -111,7 +111,6 @@ public class AIGovernor implements Base, Governor {
         int prevDef = col.defense().allocation();
         int prevInd = col.industry().allocation();
         int prevEco = col.ecology().allocation();
-        int prevRes = col.research().allocation();
 
         int cleanEco = col.ecology().cleanupAllocationNeeded();
         int maxInd = col.industry().maxAllocationNeeded();
