@@ -1,8 +1,10 @@
-# Remnants of the Precursors
+# Lesser Remnants
 
-Remnants of the Precursors is a Java-based modernization of the original Master of Orion game from 1993.
+The commonly agreed brilliant thing about the original game is its simplicity and elegance, yet most 4X games since have only added features.
+This is understandable, as feature removals aren't exactly an exciting thing to put on the back of the box.
+Fortunately, this is a hobbyist endeavour free of such constraints!
+As such, the project aims to answer "What if Remnants of the Precursors but less?" in gory detail.
 
-# Links
-Official website: https://www.remnantsoftheprecursors.com/<br/>
-Community subreddit: https://www.reddit.com/r/rotp/<br/>
-Download build: https://rayfowler.itch.io/remnants-of-the-precursors
+Expect mostly removals from code, UI, story and game mechanics. 
+If not removed, an attempt will be made to tweak the afore mentioned to simply work better.
+No new features are planned!
