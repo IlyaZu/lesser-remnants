@@ -1104,14 +1104,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         return false;
     }
-    // only used as a test method to accelerate testing
-    // of the galactic council
-    public void makeFullContact() {
-        for (EmpireView v : empireViews()) {
-            if ((v!= null) && !v.embassy().contact())
-                v.embassy().makeFirstContact();
-        }
-    }
     public float orionCouncilBonus() {
         Galaxy gal = galaxy();
         for (int i=0; i<sv.count(); i++) {

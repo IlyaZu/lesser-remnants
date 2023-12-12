@@ -155,9 +155,6 @@ public final class TechCategory implements Base, Serializable {
         //can't see new techs
         knownTechs().removeAll(tree.newTechs());
     }
-    public String randomKnownTech() {
-        return random(knownTechs());
-    }
     public Tech randomUnknownTech(int minLevel, int levelDiff) {
         // find level of highest known tech
         int highestLevel = 0;
@@ -329,14 +326,6 @@ public final class TechCategory implements Base, Serializable {
             if (!t.restricted && (t.level <= maxLevel) && (random() < pct))
                 addKnownTech(t.id());
         }
-    }
-    public void learnAll() {
-        TechCategory baseCat = TechLibrary.baseCategory[index];
-        List<String> possCopy = new ArrayList<>();
-        for (String id: baseCat.possibleTechs())
-            possCopy.add(id);
-        for (String id: possCopy)
-            learnTech(id);
     }
     private Tech techNamed(String name) {
         for (String id: possibleTechs()) {

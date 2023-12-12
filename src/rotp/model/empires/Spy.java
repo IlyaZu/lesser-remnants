@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +38,6 @@ public class Spy implements Base, Serializable {
     private int mission;
     private int identity;
     public Spy(SpyNetwork sn) { }
-    public Spy makeSuper()  {
-        fate = FATE_CLEARED;
-        identity = IDENTITY_CAN_FRAME;
-        mission = MISSION_SUCCEEDS;
-        return this;
-    }
     public void attemptInfiltration(float securityAdj) {
         // determine spy's fate.. p271 of Strategy Guide, Table 12-1
         float r = random() + securityAdj;

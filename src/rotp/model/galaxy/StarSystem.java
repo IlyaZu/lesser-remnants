@@ -263,7 +263,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         return e == null ? Empire.NULL_ID : e.id;
     }
     public boolean hasColonyForEmpire(Empire c) { return empire() == c; }
-    public boolean hasOrbitingTransports()      { return !orbitingTransports.isEmpty(); }
     public boolean hasStargate(Empire e)        { return isColonized() && colony().hasStargate(e); }
 
     public boolean hasOrbitingFleetForEmpire(Empire emp) {
@@ -311,9 +310,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         
     }
     public void resolvePendingTransports() {
-        if (!hasOrbitingTransports())
-            return;
-
         // land orbiting transports in random order
         while (!orbitingTransports.isEmpty()) {
             Transport tr = random(orbitingTransports);
