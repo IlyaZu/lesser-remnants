@@ -589,9 +589,6 @@ public final class TechTree implements Base, Serializable {
                 adjustTechAllocation(cat.index(), 0-cat.allocation(), true);
         }
     }
-    public String randomKnownTech() {
-        return random(category).randomKnownTech();
-    }
     public Tech randomUnknownTech(int minLevel, int levelDiff) {
         return random(category).randomUnknownTech(minLevel, levelDiff);
     }
@@ -599,10 +596,6 @@ public final class TechTree implements Base, Serializable {
     public void knowAll(int maxLevel, float pct) {
         for (TechCategory cat: category)
             cat.knowAll(maxLevel, pct);
-    }
-    public void learnAll() {
-        for (TechCategory cat: category)
-            cat.learnAll();
     }
     public void allowResearch(String id) {
         category[tech(id).cat.index()].allowResearch(id);
