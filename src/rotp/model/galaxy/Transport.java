@@ -318,10 +318,14 @@ public class Transport implements Base, Ship, Sprite, Serializable {
             else
                 dest.colony().resistTransport(this);
         }
-        else if (dest.colony().inRebellion())
+        else if (dest.colony().inRebellion()) {
+        	dest.colony().resistTransportWithFleet(this);
             dest.colony().resistTransportWithRebels(this);
-        else
-            dest.colony().acceptTransport(this);
+        } 
+        else {
+        	dest.colony().resistTransportWithFleet(this);
+        	dest.colony().acceptTransport(this);
+        }
 
         //Transport is gone. If selected on the map, de-select and replace with target system
         session().replaceVarValue(this, dest);

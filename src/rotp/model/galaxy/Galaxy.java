@@ -209,15 +209,15 @@ public class Galaxy implements Base, Serializable {
         }
     }
     public void postNextTurn2() {
-        // check bombardment
-        NoticeMessage.resetSubstatus(text("TURN_BOMBARDMENT"));
-        checkForPlanetaryBombardment();
-
         // land transports
         Galaxy gal = galaxy();
         NoticeMessage.resetSubstatus(text("TURN_TRANSPORTS"));
         for (int i=0; i<gal.numStarSystems(); i++)
             gal.system(i).resolvePendingTransports();
+    	
+        // check bombardment
+        NoticeMessage.resetSubstatus(text("TURN_BOMBARDMENT"));
+        checkForPlanetaryBombardment();
 
         NoticeMessage.resetSubstatus(text("TURN_COLONIES"));
         // after bombardments, check for any possible colonizations
