@@ -1029,10 +1029,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
             return;
         }
         
-        int passed = 0;
-        int num = tr.size();
-        float pct = tr.combatTransportPct();
-
         EmpireView ev = tr.empire().viewForEmpire(empire);
 
         if (ev != null) {
@@ -1046,62 +1042,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
                 ev.embassy().declareWar();
         }
 
-        if (tech().subspaceInterdiction())
-            pct /= 2;
-
-        // check for automatic passing if combat transporters
-        if (pct > 0) {
-            for (int i = 0; i < num; i++) {
-                if (random() <= pct)
-                    passed++;
-            }
-        }
-
-        num -= passed;
-
-        // choose most effective missile dmg
-        int missileDmg = 0;
-        MissileBase base = defense().missileBase();
-        TechMissileWeapon scatter = base.scatterPack() == null ? null : base.scatterPack().tech();
-        TechMissileWeapon missile = defense().missileBase().missile().tech();
-        if (scatter != null)
-            missileDmg = 3*max(missile.damage(), scatter.damage() * scatter.scatterAttacks());
-        else 
-            missileDmg = 3*missile.damage();
-
-        int lost = 0;
-
-        // start with base missile damage
-        float defenderDmg = defense().missileBases() * missileDmg;
-
-        // add firepower for each allied ship in orbit
-            // modnar: use firepowerAntiShip to only count ship weapons that can hit ships
-            // to prevent ground bombs from being able to damage transports
-        List<ShipFleet> fleets = starSystem().orbitingFleets();
-        for (ShipFleet fl : fleets) {
-            if (fl.empire().aggressiveWith(tr.empId()))
-                defenderDmg += fl.firepowerAntiShip(0);
-        }
-
-        // run the gauntlet
-        for (int j = 0; j < tr.gauntletRounds(); j++)
-            lost += (int) (defenderDmg / tr.hitPoints());
-
-        passed += max(0, (num - lost));
-
-        tr.size(passed);
-
-        // if gauntlet not passed, stop and inform player (if player)
-        // neither of these incidents are added to the embassies. They are for
-        // player notification only.
-        if (tr.size() == 0) {
-            log(concat(str(tr.launchSize()), " ", tr.empire().raceName(), " transports perished at ", name()));
-            if (tr.empire().isPlayerControlled()) 
-                TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
-            else if (empire().isPlayerControlled()) 
-                InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
-            return;
-        }
+        resistTransportWithFleet(tr);
 
         float startingPop = population();
         if (population() > 0) {
@@ -1128,6 +1069,68 @@ public final class Colony implements Base, IMappedObject, Serializable {
             capturedByTransport(tr);
         } else
             ColonyInvadedIncident.create(tr.empire(), empire(), starSystem(), popLost);
+    }
+    public void resistTransportWithFleet(Transport tr) {
+        int passed = 0;
+        int num = tr.size();
+
+        float pct = tr.combatTransportPct();
+        if (tech().subspaceInterdiction())
+            pct /= 2;
+
+        // check for automatic passing if combat transporters
+        if (pct > 0) {
+            for (int i = 0; i < num; i++) {
+                if (random() <= pct)
+                    passed++;
+            }
+        }
+
+        num -= passed;
+
+        // choose most effective missile dmg
+        int missileDmg = 0;
+        if (empire().aggressiveWith(tr.empId())) {
+        	MissileBase base = defense().missileBase();
+            TechMissileWeapon scatter = base.scatterPack() == null ? null : base.scatterPack().tech();
+            TechMissileWeapon missile = defense().missileBase().missile().tech();
+            if (scatter != null)
+                missileDmg = 3*max(missile.damage(), scatter.damage() * scatter.scatterAttacks());
+            else 
+                missileDmg = 3*missile.damage();
+        }
+
+        // start with base missile damage
+        float defenderDmg = defense().missileBases() * missileDmg;
+
+        // add firepower for each allied ship in orbit
+            // modnar: use firepowerAntiShip to only count ship weapons that can hit ships
+            // to prevent ground bombs from being able to damage transports
+        List<ShipFleet> fleets = starSystem().orbitingFleets();
+        for (ShipFleet fl : fleets) {
+            if (fl.empire().aggressiveWith(tr.empId()))
+                defenderDmg += fl.firepowerAntiShip(0);
+        }
+
+        // run the gauntlet
+        defenderDmg *= tr.gauntletRounds();
+        
+        int lost = (int) (defenderDmg / tr.hitPoints());
+        passed += max(0, (num - lost));
+
+        tr.size(passed);
+
+        // if gauntlet not passed, stop and inform player (if player)
+        // neither of these incidents are added to the embassies. They are for
+        // player notification only.
+        if (tr.size() == 0) {
+            log(concat(str(tr.launchSize()), " ", tr.empire().raceName(), " transports perished at ", name()));
+            if (tr.empire().isPlayerControlled()) 
+                TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
+            else if (empire().isPlayerControlled()) 
+                InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
+            return;
+        }
     }
     public void completeDefenseAgainstTransports(Transport tr) {
         while ((tr.size() > 0) && (defense().troops() > 0))
