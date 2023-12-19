@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +33,8 @@ public class CombatStackSpaceCrystal extends CombatStack {
         maxShield = shield = 5.0f;
         captain = new CrystalShipCaptain();
         image = image("SPACE_CRYSTAL");
-    }    
+    }
+    @Override
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
         return max(0, 0.75f - (0.01f * wpn.tech().level));
     }

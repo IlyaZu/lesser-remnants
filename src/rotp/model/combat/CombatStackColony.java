@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,15 +33,12 @@ public class CombatStackColony extends CombatStack {
     public static final float BEAM_DAMAGE_MOD = .5f;
     public static final float TORPEDO_DAMAGE_MOD = .5f;
     public Colony colony;
-    public ShipWeaponMissile missile;
-    public ShipWeaponMissile scatterPack;
-    public float targetDmg = 0;
-    public float targetKills = 0;
-    public boolean retreatAllowed = true;
-    public boolean missileFired = false;
+    private ShipWeaponMissile missile;
+    private ShipWeaponMissile scatterPack;
+    private boolean missileFired = false;
     public boolean colonyDestroyed = false;
-    public float startingPop = 0;
-    public float startingFactories = 0;
+    private float startingPop = 0;
+    private float startingFactories = 0;
     private float planetaryShieldLevel = 0;
     private boolean usingAI = true;
     public CombatStackColony(Colony col, ShipCombatManager m) {
@@ -89,10 +87,8 @@ public class CombatStackColony extends CombatStack {
     @Override
     public boolean isColony()         { return true; }
     @Override
-    public int shots()                { return num; }
-    @Override
     public String name()              { return colony.name(); }
-    final public MissileBase missileBase()  { return colony.defense().missileBase(); }
+    private MissileBase missileBase()  { return colony.defense().missileBase(); }
     @Override
     public float designCost()          { return  missileBase().cost(colony.empire()); }
     @Override
@@ -183,8 +179,7 @@ public class CombatStackColony extends CombatStack {
     public boolean canMoveTo(int x, int y) { return false; }
     @Override
     public boolean canTeleport()           { return false; }
-    @Override
-    public boolean currentWeaponCanAttack(CombatStack target) {
+    private boolean currentWeaponCanAttack(CombatStack target) {
         if (target == null)
             return false;
         if (target.inStasis || missileFired || (num == 0))
@@ -194,8 +189,7 @@ public class CombatStackColony extends CombatStack {
         int dist = Math.abs(x-target.x);
         return ((selectedWeapon().range() * 2) >= dist);
     }
-    @Override
-    public ShipWeaponMissile selectedWeapon() { return missile; }
+    private ShipWeaponMissile selectedWeapon() { return missile; }
     @Override
     public void fireWeapon(CombatStack newTarget) {
         //ail: @Ray: My AI usually doesn't build missile-bases and there's also no hook in it to control the used missile type, so'll do some very basic logic here to help the auto-play and the other AIs pick the right missile
@@ -289,7 +283,6 @@ public class CombatStackColony extends CombatStack {
     @Override
     public void drawStack(ShipBattleUI ui, Graphics2D g, int origCount, int x, int y, int stackW, int stackH) {
         int x1 = x;
-        int y1 = y;
 
         int sysId = colony.starSystem().id;
         String sname = player().sv.name(sysId);

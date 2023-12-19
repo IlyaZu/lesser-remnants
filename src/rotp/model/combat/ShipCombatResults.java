@@ -33,17 +33,16 @@ import rotp.model.ships.ShipDesign;
 import rotp.util.Base;
 
 public final class ShipCombatResults implements Base {
-    StarSystem system;
+    private StarSystem system;
     public CombatStackColony colonyStack;
     Empire defender, attacker;
     private final SpaceMonster monster;
-    List<Empire> empires = new ArrayList<>();
-    List<CombatStack> activeStacks = new ArrayList<>();
-    Map<ShipDesign, Integer> shipsDestroyed = new HashMap<>();
-    Map<ShipDesign, Integer> shipsDamaged   = new HashMap<>();
-    Map<ShipDesign, Integer> shipsRetreated = new HashMap<>();
+    private List<Empire> empires = new ArrayList<>();
+    private List<CombatStack> activeStacks = new ArrayList<>();
+    private Map<ShipDesign, Integer> shipsDestroyed = new HashMap<>();
+    private Map<ShipDesign, Integer> shipsRetreated = new HashMap<>();
     int basesDestroyed = 0;
-    List<Empire> usedBioweapons = new ArrayList<>();
+    private List<Empire> usedBioweapons = new ArrayList<>();
 
     public StarSystem system()            { return system; }
     public Empire defender()              { return defender; }
@@ -57,7 +56,6 @@ public final class ShipCombatResults implements Base {
 
     public List<CombatStack> activeStacks()  { return activeStacks; }
     public Map<ShipDesign, Integer> shipsDestroyed()  { return shipsDestroyed; }
-    public Map<ShipDesign, Integer> shipsDamaged()    { return shipsDamaged; }
     public Map<ShipDesign, Integer> shipsRetreated()  { return shipsRetreated; }
 
     public float shipHullPointsDestroyed(Empire e) {
@@ -88,15 +86,6 @@ public final class ShipCombatResults implements Base {
             return empires.get(1);
         else
             return empires.get(0);
-    }
-    public String victorName() {
-        Empire victor = victor();
-        if (victor != null)
-            return victor.raceName();
-        else if (isMonsterAttack())
-            return monster.name();
-        else 
-            return "";
     }
     public void addBioweaponUse(Empire e) {
         if (!usedBioweapons.contains(e))
@@ -215,12 +204,6 @@ public final class ShipCombatResults implements Base {
     }
     public void addShipStackDestroyed(ShipDesign d, int count) {
         shipsDestroyed.put(d, count);
-    }
-    public void addShipsDamaged(ShipDesign d, int count) {
-        if (shipsDamaged.containsKey(d))
-            shipsDamaged.put(d, count+shipsDamaged.get(d));
-        else
-            shipsDamaged.put(d, count);
     }
     public void addShipsRetreated(ShipDesign d, int count) {
         if (shipsRetreated.containsKey(d))

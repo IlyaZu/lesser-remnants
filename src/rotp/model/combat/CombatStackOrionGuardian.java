@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,14 +35,14 @@ import rotp.model.tech.TechShipWeapon;
 import rotp.model.tech.TechTorpedoWeapon;
 
 public class CombatStackOrionGuardian extends CombatStack {
-    public final List<ShipComponent> weapons = new ArrayList<>();
-    public int[] weaponCount = new int[4];
-    public final ShipSpecial[] specials = new ShipSpecial[3];
-    public int[] roundsRemaining = new int[4]; // how many rounds you can fire (i.e. missiles)
-    public int[] shotsRemaining = new int[4]; // how many uses (shots) left onthe current turn
-    public int[] baseTurnsToFire = new int[4];    // how many turns to wait before you can fire again
-    public int[] wpnTurnsToFire = new int[4];    // how many turns to wait before you can fire again
-    public ShipComponent selectedWeapon;
+    private final List<ShipComponent> weapons = new ArrayList<>();
+    private int[] weaponCount = new int[4];
+    private final ShipSpecial[] specials = new ShipSpecial[3];
+    private int[] roundsRemaining = new int[4]; // how many rounds you can fire (i.e. missiles)
+    private int[] shotsRemaining = new int[4]; // how many uses (shots) left onthe current turn
+    private int[] baseTurnsToFire = new int[4];    // how many turns to wait before you can fire again
+    private int[] wpnTurnsToFire = new int[4];    // how many turns to wait before you can fire again
+    private ShipComponent selectedWeapon;
     public CombatStackOrionGuardian() {
         num = 1;
         maxHits = hits = 10000;
@@ -83,7 +84,8 @@ public class CombatStackOrionGuardian extends CombatStack {
         wpnTurnsToFire[3] = 1;
         if (weapons.size() > 0)
             selectedWeapon = weapons.get(0);
-    }    
+    }
+    @Override
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
         return max(0, 0.75f - (0.01f * wpn.tech().level));
     }
@@ -137,8 +139,7 @@ public class CombatStackOrionGuardian extends CombatStack {
         for (int i=0;i<shotsRemaining.length;i++) 
             wpnTurnsToFire[i] = shotsRemaining[i] == 0 ? baseTurnsToFire[i] : wpnTurnsToFire[i]-1;          
     }
-    @Override
-    public void rotateToUsableWeapon(CombatStack target) {
+    private void rotateToUsableWeapon(CombatStack target) {
         if (selectedWeapon == null)
             return;
         int i = weapons.indexOf(selectedWeapon);
@@ -166,8 +167,7 @@ public class CombatStackOrionGuardian extends CombatStack {
         }
         return false;
     }
-    @Override
-    public boolean currentWeaponCanAttack(CombatStack target) {
+    private boolean currentWeaponCanAttack(CombatStack target) {
         if (selectedWeapon() == null)
             return false;
 
@@ -212,8 +212,7 @@ public class CombatStackOrionGuardian extends CombatStack {
     public int weaponNum(ShipComponent comp) {
         return weapons.indexOf(comp);
     }
-    @Override
-    public int weaponIndex() {
+    private int weaponIndex() {
         return weapons.indexOf(selectedWeapon);
     }
     @Override
@@ -257,35 +256,6 @@ public class CombatStackOrionGuardian extends CombatStack {
     public float initiativeRank() {
         return 5;
     }
-    @Override
-    public ShipComponent selectedWeapon() { return selectedWeapon; }
-    public void drawAttack() { 
-        if (mgr.ui == null)
-            return;
-        
-        brighten = 1.0f;
-        for (int i=0;i<2;i++) {
-            scale += 1.5;
-            transparency -= 0.45;
-            brighten -= .005;
-            long t0 = System.currentTimeMillis();
-            mgr.ui.paintAllImmediately();
-            long t1 = System.currentTimeMillis() - t0;
-            if (t1 < 50)
-                sleep(50-t1);
-        }
-        for (int i=0;i<12;i++) {
-            scale -= 0.25;
-            transparency += 0.075;
-            brighten -= 0.075f;
-            long t0 = System.currentTimeMillis();
-            mgr.ui.paintAllImmediately();
-            long t1 = System.currentTimeMillis() - t0;
-            if (t1 < 50)
-                sleep(50-t1);
-        }
-        brighten = 0;
-        mgr.ui.paintAllImmediately();
-    }
+    private ShipComponent selectedWeapon() { return selectedWeapon; }
 }
         

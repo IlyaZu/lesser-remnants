@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +18,7 @@ package rotp.model.combat;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.DiplomaticTreaty;
@@ -31,9 +33,10 @@ import rotp.ui.combat.ShipBattleUI;
 import rotp.util.Base;
 
 public class ShipCombatManager implements Base {
+    private static final Comparator<CombatStack> INITIATIVE = 
+    		(o1, o2) -> Base.compare(o2.initiativeRank(), o1.initiativeRank());
     private static final int MAX_TURNS = 100;
     private static Thread autoRunThread;
-    private static Thread runningThread;
     // combat vars
     public ShipBattleUI ui;
     private StarSystem system;
@@ -45,7 +48,7 @@ public class ShipCombatManager implements Base {
     public boolean autoResolve = false;
     public boolean performingStackTurn = false;
     public boolean showAnimations = true;
-    public boolean playerInBattle = false;
+    private boolean playerInBattle = false;
     private CombatStack currentStack;
     private ShipCombatResults results;
     private boolean finished = false;
@@ -53,10 +56,9 @@ public class ShipCombatManager implements Base {
     public static final int maxY = 7;
     private int turnCounter = 0;
     private final int[] startingPosn = { 30,40,20,50,10,60,0 };
-    private final double[][] riskMap = new double[maxX+1][maxY+1];
     public boolean[][] asteroidMap = new boolean[maxX+1][maxY+1];
     private boolean initialPause;
-    public List<CombatStack> currentTurnList;
+    private List<CombatStack> currentTurnList;
 
     public boolean interdiction()              { return interdiction; }
     public ShipCombatResults results()         { return results; }
@@ -68,9 +70,6 @@ public class ShipCombatManager implements Base {
     public List<CombatStack> allStacks()       { return allStacks; }
     public void setInitialPause()              { initialPause = true; }
     
-    public boolean involves(Empire emp) {
-        return (results.attacker() == emp) || (results.defender() == emp);
-    }
     public boolean redrawMap = false;
     public void battle(StarSystem sys) {
         playerInBattle = false;
@@ -261,7 +260,6 @@ public class ShipCombatManager implements Base {
         if (autoComplete) {
             autoRunThread = new Thread(autoRunProcess());
             autoRunThread.start();
-            runningThread = autoRunThread;
         }
         else {
             if(autoRunThread != null) {
@@ -279,7 +277,7 @@ public class ShipCombatManager implements Base {
         // the middle of combat, which can potentially update both activeStacks()
         // and currentTurnList
         List<CombatStack> temp = new ArrayList<>(activeStacks());
-        Collections.sort(temp, CombatStack.INITIATIVE);
+        Collections.sort(temp, INITIATIVE);
         currentTurnList = new ArrayList<>(temp);
     }
     public void resolveAllCombat() {
@@ -291,7 +289,7 @@ public class ShipCombatManager implements Base {
         while (shouldContinue())
             performNextStackTurn();
     } 
-    public boolean shouldContinue() {
+    private boolean shouldContinue() {
         return autoComplete && !combatIsFinished();
     }
     public void continueToNextPlayerStack() {
@@ -328,20 +326,6 @@ public class ShipCombatManager implements Base {
             performingStackTurn = false;
             autoRunThread = null;
         };
-    }
-    public boolean canScan(Empire civ, CombatStack st) {
-        if (st.empire == civ)
-            return true;
-        if (st.cloaked)
-            return false;
-        if (system.empire() == civ)
-            return true;
-
-        for (CombatStack stack : results.activeStacks()) {
-            if ((stack.empire == civ) && stack.canScan())
-                return true;
-        }
-        return false;
     }
     public void setupBombardment(StarSystem sys, ShipFleet fleet) {
         ui = null;
@@ -526,7 +510,7 @@ public class ShipCombatManager implements Base {
             }
         }
     }
-    public void initCombatStacks(Empire emp1, Empire emp2) {
+    private void initCombatStacks(Empire emp1, Empire emp2) {
         if (results.colonyStack != null)
             addStackToCombat(results.colonyStack);
 
@@ -566,7 +550,7 @@ public class ShipCombatManager implements Base {
             empiresInConflict.remove(passiveEmp);
         }
     }
-    public void initCombatStacks(Empire emp, SpaceMonster monster) {
+    private void initCombatStacks(Empire emp, SpaceMonster monster) {
         if (results.colonyStack != null)
             addStackToCombat(results.colonyStack);
 
@@ -607,7 +591,7 @@ public class ShipCombatManager implements Base {
             empiresInConflict.remove(passiveEmp);
         }
     }
-    public void retreatEmpire(Empire e) {
+    private void retreatEmpire(Empire e) {
         List<CombatStack> retreatingStacks = new ArrayList<>();
 
         List<CombatStack> activeStacks = new ArrayList<>(results.activeStacks());
@@ -622,7 +606,7 @@ public class ShipCombatManager implements Base {
         for (CombatStack st: retreatingStacks)
             results.activeStacks().remove(st);
     }
-    public void addEmpiresToCombat() {
+    private void addEmpiresToCombat() {
         boolean playerInCombat = false;
         List<Empire> empiresInCombat = new ArrayList<>();
         for (CombatStack st : results.activeStacks()) {
@@ -749,11 +733,9 @@ public class ShipCombatManager implements Base {
         int tgtY = nearY.get(index);
         CombatStack tgtStack = stackAt(tgtX, tgtY);
         this.moveStack(newStack, tgtX, tgtY);
-        //newStack.x = tgtX;
-        //newStack.y = tgtY;
         return tgtStack;
     }
-    public void scanShips() {
+    private void scanShips() {
         // scan only if have scanners and NOT same civ as planet (already scanned)
         for (CombatStack st : results.activeStacks()) {
             if (st.canScan()) {
@@ -869,7 +851,6 @@ public class ShipCombatManager implements Base {
 
         return false;
     }
-    public boolean finished()    { return finished; }
     public boolean combatIsFinished() {
         if (finished)
             return true;
@@ -895,7 +876,6 @@ public class ShipCombatManager implements Base {
         return false;
     }
     public void turnDone(CombatStack st) {
-        //log(st.fullName(), " - Done");
         st.endTurn();
 
         if (activeStacks().isEmpty()) {
@@ -938,8 +918,7 @@ public class ShipCombatManager implements Base {
 
         currentStack.beginTurn();
     }
-    public void performNextStackTurn() {
-        generateRiskMap(currentStack);
+    private void performNextStackTurn() {
         currentStack.performTurn();
     }
     public void removeFromCombat(CombatStack st) {
@@ -959,7 +938,7 @@ public class ShipCombatManager implements Base {
             allStacks.remove(st);
         
     }
-    public void removeMissilesLaunchedFromStack(CombatStack st) {
+    private void removeMissilesLaunchedFromStack(CombatStack st) {
         List<CombatStack> stacks = new ArrayList<>(allStacks());
         for (CombatStack stack: stacks) {
             List<CombatStackMissile> missiles = new ArrayList<>(stack.missiles());
@@ -969,14 +948,14 @@ public class ShipCombatManager implements Base {
             }
         }
     }
-    public void removeMissilesTargetingStack(CombatStack st) {
+    private void removeMissilesTargetingStack(CombatStack st) {
         List<CombatStackMissile> missiles = new ArrayList<>(st.missiles());
         for (CombatStackMissile miss: missiles) {
             removeMissileFromCombat(miss);
         }
     }
     private void removeMissileFromCombat(CombatStackMissile miss) {
-        List missList = miss.target.missiles();
+        List<CombatStackMissile> missList = miss.target.missiles();
         synchronized(missList) {
             missList.remove(miss);
         }
@@ -1011,28 +990,14 @@ public class ShipCombatManager implements Base {
         }
     }
     public boolean moveStack(CombatStack st, int x1, int y1) {
-        //log(currentStack.fullName(), " moving to: ", str(x1), ",", str(y1));
         return st.moveTo(x1,y1);
     }
-    public void teleportStack(CombatStack st, int x1, int y1) {
-        //log(currentStack.fullName() + " teleporting to: " + x1 + "," + y1);
+    private void teleportStack(CombatStack st, int x1, int y1) {
         st.teleportTo(x1,y1, 0.1f);
     }
     public void performAttackTarget(CombatStack st) {
         while (st.selectBestWeapon(st.target)) 
             st.fireWeapon(st.target);
-    }
-    public void attackTarget(CombatStack st) {
-        //log("mgr attackTarget done:" + st.civ.race.name + st.name());
-    }
-    private void generateRiskMap(CombatStack st) {
-        for (int x=0;x<=maxX;x++) {
-            for (int y=0;y<maxY;y++)
-                    riskMap[x][y] = riskAt(st, x, y);
-        }
-    }
-    private double riskAt(CombatStack stack, int x, int y) {
-        return 0.0d;
     }
     public boolean[] validMoveMap(CombatStack stack) {
         int gridW = maxX+3;
@@ -1074,7 +1039,7 @@ public class ShipCombatManager implements Base {
         }
         return valid;
     }
-    class EmpireMatchup {
+    private static class EmpireMatchup {
         Empire emp1;
         Empire emp2;
         public EmpireMatchup(Empire e1, Empire e2) {
@@ -1087,9 +1052,6 @@ public class ShipCombatManager implements Base {
             if ((emp1 == e2) && (emp2 == e1))
                 return true;
             return false;
-        }
-        public boolean includes(Empire e1) {
-            return (emp1 == e1) || (emp2 == e1);
         }
     }
 }
