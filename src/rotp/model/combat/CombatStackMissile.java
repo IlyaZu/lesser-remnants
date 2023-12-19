@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +21,16 @@ import java.awt.geom.AffineTransform;
 import rotp.model.ships.ShipWeaponMissileType;
 import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
-import rotp.util.Base;
 
-public class CombatStackMissile extends CombatStack implements Base {
-    public static int MAX_TURNS = 10;
+public class CombatStackMissile extends CombatStack {
+    private static final Color missileCountColour = new Color(255,240,78);
+    private static final int MAX_TURNS = 10;
     public CombatStack owner;
-    public ShipWeaponMissileType missile;
-    public int turnsLeft = 0;
-    Image missiles;
-    float moveRate = 0;
-    float range = 0;
+    private ShipWeaponMissileType missile;
+    private int turnsLeft = 0;
+    private Image missiles;
+    private float moveRate = 0;
+    private float range = 0;
 
     public CombatStackMissile(CombatStack ship, ShipWeaponMissileType miss, int n) {
         missile = miss;
@@ -39,7 +40,6 @@ public class CombatStackMissile extends CombatStack implements Base {
         mgr = ship.mgr;
         empire = ship.empire;
         target = ship.target;
-        ally = ship.ally;
         x = ship.x;
         y = ship.y;
         offsetX = ship.offsetX;
@@ -55,7 +55,6 @@ public class CombatStackMissile extends CombatStack implements Base {
         g.dispose();
 
         maxMove = miss.speed();
-        //image = missile.image(num);
         turnsLeft = MAX_TURNS;
         moveRate = target.maxMove() == 0 ? maxMove : maxMove / target.maxMove();
     }
@@ -65,13 +64,9 @@ public class CombatStackMissile extends CombatStack implements Base {
     }
 
     @Override
-    public float maxDamage()             { return missile.maxDamage(); }
-    @Override
     public int maxFiringRange(CombatStack tgt)           { return 0; }
     @Override
     public int optimalFiringRange(CombatStack tgt)       { return 0; }
-    @Override
-    public int minFiringRange()           { return 0; }
     @Override
     public boolean isMissile()            { return true; }
     @Override
@@ -92,15 +87,12 @@ public class CombatStackMissile extends CombatStack implements Base {
     @Override
     public void endTurn() {
         turnsLeft--;
-        //log(fullName(), " - Done. Turns left: ", str(turnsLeft));
         if (selfDestruct()) {
-            ///log(fullName(), " - Self Destructing!");
             mgr.removeFromCombat(this);
         }
     }
 
-    @Override
-    public float rotateRadians() {
+    private float rotateRadians() {
         return radiansTo(target) + ((float)Math.PI/2);
     }
     @Override
@@ -110,8 +102,6 @@ public class CombatStackMissile extends CombatStack implements Base {
     @Override
     public void fireWeapon(CombatStack target) {
         missile.fireUpon(this, target, num);
-        //if (target.damageSustained > 0)
-        //    log("missile damage: ", str(target.damageSustained));
 
         mgr.destroyStack(this);
     }
@@ -163,7 +153,7 @@ public class CombatStackMissile extends CombatStack implements Base {
         g.drawImage(missiles, tx, null);
         int y2 = y0+BasePanel.s6;
         int x1 = x0;
-        g.setColor(shipCountTextC);
+        g.setColor(missileCountColour);
         g.setFont(narrowFont(12));
         String cnt = str(num);
         drawBorderedString(g, cnt, 2, x1, y2, Color.black, Color.yellow);

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,20 +30,20 @@ import rotp.ui.combat.ShipBattleUI;
 
 public class CombatStackShip extends CombatStack {
     public ShipDesign design;
-    public ShipFleet fleet;
-    public int selectedWeaponIndex;
-    public final List<ShipComponent> weapons = new ArrayList<>();
-    public float displacementPct = 0;
+    private ShipFleet fleet;
+    private int selectedWeaponIndex;
+    private final List<ShipComponent> weapons = new ArrayList<>();
+    private float displacementPct = 0;
 
-    public int[] weaponCount = new int[7];
+    private int[] weaponCount = new int[7];
     public int[] weaponAttacks = new int[7];
-    public int[] shotsRemaining = new int[7];
+    private int[] shotsRemaining = new int[7];
     public int[] roundsRemaining = new int[7]; // how many rounds you can fire (i.e. missiles)
-    public int[] baseTurnsToFire = new int[7];    // how many turns to wait before you can fire again
-    public int[] wpnTurnsToFire = new int[7];    // how many turns to wait before you can fire again
-    public boolean bombardedThisTurn = false;
+    private int[] baseTurnsToFire = new int[7];    // how many turns to wait before you can fire again
+    private int[] wpnTurnsToFire = new int[7];    // how many turns to wait before you can fire again
+    private boolean bombardedThisTurn = false;
     private boolean usingAI = true;
-    public int repulsorRange = 0;
+    private int repulsorRange = 0;
     private CombatStack ward;
     
     @Override
@@ -114,10 +115,7 @@ public class CombatStackShip extends CombatStack {
     public boolean canRetreat()     { return !atLastColony && (maneuverability > 0); }
     @Override
     public float autoMissPct()      { return displacementPct; }
-    @Override
-    public ShipComponent selectedWeapon() { return weapons.get(selectedWeaponIndex); }
-    @Override
-    public boolean canDamage(CombatStack target) { return estimatedKills(target) > 0; }
+    private ShipComponent selectedWeapon() { return weapons.get(selectedWeaponIndex); }
     @Override
     public float bombDamageMod()   { return 0; }
     @Override
@@ -200,18 +198,17 @@ public class CombatStackShip extends CombatStack {
                     float targetBackOffRange = 2 * tgt.maxMove();
                     if(distanceTo(0, 0) > tgt.distanceTo(0, 0))
                         targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, 0));
-                    if(distanceTo(0, mgr.maxY) > tgt.distanceTo(0, mgr.maxY))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, mgr.maxY));
-                    if(distanceTo(mgr.maxX, 0) > tgt.distanceTo(mgr.maxX, 0))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(mgr.maxX, 0));
-                    if(distanceTo(mgr.maxX, mgr.maxY) > tgt.distanceTo(mgr.maxX, mgr.maxY))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(mgr.maxX, mgr.maxY));
+                    if(distanceTo(0, ShipCombatManager.maxY) > tgt.distanceTo(0, ShipCombatManager.maxY))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, ShipCombatManager.maxY));
+                    if(distanceTo(ShipCombatManager.maxX, 0) > tgt.distanceTo(ShipCombatManager.maxX, 0))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(ShipCombatManager.maxX, 0));
+                    if(distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY) > tgt.distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY));
                     int curr = (int)(max(1, (weaponRange(wpn) - targetBackOffRange) / sqrt(2) + 0.7f));
                     if(missileRange > 0)
                         missileRange = min(missileRange, curr);
                     else
                         missileRange = curr;
-                    //System.out.print("\n"+fullName()+" targetBackOffRange: "+targetBackOffRange+" missileRange: "+missileRange);
                 }
             }
             else if(!wpn.groundAttacksOnly())
@@ -245,7 +242,7 @@ public class CombatStackShip extends CombatStack {
             rng += design.special(j).beamRangeBonus();
         return rng;
     }
-    public void initShip() {
+    private void initShip() {
         int cols = empire.numColonies();
         atLastColony = ((empire == mgr.system().empire()) && (cols == 1));
         canCloak = design.allowsCloaking();
@@ -308,15 +305,13 @@ public class CombatStackShip extends CombatStack {
             fleet.bombarded(design.id());
         bombardedThisTurn = false;
     }
-    @Override
-    public void cloak() {
+    private void cloak() {
         if (!cloaked && canCloak) {
             cloaked = true;
             transparency = TechCloaking.TRANSPARENCY;
         }
     }
-    @Override
-    public void uncloak() {
+    private void uncloak() {
         if (cloaked) {
             cloaked = false;
             transparency = 1;
@@ -344,8 +339,7 @@ public class CombatStackShip extends CombatStack {
         rotateToUsableWeapon(target);
         return shipComponentCanAttack(target, selectedWeaponIndex);
     }
-    @Override
-    public void rotateToUsableWeapon(CombatStack target) {
+    private void rotateToUsableWeapon(CombatStack target) {
         int i = selectedWeaponIndex;
         int j = i;
         boolean looking = true;
@@ -359,8 +353,7 @@ public class CombatStackShip extends CombatStack {
                 looking = false;
         }
     }
-    @Override
-    public int weaponIndex() {
+    private int weaponIndex() {
         return selectedWeaponIndex;
     }
     @Override
@@ -388,21 +381,16 @@ public class CombatStackShip extends CombatStack {
             int count = num*shotsTaken*weaponCount[index];
             if (selectedWeapon.isMissileWeapon()) {
                 CombatStackMissile missile = new CombatStackMissile(this, (ShipWeaponMissileType) selectedWeapon, count);
-                //log(fullName(), " launching ", missile.fullName(), " at ", targetStack.fullName());
                 mgr.addStackToCombat(missile);
             }
             else {
-                //log(fullName(), " firing ", str(count), " ", selectedWeapon.name(), " at ", targetStack.fullName());
                 selectedWeapon.fireUpon(this, target, count);
             }
             if (selectedWeapon.isLimitedShotWeapon())
                 roundsRemaining[index] = max(0, roundsRemaining[index]-1);
             if (target == null) {
-                //log("TARGET IS NULL AFTER BEING FIRED UPON!");
                 return;
             }
-            if (target.damageSustained > 0)
-               ; //log("weapon damage: ", str(target.damageSustained));
         }
 
         if (shotsRemaining[index] == 0)
@@ -473,23 +461,6 @@ public class CombatStackShip extends CombatStack {
             }
         }
         return kills;
-    }
-    @Override
-    public boolean currentWeaponCanAttack(CombatStack target) {
-        if (selectedWeapon() == null) 
-            return false;
-
-        if (target.inStasis || target.isMissile())
-            return false;
-
-        int wpn = selectedWeaponIndex;
-        if (shotsRemaining[wpn] < 1) 
-            return false;
-
-        if (roundsRemaining[wpn]< 1) 
-            return false;
-
-        return shipComponentCanAttack(target, wpn);
     }
     public boolean shipComponentCanAttack(CombatStack target, int index) {
         if (target == null)

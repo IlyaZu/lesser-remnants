@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +19,6 @@ package rotp.model.combat;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import rotp.model.ai.interfaces.ShipCaptain;
 import rotp.model.empires.Empire;
@@ -32,13 +32,10 @@ import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 import rotp.util.Base;
 
-public class CombatStack implements Base {
-    static final Color shipCountTextC = new Color(255,240,78);
-    static final Float MOVE_STEP = 0.1f;
-    public static final Color healthBarC = new Color(0,96,0);
-    public static final Color shipCountBackC = new Color(0,0,0);
-    public static final Color healthBarBackC = new Color(0,48,0);
-    public static final Color healthBorderC = new Color(64,192,64);
+public abstract class CombatStack implements Base {
+    private static final float MOVE_STEP = 0.1f;
+    protected static final Color healthBarC = new Color(0,96,0);
+    protected static final Color healthBarBackC = new Color(0,48,0);
     public static final Color shipShieldC = new Color(128,128,0);
     public static final Color shipAttackC = new Color(128,0,0);
     public static final Color shipMissDefenseC = new Color(0,0,128);
@@ -49,7 +46,7 @@ public class CombatStack implements Base {
     public Empire empire;
     public ShipCombatManager mgr;
     public ShipCaptain captain;
-    public final List<CombatStackMissile> targetingMissiles = new ArrayList<>();
+    private final List<CombatStackMissile> targetingMissiles = new ArrayList<>();
     public int num = 0;
     public int origNum = 0;
     public int x = 0;
@@ -78,29 +75,19 @@ public class CombatStack implements Base {
     public boolean atLastColony = false;
     public float damageSustained = 0;
     public boolean attacked = false;
-    public boolean destroyed = false;
     public CombatStack target;
     public int distance = 0;
     public Image image;
     public boolean reversed = false;
-    public boolean ally = true;
     public boolean visible = true;
     public float transparency = 1;
-    public String destroyedSoundEffect() { return "ShipExplosion"; }
 
     public String shortString() {
         return concat(toString()," at:", str(x), ",", str(y));
     }
-    public static Comparator<CombatStack> INITIATIVE = (CombatStack o1, CombatStack o2) -> Base.compare(o2.initiativeRank(), o1.initiativeRank());
-    public CombatStack() { }
-    public CombatStack(ShipCombatManager m, Empire c) {
-        mgr = m;
-        empire = c;
-        captain = empire.ai().shipCaptain();
-    }
     public String fullName()            { return concat(str(num), ":", raceName(), " ", name()); }
-    public String raceName()            { return empire != null ? empire.raceName() : name(); }
-    public String name()                { return "object"; }
+    private String raceName()            { return empire != null ? empire.raceName() : name(); }
+    public abstract String name();
     public float initiative()           { return 0; }
     public float initiativeRank() {
         if (cloaked)
@@ -118,12 +105,10 @@ public class CombatStack implements Base {
     public boolean isShip()             { return false; }
     public boolean isColony()           { return false; }
     public boolean isMonster()          { return false; }
-    public boolean isPlayer()           { return (empire != null) && empire.isPlayer(); }
     public boolean isPlayerControlled() { return (empire != null) && empire.isPlayerControlled(); }
     public boolean isMissile()          { return false; }
     public boolean destroyed()          { return ((num < 1) || (maxHits <= 0)); }
     public boolean isArmed()            { return false; }
-    public boolean hasTarget()          { return target != null; }
     public CombatStack ward()           { return null; }
     public boolean hasWard()            { return false; }
     public void ward(CombatStack st)    { }
@@ -139,8 +124,7 @@ public class CombatStack implements Base {
     public boolean canTeleport()     { return canTeleport && !mgr.interdiction(); }
     public boolean hasTeleporting()  { return false; }
     public boolean canScan()         { return false; }
-    public boolean retreatAllowed()  { return false; }
-    public void becomeDestroyed()    { destroyed = true; num = 0;}
+    public void becomeDestroyed()    { num = 0;}
     public int numWeapons()          { return 0; }
     public ShipComponent weapon(int i)   { return null; }
     public ShipDesign design()       { return null; }
@@ -165,30 +149,20 @@ public class CombatStack implements Base {
     public float attackLevel()      { return attackLevel; }
     public float bombDefense()      { return 0; }
     public float bioweaponDefense() { return 0; }
-    public void cloak()             {  }
-    public void uncloak()           {  }
     public boolean canEat(CombatStack st)       { return false; }
     public boolean hostileTo(CombatStack st, StarSystem sys)                  { return empire != st.empire; }
     public boolean selectBestWeapon(CombatStack target)       { return false; }
-    public boolean currentWeaponCanAttack(CombatStack target) { return false; }
     public boolean canAttack(CombatStack target)              { return false; }
     public boolean canPotentiallyAttack(CombatStack target)   { return false; }
-    public boolean canDamage(CombatStack target)              { return maxDamage() > target.shieldLevel(); }
     public float estimatedKills(CombatStack target)           { return 0; }
     public float estimatedKillPct(CombatStack target)         { return target.num == 0 ? 0 : estimatedKills(target) / target.num; }
-    public void rotateToUsableWeapon(CombatStack target)      {  }
     public void fireWeapon(CombatStack target, int i, boolean shots) { }
     public void fireWeapon(CombatStack target, int i) { fireWeapon(target,i,false); }
     public void fireWeapon(CombatStack target)       {  }
-    public int weaponIndex()                         { return 0; }
-    public int shots()                               { return 1; }
     public int maxFiringRange(CombatStack tgt)       { return 1; }
     public int optimalFiringRange(CombatStack tgt)   { return 1; }
-    public int minFiringRange()                      { return 1; }
     public float maxDamage()                         { return 0; }
     public float shieldLevel()                       { return shield; }
-    public ShipComponent selectedWeapon()            { return null; }
-    public float rotateRadians()                     { return 0; }
     public float rotateRadians(CombatStack target)   { return radiansTo(target) + ((float)Math.PI/2); }
 
     public float torpedoDamageMod()                  { return 1; }
@@ -207,7 +181,6 @@ public class CombatStack implements Base {
     public void reverse()                           { reversed = !reversed; }
     public List<CombatStackMissile> missiles()       { return targetingMissiles; }
     public void addMissile(CombatStackMissile miss)  { targetingMissiles.add(miss); }
-    public float scale()                             { return scale; }
     public int weaponRange(ShipComponent c) {
         if (!c.isBeamWeapon())
             return c.range();
@@ -288,17 +261,6 @@ public class CombatStack implements Base {
         offsetY = 0;
         drawFadeIn(oldX, oldY);
     }
-    public int turnsToTravel(int distance) {
-        int turns = 0;
-        int mv = (int) move;
-        int remaining = distance;
-        while (remaining > 0) {
-            turns++;
-            remaining -= mv;
-            mv = (int) maxMove();
-        }
-        return turns;
-    }
     public boolean moveTo(int x1, int y1) {
         float plannedDistance = movePointsTo(x1,y1);
 
@@ -321,7 +283,6 @@ public class CombatStack implements Base {
         // then allows each pursuing missile to perform a sub-move
         // the distance of the sub-move is dependent on the stack's maneuverability
 
-        float movePct = missiles.isEmpty() && !mgr.showAnimations() ? 1.0f : MOVE_STEP;
         float x0 = x();
         float y0 = y();
 
@@ -515,7 +476,6 @@ public class CombatStack implements Base {
         
         float maxTransparency = cloaked ? TechCloaking.TRANSPARENCY : 1.0f;
         ShipBattleUI ui = mgr.ui;
-        Graphics2D g = (Graphics2D) ui.getGraphics();
 
         // fade out
         for (float i=maxTransparency; i>=0; i-=amt) {
@@ -533,7 +493,6 @@ public class CombatStack implements Base {
         
         float maxTransparency = cloaked ? TechCloaking.TRANSPARENCY : 1.0f;
         ShipBattleUI ui = mgr.ui;
-        Graphics2D g = (Graphics2D) ui.getGraphics();
 
         // fade in, but ensure old position is cleared out first
         ui.paintCellImmediately(oldX, oldY);

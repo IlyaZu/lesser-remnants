@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,10 +94,6 @@ public class CombatStackSpaceAmoeba extends CombatStack {
         move = 0;
         if (st.mgr.showAnimations())
             st.mgr.ui.paintAllImmediately();
-    }
-    @Override
-    public void endTurn() {
-        super.endTurn();
     }
     @Override
     public boolean moveTo(int x1, int y1) {

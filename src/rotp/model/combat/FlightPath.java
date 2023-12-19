@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,13 +33,11 @@ public class FlightPath implements Base {
     public static int[] swPathPriority =   { mapW-1, mapW, -1, mapW+1, -mapW-1, 1, -mapW, -mapW+1 };
     public static int[] wPathPriority =    { -1, -mapW-1, mapW-1, -mapW, mapW, -mapW+1, mapW+1, 1 };
 
-    List<Integer> points;
-    final int gridW;
+    private List<Integer> points;
+    private final int gridW;
     private int straightness = -1;
     private float sortValue = -1;
 
-    public List<Integer> points() { return points; }
-    public void add(int pt)       { points.add(pt); }
     public int size()             { return points.size(); }
     public int mapX(int i)        { return (points.get(i) % gridW) -1; 	}
     public int mapY(int i)        { return (points.get(i) / gridW) -1; 	}
@@ -46,7 +45,7 @@ public class FlightPath implements Base {
         if ((n >= 0) && points.size() > n) 
             points = points.subList(0,n);
     }
-    public float sortValue()      {
+    private float sortValue()      {
         if (sortValue < 0)
             calculateSortValue();
         return sortValue;
