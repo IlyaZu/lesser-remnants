@@ -450,7 +450,7 @@ public class AIDiplomat implements Base, Diplomat {
         if (v.embassy().alliedWithEnemy()) 
             return false;
         
-        if ((v.trade().level() > 0)
+        if (v.trade().active()
             && (v.trade().profit() <= 0))
             return false;
         if (!v.trade().atMaxProfit())

@@ -262,7 +262,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-s20-sw, y3);
 
-        amt = player().totalTradeTreaties();
+        amt = (int) player().totalTradeTreaties();
         s = text("RACES_DIPLOMACY_TRADE_AMT", str(amt));
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-s20-sw, y4);
@@ -1046,8 +1046,9 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         int y2 = lines.size() <= 5 ? y0+h-s65 : y0+h-s55;
         drawString(g,spies, x+s20, y2);
         
+        int maxProfit = (int) view.trade().maxProfit();
         g.setFont(narrowFont(16));
-        String s2 = text("RACES_DIPLOMACY_TRADE_AMT", view.trade().level());
+        String s2 = text("RACES_DIPLOMACY_TRADE_AMT", maxProfit);
         int sw2 = g.getFontMetrics().stringWidth(s2);
         drawString(g,s2, x+w-s20-sw2, y2);
         
@@ -1055,10 +1056,10 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setFont(narrowFont(18));
         String spending = text("RACES_DIPLOMACY_CURRENT_TRADE");
         drawString(g,spending, x+s20, y2);
-        int amt = (int) view.trade().profit();
         
+        int profit = (int) view.trade().profit();
         g.setFont(narrowFont(16));
-        s2 = text("RACES_DIPLOMACY_TRADE_AMT", str(amt));
+        s2 = text("RACES_DIPLOMACY_TRADE_AMT", str(profit));
         sw2 = g.getFontMetrics().stringWidth(s2);
         drawString(g,s2, x+w-s20-sw2, y2);
     }

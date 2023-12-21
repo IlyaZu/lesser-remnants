@@ -1011,8 +1011,8 @@ public class RacesUI extends BasePanel {
                     }
                     // trade
                     y1 += s16;
-                    int level = view.trade().level();
-                    String tradeStr = (level == 0) ? text("RACES_TRADE_NONE") : text("RACES_TRADE_LEVEL", level);
+                    int profit = (int) view.trade().maxProfit();
+                    String tradeStr = view.trade().active() ? text("RACES_TRADE_LEVEL", profit) : text("RACES_TRADE_NONE");
                     scaledFont(g, tradeStr, scaled(130), 16, 12);
                     drawString(g,tradeStr, x1, y1);
                 }

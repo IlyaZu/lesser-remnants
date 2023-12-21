@@ -2143,7 +2143,7 @@ public final class Empire implements Base, NamedObject, Serializable {
     }
     public boolean hasTrade() {
         for (EmpireView v : empireViews()) {
-            if ((v != null) && (v.trade().level() > 0))
+            if ((v != null) && (v.trade().active()))
                 return true;
         }
         return false;
@@ -2160,11 +2160,11 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         return sum;
     }
-    public int totalTradeTreaties() {
-        int sum = 0;
+    public float totalTradeTreaties() {
+        float sum = 0;
         for (EmpireView v : empireViews()) {
             if (v != null)
-                sum += v.trade().level();
+                sum += v.trade().maxProfit();
         }
         return sum;
     }
