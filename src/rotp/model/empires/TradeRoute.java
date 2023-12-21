@@ -41,8 +41,12 @@ public class TradeRoute implements Base, Serializable {
     	return profit;
     }
 
-    public boolean atFullLevel() {
-    	return profit >= level;
+    public boolean atMaxProfit() {
+    	return profit >= maxProfit(); 
+    }
+
+    private float maxProfit() {
+        return level * (1 + view().owner().tradePctBonus());
     }
 
     public int level() {
@@ -78,7 +82,7 @@ public class TradeRoute implements Base, Serializable {
         
         float pct = (roll(1,200) + view().embassy().relations() + 25) / 6000.0f;
         profit = min(maxProfit(), profit + (pct * level) );
-        if ((profit == level) && (profit > prevProfit)) {
+        if (atMaxProfit() && profit > prevProfit) {
             if (view().owner().isPlayer())
                TradeTreatyMaturedAlert.create(view().empId(), level);
         }
@@ -108,6 +112,10 @@ public class TradeRoute implements Base, Serializable {
             otherView.trade().startRoute(newLevel);
     }
 
+    private float startPct() {
+        return -.3f + view().owner().tradePctBonus();
+    }
+
     public void stopRoute() {
         level = 0;
         profit = 0;
@@ -116,13 +124,5 @@ public class TradeRoute implements Base, Serializable {
         EmpireView otherView = view().otherView();
         if (otherView.trade().active())
             otherView.trade().stopRoute();
-    }
-
-    private float maxProfit() {
-        return level * (1 + view().owner().tradePctBonus());
-    }
-
-    private float startPct() {
-        return -.3f + view().owner().tradePctBonus();
     }
 }

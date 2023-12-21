@@ -453,7 +453,7 @@ public class AIDiplomat implements Base, Diplomat {
         if ((v.trade().level() > 0)
             && (v.trade().profit() <= 0))
             return false;
-        if (!v.trade().atFullLevel())
+        if (!v.trade().atMaxProfit())
             return false;
         
         // if asking player, check that we don't spam him

@@ -364,7 +364,7 @@ public class AIDiplomat implements Base, Diplomat {
             if ((view.trade().level() > 0)
             && (view.trade().profit() <= 0))
                 return false;
-            if (!view.trade().atFullLevel()
+            if (!view.trade().atMaxProfit()
             || (view.trade().level() * 1.5) > view.trade().maxLevel())
                 return false;
         }
