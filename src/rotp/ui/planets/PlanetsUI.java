@@ -1189,7 +1189,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         protected Rectangle limitBox = new Rectangle();
 
 
-        private final Color textColor = newColor(204,204,204);
+        private final Color textColor = new Color(204,204,204);
         ColonyShipPane(SystemPanel p) {
             parent = p;
             init();
@@ -1613,7 +1613,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private final Rectangle transferBox = new Rectangle();
         private Shape hoverBox;
 
-        private final Color textColor = newColor(204,204,204);
+        private final Color textColor = new Color(204,204,204);
         ColonyTransferFunds(SystemPanel p) {
             parent = p;
             init();

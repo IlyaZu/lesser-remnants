@@ -771,13 +771,6 @@ public interface Base {
     }
     public static int compare(int a, int b)        { return Integer.compare(a,b); }
     public static int compare(float a, float b)  { return Float.compare(a, b); }
-    public default Color newColor(int r, int g, int b) {
-        return newColor(r,g,b,255);
-    }
-    public default Color newColor(int r, int g, int b, int a) {
-        //log("Creating color r:"+r+" g:"+g+" b:"+b+" a:"+a);
-        return new Color(r,g,b,a);
-    }
     public default String str(String s) { return s == null ? "null" : s; }
     public default String str(int i)    { return Integer.toString(i); }
     public default String str(float i)  { return Float.toString(i); }
@@ -1117,17 +1110,17 @@ public interface Base {
     }
     public default void drawBackgroundStars(Graphics g, int w, int h, int minDist, int varDist) {
         // draw background stars
-        g.setColor(newColor(0,0,0,0));
+        g.setColor(new Color(0,0,0,0));
         g.fillRect(0,0,w,h);
         int count = w*h;
         int p = 0;
-        Color dimmest = newColor(32,32,32);
-        Color dimmer = newColor(48,48,48);
-        Color dim = newColor(64,64,64);
-        Color avg = newColor(96,96,96);
-        Color bright = newColor(144,144,144);
-        Color brighter = newColor(196,196,196);
-        Color brightest = newColor(255,255,255);
+        Color dimmest = new Color(32,32,32);
+        Color dimmer = new Color(48,48,48);
+        Color dim = new Color(64,64,64);
+        Color avg = new Color(96,96,96);
+        Color bright = new Color(144,144,144);
+        Color brighter = new Color(196,196,196);
+        Color brightest = new Color(255,255,255);
 
         int s1 = BasePanel.s1;
         int s2 = BasePanel.s2;
@@ -1161,7 +1154,7 @@ public interface Base {
     }
     public default void drawBackgroundStars(BufferedImage image, Graphics g, int w, int h, int minDist, int varDist) {
         // draw background stars
-        g.setColor(newColor(0,0,0,0));
+        g.setColor(new Color(0,0,0,0));
         g.fillRect(0,0,w,h);
         int count = w*h;
         int p = 0;

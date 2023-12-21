@@ -390,13 +390,13 @@ public class RacesUI extends BasePanel {
         for (int i=0;i<20;i++) {
             int r = 255-(i*12);
             int gb = 38-(i*2);
-            relationsC[i] = newColor(r,gb,gb);
+            relationsC[i] = new Color(r,gb,gb);
         }
         // do green.. 20-39, dark to bright
         for (int i=0;i<20;i++) {
             int g = 17+(i*12);
             int rb = i*2;
-            relationsC[20+i] = newColor(rb,g,rb);
+            relationsC[20+i] = new Color(rb,g,rb);
         }
     }
     public Empire selectedEmpire() {

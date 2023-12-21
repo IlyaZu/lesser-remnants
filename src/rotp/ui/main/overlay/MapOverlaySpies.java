@@ -53,7 +53,7 @@ public class MapOverlaySpies extends MapOverlay {
     private final List<EmpireTabSprite> tabs = new ArrayList<>();
     private Empire selectedEmpire;
     boolean drawSprites = false;
-    Color darkShadingC = newColor(50,50,50);
+    Color darkShadingC = new Color(50,50,50);
     CloseButton closeButton = new CloseButton();
     IntelligenceButton intelButton = new IntelligenceButton();
     ThreatenButton threatenButton = new ThreatenButton();
@@ -500,8 +500,8 @@ public class MapOverlaySpies extends MapOverlay {
         private int x, y, w, h;
         private MapOverlaySpies parent;
         private String label;
-        Color buttonC = newColor(110,110,110);
-        Color gray190C = newColor(190,190,190);
+        Color buttonC = new Color(110,110,110);
+        Color gray190C = new Color(190,190,190);
 
         public void setBounds(int x0, int y0, int w0, int h0) {
             x = x0;
@@ -577,8 +577,8 @@ public class MapOverlaySpies extends MapOverlay {
         private int x, y, w, h;
         private MapOverlaySpies parent;
         private String label;
-        Color buttonC = newColor(110,110,110);
-        Color gray190C = newColor(190,190,190);
+        Color buttonC = new Color(110,110,110);
+        Color gray190C = new Color(190,190,190);
 
         public void setBounds(int x0, int y0, int w0, int h0) {
             x = x0;
@@ -654,8 +654,8 @@ public class MapOverlaySpies extends MapOverlay {
         private int x, y, w, h;
         private MapOverlaySpies parent;
         private String label;
-        Color buttonC = newColor(110,110,110);
-        Color gray190C = newColor(190,190,190);
+        Color buttonC = new Color(110,110,110);
+        Color gray190C = new Color(190,190,190);
 
         public void setBounds(int x0, int y0, int w0, int h0) {
             x = x0;

@@ -17,6 +17,7 @@
 package rotp.ui;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -57,7 +58,7 @@ public class FadeInPanel extends BasePanel {
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2.setColor(newColor(0,0,0,(int)(alpha*255)));
+        g2.setColor(new Color(0,0,0,(int)(alpha*255)));
         g2.fillRect(0,0,getWidth(), getHeight());
         return image;
     }
