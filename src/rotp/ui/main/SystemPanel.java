@@ -140,12 +140,12 @@ public abstract class SystemPanel extends BasePanel implements SystemViewer, Map
     }
     private void createPaneBorders() {
         Border line0 = newLineBorder(dataBorders,2);
-        Border line1 = newLineBorder(newColor(32,32,32),3);
-        Border lineYellow = newLineBorder(newColor(224,224,0),3);
-        Border lineRed = newLineBorder(newColor(192,0,0),3);
-        Border lineGreen = newLineBorder(newColor(0,192,0),3);
-        Border lineBlue = newLineBorder(newColor(0,0,192),3);
-        Border lineGray = newLineBorder(newColor(224,224,224),3);
+        Border line1 = newLineBorder(new Color(32,32,32),3);
+        Border lineYellow = newLineBorder(new Color(224,224,0),3);
+        Border lineRed = newLineBorder(new Color(192,0,0),3);
+        Border lineGreen = newLineBorder(new Color(0,192,0),3);
+        Border lineBlue = newLineBorder(new Color(0,0,192),3);
+        Border lineGray = newLineBorder(new Color(224,224,224),3);
 
         Border compound0 = BorderFactory.createCompoundBorder(line0, line1);
         topPaneBorderUncolonized = BorderFactory.createCompoundBorder(compound0, lineGray);

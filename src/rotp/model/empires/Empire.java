@@ -305,21 +305,21 @@ public final class Empire implements Base, NamedObject, Serializable {
     public Color nameColor() {
         if (nameColor == null) {
             Color c = color();
-            nameColor = newColor(c.getRed(), c.getGreen(), c.getBlue(), 160);
+            nameColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), 160);
         }
         return nameColor;
     }
     public Color ownershipColor() {
         if (ownershipColor == null) {
             Color c = color();
-            ownershipColor = newColor(c.getRed(), c.getGreen(), c.getBlue(), 80);
+            ownershipColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), 80);
         }
         return ownershipColor;
     }
     public Color selectionColor() {
         if (selectionColor == null) {
             Color c = color();
-            selectionColor = newColor(c.getRed(), c.getGreen(), c.getBlue(), 160);
+            selectionColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), 160);
         }
         return selectionColor;
     }
@@ -329,7 +329,7 @@ public final class Empire implements Base, NamedObject, Serializable {
             int cR = c.getRed();
             int cG = c.getGreen();
             int cB = c.getBlue();
-            shipBorderColor = newColor(cR*6/8,cG*6/8,cB*6/8);
+            shipBorderColor = new Color(cR*6/8,cG*6/8,cB*6/8);
         }
         return shipBorderColor;
     }
@@ -339,14 +339,14 @@ public final class Empire implements Base, NamedObject, Serializable {
             int cR = c.getRed();
             int cG = c.getGreen();
             int cB = c.getBlue();
-            scoutBorderColor = newColor(cR*4/8,cG*4/8,cB*4/8);
+            scoutBorderColor = new Color(cR*4/8,cG*4/8,cB*4/8);
         }
         return scoutBorderColor;
     }
     public Color reachColor() {
         if (reachColor == null) {
             Color c = color();
-            reachColor = newColor(c.getRed(), c.getGreen(), c.getBlue(), 48);
+            reachColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), 48);
         }
         return reachColor;
     }

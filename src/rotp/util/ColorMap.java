@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,13 +59,13 @@ public class ColorMap implements Base {
             cm2 = cm1;
 
         if (cm1.p == cm2.p) 
-            return newColor(cm1.r, cm1.g, cm1.b);
+            return new Color(cm1.r, cm1.g, cm1.b);
 
         float amt = (pct - cm1.p) / (cm2.p - cm1.p);
         int r = bounds(0,cm1.r+(int)(amt*(cm2.r-cm1.r)),255);
         int g = bounds(0,cm1.g+(int)(amt*(cm2.r-cm1.r)),255);
         int b = bounds(0,cm1.b+(int)(amt*(cm2.r-cm1.r)),255);
-        return newColor(r,g,b);
+        return new Color(r,g,b);
     }
     class ColorMark {
         float p;

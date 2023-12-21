@@ -30,8 +30,8 @@ public class DistanceDisplaySprite extends MapControlSprite  {
         yOffset = scaled(yOff);
         width = scaled(w);
         height = scaled(h);
-        extColor =  newColor(0,0,192,64);
-        normColor = newColor(32,32,192,128);
+        extColor =  new Color(0,0,192,64);
+        normColor = new Color(32,32,192,128);
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {

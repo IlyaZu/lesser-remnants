@@ -1060,7 +1060,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
                             new Point2D.Float(x,y),
                             r,
                             new float[]{0.0f, 0.2f, 0.6f, 1.0f},
-                            new Color[] { newColor(0,0,0,0), newColor(0,0,0,0), newColor(0,0,0,255), newColor(0,0,0,255) }
+                            new Color[] { new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,255), new Color(0,0,0,255) }
             );
         }
         return diploGradient;

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@ package rotp.util;
 import java.awt.Color;
 import java.util.HashMap;
 
-public class Palette implements Base {
+public class Palette {
     private static final int MAX_BORDERS = 25;
     private static final HashMap<String, Palette> all = new HashMap<>();
     public static Palette named(String s) { return all.get(s); }
@@ -34,18 +35,18 @@ public class Palette implements Base {
         createDefaultPalettes();
     }
     public Palette() {
-        orange = newColor(248,127,0);
-        aqua   = newColor(73,220,178);
-        green  = newColor(68,206,67);
-        forest = newColor(34,103,34);
-        yellow = newColor(255,241,78);
-        white  = newColor(209,209,209);
-        red    = newColor(192,18,20);
-        darkBlue = newColor(57,77,100);
-        darkGray = newColor(64,64,64);
-        blue   = newColor(114,155,201);
-        maroon = newColor(106,9,0);
-        black  = newColor(19,19,19);
+        orange = new Color(248,127,0);
+        aqua   = new Color(73,220,178);
+        green  = new Color(68,206,67);
+        forest = new Color(34,103,34);
+        yellow = new Color(255,241,78);
+        white  = new Color(209,209,209);
+        red    = new Color(192,18,20);
+        darkBlue = new Color(57,77,100);
+        darkGray = new Color(64,64,64);
+        blue   = new Color(114,155,201);
+        maroon = new Color(106,9,0);
+        black  = new Color(19,19,19);
     }
     public ThickBevelBorder outsetBorder(int thick) {
         int w = thick-1;

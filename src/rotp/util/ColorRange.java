@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +36,6 @@ public class ColorRange implements Base {
         int red = color1.getRed() + (int) (r*(color2.getRed()-color1.getRed()));
         int green = color1.getGreen() + (int) (r*(color2.getGreen()-color1.getGreen()));
         int blue = color1.getBlue() + (int) (r*(color2.getBlue()-color1.getBlue()));
-        return newColor(red,green,blue);
+        return new Color(red,green,blue);
     }
 }

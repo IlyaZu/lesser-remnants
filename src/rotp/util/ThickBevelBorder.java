@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import javax.swing.border.AbstractBorder;
 
-public class ThickBevelBorder extends AbstractBorder  implements Base {
+public class ThickBevelBorder extends AbstractBorder implements Base {
     private static final long serialVersionUID = 1L;
     private static final int TOP = 1;
     private static final int LEFT = 2;
@@ -133,7 +134,7 @@ public class ThickBevelBorder extends AbstractBorder  implements Base {
     	int g0 = c1.getGreen() + (int) (adjPct * (c2.getGreen() - c1.getGreen()));
     	int b0 = c1.getBlue()  + (int) (adjPct * (c2.getBlue() - c1.getBlue()));
     	int a0 = c1.getAlpha() + (int) (adjPct * (c2.getAlpha() - c1.getAlpha()));
-    	Color c = newColor(bounds(0,r0,255),bounds(0,g0,255),bounds(0,b0,255),bounds(0,a0,255));
+    	Color c = new Color(bounds(0,r0,255),bounds(0,g0,255),bounds(0,b0,255),bounds(0,a0,255));
     	colors.put(side+pct, c);
     	return c;
     }

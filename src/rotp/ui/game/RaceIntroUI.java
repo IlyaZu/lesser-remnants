@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -182,7 +183,7 @@ public class RaceIntroUI extends BasePanel implements MouseListener {
             Point2D start = new Point2D.Float(0, 0);
             Point2D end = new Point2D.Float(w, 0);
             float[] dist = {0.0f, 0.4f, 0.75f, 1.0f};
-            Color[] colors = new Color[] { newColor(0,0,0,0), newColor(0,0,0,0), newColor(0,0,0,255), newColor(0,0,0,255) };
+            Color[] colors = new Color[] { new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,255), new Color(0,0,0,255) };
             backGradient = new LinearGradientPaint(start, end, dist, colors);
         }
         return backGradient;
@@ -229,11 +230,11 @@ public class RaceIntroUI extends BasePanel implements MouseListener {
         add(eastPanel, BorderLayout.EAST);
 
         // same outer border as MainUI
-        Border line1 = newLineBorder(newColor(192,192,192),2);
-        Border line2 = newLineBorder(newColor(160,160,160),2);
-        Border line3 = newLineBorder(newColor(128,128,128),2);
-        Border line4 = newLineBorder(newColor(96,96,96),2);
-        Border line5 = newLineBorder(newColor(80,80,80),2);
+        Border line1 = newLineBorder(new Color(192,192,192),2);
+        Border line2 = newLineBorder(new Color(160,160,160),2);
+        Border line3 = newLineBorder(new Color(128,128,128),2);
+        Border line4 = newLineBorder(new Color(96,96,96),2);
+        Border line5 = newLineBorder(new Color(80,80,80),2);
         Border compound1 = BorderFactory.createCompoundBorder(line2, line1);
         Border compound2 = BorderFactory.createCompoundBorder(line3, compound1);
         Border compound3 = BorderFactory.createCompoundBorder(line4, compound2);
@@ -278,7 +279,7 @@ public class RaceIntroUI extends BasePanel implements MouseListener {
         private final Color nextTurnDarkC = new Color(26,56,0);
         private final Color nextTurnBorderC = new Color(231,231,231);
         private final Color nextTurnTextC = Color.white;
-        private final Color backColor = newColor(159,235,180);
+        private final Color backColor = new Color(159,235,180);
 
         public void reset() {
             nextTurnBackground = null;

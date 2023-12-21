@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +22,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
-import rotp.util.Base;
 
-public enum SphereShadowContext implements Base, PaintContext {
+public enum SphereShadowContext implements PaintContext {
 	INSTANCE;
 	public static SphereShadowContext current()  { return INSTANCE; }
 	// mPoint is the center of the sphere we are shading
@@ -36,7 +36,7 @@ public enum SphereShadowContext implements Base, PaintContext {
 		mPoint = p;
 		mPoint0 = p0;
 		mC2 = c2;
-		mC1 = newColor(c2.getRed(), c2.getGreen(), c2.getBlue(), 0);
+		mC1 = new Color(c2.getRed(), c2.getGreen(), c2.getBlue(), 0);
 		mRadius = r;
 		mRadius0 = r0;
 	}

@@ -210,16 +210,16 @@ public class EmpireSystemPanel extends SystemPanel {
         private final int downButtonY[] = new int[3];
         protected Rectangle limitBox = new Rectangle();
 
-        Color textColor = newColor(204,204,204);
-        Color gray20C = newColor(20,20,20);
-        Color darkShadingC = newColor(50,50,50);
-        Color buttonC = newColor(110,110,110);
-        Color gray70C = newColor(70,70,70);
-        Color gray90C = newColor(90,90,90);
-        Color gray115C = newColor(115,115,115);
-        Color gray150C = newColor(150,150,150);
-        Color gray175C = newColor(175,175,175);
-        Color gray190C = newColor(190,190,190);
+        Color textColor = new Color(204,204,204);
+        Color gray20C = new Color(20,20,20);
+        Color darkShadingC = new Color(50,50,50);
+        Color buttonC = new Color(110,110,110);
+        Color gray70C = new Color(70,70,70);
+        Color gray90C = new Color(90,90,90);
+        Color gray115C = new Color(115,115,115);
+        Color gray150C = new Color(150,150,150);
+        Color gray175C = new Color(175,175,175);
+        Color gray190C = new Color(190,190,190);
         EmpireShipPane(EmpireSystemPanel p) {
             parent = p;
             init();
