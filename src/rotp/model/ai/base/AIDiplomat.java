@@ -361,7 +361,7 @@ public class AIDiplomat implements Base, Diplomat {
         //    1) Have trade established but it is not yet profitable
         // or 2) Not at full trade && and can't increase current trade level by +50%
         if (empire.isAIControlled()) {
-            if ((view.trade().level() > 0)
+            if (view.trade().active()
             && (view.trade().profit() <= 0))
                 return false;
             if (!view.trade().atMaxProfit()

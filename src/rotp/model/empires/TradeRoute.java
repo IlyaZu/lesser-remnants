@@ -45,7 +45,7 @@ public class TradeRoute implements Base, Serializable {
     	return profit >= maxProfit(); 
     }
 
-    private float maxProfit() {
+    public float maxProfit() {
         return level * (1 + view().owner().tradePctBonus());
     }
 
