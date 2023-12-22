@@ -39,7 +39,6 @@ public final class SpyNetwork implements Base, Serializable {
     private static final int MAX_SPENDING_TICKS = 20;
     private static final float MAX_SPENDING_PCT = 0.10f;
     private static final int MIN_SPIES_FOR_FLEET_VIEW = 1;
-    private static final float NO_TRADE_SECURITY_BONUS = 0.1f;
     
     private static final int THREAT_NONE = 0;
     private static final int THREAT_HIDE = 1;
@@ -495,12 +494,6 @@ public final class SpyNetwork implements Base, Serializable {
     private float overallSecurityAdj() {
         // security pct based on their spending
         float adj = empire().totalInternalSecurityPct();
-
-        // we get a security bonus if there is no trade set up with any race...
-        // xenophobes rejoice! now there is a slight downside to trade routes
-        // whereas before they were automatic
-        if (empire().totalTradeTreaties() == 0)
-            adj += NO_TRADE_SECURITY_BONUS;
         
         // adjust for their race
         adj += empire().internalSecurityAdj();
