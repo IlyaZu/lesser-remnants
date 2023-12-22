@@ -21,7 +21,7 @@ import rotp.util.Base;
 import java.util.Comparator;
 import java.util.List;
 
-public class FlightPath implements Base {
+public class FlightPath {
     public static final int mapW = 12;
     public static int[] basePathPriority = { -mapW, -mapW+1, 1, mapW+1, mapW, mapW-1, -1, -mapW-1 };
     public static int[] nwPathPriority =   { -mapW-1, -mapW, -1, -mapW+1, mapW-1, 1, mapW, mapW+1 };
@@ -76,8 +76,8 @@ public class FlightPath implements Base {
             int x0 = mapX(i);
             int y0 = mapY(i);
             if (prevX >= 0) {
-                straightness += abs(x0 - prevX);
-                straightness += abs(y0 - prevY);
+                straightness += Math.abs(x0 - prevX);
+                straightness += Math.abs(y0 - prevY);
             }
             prevX = x0;
             prevY = y0;
