@@ -66,15 +66,15 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
     private void init0() {
         setOpaque(false);
         Color textC = SystemPanel.whiteText;
-        displayModeText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        graphicsText =     new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        mouseText =        new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        soundsText =       new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        autoColonizeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        musicText =        new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        autoBombardText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        backupTurnsText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
-        saveDirText =      new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
+        displayModeText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        graphicsText =     new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        mouseText =        new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        soundsText =       new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        autoColonizeText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        musicText =        new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        autoBombardText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        backupTurnsText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
+        saveDirText =      new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);

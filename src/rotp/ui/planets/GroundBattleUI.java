@@ -573,7 +573,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         }
     }
     private void drawTroops(Graphics2D g, int troopCount, boolean attack, int x, int y) {
-//        log("DrawTroops. count:"+troopCount+" attacker?"+attack+"  x:"+x+"  y:"+y);
         int MAX_PER_ROW = 25;
         int  NUM_ROWS = 6;
         int MAX_ROWS = 20;
@@ -594,7 +593,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         int numRows = (troopCount + PER_ROW - 1) / PER_ROW;
         int y0 = y - (4 * rowH);
 
-        //log("troopSize:"+troopSize+"  w: "+imgW+" h:"+imgH+"   nuwRows:"+numRows);
         int count = 0;
         for (int row=0; row<numRows; row++) {
             int rowCount = Math.min(PER_ROW, troopCount);
@@ -629,7 +627,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
                     defenderX[count] = x0;
                     defenderY[count] = y0+yAdj;
-                    //log("defender #"+count+" frame:"+frame+"  x:"+x0+"  y:"+(y0+yAdj)+"  w:"+imgW+"  h:"+imgH);
                     g.drawImage(iconImg, x0, y0+yAdj, imgW, imgH, null);
                     if (frame == defenderFiringFrame)
                         fireAtAttacker(g, count);
