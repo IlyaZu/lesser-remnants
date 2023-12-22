@@ -96,7 +96,6 @@ public class StarType implements Base {
         int g1 = 127+(c0.getGreen()/2);
         int b1 = 127+(c0.getBlue()/2);
         Color c1 = unscaled(r) > 70 ? Color.white : new Color(r1,g1,b1);
-        //Color c1 = Color.white;
         int w = (r+f+f)*2;
         int x = w/2;
         int y = w/2;

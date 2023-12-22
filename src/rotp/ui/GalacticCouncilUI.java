@@ -1181,7 +1181,6 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
     }
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
         int y = e.getY();
         int dY = y-dragY;
         dragY = y;

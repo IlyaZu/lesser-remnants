@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +33,7 @@ public class BaseText implements Base {
 
     private final BasePanel panel;
     private final Color enabledC, disabledC, hoverC, depressedC, shadeC;
-    private final int topLBdr, btmRBdr, bdrStep;
+    private final int topLBdr, btmRBdr;
     private final Rectangle bounds = new Rectangle();
     private String text, hoverText;
     private int x,y;
@@ -49,7 +50,7 @@ public class BaseText implements Base {
     private int yOrig;
     BaseText preceder;
 
-    public BaseText(BasePanel p, boolean logo, int fSize, int x1, int y1, Color c1, Color c2, Color c3, Color c4, Color c5, int i1, int i2, int i3) {
+    public BaseText(BasePanel p, boolean logo, int fSize, int x1, int y1, Color c1, Color c2, Color c3, Color c4, Color c5, int i2, int i3) {
         panel = p;
         
         logoFont = logo;
@@ -63,7 +64,6 @@ public class BaseText implements Base {
         hoverC = c3;
         depressedC = c4;
         shadeC = c5;
-        bdrStep = i1;
         topLBdr = i2;
         btmRBdr = i3;
     }
@@ -80,7 +80,6 @@ public class BaseText implements Base {
     private Font font() {
         return logoFont ? logoFont(fontSize) : narrowFont(fontSize);
     }
-    private boolean centered() {  return (xOrig == 0) && (preceder == null); }
     @Override
     public String toString()  { return concat("Text:", text, "  at:", bounds.toString()); }
     public void displayText(String s) { text = s; }

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,7 +84,6 @@ public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, Mo
     int barH = s45;
     float planetRotateSpeed = 0.1f;
     private boolean drawingPlanet = false;
-    private boolean planetDrawn = false;
     boolean showPlanet = false;
     boolean exited = false;
     boolean shiftPressed = false;
@@ -251,7 +251,6 @@ public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, Mo
         mode = Display.INTRO;
         renderedPlanetImage = mgr.system().planet().image(planetR, 135);
 
-        planetDrawn = false;
         showPlanet = false;
         shiftPressed = false;
         Color redEdgeC = new Color(92,20,20);
@@ -1170,7 +1169,6 @@ public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, Mo
         drawShadowedString(g, scanTitle, 3, x2, y2, SystemPanel.textShadowC, SystemPanel.whiteText);
 
         y2 += s10;
-        int y2a = y2;
         int x1 = x+s4;
         int w1 = w-s8;
         int x1a = x1+s4;
@@ -1366,27 +1364,11 @@ public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, Mo
     }
     private void drawPlanet(Graphics2D g, CombatStackColony st, int x, int y, int w, int h) {
         if (renderedPlanetImage != null) {
-            planetDrawn = true;
             int imgW = renderedPlanetImage.getWidth();
             int imgH = renderedPlanetImage.getHeight();
             g.drawImage(renderedPlanetImage, planetX, planetY, planetX+planetR, planetY+planetR, 0, 0, imgW, imgH, null);
         }
         st.drawStack(this, g, 0, x, y, w, h);
-        /*
-        int y0 = y+h-s5;
-        g.setFont(narrowFont(18));
-        g.setColor(Color.white);
-        int sysId = st.colony.starSystem().id;
-        if (player().sv.isScouted(sysId)) {
-            String sname = player().sv.name(sysId);
-            if (sname == null)
-                sname = "";    
-            String dispName = st.num > 0 ? ""+st.num+"  " + sname : sname;
-            int sw = g.getFontMetrics().stringWidth(dispName);
-            int x0 = x+(w-sw)/2;
-            drawString(g,dispName, x0, y0);
-        }
-        */
     }
     private void rotateAndRenderPlanet() {
         if (!showPlanet)

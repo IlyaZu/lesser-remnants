@@ -49,7 +49,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     public StartOptionsUI() {
         setOpaque(false);
         Color textC = SystemPanel.whiteText;
-        randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0, 0);
+        randomEventsText = new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);
         addMouseListener(this);
         addMouseMotionListener(this);
     }
