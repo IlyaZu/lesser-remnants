@@ -568,8 +568,8 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         
         int x = min(selectX0, selectX1);
         int y = min(selectY0, selectY1);
-        int w = abs(selectX0-selectX1);
-        int h = abs(selectY0-selectY1);
+        int w = Math.abs(selectX0-selectX1);
+        int h = Math.abs(selectY0-selectY1);
         Stroke prev = g.getStroke();
         g.setStroke(stroke1);
         g.setColor(Color.white);

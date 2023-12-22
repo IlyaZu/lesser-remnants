@@ -35,13 +35,12 @@ import rotp.model.galaxy.StarSystem;
 import rotp.model.ships.*;
 import rotp.ui.FadeInPanel;
 import rotp.ui.main.SystemPanel;
-import rotp.util.Base;
 import javax.swing.*;
 import javax.swing.border.Border;
 import rotp.model.colony.Colony;
 import rotp.model.galaxy.SpaceMonster;
 
-public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, MouseMotionListener {
+public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
     public static final int ENTER_COMBAT = 0;
     public static final int AUTO_RESOLVE = 1;
@@ -358,9 +357,9 @@ public class ShipBattleUI extends FadeInPanel implements Base, MouseListener, Mo
         int y1a = max(0,min(y1,ptY.length-1));
         
         int x = ptX[min(x0a,x1a)];
-        int w = abs(ptX[x0a]-ptX[x1a])+boxW;
+        int w = Math.abs(ptX[x0a]-ptX[x1a])+boxW;
         int y = ptY[min(y0a,y1a)];
-        int h = abs(ptY[y0a]-ptY[y1a])+boxH;
+        int h = Math.abs(ptY[y0a]-ptY[y1a])+boxH;
         paintImmediately(x,y,w,h);
     }
     public void repaintButtonArea() {
