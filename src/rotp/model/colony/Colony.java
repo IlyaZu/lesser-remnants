@@ -1043,6 +1043,9 @@ public final class Colony implements Base, IMappedObject, Serializable {
         }
 
         resistTransportWithFleet(tr);
+        if (tr.size() == 0) {
+        	return;
+        }
 
         float startingPop = population();
         if (population() > 0) {
@@ -1129,7 +1132,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
                 TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
             else if (empire().isPlayerControlled()) 
                 InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
-            return;
         }
     }
     public void completeDefenseAgainstTransports(Transport tr) {
