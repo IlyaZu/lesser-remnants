@@ -232,6 +232,8 @@ public final class ShipCombatResults implements Base {
                 ColonyDestroyedIncident.create(this);
             else if (colonyStack.attacked)
                 ColonyAttackedIncident.create(this);
+            else 
+            	SkirmishIncident.create(this, defender);
         }
         else
             SkirmishIncident.create(this, defender);
