@@ -852,7 +852,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
                 }
             }
         }
-        mgr.endOfCombat(true);
+        mgr.endOfCombat();
         empire().sv.refreshFullScan(sysId);
         victim.sv.refreshFullScan(sysId);
     }

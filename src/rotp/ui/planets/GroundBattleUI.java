@@ -245,8 +245,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         for (int i=0;i<defenderState.length;i++)
                 defenderState[i] = NOT_FIRING;  // -1 is "not firing"  0-N is the firing frame #
         shipLanding = playAudioClip(attackerEmp.race().shipAudioKey);
-
-        //log("Starting Ground Battle. ", totalAttackers+" attackers vs. ", str(totalDefenders), " defenders");
     }
     private void initLandscapeImage(Colony c) {
         int w = getWidth();
@@ -409,7 +407,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             str1 = transport.empire().replaceTokens(str1, "attacker");
             drawBorderedString(g, str1, 2, x0, y0, Color.black, Color.white);
             scaledFont(g, attLine, w/2-s60, 22, 18);
-            //g.setFont(narrowFont(22));
             y0 += s30;
             if (!attArmorDesc.isEmpty()) {
                 int sw = g.getFontMetrics().stringWidth(attArmorDesc)+s10;
