@@ -213,7 +213,7 @@ public class ShipCombatManager implements Base {
         else {
             resolveAllCombat();
         }
-        endOfCombat(true);
+        endOfCombat();
     }
     private void battle(StarSystem sys, Empire emp, SpaceMonster monster) {
         finished = false;
@@ -233,7 +233,7 @@ public class ShipCombatManager implements Base {
         else {
             resolveAllCombat();
         }
-        endOfCombat(true);
+        endOfCombat();
     }
     private void beginInSystem(StarSystem s, Empire emp1, Empire emp2) {
         system = s;
@@ -406,7 +406,7 @@ public class ShipCombatManager implements Base {
         currentStack =  currentTurnList.get(0);
         currentStack.beginTurn();
     }
-    public void endOfCombat(boolean logIncidents) {
+    public void endOfCombat() {
         // auto-retreat any attacking ships that are stuck in stasis.
         // if they have nowhere to retreat, destroy them (don't show retreat animation in this case)
         List<CombatStack> activeStacks = new ArrayList<>(results.activeStacks());
@@ -455,8 +455,7 @@ public class ShipCombatManager implements Base {
             }
         }
 
-        if (logIncidents)
-            results.logIncidents();
+        results.logIncidents();
     }
     public void retreatStack(CombatStackShip stack, StarSystem s) {
         log("Retreating: ", stack.fullName());
@@ -870,7 +869,7 @@ public class ShipCombatManager implements Base {
             finished = true;
             if (showAnimations())
                 ui.showResult();
-            endOfCombat(true);
+            endOfCombat();
             return true;
         }
         return false;
@@ -879,7 +878,7 @@ public class ShipCombatManager implements Base {
         st.endTurn();
 
         if (activeStacks().isEmpty()) {
-            endOfCombat(true);
+            endOfCombat();
             return;
         }
         
