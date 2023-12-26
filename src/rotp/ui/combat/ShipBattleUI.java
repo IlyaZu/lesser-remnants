@@ -701,7 +701,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl1);
-            g.setColor(CombatStack.sysShieldC);
+            g.setColor(CombatStack.shieldColor);
             g.fillOval(x1a+lblW+s5, y2+s2, s20, s12);
         }
 
@@ -727,7 +727,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl1);
-            g.setColor(CombatStack.sysPopC);
+            g.setColor(CombatStack.populationColor);
             g.fillOval(x1a+lblW+s5, y2+s2, s20, s12);
         }
 
@@ -753,7 +753,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl1);
-            g.setColor(CombatStack.sysFactoryC);
+            g.setColor(CombatStack.factoryColor);
             g.fillOval(x1a+lblW+s5, y2+s2, s20, s12);
         }
 
@@ -960,7 +960,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl2);
-            g.setColor(CombatStack.shipShieldC);
+            g.setColor(CombatStack.shieldColor);
             g.fillOval(x1b+lblW+s5, y2+s2, s12, s12);
         }
 
@@ -986,10 +986,10 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl1);
-            g.setColor(CombatStack.shipMissDefenseC);
+            g.setColor(CombatStack.missileDefenseColor);
             g.fillOval(x1a+lblW+s5, y2+s2, s12, s12);
             lblW = g.getFontMetrics().stringWidth(lbl2);
-            g.setColor(CombatStack.shipAttackC);
+            g.setColor(CombatStack.attackColor);
             g.fillOval(x1b+lblW+s5, y2+s2, s12, s12);
         }
 
@@ -1015,7 +1015,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
         if (showTacticalInfo()) {
             int lblW = g.getFontMetrics().stringWidth(lbl1);
-            g.setColor(CombatStack.shipBeamDefenseC);
+            g.setColor(CombatStack.beamDefenseColor);
             g.fillOval(x1a+lblW+s5, y2+s2, s12, s12);
         }
 

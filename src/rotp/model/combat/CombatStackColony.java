@@ -338,7 +338,7 @@ public class CombatStackColony extends CombatStack {
             }
             int shieldLevel = (int)shieldLevel();
             // draw shield level
-            g.setColor(sysShieldC);
+            g.setColor(shieldColor);
             int x4a = reversed ? x4+w4-iconW : x4;
             int y4a =y4+barH+BasePanel.s1;
             g.fillOval(x4a, y4a, iconW, iconH);
@@ -350,7 +350,7 @@ public class CombatStackColony extends CombatStack {
 
             //draw population level
             int popLevel = colony == null ? 0 : (int) Math.ceil(colony.population());
-            g.setColor(sysPopC);
+            g.setColor(populationColor);
             int y4b =y4a+iconH+BasePanel.s2;
             g.fillOval(x4a, y4b, iconW, iconH);
             g.setColor(Color.white);
@@ -360,7 +360,7 @@ public class CombatStackColony extends CombatStack {
             g.drawString(valStr, x4a+((iconW-valW)/2), y4b+BasePanel.s14);
             //draw factories
             int factLevel = (colony == null) ? 0 : (int) Math.ceil(colony.industry().factories());
-            g.setColor(sysFactoryC);
+            g.setColor(factoryColor);
             int y4c =y4b+iconH+BasePanel.s1;
             g.fillOval(x4a, y4c, iconW, iconH);
             g.setColor(Color.white);
