@@ -690,7 +690,7 @@ public class CombatStackShip extends CombatStack {
             ShipView view = player().shipViewFor(design());
             if (view != null) {
                 // draw shield level
-                g.setColor(shipShieldC);
+                g.setColor(shieldColor);
                 int x4a = reversed ? x4+w4-iconW : x4;
                 int y4a =y4+barH+BasePanel.s1;
                 g.fillOval(x4a, y4a, iconW, iconW);
@@ -702,7 +702,7 @@ public class CombatStackShip extends CombatStack {
                     g.drawString(valStr, x4a+((iconW-shldW)/2), y4a+BasePanel.s14);
                 }
                 //draw attack level
-                g.setColor(shipAttackC);
+                g.setColor(attackColor);
                 int y4b =y4a+iconW+BasePanel.s2;
                 g.fillOval(x4a, y4b, iconW, iconW);
                 if (view.attackLevelKnown()) {
@@ -713,7 +713,7 @@ public class CombatStackShip extends CombatStack {
                     g.drawString(valStr, x4a+((iconW-shldW)/2), y4b+BasePanel.s14);
                 }
                 //draw beam defense level
-                g.setColor(shipBeamDefenseC);
+                g.setColor(beamDefenseColor);
                 int y4c =y4b+iconW+BasePanel.s1;
                 g.fillOval(x4a, y4c, iconW, iconW);
                 if (view.beamDefenseKnown()) {
@@ -724,7 +724,7 @@ public class CombatStackShip extends CombatStack {
                     g.drawString(valStr, x4a+((iconW-shldW)/2), y4c+BasePanel.s14);
                 }
                 //draw missie defense level
-                g.setColor(shipMissDefenseC);
+                g.setColor(missileDefenseColor);
                 int y4d =y4c+iconW+BasePanel.s1;
                 g.fillOval(x4a, y4d, iconW, iconW);
                 if (view.missileDefenseKnown()) {
