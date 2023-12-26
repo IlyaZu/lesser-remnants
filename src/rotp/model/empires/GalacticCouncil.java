@@ -246,8 +246,8 @@ public class GalacticCouncil implements Base, Serializable {
         // create incidents between voters and the candidates
         for (Empire voter: empires) {
             Empire lastVote = galaxy().empire(voter.lastCouncilVoteEmpId());
-            CouncilVoteIncident.create(candidate1.viewForEmpire(voter), lastVote, candidate2);
-            CouncilVoteIncident.create(candidate2.viewForEmpire(voter), lastVote, candidate1);
+            CouncilVoteIncident.create(candidate1, voter, lastVote, candidate2);
+            CouncilVoteIncident.create(candidate2, voter, lastVote, candidate1);
         }
 
         // schedule next council

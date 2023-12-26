@@ -17,30 +17,26 @@
 package rotp.model.incidents;
 
 import rotp.model.empires.Empire;
-import rotp.model.empires.EmpireView;
 import rotp.ui.diplomacy.DialogueManager;
 
 public class CouncilVoteIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    private static final int FOR = 1;
-    private static final int ABSTAIN = 0;
-    private static final int AGAINST = -1;
-    final int empVotee; // who was voted for... could be null on abstention
-    final int empVoter; // the voter getting the praise/warning
-    final int empCandidate; // the candidate giving the praise/warning
-    final int empRival; // the candidate's rival
+    
+    private final int voteeId; // who was voted for... could be null on abstention
+    private final int voterId; // the voter getting the praise/warning
+    private final int candidateId; // the candidate giving the praise/warning
+    private final int rivalId; // the candidate's rival
 
-    public static void create(EmpireView ev, Empire votee, Empire rival) {
-        // don't care if he voted for himself
-        if ((ev == null) || (ev.empire() == votee))
+    public static void create(Empire candidate, Empire voter, Empire votee, Empire rival) {
+        if (candidate == voter)
             return;
-        ev.owner().diplomatAI().noticeIncident(new CouncilVoteIncident(ev, votee, rival), ev.empire());
+        candidate.diplomatAI().noticeIncident(new CouncilVoteIncident(candidate, voter, votee, rival), voter);
     }
-    private CouncilVoteIncident(EmpireView ev, Empire votee, Empire rival) {
-        empVotee = votee == null ? Empire.NULL_ID : votee.id;
-        empVoter = ev.empire().id;
-        empCandidate = ev.owner().id;
-        empRival = rival.id;
+    private CouncilVoteIncident(Empire candidate, Empire voter, Empire votee, Empire rival) {
+        voteeId = votee == null ? Empire.NULL_ID : votee.id;
+        voterId = voter.id;
+        candidateId = candidate.id;
+        rivalId = rival.id;
         severity = calculateSeverity();
         turnOccurred = galaxy().currentTurn();
         duration = 10;
@@ -49,46 +45,24 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     public String title()               { return text("INC_COUNCIL_VOTE_TITLE"); }
     @Override
     public String description() {
-        if (empCandidate == empVotee)
+        if (candidateId == voteeId)
             return decode(text("INC_COUNCIL_VOTE_FOR_DESC"));
-        else if (empVotee == Empire.NULL_ID)
+        else if (voteeId == Empire.NULL_ID)
             return decode(text("INC_COUNCIL_ABSTAIN_DESC"));
         else
             return decode(text("INC_COUNCIL_VOTE_AGAINST_DESC"));
     }
     private float calculateSeverity() {
-        if (empVotee == empVoter)
-            return 0;
-
-        int type = AGAINST;
-        if (empVotee == Empire.NULL_ID)
-            type = ABSTAIN;
-        else if (empVotee == empCandidate)
-            type = FOR;
-
-        Empire candidate = galaxy().empire(empCandidate);
-        if (candidate.alliedWith(empVoter)) {
-            switch(type) {
-                case FOR: return 5;
-                case ABSTAIN: return -5;
-                case AGAINST: return -15;
-            }
+        if (voteeId == Empire.NULL_ID) {
+            // Abstain
+        	return -10;
+        } else if (voteeId == candidateId) {
+        	// Voted for
+        	return 25;
+        } else {
+        	// Voted against
+        	return -20;
         }
-        if (candidate.atWarWith(empVoter)) {
-            switch(type) {
-                case FOR: return 25;
-                case ABSTAIN: return 0;
-                case AGAINST: return -5;
-            }
-        }
-        else {
-            switch(type) {
-                case FOR: return 25;
-                case ABSTAIN: return 0;
-                case AGAINST: return -15;
-            }
-        }
-        return 0;
     }
     @Override
     public String praiseMessageId()   { return severity > 0 ? DialogueManager.PRAISE_COUNCIL_VOTE : ""; }
@@ -101,10 +75,10 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);
-        s1 = galaxy().empire(empVoter).replaceTokens(s1, "voter");
-        s1 = galaxy().empire(empCandidate).replaceTokens(s1, "candidate");
-        s1 = galaxy().empire(empRival).replaceTokens(s1, "rival");
-        s1 = galaxy().empire(empRival).replaceTokens(s1, "other");  // sometimes used instead of rival
+        s1 = galaxy().empire(voterId).replaceTokens(s1, "voter");
+        s1 = galaxy().empire(candidateId).replaceTokens(s1, "candidate");
+        s1 = galaxy().empire(rivalId).replaceTokens(s1, "rival");
+        s1 = galaxy().empire(rivalId).replaceTokens(s1, "other");  // sometimes used instead of rival
         return s1;
     }
 }
