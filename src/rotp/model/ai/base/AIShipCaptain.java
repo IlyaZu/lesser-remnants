@@ -32,12 +32,12 @@ public class AIShipCaptain implements Base, ShipCaptain {
     private transient List<CombatStack> allies = new ArrayList<>();
     private transient List<CombatStack> enemies = new ArrayList<>();
 
-    public List<CombatStack> allies() {
+    private List<CombatStack> allies() {
         if (allies == null)
             allies = new ArrayList<>();
         return allies;
     }
-    public List<CombatStack> enemies() {
+    private List<CombatStack> enemies() {
         if (enemies == null)
             enemies = new ArrayList<>();
         return enemies;
@@ -197,7 +197,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         stack.target = bestTarget;
         return bestPath;
     }
-    public Point findClosestPoint(CombatStack st, CombatStack tgt) {
+    private Point findClosestPoint(CombatStack st, CombatStack tgt) {
         if (!st.canMove())
             return null;
 
@@ -239,9 +239,6 @@ public class AIShipCaptain implements Base, ShipCaptain {
             }
         }
         return pt;
-    }
-    public FlightPath findSafestSpace(CombatStack st) {
-        return null;
     }
     public static FlightPath findBestPathToAttack(CombatStack st, CombatStack tgt) {
         if (!st.isArmed())
@@ -306,7 +303,6 @@ public class AIShipCaptain implements Base, ShipCaptain {
         }  
 
         Collections.sort(validPaths,FlightPath.SORT);
-        //System.out.println("Paths found: "+validPaths.size());
         return validPaths.get(0);
     }
     @Override
@@ -373,7 +369,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         return false;
     }
-    public boolean facingOverwhelmingForce(CombatStack stack) {
+    private boolean facingOverwhelmingForce(CombatStack stack) {
         // build list of allies & enemies
         allies().clear(); enemies().clear();
 
@@ -405,13 +401,11 @@ public class AIShipCaptain implements Base, ShipCaptain {
                 foes.add(enemy);
         }
 
-//        log("friends:"+friends.size()+"   foes:"+foes.size());
         for (CombatStack st1 : friends) {
             float maxKillValue = -1;
             for (CombatStack st2: foes) {
                 float killPct = min(1.0f,st1.estimatedKillPct(st2)); // modnar: killPct should have max of 1.00 instead of 100?
                 float killValue = killPct*st2.num*st2.designCost();
-//                log(st1.name()+"="+killPct+"    "+st2.name());
                 if (killValue > maxKillValue)
                     maxKillValue = killValue;
             }
@@ -422,7 +416,6 @@ public class AIShipCaptain implements Base, ShipCaptain {
             for (CombatStack st2: friends) {
                 float killPct = min(1.0f,st1.estimatedKillPct(st2)); // modnar: killPct should have max of 1.00 instead of 100?
                 float killValue = killPct*st2.num*st2.designCost();
-//                log(st1.name()+"="+killPct+"    "+st2.name());
                 if (killValue > maxKillValue)
                     maxKillValue = killValue;
             }
@@ -453,12 +446,12 @@ public class AIShipCaptain implements Base, ShipCaptain {
         Collections.sort(validPaths,FlightPath.SORT);
         return validPaths.get(0);
     }
-    public List<FlightPath> allValidPathsTo(CombatStack st, int x1, int y1) {
+    private List<FlightPath> allValidPathsTo(CombatStack st, int x1, int y1) {
         List<FlightPath> validPaths = new ArrayList<>();
         allValidPaths(st.x, st.y, x1, y1, (int)st.maxMove, st, validPaths, null);
         return validPaths;
     }
-    public static FlightPath allValidPaths(int x0, int y0, int x1, int y1, int moves, CombatStack stack, List<FlightPath> validPaths, FlightPath bestPath) {
+    private static FlightPath allValidPaths(int x0, int y0, int x1, int y1, int moves, CombatStack stack, List<FlightPath> validPaths, FlightPath bestPath) {
         FlightPath updatedBestPath = bestPath;
         ShipCombatManager mgr = stack.mgr;
         int gridW = ShipCombatManager.maxX+3;
@@ -577,7 +570,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         int y1 = pt1 / w;
         return Math.max(Math.abs(x0-x1), Math.abs(y0-y1));
     }
-    public float expectedBombardDamage(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedBombardDamage(CombatStackShip ship, CombatStackColony colony) {
         int num = ship.num;
         float damage = 0.0f;
 
@@ -588,7 +581,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             damage += d.special(j).estimatedBombardDamage(d, colony);
         return damage;
     }
-    public float expectedBioweaponDamage(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedBioweaponDamage(CombatStackShip ship, CombatStackColony colony) {
         int num = ship.num;
         float popLoss = 0.0f;
 
@@ -597,7 +590,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             popLoss += (num * d.wpnCount(j) * d.weapon(j).estimatedBioweaponDamage(ship, colony));
         return popLoss;
     }
-    public float expectedPopulationLoss(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedPopulationLoss(CombatStackShip ship, CombatStackColony colony) {
         float popLost = 0;
         float bombDamage = expectedBombardDamage(ship, colony);
         if (colony.num == 0)
@@ -609,7 +602,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         return popLost+bioDamage;
     }
-    public float expectedPopLossPct(CombatStack source, CombatStack target) {
+    private float expectedPopLossPct(CombatStack source, CombatStack target) {
         if (!source.isShip())
             return 0;
         if (!target.isColony())
