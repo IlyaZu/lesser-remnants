@@ -408,6 +408,8 @@ public class CombatStackShip extends CombatStack {
     public boolean canAttack(CombatStack st) {
         if (st == null)
             return false;
+        if (num <= 0) 
+        	return false;
         if (st.inStasis)
             return false;
         for (int i=0;i<weapons.size();i++) {
