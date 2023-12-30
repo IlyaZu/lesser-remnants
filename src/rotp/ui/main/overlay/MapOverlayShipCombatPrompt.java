@@ -17,7 +17,7 @@
 package rotp.ui.main.overlay;
 
 import rotp.model.Sprite;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
@@ -47,7 +47,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
     int pop, bases, fact, shield;
     public int boxX, boxY, boxW, boxH;
     boolean drawSprites = false;
-    public ShipCombatManager mgr;
+    public CombatManager mgr;
     AutoResolveBattleSprite resolveButton = new AutoResolveBattleSprite();
     RetreatAllBattleSprite retreatButton = new RetreatAllBattleSprite();
     EnterBattleSprite battleButton = new EnterBattleSprite();
@@ -55,7 +55,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
     public MapOverlayShipCombatPrompt(MainUI p) {
         parent = p;
     }
-    public void init(ShipCombatManager m) {
+    public void init(CombatManager m) {
         mgr = m;
         sysId = mgr.system().id;
         Empire pl = player();

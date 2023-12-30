@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.tech.TechEnergyPulsar;
 
 public final class ShipSpecialPulsar extends ShipSpecial {
@@ -35,13 +36,13 @@ public final class ShipSpecialPulsar extends ShipSpecial {
     @Override
     public int range()                      { return tech().range; }
     @Override
-    public float estimatedKills(CombatStack source, CombatStack target, int num) {
+    public float estimatedKills(CombatEntity source, CombatEntity target, int num) {
         float maxDam = tech().firstShipDamage + (int)((tech().extraShipDamage * (num-1)));
         float dam = maxDam/2;
         return target.num * Math.min(1,(dam/target.maxHits));
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         float maxDam = tech().firstShipDamage + (int)((tech().extraShipDamage * (source.num-1)));
         float dam = roll(1,(int)maxDam);
 
@@ -49,7 +50,7 @@ public final class ShipSpecialPulsar extends ShipSpecial {
 
         for (int x0=source.x-1; x0<=source.x+1; x0++) {
             for (int y0=source.y-1; y0<=source.y+1; y0++) {
-                CombatStack st = source.mgr.stackAt(x0,y0);
+                CombatEntity st = source.mgr.stackAt(x0,y0);
                 if ((st != null) && st.isShip() && (st != source)) 
                     st.takePulsarDamage(dam, 1);
             }

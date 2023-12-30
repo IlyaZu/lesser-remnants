@@ -32,7 +32,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
 import rotp.Rotp;
 import rotp.model.Sprite;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EspionageMission;
 import rotp.model.empires.SystemView;
@@ -264,7 +264,7 @@ public class MainUI extends BasePanel implements IMapHandler {
         overlayBombardedNotice.init(sysId, fl);
         repaint();
     }
-    public void showShipCombatPrompt(ShipCombatManager mgr) {
+    public void showShipCombatPrompt(CombatManager mgr) {
         overlay = overlayShipCombatPrompt;
         overlayShipCombatPrompt.init(mgr);
         repaint();

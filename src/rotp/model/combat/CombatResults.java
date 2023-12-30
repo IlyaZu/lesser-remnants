@@ -32,13 +32,13 @@ import rotp.model.incidents.SkirmishIncident;
 import rotp.model.ships.ShipDesign;
 import rotp.util.Base;
 
-public final class ShipCombatResults implements Base {
+public final class CombatResults implements Base {
     private StarSystem system;
-    public CombatStackColony colonyStack;
+    public CombatColony colonyStack;
     Empire defender, attacker;
     private final SpaceMonster monster;
     private List<Empire> empires = new ArrayList<>();
-    private List<CombatStack> activeStacks = new ArrayList<>();
+    private List<CombatEntity> activeStacks = new ArrayList<>();
     private Map<ShipDesign, Integer> shipsDestroyed = new HashMap<>();
     private Map<ShipDesign, Integer> shipsRetreated = new HashMap<>();
     int basesDestroyed = 0;
@@ -54,7 +54,7 @@ public final class ShipCombatResults implements Base {
     public int factoriesDestroyed()       { return colonyStack == null ? 0 : (int) Math.ceil(colonyStack.factoriesLost()); }
     public void killRebels()              { if (colonyStack != null) colonyStack.killRebels(); }
 
-    public List<CombatStack> activeStacks()  { return activeStacks; }
+    public List<CombatEntity> activeStacks()  { return activeStacks; }
     public Map<ShipDesign, Integer> shipsDestroyed()  { return shipsDestroyed; }
     public Map<ShipDesign, Integer> shipsRetreated()  { return shipsRetreated; }
 
@@ -106,7 +106,7 @@ public final class ShipCombatResults implements Base {
         float prod = e == null ? 0 : e.totalPlanetaryProduction();
         return prod <= 0 ? 1.0f : min(1.0f, bc / prod);
     }
-    public ShipCombatResults(ShipCombatManager mgr, StarSystem s, Empire emp1, Empire emp2) {
+    public CombatResults(CombatManager mgr, StarSystem s, Empire emp1, Empire emp2) {
         system = s;
         monster = null;
         
@@ -124,19 +124,19 @@ public final class ShipCombatResults implements Base {
                 defender = emp1;
                 attacker = emp2;
                 if (defender == sysEmpire)
-                    colonyStack = new CombatStackColony(system().colony(), mgr);
+                    colonyStack = new CombatColony(system().colony(), mgr);
             }
             // this is when a fleet for emp1 is bombarding a colony with no defending fleet
             else if (emp2 == null) {
                 attacker = emp1;
                 defender = null;
-                colonyStack = new CombatStackColony(system().colony(), mgr);
+                colonyStack = new CombatColony(system().colony(), mgr);
             }
             else if ((emp2 == sysEmpire) || emp2.alliedWith(sysEmpire.id)) {
                 defender = emp2;
                 attacker = emp1;
                 if (defender == sysEmpire)
-                    colonyStack = new CombatStackColony(system().colony(), mgr);
+                    colonyStack = new CombatColony(system().colony(), mgr);
             }
             else
                 neutralSystem = true;
@@ -162,7 +162,7 @@ public final class ShipCombatResults implements Base {
         if (emp2 != null)
             empires.add(emp2);
     }
-    public ShipCombatResults(ShipCombatManager mgr, StarSystem s, Empire emp, SpaceMonster m) {
+    public CombatResults(CombatManager mgr, StarSystem s, Empire emp, SpaceMonster m) {
         system = s;
         monster = m;
 
@@ -176,7 +176,7 @@ public final class ShipCombatResults implements Base {
             if ((emp == sysEmpire) || emp.alliedWith(sysEmpire.id)) {
                 defender = emp;
                 if (defender == sysEmpire)
-                    colonyStack = new CombatStackColony(system.colony(), mgr);
+                    colonyStack = new CombatColony(system.colony(), mgr);
             }
         }
 
@@ -184,7 +184,7 @@ public final class ShipCombatResults implements Base {
     }
     public Empire victor() {
         // if there is a ship stack, that empire is the victor
-        for (CombatStack st: activeStacks) {
+        for (CombatEntity st: activeStacks) {
             if (!st.isColony())
                 return st.empire;
         }

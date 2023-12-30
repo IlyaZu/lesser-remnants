@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import rotp.model.ai.base.AIShipCaptain;
 import rotp.model.ai.interfaces.ShipCaptain;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.CombatStackSpaceAmoeba;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatAmoeba;
 import rotp.model.combat.FlightPath;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.events.RandomEventSpaceAmoeba;
 import rotp.model.galaxy.StarSystem;
 import rotp.util.Base;
@@ -33,10 +33,10 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
     @Override
     public StarSystem retreatSystem(StarSystem fr) { return null; }
     @Override
-    public boolean wantToRetreat(CombatStack stack) { return false; }
+    public boolean wantToRetreat(CombatEntity stack) { return false; }
     @Override
-    public void performTurn(CombatStack stack)  {
-        ShipCombatManager mgr = galaxy().shipCombat();
+    public void performTurn(CombatEntity stack)  {
+        CombatManager mgr = galaxy().shipCombat();
         if (stack.destroyed()) {
             mgr.turnDone(stack);
             return;
@@ -47,7 +47,7 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
             return;
         }
 
-        CombatStack prevTarget = null;
+        CombatEntity prevTarget = null;
         while (stack.move > 0) {
             FlightPath bestPathToTarget = chooseTarget(stack);
             // if we need to move towards target, do it now
@@ -72,12 +72,12 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         stack.mgr.turnDone(stack);
     }
     @Override
-    public FlightPath pathTo(CombatStack st, int x, int y) { return null; }
+    public FlightPath pathTo(CombatEntity st, int x, int y) { return null; }
 
-    public void splitAmoeba(CombatStackSpaceAmoeba st) {
+    public void splitAmoeba(CombatAmoeba st) {
         float newScale = st.scale == 1.5f ? 1.0f : st.scale*2/3;
 
-        CombatStackSpaceAmoeba newStack = new CombatStackSpaceAmoeba();
+        CombatAmoeba newStack = new CombatAmoeba();
         newStack.maxHits = st.maxHits;
         newStack.hits = st.maxHits;
         newStack.x = st.x;
@@ -90,16 +90,16 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         // combats with other fleets later in this turn
         RandomEventSpaceAmoeba.monster.addCombatStack(newStack);   
         st.mgr.addStackToCombat(newStack);
-        CombatStack eatenStack = st.mgr.moveStackNearest(newStack, st.x, st.y);
+        CombatEntity eatenStack = st.mgr.moveStackNearest(newStack, st.x, st.y);
         newStack.eatShips(eatenStack);
     }
-    private  FlightPath chooseTarget(CombatStack stack) {
-        ShipCombatManager mgr = galaxy().shipCombat();
-        CombatStackColony colony = stack.mgr.results().colonyStack;
+    private  FlightPath chooseTarget(CombatEntity stack) {
+        CombatManager mgr = galaxy().shipCombat();
+        CombatColony colony = stack.mgr.results().colonyStack;
 
-        List<CombatStack> activeStacks = new ArrayList<>(mgr.activeStacks());
-        List<CombatStack> potentialTargets = new ArrayList<>();
-        for (CombatStack st: activeStacks) {
+        List<CombatEntity> activeStacks = new ArrayList<>(mgr.activeStacks());
+        List<CombatEntity> potentialTargets = new ArrayList<>();
+        for (CombatEntity st: activeStacks) {
             if (st.isShip() || st.isColony())
                 potentialTargets.add(st);
         }
@@ -107,11 +107,11 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
             potentialTargets.remove(colony);
 
         FlightPath bestPath = null;
-        CombatStack bestTarget = null;
+        CombatEntity bestTarget = null;
         int bestTurns = 9999;
 
         // can we eat any stacks? (range 0 weapon)
-        for (CombatStack target : potentialTargets) {
+        for (CombatEntity target : potentialTargets) {
             FlightPath path = AIShipCaptain.findBestPathToAttack(stack, target, 0);
             if (path != null) {  // can we even path to this target?
                 if (bestPath == null) {

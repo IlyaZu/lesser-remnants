@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +18,8 @@ package rotp.model.ships;
 
 import java.awt.Component;
 import java.awt.Image;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechTorpedoWeapon;
 
 public final class ShipWeaponTorpedo extends ShipWeaponMissileType {
@@ -28,7 +29,7 @@ public final class ShipWeaponTorpedo extends ShipWeaponMissileType {
         sequence(t.level + .1f);
     }
     @Override
-    public float planetDamageMod()       { return CombatStackColony.TORPEDO_DAMAGE_MOD; }
+    public float planetDamageMod()       { return CombatColony.TORPEDO_DAMAGE_MOD; }
     @Override
     public int bombardAttacks()           { return 5; }
     @Override
@@ -52,13 +53,13 @@ public final class ShipWeaponTorpedo extends ShipWeaponMissileType {
     @Override
     public int maxDamage()                { return tech().damage(); }
     @Override
-    public void dealDamage(CombatStack target, float damage, float shieldMod) {
+    public void dealDamage(CombatEntity target, float damage, float shieldMod) {
         target.takeTorpedoDamage(damage, shieldMod);
     }
     @Override
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
         return super.estimatedBombardDamage(source, target) * target.torpedoDamageMod();
     }
     @Override
-    public void drawAttackEffect(CombatStack source, CombatStack target, Component comp) { }
+    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component comp) { }
 }

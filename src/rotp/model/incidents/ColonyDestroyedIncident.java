@@ -16,7 +16,7 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.combat.ShipCombatResults;
+import rotp.model.combat.CombatResults;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.ui.diplomacy.DialogueManager;
 
@@ -27,14 +27,14 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
     final int empAttacker;
     final int popLost;
 
-    public static void create(ShipCombatResults r) {
+    public static void create(CombatResults r) {
         if (r.defender().extinct())
             return;
 
         ColonyDestroyedIncident inc = new ColonyDestroyedIncident(r);
         r.defender().diplomatAI().noticeIncident(inc, r.attacker());
     }
-    private ColonyDestroyedIncident(ShipCombatResults r) {
+    private ColonyDestroyedIncident(CombatResults r) {
         sysId = r.system().id;
         empDefender = r.defender().id;
         empAttacker = r.attacker().id;

@@ -17,7 +17,7 @@
 package rotp.model.incidents;
 
 import java.util.List;
-import rotp.model.combat.ShipCombatResults;
+import rotp.model.combat.CombatResults;
 import rotp.model.empires.Empire;
 import rotp.ui.diplomacy.DialogueManager;
 
@@ -26,7 +26,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     public final int empAttacker;
     public final int empAlly;
     public final int empMe;
-    public static void alert(Empire attacker, Empire defender, ShipCombatResults res) {
+    public static void alert(Empire attacker, Empire defender, CombatResults res) {
         List<Empire> allies = defender.allies();
 
         // severity is total % of GDP affected. Can't be less than -40

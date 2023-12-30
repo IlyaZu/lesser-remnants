@@ -20,7 +20,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.galaxy.Galaxy;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.PlanetType;
@@ -410,13 +410,13 @@ public final class ShipDesign extends Design {
             dmg += (wpnCount(i) * weapon(i).firepower(shield));
         return dmg;
     }
-    public float firepower(CombatStack target, int wpn) {
+    public float firepower(CombatEntity target, int wpn) {
         float dmg = wpnCount(wpn) * weapon(wpn).firepower(target.shieldLevel());
         if (weapon(wpn).isStreamingWeapon() && (dmg > target.maxHits()))
             dmg *= (dmg/target.maxHits());
         return dmg;
     }
-    public float estimatedKills(CombatStack source, CombatStack target) {
+    public float estimatedKills(CombatEntity source, CombatEntity target) {
         float kills = 0;
         for (int i=0;i<maxWeapons();i++)
             kills += weapon(i).estimatedKills(source, target, wpnCount(i));

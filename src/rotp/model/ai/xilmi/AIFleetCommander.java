@@ -26,8 +26,8 @@ import rotp.model.ai.FleetOrders;
 import rotp.model.ai.FleetPlan;
 import rotp.model.ai.ShipDecision;
 import rotp.model.ai.ShipPlan;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.Galaxy;
@@ -1309,8 +1309,8 @@ public class AIFleetCommander implements Base, FleetCommander {
             return 0;
 
         float damage = 0;
-        ShipCombatManager mgr = galaxy().shipCombat();
-        CombatStackColony planetStack = new CombatStackColony(sys.colony(), mgr);
+        CombatManager mgr = galaxy().shipCombat();
+        CombatColony planetStack = new CombatColony(sys.colony(), mgr);
 
         for (int j=0;j<ShipDesign.maxWeapons();j++)
             damage += d.wpnCount(j) * d.weapon(j).estimatedBombardDamage(d, planetStack);

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +16,13 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackShip;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatShip;
 import rotp.model.tech.TechStasisField;
 
 public final class ShipSpecialStasisField extends ShipSpecial {
     private static final long serialVersionUID = 1L;
-    transient CombatStackShip target;
+    transient CombatShip target;
     public ShipSpecialStasisField (TechStasisField t) {
         tech(t);
         sequence(t.level + .05f);
@@ -37,7 +38,7 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     @Override
     public String desc()           { return tech().brief(); }
     @Override
-    public boolean validTarget(CombatStack tgt) {
+    public boolean validTarget(CombatEntity tgt) {
         if (!tgt.isShip())
             return false;
         if (tgt.immuneToStasis())
@@ -49,11 +50,11 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     @Override
     public void becomeDestroyed()  { breakStasis(); }
     @Override
-    public void fireUpon(CombatStack source, CombatStack tgt, int count)   {
+    public void fireUpon(CombatEntity source, CombatEntity tgt, int count)   {
         if (tgt.immuneToStasis())
             return;
         if (tgt.isShip()) {
-            target = (CombatStackShip) tgt;
+            target = (CombatShip) tgt;
             tech().drawSpecialAttack(source, target, 1, 0);
             target.inStasis = true;
             target.missiles().clear();

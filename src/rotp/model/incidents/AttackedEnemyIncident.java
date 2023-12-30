@@ -18,7 +18,7 @@ package rotp.model.incidents;
 
 import java.util.ArrayList;
 import java.util.List;
-import rotp.model.combat.ShipCombatResults;
+import rotp.model.combat.CombatResults;
 import rotp.model.empires.Empire;
 import rotp.ui.diplomacy.DialogueManager;
 
@@ -27,7 +27,7 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
     public final int empAttacker;
     public final int empEnemy;
     public final int empMe;
-    public static void alert(Empire attacker, Empire defender, ShipCombatResults res) {
+    public static void alert(Empire attacker, Empire defender, CombatResults res) {
         List<Empire> allEnemies = new ArrayList<>();
         
         for (Empire emp: defender.contactedEmpires()) {

@@ -28,7 +28,7 @@ import rotp.model.tech.TechStasisField;
 import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 
-public class CombatStackShip extends CombatStack {
+public class CombatShip extends CombatEntity {
     public ShipDesign design;
     private ShipFleet fleet;
     private int selectedWeaponIndex;
@@ -44,7 +44,7 @@ public class CombatStackShip extends CombatStack {
     private boolean bombardedThisTurn = false;
     private boolean usingAI = true;
     private int repulsorRange = 0;
-    private CombatStack ward;
+    private CombatEntity ward;
     
     @Override
     public String toString() {
@@ -57,7 +57,7 @@ public class CombatStackShip extends CombatStack {
     public String shortString() {
         return concat(design.name(), " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
     }
-    public CombatStackShip(ShipFleet fl, int index, ShipCombatManager m) {
+    public CombatShip(ShipFleet fl, int index, CombatManager m) {
         mgr = m;
         fleet = fl;
         empire = fl.empire();
@@ -92,13 +92,13 @@ public class CombatStackShip extends CombatStack {
     @Override
     public ShipDesign design()       { return design; }
     @Override
-    public boolean hostileTo(CombatStack st, StarSystem sys)       { return st.isMonster() || empire.aggressiveWith(st.empire, sys); }
+    public boolean hostileTo(CombatEntity st, StarSystem sys)       { return st.isMonster() || empire.aggressiveWith(st.empire, sys); }
     @Override
-    public CombatStack ward()             { return ward; }
+    public CombatEntity ward()             { return ward; }
     @Override
     public boolean hasWard()              { return ward != null; }
     @Override
-    public void ward(CombatStack st)      { ward = st; }
+    public void ward(CombatEntity st)      { ward = st; }
     @Override
     public int repulsorRange()            { return repulsorRange; }
     @Override
@@ -136,14 +136,14 @@ public class CombatStackShip extends CombatStack {
     }
     @Override
     public boolean canFireWeapon() {
-        for (CombatStack st: mgr.activeStacks()) {
+        for (CombatEntity st: mgr.activeStacks()) {
             if ((empire != st.empire) && canAttack(st))
                 return true;
         }
         return false;
     }
     @Override
-    public boolean canFireWeaponAtTarget(CombatStack st) {
+    public boolean canFireWeaponAtTarget(CombatEntity st) {
         if (st == null)
             return false;
         if (st.inStasis)
@@ -165,7 +165,7 @@ public class CombatStackShip extends CombatStack {
         return false;
     }
     @Override
-    public int maxFiringRange(CombatStack tgt) {
+    public int maxFiringRange(CombatEntity tgt) {
         int maxRange = 0;
         for (int i=0;i<weapons.size();i++) {
             ShipComponent wpn = weapons.get(i);
@@ -177,7 +177,7 @@ public class CombatStackShip extends CombatStack {
         return maxRange;
     }
     @Override
-    public int optimalFiringRange(CombatStack tgt) {
+    public int optimalFiringRange(CombatEntity tgt) {
         // if only missile weapons, use that range
         // else use beam weapon range;
         int missileRange = -1;
@@ -198,12 +198,12 @@ public class CombatStackShip extends CombatStack {
                     float targetBackOffRange = 2 * tgt.maxMove();
                     if(distanceTo(0, 0) > tgt.distanceTo(0, 0))
                         targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, 0));
-                    if(distanceTo(0, ShipCombatManager.maxY) > tgt.distanceTo(0, ShipCombatManager.maxY))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, ShipCombatManager.maxY));
-                    if(distanceTo(ShipCombatManager.maxX, 0) > tgt.distanceTo(ShipCombatManager.maxX, 0))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(ShipCombatManager.maxX, 0));
-                    if(distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY) > tgt.distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY))
-                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(ShipCombatManager.maxX, ShipCombatManager.maxY));
+                    if(distanceTo(0, CombatManager.maxY) > tgt.distanceTo(0, CombatManager.maxY))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(0, CombatManager.maxY));
+                    if(distanceTo(CombatManager.maxX, 0) > tgt.distanceTo(CombatManager.maxX, 0))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(CombatManager.maxX, 0));
+                    if(distanceTo(CombatManager.maxX, CombatManager.maxY) > tgt.distanceTo(CombatManager.maxX, CombatManager.maxY))
+                        targetBackOffRange = min(targetBackOffRange, tgt.distanceTo(CombatManager.maxX, CombatManager.maxY));
                     int curr = (int)(max(1, (weaponRange(wpn) - targetBackOffRange) / sqrt(2) + 0.7f));
                     if(missileRange > 0)
                         missileRange = min(missileRange, curr);
@@ -330,7 +330,7 @@ public class CombatStackShip extends CombatStack {
         return design.initiative() + empire.shipInitiativeBonus();
     }
     @Override
-    public boolean selectBestWeapon(CombatStack target) {
+    public boolean selectBestWeapon(CombatEntity target) {
         if (target.destroyed())
             return false;
         if (shipComponentCanAttack(target, selectedWeaponIndex))
@@ -339,7 +339,7 @@ public class CombatStackShip extends CombatStack {
         rotateToUsableWeapon(target);
         return shipComponentCanAttack(target, selectedWeaponIndex);
     }
-    private void rotateToUsableWeapon(CombatStack target) {
+    private void rotateToUsableWeapon(CombatEntity target) {
         int i = selectedWeaponIndex;
         int j = i;
         boolean looking = true;
@@ -357,11 +357,11 @@ public class CombatStackShip extends CombatStack {
         return selectedWeaponIndex;
     }
     @Override
-    public void fireWeapon(CombatStack targetStack) {
+    public void fireWeapon(CombatEntity targetStack) {
         fireWeapon(targetStack, weaponIndex(), false);
     }
     @Override
-    public void fireWeapon(CombatStack targetStack, int index, boolean allShots) {
+    public void fireWeapon(CombatEntity targetStack, int index, boolean allShots) {
         if (targetStack == null)
             return;
 
@@ -380,7 +380,7 @@ public class CombatStackShip extends CombatStack {
             // some weapons (beams) can fire multiple per round
             int count = num*shotsTaken*weaponCount[index];
             if (selectedWeapon.isMissileWeapon()) {
-                CombatStackMissile missile = new CombatStackMissile(this, (ShipWeaponMissileType) selectedWeapon, count);
+                CombatMissile missile = new CombatMissile(this, (ShipWeaponMissileType) selectedWeapon, count);
                 mgr.addStackToCombat(missile);
             }
             else {
@@ -405,7 +405,7 @@ public class CombatStackShip extends CombatStack {
         return wpn.isWeapon() && !wpn.noWeapon();
     }
     @Override
-    public boolean canAttack(CombatStack st) {
+    public boolean canAttack(CombatEntity st) {
         if (st == null)
             return false;
         if (num <= 0) 
@@ -419,7 +419,7 @@ public class CombatStackShip extends CombatStack {
         return false;
     }
     @Override
-    public boolean canPotentiallyAttack(CombatStack st) {
+    public boolean canPotentiallyAttack(CombatEntity st) {
         if (st == null)
             return false;
         if (empire.alliedWith(id(st.empire)))
@@ -444,7 +444,7 @@ public class CombatStackShip extends CombatStack {
         return false;
     }
     @Override
-    public float estimatedKills(CombatStack target) {
+    public float estimatedKills(CombatEntity target) {
         float kills = 0;
         for (int i=0;i<weapons.size();i++) {
             ShipComponent comp = weapons.get(i);
@@ -464,7 +464,7 @@ public class CombatStackShip extends CombatStack {
         }
         return kills;
     }
-    public boolean shipComponentCanAttack(CombatStack target, int index) {
+    public boolean shipComponentCanAttack(CombatEntity target, int index) {
         if (target == null)
             return false;
 
@@ -497,7 +497,7 @@ public class CombatStackShip extends CombatStack {
 
         return true;
     }
-    private boolean shipComponentCanPotentiallyAttack(CombatStack target, int index) {
+    private boolean shipComponentCanPotentiallyAttack(CombatEntity target, int index) {
         if (target == null)
             return false;
 
@@ -543,7 +543,7 @@ public class CombatStackShip extends CombatStack {
     }
 
     @Override
-    public boolean shipComponentValidTarget(int index, CombatStack target) {
+    public boolean shipComponentValidTarget(int index, CombatEntity target) {
         ShipComponent shipWeapon = weapons.get(index);
         if (target == null)
             return false;
@@ -554,7 +554,7 @@ public class CombatStackShip extends CombatStack {
         return true;
     }
     @Override
-    public boolean shipComponentInRange(int index, CombatStack target) {
+    public boolean shipComponentInRange(int index, CombatEntity target) {
         ShipComponent shipWeapon = weapons.get(index);
         int minMove = movePointsTo(target);
         if (weaponRange(shipWeapon) < minMove)
@@ -618,7 +618,7 @@ public class CombatStackShip extends CombatStack {
             g.setComposite(prevComp);
 
         if (mgr.currentStack().isShip()) {
-            CombatStackShip shipStack = (CombatStackShip) mgr.currentStack();
+            CombatShip shipStack = (CombatShip) mgr.currentStack();
             if (!mgr.performingStackTurn ) {
                 if (shipStack.design == design) {
                     Stroke prev = g.getStroke();

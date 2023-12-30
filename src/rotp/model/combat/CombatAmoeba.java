@@ -20,9 +20,9 @@ import rotp.model.ai.AmoebaShipCaptain;
 import rotp.model.events.RandomEventSpaceAmoeba;
 import rotp.model.galaxy.StarSystem;
 
-public class CombatStackSpaceAmoeba extends CombatStack {
+public class CombatAmoeba extends CombatEntity {
     private static final int DAMAGE_FOR_SPLIT = 500;
-    public CombatStackSpaceAmoeba() {
+    public CombatAmoeba() {
         num = 1;
         maxHits = hits = 3500;
         maxMove = move = 2;
@@ -50,13 +50,13 @@ public class CombatStackSpaceAmoeba extends CombatStack {
         }
     }
     @Override
-    public boolean hostileTo(CombatStack st, StarSystem sys)      { return !(st instanceof CombatStackSpaceAmoeba); }
+    public boolean hostileTo(CombatEntity st, StarSystem sys)      { return !(st instanceof CombatAmoeba); }
     @Override
-    public boolean canEat(CombatStack st)  { return (st instanceof CombatStackShip) || (st instanceof CombatStackColony); }
+    public boolean canEat(CombatEntity st)  { return (st instanceof CombatShip) || (st instanceof CombatColony); }
     @Override
     public boolean ignoreRepulsors()    { return true; }
     @Override
-    public boolean canAttack(CombatStack target)  { 
+    public boolean canAttack(CombatEntity target)  { 
         if (target.destroyed()) 
             return false;
         if (target.isColony() && !target.isArmed())
@@ -64,13 +64,13 @@ public class CombatStackSpaceAmoeba extends CombatStack {
         return (x == target.x) && (y == target.y);
     }
     @Override
-    public boolean selectBestWeapon(CombatStack target)       { return canAttack(target); }
+    public boolean selectBestWeapon(CombatEntity target)       { return canAttack(target); }
     @Override
-    public void fireWeapon(CombatStack target)  { 
+    public void fireWeapon(CombatEntity target)  { 
         if ((x == target.x) && (y == target.y)) 
             eatShips(target);
     }
-    public void eatShips(CombatStack st) {
+    public void eatShips(CombatEntity st) {
         if (st == null)
             return;
         if (!st.isShip() && !st.isColony())
@@ -82,7 +82,7 @@ public class CombatStackSpaceAmoeba extends CombatStack {
             st.mgr.destroyStack(st); 
         }
         else if (st.isColony()) {
-            CombatStackColony cStack = (CombatStackColony) st;
+            CombatColony cStack = (CombatColony) st;
             st.mgr.destroyStack(st);
             RandomEventSpaceAmoeba.monster.degradePlanet(st.mgr.system());
             cStack.colonyDestroyed = true;
@@ -97,7 +97,7 @@ public class CombatStackSpaceAmoeba extends CombatStack {
     }
     @Override
     public boolean moveTo(int x1, int y1) {
-        CombatStack potentialFood = mgr.stackAt(x1, y1);
+        CombatEntity potentialFood = mgr.stackAt(x1, y1);
         boolean stillAlive = super.moveTo(x1, y1);
         
         // if we made it successfully to the new dest

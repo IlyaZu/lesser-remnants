@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import rotp.model.ai.base.AIShipCaptain;
 import rotp.model.ai.interfaces.ShipCaptain;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.combat.FlightPath;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.galaxy.StarSystem;
 import rotp.util.Base;
 
@@ -30,17 +30,17 @@ public class OrionGuardianCaptain implements Base, ShipCaptain {
     @Override
     public StarSystem retreatSystem(StarSystem fr) { return null; }
     @Override
-    public boolean wantToRetreat(CombatStack stack) { return false; }
+    public boolean wantToRetreat(CombatEntity stack) { return false; }
     @Override
-    public void performTurn(CombatStack stack)  {
-        ShipCombatManager mgr = galaxy().shipCombat();
+    public void performTurn(CombatEntity stack)  {
+        CombatManager mgr = galaxy().shipCombat();
         
         if (stack.destroyed()) {
             mgr.turnDone(stack);
             return;
         }
 
-        CombatStack prevTarget = null;
+        CombatEntity prevTarget = null;
         while (stack.move > 0) {
             float prevMove = stack.move;
             prevTarget = stack.target;
@@ -62,22 +62,22 @@ public class OrionGuardianCaptain implements Base, ShipCaptain {
         mgr.turnDone(stack);
     }
     @Override
-    public FlightPath pathTo(CombatStack st, int x, int y) { return null; }
-    private  FlightPath chooseTarget(CombatStack stack) {
-        ShipCombatManager mgr = galaxy().shipCombat();
+    public FlightPath pathTo(CombatEntity st, int x, int y) { return null; }
+    private  FlightPath chooseTarget(CombatEntity stack) {
+        CombatManager mgr = galaxy().shipCombat();
 
-        List<CombatStack> activeStacks = new ArrayList<>(mgr.activeStacks());
-        List<CombatStack> potentialTargets = new ArrayList<>();
-        for (CombatStack st: activeStacks) {
+        List<CombatEntity> activeStacks = new ArrayList<>(mgr.activeStacks());
+        List<CombatEntity> potentialTargets = new ArrayList<>();
+        for (CombatEntity st: activeStacks) {
             if (st.isShip())
                 potentialTargets.add(st);
         }
         FlightPath bestPath = null;
-        CombatStack bestTarget = null;
+        CombatEntity bestTarget = null;
         int bestTurns = 9999;
 
         // can we eat any stacks? (range 0 weapon)
-        for (CombatStack target : potentialTargets) {
+        for (CombatEntity target : potentialTargets) {
             FlightPath path = AIShipCaptain.findBestPathToAttack(stack, target);
             if (path != null) {  // can we even path to this target?
                 if (bestPath == null) {

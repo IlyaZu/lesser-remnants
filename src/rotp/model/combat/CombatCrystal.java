@@ -21,10 +21,10 @@ import rotp.model.events.RandomEventSpaceCrystal;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.ships.ShipWeaponMissileType;
 
-public class CombatStackSpaceCrystal extends CombatStack {
+public class CombatCrystal extends CombatEntity {
     private static final int MAX_WEAPON_DAMAGE = 1000;
     private boolean weaponUsed = false;
-    public CombatStackSpaceCrystal() {
+    public CombatCrystal() {
         num = 1;
         maxHits = hits = 7000;
         canTeleport = true;
@@ -49,11 +49,11 @@ public class CombatStackSpaceCrystal extends CombatStack {
     @Override
     public void reloadWeapons()         { weaponUsed = false; };
     @Override
-    public boolean hostileTo(CombatStack st, StarSystem sys)  { return true; }
+    public boolean hostileTo(CombatEntity st, StarSystem sys)  { return true; }
     @Override
-    public boolean selectBestWeapon(CombatStack target)       { return !weaponUsed; }
+    public boolean selectBestWeapon(CombatEntity target)       { return !weaponUsed; }
     @Override
-    public void fireWeapon(CombatStack target)  { 
+    public void fireWeapon(CombatEntity target)  { 
         weaponUsed = true;
         float dam = roll(1,MAX_WEAPON_DAMAGE);
 
@@ -62,7 +62,7 @@ public class CombatStackSpaceCrystal extends CombatStack {
         String attackText = text("SHIP_COMBAT_MISS");
         for (int x0=x-1; x0<=x+1; x0++) {
             for (int y0=y-1; y0<=y+1; y0++) {
-                CombatStack st = mgr.stackAt(x0,y0);
+                CombatEntity st = mgr.stackAt(x0,y0);
                 if ((st != null) && (st != this)) {
                     if (st.isShip() || st.isMonster() || st.isColony()) {
                         st.drawDamageTaken(dam, attackText);
@@ -71,7 +71,7 @@ public class CombatStackSpaceCrystal extends CombatStack {
                         st.repairPct = max(0, st.repairPct-0.05f);
                     }
                     if (st.isColony() && st.destroyed()) {
-                        CombatStackColony cStack = (CombatStackColony) st;
+                        CombatColony cStack = (CombatColony) st;
                         st.mgr.destroyStack(st);
                         RandomEventSpaceCrystal.monster.degradePlanet(st.mgr.system());                   
                         cStack.colonyDestroyed = true;

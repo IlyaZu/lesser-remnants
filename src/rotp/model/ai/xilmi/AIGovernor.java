@@ -21,8 +21,8 @@ import rotp.model.ai.interfaces.Governor;
 import rotp.model.colony.Colony;
 import rotp.model.colony.ColonySpendingCategory;
 import static rotp.model.colony.ColonySpendingCategory.MAX_TICKS;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.SystemView;
@@ -667,8 +667,8 @@ public class AIGovernor implements Base, Governor {
             return 0;
 
         float damage = 0;
-        ShipCombatManager mgr = galaxy().shipCombat();
-        CombatStackColony planetStack = new CombatStackColony(sys.colony(), mgr);
+        CombatManager mgr = galaxy().shipCombat();
+        CombatColony planetStack = new CombatColony(sys.colony(), mgr);
         planetStack.num = 1;
 
         for (int i=0;i<fl.num.length;i++) {

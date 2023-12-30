@@ -19,7 +19,7 @@ package rotp.model.galaxy;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import rotp.model.combat.CombatStackOrionGuardian;
+import rotp.model.combat.CombatGuardian;
 import rotp.model.empires.Empire;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.KillGuardianIncident;
@@ -34,7 +34,7 @@ public class OrionGuardianShip extends SpaceMonster {
     @Override
     public void initCombat() {
         combatStacks().clear();
-        addCombatStack(new CombatStackOrionGuardian());       
+        addCombatStack(new CombatGuardian());
     }
     @Override
     public Image image()  { return image("ORION_GUARDIAN"); }

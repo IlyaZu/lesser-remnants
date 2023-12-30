@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +20,8 @@ import java.awt.Component;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.empires.Empire;
 import rotp.model.tech.Tech;
 import rotp.util.Base;
@@ -55,14 +56,14 @@ public class ShipComponent implements Base, Serializable {
     public int range()                   { return 0; }
     public float shieldMod()             { return 1; }
     public boolean heavy()               { return false; }
-    public void drawAttack    (CombatStack source, CombatStack target, Component ui) { }
-    public void drawAttackEffect(CombatStack source, CombatStack target, Component ui) { }
+    public void drawAttack    (CombatEntity source, CombatEntity target, Component ui) { }
+    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component ui) { }
     public int bombardAttacks()          { return 0; }
-    public float estimatedBioweaponDamage(CombatStack source, CombatStackColony stack) { return 0;}
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony stack) { return 0;}
-    public float estimatedBombardDamage(ShipDesign d, CombatStackColony stack) { return 0;}
+    public float estimatedBioweaponDamage(CombatEntity source, CombatColony stack) { return 0;}
+    public float estimatedBombardDamage(CombatEntity source, CombatColony stack) { return 0;}
+    public float estimatedBombardDamage(ShipDesign d, CombatColony stack) { return 0;}
 
-    public boolean validTarget(CombatStack st) { return true; }
+    public boolean validTarget(CombatEntity st) { return true; }
     public boolean hasAttackEffect()     { return false;  }
     public int weaponWidth()             { return 0; }
     public int weaponSpread()            { return 0; }
@@ -71,9 +72,9 @@ public class ShipComponent implements Base, Serializable {
     public float planetDamageMod()       { return 1; }
     public void reload()                 { }
     public void becomeDestroyed()        { }
-    public float estimatedKills(CombatStack source, CombatStack target, int num) {  return 0; }
+    public float estimatedKills(CombatEntity source, CombatEntity target, int num) {  return 0; }
 
-    public void fireUpon(CombatStack source, CombatStack target, int count)      { 	}
+    public void fireUpon(CombatEntity source, CombatEntity target, int count)      { 	}
     public boolean isNone()          { return nullTech(); }
     public String name()             { return techId == null ? "" : tech().item(); }
     public String desc()             { return techId == null ? "" : tech().brief(); }
