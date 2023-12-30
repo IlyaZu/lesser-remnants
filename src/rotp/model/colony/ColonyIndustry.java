@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,13 +76,6 @@ public class ColonyIndustry extends ColonySpendingCategory {
         unallocatedBC = 0;
         newFactories = 0;
         previousFactories = 0;
-    }
-    public float upgradeCost() {
-        float upgradeCost = 0;
-        float factoriesToUpgrade = min(factories+newFactories, maxBuildableFactories(robotControls));
-        if (!empire().ignoresFactoryRefit())
-            upgradeCost = factoriesToUpgrade * tech().baseFactoryCost() / 2;
-        return upgradeCost;
     }
     @Override
     public void nextTurn(float totalProd, float totalReserve) {
