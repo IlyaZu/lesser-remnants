@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +16,9 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.CombatStackShip;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatShip;
 import rotp.model.tech.TechStreamProjector;
 
 public final class ShipSpecialProjector extends ShipSpecial {
@@ -37,21 +38,21 @@ public final class ShipSpecialProjector extends ShipSpecial {
     @Override
     public boolean isWeapon()         { return true; }
     @Override
-    public float estimatedKills(CombatStack source, CombatStack target, int num) {
+    public float estimatedKills(CombatEntity source, CombatEntity target, int num) {
         float armorMod = tech().armorMod(num);
         float dam = max(1, target.maxHits*armorMod) * target.num;
         return dam / target.maxHits * target.num;
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count)      {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count)      {
         float armorMod = tech().armorMod(count);
         if (target.isShip()) {
-            CombatStackShip st = (CombatStackShip) target;
+            CombatShip st = (CombatShip) target;
             st.maxHits = (int) st.maxHits*armorMod;
             st.hits = min(st.hits-1, st.maxHits);
         }
         else if (target.isColony()) {
-            CombatStackColony st = (CombatStackColony) target;
+            CombatColony st = (CombatColony) target;
             st.maxHits = (int) st.maxHits*armorMod;
             st.hits = min(st.hits-1, st.maxHits);
         }

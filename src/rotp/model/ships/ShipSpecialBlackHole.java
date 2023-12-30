@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.tech.TechBlackHole;
 
 public final class ShipSpecialBlackHole extends ShipSpecial {
@@ -37,7 +38,7 @@ public final class ShipSpecialBlackHole extends ShipSpecial {
     @Override
     public boolean createsBlackHole()  { return true; }
     @Override
-    public float estimatedKills(CombatStack source, CombatStack target, int num) {
+    public float estimatedKills(CombatEntity source, CombatEntity target, int num) {
         //base pct is random from 25 to 100
         float pct = .625f;
         //-2% per shield level
@@ -48,7 +49,7 @@ public final class ShipSpecialBlackHole extends ShipSpecial {
         return target.num * pct;
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         float pct = (random()*.75f) + .25f;
         // modnar: bug fix for Black Hole damage numbers
         float pctLoss = (float)Math.max(0.0f, pct - (target.shieldLevel() / 50) - target.blackHoleDef());

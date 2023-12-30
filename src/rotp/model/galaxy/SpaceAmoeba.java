@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 package rotp.model.galaxy;
 
 import rotp.model.colony.Colony;
-import rotp.model.combat.CombatStackSpaceAmoeba;
+import rotp.model.combat.CombatAmoeba;
 import static rotp.model.events.RandomEventSpaceAmoeba.monster;
 import rotp.model.planet.PlanetType;
 
@@ -28,7 +29,7 @@ public class SpaceAmoeba extends SpaceMonster {
     @Override
     public void initCombat() {
         combatStacks().clear();
-        addCombatStack(new CombatStackSpaceAmoeba());       
+        addCombatStack(new CombatAmoeba());
     }
     public void degradePlanet(StarSystem sys) {
         Colony col = sys.colony();

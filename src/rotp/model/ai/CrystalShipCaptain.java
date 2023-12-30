@@ -18,9 +18,9 @@ package rotp.model.ai;
 
 import java.awt.Point;
 import rotp.model.ai.interfaces.ShipCaptain;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.combat.FlightPath;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.galaxy.StarSystem;
 import rotp.util.Base;
 
@@ -28,10 +28,10 @@ public class CrystalShipCaptain implements Base, ShipCaptain {
     @Override
     public StarSystem retreatSystem(StarSystem fr) { return null; }
     @Override
-    public boolean wantToRetreat(CombatStack stack) { return false; }
+    public boolean wantToRetreat(CombatEntity stack) { return false; }
     @Override
-    public void performTurn(CombatStack stack)  {
-        ShipCombatManager mgr = galaxy().shipCombat();
+    public void performTurn(CombatEntity stack)  {
+        CombatManager mgr = galaxy().shipCombat();
         if (stack.destroyed()) {
             mgr.turnDone(stack);
             return;
@@ -50,16 +50,16 @@ public class CrystalShipCaptain implements Base, ShipCaptain {
         stack.mgr.turnDone(stack);
     }
     @Override
-    public FlightPath pathTo(CombatStack st, int x, int y) { return null; }
-    private Point bestAttackSpot(CombatStack st) {
-        ShipCombatManager mgr = st.mgr;
+    public FlightPath pathTo(CombatEntity st, int x, int y) { return null; }
+    private Point bestAttackSpot(CombatEntity st) {
+        CombatManager mgr = st.mgr;
         
-        int maxX = ShipCombatManager.maxX;
-        int maxY = ShipCombatManager.maxY;
+        int maxX = CombatManager.maxX;
+        int maxY = CombatManager.maxY;
         int validGrid[][] = new int[maxX+1][maxY+1];
         
         // add up stack hp values in all of their adjacent squares
-        for (CombatStack stack: mgr.activeStacks()) {
+        for (CombatEntity stack: mgr.activeStacks()) {
             if (stack == st)
                 continue;
             int x0 = max(0,stack.x-1);
@@ -75,7 +75,7 @@ public class CrystalShipCaptain implements Base, ShipCaptain {
         
         // now set to -1 all squares that have a stack
         // we can't teleport to those
-        for (CombatStack stack: mgr.activeStacks()) 
+        for (CombatEntity stack: mgr.activeStacks()) 
             validGrid[stack.x][stack.y] = -1;
         
         // now set to -1 all squares that have asteroids

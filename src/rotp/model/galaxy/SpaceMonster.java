@@ -20,7 +20,7 @@ import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
 import rotp.util.Base;
 
@@ -29,20 +29,20 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
     protected final String nameKey;
     protected int lastAttackerId;
     private final List<Integer> path = new ArrayList<>();
-    private transient List<CombatStack> combatStacks = new ArrayList<>();
+    private transient List<CombatEntity> combatStacks = new ArrayList<>();
     
     public Empire lastAttacker()               { return galaxy().empire(lastAttackerId); }
     public void lastAttacker(Empire c)         { lastAttackerId = c.id; }
     public void visitSystem(int sysId)         { path.add(sysId); }
     public List<Integer> vistedSystems()       { return path; }
-    public List<CombatStack> combatStacks()    {
+    public List<CombatEntity> combatStacks()    {
         if (combatStacks == null)
             combatStacks = new ArrayList<>();
         return combatStacks; 
     }
     public Image image()  { return image(nameKey); }
     public void initCombat() { }
-    public void addCombatStack(CombatStack c)  { combatStacks.add(c); }
+    public void addCombatStack(CombatEntity c)  { combatStacks.add(c); }
     public SpaceMonster(String s) {
         nameKey = s;
     }
@@ -50,7 +50,7 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
     public String name()      { return text(nameKey);  }
     public boolean alive()    { 
         boolean alive = false;
-        for (CombatStack st: combatStacks) {
+        for (CombatEntity st: combatStacks) {
             if (!st.destroyed())
                 return true;
         }

@@ -29,7 +29,7 @@ import rotp.model.tech.TechScanner;
 import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 
-public class CombatStackColony extends CombatStack {
+public class CombatColony extends CombatEntity {
     public static final float BEAM_DAMAGE_MOD = .5f;
     public static final float TORPEDO_DAMAGE_MOD = .5f;
     public Colony colony;
@@ -41,7 +41,7 @@ public class CombatStackColony extends CombatStack {
     private float startingFactories = 0;
     private float planetaryShieldLevel = 0;
     private boolean usingAI = true;
-    public CombatStackColony(Colony col, ShipCombatManager m) {
+    public CombatColony(Colony col, CombatManager m) {
         mgr = m;
         colony = col;
         empire = colony.empire();
@@ -83,7 +83,7 @@ public class CombatStackColony extends CombatStack {
         missileFired = false;
     }
     @Override
-    public boolean selectBestWeapon(CombatStack target)       { return (num > 0) && !missileFired; }
+    public boolean selectBestWeapon(CombatEntity target)       { return (num > 0) && !missileFired; }
     @Override
     public boolean isColony()         { return true; }
     @Override
@@ -96,7 +96,7 @@ public class CombatStackColony extends CombatStack {
     @Override
     public boolean hasWard()          { return true; }
     @Override
-    public CombatStack ward()         { return this; }
+    public CombatEntity ward()         { return this; }
     @Override
     public boolean isArmed()          { return num > 0; }
     @Override
@@ -156,7 +156,7 @@ public class CombatStackColony extends CombatStack {
         mgr.results().basesDestroyed = origNum - num;
     }
     @Override
-    public float estimatedKills(CombatStack target) {
+    public float estimatedKills(CombatEntity target) {
         //ail: take attack and defense into account
         float hitPct = (5 + attackLevel - target.missileDefense) / 10;
         hitPct = max(.05f, hitPct);
@@ -168,18 +168,18 @@ public class CombatStackColony extends CombatStack {
         return max(missileDamage, scatterDamage);
     }
     @Override
-    public boolean canAttack(CombatStack target) {
+    public boolean canAttack(CombatEntity target) {
         return (num > 0) && currentWeaponCanAttack(target);
     }
     @Override
-    public boolean canPotentiallyAttack(CombatStack target)   { return (num > 0) && !empire.alliedWith(id(target.empire)); }
+    public boolean canPotentiallyAttack(CombatEntity target)   { return (num > 0) && !empire.alliedWith(id(target.empire)); }
     @Override
     public boolean canMove()               { return false; }
     @Override
     public boolean canMoveTo(int x, int y) { return false; }
     @Override
     public boolean canTeleport()           { return false; }
-    private boolean currentWeaponCanAttack(CombatStack target) {
+    private boolean currentWeaponCanAttack(CombatEntity target) {
         if (target == null)
             return false;
         if (target.inStasis || missileFired || (num == 0))
@@ -191,7 +191,7 @@ public class CombatStackColony extends CombatStack {
     }
     private ShipWeaponMissile selectedWeapon() { return missile; }
     @Override
-    public void fireWeapon(CombatStack newTarget) {
+    public void fireWeapon(CombatEntity newTarget) {
         //ail: @Ray: My AI usually doesn't build missile-bases and there's also no hook in it to control the used missile type, so'll do some very basic logic here to help the auto-play and the other AIs pick the right missile
         int missileToUse = 0;
         float bestDamage = 0;
@@ -206,11 +206,11 @@ public class CombatStackColony extends CombatStack {
         fireWeapon(newTarget, missileToUse);
     }
     @Override
-    public void fireWeapon(CombatStack newTarget, int i) {
+    public void fireWeapon(CombatEntity newTarget, int i) {
         fireWeapon(newTarget, i, false);
     }
     @Override
-    public void fireWeapon(CombatStack newTarget, int i, boolean b) {
+    public void fireWeapon(CombatEntity newTarget, int i, boolean b) {
         if (missileFired)
             return;
         target = newTarget;
@@ -218,7 +218,7 @@ public class CombatStackColony extends CombatStack {
         ShipWeaponMissile missileType = missile;
         if(i > 0 && numWeapons() > 0)
             missileType = scatterPack;
-        CombatStackMissile missileStack = new CombatStackMissile(this, missileType, 3*num);
+        CombatMissile missileStack = new CombatMissile(this, missileType, 3*num);
         mgr.addStackToCombat(missileStack);
         missileFired = true;
     }
@@ -230,7 +230,7 @@ public class CombatStackColony extends CombatStack {
         colony.rebels(newRebels);
     }
     @Override
-    public int optimalFiringRange(CombatStack target) {
+    public int optimalFiringRange(CombatEntity target) {
         return 9;
     }
     @Override
@@ -238,7 +238,7 @@ public class CombatStackColony extends CombatStack {
         return missileFired;
     }
     @Override
-    public boolean shipComponentValidTarget(int index, CombatStack target) {
+    public boolean shipComponentValidTarget(int index, CombatEntity target) {
         if (target == null)
             return false;
         if (empire == target.empire)
@@ -246,7 +246,7 @@ public class CombatStackColony extends CombatStack {
         return true;
     }
     @Override
-    public boolean shipComponentInRange(int index, CombatStack target) {
+    public boolean shipComponentInRange(int index, CombatEntity target) {
         return true;
     }
     @Override
@@ -274,7 +274,7 @@ public class CombatStackColony extends CombatStack {
             return scatterPack.name();
     }
     @Override
-    public int maxFiringRange(CombatStack tgt) {
+    public int maxFiringRange(CombatEntity tgt) {
         int maxRange = 0;
         if(num > 0)
             maxRange = 9;

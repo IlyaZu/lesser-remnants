@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
 import rotp.model.ships.ShipSpecialStasisField;
 import rotp.ui.BasePanel;
@@ -68,7 +69,7 @@ public final class TechStasisField extends Tech {
         c.shipLab().addSpecial(sh);
     }        
     @Override
-    public void drawSpecialAttack(CombatStack source, CombatStack target, int wpnNum, float dmg) {
+    public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
         if (ui == null)
             return;

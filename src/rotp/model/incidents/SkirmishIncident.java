@@ -16,8 +16,8 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.ShipCombatResults;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatResults;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
@@ -30,7 +30,7 @@ public class SkirmishIncident extends DiplomaticIncident {
     final int empMe;
     final int empYou;
     
-    public static void create(ShipCombatResults result, Empire empire) {
+    public static void create(CombatResults result, Empire empire) {
         for (Empire emp: result.empires()) {
             if  (!empire.alliedWith(emp.id)) {
                 float winModifier = victoryModifier(result, empire);
@@ -41,7 +41,7 @@ public class SkirmishIncident extends DiplomaticIncident {
             }
         }
     }
-    private static float victoryModifier(ShipCombatResults res, Empire empire) {
+    private static float victoryModifier(CombatResults res, Empire empire) {
         // how much do we magnify lost ships when we lose
         // how much do we minimize lost ships when we lose
 
@@ -52,7 +52,7 @@ public class SkirmishIncident extends DiplomaticIncident {
 
         // did we win? if aggressive stacks still active, then no
         boolean won = true;
-        for (CombatStack st: res.activeStacks()) {
+        for (CombatEntity st: res.activeStacks()) {
             if (st.empire.aggressiveWith(empire.id))
                 won = false;
         }
@@ -66,7 +66,7 @@ public class SkirmishIncident extends DiplomaticIncident {
 
         return multiplier;
     }
-    private static float skirmishSeverity(ShipCombatResults res, Empire empire) {
+    private static float skirmishSeverity(CombatResults res, Empire empire) {
         float lostBC = 0;
         // how many ships & bases were lost, relative to empire production
         for (ShipDesign d: res.shipsDestroyed().keySet()) {
@@ -85,7 +85,7 @@ public class SkirmishIncident extends DiplomaticIncident {
         return -1.0f*lostBC*100/totalIndustry;
     }
     
-    private SkirmishIncident(EmpireView ev,ShipCombatResults res, float sev) {
+    private SkirmishIncident(EmpireView ev,CombatResults res, float sev) {
         sysId = res.system().id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy`
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import rotp.model.colony.Colony;
 import rotp.model.colony.MissileBaseMissile;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
 import rotp.model.game.GameSession;
 import rotp.model.ships.ShipWeaponMissile;
@@ -328,7 +329,7 @@ public final class TechMissileWeapon extends Tech {
         }
     }
     @Override
-    public void drawSuccessfulAttack(CombatStack nullStack, CombatStack target, int wpnNum, float dmg) {
+    public void drawSuccessfulAttack(CombatEntity nullStack, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = target.mgr.ui;
         if (ui == null)
             return;

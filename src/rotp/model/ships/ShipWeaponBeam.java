@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +17,8 @@
 package rotp.model.ships;
 
 import java.awt.BasicStroke;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechShipWeapon;
 
 public final class ShipWeaponBeam extends ShipWeapon {
@@ -55,17 +56,17 @@ public final class ShipWeaponBeam extends ShipWeapon {
     @Override
     public float shieldMod()          { return tech().enemyShieldMod; }
     @Override
-    public float planetDamageMod()    { return CombatStackColony.BEAM_DAMAGE_MOD; }
+    public float planetDamageMod()    { return CombatColony.BEAM_DAMAGE_MOD; }
     @Override
     public int bombardAttacks()        { return 10; }
     @Override
     public boolean canAttackShips()   { return true; }
     @Override
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
         return super.estimatedBombardDamage(source, target) * target.beamDamageMod();
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         if (random() < target.autoMissPct()) {
             drawUnsuccessfulAttack(source, target);
             return;

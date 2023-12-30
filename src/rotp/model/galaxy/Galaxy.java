@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import rotp.model.colony.Colony;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.GalacticCouncil;
 import rotp.model.empires.Race;
@@ -54,7 +54,7 @@ public class Galaxy implements Base, Serializable {
     private float maxScaleAdj = 1.0f;
     public int systemCount = 0;
 
-    private transient ShipCombatManager shipCombat = new ShipCombatManager();
+    private transient CombatManager shipCombat = new CombatManager();
     private transient Map<String, List<String>> raceSystemNames = new HashMap<>();
     private transient Map<String, Integer> raceSystemCtr = new HashMap<>();
 
@@ -87,9 +87,9 @@ public class Galaxy implements Base, Serializable {
     @Override
     public boolean isPlayer(Empire d)        { return playerEmpire == d; }
     public void initNebulas(int size)        { nebulas = new ArrayList<>(size); }
-    public ShipCombatManager shipCombat() {
+    public CombatManager shipCombat() {
         if (shipCombat == null)
-            shipCombat = new ShipCombatManager();
+            shipCombat = new CombatManager();
         return shipCombat;
     }
     private Map<String, List<String>> raceSystemNames() {

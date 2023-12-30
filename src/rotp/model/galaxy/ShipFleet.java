@@ -26,9 +26,9 @@ import java.util.Comparator;
 import java.util.List;
 import rotp.model.Sprite;
 import rotp.model.ai.FleetOrders;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.CombatStackShip;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatShip;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.ShipView;
 import rotp.model.ships.ShipDesign;
@@ -827,15 +827,15 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         Empire victim = sys.empire();
         victim.lastAttacker(empire());
         log(empire().name(), " fleet bombarding ", sys.name());
-        ShipCombatManager mgr = galaxy().shipCombat();
+        CombatManager mgr = galaxy().shipCombat();
         mgr.setupBombardment(system(), this);
 
-        CombatStackColony colonyStack = mgr.results().colonyStack;
+        CombatColony colonyStack = mgr.results().colonyStack;
         for (int i=0;i<num.length;i++) {
             if (num[i] > 0) {
                 ShipDesign d = design(i);
                 if (d != null) {
-                    CombatStackShip shipStack = new CombatStackShip(this, i, mgr);
+                    CombatShip shipStack = new CombatShip(this, i, mgr);
                     for (int j=0;j<ShipDesign.maxWeapons();j++) {
                         int wpnCount = d.wpnCount(j);
                         int attackCount = d.weapon(j).attacksPerRound();
@@ -862,8 +862,8 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             return 0;
 
         float damage = 0;
-        ShipCombatManager mgr = galaxy().shipCombat();
-        CombatStackColony planetStack = new CombatStackColony(sys.colony(), mgr);
+        CombatManager mgr = galaxy().shipCombat();
+        CombatColony planetStack = new CombatColony(sys.colony(), mgr);
 
         for (int i=0;i<num.length;i++) {
             if (num[i] > 0) {

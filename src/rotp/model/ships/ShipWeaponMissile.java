@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +18,8 @@ package rotp.model.ships;
 
 import java.awt.Component;
 import java.awt.Image;
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechMissileWeapon;
 
 public final class ShipWeaponMissile extends ShipWeaponMissileType {
@@ -71,10 +72,10 @@ public final class ShipWeaponMissile extends ShipWeaponMissileType {
     @Override
     public String desc()                  { return multi ? tech().brief2() : tech().brief();  }
     @Override
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
         // missiles always do max damage on bombardment
         return (maxDamage()-target.shieldLevel()) * bombardAttacks() * target.missileDamageMod();
     }
     @Override
-    public void drawAttackEffect(CombatStack source, CombatStack target, Component comp) { }
+    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component comp) { }
 }

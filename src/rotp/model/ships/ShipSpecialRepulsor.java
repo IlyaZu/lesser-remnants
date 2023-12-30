@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +16,9 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
-import rotp.model.combat.CombatStackShip;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatShip;
 import rotp.model.tech.TechRepulsor;
 
 public final class ShipSpecialRepulsor extends ShipSpecial {
@@ -37,10 +38,10 @@ public final class ShipSpecialRepulsor extends ShipSpecial {
     @Override
     public int range()                   { return 1; }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         makeSuccessfulAttack(source, target);
     }
-    private void makeSuccessfulAttack(CombatStack source, CombatStack target) {
+    private void makeSuccessfulAttack(CombatEntity source, CombatEntity target) {
         if (target.isShip()|| target.isMonster()) {
             tech().drawSpecialAttack(source, target, 1, 0);
         }

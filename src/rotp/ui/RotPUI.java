@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import rotp.Rotp;
 import rotp.model.colony.Colony;
-import rotp.model.combat.ShipCombatManager;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EspionageMission;
 import rotp.model.empires.SabotageMission;
@@ -452,7 +452,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             drawNextTurnNotice = true;
         }
     }
-    public void promptForShipCombat(ShipCombatManager mgr) {
+    public void promptForShipCombat(CombatManager mgr) {
         try {
             drawNextTurnNotice = false;
             session().pauseNextTurnProcessing("Show Ship Combat Prompt");
@@ -463,7 +463,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             drawNextTurnNotice = true;
         }
     }
-    public void selectShipBattlePanel(ShipCombatManager mgr, int combatFlag) {
+    public void selectShipBattlePanel(CombatManager mgr, int combatFlag) {
         boolean showBattle = shipBattleUI.init(mgr, combatFlag);
         if (showBattle)
             selectPanel(SHIP_BATTLE_PANEL, shipBattleUI);

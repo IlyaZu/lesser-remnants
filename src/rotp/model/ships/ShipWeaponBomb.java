@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +16,8 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechBombWeapon;
 
 public final class ShipWeaponBomb extends ShipWeapon {
@@ -46,11 +47,11 @@ public final class ShipWeaponBomb extends ShipWeapon {
     @Override
     public boolean isLimitedShotWeapon() { return true; }
     @Override
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
         return super.estimatedBombardDamage(source, target) * target.bombDamageMod();
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         float defense = target.bombDefense();
         float attack = source.attackLevel();
         float pct = (5 + attack - defense) / 10;

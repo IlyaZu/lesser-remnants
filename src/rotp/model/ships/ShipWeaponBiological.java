@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +16,8 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechBiologicalWeapon;
 
 public final class ShipWeaponBiological extends ShipWeapon {
@@ -44,7 +45,7 @@ public final class ShipWeaponBiological extends ShipWeapon {
     @Override
     public boolean isLimitedShotWeapon()    { return true; }
     @Override
-    public float estimatedBioweaponDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBioweaponDamage(CombatEntity source, CombatColony target) {
         float antidote = target.empire.tech().antidoteLevel();
         // this is simplified and inexact when antidote > 1
         // and doesn't consider att vs def
@@ -54,7 +55,7 @@ public final class ShipWeaponBiological extends ShipWeapon {
         return bombardAttacks()*avg;
     }
     @Override
-    public void fireUpon(CombatStack source, CombatStack target, int count) {
+    public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         source.usedBioweapons();
         float defense = target.bioweaponDefense();
         float attack = source.attackLevel();

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +16,8 @@
  */
 package rotp.model.ships;
 
-import rotp.model.combat.CombatStack;
-import rotp.model.combat.CombatStackColony;
+import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechBiologicalWeapon;
 
 public class ShipWeapon extends ShipComponent {
@@ -44,7 +45,7 @@ public class ShipWeapon extends ShipComponent {
         return noWeapon() ? 0 : max(0, (float)Math.floor(d.availableSpaceForWeaponSlot(i) / space(d))) ;
     }
     @Override
-    public float estimatedKills(CombatStack source, CombatStack target, int num) {
+    public float estimatedKills(CombatEntity source, CombatEntity target, int num) {
         if (groundAttacksOnly() && !target.isColony())
             return 0;
         float shieldLevel = target.shieldLevel();
@@ -67,7 +68,7 @@ public class ShipWeapon extends ShipComponent {
         return dmg/target.maxHits();
     }
     @Override
-    public float estimatedBombardDamage(CombatStack source, CombatStackColony target) {
+    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
         int num = bombardAttacks();
         float shieldMod = source.targetShieldMod(this);
         float shieldLevel = shieldMod * target.shieldLevel();
@@ -88,7 +89,7 @@ public class ShipWeapon extends ShipComponent {
         return firepower(shieldLevel)* num * beamMod * pct;
     }
     @Override
-    public float estimatedBombardDamage(ShipDesign des, CombatStackColony target) {
+    public float estimatedBombardDamage(ShipDesign des, CombatColony target) {
         int num = bombardAttacks();
         float shieldMod = des.targetShieldMod(this);
         float shieldLevel = shieldMod * target.shieldLevel();
@@ -124,19 +125,19 @@ public class ShipWeapon extends ShipComponent {
         }
         return "";
     }
-    public void drawIneffectiveAttack(CombatStack source, CombatStack target) {
+    public void drawIneffectiveAttack(CombatEntity source, CombatEntity target) {
         try {
             tech().drawIneffectiveAttack(source, target, source.weaponNum(this));
         }
         catch(Exception e) { }
     }
-    public void drawUnsuccessfulAttack(CombatStack source, CombatStack target) {
+    public void drawUnsuccessfulAttack(CombatEntity source, CombatEntity target) {
         try {
             tech().drawUnsuccessfulAttack(source, target, source.weaponNum(this));
         }
         catch(Exception e) { }
     }
-    public void drawSuccessfulAttack(CombatStack source, CombatStack target, float dmg) {
+    public void drawSuccessfulAttack(CombatEntity source, CombatEntity target, float dmg) {
         try {
             tech().drawSuccessfulAttack(source, target, source.weaponNum(this), dmg);
         }

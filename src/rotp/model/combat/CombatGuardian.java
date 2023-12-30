@@ -34,7 +34,7 @@ import rotp.model.tech.TechMissileWeapon;
 import rotp.model.tech.TechShipWeapon;
 import rotp.model.tech.TechTorpedoWeapon;
 
-public class CombatStackOrionGuardian extends CombatStack {
+public class CombatGuardian extends CombatEntity {
     private final List<ShipComponent> weapons = new ArrayList<>();
     private int[] weaponCount = new int[4];
     private final ShipSpecial[] specials = new ShipSpecial[3];
@@ -43,7 +43,7 @@ public class CombatStackOrionGuardian extends CombatStack {
     private int[] baseTurnsToFire = new int[4];    // how many turns to wait before you can fire again
     private int[] wpnTurnsToFire = new int[4];    // how many turns to wait before you can fire again
     private ShipComponent selectedWeapon;
-    public CombatStackOrionGuardian() {
+    public CombatGuardian() {
         num = 1;
         maxHits = hits = 10000;
         maxMove = move = 2;
@@ -90,9 +90,9 @@ public class CombatStackOrionGuardian extends CombatStack {
         return max(0, 0.75f - (0.01f * wpn.tech().level));
     }
     @Override
-    public int optimalFiringRange(CombatStack tgt)   { return 3; }
+    public int optimalFiringRange(CombatEntity tgt)   { return 3; }
     @Override
-    public int maxFiringRange(CombatStack tgt) {
+    public int maxFiringRange(CombatEntity tgt) {
         if (roundsRemaining[0]>0)
             return 9;
         else if (wpnTurnsToFire[2] < 2)
@@ -122,9 +122,9 @@ public class CombatStackOrionGuardian extends CombatStack {
     @Override
     public int shotsRemaining(int i) { return shotsRemaining[i]; }
     @Override
-    public boolean hostileTo(CombatStack st, StarSystem sys)  { return true; }
+    public boolean hostileTo(CombatEntity st, StarSystem sys)  { return true; }
     @Override
-    public boolean selectBestWeapon(CombatStack target) {
+    public boolean selectBestWeapon(CombatEntity target) {
         if (target.destroyed())
             return false;
         if (currentWeaponCanAttack(target))
@@ -139,7 +139,7 @@ public class CombatStackOrionGuardian extends CombatStack {
         for (int i=0;i<shotsRemaining.length;i++) 
             wpnTurnsToFire[i] = shotsRemaining[i] == 0 ? baseTurnsToFire[i] : wpnTurnsToFire[i]-1;          
     }
-    private void rotateToUsableWeapon(CombatStack target) {
+    private void rotateToUsableWeapon(CombatEntity target) {
         if (selectedWeapon == null)
             return;
         int i = weapons.indexOf(selectedWeapon);
@@ -156,7 +156,7 @@ public class CombatStackOrionGuardian extends CombatStack {
         }
     }
     @Override
-    public boolean canAttack(CombatStack st) {
+    public boolean canAttack(CombatEntity st) {
         if (st == null)
             return false;
         if (st.inStasis)
@@ -167,15 +167,15 @@ public class CombatStackOrionGuardian extends CombatStack {
         }
         return false;
     }
-    private boolean currentWeaponCanAttack(CombatStack target) {
-        if (selectedWeapon() == null)
+    private boolean currentWeaponCanAttack(CombatEntity target) {
+        if (selectedWeapon == null)
             return false;
 
         int wpn = weapons.indexOf(selectedWeapon());
 
         return shipComponentCanAttack(target, wpn);
     }
-    private boolean shipComponentCanAttack(CombatStack target, int index) {
+    private boolean shipComponentCanAttack(CombatEntity target, int index) {
         if (target == null)
             return false;
 
@@ -216,11 +216,11 @@ public class CombatStackOrionGuardian extends CombatStack {
         return weapons.indexOf(selectedWeapon);
     }
     @Override
-    public void fireWeapon(CombatStack targetStack) {
+    public void fireWeapon(CombatEntity targetStack) {
         fireWeapon(targetStack, weaponIndex());
     }
     @Override
-    public void fireWeapon(CombatStack targetStack, int index)  { 
+    public void fireWeapon(CombatEntity targetStack, int index)  { 
          if (targetStack == null)
             return;
 
@@ -233,7 +233,7 @@ public class CombatStackOrionGuardian extends CombatStack {
             int shots = (int) selectedWeapon.attacksPerRound();
             int count = num*shots*weaponCount[index];
             if (selectedWeapon.isMissileWeapon()) {
-                CombatStackMissile missile = new CombatStackMissile(this, (ShipWeaponMissileType) selectedWeapon, count);
+                CombatMissile missile = new CombatMissile(this, (ShipWeaponMissileType) selectedWeapon, count);
                 log(fullName(), " launching ", missile.fullName(), " at ", targetStack.fullName());
                 mgr.addStackToCombat(missile);
             }

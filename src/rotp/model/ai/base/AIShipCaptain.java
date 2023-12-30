@@ -29,15 +29,15 @@ import rotp.util.Base;
 
 public class AIShipCaptain implements Base, ShipCaptain {
     private final Empire empire;
-    private transient List<CombatStack> allies = new ArrayList<>();
-    private transient List<CombatStack> enemies = new ArrayList<>();
+    private transient List<CombatEntity> allies = new ArrayList<>();
+    private transient List<CombatEntity> enemies = new ArrayList<>();
 
-    private List<CombatStack> allies() {
+    private List<CombatEntity> allies() {
         if (allies == null)
             allies = new ArrayList<>();
         return allies;
     }
-    private List<CombatStack> enemies() {
+    private List<CombatEntity> enemies() {
         if (enemies == null)
             enemies = new ArrayList<>();
         return enemies;
@@ -45,10 +45,10 @@ public class AIShipCaptain implements Base, ShipCaptain {
     public AIShipCaptain (Empire c) {
         empire = c;
     }
-    private ShipCombatManager combat()    { return galaxy().shipCombat(); }
+    private CombatManager combat()    { return galaxy().shipCombat(); }
     @Override
-    public void performTurn(CombatStack stack) {
-        ShipCombatManager mgr = galaxy().shipCombat();
+    public void performTurn(CombatEntity stack) {
+        CombatManager mgr = galaxy().shipCombat();
         // missiles move during their target's turn
         // check if stack is still alive!
         if (stack.destroyed()) {
@@ -73,7 +73,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         // check for retreating
         if (wantToRetreat(stack)) {
-            CombatStackShip shipStack = (CombatStackShip) stack;
+            CombatShip shipStack = (CombatShip) stack;
             StarSystem dest = retreatSystem(shipStack.mgr.system());
             if (dest != null) {
                 mgr.retreatStack(shipStack, dest);
@@ -81,7 +81,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             }
         }
         
-        CombatStack prevTarget = null;
+        CombatEntity prevTarget = null;
         
         boolean turnActive = true;
         while (turnActive) {
@@ -113,32 +113,32 @@ public class AIShipCaptain implements Base, ShipCaptain {
         }
         mgr.turnDone(stack);
     }
-    private  FlightPath chooseTarget(CombatStack stack) {
+    private  FlightPath chooseTarget(CombatEntity stack) {
         if (!stack.canChangeTarget())
             return null;
 
-        List<CombatStack> potentialTargets = new ArrayList<>();
-        List<CombatStack> activeStacks = new ArrayList<>(combat().activeStacks());
+        List<CombatEntity> potentialTargets = new ArrayList<>();
+        List<CombatEntity> activeStacks = new ArrayList<>(combat().activeStacks());
 
-        for (CombatStack st: activeStacks) {
+        for (CombatEntity st: activeStacks) {
             if (stack.hostileTo(st, st.mgr.system()) && !st.inStasis)
                 potentialTargets.add(st);
         }
         FlightPath bestPath = null;
-        CombatStack bestTarget = null;
+        CombatEntity bestTarget = null;
         float maxDesirability = -1;
         float threatLevel = 0;
         boolean currentCanBomb = false;
-        for (CombatStack target : potentialTargets) {
+        for (CombatEntity target : potentialTargets) {
             // pct of target that this stack thinks it can kill
             float killPct = max(stack.estimatedKillPct(target), expectedPopLossPct(stack, target)); 
             // threat level target poses to this stack (or its ward if applicable)
-            CombatStack ward = stack.hasWard() ? stack.ward() : stack;
+            CombatEntity ward = stack.hasWard() ? stack.ward() : stack;
             // want to adjust threat upward as target gets closer to ward
             int distAfterMove = target.canTeleport() ? 1 : (int) max(1,target.movePointsTo(ward)-target.maxMove());
             // treat those who can move to bombing range (distAfterMove == 1) as maximum threats
             if (ward.isColony()) {
-                CombatStackColony colony = (CombatStackColony) ward;
+                CombatColony colony = (CombatColony) ward;
                 float popLossPct  =  expectedPopLossPct(target, colony); 
                 float baseLossPct = target.estimatedKillPct(colony);
                 float maxLossPct = max(popLossPct,baseLossPct);
@@ -197,7 +197,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         stack.target = bestTarget;
         return bestPath;
     }
-    private Point findClosestPoint(CombatStack st, CombatStack tgt) {
+    private Point findClosestPoint(CombatEntity st, CombatEntity tgt) {
         if (!st.canMove())
             return null;
 
@@ -240,13 +240,13 @@ public class AIShipCaptain implements Base, ShipCaptain {
         }
         return pt;
     }
-    public static FlightPath findBestPathToAttack(CombatStack st, CombatStack tgt) {
+    public static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt) {
         if (!st.isArmed())
             return null;
         int r = st.optimalFiringRange(tgt);
         return findBestPathToAttack(st, tgt, r);
     }
-    public static FlightPath findBestPathToAttack(CombatStack st, CombatStack tgt, int range) {
+    public static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt, int range) {
         if (st.movePointsTo(tgt) <= range) {
             return new FlightPath();
         }        
@@ -306,8 +306,8 @@ public class AIShipCaptain implements Base, ShipCaptain {
         return validPaths.get(0);
     }
     @Override
-    public boolean wantToRetreat(CombatStack currStack) {
-        CombatStackColony col = combat().results().colonyStack;
+    public boolean wantToRetreat(CombatEntity currStack) {
+        CombatColony col = combat().results().colonyStack;
         EmpireView colView = (col == null) ? null : currStack.empire.viewForEmpire(col.empire);
         boolean inPact = (colView != null) && colView.embassy().pact();
             
@@ -330,9 +330,9 @@ public class AIShipCaptain implements Base, ShipCaptain {
             return false;
 
         // don't retreat if we still have missiles in flight
-        List<CombatStack> activeStacks = new ArrayList<>(currStack.mgr.activeStacks());
-        for (CombatStack st: activeStacks) {
-            for (CombatStackMissile miss: st.missiles()) {
+        List<CombatEntity> activeStacks = new ArrayList<>(currStack.mgr.activeStacks());
+        for (CombatEntity st: activeStacks) {
+            for (CombatMissile miss: st.missiles()) {
                 if (miss.owner == currStack) 
                     return false;
             }
@@ -355,7 +355,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         // don't retreat if all enemies can only target planets
         boolean canBeTargeted = false;
-        for (CombatStack st: activeStacks) {
+        for (CombatEntity st: activeStacks) {
             if (st.canPotentiallyAttack(currStack))
                 canBeTargeted = true;
         }
@@ -369,11 +369,11 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         return false;
     }
-    private boolean facingOverwhelmingForce(CombatStack stack) {
+    private boolean facingOverwhelmingForce(CombatEntity stack) {
         // build list of allies & enemies
         allies().clear(); enemies().clear();
 
-        for (CombatStack st : combat().activeStacks()) {
+        for (CombatEntity st : combat().activeStacks()) {
             if (st.isMonster()) 
                 enemies.add(st);
             else {
@@ -388,22 +388,22 @@ public class AIShipCaptain implements Base, ShipCaptain {
         float allyKills = 0;
         float enemyKills = 0;
 
-        List<CombatStack> friends = new ArrayList<>();
-        for (CombatStack ally: allies()) {
+        List<CombatEntity> friends = new ArrayList<>();
+        for (CombatEntity ally: allies()) {
             if (ally.isArmed())
                 friends.add(ally);
         }
         if (!friends.contains(stack))
             friends.add(stack);
-        List<CombatStack> foes = new ArrayList<>();
-        for (CombatStack enemy: enemies()) {
+        List<CombatEntity> foes = new ArrayList<>();
+        for (CombatEntity enemy: enemies()) {
             if (enemy.isArmed())
                 foes.add(enemy);
         }
 
-        for (CombatStack st1 : friends) {
+        for (CombatEntity st1 : friends) {
             float maxKillValue = -1;
-            for (CombatStack st2: foes) {
+            for (CombatEntity st2: foes) {
                 float killPct = min(1.0f,st1.estimatedKillPct(st2)); // modnar: killPct should have max of 1.00 instead of 100?
                 float killValue = killPct*st2.num*st2.designCost();
                 if (killValue > maxKillValue)
@@ -411,9 +411,9 @@ public class AIShipCaptain implements Base, ShipCaptain {
             }
             allyKills += maxKillValue;
         }
-       for (CombatStack st1 : foes) {
+       for (CombatEntity st1 : foes) {
             float maxKillValue = -1;
-            for (CombatStack st2: friends) {
+            for (CombatEntity st2: friends) {
                 float killPct = min(1.0f,st1.estimatedKillPct(st2)); // modnar: killPct should have max of 1.00 instead of 100?
                 float killValue = killPct*st2.num*st2.designCost();
                 if (killValue > maxKillValue)
@@ -438,7 +438,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         return galaxy().system(sysId);
     }
     @Override
-    public FlightPath pathTo(CombatStack st, int x1, int y1) {
+    public FlightPath pathTo(CombatEntity st, int x1, int y1) {
         List<FlightPath> validPaths = allValidPathsTo(st,x1,y1);
         if (validPaths.isEmpty())
             return null;
@@ -446,15 +446,15 @@ public class AIShipCaptain implements Base, ShipCaptain {
         Collections.sort(validPaths,FlightPath.SORT);
         return validPaths.get(0);
     }
-    private List<FlightPath> allValidPathsTo(CombatStack st, int x1, int y1) {
+    private List<FlightPath> allValidPathsTo(CombatEntity st, int x1, int y1) {
         List<FlightPath> validPaths = new ArrayList<>();
         allValidPaths(st.x, st.y, x1, y1, (int)st.maxMove, st, validPaths, null);
         return validPaths;
     }
-    private static FlightPath allValidPaths(int x0, int y0, int x1, int y1, int moves, CombatStack stack, List<FlightPath> validPaths, FlightPath bestPath) {
+    private static FlightPath allValidPaths(int x0, int y0, int x1, int y1, int moves, CombatEntity stack, List<FlightPath> validPaths, FlightPath bestPath) {
         FlightPath updatedBestPath = bestPath;
-        ShipCombatManager mgr = stack.mgr;
-        int gridW = ShipCombatManager.maxX+3;
+        CombatManager mgr = stack.mgr;
+        int gridW = CombatManager.maxX+3;
 
         // all squares containing ships, asteroids, etc or non-traversable
         // can also check for enemy repulsor beam effects
@@ -570,7 +570,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         int y1 = pt1 / w;
         return Math.max(Math.abs(x0-x1), Math.abs(y0-y1));
     }
-    private float expectedBombardDamage(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedBombardDamage(CombatShip ship, CombatColony colony) {
         int num = ship.num;
         float damage = 0.0f;
 
@@ -581,7 +581,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             damage += d.special(j).estimatedBombardDamage(d, colony);
         return damage;
     }
-    private float expectedBioweaponDamage(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedBioweaponDamage(CombatShip ship, CombatColony colony) {
         int num = ship.num;
         float popLoss = 0.0f;
 
@@ -590,7 +590,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             popLoss += (num * d.wpnCount(j) * d.weapon(j).estimatedBioweaponDamage(ship, colony));
         return popLoss;
     }
-    private float expectedPopulationLoss(CombatStackShip ship, CombatStackColony colony) {
+    private float expectedPopulationLoss(CombatShip ship, CombatColony colony) {
         float popLost = 0;
         float bombDamage = expectedBombardDamage(ship, colony);
         if (colony.num == 0)
@@ -602,14 +602,14 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         return popLost+bioDamage;
     }
-    private float expectedPopLossPct(CombatStack source, CombatStack target) {
+    private float expectedPopLossPct(CombatEntity source, CombatEntity target) {
         if (!source.isShip())
             return 0;
         if (!target.isColony())
             return 0;
         
-        CombatStackShip ship = (CombatStackShip) source;
-        CombatStackColony colony = (CombatStackColony) target;
+        CombatShip ship = (CombatShip) source;
+        CombatColony colony = (CombatColony) target;
         
         if (colony.destroyed())
             return 0;

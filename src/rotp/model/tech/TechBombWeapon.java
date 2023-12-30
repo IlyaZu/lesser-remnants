@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2023 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 package rotp.model.tech;
 
 import java.awt.*;
-import rotp.model.combat.CombatStack;
+import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
 import rotp.model.ships.ShipWeaponBomb;
 import rotp.ui.BasePanel;
@@ -103,7 +104,7 @@ public final class TechBombWeapon extends Tech {
         c.shipLab().addWeapon(sh);
     }
     @Override
-    public void drawIneffectiveAttack(CombatStack source, CombatStack target, int wpnNum) {
+    public void drawIneffectiveAttack(CombatEntity source, CombatEntity target, int wpnNum) {
         if (!source.mgr.showAnimations())
             return;
 
@@ -124,7 +125,7 @@ public final class TechBombWeapon extends Tech {
         drawAttack(source, target, x0, y0, x1, y1, wpnNum, -1);
     }
     @Override
-    public void drawUnsuccessfulAttack(CombatStack source, CombatStack target, int wpnNum) {
+    public void drawUnsuccessfulAttack(CombatEntity source, CombatEntity target, int wpnNum) {
         ShipBattleUI ui = source.mgr.ui;
         if (!source.mgr.showAnimations())
             return;
@@ -143,7 +144,7 @@ public final class TechBombWeapon extends Tech {
         drawAttack(source, target, x0, y0, x1, y1, wpnNum, 0);
     }
     @Override
-    public void drawSuccessfulAttack(CombatStack source, CombatStack target, int wpnNum, float dmg) {
+    public void drawSuccessfulAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         if (!source.mgr.showAnimations())
             return;
 
@@ -163,7 +164,7 @@ public final class TechBombWeapon extends Tech {
         int y1 = st1Y+stH/2;
         drawAttack(source, target, x0, y0, x1, y1, wpnNum, dmg);
     }
-    public void drawAttack(CombatStack source, CombatStack target, int x0, int y0, int x1, int y1, int wpnNum, float dmg) {
+    public void drawAttack(CombatEntity source, CombatEntity target, int x0, int y0, int x1, int y1, int wpnNum, float dmg) {
         if (!source.mgr.showAnimations())
             return;
 

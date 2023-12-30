@@ -22,17 +22,17 @@ import rotp.model.ships.ShipWeaponMissileType;
 import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 
-public class CombatStackMissile extends CombatStack {
+public class CombatMissile extends CombatEntity {
     private static final Color missileCountColour = new Color(255,240,78);
     private static final int MAX_TURNS = 10;
-    public CombatStack owner;
+    public CombatEntity owner;
     private ShipWeaponMissileType missile;
     private int turnsLeft = 0;
     private Image missiles;
     private float moveRate = 0;
     private float range = 0;
 
-    public CombatStackMissile(CombatStack ship, ShipWeaponMissileType miss, int n) {
+    public CombatMissile(CombatEntity ship, ShipWeaponMissileType miss, int n) {
         missile = miss;
         range = ship.isColony() ? miss.range()*2 : miss.range();
         origNum = num = n*miss.scatterAttacks();
@@ -64,9 +64,9 @@ public class CombatStackMissile extends CombatStack {
     }
 
     @Override
-    public int maxFiringRange(CombatStack tgt)           { return 0; }
+    public int maxFiringRange(CombatEntity tgt)           { return 0; }
     @Override
-    public int optimalFiringRange(CombatStack tgt)       { return 0; }
+    public int optimalFiringRange(CombatEntity tgt)       { return 0; }
     @Override
     public boolean isMissile()            { return true; }
     @Override
@@ -96,11 +96,11 @@ public class CombatStackMissile extends CombatStack {
         return radiansTo(target) + ((float)Math.PI/2);
     }
     @Override
-    public boolean canAttack(CombatStack target) {
+    public boolean canAttack(CombatEntity target) {
         return (distanceTo(target.x(),target.y()) < .7);
     }
     @Override
-    public void fireWeapon(CombatStack target) {
+    public void fireWeapon(CombatEntity target) {
         missile.fireUpon(this, target, num);
 
         mgr.destroyStack(this);
