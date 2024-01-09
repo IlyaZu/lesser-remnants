@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import rotp.ui.combat.ShipBattleUI;
 public class CombatShip extends CombatEntity {
     public ShipDesign design;
     private ShipFleet fleet;
-    private int selectedWeaponIndex;
+    private int selectedWeaponIndex = 0;
     private final List<ShipComponent> weapons = new ArrayList<>();
     private float displacementPct = 0;
 
@@ -39,12 +39,13 @@ public class CombatShip extends CombatEntity {
     public int[] weaponAttacks = new int[7];
     private int[] shotsRemaining = new int[7];
     public int[] roundsRemaining = new int[7]; // how many rounds you can fire (i.e. missiles)
-    private int[] baseTurnsToFire = new int[7];    // how many turns to wait before you can fire again
-    private int[] wpnTurnsToFire = new int[7];    // how many turns to wait before you can fire again
+    private int[] baseTurnsToFire = new int[7]; // how many turns to wait before you can fire again
+    private int[] wpnTurnsToFire = new int[7]; // how many turns to wait before you can fire again
     private boolean bombardedThisTurn = false;
     private boolean usingAI = true;
     private int repulsorRange = 0;
     private CombatEntity ward;
+    private boolean atLastColony = false;
     
     @Override
     public String toString() {
@@ -57,6 +58,7 @@ public class CombatShip extends CombatEntity {
     public String shortString() {
         return concat(design.name(), " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
     }
+
     public CombatShip(ShipFleet fl, int index, CombatManager m) {
         mgr = m;
         fleet = fl;
@@ -65,22 +67,59 @@ public class CombatShip extends CombatEntity {
         usingAI = (empire == null) || empire.isAIControlled();
         captain = empire.ai().shipCaptain();
         origNum = num = fl.num(index);
-        startingMaxHits = maxHits = design.hits();
-        maxMove = design.moveRange();
-        maxShield = m.system().inNebula() ? 0 : design.shieldLevel();
+        startingMaxHits = maxHits = hits = design.hits();
+        maxMove = move = design.moveRange();
+        maxShield = shield = m.system().inNebula() ? 0 : design.shieldLevel();
         attackLevel = design.attackLevel() + empire.shipAttackBonus();
         maneuverability = design.maneuverability();
         repulsorRange = design.repulsorRange();
-        hits = maxHits;
-        move = maxMove;
-        shield = maxShield;
         missileDefense = design.missileDefense() + empire.shipDefenseBonus();
         beamDefense = design.beamDefense() + empire.shipDefenseBonus();
         displacementPct = design.missPct();
         repairPct = designShipRepairPct();
         beamRangeBonus = designBeamRangeBonus();
         image = design.image();
-        initShip();
+        
+        atLastColony = (empire == mgr.system().empire()) && (empire.numColonies() == 1);
+        canCloak = design.allowsCloaking();
+        cloak();
+
+        for (int i=0;i<ShipDesign.maxWeapons();i++) {
+            if (validWeapon(i) && (design.wpnCount(i) > 0)) {
+                weaponCount[weapons.size()] = design.wpnCount(i);
+                weaponAttacks[weapons.size()] = design.weapon(i).attacksPerRound();
+                roundsRemaining[weapons.size()] = design.weapon(i).shots();
+                baseTurnsToFire[weapons.size()] = design.weapon(i).turnsToFire();
+                wpnTurnsToFire[weapons.size()] = 1;
+                weapons.add(design.weapon(i));
+            }
+        }
+        for (int i=0;i<ShipDesign.maxSpecials();i++) {
+            if (design.special(i).isWeapon()) {
+                weaponCount[weapons.size()] = 1;
+                weaponAttacks[weapons.size()] = 1;
+                roundsRemaining[weapons.size()] = 1;
+                baseTurnsToFire[weapons.size()] = 1;
+                wpnTurnsToFire[weapons.size()] = 1;
+                weapons.add(design.special(i));
+            }
+        }
+
+        System.arraycopy(weaponAttacks, 0, shotsRemaining, 0, shotsRemaining.length);
+    }
+
+    public float designShipRepairPct() {
+        float healPct = 0;
+        for (int i=0;i<ShipDesign.maxSpecials();i++)
+            healPct = max(healPct, design.special(i).shipRepairPct());
+        return healPct;
+    }
+
+    private int designBeamRangeBonus() {
+        int rng = 0;   
+        for (int j=0;j<ShipDesign.maxSpecials();j++)
+            rng += design.special(j).beamRangeBonus();
+        return rng;
     }
 
     @Override
@@ -230,64 +269,18 @@ public class CombatShip extends CombatEntity {
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
         return design.missileInterceptPct(wpn);
     }
-    public float designShipRepairPct() {
-        float healPct = 0;
-        for (int i=0;i<ShipDesign.maxSpecials();i++)
-            healPct = max(healPct, design.special(i).shipRepairPct());
-        return healPct;
-    }
-    private int designBeamRangeBonus() {
-        int rng = 0;   
-        for (int j=0;j<ShipDesign.maxSpecials();j++)
-            rng += design.special(j).beamRangeBonus();
-        return rng;
-    }
-    private void initShip() {
-        int cols = empire.numColonies();
-        atLastColony = ((empire == mgr.system().empire()) && (cols == 1));
-        canCloak = design.allowsCloaking();
-        cloak();
-
-        for (int i=0;i<ShipDesign.maxWeapons();i++) {
-            if (validWeapon(i) && (design.wpnCount(i) > 0)) {
-                weaponCount[weapons.size()] = design.wpnCount(i);
-                weaponAttacks[weapons.size()] = design.weapon(i).attacksPerRound();
-                roundsRemaining[weapons.size()] = design.weapon(i).shots();
-                baseTurnsToFire[weapons.size()] = design.weapon(i).turnsToFire();
-                wpnTurnsToFire[weapons.size()] = 1;
-                weapons.add(design.weapon(i));
-            }
-        }
-        for (int i=0;i<ShipDesign.maxSpecials();i++) {
-            if (design.special(i).isWeapon()) {
-                weaponCount[weapons.size()] = 1;
-                weaponAttacks[weapons.size()] = 1;
-                roundsRemaining[weapons.size()] = 1;
-                baseTurnsToFire[weapons.size()] = 1;
-                wpnTurnsToFire[weapons.size()] = 1;
-                weapons.add(design.special(i));
-            }
-        }
-
-        System.arraycopy(weaponAttacks, 0, shotsRemaining, 0, shotsRemaining.length);
-
-        if (weapons.size() > 0)
-            selectedWeaponIndex = 0;
-    }
     @Override
     public int wpnCount(int i) { return design.wpnCount(i); }
     @Override
     public int shotsRemaining(int i) { return shotsRemaining[i]; }
     @Override
     public void reloadWeapons() {
-        super.reloadWeapons();
         System.arraycopy(weaponAttacks, 0, shotsRemaining, 0, shotsRemaining.length);
         
         for (ShipComponent c: weapons)
             c.reload();
         //ail: reset selectedWeaponIndex too, so that ship will consistently start from the same weapon each new turn
-        if (weapons.size() > 0)
-            selectedWeaponIndex = 0;
+        selectedWeaponIndex = 0;
     }
     @Override
     public void endTurn() {
@@ -353,12 +346,9 @@ public class CombatShip extends CombatEntity {
                 looking = false;
         }
     }
-    private int weaponIndex() {
-        return selectedWeaponIndex;
-    }
     @Override
     public void fireWeapon(CombatEntity targetStack) {
-        fireWeapon(targetStack, weaponIndex(), false);
+        fireWeapon(targetStack, selectedWeaponIndex, false);
     }
     @Override
     public void fireWeapon(CombatEntity targetStack, int index, boolean allShots) {
