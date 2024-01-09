@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,6 @@ public abstract class CombatEntity implements Base {
     public boolean cloaked = false;
     public boolean canCloak = false;
     public boolean canTeleport = false;
-    public boolean atLastColony = false;
     public float damageSustained = 0;
     public boolean attacked = false;
     public CombatEntity target;
