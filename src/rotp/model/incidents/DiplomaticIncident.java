@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import rotp.util.Base;
 
 public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
+
     public float severity;
     public int duration;
     public int turnOccurred;
@@ -34,7 +35,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public boolean triggeredByAction()   { return true; }
     public String praiseMessageId()      { return ""; }
     public String warningMessageId()     { return ""; }
-    public String breakTreatyId()        { return ""; }
     public String declareWarId()         { return ""; }
     public int duration()                { return duration; }
     public int turnOccurred()            { return turnOccurred; }
@@ -58,7 +58,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     public boolean triggersPraise()      { return !praiseMessageId().isEmpty(); }
     public boolean triggersWarning()     { return !warningMessageId().isEmpty(); }
-    public boolean triggersBreakTreaty() { return false; }
     public boolean triggersImmediateWar(){ return false; }
     public boolean triggersWar()         { return !declareWarId().isEmpty(); }
 

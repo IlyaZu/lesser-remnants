@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
     private static final int OBS_FIGHTER_TURNS = 16;
     private static final int OBS_BOMBER_TURNS = 12;
     private static final int OBS_COLONY_TURNS = 8;
-    private static final int OBS_SCOUT_TURNS = 1;
 
     private final Empire empire;
     private int[] shipCounts;
@@ -429,7 +428,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         design.special(0, special);
         design.setSmallestSize();
         design.mission(ShipDesign.SCOUT);
-        design.maxUnusedTurns(OBS_SCOUT_TURNS);
         lab.nameDesign(design);
         lab.iconifyDesign(design);
         return design;
@@ -443,7 +441,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         design.special(0, bestColonySpecial());
         design.engine(lab.fastestEngine());
         design.mission(ShipDesign.COLONY);
-        design.maxUnusedTurns(OBS_COLONY_TURNS);
 
         // AIs will always put 1 beam weapon on their colony ships if AI contact made
         if (weaponNeeded) {
@@ -527,21 +524,18 @@ public class AIShipDesigner implements Base, ShipDesigner {
     public ShipDesign newFighterDesign(int size) {
         ShipDesign design = NewShipTemplate.newFighterDesign(this);
         design.mission(ShipDesign.FIGHTER);
-        design.maxUnusedTurns(OBS_FIGHTER_TURNS);
         return design;
     }
     @Override
     public ShipDesign newBomberDesign(int size) {
         ShipDesign design = NewShipTemplate.newBomberDesign(this);
         design.mission(ShipDesign.BOMBER);
-        design.maxUnusedTurns(OBS_BOMBER_TURNS);
         return design;
     }
     @Override
     public ShipDesign newDestroyerDesign(int size) {
         ShipDesign design = NewShipTemplate.newDestroyerDesign(this);
         design.mission(ShipDesign.DESTROYER);
-        design.maxUnusedTurns(OBS_DESTROYER_TURNS);
         return design;
     }
     @Override

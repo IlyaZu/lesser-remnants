@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -506,7 +506,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         design.special(0, special);
         design.setSmallestSize();
         design.mission(ShipDesign.SCOUT);
-        design.maxUnusedTurns(OBS_SCOUT_TURNS);
         lab.nameDesign(design);
         //NewShipTemplate.nameShipDesign(this, design);
         lab.iconifyDesign(design);
@@ -523,7 +522,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         design.special(0, bestColonySpecial());
         design.engine(lab.fastestEngine());
         design.mission(ShipDesign.COLONY);
-        design.maxUnusedTurns(OBS_COLONY_TURNS);
 
         boolean allowHuge = false;
         boolean unexploredInRange = false;
@@ -632,21 +630,18 @@ public class AIShipDesigner implements Base, ShipDesigner {
     public ShipDesign newFighterDesign(int size) {
         ShipDesign design = NewShipTemplate.newFighterDesign(this);
         design.mission(ShipDesign.FIGHTER);
-        design.maxUnusedTurns(OBS_FIGHTER_TURNS);
         return design;
     }
     @Override
     public ShipDesign newBomberDesign(int size) {
         ShipDesign design = NewShipTemplate.newBomberDesign(this);
         design.mission(ShipDesign.BOMBER);
-        design.maxUnusedTurns(OBS_BOMBER_TURNS);
         return design;
     }
     @Override
     public ShipDesign newDestroyerDesign(int size) {
         ShipDesign design = NewShipTemplate.newDestroyerDesign(this);
         design.mission(ShipDesign.DESTROYER);
-        design.maxUnusedTurns(OBS_DESTROYER_TURNS);
         return design;
     }
     @Override
