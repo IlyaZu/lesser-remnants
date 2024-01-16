@@ -17,7 +17,6 @@
 package rotp.model.incidents;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import rotp.ui.notifications.TurnNotification;
 import rotp.util.Base;
 
@@ -64,5 +63,4 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private float remainingTime() {
             return Math.max(0, (turnOccurred() + duration() - galaxy().currentTurn()));
     }
-    public static Comparator<DiplomaticIncident> DATE = (DiplomaticIncident o1, DiplomaticIncident o2) -> Integer.compare(o2.turnOccurred(), o1.turnOccurred());
 }

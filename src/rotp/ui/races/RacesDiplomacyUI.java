@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import rotp.model.empires.DiplomaticTreaty;
@@ -55,6 +56,9 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         "RELATIONS_NEUTRAL", "RELATIONS_RELAXED", "RELATIONS_AMIABLE", "RELATIONS_CALM", "RELATIONS_AFFABLE",
         "RELATIONS_PEACEFUL", "RELATIONS_FRIENDLY", "RELATIONS_UNITY", "RELATIONS_HARMONY" };
     private static final Color unselectedC = new Color(112,85,68);
+    private static final Comparator<DiplomaticIncident> DATE = 
+    		(o1, o2) -> Integer.compare(o2.turnOccurred(), o1.turnOccurred());
+
     private final Color greenEdgeC = new Color(44,59,30);
     private final Color greenMidC = new Color(70,93,48);
     private final Color brownEdgeC = new Color(101,70,50);
@@ -426,7 +430,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
                 }
             }
         }
-        Collections.sort(incidents, DiplomaticIncident.DATE);
+        Collections.sort(incidents, DATE);
         int y2 = y1 - incidentY;
         int fullListH = 0;
         for (int i=0;i<incidents.size();i++) {
@@ -874,7 +878,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
             if (inc.currentSeverity() != 0)
                 incidents.add(inc);
         }
-        Collections.sort(incidents, DiplomaticIncident.DATE);
+        Collections.sort(incidents, DATE);
         int y2 = y1 - incidentY;
         int fullListH = 0;
         for (int i=0;i<incidents.size();i++) {
