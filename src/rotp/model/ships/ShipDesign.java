@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,9 +57,7 @@ public final class ShipDesign extends Design {
     private final ShipSpecial[] special = new ShipSpecial[maxSpecials];
     private int size = SMALL;
     private int mission = SCOUT;
-    private int unusedTurns = 0;     // # turns while built but unused by FleetCommander
     public int remainingLife = 999; // once obsolete, this is minimum num turns to survive before scrapping
-    private int maxUnusedTurns = 12; // max number of turns to survive while unused
     private int usedCount = 0;       // # ships used by FleetCommander... updated each turn
     private float perTurnDmg = 0;
     private String iconKey;
@@ -99,9 +97,6 @@ public final class ShipDesign extends Design {
     public int mission()                    { return mission; }
     public void mission(int i)              { mission = i; }
     public int remainingLife()              { return remainingLife; }
-    public int unusedTurns()                { return unusedTurns; }
-    public int maxUnusedTurns()             { return maxUnusedTurns; }
-    public void maxUnusedTurns(int i)       { maxUnusedTurns = i; }
     public void addUsedCount(int i)         { usedCount += i; }
     public float perTurnDamage()            { return perTurnDmg; }
     public void perTurnDamage(float d)      { perTurnDmg = d; }
