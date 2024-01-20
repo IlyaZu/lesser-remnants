@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.List;
 import rotp.model.Sprite;
 import rotp.model.ai.FleetOrders;
 import rotp.model.combat.CombatColony;
+import rotp.model.combat.CombatEmpireShip;
 import rotp.model.combat.CombatShip;
 import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
@@ -835,7 +836,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             if (num[i] > 0) {
                 ShipDesign d = design(i);
                 if (d != null) {
-                    CombatShip shipStack = new CombatShip(this, i, mgr);
+                    CombatShip shipStack = new CombatEmpireShip(this, i, mgr);
                     for (int j=0;j<ShipDesign.maxWeapons();j++) {
                         int wpnCount = d.wpnCount(j);
                         int attackCount = d.weapon(j).attacksPerRound();

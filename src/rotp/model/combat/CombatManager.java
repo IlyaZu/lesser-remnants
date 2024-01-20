@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -501,7 +501,7 @@ public class CombatManager implements Base {
             if (fl.num(i) > 0) {
                 ShipDesign d = fl.empire().shipLab().design(i);
                 if (d != null) {
-                    CombatShip stack = new CombatShip(fl, i, this);
+                    CombatShip stack = new CombatEmpireShip(fl, i, this);
                     if (stack.isArmed())
                         stack.ward(colonyWard);
                     addStackToCombat(stack);
