@@ -19,9 +19,10 @@ package rotp.model.combat;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import rotp.model.ai.interfaces.ShipCaptain;
+import rotp.model.empires.Empire;
 import rotp.model.empires.ShipView;
-import rotp.model.galaxy.ShipFleet;
-import rotp.model.galaxy.StarSystem;
 import rotp.model.ships.*;
 import rotp.model.tech.TechCloaking;
 import rotp.model.tech.TechStasisField;
@@ -30,7 +31,6 @@ import rotp.ui.combat.ShipBattleUI;
 
 public class CombatShip extends CombatEntity {
     public ShipDesign design;
-    private ShipFleet fleet;
     private int selectedWeaponIndex = 0;
     private final List<ShipComponent> weapons = new ArrayList<>();
     private float displacementPct = 0;
@@ -41,11 +41,8 @@ public class CombatShip extends CombatEntity {
     public int[] roundsRemaining = new int[7]; // how many rounds you can fire (i.e. missiles)
     private int[] baseTurnsToFire = new int[7]; // how many turns to wait before you can fire again
     private int[] wpnTurnsToFire = new int[7]; // how many turns to wait before you can fire again
-    private boolean bombardedThisTurn = false;
-    private boolean usingAI = true;
     private int repulsorRange = 0;
     private CombatEntity ward;
-    private boolean atLastColony = false;
     
     @Override
     public String toString() {
@@ -59,28 +56,24 @@ public class CombatShip extends CombatEntity {
         return concat(design.name(), " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
     }
 
-    public CombatShip(ShipFleet fl, int index, CombatManager m) {
+    public CombatShip(int count, ShipDesign design, ShipCaptain captian, CombatManager m) {
         mgr = m;
-        fleet = fl;
-        empire = fl.empire();
-        design = empire.shipLab().design(index);
-        usingAI = (empire == null) || empire.isAIControlled();
-        captain = empire.ai().shipCaptain();
-        origNum = num = fl.num(index);
+        this.design = design;
+        this.captain = captian;
+        origNum = num = count;
         startingMaxHits = maxHits = hits = design.hits();
         maxMove = move = design.moveRange();
         maxShield = shield = m.system().inNebula() ? 0 : design.shieldLevel();
-        attackLevel = design.attackLevel() + empire.shipAttackBonus();
+        attackLevel = design.attackLevel();
         maneuverability = design.maneuverability();
         repulsorRange = design.repulsorRange();
-        missileDefense = design.missileDefense() + empire.shipDefenseBonus();
-        beamDefense = design.beamDefense() + empire.shipDefenseBonus();
+        missileDefense = design.missileDefense();
+        beamDefense = design.beamDefense();
         displacementPct = design.missPct();
         repairPct = designShipRepairPct();
         beamRangeBonus = designBeamRangeBonus();
         image = design.image();
         
-        atLastColony = (empire == mgr.system().empire()) && (empire.numColonies() == 1);
         canCloak = design.allowsCloaking();
         cloak();
 
@@ -123,15 +116,11 @@ public class CombatShip extends CombatEntity {
     }
 
     @Override
-    public boolean usingAI()          { return usingAI; }
-    @Override
     public boolean isShip()          { return true;  }
     @Override
     public String name()             { return str(num)+":"+design.name(); }
     @Override
     public ShipDesign design()       { return design; }
-    @Override
-    public boolean hostileTo(CombatEntity st, StarSystem sys)       { return st.isMonster() || empire.aggressiveWith(st.empire, sys); }
     @Override
     public CombatEntity ward()             { return ward; }
     @Override
@@ -151,8 +140,6 @@ public class CombatShip extends CombatEntity {
     @Override
     public boolean canScan()        { return design.allowsScanning(); }
     @Override
-    public boolean canRetreat()     { return !atLastColony && (maneuverability > 0); }
-    @Override
     public float autoMissPct()      { return displacementPct; }
     private ShipComponent selectedWeapon() { return weapons.get(selectedWeaponIndex); }
     @Override
@@ -160,13 +147,9 @@ public class CombatShip extends CombatEntity {
     @Override
     public float blackHoleDef()    { return design.blackHoleDef(); }
     @Override
-    public void recordKills(int num) { empire.shipLab().recordKills(design, num); }
-    @Override
     public boolean ignoreRepulsors()    { return cloaked || canTeleport(); }
     @Override
     public void becomeDestroyed()    {
-        fleet.removeShips(design.id(), num, true);
-        empire.shipLab().recordDestruction(design, num);
         mgr.currentStack().recordKills(num);
 
         super.becomeDestroyed();
@@ -252,7 +235,7 @@ public class CombatShip extends CombatEntity {
             }
             else if(!wpn.groundAttacksOnly())
             {
-                if(empire.ai().shipCaptain().useSmartRangeForBeams())
+                if(useSmartRangeForBeams())
                 {
                     if(tgt.maxFiringRange(this) > repulsorRange()) //If our enemy has a bigger range than our repulsors we close in no matter what
                         weaponRange = 1;
@@ -264,6 +247,9 @@ public class CombatShip extends CombatEntity {
             }
         }
         return max(missileRange, weaponRange);
+    }
+    protected boolean useSmartRangeForBeams() {
+    	return false;
     }
     @Override
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
@@ -294,9 +280,6 @@ public class CombatShip extends CombatEntity {
         
         if (!anyWeaponFired)
             cloak();
-        if (bombardedThisTurn)
-            fleet.bombarded(design.id());
-        bombardedThisTurn = false;
     }
     private void cloak() {
         if (!cloaked && canCloak) {
@@ -311,16 +294,8 @@ public class CombatShip extends CombatEntity {
         }
     }
     @Override
-    public boolean retreatToSystem(StarSystem s) {
-        if (s == null)
-            return false;
-
-        galaxy().ships.retreatSubfleet(fleet, design.id(), s.id);
-        return true;
-    }
-    @Override
     public float initiative() {
-        return design.initiative() + empire.shipInitiativeBonus();
+        return design.initiative();
     }
     @Override
     public boolean selectBestWeapon(CombatEntity target) {
@@ -386,9 +361,6 @@ public class CombatShip extends CombatEntity {
         if (shotsRemaining[index] == 0)
             rotateToUsableWeapon(targetStack);
         target.damageSustained = 0;
-        
-        if (targetStack.isColony())
-            bombardedThisTurn = true;
     }
     private boolean validWeapon(int i) {
         ShipWeapon wpn = design.weapon(i);
@@ -410,10 +382,6 @@ public class CombatShip extends CombatEntity {
     }
     @Override
     public boolean canPotentiallyAttack(CombatEntity st) {
-        if (st == null)
-            return false;
-        if (empire.alliedWith(id(st.empire)))
-            return false;
         for (int i=0;i<weapons.size();i++) {
             if (shipComponentCanPotentiallyAttack(st, i))
                 return true;
@@ -424,10 +392,11 @@ public class CombatShip extends CombatEntity {
     public boolean isArmed() {
         for (int i=0;i<weapons.size();i++) {
             if (roundsRemaining[i] > 0) {
+            	int empireId = empire != null ? empire.id : Empire.NULL_ID;
                 // armed if: weapons are not bombs or if not allied with planet (& can bomb it)
                 if (!weapons.get(i).groundAttacksOnly())
                     return true;
-                if (mgr.system().isColonized() && !empire.alliedWith(mgr.system().empire().id))
+                if (mgr.system().isColonized() && !mgr.system().empire().alliedWith(empireId))
                     return true;
             }
         }
@@ -560,13 +529,11 @@ public class CombatShip extends CombatEntity {
         int orig = num;
         super.loseShip();
         int shipsLost = orig-num;
-        fleet.removeShips(design.id(), shipsLost, true);
 
         // record losses
         if (!destroyed())  // if destroyed, already recorded lose in super.loseShip()
             mgr.results().addShipDestroyed(design, shipsLost);
         
-        empire.shipLab().recordDestruction(design, shipsLost);
         mgr.currentStack().recordKills(shipsLost);
     }
     @Override
