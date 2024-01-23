@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +17,7 @@
 package rotp.ui.diplomacy;
 
 import rotp.model.empires.Empire;
+import rotp.model.empires.EmpireView;
 
 public class OfferTradeMessage extends TurnNotificationMessage {
     int tradeAmount = 0;
@@ -48,7 +50,12 @@ public class OfferTradeMessage extends TurnNotificationMessage {
         log("OfferTradeMessage - selected: ", str(i));
         switch(i) {
             case 0:
-                DiplomaticReply reply = player().diplomatAI().acceptOfferTrade(diplomat(), tradeAmount());
+            	int tradeAmount = tradeAmount();
+            	EmpireView view = player().viewForEmpire(diplomat());
+            	view.embassy().establishTradeTreaty(tradeAmount);
+            	
+            	DiplomaticReply reply = DiplomaticReplies.announceTrade(
+            			view.otherView(), tradeAmount, galaxy().currentTurn());
                 reply.resumeTurn(true);
                 DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
                 break;

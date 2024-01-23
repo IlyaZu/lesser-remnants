@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,6 @@ import rotp.model.incidents.SignBreakAllianceIncident;
 import rotp.model.incidents.SignDeclareWarIncident;
 import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
-import rotp.model.incidents.SignTradeIncident;
 import rotp.model.incidents.TrespassingIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
@@ -415,13 +414,9 @@ public class DiplomaticEmbassy implements Base, Serializable {
         otherEmbassy().addIncident(ExchangeTechnologyIncident.create(empire(), owner(), requestedTech, offeredTech));
         return inc;
     }
-    public DiplomaticIncident establishTradeTreaty(int level) {
+    public void establishTradeTreaty(int level) {
         view.embassy().tradePraised(false);
         view.trade().startRoute(level);
-        DiplomaticIncident inc = SignTradeIncident.create(owner(), empire(), level);
-        addIncident(inc);
-        otherEmbassy().addIncident(SignTradeIncident.create(empire(), owner(), level));
-        return inc;
     }
     public DiplomaticIncident demandTribute() {
         DiplomaticIncident inc = DemandTributeIncident.create(owner(), empire(), true);

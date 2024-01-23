@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
 import rotp.ui.diplomacy.DiplomaticCounterReply;
 import rotp.ui.diplomacy.DiplomaticMessage;
+import rotp.ui.diplomacy.DiplomaticReplies;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
 import rotp.util.Base;
@@ -425,18 +426,12 @@ public class AIDiplomat implements Base, Diplomat {
         }
 
         v.otherView().embassy().tradeAccepted();
-        DiplomaticIncident inc = v.otherView().embassy().establishTradeTreaty(level);
-        return v.otherView().accept(DialogueManager.ACCEPT_TRADE, inc);
+        v.otherView().embassy().establishTradeTreaty(level);
+        return DiplomaticReplies.acceptTrade(v.otherView(), level);
     }
     @Override
     public DiplomaticReply immediateRefusalToTrade(Empire requestor) {
         return null;
-    }
-    @Override
-    public DiplomaticReply acceptOfferTrade(Empire e, int level) {
-        EmpireView v = empire.viewForEmpire(e);
-        DiplomaticIncident inc = v.embassy().establishTradeTreaty(level);
-        return v.accept(DialogueManager.ANNOUNCE_TRADE, inc);
     }
     @Override
     public DiplomaticReply refuseOfferTrade(Empire requestor, int level) {

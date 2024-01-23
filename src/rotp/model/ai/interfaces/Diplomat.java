@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ public interface Diplomat {
     DiplomaticReply receiveCounterJointWar(Empire e, DiplomaticCounterReply reply);
     DiplomaticReply acceptOfferPeace(Empire e);
     DiplomaticReply refuseOfferPeace(Empire e);
-    DiplomaticReply acceptOfferTrade(Empire e, int level);
     DiplomaticReply refuseOfferTrade(Empire e, int level);
     DiplomaticReply acceptOfferPact(Empire e);
     DiplomaticReply refuseOfferPact(Empire e);
