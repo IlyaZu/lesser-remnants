@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,6 @@ public class AIGeneral implements Base, General {
     private float totalArmedFleetCost = -1;
     private int additionalColonizersToBuild = -1;
     private float totalEmpirePopulationCapacity = -1;
-    private float warROI = -1;
     private float visibleEnemyFighterCost = -1;
     private float myFighterCost = -1;
     private float smartPower = -1;
@@ -85,7 +84,6 @@ public class AIGeneral implements Base, General {
         additionalColonizersToBuild = -1;
         totalArmedFleetCost = -1;
         totalEmpirePopulationCapacity = -1;
-        warROI = -1;
         visibleEnemyFighterCost = -1;
         myFighterCost = -1;
         smartPower = -1;
@@ -283,7 +281,6 @@ public class AIGeneral implements Base, General {
 
         // for our systems
         if (empire == empire.sv.empire(sysId)) {
-            float value = invasionPriority(sys);
             if (sys.colony().inRebellion())
                 orderRebellionFleet(sys);
             return;
@@ -515,35 +512,6 @@ public class AIGeneral implements Base, General {
         fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
         fp.priority = FleetPlan.BOMB_ENEMY+ invasionPriority(sys)/100;
     }
-    public void orderBombEncroachmentFleet(EmpireView v, StarSystem sys, float fleetSize) {
-        // set fleet orders for bombardment...
-        int sysId = sys.id;
-        EmpireView ev = empire.viewForEmpire(empire.sv.empId(sysId));
-        float targetTech = ev.spies().tech().avgTechLevel(); // modnar: target tech level
-        
-        float baseBCPresent = empire.sv.bases(sys.id)*empire.tech().newMissileBaseCost();
-        float bcMultiplier = 1 + (empire.sv.hostilityLevel(sys.id)/2);
-        
-        // modnar: test fleet sizes, include enemyFleetSize, factoring in relative tech levels
-        float bombBcNeeded = max(baseBCPresent*1.5f*(targetTech+10.0f)/(civTech+10.0f),bcMultiplier*civProd);
-        float fightBcNeeded = 2*fleetSize*(targetTech+10.0f)/(civTech+10.0f);
-        float destroyerBcNeeded = (bombBcNeeded + fightBcNeeded) * 0.2f;
-        
-        // ail: bombers and fighters according to what is needed
-        int destroyersNeeded = (int) Math.ceil(destroyerBcNeeded/empire.shipLab().destroyerDesign().cost());
-        int bombersNeeded = (int) Math.ceil(bombBcNeeded/empire.shipLab().bomberDesign().cost());
-        int fightersNeeded = (int) Math.ceil(fightBcNeeded/empire.shipLab().fighterDesign().cost());
-
-        ShipDesignLab lab = empire.shipLab();
-        // modnar: should use min speed here (?)
-        float speed = min(lab.destroyerDesign().warpSpeed(), lab.bomberDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
-        FleetPlan fp = empire.sv.fleetPlan(sys.id);
-        fp.addShips(empire.shipLab().destroyerDesign(), destroyersNeeded);
-        fp.addShips(empire.shipLab().bomberDesign(), bombersNeeded);
-        fp.addShips(empire.shipLab().fighterDesign(), fightersNeeded);
-        fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
-        fp.priority = FleetPlan.BOMB_ENCROACHMENT;
-    }
     
     public void considerSneakAttackFleet(EmpireView v, StarSystem sys, float fleetSize) {
         // pacifist/honorable never sneak attack
@@ -590,29 +558,6 @@ public class AIGeneral implements Base, General {
             orderBombardmentFleet(v, sys, fleetSize);
             empire.sv.fleetPlan(sys.id).priority = FleetPlan.BOMB_UNDEFENDED;
         }
-    }
-    private void setRepelFleetPlan(StarSystem sys, float fleetSize) {
-        float baseBCPresent = empire.sv.bases(sys.id)*empire.tech().newMissileBaseCost();
-        float bcNeeded = max(empire.shipLab().fighterDesign().cost(), fleetSize*3); // modnar: reduce repel fleet
-        bcNeeded -= baseBCPresent;
-        if (bcNeeded <= 0)
-            return;
-        
-        rushDefenseSystems.add(sys);
-
-        // use up to half of BC for Destroyers... rest for fighters
-        int destroyersNeeded = (int) Math.ceil((bcNeeded/2)/empire.shipLab().destroyerDesign().cost());
-        bcNeeded = max(0, bcNeeded-(destroyersNeeded * empire.shipLab().destroyerDesign().cost()));
-        int fightersNeeded = (int) Math.ceil(bcNeeded/empire.shipLab().fighterDesign().cost());
-
-        ShipDesignLab lab = empire.shipLab();
-        // modnar: should use min speed here (?)
-        float speed = min(lab.destroyerDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
-        FleetPlan fp = empire.sv.fleetPlan(sys.id);
-        fp.priority = FleetPlan.REPEL + invasionPriority(sys)/100;
-        fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
-        fp.addShips(empire.shipLab().destroyerDesign(), destroyersNeeded);
-        fp.addShips(empire.shipLab().fighterDesign(), fightersNeeded);
     }
     private void resetTargetedSystems() {
         Set<StarSystem> systems = targetedSystems().keySet(); // re-inits
@@ -701,12 +646,6 @@ public class AIGeneral implements Base, General {
         {
             bestVictim = archEnemy;
             return bestVictim;
-        }
-        int opponentsInRange = 1;
-        for(Empire emp : empire.contactedEmpires())
-        {
-            if(empire.inShipRange(emp.id))
-                opponentsInRange++;
         }
         for(Empire emp : empire.contactedEmpires())
         {
@@ -810,7 +749,6 @@ public class AIGeneral implements Base, General {
         float highestPower = 0.0f;
         float enemyPop = 0.0f;
         float biggestPop = 0.0f;
-        float enemyPlanetaryShield = 0.0f;
         float totalKillingPower = 0.0f;
         StarSystem dummySys = null;
         float dummyScore = 0.0f;

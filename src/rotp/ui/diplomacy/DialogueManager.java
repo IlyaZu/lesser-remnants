@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import rotp.util.Base;
 public class DialogueManager implements Base {
     public static final String DIALOG_FILENAME = "data/dialogue.txt";
     // these values are used in the dialogue.txt file to identify message types
-    public static final String CONTACT_DIPLOMATIC       = "Contact-Diplomatic";
     public static final String CONTACT_PACIFIST         = "Contact-Pacifist";
     public static final String CONTACT_HONORABLE        = "Contact-Honorable";
     public static final String CONTACT_RUTHLESS         = "Contact-Ruthless";
@@ -53,13 +52,10 @@ public class DialogueManager implements Base {
     public static final String DECLINE_ESPIONAGE        = "DeclineEspionage";
     public static final String DECLINE_SABOTAGE         = "DeclineSabotage";
     public static final String DECLINE_BUILDUP          = "DeclineBuildup";
-    public static final String DECLINE_ENCROACH         = "DeclineEncroach";
     public static final String DECLINE_SKIRMISH         = "DeclineSkirmish";
     public static final String DECLINE_ATTACK           = "DeclineAttack";
     public static final String DECLINE_INVASION         = "DeclineInvasion";
-    public static final String DECLINE_BIOWEAPONS       = "DeclineBioweapons";
     public static final String DECLINE_ENEMY_ALLY       = "DeclineEnemyAlly";
-    public static final String DECLINE_ALREADY_ALLIED   = "DeclineAlreadyAllied";
     public static final String DECLINE_NO_WAR_ON_ALLY   = "DeclineNoWarOnAlly";
     public static final String DECLINE_PEACE_TREATY     = "DeclinePeaceTreaty";
     public static final String OFFER_TRADE              = "OfferTrade";
@@ -84,7 +80,6 @@ public class DialogueManager implements Base {
     public static final String OFFER_JOINT_WAR          = "OfferJointWar";
     public static final String ACCEPT_JOINT_WAR         = "AcceptJointWar";
     public static final String COUNTER_JOINT_WAR        = "CounterJointWar";
-    public static final String RESPOND_CLOSE_EMBASSY    = "RespondCloseEmbassy";
     public static final String RESPOND_BREAK_TRADE      = "RespondBreakTrade";
     public static final String RESPOND_BREAK_PACT       = "RespondBreakPact";
     public static final String RESPOND_BREAK_ALLIANCE   = "RespondBreakAlliance";
@@ -92,9 +87,6 @@ public class DialogueManager implements Base {
     public static final String RESPOND_STOP_SPYING      = "RespondStopSpying";
     public static final String RESPOND_STOP_ATTACKING   = "RespondStopAttacking";
     
-    public static final String TRANSPORTS_PERISHED      = "TransportsPerished";
-    public static final String TRANSPORTS_KILLED        = "TransportsKilled";
-    public static final String ENEMY_TRANSPORTS_KILLED  = "EnemyTransportsKilled";
     public static final String PRAISE_COUNCIL_VOTE      = "Praise-CouncilVote";
     public static final String PRAISE_ATTACKED_ENEMY    = "Praise-AttackedEnemy";
     public static final String PRAISE_TRADE             = "Praise-Trade";
@@ -103,7 +95,6 @@ public class DialogueManager implements Base {
     public static final String WARNING_ATTACKED_ALLY    = "Warning-AttackedAlly";
     public static final String WARNING_SKIRMISH         = "Warning-Skirmish";
     public static final String WARNING_TRESPASSING      = "Warning-Trespassing";
-    public static final String WARNING_ENCROACHING      = "Warning-Encroaching";
     public static final String WARNING_EXPANSION        = "Warning-Expansion";
     public static final String WARNING_BUILDUP          = "Warning-Buildup";
     public static final String WARNING_ESPIONAGE        = "Warning-Espionage";
@@ -118,7 +109,6 @@ public class DialogueManager implements Base {
     public static final String DECLARE_OPPORTUNITY_WAR  = "DeclareWar-Opportunity";
     public static final String DECLARE_SPYING_WAR       = "DeclareWar-Spying";
     public static final String DECLARE_ERRATIC_WAR      = "DeclareWar-Erratic"; 
-    public static final String DECLARE_MILITARY_WAR     = "DeclareWar-Military"; 
     public static final String DECLARE_ALLIANCE_WAR     = "DeclareWar-Alliance"; 
 
     public HashMap<String, DiplomaticMessage> messages = new HashMap<>();
@@ -175,7 +165,6 @@ public class DialogueManager implements Base {
             return diplomat.race().dialogue(random(matchingStrings).key());
     }
     private void loadMessages() {
-        addMessage(new TurnNotificationMessage(CONTACT_DIPLOMATIC));
         addMessage(new TurnNotificationMessage(CONTACT_PACIFIST));
         addMessage(new TurnNotificationMessage(CONTACT_HONORABLE));
         addMessage(new TurnNotificationMessage(CONTACT_RUTHLESS));
@@ -205,11 +194,9 @@ public class DialogueManager implements Base {
         addMessage(new SimpleMessage(DECLINE_ESPIONAGE));
         addMessage(new SimpleMessage(DECLINE_SABOTAGE));
         addMessage(new SimpleMessage(DECLINE_BUILDUP));
-        addMessage(new SimpleMessage(DECLINE_ENCROACH));
         addMessage(new SimpleMessage(DECLINE_SKIRMISH));
         addMessage(new SimpleMessage(DECLINE_ATTACK));
         addMessage(new SimpleMessage(DECLINE_INVASION));
-        addMessage(new SimpleMessage(DECLINE_BIOWEAPONS));
         addMessage(new SimpleMessage(DECLINE_ENEMY_ALLY));
         addMessage(new SimpleMessage(DECLINE_NO_WAR_ON_ALLY));
         addMessage(new SimpleMessage(DECLINE_PEACE_TREATY));
@@ -222,7 +209,6 @@ public class DialogueManager implements Base {
         addMessage(new SimpleMessage(ACCEPT_ALLIANCE));
         addMessage(new SimpleMessage(ACCEPT_JOINT_WAR));
         addMessage(new SimpleMessage(COUNTER_JOINT_WAR));
-        addMessage(new SimpleMessage(RESPOND_CLOSE_EMBASSY));
         addMessage(new SimpleMessage(RESPOND_BREAK_TRADE));
         addMessage(new SimpleMessage(RESPOND_BREAK_PACT));
         addMessage(new SimpleMessage(RESPOND_BREAK_ALLIANCE));
@@ -233,9 +219,6 @@ public class DialogueManager implements Base {
         addMessage(new TurnNotificationMessage(BREAK_TRADE));
         addMessage(new TurnNotificationMessage(BREAK_PACT));
         addMessage(new TurnNotificationMessage(BREAK_ALLIANCE));
-        addMessage(new TurnNotificationMessage(TRANSPORTS_PERISHED));
-        addMessage(new TurnNotificationMessage(TRANSPORTS_KILLED));
-        addMessage(new TurnNotificationMessage(ENEMY_TRANSPORTS_KILLED));
         addMessage(new TurnNotificationMessage(PRAISE_COUNCIL_VOTE));
         addMessage(new TurnNotificationMessage(PRAISE_ATTACKED_ENEMY));
         addMessage(new TurnNotificationMessage(PRAISE_TRADE));

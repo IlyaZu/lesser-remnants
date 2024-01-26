@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -252,10 +252,7 @@ public class AIGeneral implements Base, General {
         
         // for other empires that haven't threatened us
         if (!ev.embassy().threatened()) {
-            if (ev.embassy().encroaching(sys))
-                orderBombEncroachmentFleet(ev, sys, enemyFleetSize);
-            else
-                considerSneakAttackFleet(ev, sys, enemyFleetSize);
+        	considerSneakAttackFleet(ev, sys, enemyFleetSize);
         }
     }
     public boolean willingToInvade(EmpireView v, StarSystem sys) {
@@ -462,33 +459,6 @@ public class AIGeneral implements Base, General {
         fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
         fp.priority = FleetPlan.BOMB_ENEMY+ invasionPriority(sys)/100;
     }
-    public void orderBombEncroachmentFleet(EmpireView v, StarSystem sys, float fleetSize) {
-        // set fleet orders for bombardment...
-        int sysId = sys.id;
-        EmpireView ev = empire.viewForEmpire(empire.sv.empId(sysId));
-        float targetTech = ev.spies().tech().avgTechLevel(); // modnar: target tech level
-        
-        float baseBCPresent = empire.sv.bases(sys.id)*empire.tech().newMissileBaseCost();
-        float bcMultiplier = 1 + (empire.sv.hostilityLevel(sys.id)/2);
-        
-        // modnar: test fleet sizes, include enemyFleetSize, factoring in relative tech levels
-        float bcNeeded = (baseBCPresent*4 + 2*fleetSize)*(targetTech+10.0f)/(civTech+10.0f) + bcMultiplier*civProd/24;
-        
-        // modnar: bombing fleet to use 50% destroyers, 30% bombers, and 20% fighters
-        int destroyersNeeded = (int) Math.ceil(0.5f*bcNeeded/empire.shipLab().destroyerDesign().cost());
-        int bombersNeeded = (int) Math.ceil(0.3f*bcNeeded/empire.shipLab().bomberDesign().cost());
-        int fightersNeeded = (int) Math.ceil(0.2f*bcNeeded/empire.shipLab().fighterDesign().cost());
-
-        ShipDesignLab lab = empire.shipLab();
-        // modnar: should use min speed here (?)
-        float speed = min(lab.destroyerDesign().warpSpeed(), lab.bomberDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
-        FleetPlan fp = empire.sv.fleetPlan(sys.id);
-        fp.addShips(empire.shipLab().destroyerDesign(), destroyersNeeded);
-        fp.addShips(empire.shipLab().bomberDesign(), bombersNeeded);
-        fp.addShips(empire.shipLab().fighterDesign(), fightersNeeded);
-        fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
-        fp.priority = FleetPlan.BOMB_ENCROACHMENT;
-    }
     public void considerSneakAttackFleet(EmpireView v, StarSystem sys, float fleetSize) {
         // pacifist/honorable never sneak attack
         if (empire.leader().isPacifist()
@@ -601,9 +571,6 @@ public class AIGeneral implements Base, General {
         bcNeeded = max(0, bcNeeded-(destroyersNeeded * empire.shipLab().destroyerDesign().cost()));
         int fightersNeeded = (int) Math.ceil(bcNeeded/empire.shipLab().fighterDesign().cost());
 
-        ShipDesignLab lab = empire.shipLab();
-        // modnar: should use min speed here (?)
-        float speed = min(lab.destroyerDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
         FleetPlan fp = empire.sv.fleetPlan(sys.id);
         fp.priority = FleetPlan.INTERCEPT + invasionPriority(sys)/100;
         fp.addShips(empire.shipLab().destroyerDesign(), destroyersNeeded);
