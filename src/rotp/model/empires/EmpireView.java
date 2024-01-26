@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -231,9 +231,6 @@ public final class EmpireView implements Base, Serializable {
     private String decodedMessage(String key) {
         return decode(DialogueManager.current().randomMessage(key, this));
     }
-    private String decodedMessage(String key, Empire speaker, Empire otherEmp) {
-        return decode(DialogueManager.current().randomMessage(key, speaker), otherEmp);
-    }
     private String decodedMessage(String key, Empire otherEmp) {
         return decode(DialogueManager.current().randomMessage(key, this), otherEmp);
     }
@@ -248,9 +245,6 @@ public final class EmpireView implements Base, Serializable {
     }
     public DiplomaticReply accept(String reason) {
         return new DiplomaticReply(true, decodedMessage(reason));
-    }
-    public DiplomaticReply accept(String reason, Empire speaker) {
-        return new DiplomaticReply(true, decodedMessage(reason, speaker, null));
     }
     public DiplomaticReply accept(String reason, DiplomaticIncident inc) {
         return new DiplomaticReply(true, decodedMessage(reason, inc));

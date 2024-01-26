@@ -42,7 +42,6 @@ import rotp.model.incidents.ColonyCapturedIncident;
 import rotp.model.incidents.ColonyDestroyedIncident;
 import rotp.model.incidents.ColonyInvadedIncident;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.EncroachmentIncident;
 import rotp.model.incidents.EspionageTechIncident;
 import rotp.model.incidents.EvictedSpiesIncident;
 import rotp.model.incidents.ExpansionIncident;
@@ -482,9 +481,6 @@ public class AIDiplomat implements Base, Diplomat {
 
         if (inc instanceof MilitaryBuildupIncident)
             return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_BUILDUP, v.owner())));
-
-        if (inc instanceof EncroachmentIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_ENCROACH, v.owner())));
 
         if (inc instanceof SkirmishIncident)
             return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_SKIRMISH, v.owner())));

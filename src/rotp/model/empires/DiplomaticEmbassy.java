@@ -31,7 +31,6 @@ import rotp.model.incidents.BreakTradeIncident;
 import rotp.model.incidents.DeclareWarIncident;
 import rotp.model.incidents.DemandTributeIncident;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.EncroachmentIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
 import rotp.model.incidents.ExpansionIncident;
@@ -273,16 +272,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public DiplomaticEmbassy otherEmbassy() { return view.otherView().embassy(); }
     public boolean tradePraised()           { return tradePraised; }
     public void tradePraised(boolean b)     { tradePraised = b; }
-    public boolean encroaching(StarSystem sys) {
-        for (DiplomaticIncident inc: allIncidents()) {
-            if (inc instanceof EncroachmentIncident) {
-                EncroachmentIncident enInc = (EncroachmentIncident) inc;
-                if (enInc.sysId() == sys.id)
-                    return true;
-            }
-        }
-        return false;
-    }
     public void logTechExchangeRequest(Tech wantedTech, List<Tech> counterTechs) {
         if (!offeredTechs().containsKey(wantedTech.id()))
             offeredTechs().put(wantedTech.id(), new ArrayList<>());

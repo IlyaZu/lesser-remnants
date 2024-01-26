@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ public class FleetPlan implements Base, Serializable {
     public static final int BOMB_ENEMY = 1100;
     public static final int COLONIZE = 1000;
     public static final int SCOUT_TO_UNEXPLORED = 900;
-    public static final int BOMB_ENCROACHMENT = 800;    // sneak attack bombing missions against untreatied systems that have encroaching fleets
     public static final int GUARD_ATTACK_TARGET = 700;  // send guard fleet to systems in range of enemy attacks
     public static final int EXPEL = 600;                // expel enemy fleets from nearby uncolonized systemss
     public static final int BOMB_UNDEFENDED = 500;      // sneak attack bombing msisions against untreatied systems
