@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,7 @@ public class SignDeclareWarIncident extends DiplomaticIncident {
         empYou = e2.id;
         empOther = t.id;
         severity = 0;
-
         turnOccurred = galaxy().currentTurn();
-        duration = 5;
     }
     @Override
     public String title()               { return text("INC_JOINT_WAR_TITLE"); }

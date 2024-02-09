@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,8 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
                 allEnemies.add(emp);
         }        
 
-        // severity is total % of GDP affected. Can't be greater than +40
-        int severity = (int) Math.min(15, (50 * res.damageSustained(defender)));
-        if (severity > 0) {
+        float severity = Math.min(3.75f, 12.5f * res.damageSustained(defender));
+        if (((int)severity) > 0) {
             for (Empire enemy: allEnemies) {
                 if (enemy != attacker) {
                     AttackedEnemyIncident inc = new AttackedEnemyIncident(attacker, defender, enemy, severity);
@@ -46,13 +45,12 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
             }
         }
     }
-    private AttackedEnemyIncident(Empire e1, Empire e2, Empire e3, int sev) {
+    private AttackedEnemyIncident(Empire e1, Empire e2, Empire e3, float sev) {
         empAttacker = e1.id;
         empEnemy = e2.id;
         empMe = e3.id;
-        severity = max(-10, sev);
+        severity = sev;
         turnOccurred = galaxy().currentTurn();
-        duration = 5;
     }
     @Override
     public String title()           { return text("INC_ATTACKED_ENEMY_TITLE", galaxy().empire(empEnemy).raceName()); }

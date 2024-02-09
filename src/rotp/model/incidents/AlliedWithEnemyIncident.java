@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,7 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
         empYou = ev.empire().id;
         empOther = other.id;
         turnOccurred = galaxy().currentTurn();
-        duration = 1;
-        severity = -10;
+        severity = -2.5f;
     }
     @Override
     public String title()            { return text("INC_ALLIED_WITH_ENEMY_TITLE"); }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ public class TrespassingIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         turnOccurred = galaxy().currentTurn();
-        duration = 2;
 
         float multiplier = -1.0f;
         if (sys.empire().atWarWith(fl.empId()))

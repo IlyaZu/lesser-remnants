@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,8 @@ public class SignPeaceIncident extends DiplomaticIncident {
         empMe = e1.id;
         empYou = e2.id;
         severity = 20;
-
         turnOccurred = galaxy().currentTurn();
         endTurn = turnOccurred+dur;
-        duration = dur;
     }
     @Override
     public String title()               { return text("INC_SIGNED_PEACE_TITLE"); }

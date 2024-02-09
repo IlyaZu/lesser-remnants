@@ -81,7 +81,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private DiplomaticTreaty treaty;
 
     private final int[] timers = new int[20];
-    private float relations = 0;
+    private float relations;
     private int peaceDuration = 0; // obsolete - sunset at some point
     private int tradeTimer = 0;
     private int lastRequestedTradeLevel = 0;
@@ -165,6 +165,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public DiplomaticEmbassy(EmpireView v) {
         view = v;
         setNoTreaty();
+        relations = baseRelations();
     }
     public final void setNoTreaty() {
         treaty = new TreatyNone(view.owner(), view.empire());
@@ -309,9 +310,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void assessTurn() {
         log(view+" Embassy: assess turn");
         evaluateWarPreparations();
-        checkForIncidents();
-
-        recalculateRelationsLevel();
+        driftRelations();
+        resetIncidents();
 
         // player refusals are remembered for the 
         // entire duration to avoid the AI spamming the player
@@ -614,21 +614,47 @@ public class DiplomaticEmbassy implements Base, Serializable {
         log(view.toString(), ": Adding incident- ", inc.key(), ":", str(inc.currentSeverity()), ":", inc.toString());
         if (inc.moreSevere(matchingEvent)) {
             incidents.put(k,inc);
+            updateRelations(inc);
             treaty.noticeIncident(inc);
         }
-        recalculateRelationsLevel();
     }
     public DiplomaticIncident getIncidentWithKey(String key) {
         return incidents.get(key);
     }
-    private void recalculateRelationsLevel() {
-        float rel = owner().baseRelations(empire());
-        rel += treatyRelationsAdj();
-        for (DiplomaticIncident ev: incidents.values()) 
-            rel += ev.currentSeverity();       
-        relations = bounds(-100,rel,100);
+    
+    private void driftRelations() {
+    	updateRelations((baseRelations()-relations)/100);
     }
-    private void checkForIncidents() {
+    
+    private void updateRelations(DiplomaticIncident incident) {
+    	updateRelations(incident.currentSeverity());
+    }
+    
+    private void updateRelations(float severity) {
+    	severity = adjustSeverity(severity);
+    	relations = bounds(-100, relations+severity, 100);
+    }
+    
+    private float adjustSeverity(float severity) {
+    	// Negative severity is treated the same with the relations range flipped.
+    	float adjustedRelations = relations * Math.signum(severity);
+    	
+    	float modifier;
+    	if (adjustedRelations < 0) {
+    		// relations is negative at this point so this is an add.
+    		modifier = 1 - adjustedRelations/50; // 1 to 3
+    	} else {
+    		modifier = 1 / (1 + adjustedRelations/25); // 1 to 1/5
+    	}
+    	
+    	return severity * modifier;
+    }
+    
+    private float baseRelations() {
+    	return owner().baseRelations(empire());
+    }
+
+    private void resetIncidents() {
         newIncidents().clear();
         clearForgottenIncidents();
         
@@ -653,16 +679,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
                 incidents.remove(key);
             }
         }
-    }
-    private int treatyRelationsAdj() {
-        if (war())
-            return -10;
-        else if (pact())
-            return 5;
-        else if (alliance())
-            return 10;
-        else
-            return 0;
     }
     private void beginTreaty() {
         treatyTurn = galaxy().currentTurn();

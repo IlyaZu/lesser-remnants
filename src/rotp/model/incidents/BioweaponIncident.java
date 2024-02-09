@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,9 +53,7 @@ public class BioweaponIncident extends DiplomaticIncident {
         empVictim = v.id;
         sysId = sys.id;
         turnOccurred = galaxy().currentTurn();
-              
-        severity = max(-30, -20*n.leader().bioweaponMod());
-        duration = 50;
+        severity = max(-7.5f, -5*n.leader().bioweaponMod());
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

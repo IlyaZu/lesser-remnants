@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class OathBreakerIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    private static final int ALLIANCE_SEV = -30;
-    private static final int PACT_SEV = -20;
+    private static final float ALLIANCE_SEV = -30;
+    private static final float PACT_SEV = -20;
     private final int oathBreakType;
     final int empBreaker;
     final int empVictim;
@@ -60,28 +60,15 @@ public class OathBreakerIncident extends DiplomaticIncident {
             }
         }
     }
-    private OathBreakerIncident(Empire brk, Empire vic, Empire obs, int type, int sev, boolean spy) {
+    private OathBreakerIncident(Empire brk, Empire vic, Empire obs, int type, float sev, boolean spy) {
         empBreaker = brk.id;
         empVictim = vic.id;
         spying = spy;
         oathBreakType = type;
         turnOccurred = galaxy().currentTurn();
         notify = vic == obs;
-        
-        duration = obs.leader().oathBreakerDuration();
-        
-        // zero duration means zero severity. That's ruthless!
-        if (duration == 0) {
-            duration = 1; // avoid /0 errors
-            severity = 0;
-            return;
-        }
-        
-        // longer duration for the victim of the oathbreaking
-        if (vic == obs)
-            duration *= 2;
-
-        severity = max(-30,sev);
+        float multiplier = obs.leader().isHonorable() ? 2 : 1;
+        severity = max(-30,sev) * multiplier;
     }
     @Override
     public String title()        { return text("INC_OATHBREAKER_TITLE"); }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,14 +46,12 @@ public class AssassinationIncident extends DiplomaticIncident {
         empVictim = vic.id;
         severity = -50;
         turnOccurred = galaxy().currentTurn();
-        duration = 20;
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
         empAssassin = ass.id;
         empVictim = vic.id;
         severity = 50;
         turnOccurred = galaxy().currentTurn();
-        duration = 10;
     }
     @Override
     public String title()            { return text("INC_ASSASSINATION_TITLE"); }

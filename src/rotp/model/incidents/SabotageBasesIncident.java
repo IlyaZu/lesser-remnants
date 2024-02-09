@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,15 +48,13 @@ public class SabotageBasesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageBasesIncident(otherView, m));
     }
     private SabotageBasesIncident(EmpireView ev, SabotageMission m) {
-
         turnOccurred = galaxy().currentTurn();
-        duration = ev.empire().leader().isPacifist() ? 20 : 10;
-
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
         destroyed = m.missileBasesDestroyed();
-        severity = max(-30, (-2 * destroyed) + ev.embassy().currentSpyIncidentSeverity());
+        float multiplier = ev.empire().leader().isPacifist() ? 2 : 1;
+        severity = max(-30, (-2 * destroyed) + ev.embassy().currentSpyIncidentSeverity()) * multiplier;
         
         if (ev.owner().isPlayerControlled()
         && (destroyed > 0)) {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,12 +64,10 @@ public class EnemyAidIncident extends DiplomaticIncident {
         setAmount(emp, amt);
         techId = null;
         turnOccurred = galaxy().currentTurn();
-        duration = 5;
     }
     private void setAmount(Empire emp, int amt) {
         float pct = (float) amt / emp.totalPlanetaryProduction();
-        float sev = min(5,5*pct);
-        severity = -sev;
+        severity = -min(5, 5*pct);
         amount = amt;
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, String tId) {
@@ -82,10 +80,8 @@ public class EnemyAidIncident extends DiplomaticIncident {
         Tech tech = tech(tId);
         float rpValue = enemy.ai().scientist().warTradeBCValue(tech);
         float pct = rpValue / enemy.totalPlanetaryProduction();
-        float sev = min(10,15*pct);
-        severity = -sev;
+        severity = -min(10, 15*pct);
         turnOccurred = galaxy().currentTurn();
-        duration = 5;
     }
     @Override
     public String title()        { return text("INC_ENEMY_AID_TITLE"); }
