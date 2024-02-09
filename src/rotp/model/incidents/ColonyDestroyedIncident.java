@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,8 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
         empDefender = r.defender().id;
         empAttacker = r.attacker().id;
         popLost = r.popDestroyed();
-        severity = -20 + max(-40, -popLost);
-
+        severity = -5 + max(-10f, -popLost/4.0f);
         turnOccurred = galaxy().currentTurn();
-        duration = 10;
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

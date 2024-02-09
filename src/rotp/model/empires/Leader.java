@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,17 +121,6 @@ public class Leader implements Base, Serializable {
 
         return baseRatio;
     }
-    public int genocideDurationMod() {
-        switch(personality) {
-            case PACIFIST:   return 999999;
-            case HONORABLE:  return 50;
-            case XENOPHOBIC: return 100;
-            case RUTHLESS:   return 10;
-            case AGGRESSIVE: return 0;
-            case ERRATIC:    return 25;
-            default:         return 25;
-        }
-    }
     public float bioweaponMod() {
         float objMod = 1.0f;
         switch(objective) {
@@ -144,21 +133,6 @@ public class Leader implements Base, Serializable {
             case RUTHLESS:   return 0;
             case AGGRESSIVE: return objMod*0.5f;
             case ERRATIC:    return objMod*0.5f;
-            default:         return objMod*1;
-        }
-    }
-    public int oathBreakerDuration() {
-        int objMod = 1;
-        switch(objective) {
-            case DIPLOMAT:  objMod = 2;
-        }
-        switch(personality) {
-            case PACIFIST:   return objMod*50;
-            case HONORABLE:  return 999999;
-            case XENOPHOBIC: return objMod*50;
-            case RUTHLESS:   return 0;
-            case AGGRESSIVE: return objMod*50;
-            case ERRATIC:    return objMod*25;
             default:         return objMod*1;
         }
     }

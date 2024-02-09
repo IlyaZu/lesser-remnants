@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,8 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     public static void alert(Empire attacker, Empire defender, CombatResults res) {
         List<Empire> allies = defender.allies();
 
-        // severity is total % of GDP affected. Can't be less than -40
-        int severity = (int) Math.min(30, 100 * res.damageSustained(defender));
-        if (severity > 0) {
+        float severity = Math.min(5, 25 * res.damageSustained(defender));
+        if (((int)severity) > 0) {
             for (Empire emp: allies) {
                 if (emp != attacker) {
                     AttackedAllyIncident inc = new AttackedAllyIncident(attacker, defender, emp, -severity);
@@ -40,13 +39,12 @@ public class AttackedAllyIncident extends DiplomaticIncident {
             }
         }
     }
-    private AttackedAllyIncident(Empire e1, Empire e2, Empire e3, int sev) {
+    private AttackedAllyIncident(Empire e1, Empire e2, Empire e3, float sev) {
         empAttacker = e1.id;
         empAlly = e2.id;
         empMe = e3.id;
-        severity = max(-20, sev);
+        severity = sev;
         turnOccurred = galaxy().currentTurn();
-        duration = 5;
     }
     @Override
     public String title()            { return text("INC_ATTACKED_ALLY_TITLE", galaxy().empire(empAlly).raceName()); }

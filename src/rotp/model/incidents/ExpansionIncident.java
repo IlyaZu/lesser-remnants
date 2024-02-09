@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,6 @@ public class ExpansionIncident extends DiplomaticIncident {
         maxSystems = max;
         empYou = ev.empire().id;
         turnOccurred = galaxy().currentTurn();
-        duration = 1;
 
         float multiplier = 1.0f;
         // penalty doubled for xenophobes
@@ -90,9 +89,9 @@ public class ExpansionIncident extends DiplomaticIncident {
             multiplier = multiplier * ratio * ratio;
         }
         
-        float n = -20*((num*num/max/max) - 1);
+        float n = -5*((num*num/max/max) - 1);
 
-        severity = max(-50, multiplier*n);
+        severity = max(-12.5f, multiplier*n);
     }
     @Override
     public String title()            { return text("INC_EXPANSION_TITLE"); }

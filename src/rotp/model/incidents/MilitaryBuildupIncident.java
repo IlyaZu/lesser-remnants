@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     public static void create(EmpireView view) {
         float shipRange = view.owner().shipRange();
 
-        float multiplier = -0.05f;
+        float multiplier = -0.0125f;
         if (view.owner().atWarWith(view.empId()))
             multiplier *= 2;
         else if (view.owner().pactWith(view.empId()))
@@ -59,8 +59,7 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         turnOccurred = galaxy().currentTurn();
-        duration = 3;
-        severity = max(-10, sev);
+        severity = max(-2.5f, sev);
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

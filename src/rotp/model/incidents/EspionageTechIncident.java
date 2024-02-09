@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ public class EspionageTechIncident extends DiplomaticIncident {
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
         ev.embassy().resetAllianceTimer();
         turnOccurred = galaxy().currentTurn();
-        
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)
         empSpy = m.spyEmpire().id;
@@ -41,8 +40,8 @@ public class EspionageTechIncident extends DiplomaticIncident {
         empThief = m.thief().id;
         techId = m.stolenTech();
         m.incident(this);
-        severity = max(-20,-10+ev.embassy().currentSpyIncidentSeverity());
-        duration = ev.empire().leader().isTechnologist()? 20 : 10;
+        float multiplier = ev.empire().leader().isTechnologist()? 2 : 1;
+        severity = max(-20,-10+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
     }
     @Override
     public boolean isSpying()         { return true; }

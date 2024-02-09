@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,13 +51,12 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     }
     private SabotageFactoriesIncident(EmpireView ev, SabotageMission m) {
         turnOccurred = galaxy().currentTurn();
-        duration = ev.empire().leader().isIndustrialist() ? 20 : 10;
-
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
         destroyed = m.factoriesDestroyed();
-        severity = max(-20,(-1*destroyed)+ev.embassy().currentSpyIncidentSeverity());
+        float multiplier = ev.empire().leader().isIndustrialist() ? 2 : 1;
+        severity = max(-20,(-1*destroyed)+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
 
         if (ev.owner().isPlayerControlled()
         && (destroyed > 0)) {

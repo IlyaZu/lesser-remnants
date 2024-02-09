@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,10 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     }
     public TradeIncomeIncident(EmpireView ev, float p, float pct) {
         profit = p;
-        severity = min(30, max(0,pct*50));
+        severity = min(7.5f, max(0,pct*12.5f));
         turnOccurred = galaxy().currentTurn();
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        duration = 3;
     }
     private DiplomaticEmbassy embassy() {
         return galaxy().empire(empMe).viewForEmpire(empYou).embassy();

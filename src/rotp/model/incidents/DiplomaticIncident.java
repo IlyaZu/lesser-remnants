@@ -24,7 +24,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
     public float severity;
-    public int duration;
     public int turnOccurred;
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered
@@ -35,7 +34,7 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String praiseMessageId()      { return ""; }
     public String warningMessageId()     { return ""; }
     public String declareWarId()         { return ""; }
-    public int duration()                { return duration; }
+    public int duration()                { return (int) Math.ceil(Math.abs(severity)); }
     public int turnOccurred()            { return turnOccurred; }
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
@@ -49,9 +48,9 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
     public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
-    public float currentSeverity()	     { return severity*remainingTime()/duration(); }
+    public float currentSeverity()	     { return severity; }
 
-    public boolean isForgotten()         { return remainingTime() <= 0; }
+    public boolean isForgotten()         { return turnOccurred() + duration() <= galaxy().currentTurn(); }
     public boolean isSpying()            { return false; }
     public boolean isAttacking()         { return false; }
 
@@ -59,8 +58,4 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public boolean triggersWarning()     { return !warningMessageId().isEmpty(); }
     public boolean triggersImmediateWar(){ return false; }
     public boolean triggersWar()         { return !declareWarId().isEmpty(); }
-
-    private float remainingTime() {
-            return Math.max(0, (turnOccurred() + duration() - galaxy().currentTurn()));
-    }
 }
