@@ -36,7 +36,6 @@ import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SignAllianceIncident;
-import rotp.model.incidents.SignBreakAllianceIncident;
 import rotp.model.incidents.SignDeclareWarIncident;
 import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
@@ -567,14 +566,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         DiplomaticIncident inc = SignDeclareWarIncident.create(owner(), empire(), target);
         addIncident(inc);
         otherEmbassy().addIncident(SignDeclareWarIncident.create(empire(), owner(), target));
-        return inc;
-    }
-    public DiplomaticIncident signUnally(Empire target) {
-        EmpireView view2 = empire().viewForEmpire(target);
-        view2.embassy().breakAlliance();
-        DiplomaticIncident inc = SignBreakAllianceIncident.create(owner(), empire(), target);
-        addIncident(inc);
-        otherEmbassy().addIncident(SignBreakAllianceIncident.create(empire(), owner(), target));
         return inc;
     }
     public void setContact() {
