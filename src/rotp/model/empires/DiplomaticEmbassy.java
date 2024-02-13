@@ -36,7 +36,6 @@ import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SignAllianceIncident;
-import rotp.model.incidents.SignDeclareWarIncident;
 import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
 import rotp.model.incidents.TrespassingIncident;
@@ -558,14 +557,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         otherEmbassy().addIncident(inc);
         GNNAllianceBrokenNotice.create(owner(), empire());
         OathBreakerIncident.alertBrokenAlliance(owner(),empire(),caughtSpying);
-        return inc;
-    }
-    public DiplomaticIncident signJointWar(Empire target) {
-        EmpireView view2 = empire().viewForEmpire(target);
-        view2.embassy().declareWar();
-        DiplomaticIncident inc = SignDeclareWarIncident.create(owner(), empire(), target);
-        addIncident(inc);
-        otherEmbassy().addIncident(SignDeclareWarIncident.create(empire(), owner(), target));
         return inc;
     }
     public void setContact() {
