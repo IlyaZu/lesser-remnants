@@ -907,19 +907,6 @@ public class AIDiplomat implements Base, Diplomat {
             return true;
         return false; 
     }
-
-    public DiplomaticReply receiveDemandTribute(Empire e) {
-        EmpireView v = empire.viewForEmpire(id(e));
-        v.embassy().noteRequest();
-        if (random() > chanceToGiveTribute(v))
-            return new DiplomaticReply(false, declineReasonText(v));
-
-        DiplomaticIncident inc = v.otherView().embassy().demandTribute();
-        return v.accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
-    }
-    private float chanceToGiveTribute(EmpireView v) {
-        return 0.50f;
-    }
     @Override
     public DiplomaticReply receiveBreakPact(Empire e) {
         EmpireView v = empire.viewForEmpire(e);

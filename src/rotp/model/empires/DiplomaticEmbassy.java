@@ -29,7 +29,6 @@ import rotp.model.incidents.BreakAllianceIncident;
 import rotp.model.incidents.BreakPactIncident;
 import rotp.model.incidents.BreakTradeIncident;
 import rotp.model.incidents.DeclareWarIncident;
-import rotp.model.incidents.DemandTributeIncident;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
@@ -406,12 +405,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void establishTradeTreaty(int level) {
         view.embassy().tradePraised(false);
         view.trade().startRoute(level);
-    }
-    public DiplomaticIncident demandTribute() {
-        DiplomaticIncident inc = DemandTributeIncident.create(owner(), empire(), true);
-        addIncident(inc);
-        otherEmbassy().addIncident(DemandTributeIncident.create(empire(), owner(), false));
-        return inc;
     }
     public DiplomaticIncident declareJointWar(Empire requestor) {
         // when we are declaring a war as a result of a joint war request, ignore
