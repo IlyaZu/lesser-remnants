@@ -24,7 +24,11 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
     public float severity;
-    public int turnOccurred;
+    private final int turnOccurred = galaxy().currentTurn();
+    
+    public int turnOccurred() {
+    	return turnOccurred;
+    }
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered
     public abstract String key();
@@ -35,7 +39,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String warningMessageId()     { return ""; }
     public String declareWarId()         { return ""; }
     public int duration()                { return (int) Math.ceil(Math.abs(severity)); }
-    public int turnOccurred()            { return turnOccurred; }
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
     @Override

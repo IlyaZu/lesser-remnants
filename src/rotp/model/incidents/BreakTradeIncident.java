@@ -30,7 +30,6 @@ public class BreakTradeIncident extends DiplomaticIncident {
         empBreaker = e1.id;
         empMe = e2.id;
         severity = -5;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_BROKE_TRADE_TITLE"); }

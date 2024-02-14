@@ -30,7 +30,6 @@ public class DeclareWarIncident extends DiplomaticIncident {
         severity = -70;
         empAggressor = e1.id;
         empVictim = e2.id;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_DECLARED_WAR_TITLE"); }

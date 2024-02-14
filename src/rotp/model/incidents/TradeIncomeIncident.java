@@ -32,7 +32,6 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     public TradeIncomeIncident(EmpireView ev, float p, float pct) {
         profit = p;
         severity = min(7.5f, max(0,pct*12.5f));
-        turnOccurred = galaxy().currentTurn();
         empMe = ev.owner().id;
         empYou = ev.empire().id;
     }
@@ -51,7 +50,7 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     public String praiseMessageId()   { return DialogueManager.PRAISE_TRADE; }
     @Override
     public String key() {
-        return str(turnOccurred);
+        return str(turnOccurred());
     }
     @Override
     public String decode(String s) {

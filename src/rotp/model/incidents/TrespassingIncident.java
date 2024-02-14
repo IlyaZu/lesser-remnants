@@ -47,7 +47,6 @@ public class TrespassingIncident extends DiplomaticIncident {
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        turnOccurred = galaxy().currentTurn();
 
         float multiplier = -1.0f;
         if (sys.empire().atWarWith(fl.empId()))
@@ -73,7 +72,7 @@ public class TrespassingIncident extends DiplomaticIncident {
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String key() {
-        return concat(systemName(), ":", str(turnOccurred));
+        return concat(systemName(), ":", str(turnOccurred()));
     }
     @Override
     public String decode(String s) {

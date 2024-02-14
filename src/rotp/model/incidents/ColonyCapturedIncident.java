@@ -44,7 +44,6 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
         sysId = sys.id;
         popLost = p;
         severity = -5 + max(-7.5f, -popLost/4.0f);
-        turnOccurred = galaxy().currentTurn();
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override
@@ -59,7 +58,7 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String key() {
-        return concat(systemName(), ":", str(turnOccurred));
+        return concat(systemName(), ":", str(turnOccurred()));
     }
     @Override
     public String decode(String s) {

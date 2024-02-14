@@ -38,7 +38,6 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
-        turnOccurred = galaxy().currentTurn();
         severity = -2.5f;
     }
     @Override

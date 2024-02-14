@@ -52,7 +52,6 @@ public class BioweaponIncident extends DiplomaticIncident {
         empAttacker = a.id;
         empVictim = v.id;
         sysId = sys.id;
-        turnOccurred = galaxy().currentTurn();
         severity = max(-7.5f, -5*n.leader().bioweaponMod());
     }
     private String systemName() { return player().sv.name(sysId); }

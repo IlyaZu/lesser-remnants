@@ -44,7 +44,6 @@ public class AttackedAllyIncident extends DiplomaticIncident {
         empAlly = e2.id;
         empMe = e3.id;
         severity = sev;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_ATTACKED_ALLY_TITLE", galaxy().empire(empAlly).raceName()); }
@@ -54,7 +53,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     public String warningMessageId() { return DialogueManager.WARNING_ATTACKED_ALLY; }
     @Override
     public String key() {
-        return concat(str(turnOccurred), ":AttackedAlly:", str(empAlly));
+        return concat(str(turnOccurred()), ":AttackedAlly:", str(empAlly));
     }
     @Override
     public String decode(String s) {

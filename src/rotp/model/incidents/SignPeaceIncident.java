@@ -31,8 +31,7 @@ public class SignPeaceIncident extends DiplomaticIncident {
         empMe = e1.id;
         empYou = e2.id;
         severity = 20;
-        turnOccurred = galaxy().currentTurn();
-        endTurn = turnOccurred+dur;
+        endTurn = turnOccurred()+dur;
     }
     @Override
     public String title()               { return text("INC_SIGNED_PEACE_TITLE"); }

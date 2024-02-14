@@ -47,7 +47,6 @@ public class FinancialAidIncident extends DiplomaticIncident {
         empYou = donor.id;
         empMe = emp.id;
         setAmount(emp, amt);
-        turnOccurred = galaxy().currentTurn();
     }
     private void setAmount(Empire emp, int amt) {
         float pct = (float) amt / emp.totalPlanetaryProduction();
@@ -59,7 +58,7 @@ public class FinancialAidIncident extends DiplomaticIncident {
     @Override
     public String description()  { return decode(text("INC_FINANCIAL_AID_DESC")); }
     @Override
-    public String key()          { return "Financial Aid:"+turnOccurred; }
+    public String key()          { return "Financial Aid:"+turnOccurred(); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

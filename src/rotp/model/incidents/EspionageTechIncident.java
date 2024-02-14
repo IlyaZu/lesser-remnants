@@ -32,7 +32,6 @@ public class EspionageTechIncident extends DiplomaticIncident {
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
         ev.embassy().resetAllianceTimer();
-        turnOccurred = galaxy().currentTurn();
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)
         empSpy = m.spyEmpire().id;
@@ -69,7 +68,7 @@ public class EspionageTechIncident extends DiplomaticIncident {
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
     public String key() {
-        return str(turnOccurred)+":Espionage";
+        return str(turnOccurred())+":Espionage";
     }
     @Override
     public String decode(String s) {

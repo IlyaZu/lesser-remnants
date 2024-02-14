@@ -34,7 +34,6 @@ public class GenocideIncident extends DiplomaticIncident {
         empAttacker = att.id;
         empVictim = vic.id;
         severity = -50;
-        turnOccurred = galaxy().currentTurn();
         if (att.alliedWith(obs.id) && obs.atWarWith(vic.id)) 
             severity /= 2;
     }

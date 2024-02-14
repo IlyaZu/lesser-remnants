@@ -35,7 +35,6 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
         received = recv.id();
         given = give.id();
         severity = 5;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()        { return text("INC_TECH_EXCHANGE_TITLE"); }

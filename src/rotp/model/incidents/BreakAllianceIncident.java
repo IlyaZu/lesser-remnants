@@ -32,7 +32,6 @@ public class BreakAllianceIncident extends DiplomaticIncident {
         empMe = e2.id;
         spying = spy;
         severity = -30;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_BROKE_ALLIANCE_TITLE"); }

@@ -31,7 +31,6 @@ public class ErraticWarIncident extends DiplomaticIncident {
         severity = -50;
         empAggressor = e1.id;
         empVictim = e2.id;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_ERRATIC_WAR_TITLE"); }
