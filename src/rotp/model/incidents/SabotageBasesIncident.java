@@ -48,7 +48,6 @@ public class SabotageBasesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageBasesIncident(otherView, m));
     }
     private SabotageBasesIncident(EmpireView ev, SabotageMission m) {
-        turnOccurred = galaxy().currentTurn();
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
@@ -83,7 +82,7 @@ public class SabotageBasesIncident extends DiplomaticIncident {
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
-    public String key()         { return  str(turnOccurred)+":Sabotage:"+sysId; }
+    public String key()         { return  str(turnOccurred())+":Sabotage:"+sysId; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

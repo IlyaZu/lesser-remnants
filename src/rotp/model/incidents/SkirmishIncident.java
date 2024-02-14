@@ -90,7 +90,6 @@ public class SkirmishIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         severity = max(-2.5f, sev/4);
-        turnOccurred = galaxy().currentTurn();
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override
@@ -103,7 +102,7 @@ public class SkirmishIncident extends DiplomaticIncident {
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String key() {
-        return concat(systemName(), ":", str(turnOccurred));
+        return concat(systemName(), ":", str(turnOccurred()));
     }
     @Override
     public String decode(String s) {

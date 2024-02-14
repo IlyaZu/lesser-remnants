@@ -53,8 +53,6 @@ public class SpyConfessionIncident extends DiplomaticIncident {
             severity = max(-5, -2+ev.embassy().currentSpyIncidentSeverity());
             missionType = 0;
         }
-        
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public boolean isSpying()           { return true; }
@@ -90,7 +88,7 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
     public String key() {
-        return concat(str(turnOccurred), ":SpyConfession");
+        return concat(str(turnOccurred()), ":SpyConfession");
     }
     @Override
     public String decode(String s) {

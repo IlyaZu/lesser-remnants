@@ -67,7 +67,6 @@ public class ExpansionIncident extends DiplomaticIncident {
         numSystems = num;
         maxSystems = max;
         empYou = ev.empire().id;
-        turnOccurred = galaxy().currentTurn();
 
         float multiplier = 1.0f;
         // penalty doubled for xenophobes
@@ -101,7 +100,7 @@ public class ExpansionIncident extends DiplomaticIncident {
     public String warningMessageId() { return  galaxy().empire(empYou).newSystems().isEmpty() ? "" :DialogueManager.WARNING_EXPANSION; }
     @Override
     public String key() {
-        return concat("EmpireGrowth:", str(turnOccurred));
+        return concat("EmpireGrowth:", str(turnOccurred()));
     }
     @Override
     public String decode(String s) {

@@ -63,7 +63,6 @@ public class EnemyAidIncident extends DiplomaticIncident {
         empEnemy = enemy.id;
         setAmount(emp, amt);
         techId = null;
-        turnOccurred = galaxy().currentTurn();
     }
     private void setAmount(Empire emp, int amt) {
         float pct = (float) amt / emp.totalPlanetaryProduction();
@@ -81,7 +80,6 @@ public class EnemyAidIncident extends DiplomaticIncident {
         float rpValue = enemy.ai().scientist().warTradeBCValue(tech);
         float pct = rpValue / enemy.totalPlanetaryProduction();
         severity = -min(10, 15*pct);
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()        { return text("INC_ENEMY_AID_TITLE"); }

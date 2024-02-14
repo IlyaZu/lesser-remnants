@@ -30,7 +30,6 @@ public class KillGuardianIncident extends DiplomaticIncident {
         empYou = e2;
         monsterKey = key;
         severity = 100;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()         { return text("INC_KILLED_GUARDIAN_TITLE", text(monsterKey)); }

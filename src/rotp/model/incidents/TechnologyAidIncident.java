@@ -52,7 +52,6 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         empMe = emp.id;
         techId = tId;
         addTech(emp, tId);
-        turnOccurred = galaxy().currentTurn();
     }
     private List<String> techIds() {
         if (techIds == null)
@@ -85,7 +84,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
             return decode(text("INC_TECHNOLOGY_AID_DESC_MULT")); 
     }
     @Override
-    public String key()          { return "Technology Aid:"+turnOccurred; }
+    public String key()          { return "Technology Aid:"+turnOccurred(); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

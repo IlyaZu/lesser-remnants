@@ -31,7 +31,6 @@ public class EvictedSpiesIncident extends DiplomaticIncident {
         empBreaker = e1.id;
         empMe = e2.id;
         severity = -10;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_EVICTED_SPIES_TITLE"); }

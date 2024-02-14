@@ -65,7 +65,6 @@ public class OathBreakerIncident extends DiplomaticIncident {
         empVictim = vic.id;
         spying = spy;
         oathBreakType = type;
-        turnOccurred = galaxy().currentTurn();
         notify = vic == obs;
         float multiplier = obs.leader().isHonorable() ? 2 : 1;
         severity = max(-30,sev) * multiplier;
@@ -86,7 +85,7 @@ public class OathBreakerIncident extends DiplomaticIncident {
     public String key()              { return "Oath Break"; }
     @Override
     public String decode(String s) {
-        String s1 = s.replace("[year]", str(turnOccurred));
+        String s1 = s.replace("[year]", str(turnOccurred()));
         // this is a 3rd-party penalty... where "my" empire is upset that "your" empire broke a treaty with another empire (the victim)
         // this means that "my_empire" tag in the text needs to be replaced with the victim empire name
         s1 = galaxy().empire(empVictim).replaceTokens(s1, "my");

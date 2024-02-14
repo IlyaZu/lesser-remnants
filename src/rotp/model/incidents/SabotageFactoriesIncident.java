@@ -50,7 +50,6 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageFactoriesIncident(otherView, m));
     }
     private SabotageFactoriesIncident(EmpireView ev, SabotageMission m) {
-        turnOccurred = galaxy().currentTurn();
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
@@ -83,7 +82,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
-    public String key()              { return str(turnOccurred)+":Sabotage:"+sysId; }
+    public String key()              { return str(turnOccurred())+":Sabotage:"+sysId; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

@@ -45,13 +45,11 @@ public class AssassinationIncident extends DiplomaticIncident {
         empAssassin = ass.id;
         empVictim = vic.id;
         severity = -50;
-        turnOccurred = galaxy().currentTurn();
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
         empAssassin = ass.id;
         empVictim = vic.id;
         severity = 50;
-        turnOccurred = galaxy().currentTurn();
     }
     @Override
     public String title()            { return text("INC_ASSASSINATION_TITLE"); }
