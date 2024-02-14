@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 package rotp.util;
 
 import rotp.util.sound.SoundManager;
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -30,16 +28,13 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -47,9 +42,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
@@ -70,7 +62,6 @@ import rotp.ui.UserPreferences;
 import rotp.util.sound.SoundClip;
 
 public interface Base {
-    public static String[] monthName = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
     public static String[] letter = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N" };
     public static Random random = new Random();
     public static DecimalFormat df1 = new DecimalFormat("0.0");
@@ -79,14 +70,6 @@ public interface Base {
     public static DecimalFormat df4 = new DecimalFormat("0.0000");
     public static DecimalFormat df5 = new DecimalFormat("0.00000");
     public static DecimalFormat df6 = new DecimalFormat("0.000000");
-    public static DecimalFormat sf1 = new DecimalFormat("0.0E00");
-    public static DecimalFormat sf2 = new DecimalFormat("0.00E00");
-    public static DecimalFormat sf3 = new DecimalFormat("0.000E00");
-    public static DecimalFormat sf4 = new DecimalFormat("0.0000E00");
-    public static DecimalFormat sf5 = new DecimalFormat("0.00000E00");
-    public static DecimalFormat sf6 = new DecimalFormat("0.000000E00");
-    public static DecimalFormat sf7 = new DecimalFormat("0.0000000E00");
-    public static DecimalFormat sf8 = new DecimalFormat("0.00000000E00");
     public static DecimalFormat pad4 = new DecimalFormat("0000");
     
     static ImageColorizer colorizer = new ImageColorizer();
@@ -281,9 +264,6 @@ public interface Base {
     public default <T> T random(List<T> list) {
         return (list == null || list.isEmpty()) ? null : list.get(random.nextInt(list.size()));
     }
-    public default <T> T random(Set<T> list) {
-        return random(new ArrayList<>(list));
-    }
     public default float asin(float d)  { return (float) FastMath.asin(d); }
     public default int bounds(int low, int val, int hi) {
         return Math.min(Math.max(low, val), hi);
@@ -320,7 +300,6 @@ public interface Base {
         }
         return tokens;
     }
-    public default String concat(String s1)   { return s1; }
     public default String concat(String s1, String s2) { return str(s1).concat(str(s2)); }
     public default String concat(String... s) {
         if (s.length == 1)
@@ -383,21 +362,6 @@ public interface Base {
             sum = n[i];
         return sum/n.length;
     }
-    public default String scifmt(float d, int n) {
-        String res = null;
-        switch(n) {
-            case 1:  res = sf1.format(d); break;
-            case 2:  res = sf2.format(d); break;
-            case 3:  res = sf3.format(d); break;
-            case 4:  res = sf4.format(d); break;
-            case 5:  res = sf5.format(d); break;
-            case 6:  res = sf6.format(d); break;
-            case 7:  res = sf7.format(d); break;
-            case 8:  res = sf8.format(d); break;
-            default: res = sf3.format(d); break;
-        }
-        return res.replace('E','e');
-    }
     public default String fmt(float d, int n) {
         if (n == 0)
             return str((int)d);
@@ -410,18 +374,6 @@ public interface Base {
             case 6:  return df6.format(d);
             default: return df3.format(d);
         }
-    }
-    public default String fmt(float d) {
-        if (Math.abs(d) < .0005)
-            return "0";
-        else if (d < .1)
-            return df3.format(d);
-        else if (d < 1)
-            return df2.format(d);
-        else if (d < 10)
-            return df1.format(d);
-        else
-            return str((int)d);
     }
     public default String shortFmt(float d) {
         return shortFmt((int) d);
@@ -462,31 +414,11 @@ public interface Base {
             return text("NUM_FORMAT_BILLIONS", amt);
         }
     } 
-    public default float round(float val, float precision) {
-        return ((int)((val+(precision/2.0))/precision)) * precision;
-    }
-    public default int round(float val, int precision) {
-        return ((int)((val+(precision/2))/ precision)) * precision;
-    }
-    public default int getAlpha(int pixel) { return (pixel >> 24) & 0xFF; }
-    public default int getRed(int pixel)   { return (pixel >> 16) & 0xFF; }
-    public default int getGreen(int pixel) { return (pixel >> 8) & 0xFF; }
-    public default int getBlue(int pixel)  { return (pixel >> 0) & 0xFF; }
-    public default Tech tech(String id)    { return TechLibrary.current().tech(id); }
-
-    public default String date(float n) {
-        int year = (int) n;
-        float frac = n - (int) n;
-        int month = (int) (frac * 12);
-        int day =  (int)  ((frac - (month / 12)) * 30);
-
-        return concat(str(year), ".", monthName[month], ".", str(++day));
+    public default Tech tech(String id) {
+    	return TechLibrary.current().tech(id);
     }
     public default String displayYear() {
     	return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
-    }
-    public default boolean equal(float d1, float d2, float precision) {
-        return Math.abs(d1-d2) < precision;
     }
     public default List<String> substrings(String input, char delim) {
         return substrings(input,delim,0);
@@ -545,7 +477,7 @@ public interface Base {
         catch (NumberFormatException e) {
             err("Base.parseDouble (2) -- error parsing: " + s);
             throw e;
-    }
+        }
     }
     public default List<String> parsedValues(String s, char delim) {
         // used for parsing delimited text file lines that may be commented
@@ -617,9 +549,6 @@ public interface Base {
         return Rotp.class.getResource(n);
     }
     public default ImageIcon icon(String n)  {
-        return icon(n, true);
-    }
-    public default ImageIcon icon(String n, boolean logError)  {
         if ((n == null) || n.isEmpty()) {
            //("Base.icon() -- resource is empty or null");
             return null;
@@ -633,15 +562,11 @@ public interface Base {
             return null;
         }
         if (resource == null) {
-            if (logError) 
-                err("Base.icon() -- Resource not found:", n);
+        	err("Base.icon() -- Resource not found:", n);
             return null;
         }
         else 
             return new ImageIcon(resource);
-    }
-    public default File file(String n) {
-        return new File(Rotp.jarPath(), n);
     }
     public default InputStream fileInputStream(String n) {
         String fullString = "../rotp/" +n;
@@ -713,60 +638,6 @@ public interface Base {
 
         return new BufferedReader(in);
     }
-    public default PrintWriter writer(String n) {
-        String fullString = "src/rotp/" +n;
-        try {
-            FileOutputStream fout = new FileOutputStream(new File(fullString));
-            return new PrintWriter(fout, true);
-        }
-        catch (FileNotFoundException e) {
-            err("Base.writer -- " + e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public default InputStream inputStream(String n) {
-        InputStream stream = null;
-        File fontFile = new File(n);
-        if (fontFile.exists())
-            try {
-                stream = new FileInputStream(fontFile);
-            }
-            catch (FileNotFoundException e) {
-                err("Base.fileStream -- FileNotFoundException: " + n);
-            }
-        else {
-            JarFile jarFile = null;
-            try {
-                jarFile = new JarFile(Rotp.jarFileName);
-                ZipEntry ze = jarFile.getEntry(n);
-                if (ze != null)
-                    stream = jarFile.getInputStream(ze);
-            }
-            catch (IOException e) {
-                err("Base.fileStream -- IOException: " + n);
-            }
-            finally {
-                try {
-                    if (jarFile != null)
-                        jarFile.close();
-                } catch (IOException e) {}
-            }
-        }
-        return stream;
-    }
-    public default OutputStream outputStream(String s) throws IOException {
-        try {
-            OutputStream file = new FileOutputStream(s);
-            OutputStream buffer = new BufferedOutputStream(file);
-            return buffer;
-        }
-        catch(IOException e){
-            log("Cannot create output file: ", s);
-            log(e.getMessage());
-            throw(e);
-        }
-    }
     public static int compare(int a, int b)        { return Integer.compare(a,b); }
     public static int compare(float a, float b)  { return Float.compare(a, b); }
     public default String str(String s) { return s == null ? "null" : s; }
@@ -784,7 +655,6 @@ public interface Base {
         return flippedImg;
     }
     public default BufferedImage newOpaqueImage(int w, int h) {
-        //log("Creating image w:"+w+"  h:"+h);
         return BasePanel.gc().createCompatibleImage(w, h);
     }
     public default BufferedImage newBufferedImage(int w, int h) {
@@ -856,9 +726,6 @@ public interface Base {
     public default void drawShadowedString(Graphics g, String str, int thick, int x, int y, Color back, Color fore) {
         drawShadowedString(g, str, 0, thick, x, y, back, fore);
     }
-    public default void drawAlphaShadowedString(Graphics2D g, float alpha, String str, int thick, int x, int y, Color back, Color fore) {
-        drawAlphaShadowedString(g, alpha, str, 0, thick, x, y, back, fore);
-    }
     public default void drawShadowedString(Graphics g, String str, int th0, int th1, int x, int y, Color back, Color fore) {
         g.setColor(back);
 
@@ -886,49 +753,6 @@ public interface Base {
         }
         g.setColor(fore);
         drawString(g,str,  x, y);
-    }
-    public default void drawAlphaShadowedString(Graphics2D g, float alpha, String str, int th0, int th1, int x, int y, Color back, Color fore) {
-        if (alpha <= 0)
-            return;
-
-        int mult = 2*(th0+th1+1)*(th0+th1+1);
-
-        Composite c = g.getComposite();
-
-        if (alpha < 1)
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha/mult));
-
-        g.setColor(back);
-
-        int topThick = scaled(th0);
-        int thick = scaled(th1);
-        for (int x0=(0-topThick);x0<=thick;x0++) {
-            for (int y0=(0-topThick);y0<=thick;y0++)
-                drawString(g,str, x+x0, y+y0);
-        }
-        if (alpha < 1)
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha/2));
-
-        g.setColor(fore);
-        drawString(g,str,  x, y);
-        g.setComposite(c);
-    }
-    public default void drawBoldString(Graphics g,  String str, int x, int y) {
-        for (int x0=0;x0<=1;x0++) {
-            for (int y0=0;y0<=1;y0++)
-                drawString(g,str, x+x0, y+y0);
-        }
-    }
-    public default void drawBoldString(Graphics g,  String str, int x, int y,Color fore) {
-        g.setColor(fore);
-
-        for (int x0=0;x0<=1;x0++) {
-            for (int y0=0;y0<=1;y0++)
-                drawString(g,str, x+x0, y+y0);
-        }
-    }
-    public default boolean isLightColor(Color c) {
-        return (c.getRed()+c.getGreen()+c.getBlue()) > 320;
     }
     public default void drawShadedPolygon(Graphics g, int[] x, int[] y, Color c0, int offsetX, int offsetY) {
         int x0[] = new int[x.length];
@@ -1024,17 +848,6 @@ public interface Base {
         while ((wrappedLines.size() > maxLines) && (fontSize > minFont)) {
             fontSize--;
             g.setFont(narrowFont(fontSize));
-            wrappedLines = wrappedLines(g, text, maxWidth);
-        }
-        return wrappedLines;
-    }
-    public default List<String> scaledDialogueWrappedLines(Graphics g, String text, int maxWidth, int maxLines, int desiredFont, int minFont) {
-        int fontSize = desiredFont;
-        g.setFont(dlgFont(fontSize));
-        List<String> wrappedLines = wrappedLines(g, text, maxWidth);
-        while ((wrappedLines.size() > maxLines) && (fontSize > minFont)) {
-            fontSize--;
-            g.setFont(dlgFont(fontSize));
             wrappedLines = wrappedLines(g, text, maxWidth);
         }
         return wrappedLines;
@@ -1192,17 +1005,6 @@ public interface Base {
             else
                 g.fillRect(x1,y1,s1,s1);
         }
-    }
-    public default BufferedImage makeTransparent(Image img, Color c) {
-        colorizer.image(img);
-        colorizer.onlySpecificColor(c);
-        return colorizer.makeTransparent();
-    }
-    public default String stringAt(List<String> names, int i) {
-        if ((i >= names.size()) || names.get(i).isEmpty())
-            return names.get(0);
-        else
-            return names.get(i);
     }
     public default List<String> readSystemNames(String filePath) {
         BufferedReader reader = reader(filePath);
