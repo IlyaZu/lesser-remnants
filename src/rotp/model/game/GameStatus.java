@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,11 @@ import rotp.util.Base;
 
 public class GameStatus implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    enum Status { NO_GAME, IN_PROGRESS, LOSS_MILITARY, LOSS_DIPLOMATIC, 
-        WIN_DIPLOMATIC, WIN_MILITARY, WIN_MILITARY_ALLIANCE, WIN_COUNCIL_ALLIANCE, LOSS_NO_COLONIES; }
+    private enum Status {
+    	NO_GAME, IN_PROGRESS,
+    	LOSS_MILITARY, LOSS_DIPLOMATIC, LOSS_NO_COLONIES,
+    	WIN_MILITARY, WIN_DIPLOMATIC, WIN_COUNCIL_ALLIANCE;
+    }
     private Status status = Status.NO_GAME;
 
     public boolean inProgress()       { return status == Status.IN_PROGRESS; }
@@ -30,14 +33,13 @@ public class GameStatus implements Base, Serializable {
     	return lostMilitary() || lostDiplomatic() || lostNoColonies(); 
     }
     public boolean won() {
-    	return wonCouncilAlliance() || wonMilitary() || wonMilitaryAlliance() || wonDiplomatic();
+    	return wonCouncilAlliance() || wonMilitary() || wonDiplomatic();
     }
     public boolean lostMilitary()         { return status == Status.LOSS_MILITARY; }
     public boolean lostDiplomatic()       { return status == Status.LOSS_DIPLOMATIC; }
     public boolean lostNoColonies()       { return status == Status.LOSS_NO_COLONIES; }
     public boolean wonDiplomatic()        { return status == Status.WIN_DIPLOMATIC; }
     public boolean wonMilitary()          { return status == Status.WIN_MILITARY; }
-    public boolean wonMilitaryAlliance()  { return status == Status.WIN_MILITARY_ALLIANCE; }
     public boolean wonCouncilAlliance()   { return status == Status.WIN_COUNCIL_ALLIANCE; }
 
     public void startGame()               { status = Status.IN_PROGRESS; }
@@ -46,7 +48,6 @@ public class GameStatus implements Base, Serializable {
     public void loseNoColonies()          { status = Status.LOSS_NO_COLONIES; }
     public void winDiplomatic()           { status = Status.WIN_DIPLOMATIC; }
     public void winMilitary()             { status = Status.WIN_MILITARY; }
-    public void winMilitaryAlliance()     { status = Status.WIN_MILITARY_ALLIANCE; }
     public void winCouncilAlliance()      { status = Status.WIN_COUNCIL_ALLIANCE; }
     
 }

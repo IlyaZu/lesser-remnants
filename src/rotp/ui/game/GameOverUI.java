@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -238,8 +238,6 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
             return text("GAME_OVER_DIPLOMATIC_WIN");
         else if (session().status().wonMilitary())
             return text("GAME_OVER_MILITARY_WIN");
-        else if (session().status().wonMilitaryAlliance())
-            return text("GAME_OVER_MILITARY_ALLIANCE_WIN");
         else if (session().status().wonCouncilAlliance())
             return text("GAME_OVER_ALLIANCE_WIN");
 
@@ -269,8 +267,6 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
             resultText = text("GAME_OVER_COUNCIL_WIN2", year, pName, pRace, pEmpire, rName, rRace, rEmpire);
         else if (session().status().wonMilitary())
             resultText = text("GAME_OVER_MILITARY_WIN2", year, pName, pRace, pEmpire, rName, rRace, rEmpire);
-        else if (session().status().wonMilitaryAlliance()) 
-            resultText = text("GAME_OVER_MILITARY_ALLIANCE_WIN2", year, pName, pRace, pEmpire, rName, rRace, rEmpire);
         else if (session().status().wonCouncilAlliance()) {
             String special = ruler.race().text("GAME_OVER_ALLIANCE_WIN3");
             resultText = text("GAME_OVER_COUNCIL_ALLIANCE_WIN2", year, pName, pRace, pEmpire, rName, rRace, rEmpire, special);
