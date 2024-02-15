@@ -542,11 +542,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         addIncident(inc);
         otherEmbassy().addIncident(SignAllianceIncident.create(empire(), owner()));
         GNNAllianceFormedNotice.create(owner(), empire());
-        // check for military alliance win
-        if (view.owner().isPlayerControlled() || view.empire().isPlayerControlled()) {
-            if (galaxy().allAlliedWithPlayer())
-                session().status().winMilitaryAlliance();
-        }
         return inc;
     }
     public DiplomaticIncident breakAlliance() { return breakAlliance(false); }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -433,15 +433,6 @@ public class Galaxy implements Base, Serializable {
                 emps.add(e);
         }
         return emps;
-    }
-    public boolean allAlliedWithPlayer() {
-        List<Empire> activeEmpires = activeEmpires();
-        int playerId = player().id;
-        for (Empire emp: activeEmpires) {
-            if (!emp.alliedWith(playerId))
-                return false;
-        }
-        return true;
     }
     public List<StarSystem> systemsInRange(IMappedObject xyz, float radius) {
         List<StarSystem> systems = new ArrayList<>();
