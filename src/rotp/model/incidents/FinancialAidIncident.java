@@ -27,16 +27,8 @@ public class FinancialAidIncident extends DiplomaticIncident {
     public static FinancialAidIncident create(Empire emp, Empire donor, int amt) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         FinancialAidIncident inc = new FinancialAidIncident(emp, donor, amt);
-        
-        // if we already have a financial incident with this key, then add it to
-        // the existing one. Note: severity is eventually capped with no more ROE
-        DiplomaticIncident prev = emb.getIncidentWithKey(inc.key());
-        if (prev != null) {
-            FinancialAidIncident prevF = (FinancialAidIncident) prev;
-            prevF.setAmount(emp, prevF.amount+inc.amount);
-        }
-        else
-            emb.addIncident(inc);
+        emb.addIncident(inc);
+        emb.otherEmbassy().giveAid();
         
         for (Empire enemy: emp.warEnemies()) 
             EnemyAidIncident.create(enemy, emp, donor, amt);
