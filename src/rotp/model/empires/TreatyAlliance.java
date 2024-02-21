@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,7 +134,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
             return;
         
         int giver = inc.empYou == empire1 ? 1 : 0;
-        standings[giver] += (int) inc.currentSeverity();
+        standings[giver] += (int) inc.severity();
         
     }
     private void handleFinancialAid(FinancialAidIncident inc) {
@@ -144,7 +144,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
             return;
         
         int giver = inc.empYou == empire1 ? 1 : 0;
-        standings[giver] += (int) inc.currentSeverity();
+        standings[giver] += (int) inc.severity();
     }
     private void handleEnemyAid(EnemyAidIncident inc) {
         if ((inc.empYou != empire1) && (inc.empYou != empire2))
@@ -153,7 +153,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
             return;
         
         int giver = inc.empYou == empire1 ? 1 : 0;
-        standings[giver] += (int) inc.currentSeverity();
+        standings[giver] += (int) inc.severity();
     }
     private void handleAttackedEnemy(AttackedEnemyIncident inc) {
         if ((inc.empAttacker != empire1) && (inc.empAttacker != empire2))
@@ -162,7 +162,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
             return;
         
         int giver = inc.empAttacker == empire1 ? 1 : 0;
-        standings[giver] += (int) inc.currentSeverity();
+        standings[giver] += (int) inc.severity();
     }
     private void handleAttackedAlly(AttackedAllyIncident inc) {
         if ((inc.empAttacker != empire1) && (inc.empAttacker != empire2))
@@ -171,7 +171,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
             return;
         
         int giver = inc.empAttacker == empire1 ? 1 : 0;
-        standings[giver] += (int) inc.currentSeverity();
+        standings[giver] += (int) inc.severity();
     }
     private void initStandings() {
         if (standings == null) {

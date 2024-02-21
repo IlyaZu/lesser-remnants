@@ -424,7 +424,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         incidentMap.clear();
         for (EmpireView view: player().contacts()) {
             for (DiplomaticIncident inc : view.otherView().embassy().allIncidents()) {
-                if ((inc.currentSeverity() != 0) && inc.triggeredByAction()) {
+                if ((inc.severity() != 0) && inc.triggeredByAction()) {
                     incidents.add(inc);
                     incidentMap.put(inc, view.empire());
                 }
@@ -471,7 +471,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
     }
     private int drawPlayerIncident(Graphics g, DiplomaticIncident inc, int x, int y, int w, int w1, int w2, int w3, int w4) {
         String title = inc.title()+":";
-        String sev = fmt(inc.currentSeverity(),1);
+        String sev = fmt(inc.severity(),1);
         String desc = inc.description();
         g.setFont(narrowFont(18));
         int indent = g.getFontMetrics().stringWidth(title)+s5;
@@ -526,7 +526,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setFont(narrowFont(18));
         sw = g.getFontMetrics().stringWidth(sev);
         x0 = x4+(w4-sw)/2;
-        if (inc.currentSeverity() < 0)
+        if (inc.severity() < 0)
             g.setColor(incidentRedC);
         else
             g.setColor(incidentGreenC);
@@ -875,7 +875,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setStroke(prev);
         List<DiplomaticIncident> incidents = new ArrayList<>();
         for (DiplomaticIncident inc : parent.selectedView().otherView().embassy().allIncidents()) {
-            if (inc.currentSeverity() != 0)
+            if (inc.severity() != 0)
                 incidents.add(inc);
         }
         Collections.sort(incidents, DATE);
@@ -921,7 +921,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
     }
     private int drawAIIncident(Graphics g, DiplomaticIncident inc, int x, int y, int w, int leftM, int rightM) {
         String title = inc.title()+":";
-        String sev = fmt(inc.currentSeverity(),1);
+        String sev = fmt(inc.severity(),1);
         String desc = inc.description();
         g.setFont(narrowFont(18));
         int indent = g.getFontMetrics().stringWidth(title)+s5;
@@ -966,7 +966,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setFont(narrowFont(18));
         int sw = g.getFontMetrics().stringWidth(sev);
         int x2a = x2+(w2-sw)/2;
-        if (inc.currentSeverity() < 0)
+        if (inc.severity() < 0)
             g.setColor(incidentRedC);
         else
             g.setColor(incidentGreenC);
