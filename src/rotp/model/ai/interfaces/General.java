@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,5 @@ public interface General {
     default boolean needScoutRepellers() { return false; }
     default boolean sensePotentialAttack() { return false; }
     default Location colonyCenter(Empire emp) { return new Location(0, 0); }
-    default float absolution() { return 0f; }
     default float smartPowerLevel() { return 0f; }
 }
