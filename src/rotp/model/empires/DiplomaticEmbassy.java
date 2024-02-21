@@ -171,7 +171,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         float sev = 0;
         for (DiplomaticIncident inc: allIncidents()) {
             if (inc.isSpying())
-                sev += inc.currentSeverity();
+                sev += inc.severity();
         }
         return max(-50,sev);
     }
@@ -581,7 +581,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         String k = inc.key();
         log("addIncident key:"+k);
         DiplomaticIncident matchingEvent = incidents.get(k);
-        log(view.toString(), ": Adding incident- ", inc.key(), ":", str(inc.currentSeverity()), ":", inc.toString());
+        log(view.toString(), ": Adding incident- ", k, ":", str(inc.severity()), ":", inc.toString());
         if (inc.moreSevere(matchingEvent)) {
             incidents.put(k,inc);
             updateRelations(inc);
@@ -597,7 +597,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     
     private void updateRelations(DiplomaticIncident incident) {
-    	updateRelations(incident.currentSeverity());
+    	updateRelations(incident.severity());
     }
     
     private void updateRelations(float severity) {

@@ -473,7 +473,7 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident inc = worstWarnableIncident(v.embassy().allIncidents());
 
         // no reason or insignificant, so give generic error
-        if ((inc == null) || (inc.currentSeverity() > -5))
+        if ((inc == null) || (inc.severity() > -5))
             return v.decode(dlg.randomMessage(DialogueManager.DECLINE_OFFER, v.owner()));
 
         if (inc instanceof OathBreakerIncident)
@@ -1068,10 +1068,10 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxIncident == null)
             return false;
 
-        log("cum.sev: ", str(cumulativeSeverity), "   maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.currentSeverity()));
+        log("cum.sev: ", str(cumulativeSeverity), "   maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.severity()));
 
         // don't issue praise unless new incidents are high enough
-        if (maxIncident.currentSeverity() < view.embassy().minimumPraiseLevel())
+        if (maxIncident.severity() < view.embassy().minimumPraiseLevel())
             return false;
 
         maxIncident.notifyOfPraise();
@@ -1104,7 +1104,7 @@ public class AIDiplomat implements Base, Diplomat {
         cumulativeSeverity = 0;
         for (DiplomaticIncident ev: emb.newIncidents()) {
             log(view.toString(), "new incident:", ev.toString());
-            float sev = ev.currentSeverity();
+            float sev = ev.severity();
             cumulativeSeverity += sev;
             if (ev.triggersWarning() && ev.moreSevere(maxIncident))
                 maxIncident = ev;
@@ -1113,7 +1113,7 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxIncident == null)
             return false;
         
-        if (maxIncident.currentSeverity() > threshold)
+        if (maxIncident.severity() > threshold)
             return false;
 
         log("cumulative severity: "+cumulativeSeverity);
@@ -1156,7 +1156,7 @@ public class AIDiplomat implements Base, Diplomat {
             for (DiplomaticIncident ev: view.embassy().newIncidents()) {
                 if (!ev.declareWarId().isEmpty()) {
                     if (ev.triggersWar()) {
-                        float sev = ev.currentSeverity();
+                        float sev = ev.severity();
                         if (ev.triggersWarning() && (sev < worstNewSeverity))
                             warIncident = ev;
                     }
@@ -1344,7 +1344,7 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident worstIncident = null;
         float worstNewSeverity = 0;
         for (DiplomaticIncident ev: incidents) {
-            float sev = ev.currentSeverity();
+            float sev = ev.severity();
             if (ev.triggersWarning() && (sev < worstNewSeverity))
                 worstIncident = ev;
         }

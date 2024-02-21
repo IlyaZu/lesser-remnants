@@ -23,11 +23,19 @@ import rotp.util.Base;
 public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
-    public float severity;
     private final int turnOccurred = galaxy().currentTurn();
+    public float severity;
     
     public int turnOccurred() {
     	return turnOccurred;
+    }
+    
+    public int duration() {
+    	return (int) Math.ceil(Math.abs(severity));
+    }
+    
+    public float severity() {
+    	return severity;
     }
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered
@@ -38,20 +46,18 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String praiseMessageId()      { return ""; }
     public String warningMessageId()     { return ""; }
     public String declareWarId()         { return ""; }
-    public int duration()                { return (int) Math.ceil(Math.abs(severity)); }
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
     @Override
-    public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(currentSeverity(),1)); }
+    public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(severity(),1)); }
     public boolean moreSevere(DiplomaticIncident inc) {
         if  (inc == null)
             return true;
-        return Math.abs(currentSeverity()) > Math.abs(inc.currentSeverity());
+        return Math.abs(severity()) > Math.abs(inc.severity());
     }
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
     public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
-    public float currentSeverity()	     { return severity; }
 
     public boolean isForgotten()         { return turnOccurred() + duration() <= galaxy().currentTurn(); }
     public boolean isSpying()            { return false; }
