@@ -1146,8 +1146,6 @@ public class AIGeneral implements Base, General {
         return biggestThreat;
     }
     @Override
-    public float absolution() { return 1f; }
-    @Override
     public float smartPowerLevel()
     {
         if(smartPower > -1)
