@@ -36,15 +36,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         
         EnemyAidIncident inc = new EnemyAidIncident(emp, enemy, donor, amt);
-        // if we already have an enemy aid incident with this key, then add it to
-        // the existing one. Note: severity is eventually capped with no more ROE
-        DiplomaticIncident prev = emb.getIncidentWithKey(inc.key());
-        if (prev != null) {
-            EnemyAidIncident prevF = (EnemyAidIncident) prev;
-            prevF.setAmount(emp, prevF.amount+inc.amount);
-        }
-        else
-            emb.addIncident(inc);
+        emb.addIncident(inc);
         return inc;
     }
     public static EnemyAidIncident create(Empire emp, Empire enemy, Empire donor, String tId) {

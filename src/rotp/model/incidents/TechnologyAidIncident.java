@@ -31,16 +31,8 @@ public class TechnologyAidIncident extends DiplomaticIncident {
     public static TechnologyAidIncident create(Empire emp, Empire donor, String techId) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         TechnologyAidIncident inc = new TechnologyAidIncident(emp, donor, techId);
-        
-        // if we already have a financial incident with this key, then add it to
-        // the existing one. Note: severity is eventually capped with no more ROE
-        DiplomaticIncident prev = emb.getIncidentWithKey(inc.key());
-        if (prev != null) {
-            TechnologyAidIncident prevF = (TechnologyAidIncident) prev;
-            prevF.addTech(emp, techId);
-        }
-        else
-            emb.addIncident(inc);
+        emb.addIncident(inc);
+        emb.otherEmbassy().giveAid();
         
         for (Empire enemy: emp.warEnemies()) 
             EnemyAidIncident.create(enemy, emp, donor, techId);

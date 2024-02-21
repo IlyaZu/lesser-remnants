@@ -96,6 +96,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int minimumPraiseLevel = 0;
     private int minimumWarnLevel = 0;
     private boolean threatened = false;
+    private boolean givenAidThisTurn = false;
 
     public Empire empire()                               { return view.empire(); }
     public Empire owner()                                { return view.owner(); }
@@ -264,6 +265,13 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void ignoreThreat()        { threatened = false; }
     public boolean threatened()       { return threatened; }
     
+    public void giveAid() {
+    	givenAidThisTurn = true;
+    }
+    public boolean givenAidThisTurn() {
+    	return givenAidThisTurn;
+    }
+    
     public boolean tooManyRequests()        { return requestCount > currentMaxRequests; }
     public float otherRelations()          { return otherEmbassy().relations(); }
     public int contactAge()                 { return (galaxy().currentTurn() - contactTurn); }
@@ -348,6 +356,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         minimumWarnLevel = min(20, minimumWarnLevel);
         minimumPraiseLevel = minimumPraiseLevel() - 1;
         minimumWarnLevel = minimumWarnLevel() - 1;
+        givenAidThisTurn = false;
     }
     public void recallAmbassador()     { diplomatGoneTimer = Integer.MAX_VALUE; }
     public void openEmbassy()          { diplomatGoneTimer = 0; }
@@ -587,9 +596,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
             updateRelations(inc);
             treaty.noticeIncident(inc);
         }
-    }
-    public DiplomaticIncident getIncidentWithKey(String key) {
-        return incidents.get(key);
     }
     
     private void driftRelations() {

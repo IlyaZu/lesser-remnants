@@ -73,6 +73,10 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     @Override
     public boolean canOfferAid(Empire e) { 
+    	if (empire.viewForEmpire(e).embassy().givenAidThisTurn()) {
+    		return false;
+    	}
+    	
         if (!diplomats(id(e)) || empire.atWarWith(id(e)) || !empire.inEconomicRange(id(e)))
             return false;
                 
