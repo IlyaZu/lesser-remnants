@@ -27,9 +27,9 @@ public class SignPactIncident extends DiplomaticIncident {
         return inc;
     }
     private SignPactIncident(Empire e1, Empire e2) {
+    	super(5);
         empMe = e1.id;
         empYou = e2.id;
-        severity = 5;
     }
     @Override
     public String title()         { return text("INC_SIGNED_PACT_TITLE"); }

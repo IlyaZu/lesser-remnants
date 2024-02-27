@@ -28,10 +28,10 @@ public class BreakPactIncident extends DiplomaticIncident {
         return inc;
     }
     private BreakPactIncident(Empire e1, Empire e2, boolean spy) {
+    	super(-15);
         empBreaker = e1.id;
         empMe = e2.id;
         spying = spy;
-        severity = -15;
     }
     @Override
     public String title()            { return text("INC_BROKE_PACT_TITLE"); }

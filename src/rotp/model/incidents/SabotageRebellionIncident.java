@@ -40,12 +40,15 @@ public class SabotageRebellionIncident extends DiplomaticIncident {
         otherView.embassy().resetPactTimer();
     }
     private SabotageRebellionIncident(EmpireView ev, SabotageMission m) {
+    	super(calculateSeverity(ev, m));
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
         incited = m.rebelsIncited();
+    }
+    private static float calculateSeverity(EmpireView ev, SabotageMission m) {
         float multiplier = ev.empire().leader().isXenophobic()? 2 : 1;
-        severity = max(-25,(-2*incited)+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
+        return Math.max(-25,(-2*m.rebelsIncited())+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
     }
     private String systemName()      { return player().sv.name(sysId); }
     @Override

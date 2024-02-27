@@ -28,7 +28,7 @@ public class ErraticWarIncident extends DiplomaticIncident {
         return inc;
     }
     private ErraticWarIncident(Empire e1, Empire e2) {
-        severity = -50;
+        super(-50);
         empAggressor = e1.id;
         empVictim = e2.id;
     }

@@ -35,11 +35,11 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
         r.defender().diplomatAI().noticeIncident(inc, r.attacker());
     }
     private ColonyDestroyedIncident(CombatResults r) {
+    	super(-5 + Math.max(-10f, -r.popDestroyed()/4.0f));
         sysId = r.system().id;
         empDefender = r.defender().id;
         empAttacker = r.attacker().id;
         popLost = r.popDestroyed();
-        severity = -5 + max(-10f, -popLost/4.0f);
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

@@ -28,9 +28,9 @@ public class EvictedSpiesIncident extends DiplomaticIncident {
         return inc;
     }
     private EvictedSpiesIncident(Empire e1, Empire e2) {
+    	super(-10);
         empBreaker = e1.id;
         empMe = e2.id;
-        severity = -10;
     }
     @Override
     public String title()            { return text("INC_EVICTED_SPIES_TITLE"); }

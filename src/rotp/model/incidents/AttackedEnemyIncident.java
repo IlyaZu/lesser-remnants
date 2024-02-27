@@ -46,10 +46,10 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
         }
     }
     private AttackedEnemyIncident(Empire e1, Empire e2, Empire e3, float sev) {
+    	super(sev);
         empAttacker = e1.id;
         empEnemy = e2.id;
         empMe = e3.id;
-        severity = sev;
     }
     @Override
     public String title()           { return text("INC_ATTACKED_ENEMY_TITLE", galaxy().empire(empEnemy).raceName()); }

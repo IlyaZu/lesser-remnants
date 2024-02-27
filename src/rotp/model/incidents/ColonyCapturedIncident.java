@@ -39,11 +39,11 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
             System.err.println("Null embassy for defender:"+defender.raceName()+" attacker:"+attacker.raceName());
     }
     public ColonyCapturedIncident(Empire att, Empire def, StarSystem sys, int p) {
+    	super(-5 + Math.max(-7.5f, -p/4.0f));
         empAttacker = att.id;
         empDefender = def.id;
         sysId = sys.id;
         popLost = p;
-        severity = -5 + max(-7.5f, -popLost/4.0f);
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

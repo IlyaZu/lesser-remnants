@@ -30,8 +30,8 @@ public class TradeIncomeIncident extends DiplomaticIncident {
         ev.owner().diplomatAI().noticeIncident(new TradeIncomeIncident(ev, profit, pct), ev.empire());
     }
     public TradeIncomeIncident(EmpireView ev, float p, float pct) {
+    	super(Math.min(7.5f, Math.max(0,pct*12.5f)));
         profit = p;
-        severity = min(7.5f, max(0,pct*12.5f));
         empMe = ev.owner().id;
         empYou = ev.empire().id;
     }

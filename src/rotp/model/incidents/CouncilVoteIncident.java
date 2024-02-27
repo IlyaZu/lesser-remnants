@@ -33,11 +33,11 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         candidate.diplomatAI().noticeIncident(new CouncilVoteIncident(candidate, voter, votee, rival), voter);
     }
     private CouncilVoteIncident(Empire candidate, Empire voter, Empire votee, Empire rival) {
-        voteeId = votee == null ? Empire.NULL_ID : votee.id;
+    	super(calculateSeverity(votee, candidate));
+        voteeId = id(votee);
         voterId = voter.id;
         candidateId = candidate.id;
         rivalId = rival.id;
-        severity = calculateSeverity();
     }
     @Override
     public String title()               { return text("INC_COUNCIL_VOTE_TITLE"); }
@@ -50,11 +50,11 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         else
             return decode(text("INC_COUNCIL_VOTE_AGAINST_DESC"));
     }
-    private float calculateSeverity() {
-        if (voteeId == Empire.NULL_ID) {
+    private static float calculateSeverity(Empire votee, Empire candidate) {
+        if (votee == null) {
             // Abstain
         	return -10;
-        } else if (voteeId == candidateId) {
+        } else if (votee.id == candidate.id) {
         	// Voted for
         	return 25;
         } else {
@@ -63,9 +63,9 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         }
     }
     @Override
-    public String praiseMessageId()   { return severity > 0 ? DialogueManager.PRAISE_COUNCIL_VOTE : ""; }
+    public String praiseMessageId()   { return severity() > 0 ? DialogueManager.PRAISE_COUNCIL_VOTE : ""; }
     @Override
-    public String warningMessageId() {  return severity < 0 ? DialogueManager.WARNING_COUNCIL_VOTE : ""; }
+    public String warningMessageId() {  return severity() < 0 ? DialogueManager.WARNING_COUNCIL_VOTE : ""; }
     @Override
     public String key() {
         return concat(str(turnOccurred()), ":CouncilVote");

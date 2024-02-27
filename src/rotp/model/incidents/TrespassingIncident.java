@@ -44,23 +44,29 @@ public class TrespassingIncident extends DiplomaticIncident {
     }
 
     private TrespassingIncident(EmpireView ev, StarSystem sys, ShipFleet fl) {
+    	super(calculateSeverity(sys, fl));
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
 
+        // if it is player's ships in orbit, notify player only if not at war
+        if (ev.empire().isPlayerControlled() && !ev.embassy().anyWar())
+            TrespassingAlert.create(empMe, sysId);
+    }
+
+    private static float calculateSeverity(StarSystem sys, ShipFleet fl) {
         float multiplier = -1.0f;
         if (sys.empire().atWarWith(fl.empId()))
             multiplier *= 3;
         if (sys.empire().leader().isXenophobic())
             multiplier *= 2;
-
+        
         float fleetPower = fl.firepower(sys.colony().defense().shieldLevel())/100.0f;
-        severity = multiplier* max(1.0f, fleetPower);
-        severity = max(-10, severity);
-        // if it is player's ships in orbit, notify player only if not at war
-        if (ev.empire().isPlayerControlled() && !ev.embassy().anyWar())
-            TrespassingAlert.create(empMe, sysId);
+        
+    	float severity = multiplier * Math.max(1.0f, fleetPower);
+    	return Math.max(-10, severity);
     }
+
     private String systemName()         { return player().sv.name(sysId); }
     @Override
     public String title()               { return text("INC_TRESPASSING_TITLE", systemName()); }
