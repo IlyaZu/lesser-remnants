@@ -28,9 +28,9 @@ public class SignPeaceIncident extends DiplomaticIncident {
         return inc;
     }
     private SignPeaceIncident(Empire e1, Empire e2, int dur) {
+    	super(20);
         empMe = e1.id;
         empYou = e2.id;
-        severity = 20;
         endTurn = turnOccurred()+dur;
     }
     @Override

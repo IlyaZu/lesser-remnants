@@ -30,11 +30,11 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
         return inc;
     }
     private ExchangeTechnologyIncident(Empire e1, Empire e2, Tech recv, Tech give) {
+    	super(5);
         empMe = e1.id;
         empYou = e2.id;
         received = recv.id();
         given = give.id();
-        severity = 5;
     }
     @Override
     public String title()        { return text("INC_TECH_EXCHANGE_TITLE"); }

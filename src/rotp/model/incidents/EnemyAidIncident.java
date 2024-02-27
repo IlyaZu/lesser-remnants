@@ -50,28 +50,28 @@ public class EnemyAidIncident extends DiplomaticIncident {
         return inc;
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, int amt) {
+    	super(calculateFinancialAidSeverity(emp, amt));
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;
-        setAmount(emp, amt);
-        techId = null;
-    }
-    private void setAmount(Empire emp, int amt) {
-        float pct = (float) amt / emp.totalPlanetaryProduction();
-        severity = -min(5, 5*pct);
         amount = amt;
     }
+    private static float calculateFinancialAidSeverity(Empire emp, int amt) {
+        float pct = (float) amt / emp.totalPlanetaryProduction();
+        return -Math.min(5, 5*pct);
+    }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, String tId) {
-        log("creating enemy aid incident: "+enemy.raceName()+"  tech:"+tech(tId).name());
+    	super(calculateTechAidSeverity(enemy, tId));
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;
         techId = tId;
-        amount = 0;
-        Tech tech = tech(tId);
+    }
+    private static float calculateTechAidSeverity(Empire enemy, String tId) {
+        Tech tech = enemy.tech(tId);
         float rpValue = enemy.ai().scientist().warTradeBCValue(tech);
         float pct = rpValue / enemy.totalPlanetaryProduction();
-        severity = -min(10, 15*pct);
+        return -Math.min(10, 15*pct);
     }
     @Override
     public String title()        { return text("INC_ENEMY_AID_TITLE"); }

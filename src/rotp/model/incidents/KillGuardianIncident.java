@@ -26,10 +26,10 @@ public class KillGuardianIncident extends DiplomaticIncident {
         return inc;
     }
     private KillGuardianIncident(int e1, int e2, String key) {
+    	super(100);
         empMe = e1;
         empYou = e2;
         monsterKey = key;
-        severity = 100;
     }
     @Override
     public String title()         { return text("INC_KILLED_GUARDIAN_TITLE", text(monsterKey)); }

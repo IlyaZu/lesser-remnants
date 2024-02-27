@@ -48,15 +48,13 @@ public class SabotageBasesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageBasesIncident(otherView, m));
     }
     private SabotageBasesIncident(EmpireView ev, SabotageMission m) {
+    	super(calculateSeverity(ev, m));
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
         destroyed = m.missileBasesDestroyed();
-        float multiplier = ev.empire().leader().isPacifist() ? 2 : 1;
-        severity = max(-30, (-2 * destroyed) + ev.embassy().currentSpyIncidentSeverity()) * multiplier;
         
-        if (ev.owner().isPlayerControlled()
-        && (destroyed > 0)) {
+        if (ev.owner().isPlayerControlled() && (destroyed > 0)) {
             StarSystem sys = m.starSystem();
             BasesDestroyedAlert.create(ev.empire(), destroyed, sys);
             if (sys.isColonized() && sys.colony().defense().allocation() == 0) {
@@ -65,6 +63,10 @@ public class SabotageBasesIncident extends DiplomaticIncident {
                 session().addSystemToAllocate(sys, str1);
             }
         }
+    }
+    private static float calculateSeverity(EmpireView view, SabotageMission m) {
+        float multiplier = view.empire().leader().isPacifist() ? 2 : 1;
+        return Math.max(-30, (-2 * m.missileBasesDestroyed()) + view.embassy().currentSpyIncidentSeverity()) * multiplier;
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

@@ -23,7 +23,6 @@ import rotp.ui.diplomacy.DialogueManager;
 public class ExpansionIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     int numSystems;
-    float maxSystems;
     final int empYou;
     public static void create(EmpireView view) {
         int numberSystems = view.empire().numSystemsForCiv(view.empire());
@@ -64,33 +63,35 @@ public class ExpansionIncident extends DiplomaticIncident {
     @Override
     public boolean triggeredByAction()   { return false; }
     private ExpansionIncident(EmpireView ev, int num, float max) {
+    	super(calculateSeverity(ev, num, max));
         numSystems = num;
-        maxSystems = max;
         empYou = ev.empire().id;
-
+    }
+    private static float calculateSeverity(EmpireView view, int numSystems, float maxSystems) {
+    	int empireId = view.empire().id;
         float multiplier = 1.0f;
         // penalty doubled for xenophobes
-        if (ev.owner().leader().isXenophobic())
+        if (view.owner().leader().isXenophobic())
             multiplier *= 2;
         // allies are more tolerant of growth, NAPS less so
-        if (!ev.owner().alliedWith(empYou))
+        if (!view.owner().alliedWith(empireId))
             multiplier /= 3;
-        else if (!ev.owner().pactWith(empYou))
+        else if (!view.owner().pactWith(empireId))
             multiplier /= 1.5;
         
         // if you are bigger than average but the viewer is 
         // even larger, the penalty is lessened by the square
         // of the proportion... i.e. if you are 1/2 the size
         // the penalty is 1/4th
-        int ownerNum = ev.owner().numColonizedSystems();
+        int ownerNum = view.owner().numColonizedSystems();
         if (ownerNum > numSystems) {
             float ratio = (float) numSystems / ownerNum;
             multiplier = multiplier * ratio * ratio;
         }
         
-        float n = -5*((num*num/max/max) - 1);
+        float n = -5*((numSystems*numSystems/maxSystems/maxSystems) - 1);
 
-        severity = max(-12.5f, multiplier*n);
+        return Math.max(-12.5f, multiplier*n);
     }
     @Override
     public String title()            { return text("INC_EXPANSION_TITLE"); }

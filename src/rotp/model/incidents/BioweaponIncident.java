@@ -48,11 +48,11 @@ public class BioweaponIncident extends DiplomaticIncident {
         }
     }
     private BioweaponIncident(Empire n, Empire a, Empire v, StarSystem sys) {
+    	super(Math.max(-7.5f, -5*n.leader().bioweaponMod()));
         empMe = n.id;
         empAttacker = a.id;
         empVictim = v.id;
         sysId = sys.id;
-        severity = max(-7.5f, -5*n.leader().bioweaponMod());
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

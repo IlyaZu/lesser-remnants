@@ -672,7 +672,7 @@ public class AIGeneral implements Base, General {
             for(DiplomaticIncident inc : empire.viewForEmpire(emp).embassy().allIncidents())
             {
                 if(inc.isSpying())
-                    spyAnnoyanceMod -= inc.severity;
+                    spyAnnoyanceMod -= inc.severity();
             }
             currentScore *= spyAnnoyanceMod;
             //System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" vs "+emp.name()+" dist: "+fleetCenter(empire).distanceTo(colonyCenter(emp))+" rev-dist: "+fleetCenter(emp).distanceTo(colonyCenter(empire))+" milrank: "+empire.diplomatAI().militaryRank(emp, true)+" poprank: "+empire.diplomatAI().popCapRank(emp, true)+" tradeMod: "+tradeMod+" spy-mod: "+spyAnnoyanceMod+" score: "+currentScore);

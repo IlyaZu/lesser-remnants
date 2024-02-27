@@ -16,8 +16,6 @@
  */
 package rotp.model.incidents;
 
-import java.util.ArrayList;
-import java.util.List;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.tech.Tech;
@@ -27,7 +25,6 @@ public class TechnologyAidIncident extends DiplomaticIncident {
     public final int empMe;
     public final int empYou;
     private final String techId;
-    private List<String> techIds = new ArrayList<>();
     public static TechnologyAidIncident create(Empire emp, Empire donor, String techId) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         TechnologyAidIncident inc = new TechnologyAidIncident(emp, donor, techId);
@@ -40,40 +37,23 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         return inc;
     }
     private TechnologyAidIncident(Empire emp, Empire donor, String tId) {
+    	super(calculateSeverity(emp, tId));
         empYou = donor.id;
         empMe = emp.id;
         techId = tId;
-        addTech(emp, tId);
     }
-    private List<String> techIds() {
-        if (techIds == null)
-            techIds = new ArrayList<>();
-        return techIds;
-    }
-    private void addTech(Empire emp, String tId) {
-        // handle legacy instances
-        if (techIds().isEmpty() && (techId != null))
-            techIds.add(techId);
+    private static float calculateSeverity(Empire emp, String tId) {
+        Tech tech = emp.tech(tId);
+        int rpValue = (int)emp.ai().scientist().researchBCValue(tech);
 
-        if (!techIds.contains(tId))
-            techIds.add(tId);
-        
-        int rpValue = 0;
-        for (String id: techIds) {
-            Tech tech = tech(id);
-            rpValue += emp.ai().scientist().researchBCValue(tech);
-        }
         float pct = rpValue / emp.totalPlanetaryProduction();
-        severity = min(15,25*pct); 
+        return Math.min(15,25*pct); 
     }
     @Override
     public String title()        { return text("INC_TECHNOLOGY_AID_TITLE"); }
     @Override
     public String description()  { 
-        if (techIds().size() < 2)
-            return decode(text("INC_TECHNOLOGY_AID_DESC")); 
-        else
-            return decode(text("INC_TECHNOLOGY_AID_DESC_MULT")); 
+    	return decode(text("INC_TECHNOLOGY_AID_DESC"));
     }
     @Override
     public String key()          { return "Technology Aid:"+turnOccurred(); }
@@ -82,20 +62,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");
-        if ((techIds().size() < 2) && (techId != null))
-            s1 = s1.replace("[tech]", tech(techId).name());
-        else {
-            String comma = text("INC_TECHNOLOGY_TECH_LIST_COMMA")+ " ";
-            String list = "";
-            for (int i=0;i<techIds.size();i++) {
-                String id = techIds.get(i);
-                if (i > 0)
-                    list = list + comma;
-                list = list+tech(id).name();
-            }
-            s1 = s1.replace("[techs]", list);
-        }
-            
+        s1 = s1.replace("[tech]", tech(techId).name());
         return s1;
     }
 }

@@ -55,10 +55,10 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     }
     
     private MilitaryBuildupIncident(EmpireView ev, StarSystem sys, float sev) {
+    	super(Math.max(-2.5f, sev));
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
-        severity = max(-2.5f, sev);
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

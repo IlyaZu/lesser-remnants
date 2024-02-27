@@ -27,31 +27,22 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     public final int empSpy;
     public final int remainingSpies;
     public final int missionType;
-    public final String mission;
     public SpyConfessionIncident(EmpireView ev, SpyNetwork spies) {
+    	super(calculateSeverity(ev, spies));
         remainingSpies = spies.numActiveSpies();
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
-        
+        missionType = spies.isHide() ? 0 : spies.isEspionage() ? 1 : 2;
+    }
+    private static float calculateSeverity(EmpireView view, SpyNetwork spies) {
         if (spies.isEspionage()) {
-            mission = text("NOTICE_SPYING_MISSION_ESPIONAGE");
-            missionType = 1;
-            severity = max(-20, -5+ev.embassy().currentSpyIncidentSeverity());
-        }
-        else if (spies.isHide()) {
-            mission = text("NOTICE_SPYING_MISSION_SABOTAGE");
-            severity = max(-20, -10+ev.embassy().currentSpyIncidentSeverity());
-            missionType = 0;
+            return Math.max(-20, -5+view.embassy().currentSpyIncidentSeverity());
         }
         else if (spies.isSabotage()) {
-            mission = text("NOTICE_SPYING_MISSION_SABOTAGE");
-            severity = max(-20, -10+ev.embassy().currentSpyIncidentSeverity());
-            missionType = 2;
+            return Math.max(-20, -10+view.embassy().currentSpyIncidentSeverity());
         }
         else {
-            mission = text("NOTICE_SPYING_MISSION_HIDE");
-            severity = max(-5, -2+ev.embassy().currentSpyIncidentSeverity());
-            missionType = 0;
+            return Math.max(-20, -10+view.embassy().currentSpyIncidentSeverity());
         }
     }
     @Override
@@ -97,10 +88,18 @@ public class SpyConfessionIncident extends DiplomaticIncident {
         s1 = s1.replace("[spyrace]",  galaxy().empire(empSpy).raceName());
         s1 = galaxy().empire(empSpy).replaceTokens(s1, "spy");
         s1 = galaxy().empire(empVictim).replaceTokens(s1, "victim");
-        s1 = s1.replace("[mission]", mission);
+        s1 = s1.replace("[mission]", mission());
         s1 = s1.replace("[numspies]", str(remainingSpies));
         s1 = s1.replace("[framed]", "");
         s1 = s1.replace("[forced]", forceMessage);
         return s1;
+    }
+    private String mission() {
+        switch(missionType) {
+        case 0: return text("NOTICE_SPYING_MISSION_SABOTAGE");
+        case 1: return text("NOTICE_SPYING_MISSION_ESPIONAGE");
+        case 2: return text("NOTICE_SPYING_MISSION_SABOTAGE");
+        default: return text("NOTICE_SPYING_MISSION_SABOTAGE");
+    }
     }
 }

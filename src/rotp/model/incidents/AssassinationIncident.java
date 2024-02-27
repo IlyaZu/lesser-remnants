@@ -42,14 +42,14 @@ public class AssassinationIncident extends DiplomaticIncident {
         }
     }
     public AssassinationIncident(Empire ass, Empire vic) {
+    	super(-50);
         empAssassin = ass.id;
         empVictim = vic.id;
-        severity = -50;
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
+    	super(50);
         empAssassin = ass.id;
         empVictim = vic.id;
-        severity = 50;
     }
     @Override
     public String title()            { return text("INC_ASSASSINATION_TITLE"); }
@@ -58,11 +58,11 @@ public class AssassinationIncident extends DiplomaticIncident {
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ASSASSIN_WAR; }
     @Override
-    public boolean triggersWar()     { return severity < 0; } // only trigger war for the negative version of this incident
+    public boolean triggersWar()     { return severity() < 0; } // only trigger war for the negative version of this incident
     @Override
     public boolean triggersImmediateWar() { return true; }
     @Override
-    public boolean triggersPraise()   { return severity > 0; }
+    public boolean triggersPraise()   { return severity() > 0; }
     @Override
     public String praiseMessageId()   { return DialogueManager.PRAISE_ATTACKED_ENEMY; }
     @Override

@@ -24,7 +24,11 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
     private final int turnOccurred = galaxy().currentTurn();
-    public float severity;
+    private final float severity;
+    
+    public DiplomaticIncident(float severity) {
+    	this.severity = severity;
+    }
     
     public int turnOccurred() {
     	return turnOccurred;

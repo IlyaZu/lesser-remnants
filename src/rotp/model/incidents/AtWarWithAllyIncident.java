@@ -35,10 +35,10 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     }
 
     private AtWarWithAllyIncident(EmpireView ev, Empire other) {
+    	super(-2.5f);
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
-        severity = -2.5f;
     }
     @Override
     public String title()            { return text("INC_AT_WAR_WITH_ALLY_TITLE"); }

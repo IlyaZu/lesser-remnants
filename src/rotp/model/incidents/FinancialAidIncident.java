@@ -36,14 +36,14 @@ public class FinancialAidIncident extends DiplomaticIncident {
         return inc;
     }
     private FinancialAidIncident(Empire emp, Empire donor, int amt) {
+    	super(calculateSeverity(emp, amt));
         empYou = donor.id;
         empMe = emp.id;
-        setAmount(emp, amt);
-    }
-    private void setAmount(Empire emp, int amt) {
-        float pct = (float) amt / emp.totalPlanetaryProduction();
-        severity = min(10,10*pct);
         amount = amt;
+    }
+    private static float calculateSeverity(Empire emp, int amt) {
+        float pct = (float) amt / emp.totalPlanetaryProduction();
+        return Math.min(10,10*pct);
     }
     @Override
     public String title()        { return text("INC_FINANCIAL_AID_TITLE"); }

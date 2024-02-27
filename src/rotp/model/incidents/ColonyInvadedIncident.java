@@ -34,11 +34,11 @@ public class ColonyInvadedIncident extends DiplomaticIncident {
         ev.embassy().addIncident(inc);
     }
     public ColonyInvadedIncident(Empire att, Empire def, StarSystem sys, int p) {
+    	super(-2.5f + Math.max(-7.5f, -p/4.0f));
         sysId = sys.id;
         empDefender = def.id;
         empAttacker = att.id;
         popLost = p;
-        severity = -2.5f + max(-7.5f, -popLost/4.0f);
     }
     private String systemName() { return player().sv.name(sysId); }
     @Override

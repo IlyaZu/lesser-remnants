@@ -61,13 +61,16 @@ public class OathBreakerIncident extends DiplomaticIncident {
         }
     }
     private OathBreakerIncident(Empire brk, Empire vic, Empire obs, int type, float sev, boolean spy) {
+    	super(calculateSeverity(obs, sev));
         empBreaker = brk.id;
         empVictim = vic.id;
         spying = spy;
         oathBreakType = type;
         notify = vic == obs;
+    }
+    private static float calculateSeverity(Empire obs, float sev) {
         float multiplier = obs.leader().isHonorable() ? 2 : 1;
-        severity = max(-30,sev) * multiplier;
+        return Math.max(-30,sev) * multiplier;
     }
     @Override
     public String title()        { return text("INC_OATHBREAKER_TITLE"); }

@@ -31,6 +31,7 @@ public class EspionageTechIncident extends DiplomaticIncident {
     String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
+    	super(calculateSeverity(ev));
         ev.embassy().resetAllianceTimer();
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)
@@ -39,8 +40,11 @@ public class EspionageTechIncident extends DiplomaticIncident {
         empThief = m.thief().id;
         techId = m.stolenTech();
         m.incident(this);
-        float multiplier = ev.empire().leader().isTechnologist()? 2 : 1;
-        severity = max(-20,-10+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
+
+    }
+    private static float calculateSeverity(EmpireView view) {
+        float multiplier = view.empire().leader().isTechnologist()? 2 : 1;
+        return Math.max(-20,-10+view.embassy().currentSpyIncidentSeverity()) * multiplier;
     }
     @Override
     public boolean isSpying()         { return true; }

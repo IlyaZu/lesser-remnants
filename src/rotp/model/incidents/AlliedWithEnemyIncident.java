@@ -33,10 +33,10 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
     }
     
     private AlliedWithEnemyIncident(EmpireView ev, Empire other) {
+    	super(-2.5f);
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
-        severity = -2.5f;
     }
     @Override
     public String title()            { return text("INC_ALLIED_WITH_ENEMY_TITLE"); }

@@ -31,11 +31,15 @@ public class GenocideIncident extends DiplomaticIncident {
         }
     }
     private GenocideIncident(Empire obs, Empire att, Empire vic) {
+    	super(calculateSeverity(obs, att, vic));
         empAttacker = att.id;
         empVictim = vic.id;
-        severity = -50;
+    }
+    private static float calculateSeverity(Empire obs, Empire att, Empire vic) {
+        float severity = -50;
         if (att.alliedWith(obs.id) && obs.atWarWith(vic.id)) 
             severity /= 2;
+        return severity;
     }
     @Override
     public String title()            { return text("INC_GENOCIDE_TITLE"); }

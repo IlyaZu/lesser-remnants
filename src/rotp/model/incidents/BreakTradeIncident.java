@@ -27,9 +27,9 @@ public class BreakTradeIncident extends DiplomaticIncident {
         return inc;
     }
     private BreakTradeIncident(Empire e1, Empire e2) {
+    	super(-5);
         empBreaker = e1.id;
         empMe = e2.id;
-        severity = -5;
     }
     @Override
     public String title()            { return text("INC_BROKE_TRADE_TITLE"); }
