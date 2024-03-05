@@ -34,8 +34,6 @@ public class SignAllianceIncident extends DiplomaticIncident {
     @Override
     public String title()         { return text("INC_SIGNED_ALLIANCE_TITLE"); }
     @Override
-    public String key()           { return "Sign Alliance"; }
-    @Override
     public String description()   { return decode(text("INC_SIGNED_ALLIANCE_DESC")); }
     @Override
     public String decode(String s) {

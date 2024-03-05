@@ -100,10 +100,6 @@ public class ExpansionIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return  galaxy().empire(empYou).newSystems().isEmpty() ? "" :DialogueManager.WARNING_EXPANSION; }
     @Override
-    public String key() {
-        return concat("EmpireGrowth:", str(turnOccurred()));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = s1.replace("[num]", str(numSystems));

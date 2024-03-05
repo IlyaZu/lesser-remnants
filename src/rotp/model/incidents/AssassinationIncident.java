@@ -66,10 +66,6 @@ public class AssassinationIncident extends DiplomaticIncident {
     @Override
     public String praiseMessageId()   { return DialogueManager.PRAISE_ATTACKED_ENEMY; }
     @Override
-    public String key() {
-        return concat("Assassination:", str(empVictim));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         Galaxy g = galaxy();

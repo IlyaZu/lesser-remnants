@@ -52,10 +52,6 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_ATTACKED_ALLY; }
     @Override
-    public String key() {
-        return concat(str(turnOccurred()), ":AttackedAlly:", str(empAlly));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empAttacker).replaceTokens(s1, "attacker");

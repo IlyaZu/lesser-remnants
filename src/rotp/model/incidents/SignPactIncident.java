@@ -36,8 +36,6 @@ public class SignPactIncident extends DiplomaticIncident {
     @Override
     public String description()   { return decode(text("INC_SIGNED_PACT_DESC")); }
     @Override
-    public String key()           { return "Sign Pact"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

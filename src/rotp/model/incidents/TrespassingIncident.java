@@ -77,10 +77,6 @@ public class TrespassingIncident extends DiplomaticIncident {
     @Override
     public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
-    public String key() {
-        return concat(systemName(), ":", str(turnOccurred()));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = s1.replace("[system]", systemName());

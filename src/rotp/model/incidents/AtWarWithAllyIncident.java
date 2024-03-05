@@ -47,8 +47,6 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     @Override
     public boolean triggeredByAction()   { return false; }
     @Override
-    public String key()              { return "At War with ally: "+empOther; }
-    @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ALLIANCE_WAR; }
     @Override
     public boolean triggersWar()     { 

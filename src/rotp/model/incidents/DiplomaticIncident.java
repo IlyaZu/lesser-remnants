@@ -43,7 +43,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     }
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered
-    public abstract String key();
     public abstract String title();
     public abstract String description();
     public boolean triggeredByAction()   { return true; }

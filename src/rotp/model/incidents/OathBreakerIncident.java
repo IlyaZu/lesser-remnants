@@ -85,8 +85,6 @@ public class OathBreakerIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return notify ? DialogueManager.WARNING_OATHBREAKER : ""; }
     @Override
-    public String key()              { return "Oath Break"; }
-    @Override
     public String decode(String s) {
         String s1 = s.replace("[year]", str(turnOccurred()));
         // this is a 3rd-party penalty... where "my" empire is upset that "your" empire broke a treaty with another empire (the victim)

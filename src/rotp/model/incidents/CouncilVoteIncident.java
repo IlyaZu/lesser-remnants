@@ -67,10 +67,6 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() {  return severity() < 0 ? DialogueManager.WARNING_COUNCIL_VOTE : ""; }
     @Override
-    public String key() {
-        return concat(str(turnOccurred()), ":CouncilVote");
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(voterId).replaceTokens(s1, "voter");

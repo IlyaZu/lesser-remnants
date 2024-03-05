@@ -84,8 +84,6 @@ public class SabotageBasesIncident extends DiplomaticIncident {
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
-    public String key()         { return  str(turnOccurred())+":Sabotage:"+sysId; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empSpy).replaceTokens(s1, "spy");

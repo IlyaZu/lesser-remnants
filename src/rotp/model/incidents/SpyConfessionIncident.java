@@ -78,10 +78,6 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
-    public String key() {
-        return concat(str(turnOccurred()), ":SpyConfession");
-    }
-    @Override
     public String decode(String s) {
         String forceMessage = missionType > 0 ? "" : text("SPY_FORCED_CONFESSION");
         String s1 = super.decode(s);

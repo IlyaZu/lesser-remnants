@@ -36,8 +36,6 @@ public class DeclareWarIncident extends DiplomaticIncident {
     @Override
     public String description()      { return decode(text("INC_DECLARED_WAR_DESC")); }
     @Override
-    public String key()              { return "Declare War"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empAggressor).replaceTokens(s1, "aggressor");

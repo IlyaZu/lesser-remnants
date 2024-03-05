@@ -56,8 +56,6 @@ public class TechnologyAidIncident extends DiplomaticIncident {
     	return decode(text("INC_TECHNOLOGY_AID_DESC"));
     }
     @Override
-    public String key()          { return "Technology Aid:"+turnOccurred(); }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

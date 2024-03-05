@@ -45,8 +45,6 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
     @Override
     public boolean triggeredByAction()   { return false; }
     @Override
-    public String key()              { return "Allied with enemy: "+empOther; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");

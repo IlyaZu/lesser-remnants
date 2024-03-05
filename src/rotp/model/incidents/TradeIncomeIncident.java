@@ -49,10 +49,6 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     @Override
     public String praiseMessageId()   { return DialogueManager.PRAISE_TRADE; }
     @Override
-    public String key() {
-        return str(turnOccurred());
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

@@ -37,8 +37,6 @@ public class ErraticWarIncident extends DiplomaticIncident {
     @Override
     public String description()      { return decode(text("INC_ERRATIC_WAR_DESC")); }
     @Override
-    public String key()              { return "Erratic War"; }
-    @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ERRATIC_WAR; }
     @Override
     public String decode(String s) {
