@@ -97,17 +97,6 @@ public class AIDiplomat implements Base, Diplomat {
         // if not, do we have techs to give?
         return !offerableTechnologies(e).isEmpty();
     }
-    public boolean canOfferMoney(Empire e) { 
-        if (!diplomats(id(e)) || empire.atWarWith(id(e)) || !empire.inEconomicRange(id(e)))
-            return false;
-        return !offerAidAmounts().isEmpty();
-    }
-    public boolean canOfferTechnology(Empire e)  { 
-        if (!diplomats(id(e)) || empire.atWarWith(id(e)) || !empire.inEconomicRange(id(e)))
-            return false;
-                
-        return !offerableTechnologies(e).isEmpty();
-    }
     @Override
     public List<Tech> offerableTechnologies(Empire e) {
         List<String> allMyTechIds = empire.tech().allKnownTechs();
