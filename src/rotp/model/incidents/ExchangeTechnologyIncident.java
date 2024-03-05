@@ -41,8 +41,6 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
     @Override
     public String description()  { return decode(text("INC_TECH_EXCHANGE_DESC")); }
     @Override
-    public String key()          { return "Exchange Technology"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

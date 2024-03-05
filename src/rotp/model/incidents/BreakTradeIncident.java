@@ -36,8 +36,6 @@ public class BreakTradeIncident extends DiplomaticIncident {
     @Override
     public String description()      { return  decode(text("INC_BROKE_TRADE_DESC")); }
     @Override
-    public String key()              { return "Break Trade"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empBreaker).replaceTokens(s1, "your");

@@ -34,8 +34,6 @@ public class KillGuardianIncident extends DiplomaticIncident {
     @Override
     public String title()         { return text("INC_KILLED_GUARDIAN_TITLE", text(monsterKey)); }
     @Override
-    public String key()           { return "Killed Monster: "+monsterKey; }
-    @Override
     public String description()   { return decode(text("INC_KILLED_GUARDIAN_DESC")); }
     @Override
     public String decode(String s) {

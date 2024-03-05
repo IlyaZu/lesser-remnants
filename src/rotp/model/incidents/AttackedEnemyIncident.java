@@ -58,10 +58,6 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
     @Override
     public String praiseMessageId() { return DialogueManager.PRAISE_ATTACKED_ENEMY; }
     @Override
-    public String key() {
-        return concat(str(turnOccurred()), ":AttackedEnemy:", str(empEnemy));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empAttacker).replaceTokens(s1, "attacker");

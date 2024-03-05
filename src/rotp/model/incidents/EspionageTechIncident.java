@@ -71,10 +71,6 @@ public class EspionageTechIncident extends DiplomaticIncident {
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
-    public String key() {
-        return str(turnOccurred())+":Espionage";
-    }
-    @Override
     public String decode(String s) {
         String frameMessage = empThief == empSpy ? "" : text("SPY_FRAMED");
         String s1 = super.decode(s);

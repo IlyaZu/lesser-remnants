@@ -37,8 +37,6 @@ public class EvictedSpiesIncident extends DiplomaticIncident {
     @Override
     public String description()      { return  decode(text("INC_EVICTED_SPIES_DESC")); }
     @Override
-    public String key()              { return "Evicted Spies"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empBreaker).replaceTokens(s1, "your");

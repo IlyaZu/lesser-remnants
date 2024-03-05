@@ -78,8 +78,6 @@ public class EnemyAidIncident extends DiplomaticIncident {
     @Override
     public String description()  { return techId == null ? decode(text("INC_ENEMY_AID_MONEY_DESC")) :  decode(text("INC_ENEMY_AID_TECH_DESC")); }
     @Override
-    public String key()          { return techId == null ? "Enemy Aid" : "Enemy Aid: "+techId; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

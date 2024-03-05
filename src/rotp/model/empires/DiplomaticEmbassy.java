@@ -20,8 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.incidents.AlliedWithEnemyIncident;
 import rotp.model.incidents.AtWarWithAllyIncident;
@@ -64,8 +65,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public static final int MAX_REQUESTS_TURN = 4;
 
     private final EmpireView view;
-    private final Map<String, DiplomaticIncident> incidents = new HashMap<>();
     private HashMap<String, List<String>> offeredTechs = new HashMap<>();
+    private final List<DiplomaticIncident> incidents = new LinkedList<>();
     private transient List<DiplomaticIncident> newIncidents = new ArrayList<>();
 
     private boolean contact = false;
@@ -103,7 +104,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public int treatyTurn()                            { return treatyTurn; }
     public DiplomaticTreaty treaty()                     { return treaty; }
     public String treatyStatus()                         { return treaty.status(owner()); }
-    public Collection<DiplomaticIncident> allIncidents() { return incidents.values(); }
+    public Collection<DiplomaticIncident> allIncidents() { return incidents; }
     public int requestCount()                            { return requestCount; }
     public float relations()                             { return relations; }
     public boolean contact()                             { return contact; }
@@ -585,17 +586,10 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void resetTreaty()   { setTreaty(new TreatyNone(view.owner(), view.empire())); }
     public void addIncident(DiplomaticIncident inc) {
-        // add new incidents to current list
-        // hash by incident key to filter out overlapping events
-        String k = inc.key();
-        log("addIncident key:"+k);
-        DiplomaticIncident matchingEvent = incidents.get(k);
-        log(view.toString(), ": Adding incident- ", k, ":", str(inc.severity()), ":", inc.toString());
-        if (inc.moreSevere(matchingEvent)) {
-            incidents.put(k,inc);
-            updateRelations(inc);
-            treaty.noticeIncident(inc);
-        }
+        log(view.toString(), ": Adding incident- ", str(inc.severity()), ":", inc.toString());
+        incidents.add(inc);
+        updateRelations(inc);
+        treaty.noticeIncident(inc);
     }
     
     private void driftRelations() {
@@ -641,20 +635,20 @@ public class DiplomaticEmbassy implements Base, Serializable {
         MilitaryBuildupIncident.create(view);
 
         // make special list of incidents added in this turn
-        for (DiplomaticIncident ev: incidents.values()) {
-            if ((galaxy().currentTurn() - ev.turnOccurred()) < 1)
-                newIncidents().add(ev);
+        for (DiplomaticIncident incident: incidents) {
+            if ((galaxy().currentTurn() - incident.turnOccurred()) < 1)
+                newIncidents().add(incident);
         }
     }
     private void clearForgottenIncidents() {
-        List<String> keys = new ArrayList<>(incidents.keySet());
-        for (String key: keys) {
-            DiplomaticIncident inc = incidents.get(key);
-            if (inc.isForgotten()) {
-                log("Forgetting: ", incidents.get(key).toString());
-                incidents.remove(key);
-            }
-        }
+    	Iterator<DiplomaticIncident> incidentIterator = incidents.iterator();
+    	while (incidentIterator.hasNext()) {
+    		DiplomaticIncident incident = incidentIterator.next();
+    		if (incident.isForgotten()) {
+    			log("Forgetting: ", incident.toString());
+    			incidentIterator.remove();
+    		}
+    	}
     }
     private void beginTreaty() {
         treatyTurn = galaxy().currentTurn();

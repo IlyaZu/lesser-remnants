@@ -68,8 +68,6 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_BUILDUP; }
     @Override
-    public String key()              { return concat(str(turnOccurred()), ":MilitaryBuildup:", systemName()); }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = s1.replace("[system]", systemName());

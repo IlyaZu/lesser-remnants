@@ -62,10 +62,6 @@ public class BioweaponIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_BIOWEAPON; }
     @Override
-    public String key() {
-        return concat("Bioweapon:", galaxy().empire(empAttacker).race().id);
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = s1.replace("[system]", systemName());

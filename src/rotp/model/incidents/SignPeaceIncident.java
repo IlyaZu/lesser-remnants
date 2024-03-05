@@ -38,8 +38,6 @@ public class SignPeaceIncident extends DiplomaticIncident {
     @Override
     public String description()       { return decode(text("INC_SIGNED_PEACE_DESC")); }
     @Override
-    public String key()                 { return "Peace Treaty"; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empMe).replaceTokens(s1, "my");

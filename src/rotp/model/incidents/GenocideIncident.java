@@ -48,10 +48,6 @@ public class GenocideIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() {  return DialogueManager.WARNING_GENOCIDE; }
     @Override
-    public String key() {
-        return concat("Genocide:", str(empVictim));
-    }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empAttacker).replaceTokens(s1, "attacker");
