@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,39 +50,16 @@ public class DiplomaticNotification implements TurnNotification, Base {
         GameSession.instance().addTurnNotification(notif);
         return notif;
     }
-    public static DiplomaticNotification create(EmpireView v, DiplomaticIncident inc) {
-        DiplomaticNotification notif = new DiplomaticNotification(v, inc);
-        GameSession.instance().addTurnNotification(notif);
-        return notif;
-    }
-    public static DiplomaticNotification create(Empire talk, DiplomaticIncident inc) {
-        DiplomaticNotification notif = new DiplomaticNotification(talk, inc);
-        GameSession.instance().addTurnNotification(notif);
-        return notif;
-    }
-    public DiplomaticNotification() { }
 
     public DiplomaticNotification(EmpireView v, String messageType) {
         view = v;
         talker = v.owner();
         type = messageType;
     }
-    protected DiplomaticNotification(EmpireView v, DiplomaticIncident inc, String messageType) {
+    private DiplomaticNotification(EmpireView v, DiplomaticIncident inc, String messageType) {
         view = v;
         talker = v.owner();
         type = messageType;
-        incident = inc;
-    }
-    protected DiplomaticNotification(EmpireView v, DiplomaticIncident inc) {
-        view = v;
-        talker = v.owner();
-        type = inc.warningMessageId();
-        incident = inc;
-    }
-    protected DiplomaticNotification(Empire talk, DiplomaticIncident inc) {
-        view = null;
-        talker = talk;
-        type = inc.warningMessageId();
         incident = inc;
     }
     public Empire talker()               { return talker; }

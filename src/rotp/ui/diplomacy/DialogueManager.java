@@ -119,15 +119,6 @@ public class DialogueManager implements Base {
         loadDialogStrings(filename);
         loadMessages();
     }
-    public DiplomaticMessage message(String type, DiplomaticIncident inc, Empire diplomat) {
-        if (!messages.containsKey(type))
-            return null;
-        DiplomaticMessage msg = messages.get(type);
-        msg.init();
-        msg.diplomat(diplomat);
-        msg.incident(inc);
-        return msg;
-    }
     public DiplomaticMessage message(String type, DiplomaticIncident inc, Empire diplomat, Empire target) {
         if (!messages.containsKey(type))
             return null;
