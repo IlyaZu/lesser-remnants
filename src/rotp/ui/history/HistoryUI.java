@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,9 +133,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             emp.numColoniesHistory = sysCount(emp.id, turn);
         
         Collections.sort(sortedEmpires, Empire.HISTORICAL_SIZE);
-    }
-    public int empIndex(int emp, int t) {
-        return (t*numEmps)+emp;
     }
     public byte sysData(int sys, int t) {
         return sysData[(t*numSystems)+sys];
@@ -701,18 +698,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         public boolean drawShips()                     { return false; }
         @Override
         public boolean drawBackgroundStars()           { return false; }
-        @Override
-        public boolean shouldDrawEmpireName(Empire e)  {
-            int i = empIndex(e.id, turn);
-            return (sysCount[i] > 0);
-        }
-        @Override
-        public void drawEmpireName(Empire e, GalaxyMapPanel ui, Graphics2D g)  { 
-            int i = empIndex(e.id, turn);
-            float xAvg = sysCount[i] == 0 ? 0 : xSum[i]/sysCount[i];
-            float yAvg = sysCount[i] == 0 ? 0 : ySum[i]/sysCount[i];
-            e.draw(ui,g,xMin[i],xMax[i],xAvg,yAvg); 
-        }
         @Override
         public Color systemLabelColor(StarSystem s)    { 
             int i = sysData(s.id, turn);
