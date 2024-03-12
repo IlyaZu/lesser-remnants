@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +19,7 @@ package rotp.ui.diplomacy;
 import java.util.ArrayList;
 import java.util.List;
 import rotp.model.empires.Empire;
+import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
 
 public class DiplomacyOfferTechMenu extends DiplomaticMessage {
@@ -57,8 +59,12 @@ public class DiplomacyOfferTechMenu extends DiplomaticMessage {
             escape();
             return;
         }
+
+        Tech tech = choices.get(i);
+        EmpireView view = diplomat().viewForEmpire(player());
+        view.embassy().receiveTechnologyAid(tech.id);
         // get the reply which contains text response from AI
-        DiplomaticReply reply = diplomat().diplomatAI().receiveTechnologyAid(player(),  choices.get(i).id);
+        DiplomaticReply reply = DiplomaticReplies.acceptTechnologyAid(view, tech);
 
         reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
         DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	

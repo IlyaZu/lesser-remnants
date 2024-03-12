@@ -24,16 +24,12 @@ public class FinancialAidIncident extends DiplomaticIncident {
     public final int empMe;
     public final int empYou;
     private int amount;
-    public static FinancialAidIncident create(Empire emp, Empire donor, int amt) {
+    public static void create(Empire emp, Empire donor, int amt) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
-        FinancialAidIncident inc = new FinancialAidIncident(emp, donor, amt);
-        emb.addIncident(inc);
-        emb.otherEmbassy().giveAid();
+        emb.addIncident(new FinancialAidIncident(emp, donor, amt));
         
         for (Empire enemy: emp.warEnemies()) 
             EnemyAidIncident.create(enemy, emp, donor, amt);
-
-        return inc;
     }
     private FinancialAidIncident(Empire emp, Empire donor, int amt) {
     	super(calculateSeverity(emp, amt));

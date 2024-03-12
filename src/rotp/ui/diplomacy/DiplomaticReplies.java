@@ -16,11 +16,12 @@
 package rotp.ui.diplomacy;
 
 import rotp.model.empires.EmpireView;
+import rotp.model.tech.Tech;
 
 public class DiplomaticReplies {
 	
 	public static DiplomaticReply announceTrade(EmpireView view, int amount, int turnOccurred) {
-		String remark = DialogueManager.current().randomMessage(DialogueManager.ANNOUNCE_TRADE, view);
+		String remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
 		
 		remark = remark.replace("[my_empire]", view.owner().name());
 		remark = remark.replace("[your_empire]", view.empire().name());
@@ -32,7 +33,7 @@ public class DiplomaticReplies {
 	}
 	
 	public static DiplomaticReply acceptTrade(EmpireView view, int amount) {
-		String remark = DialogueManager.current().randomMessage(DialogueManager.ACCEPT_TRADE, view);
+		String remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
 		
 		remark = remark.replace("[my_empire]", view.owner().name());
 		remark = remark.replace("[your_empire]", view.empire().name());
@@ -41,5 +42,29 @@ public class DiplomaticReplies {
 		remark = remark.replace("[amt]", Integer.toString(amount));
 		
 		return new DiplomaticReply(true, remark);
+	}
+	
+	public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
+		String remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
+		
+		remark = remark.replace("[my_nameTitle]", view.owner().race().text("_nameTitle"));
+		remark = remark.replace("[my_name]", view.owner().leader().name());
+		remark = remark.replace("[amt]", Integer.toString(amount));
+		
+		return new DiplomaticReply(true, remark);
+	}
+	
+	public static DiplomaticReply acceptTechnologyAid(EmpireView view, Tech tech) {
+		String remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
+		
+		remark = remark.replace("[my_nameTitle]", view.owner().race().text("_nameTitle"));
+		remark = remark.replace("[my_name]", view.owner().leader().name());
+		remark = remark.replace("[tech]", tech.name());
+		
+		return new DiplomaticReply(true, remark);
+	}
+	
+	private static String baseRemark(String type, EmpireView view) {
+		return DialogueManager.current().randomMessage(type, view);
 	}
 }
