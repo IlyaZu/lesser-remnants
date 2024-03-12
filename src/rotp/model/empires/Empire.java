@@ -69,7 +69,6 @@ import rotp.model.tech.TechTree;
 import rotp.ui.NoticeMessage;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomaticReply;
-import rotp.ui.main.GalaxyMapPanel;
 import rotp.util.Base;
 
 public final class Empire implements Base, NamedObject, Serializable {
@@ -128,8 +127,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     private NamedObject lastAttacker;
     private int defaultMaxBases = 0;
     private final String dataRaceKey;
-    
-    private transient float avgX, avgY, nameX1, nameX2;
 
     private transient AI ai;
     private transient boolean[] canSeeShips;
@@ -2630,70 +2627,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         contacts.remove(e1);
         contacts.remove(e2);
         return contacts;
-    }
-    public void setEmpireMapAvgCoordinates() {
-        Empire[] emps = galaxy().empires();
-        float[] xAvg = new float[emps.length];
-        float[] yAvg = new float[emps.length];
-        float[] xMin = new float[emps.length];
-        float[] xMax = new float[emps.length];
-        int[] num = new int[emps.length];
-        
-        for (int i=0;i<emps.length;i++) 
-            xMin[i] = Float.MAX_VALUE;
-        
-        int n = galaxy().numStarSystems();
-        for (int i=0;i<n;i++) {
-            int empId = sv.empId(i);
-            if (empId >= 0) {
-                if (!sv.name(i).isEmpty()) {
-                    StarSystem sys = sv.system(i);
-                    xAvg[empId] += sys.x();
-                    yAvg[empId] += sys.y();
-                    xMin[empId] = min(xMin[empId], sys.x());
-                    xMax[empId] = max(xMax[empId], sys.x());
-                    num[empId]++;
-                }
-            }
-        }
-        
-        for (Empire emp: emps) {
-            int id = emp.id;
-            emp.avgX = xAvg[id]/num[id];
-            emp.avgY = yAvg[id]/num[id];
-            emp.nameX1 =xMin[id];
-            emp.nameX2 = xMax[id];
-        }  
-    }
-    public void draw(GalaxyMapPanel map, Graphics2D g2) {
-        draw(map, g2, nameX1, nameX2, avgX, avgY);
-    }
-    public void draw(GalaxyMapPanel map, Graphics2D g2, float xMin, float xMax, float xAvg, float yAvg) {
-        // old save: new var hasn't been calculated yet
-        if (avgX == 0)
-            return;
-        
-        float empW = (xMax-xMin)*2/3;
-        float adj = max(0,3-empW);
-        int x0 = map.mapX(xMin-adj);
-        int x1 = map.mapX(xMax+adj);
-         
-        
-        int mapX = map.mapX(xAvg);
-        int mapY = map.mapY(yAvg);
-        String longName = "XXXXXXXXXX";
-        String name = raceName();
-        int fontSize = scaledFont(g2,longName,x1-x0,60,12);
-        if (fontSize >= 12) {
-            if (!name.isEmpty()) {
-                g2.setFont(narrowFont(fontSize));
-                g2.setColor(nameColor());
-                int sw = g2.getFontMetrics().stringWidth(name);
-                int x = mapX - (sw/2);
-                int y = mapY - (fontSize/2);
-                drawString(g2,name, x, y);
-            }
-        }
     }
    
     public static Comparator<Empire> TOTAL_POPULATION = (Empire o1, Empire o2) -> o2.totalPlanetaryPopulation().compareTo(o1.totalPlanetaryPopulation());

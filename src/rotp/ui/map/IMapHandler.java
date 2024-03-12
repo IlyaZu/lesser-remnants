@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,10 +98,6 @@ public interface IMapHandler {
     default boolean showOwnership(StarSystem s)          { return true; }
     default float ownerReach(StarSystem s)               { return 0; }
     default boolean drawShield()                         { return true; } 
-    default boolean shouldDrawEmpireName(Empire e)  { 
-        return e.isPlayer() || Empire.thePlayer().hasContacted(e.id);
-    }
-    default void drawEmpireName(Empire e, GalaxyMapPanel ui, Graphics2D g)  { e.draw(ui,g); }
     default boolean drawStargate()                       { return true; }
     default boolean drawFlag()                           { return true; }
     default boolean shouldDrawSprite(Sprite s)           { return true; }

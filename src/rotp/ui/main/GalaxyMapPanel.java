@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -254,7 +254,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
 
         drawNebulas(g2);
         drawStarSystems(g2);
-        drawEmpireNames(g2);
         drawShips(g2);
         drawWorkingFlightPaths(g2);
         parent.drawYear(g2);
@@ -501,12 +500,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         for (Nebula neb: galaxy().nebulas()) {
             if (parent.shouldDrawSprite(neb))
                 neb.draw(this, g);
-        }
-    }
-    public void drawEmpireNames(Graphics2D g) {
-        for (Empire emp: galaxy().empires()) {
-            if (parent.shouldDrawEmpireName(emp) && inOverview()) 
-                parent.drawEmpireName(emp, this, g);
         }
     }
     public void drawStarSystems(Graphics2D g) {
