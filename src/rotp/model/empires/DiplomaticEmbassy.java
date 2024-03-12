@@ -34,11 +34,13 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
 import rotp.model.incidents.ExpansionIncident;
+import rotp.model.incidents.FinancialAidIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SignAllianceIncident;
 import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
+import rotp.model.incidents.TechnologyAidIncident;
 import rotp.model.incidents.TrespassingIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
@@ -266,9 +268,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void ignoreThreat()        { threatened = false; }
     public boolean threatened()       { return threatened; }
     
-    public void giveAid() {
-    	givenAidThisTurn = true;
-    }
     public boolean givenAidThisTurn() {
     	return givenAidThisTurn;
     }
@@ -667,5 +666,20 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private void beginPeace(int duration) {
         treaty = new TreatyPeace(view.empire(), view.owner(), duration);
         view.setSuggestedAllocations();
+    }
+    
+    public void receiveFinancialAid(int amt) {
+        if (amt > 0) {
+            owner().addToTreasury(amt);
+            empire().addToTreasury(0-amt);
+        }
+        otherEmbassy().givenAidThisTurn = true;
+        FinancialAidIncident.create(owner(), empire(), amt);
+    }
+    
+    public void receiveTechnologyAid(String techId) {
+        owner().tech().acquireTechThroughTrade(techId, empire().id);
+        otherEmbassy().givenAidThisTurn = true;
+        TechnologyAidIncident.create(owner(), empire(), techId);
     }
 }

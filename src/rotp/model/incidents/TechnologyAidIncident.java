@@ -25,16 +25,12 @@ public class TechnologyAidIncident extends DiplomaticIncident {
     public final int empMe;
     public final int empYou;
     private final String techId;
-    public static TechnologyAidIncident create(Empire emp, Empire donor, String techId) {
+    public static void create(Empire emp, Empire donor, String techId) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
-        TechnologyAidIncident inc = new TechnologyAidIncident(emp, donor, techId);
-        emb.addIncident(inc);
-        emb.otherEmbassy().giveAid();
+        emb.addIncident(new TechnologyAidIncident(emp, donor, techId));
         
         for (Empire enemy: emp.warEnemies()) 
             EnemyAidIncident.create(enemy, emp, donor, techId);
-
-        return inc;
     }
     private TechnologyAidIncident(Empire emp, Empire donor, String tId) {
     	super(calculateSeverity(emp, tId));

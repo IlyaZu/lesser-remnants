@@ -42,8 +42,6 @@ public interface Diplomat {
     void makeDiplomaticOffers(EmpireView ev);
     Empire councilVoteFor(Empire emp1, Empire emp2);
     
-    DiplomaticReply receiveFinancialAid(Empire e, int amt);
-    DiplomaticReply receiveTechnologyAid(Empire e, String techId);
     DiplomaticReply receiveThreatEvictSpies(Empire e);
     DiplomaticReply receiveThreatStopSpying(Empire e);
     DiplomaticReply receiveThreatStopAttacking(Empire e);

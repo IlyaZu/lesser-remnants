@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,10 +79,14 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         if (!enabled(i))
             return;
 
+        EmpireView diplomatView = diplomat().viewForEmpire(player());
         log("DiplomacyOfferAidgitMenu - selected: ", str(i));
         DiplomaticReply reply;
-        if (options.get(i) == OFFER_MONEY)
-            reply = diplomat().diplomatAI().receiveFinancialAid(player(), amounts.get(i));  
+        if (options.get(i) == OFFER_MONEY) {
+        	int amount = amounts.get(i);
+        	diplomatView.embassy().receiveFinancialAid(amount);
+        	reply = DiplomaticReplies.acceptFinancialAid(diplomatView, amount);
+        } 
         else if (options.get(i) == EXIT) {
              escape(); return;
         }
@@ -92,14 +97,15 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
             }
             else {
                 int techIndex = i-amounts.size();
-                reply = diplomat().diplomatAI().receiveTechnologyAid(player(), techs.get(techIndex).id);
+                Tech tech = techs.get(techIndex);
+                diplomatView.embassy().receiveTechnologyAid(tech.id);
+                reply = DiplomaticReplies.acceptTechnologyAid(diplomatView, tech);
             }
         }
         else {
             escape(); return;
         }
 
-        EmpireView diplomatView = diplomat().viewForEmpire(player());
         // get return menu for reply (after it's clicked)
         if (!diplomatView.diplomats())
             reply.returnMenu(null);

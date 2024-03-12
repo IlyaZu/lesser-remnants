@@ -36,13 +36,11 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.EspionageTechIncident;
 import rotp.model.incidents.EvictedSpiesIncident;
 import rotp.model.incidents.ExpansionIncident;
-import rotp.model.incidents.FinancialAidIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SabotageBasesIncident;
 import rotp.model.incidents.SabotageFactoriesIncident;
 import rotp.model.incidents.SkirmishIncident;
-import rotp.model.incidents.TechnologyAidIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
@@ -135,24 +133,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
         return amts;
     }
-    @Override
-    public DiplomaticReply receiveFinancialAid(Empire donor, int amt) {
-        if (amt > 0) {
-            empire.addToTreasury(amt);
-            donor.addToTreasury(0-amt);
-        }
-        EmpireView view = donor.viewForEmpire(empire);
-        DiplomaticIncident inc = FinancialAidIncident.create(empire, donor, amt);
-        return view.accept(DialogueManager.ACCEPT_FINANCIAL_AID, inc);
-    }
-    @Override
-    public DiplomaticReply receiveTechnologyAid(Empire donor, String techId) {
-        empire.tech().acquireTechThroughTrade(techId, donor.id);
 
-        EmpireView view = donor.viewForEmpire(empire);
-        DiplomaticIncident inc = TechnologyAidIncident.create(empire, donor, techId);
-        return view.accept(DialogueManager.ACCEPT_TECHNOLOGY_AID, inc);
-    }
     //-----------------------------------
     //  EXCHANGE TECHNOLOGY
     //-----------------------------------
