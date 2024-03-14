@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1333,7 +1333,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     private void drawStack(Graphics2D g, CombatEntity st, int x, int y, int w, int h) {
         if (st.isShip()) {
             CombatShip sh = (CombatShip) st;
-            ShipDesign d = sh.design;
+            ShipDesign d = sh.design();
             int count = counts.containsKey(d) ? counts.get(d) : 0;
             if (count > 0)
                 sh.drawStack(this, g, count, x, y, w, h);

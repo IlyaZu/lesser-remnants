@@ -79,20 +79,20 @@ public class CombatEmpireShip extends CombatShip {
         super.loseShip();
         int shipsLost = orig-num;
         
-        fleet.removeShips(design.id(), shipsLost, true);
-        empire.shipLab().recordDestruction(design, shipsLost);
+        fleet.removeShips(design().id(), shipsLost, true);
+        empire.shipLab().recordDestruction(design(), shipsLost);
     }
 	
     @Override
     public void becomeDestroyed() {
-        fleet.removeShips(design.id(), num, true);
-        empire.shipLab().recordDestruction(design, num);
+        fleet.removeShips(design().id(), num, true);
+        empire.shipLab().recordDestruction(design(), num);
         super.becomeDestroyed();
     }
     
     @Override
     public void recordKills(int num) {
-    	empire.shipLab().recordKills(design, num);
+    	empire.shipLab().recordKills(design(), num);
     }
     
     @Override
@@ -105,7 +105,7 @@ public class CombatEmpireShip extends CombatShip {
         if (s == null)
             return false;
 
-        galaxy().ships.retreatSubfleet(fleet, design.id(), s.id);
+        galaxy().ships.retreatSubfleet(fleet, design().id(), s.id);
         return true;
     }
     
@@ -113,7 +113,7 @@ public class CombatEmpireShip extends CombatShip {
     public void endTurn() {
     	super.endTurn();
         if (bombardedThisTurn)
-            fleet.bombarded(design.id());
+            fleet.bombarded(design().id());
         bombardedThisTurn = false;
     }
     
