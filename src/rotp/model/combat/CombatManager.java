@@ -461,7 +461,7 @@ public class CombatManager implements Base {
         log("Retreating: ", stack.fullName());
         performingStackTurn = true;
         stack.drawRetreat();
-        results.addShipsRetreated(stack.design, stack.num);
+        results.addShipsRetreated(stack.design(), stack.num);
         removeFromCombat(stack);
         stack.retreatToSystem(s);
         //turnDone(stack);
@@ -470,7 +470,7 @@ public class CombatManager implements Base {
     public void destroyStack(CombatEntity stack) {
         log("Destroyed: ", stack.fullName());
         if (stack instanceof CombatShip)
-            results.addShipStackDestroyed(((CombatShip)stack).design, stack.origNum);
+            results.addShipStackDestroyed(((CombatShip)stack).design(), stack.origNum);
         else if (stack instanceof CombatColony)
             results.addBasesDestroyed(stack.num);
 
@@ -741,7 +741,7 @@ public class CombatManager implements Base {
                 for (CombatEntity st2 : results.activeStacks()) {
                     if (st2.isShip()) {
                         CombatShip sh2 = (CombatShip) st2;
-                        st.empire.scanDesign(sh2.design, st2.empire);
+                        st.empire.scanDesign(sh2.design(), st2.empire);
                     }
                 }
             }

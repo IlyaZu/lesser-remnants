@@ -30,7 +30,7 @@ import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 
 public class CombatShip extends CombatEntity {
-    public ShipDesign design;
+    private final ShipDesign design;
     private int selectedWeaponIndex = 0;
     private final List<ShipComponent> weapons = new ArrayList<>();
     private float displacementPct = 0;
