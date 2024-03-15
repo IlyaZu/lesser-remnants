@@ -91,11 +91,6 @@ public class CombatEmpireShip extends CombatShip {
     }
     
     @Override
-    public void recordKills(int num) {
-    	empire.shipLab().recordKills(design(), num);
-    }
-    
-    @Override
     public boolean canRetreat() {
     	return !atLastColony && (maneuverability > 0);
     }
