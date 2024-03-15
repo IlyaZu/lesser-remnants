@@ -169,7 +169,6 @@ public abstract class CombatEntity implements Base {
     public float missileDamageMod()                  { return 1; }
     public float blackHoleDef()                      { return 0; }
     public void assignCollateralDamage(float damage) {  }
-    public void recordKills(int num)                 {  }
     public boolean retreat()                         { return retreatToSystem(captain.retreatSystem(mgr.system())); }
     public boolean retreatToSystem(StarSystem s)     { return false; }
 

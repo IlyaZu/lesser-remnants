@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,16 +63,10 @@ public class ShipView implements Base,Serializable {
 
     // historical data
     private int lastViewTurn = 0;
-    private int totalKilled = 0;
-    private int totalKills = 0;
 
     public Empire empire()                { return empire; }
     public ShipDesign design()            { return design; }
     public Integer lastViewTurn()         { return lastViewTurn; }
-    public int totalKills()               { return totalKills; }
-    public void addTotalKills(int i)      { totalKills += i; }
-    public int totalKilled()              { return totalKilled; }
-    public void addTotalKilled(int i)     { totalKilled += i; }
 
     public boolean hasComputer()        { return computer != null; }
     public boolean computerKnown()      { return computerKnown; }

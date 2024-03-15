@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -192,11 +192,6 @@ public class ShipDesignLab implements Base, Serializable {
     public void recordScrap(Design d, int num)       { d.addTotalScrapped(num); }
     public void recordDestruction(Design d, int num) { d.addTotalDestroyed(num); }
     public void recordUse(Design d, int num)         { d.addTotalUsed(num); }
-    public void recordKills(Design d, int num) {
-        ShipDesign sd = (ShipDesign) d;
-        ShipView sv = shipViewFor(sd);
-        sv.addTotalKills(num);
-    }
     public int availableDesignSlot() {
         for (int i=0;i<designs.length;i++) {
             if (!designs[i].active())

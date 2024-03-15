@@ -150,8 +150,6 @@ public class CombatShip extends CombatEntity {
     public boolean ignoreRepulsors()    { return cloaked || canTeleport(); }
     @Override
     public void becomeDestroyed()    {
-        mgr.currentStack().recordKills(num);
-
         super.becomeDestroyed();
         for (ShipComponent c: weapons)
             c.becomeDestroyed();
@@ -533,8 +531,6 @@ public class CombatShip extends CombatEntity {
         // record losses
         if (!destroyed())  // if destroyed, already recorded lose in super.loseShip()
             mgr.results().addShipDestroyed(design, shipsLost);
-        
-        mgr.currentStack().recordKills(shipsLost);
     }
     @Override
     public void drawStack(ShipBattleUI ui, Graphics2D g, int origCount, int x, int y, int stackW, int stackH) {
