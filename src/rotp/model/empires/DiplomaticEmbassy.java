@@ -534,7 +534,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         OathBreakerIncident.alertBrokenPact(owner(),empire(), caughtSpying);
         return inc;
     }
-    public DiplomaticIncident signAlliance() {
+    public void signAlliance() {
         beginTreaty();
         endWarPreparations();
         setTreaty(new TreatyAlliance(view.owner(), view.empire()));
@@ -543,11 +543,9 @@ public class DiplomaticEmbassy implements Base, Serializable {
         owner().shareSystemInfoWithAlly(empire());
         owner().hideSpiesAgainst(empire().id);
         empire().hideSpiesAgainst(owner().id);
-        DiplomaticIncident inc = SignAllianceIncident.create(owner(), empire());
-        addIncident(inc);
+        addIncident(SignAllianceIncident.create(owner(), empire()));
         otherEmbassy().addIncident(SignAllianceIncident.create(empire(), owner()));
         GNNAllianceFormedNotice.create(owner(), empire());
-        return inc;
     }
     public DiplomaticIncident breakAlliance() { return breakAlliance(false); }
     public DiplomaticIncident breakAlliance(boolean caughtSpying) {

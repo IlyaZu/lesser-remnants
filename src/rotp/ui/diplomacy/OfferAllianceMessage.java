@@ -17,6 +17,7 @@
 package rotp.ui.diplomacy;
 
 import rotp.model.empires.Empire;
+import rotp.model.empires.EmpireView;
 
 public class OfferAllianceMessage extends TurnNotificationMessage {
     public OfferAllianceMessage(String  s) {
@@ -43,7 +44,10 @@ public class OfferAllianceMessage extends TurnNotificationMessage {
         log("OfferAllianceMessage - selected: ", str(i));
         switch(i) {
         case 0:
-            DiplomaticReply reply = player().diplomatAI().acceptOfferAlliance(diplomat());
+            EmpireView view = player().viewForEmpire(diplomat());
+            view.embassy().signAlliance();
+            
+            DiplomaticReply reply = DiplomaticReplies.announceAlliance(view, galaxy().currentTurn());
             reply.resumeTurn(true);
             DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
             break;

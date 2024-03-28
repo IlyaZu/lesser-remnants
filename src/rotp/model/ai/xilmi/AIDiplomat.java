@@ -638,21 +638,12 @@ public class AIDiplomat implements Base, Diplomat {
             if (hisAllies.contains(enemy))
                 return v.refuse(DialogueManager.DECLINE_ENEMY_ALLY, enemy);
         }
-        if(willingToOfferAlliance(requestor))
-            return signAlliance(requestor);
+        if(willingToOfferAlliance(requestor)) {
+            v.embassy().signAlliance();
+            return DiplomaticReplies.acceptAlliance(v);
+        }
         else
             return refuseOfferAlliance(requestor);
-    }
-    public DiplomaticReply signAlliance(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signAlliance();
-        return v.otherView().accept(DialogueManager.ACCEPT_ALLIANCE, inc);
-    }
-    @Override
-    public DiplomaticReply acceptOfferAlliance(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signAlliance();
-        return v.accept(DialogueManager.ANNOUNCE_ALLIANCE, inc);
     }
     @Override
     public DiplomaticReply refuseOfferAlliance(Empire requestor) {

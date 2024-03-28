@@ -644,18 +644,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (adjustedRelations < 60)
             return refuseOfferAlliance(requestor);
         
-        return signAlliance(requestor);
-    }
-    public DiplomaticReply signAlliance(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signAlliance();
-        return v.otherView().accept(DialogueManager.ACCEPT_ALLIANCE, inc);
-    }
-    @Override
-    public DiplomaticReply acceptOfferAlliance(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signAlliance();
-        return v.accept(DialogueManager.ANNOUNCE_ALLIANCE, inc);
+        v.embassy().signAlliance();
+        return DiplomaticReplies.acceptAlliance(v);
     }
     @Override
     public DiplomaticReply refuseOfferAlliance(Empire requestor) {
