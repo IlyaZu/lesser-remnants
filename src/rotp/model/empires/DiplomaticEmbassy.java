@@ -592,7 +592,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     
     private void driftRelations() {
-    	updateRelations((baseRelations()-relations)/100);
+    	updateRelations((baseRelations()-relations)/50);
     }
     
     private void updateRelations(DiplomaticIncident incident) {
