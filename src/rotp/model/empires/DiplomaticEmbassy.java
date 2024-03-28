@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import rotp.model.galaxy.StarSystem;
+import rotp.model.incidents.AllianceIncident;
 import rotp.model.incidents.AlliedWithEnemyIncident;
 import rotp.model.incidents.AtWarWithAllyIncident;
 import rotp.model.incidents.BreakAllianceIncident;
@@ -38,7 +39,6 @@ import rotp.model.incidents.FinancialAidIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.PactIncident;
-import rotp.model.incidents.SignAllianceIncident;
 import rotp.model.incidents.SignPeaceIncident;
 import rotp.model.incidents.TechnologyAidIncident;
 import rotp.model.incidents.TrespassingIncident;
@@ -543,8 +543,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         owner().shareSystemInfoWithAlly(empire());
         owner().hideSpiesAgainst(empire().id);
         empire().hideSpiesAgainst(owner().id);
-        addIncident(SignAllianceIncident.create(owner(), empire()));
-        otherEmbassy().addIncident(SignAllianceIncident.create(empire(), owner()));
         GNNAllianceFormedNotice.create(owner(), empire());
     }
     public DiplomaticIncident breakAlliance() { return breakAlliance(false); }
@@ -622,6 +620,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         clearForgottenIncidents();
         
         PactIncident.create(view);
+        AllianceIncident.create(view);
         AtWarWithAllyIncident.create(view);
         AlliedWithEnemyIncident.create(view);
         TrespassingIncident.create(view);
