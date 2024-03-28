@@ -181,17 +181,17 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public void addEvent(StarSystemEvent e)     { events.add(e); }
     public List<StarSystemEvent> events()       { return events; }
     public boolean abandoned()                  { return abandoned; }
-    public void abandoned(boolean b) { 
-        if (!abandoned && b) 
+    public void abandoned(boolean b) {
+        if (!abandoned && b)
             galaxy().abandonedSystems().add(this);
-        else if (abandoned && !b) 
+        else if (abandoned && !b)
             galaxy().abandonedSystems().remove(this);
            
         clearTransportSprite();
-        abandoned = b; 
+        abandoned = b;
     }
-    public void clearTransportSprite()          { 
-        transportSprite = null; 
+    public void clearTransportSprite()          {
+        transportSprite = null;
         transportDestId = StarSystem.NULL_ID;
         transportAmt = 0;
     }
@@ -239,11 +239,11 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public boolean canStargateTravelTo(StarSystem s) {
         return isColonized() && s.isColonized() && (s.empire() == empire()) && colony().hasStargate() && s.colony().hasStargate();
     }
-    public float transportTimeTo(StarSystem s) { 
+    public float transportTimeTo(StarSystem s) {
         if (canStargateTravelTo(s))
             return 1.0f;
         else
-            return distanceTo(s) / empire().transportTravelSpeed(this, s); 
+            return distanceTo(s) / empire().transportTravelSpeed(this, s);
     }
     public float rallyTimeTo(StarSystem s) {
         Design d = colony().shipyard().design();
@@ -534,15 +534,15 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         if (!session().performingTurn()) {
             SystemView sv = pl.sv.view(id);
             Color c0 = map.parent().alertColor(sv);
-            if (c0 != null) 
+            if (c0 != null)
                 drawAlert(map, g2, c0, x0, y0);
         }
         drawStar(map, g2, x0, y0);
         
         if (map.parent().isClicked(this)
-        || map.parent().isClicked(transportSprite())) 
+        || map.parent().isClicked(transportSprite()))
             drawSelection(g2, map, emp, x0, y0);
-        else if (map.parent().isHovering(this)) 
+        else if (map.parent().isHovering(this))
             drawHovering(g2, map, x0, y0);
 
         // draw shield?
@@ -687,7 +687,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             a.add(new Area(new RoundRectangle2D.Float(x-(r/6), y-r, r/3, r+r, r1/3, r1/3)));
             a.subtract(new Area(new Ellipse2D.Float(x-r1,y-r1,r1+r1,r1+r1)));
             g2.fill(a);
-        }      
+        }
     }
     public void drawStar(GalaxyMapPanel map, Graphics2D g2, int x, int y) {
         int r0 = drawRadius(map);

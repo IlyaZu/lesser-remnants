@@ -140,7 +140,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         if (casusBelli != null) {
             // re-evaluate hate and opportunity
             switch(casusBelli) {
-                case DialogueManager.DECLARE_HATE_WAR: 
+                case DialogueManager.DECLARE_HATE_WAR:
                     if (!view.owner().diplomatAI().wantToDeclareWarOfHate(view))
                         endWarPreparations();
                     break;
@@ -234,17 +234,17 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean readyForJointWar()       { return jointWarTimer <= 0; }
     public void resetJointWarTimer()        { jointWarTimer = empire().isPlayerControlled() ? JOINT_WAR_DELAY : 1; }
     public boolean alreadyOfferedJointWar() { return jointWarTimer == JOINT_WAR_DELAY; }
-    public int minimumPraiseLevel()         { 
+    public int minimumPraiseLevel()         {
         // raise threshold for praise when at war
         if (war())
             return max(50, minimumPraiseLevel);
         else
-            return max(10, minimumPraiseLevel); 
+            return max(10, minimumPraiseLevel);
     }
     public int minimumWarnLevel()           { return max(10, minimumWarnLevel); }
     public void praiseSent()                { minimumPraiseLevel = minimumPraiseLevel()+10;  }
-    public void logWarning(DiplomaticIncident inc) { 
-        minimumWarnLevel = minimumWarnLevel()+5;  
+    public void logWarning(DiplomaticIncident inc) {
+        minimumWarnLevel = minimumWarnLevel()+5;
         int timerKey = inc.timerKey();
         if (timerKey >= 0) {
             int duration = inc.duration();
@@ -318,7 +318,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         driftRelations();
         resetIncidents();
 
-        // player refusals are remembered for the 
+        // player refusals are remembered for the
         // entire duration to avoid the AI spamming the player
         // AI  refusals are completely reset after each turn
         // to allow players to continue asking once each turn
@@ -340,7 +340,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
         
         // decrement all generic timers down to 0
-        for (int i=0;i<timers.length;i++) 
+        for (int i=0;i<timers.length;i++)
             timers[i] = max(0, timers[i]-1);
         
         // check if any threat timers have aged out
@@ -415,7 +415,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public DiplomaticIncident declareJointWar(Empire requestor) {
         // when we are declaring a war as a result of a joint war request, ignore
-        // any existing casus belli. This ensures that a DeclareWarIncident is returned 
+        // any existing casus belli. This ensures that a DeclareWarIncident is returned
         // instead of some existing casus belli incident. This ensures that [other...]
         // tags are replaced properly in the war announcement to the player
         casusBelli = null;
