@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +30,8 @@ public class DiplomacyTreatyMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp) { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         
         Diplomat plAI = player().diplomatAI();
         Empire pl = player();
@@ -89,7 +90,7 @@ public class DiplomacyTreatyMenu extends DiplomaticMessage {
             case BREAK_TRADE            : return text("DIPLOMACY_MENU_BREAK_TRADE");
             case BREAK_PACT             : return text("DIPLOMACY_MENU_BREAK_PACT");
             case BREAK_ALLIANCE         : return text("DIPLOMACY_MENU_BREAK_ALLIANCE");
-            case EXIT                   : return text("DIPLOMACY_MENU_FORGET_IT"); 
+            case EXIT                   : return text("DIPLOMACY_MENU_FORGET_IT");
         }
         return "";
     }
@@ -106,26 +107,26 @@ public class DiplomacyTreatyMenu extends DiplomaticMessage {
         DiplomaticReply reply;
         switch(choice) {
             case PROPOSE_PEACE          : reply = diplomat().diplomatAI().receiveOfferPeace(player());    break;
-            case PROPOSE_TRADE          : 
+            case PROPOSE_TRADE          :
                 DiplomaticReply refusal = diplomat().diplomatAI().immediateRefusalToTrade(player());
                 if (refusal != null) {
                     refusal.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
                     DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), refusal));
                 }
                 else
-                    DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TRADE_MENU); 
+                    DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TRADE_MENU);
                 return;
             case PROPOSE_PACT           : reply = diplomat().diplomatAI().receiveOfferPact(player());     break;
-            case PROPOSE_ALLIANCE       : 
+            case PROPOSE_ALLIANCE       :
                 RotPUI.instance().mainUI().map().resetRangeAreas(); // resets the range drawing on main map
-                reply = diplomat().diplomatAI().receiveOfferAlliance(player()); 
+                reply = diplomat().diplomatAI().receiveOfferAlliance(player());
                 break;
             case PROPOSE_JOINT_WAR      : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_JOINT_WAR_MENU); return;
             case BREAK_TRADE            : reply = diplomat().diplomatAI().receiveBreakTrade(player());    break;
             case BREAK_PACT             : reply = diplomat().diplomatAI().receiveBreakPact(player());     break;
-            case BREAK_ALLIANCE         : 
+            case BREAK_ALLIANCE         :
                 RotPUI.instance().mainUI().map().resetRangeAreas(); // resets the range drawing on main map
-                reply = diplomat().diplomatAI().receiveBreakAlliance(player()); 
+                reply = diplomat().diplomatAI().receiveBreakAlliance(player());
                 break;
             case EXIT                   : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_MAIN_MENU); return;
             default                     : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_MAIN_MENU); return;
