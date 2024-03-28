@@ -512,16 +512,14 @@ public class DiplomaticEmbassy implements Base, Serializable {
         otherEmbassy().addIncident(SignPeaceIncident.create(empire(), owner(), duration));
         return inc;
     }
-    public DiplomaticIncident signPact() {
+    public void signPact() {
         beginTreaty();
         endWarPreparations();
         owner().hideSpiesAgainst(empire().id);
         empire().hideSpiesAgainst(owner().id);
         setTreaty(new TreatyPact(view.owner(), view.empire()));
-        DiplomaticIncident inc = SignPactIncident.create(owner(), empire());
-        addIncident(inc);
+        addIncident(SignPactIncident.create(owner(), empire()));
         otherEmbassy().addIncident(SignPactIncident.create(empire(), owner()));
-        return inc;
     }
     public void reopenEmbassy() {
         diplomatGoneTimer = 0;

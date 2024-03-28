@@ -564,14 +564,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (adjustedRelations < 20)
             return refuseOfferPact(requestor);
 
-        DiplomaticIncident inc = v.embassy().signPact();
-        return v.otherView().accept(DialogueManager.ACCEPT_PACT, inc);
-    }
-    @Override
-    public DiplomaticReply acceptOfferPact(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signPact();
-        return v.accept(DialogueManager.ANNOUNCE_PACT, inc);
+        v.embassy().signPact();
+        return DiplomaticReplies.acceptPact(v.otherView());
     }
     @Override
     public DiplomaticReply refuseOfferPact(Empire requestor) {

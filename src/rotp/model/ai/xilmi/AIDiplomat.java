@@ -572,19 +572,12 @@ public class AIDiplomat implements Base, Diplomat {
         v.embassy().resetPactTimer();
         
         //ail: just use the same logic we'd use for offering
-        if(willingToOfferPact(empire.viewForEmpire(requestor)))
-        {
-            DiplomaticIncident inc = v.embassy().signPact();
-            return v.otherView().accept(DialogueManager.ACCEPT_PACT, inc);
+        if(willingToOfferPact(empire.viewForEmpire(requestor))) {
+            v.embassy().signPact();
+            return DiplomaticReplies.acceptPact(v.otherView());
         }
         else
             return v.refuse(DialogueManager.DECLINE_OFFER);
-    }
-    @Override
-    public DiplomaticReply acceptOfferPact(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        DiplomaticIncident inc = v.embassy().signPact();
-        return v.accept(DialogueManager.ANNOUNCE_PACT, inc);
     }
     @Override
     public DiplomaticReply refuseOfferPact(Empire requestor) {

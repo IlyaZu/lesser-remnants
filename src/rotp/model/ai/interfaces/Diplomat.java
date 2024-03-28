@@ -59,7 +59,6 @@ public interface Diplomat {
     DiplomaticReply acceptOfferPeace(Empire e);
     DiplomaticReply refuseOfferPeace(Empire e);
     DiplomaticReply refuseOfferTrade(Empire e, int level);
-    DiplomaticReply acceptOfferPact(Empire e);
     DiplomaticReply refuseOfferPact(Empire e);
     DiplomaticReply acceptOfferAlliance(Empire e);
     DiplomaticReply refuseOfferAlliance(Empire e);
