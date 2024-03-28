@@ -16,20 +16,23 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.empires.Empire;
+import rotp.model.empires.DiplomaticEmbassy;
+import rotp.model.empires.EmpireView;
 
-public class SignAllianceIncident extends DiplomaticIncident {
+public class AllianceIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empMe;
     final int empYou;
-    public static SignAllianceIncident create(Empire e1, Empire e2) {
-        SignAllianceIncident inc = new SignAllianceIncident(e1, e2);
-        return inc;
+    public static void create(EmpireView view) {
+    	DiplomaticEmbassy embassy = view.embassy();
+    	if (embassy.alliance()) {
+    		embassy.addIncident(new AllianceIncident(view));
+    	}
     }
-    private SignAllianceIncident(Empire e1, Empire e2) {
-    	super(5);
-        empMe = e1.id;
-        empYou = e2.id;
+    private AllianceIncident(EmpireView view) {
+    	super(3);
+        empMe = view.ownerId();
+        empYou = view.empId();
     }
     @Override
     public String title()         { return text("INC_SIGNED_ALLIANCE_TITLE"); }
