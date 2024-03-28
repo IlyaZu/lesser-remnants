@@ -37,8 +37,8 @@ import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.FinancialAidIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
+import rotp.model.incidents.PactIncident;
 import rotp.model.incidents.SignAllianceIncident;
-import rotp.model.incidents.SignPactIncident;
 import rotp.model.incidents.SignPeaceIncident;
 import rotp.model.incidents.TechnologyAidIncident;
 import rotp.model.incidents.TrespassingIncident;
@@ -518,8 +518,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         owner().hideSpiesAgainst(empire().id);
         empire().hideSpiesAgainst(owner().id);
         setTreaty(new TreatyPact(view.owner(), view.empire()));
-        addIncident(SignPactIncident.create(owner(), empire()));
-        otherEmbassy().addIncident(SignPactIncident.create(empire(), owner()));
     }
     public void reopenEmbassy() {
         diplomatGoneTimer = 0;
@@ -625,6 +623,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         newIncidents().clear();
         clearForgottenIncidents();
         
+        PactIncident.create(view);
         AtWarWithAllyIncident.create(view);
         AlliedWithEnemyIncident.create(view);
         TrespassingIncident.create(view);
