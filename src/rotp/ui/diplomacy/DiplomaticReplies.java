@@ -24,64 +24,48 @@ public class DiplomaticReplies {
 	
 	public static DiplomaticReply announceTrade(EmpireView view, int amount, int turnOccurred) {
 		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
-		replaceEmpireTokens(remark, "your", view.empire());
 		replaceToken(remark, "[amt]", Integer.toString(amount));
 		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptTrade(EmpireView view, int amount) {
 		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
-		replaceEmpireTokens(remark, "your", view.owner());
 		replaceToken(remark, "[amt]", Integer.toString(amount));
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply announcePact(EmpireView view, int turnOccurred) {
 		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_PACT, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
-		replaceEmpireTokens(remark, "your", view.empire());
 		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptPact(EmpireView view) {
 		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_PACT, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
-		replaceEmpireTokens(remark, "your", view.empire());
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
 		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
 		replaceToken(remark, "[amt]", Integer.toString(amount));
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptTechnologyAid(EmpireView view, Tech tech) {
 		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
 		replaceToken(remark, "[tech]", tech.name());
-		
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	private static StringBuilder baseRemark(String type, EmpireView view) {
-		return new StringBuilder(DialogueManager.current().randomMessage(type, view));
+		String remarkString = DialogueManager.current().randomMessage(type, view);
+		StringBuilder remark = new StringBuilder(remarkString);
+		
+		replaceEmpireTokens(remark, "my", view.owner());
+		replaceEmpireTokens(remark, "your", view.empire());
+		
+		return remark;
 	}
     
     private static void replaceEmpireTokens(StringBuilder remark, String prefix, Empire empire) {
