@@ -46,6 +46,17 @@ public class DiplomaticReplies {
 		return new DiplomaticReply(true, remark.toString());
 	}
 	
+	public static DiplomaticReply announceAlliance(EmpireView view, int turnOccurred) {
+		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_ALLIANCE, view);
+		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
+		return new DiplomaticReply(true, remark.toString());
+	}
+	
+	public static DiplomaticReply acceptAlliance(EmpireView view) {
+		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_ALLIANCE, view);
+		return new DiplomaticReply(true, remark.toString());
+	}
+	
 	public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
 		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
 		replaceToken(remark, "[amt]", Integer.toString(amount));
