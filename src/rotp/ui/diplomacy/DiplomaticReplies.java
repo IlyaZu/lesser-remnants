@@ -23,78 +23,87 @@ import rotp.model.tech.Tech;
 public class DiplomaticReplies {
 	
 	public static DiplomaticReply announceTrade(EmpireView view, int amount, int turnOccurred) {
-		String remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
+		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
 		
-		remark = replaceEmpireTokens(remark, "my", view.owner());
-		remark = replaceEmpireTokens(remark, "your", view.empire());
-		remark = remark.replace("[amt]", Integer.toString(amount));
-		remark = remark.replace("[year]", Integer.toString(turnOccurred));
+		replaceEmpireTokens(remark, "my", view.owner());
+		replaceEmpireTokens(remark, "your", view.empire());
+		replaceToken(remark, "[amt]", Integer.toString(amount));
+		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
 		
-		return new DiplomaticReply(true, remark);
+		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptTrade(EmpireView view, int amount) {
-		String remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
+		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
 		
-		remark = replaceEmpireTokens(remark, "my", view.owner());
-		remark = replaceEmpireTokens(remark, "your", view.owner());
-		remark = remark.replace("[amt]", Integer.toString(amount));
+		replaceEmpireTokens(remark, "my", view.owner());
+		replaceEmpireTokens(remark, "your", view.owner());
+		replaceToken(remark, "[amt]", Integer.toString(amount));
 		
-		return new DiplomaticReply(true, remark);
+		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
-		String remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
+		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
 		
-		remark = replaceEmpireTokens(remark, "my", view.owner());
-		remark = remark.replace("[amt]", Integer.toString(amount));
+		replaceEmpireTokens(remark, "my", view.owner());
+		replaceToken(remark, "[amt]", Integer.toString(amount));
 		
-		return new DiplomaticReply(true, remark);
+		return new DiplomaticReply(true, remark.toString());
 	}
 	
 	public static DiplomaticReply acceptTechnologyAid(EmpireView view, Tech tech) {
-		String remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
+		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
 		
-		remark = replaceEmpireTokens(remark, "my", view.owner());
-		remark = remark.replace("[tech]", tech.name());
+		replaceEmpireTokens(remark, "my", view.owner());
+		replaceToken(remark, "[tech]", tech.name());
 		
-		return new DiplomaticReply(true, remark);
+		return new DiplomaticReply(true, remark.toString());
 	}
 	
-	private static String baseRemark(String type, EmpireView view) {
-		return DialogueManager.current().randomMessage(type, view);
+	private static StringBuilder baseRemark(String type, EmpireView view) {
+		return new StringBuilder(DialogueManager.current().randomMessage(type, view));
 	}
     
-    private static String replaceEmpireTokens(String remark, String prefix, Empire empire) {
+    private static void replaceEmpireTokens(StringBuilder remark, String prefix, Empire empire) {
         String fullPrefix = "[" + prefix + "_";
-        int fullPrefixSize = fullPrefix.length();
+        int fullPrefixLength = fullPrefix.length();
         int startIndex = remark.indexOf(fullPrefix, 0);
         while (startIndex != -1) {
-            int endIndex = remark.indexOf(']', startIndex);
+            int endIndex = remark.indexOf("]", startIndex);
             if (endIndex == -1)
                 break;
-            String token = remark.substring(startIndex+fullPrefixSize-1, endIndex);
-            remark = replaceEmpireToken(remark, prefix, token, empire);
+            
+            String token = remark.substring(startIndex + fullPrefixLength - 1, endIndex);
+            String value = getEmpireTokenValue(token, empire);
+            String fullToken = "[" + prefix + token + "]";
+            remark.replace(startIndex, startIndex + fullToken.length(), value);
+            
             startIndex = remark.indexOf(fullPrefix, startIndex+1);
         }
-        return remark;
     }
     
-    private static String replaceEmpireToken(String remark, String prefix, String token, Empire empire) {
-        String target = "[" + prefix + token +"]";
+    private static String getEmpireTokenValue(String token, Empire empire) {
         if (token.equals("_name")) {
         	// leader name is special case, not in dictionary
-            remark = remark.replace(target, empire.leader().name());
+            return empire.leader().name();
         }
         else if (token.equals("_home")) {
         	int capitalId = empire.capitalSysId();
-            remark = remark.replace(target, empire.sv.name(capitalId));     
+        	return empire.sv.name(capitalId);
         }
         else {
-            String value = empire.label(token);
-            remark = remark.replace(target, value);
+            return empire.label(token);
         }
-        return remark;
+    }
+    
+    private static void replaceToken(StringBuilder remark, String token, String value) {
+    	int tokenLength = token.length();
+    	int startIndex = remark.indexOf(token, 0);
+    	while (startIndex != -1) {
+    		remark.replace(startIndex, startIndex + tokenLength, value);
+    		startIndex = remark.indexOf(token, startIndex);
+    	}
     }
 	
 }
