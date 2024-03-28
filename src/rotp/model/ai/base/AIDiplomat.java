@@ -299,9 +299,6 @@ public class AIDiplomat implements Base, Diplomat {
         adjustedRelations += v.embassy().alliedWithEnemy() ? -100 : 0;
         return adjustedRelations > 20;
     }
-    public Tech mostDesirableTech(EmpireView v) {
-        return empire.ai().scientist().mostDesirableTech(v.spies().unknownTechs());
-    }
     private float techDealValue(EmpireView v) {
         if (v.embassy().alliance())
             return 1.0f;
@@ -464,7 +461,7 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  PEACE
     //-----------------------------------
-    public boolean canOfferPeaceTreaty(Empire e)           { return diplomats(id(e)) && empire.atWarWith(id(e)); }
+    private boolean canOfferPeaceTreaty(Empire e)           { return diplomats(id(e)) && empire.atWarWith(id(e)); }
     @Override
     public DiplomaticReply receiveOfferPeace(Empire requestor) {
         log(empire.name(), " receiving offer of Peace from: ", requestor.name());
@@ -521,7 +518,7 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  PACT
     //-----------------------------------
-    public boolean canOfferPact(Empire e){
+    private boolean canOfferPact(Empire e){
         if (!diplomats(id(e)))
             return false;
         if (!empire.inEconomicRange(id(e)))
@@ -590,7 +587,7 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  ALLIANCE
     //-----------------------------------
-    public boolean canOfferAlliance(Empire e) {
+    private boolean canOfferAlliance(Empire e) {
         if (!diplomats(id(e)))
             return false;
         if (!empire.inEconomicRange(id(e)))
@@ -675,7 +672,7 @@ public class AIDiplomat implements Base, Diplomat {
 //-----------------------------------
 //  JOINT WARS
 //-----------------------------------
-    public boolean willingToRequestAllyToJoinWar(Empire friend, Empire target) {
+    private boolean willingToRequestAllyToJoinWar(Empire friend, Empire target) {
         // this method is called only for targets that we are at explicit war with
         // and the friend is our ALLY
         
@@ -687,7 +684,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
         return true;
     }
-    public boolean willingToOfferJointWar(Empire friend, Empire target) {
+    private boolean willingToOfferJointWar(Empire friend, Empire target) {
         // this method is called only for targets that we are at war with
         // or targets we are preparing for war with
         
@@ -817,11 +814,6 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  BREAK TREATIES
     //-----------------------------------
-    public boolean canCloseEmbassy(Empire e)               { return empire.aggressiveWith(id(e)); }
-    public boolean canDemandTribute(Empire e)              { return true; }
-    public boolean canBreakTrade(Empire e)                 { return empire.tradingWith(e); }
-    public boolean canBreakPact(Empire e)                  { return empire.pactWith(id(e)); }
-    public boolean canBreakAlliance(Empire e)              { return empire.alliedWith(id(e)); }
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inEconomicRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
     @Override
