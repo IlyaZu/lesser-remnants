@@ -131,7 +131,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         
         colonyShipRange = player().colonyShipRange();
         
-        // on opening, build list of systems that we have colony ships 
+        // on opening, build list of systems that we have colony ships
         // in transport to. This is too expensive to do real-time
         expandEnRouteSystems.clear();
         List<ShipFleet> allFleets = player().allFleets();
@@ -147,8 +147,8 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                 else
                     expandEnRouteSystems.put(sys.id, fleetTurns);
             }
-        }     
-        // on opening, build list of systems that we have colony ships 
+        }
+        // on opening, build list of systems that we have colony ships
         // in transport to. This is too expensive to do real-time
         expandGuardedSystems.clear();
         Empire pl = player();
@@ -164,7 +164,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                     }
                 }
             }
-        }     
+        }
         
     }
     public void clickSystem(StarSystem v, int count) {
@@ -316,14 +316,14 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         paths.clear();
     }
     @Override
-    public Color alertColor(SystemView sv) { 
+    public Color alertColor(SystemView sv) {
         switch(selectedTab) {
             case exploreTab:     return exploreAlertColor(sv);
             case expandTab:      return expandAlertColor(sv);
             case exploitTab:     return exploitAlertColor(sv);
             case exterminateTab: return exterminateAlertColor(sv);
         }
-        return null; 
+        return null;
     }
     public StarSystem lastSystemSelected()    { return (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM"); }
     public void lastSystemSelected(Sprite s)  { sessionVar("MAINUI_SELECTED_SYSTEM", s); }
@@ -393,7 +393,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             if (FlightPathSprite.workingPaths().contains(fp))
                 return true;
             return fp.isPlayer() || fp.aggressiveToPlayer();
-        }      
+        }
         return true;
     }
     @Override
@@ -408,8 +408,8 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public Sprite clickedSprite()            { return (Sprite) sessionVar("MAINUI_CLICKED_SPRITE"); }
     @Override
-    public void clickedSprite(Sprite s)      { 
-        sessionVar("MAINUI_CLICKED_SPRITE", s); 
+    public void clickedSprite(Sprite s)      {
+        sessionVar("MAINUI_CLICKED_SPRITE", s);
         if (s instanceof StarSystem)
             lastSystemSelected(s);
 
@@ -439,9 +439,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public void showHelp() {
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         cancelHelp();
     }
@@ -506,7 +506,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         return "";
     }
-    private Color exploreAlertColor(SystemView sv) { 
+    private Color exploreAlertColor(SystemView sv) {
         String eventMessage = randomEventStatus(sv);
         if (!eventMessage.isEmpty()) {
             if (sv.empire() == player())
@@ -518,7 +518,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (sv.scouted())
             return null;
         
-        if (sv.isGuarded()) 
+        if (sv.isGuarded())
             return MainUI.redAlertC;
         
         float sysDistance = sv.distance();
@@ -533,14 +533,14 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         
         String neededTechId = pl.rangeTechNeededToScout(sv.sysId);
-        if (neededTechId != null) 
+        if (neededTechId != null)
             return MainUI.yellowAlertC;
         
-        return null; 
+        return null;
     }
-    private Color expandAlertColor(SystemView sv) { 
+    private Color expandAlertColor(SystemView sv) {
         if (!sv.scouted())
-            return null;   
+            return null;
                 
         String eventMessage = randomEventStatus(sv);
         if (!eventMessage.isEmpty()) {
@@ -548,7 +548,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                 return MainUI.redAlertC;
         }
 
-        if (sv.isColonized()) 
+        if (sv.isColonized())
             return null;
         
         float sysDistance = sv.distance();
@@ -564,16 +564,16 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         
         String rangeTech = pl.rangeTechNeededToReach(sv.sysId);
-        String envTech = pl.environmentTechNeededToColonize(sv.sysId);   
+        String envTech = pl.environmentTechNeededToColonize(sv.sysId);
         if ((rangeTech != null) && (envTech != null))
             return MainUI.yellowAlertC;
         if ((envTech != null) && (sysDistance <= colonyShipRange))
             return MainUI.yellowAlertC;
-        if ((rangeTech != null) && pl.canColonize(sv.sysId)) 
+        if ((rangeTech != null) && pl.canColonize(sv.sysId))
             return MainUI.yellowAlertC;
-        return null; 
+        return null;
     }
-    private Color exploitAlertColor(SystemView sv) { 
+    private Color exploitAlertColor(SystemView sv) {
         if (sv.empire() != player())
             return null;
         
@@ -588,7 +588,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (col.inRebellion())
             return MainUI.redAlertC;
         
-        if (col.creatingWaste()) 
+        if (col.creatingWaste())
             return MainUI.redAlertC;
         
         int pct = (int) (100*col.currentProductionCapacity());
@@ -598,9 +598,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             return MainUI.yellowAlertC;
         else if (pct < 100)
             return MainUI.greenAlertC;
-        return null; 
+        return null;
     }
-    private Color exterminateAlertColor(SystemView sv)       { 
+    private Color exterminateAlertColor(SystemView sv)       {
         Empire pl = player();
         if (sv.distance() > pl.scoutRange())
             return null;
@@ -611,16 +611,16 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         List<ShipFleet> fleets = sv.orbitingFleets();
         for (ShipFleet fl: fleets) {
             if (fl.isPotentiallyArmed(pl)) {
-                if (pl.atWarWith(fl.empId())) { 
+                if (pl.atWarWith(fl.empId())) {
                     if (sysEmp == null)
-                        return MainUI.yellowAlertC; // enemy fleets around empty systems          
+                        return MainUI.yellowAlertC; // enemy fleets around empty systems
                     if (sysEmp.isPlayer())
                         return MainUI.redAlertC;    // enemy fleets around player colonies
                     else if (pl.alliedWith(sysEmpId))
-                        return MainUI.yellowAlertC; // enemy fleets around ally systems 
+                        return MainUI.yellowAlertC; // enemy fleets around ally systems
                     else
-                        return MainUI.yellowAlertC; // enemy fleets around other systems 
-                }  
+                        return MainUI.yellowAlertC; // enemy fleets around other systems
+                }
             }
         }
         
@@ -631,14 +631,14 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                 if ((sh.destSysId() == sv.sysId) && pl.atWarWith(sh.empId()) && sh.isPotentiallyArmed(pl)) {
                     if (sysEmp.isPlayer())
                         return MainUI.redAlertC; // enemy fleets approaching player colonies
-                    else 
+                    else
                         return MainUI.yellowAlertC; // enemy fleets approaching player allied colonies
                 }
-            }            
+            }
         }
         
         if (sysEmp != pl) {
-            int num = pl.transportsInTransit(sv.system());        
+            int num = pl.transportsInTransit(sv.system());
             if (num > 0)
                 return MainUI.yellowAlertC;
         }
@@ -653,25 +653,25 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (!sv.colony().defense().isCompleted())
             return MainUI.greenAlertC;
         
-        return null; 
-    } 
-    public String alertDescription(SystemView sv) { 
+        return null;
+    }
+    public String alertDescription(SystemView sv) {
         switch(selectedTab) {
             case exploreTab:     return exploreAlertDescription(sv);
             case expandTab:      return expandAlertDescription(sv);
             case exploitTab:     return exploitAlertDescription(sv);
             case exterminateTab: return exterminateAlertDescription(sv);
         }
-        return null; 
+        return null;
     }
-    private String exploreAlertDescription(SystemView sv) { 
+    private String exploreAlertDescription(SystemView sv) {
         String eventMessage = randomEventStatus(sv);
-        if (!eventMessage.isEmpty()) 
-             return eventMessage; 
+        if (!eventMessage.isEmpty())
+             return eventMessage;
         
         if (sv.scouted())
-            return null;      
-        if (sv.isGuarded()) 
+            return null;
+        if (sv.isGuarded())
             return text("SYSTEMS_UNSCOUTED_GUARDED");
         
         float sysDistance = sv.distance();
@@ -689,24 +689,24 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (neededTechId != null) {
             Tech t = tech(neededTechId);
             return text("SYSTEMS_UNSCOUTED_NEED_TECH", t.name());
-        }     
-        return text("SYSTEMS_UNSCOUTED_UNREACHABLE"); 
+        }
+        return text("SYSTEMS_UNSCOUTED_UNREACHABLE");
     }
-    private String expandAlertDescription(SystemView sv) { 
+    private String expandAlertDescription(SystemView sv) {
         if (!sv.scouted())
-            return null;      
+            return null;
         String eventMessage = randomEventStatus(sv);
         if (!eventMessage.isEmpty()) {
              if (sv.empire() == player())
                  return eventMessage;
         }
 
-        if (sv.isColonized()) 
+        if (sv.isColonized())
             return null;
         
         float sysDistance = sv.distance();
         Empire pl = player();
-        if ((sysDistance <= colonyShipRange) && pl.canColonize(sv.sysId)) { 
+        if ((sysDistance <= colonyShipRange) && pl.canColonize(sv.sysId)) {
             if (expandGuardedSystems.containsKey(sv.sysId)) {
                 Empire enemyEmp = galaxy().empire(expandGuardedSystems.get(sv.sysId));
                 String s = text("SYSTEMS_CAN_COLONIZE_ENEMY");
@@ -721,7 +721,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         
         String rangeTech = pl.rangeTechNeededToReach(sv.sysId);
-        String envTech = pl.environmentTechNeededToColonize(sv.sysId);  
+        String envTech = pl.environmentTechNeededToColonize(sv.sysId);
         
         if ((rangeTech != null) && (envTech != null)) {
             Tech t1 = tech(envTech);
@@ -730,15 +730,15 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         if ((envTech != null) && (sysDistance <= colonyShipRange)){
             Tech t1 = tech(envTech);
-            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());            
+            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());
         }
         if ((rangeTech != null) && pl.canColonize(sv.sysId)) {
             Tech t1 = tech(rangeTech);
-            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());            
+            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());
         }
-        return text("SYSTEMS_UNCOLONIZEABLE"); 
+        return text("SYSTEMS_UNCOLONIZEABLE");
     }
-    private String exploitAlertDescription(SystemView sv) { 
+    private String exploitAlertDescription(SystemView sv) {
         Empire sysEmp = sv.empire();
         if ((sysEmp == null) || !sysEmp.isPlayer())
             return null;
@@ -756,29 +756,29 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (col.inRebellion())
             return concat(text("SYSTEMS_STATUS_REBELLION"),transportMsg);
         
-        if (col.creatingWaste()) 
+        if (col.creatingWaste())
             return concat(text("SYSTEMS_EXPLOIT_WASTE"), transportMsg);
         
         int pct = (int) (100*col.currentProductionCapacity());
         String capMsg;
         if (pct < 34)
-            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct); 
+            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct);
         else if (pct < 67)
-            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct); 
+            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct);
         else if (pct < 100)
-            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct); 
+            capMsg = text("SYSTEMS_EXPLOIT_PCT", pct);
         else
-            capMsg = text("SYSTEMS_EXPLOIT_COMPLETE"); 
+            capMsg = text("SYSTEMS_EXPLOIT_COMPLETE");
         
         return concat(capMsg, transportMsg);
     }
-    private String exterminateAlertDescription(SystemView sv) { 
+    private String exterminateAlertDescription(SystemView sv) {
         Empire pl = player();
         if (sv.distance() > pl.scoutRange())
             return null;
 
         Empire sysEmp = sv.empire();
-        int num = pl.transportsInTransit(sv.system());        
+        int num = pl.transportsInTransit(sv.system());
         String troopMsg;
         if (num == 0)
             troopMsg = null;
@@ -797,7 +797,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         List<ShipFleet> fleets = sv.orbitingFleets();
         for (ShipFleet fl: fleets) {
             if (fl.isPotentiallyArmed(pl)) {
-                if (pl.atWarWith(fl.empId())) { 
+                if (pl.atWarWith(fl.empId())) {
                     String fleetMsg;
                     if (sysEmp == null)
                         fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET");
@@ -808,7 +808,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                     else
                         fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET");
                     return concat(fleetMsg, troopMsg);
-                }  
+                }
             }
         }
         
@@ -820,11 +820,11 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                     String fleetMsg;
                     if (sysEmp.isPlayer())
                         fleetMsg = text("SYSTEMS_EXT_INC_FLEET_PLAYER");
-                    else 
+                    else
                         fleetMsg = text("SYSTEMS_EXT_INC_FLEET_ALLY");
                     return concat(fleetMsg, troopMsg);
                 }
-            }               
+            }
         }
         
         if ((sysEmp != pl) && (num > 0))
@@ -837,7 +837,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (!sv.colony().defense().isCompleted())
             return concat(text("SYSTEMS_EXT_NEED_DEFENSE"), troopMsg);
         
-        return null; 
+        return null;
     }
     @Override
     public String systemLabel2(StarSystem sys) {
@@ -856,9 +856,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                     return text("SYSTEMS_ENVIRONMENT_SIZE", sv.planetType().name(), "");
                 else
                     return text("SYSTEMS_ENVIRONMENT_SIZE", sv.planetType().name(), str(sv.currentSize()));
-            case exploitTab: 
+            case exploitTab:
                 return text("SYSTEMS_ENVIRONMENT_TYPE", text(sv.resourceType()), text(sv.ecologyType()));
-            case exterminateTab: 
+            case exterminateTab:
                 int bases = sv.bases();
                 int shield = sv.shieldLevel();
                 if ((bases == 0) && (shield == 0))
@@ -887,7 +887,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             case KeyEvent.VK_TAB:
                 if (!shift)
                     titlePanel.selectNextTab();
-                else 
+                else
                     titlePanel.selectPreviousTab();
                 return;
             case KeyEvent.VK_ESCAPE:
