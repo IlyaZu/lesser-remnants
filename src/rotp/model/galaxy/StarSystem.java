@@ -573,22 +573,21 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             return;
         
         // draw star name
-        int fontSize = fontSize(map);
         String label1 = map.parent().systemLabel(this);
         String label2 = map.parent().systemLabel2(this);
         if (label2.isEmpty())
             label2 = name2(map);
-        if (!label1.isEmpty() || !label2.isEmpty()) {
-            Font prevFont = g2.getFont();
+        
+        Font prevFont = g2.getFont();
+        int fontSize = fontSize(map);
+        int yAdj = scaled(fontSize)+r0;
+        if (!label1.isEmpty()) {
             g2.setFont(narrowFont(fontSize));
-            int yAdj = scaled(fontSize)+r0;
             int sw = g2.getFontMetrics().stringWidth(label1);
             if (!colonized) {
                 g2.setColor(map.parent().systemLabelColor(this));
-                if (!label1.isEmpty()) {
-                    drawString(g2,label1, x0-(sw/2), y0+yAdj);
-                    y0 += scaled(fontSize-2);
-                }
+                drawString(g2,label1, x0-(sw/2), y0+yAdj);
+                y0 += scaled(fontSize-2);
             }
             else {
             	int s1 = BasePanel.s1;
@@ -604,18 +603,16 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                 g2.setColor(map.parent().systemLabelColor(this));
                 g2.drawRoundRect(x0a, y0+yAdj-(fontH*3/4)-s1, boxW, fontH+s2, cnr,cnr);
                 g2.setStroke(prevStroke);
-                if (!label1.isEmpty()) {
-                    drawString(g2,label1, x0-(sw/2), y0+yAdj+s1);
-                    y0 += fontH+s2;
-                }
+                drawString(g2,label1, x0-(sw/2), y0+yAdj+s1);
+                y0 += fontH+s2;
             }
-            if (!label2.isEmpty()) {
-                g2.setFont(narrowFont(fontSize-2));
-                int sw2 = g2.getFontMetrics().stringWidth(label2);
-                drawString(g2,label2, x0-(sw2/2), y0+yAdj);
-            }
-            g2.setFont(prevFont);
         }
+        if (!label2.isEmpty()) {
+            g2.setFont(narrowFont(fontSize-2));
+            int sw2 = g2.getFontMetrics().stringWidth(label2);
+            drawString(g2,label2, x0-(sw2/2), y0+yAdj);
+        }
+        g2.setFont(prevFont);
     }
     private String name2(GalaxyMapPanel map) {
         IMappedObject obj = map.parent().distanceOrigin();
