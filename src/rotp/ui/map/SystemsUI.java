@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -604,12 +604,8 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         Empire pl = player();
         if (sv.distance() > pl.scoutRange())
             return null;
-        
-        // show enemy colonies as yellow
         Empire sysEmp = sv.empire();
         int sysEmpId = sv.empId();
-        if (pl.atWarWith(sysEmpId))
-            return MainUI.yellowAlertC;
         
         // deal with enemy fleets orbiting systems around us
         List<ShipFleet> fleets = sv.orbitingFleets();
@@ -785,7 +781,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         int num = pl.transportsInTransit(sv.system());        
         String troopMsg;
         if (num == 0)
-            troopMsg = "";
+            troopMsg = null;
         else if (sysEmp == pl)
             troopMsg = " "+text("SYSTEMS_EXPLOIT_TRANSPORTS",str(num));
         else {
@@ -793,13 +789,8 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             troopMsg = pl.replaceTokens(troopMsg, "player");
         }
         
-        // show enemy colonies as yellow
         if (pl.atWarWith(sv.empId())) {
-            String msg = text("SYSTEMS_EXT_ENEMY"); 
-            if (num == 0)
-                return msg;
-            else
-                return concat(msg, troopMsg);
+        	return troopMsg;
         }
             
         // deal with enemy fleets orbiting systems around us
