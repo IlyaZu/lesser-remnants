@@ -27,14 +27,11 @@ import rotp.util.Base;
 
 public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent {
     private static final long serialVersionUID = 1L;
-    public static SpaceCrystal monster;
+    public static SpaceCrystal monster = new SpaceCrystal();
     private int empId;
     private int sysId;
     private int turnCount = 0;
-    
-    static {
-        initMonster();
-    }
+
     @Override
     public String statusMessage()               { return text("SYSTEMS_STATUS_SPACE_CRYSTAL"); }
     @Override
@@ -81,9 +78,6 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
         else if (turnCount == 0)
             enterSystem();
         turnCount--;
-    }
-    private static void initMonster() {
-        monster = new SpaceCrystal();
     }
     private void enterSystem() {
         monster.visitSystem(sysId);

@@ -88,7 +88,7 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         
         // add to the event so this new stack can carry over to potential
         // combats with other fleets later in this turn
-        RandomEventSpaceAmoeba.monster.addCombatStack(newStack);
+        RandomEventSpaceAmoeba.monster.combatStacks().add(newStack);
         st.mgr.addStackToCombat(newStack);
         CombatEntity eatenStack = st.mgr.moveStackNearest(newStack, st.x, st.y);
         newStack.eatShips(eatenStack);

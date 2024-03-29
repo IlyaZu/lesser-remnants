@@ -34,7 +34,7 @@ public class OrionGuardianShip extends SpaceMonster {
     @Override
     public void initCombat() {
         combatStacks().clear();
-        addCombatStack(new CombatGuardian());
+        combatStacks().add(new CombatGuardian());
     }
     @Override
     public Image image()  { return image("ORION_GUARDIAN"); }
