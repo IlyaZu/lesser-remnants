@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,12 +39,12 @@ public class OrionGuardianShip extends SpaceMonster {
     @Override
     public Image image()  { return image("ORION_GUARDIAN"); }
     @Override
-    public void plunder() { 
+    public void plunder() {
         super.plunder();
         notifyGalaxy();
         Empire emp = this.lastAttacker();
         for (String techId: techs)
-            emp.plunderShipTech(tech(techId), -2); 
+            emp.plunderShipTech(tech(techId), -2);
         
         // find the system with this monster and remove it
         int sysId = StarSystem.NULL_ID;
@@ -56,7 +56,7 @@ public class OrionGuardianShip extends SpaceMonster {
             }
         }
         // all empires now know this system is no longer guarded
-        for (Empire emp1: galaxy().empires()) 
+        for (Empire emp1: galaxy().empires())
             emp1.sv.view(sysId).refreshSystemEntryScan();
     }
 
