@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,18 +51,18 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         while (stack.move > 0) {
             FlightPath bestPathToTarget = chooseTarget(stack);
             // if we need to move towards target, do it now
-            if ((bestPathToTarget == null) || (bestPathToTarget.size() == 0)) 
+            if ((bestPathToTarget == null) || (bestPathToTarget.size() == 0))
                 break;
         
             float prevMove = stack.move;
             mgr.performMoveStackAlongPath(stack, bestPathToTarget);
 
             // if can attack target this turn, fire when ready
-            if (stack.canAttack(stack.target)) 
+            if (stack.canAttack(stack.target))
                 mgr.performAttackTarget(stack);
             
             // SANITY CHECK:
-            // make sure we fall out if we haven't moved 
+            // make sure we fall out if we haven't moved
             // or if we are still picking the same target
             if (prevMove == stack.move)
                 stack.move = 0;
@@ -81,14 +81,14 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         newStack.maxHits = st.maxHits;
         newStack.hits = st.maxHits;
         newStack.x = st.x;
-        newStack.y = st.y;        
+        newStack.y = st.y;
         
         st.scale = newScale;
         newStack.scale = newScale;
         
         // add to the event so this new stack can carry over to potential
         // combats with other fleets later in this turn
-        RandomEventSpaceAmoeba.monster.addCombatStack(newStack);   
+        RandomEventSpaceAmoeba.monster.addCombatStack(newStack);
         st.mgr.addStackToCombat(newStack);
         CombatEntity eatenStack = st.mgr.moveStackNearest(newStack, st.x, st.y);
         newStack.eatShips(eatenStack);

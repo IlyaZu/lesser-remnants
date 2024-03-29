@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
     public List<CombatEntity> combatStacks()    {
         if (combatStacks == null)
             combatStacks = new ArrayList<>();
-        return combatStacks; 
+        return combatStacks;
     }
     public Image image()  { return image(nameKey); }
     public void initCombat() { }
@@ -48,7 +48,7 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
     }
     @Override
     public String name()      { return text(nameKey);  }
-    public boolean alive()    { 
+    public boolean alive()    {
         boolean alive = false;
         for (CombatEntity st: combatStacks) {
             if (!st.destroyed())

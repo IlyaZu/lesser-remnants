@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +46,7 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
     @Override
     public boolean monsterEvent()               { return true; }
     @Override
-    public int minimumTurn()                    { 
+    public int minimumTurn()                    {
         // space monsters can be a challenge... delay their entry in the easier game settings
         switch (options().selectedGameDifficulty()) {
             case IGameOptions.DIFFICULTY_EASIEST:
@@ -75,9 +76,9 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
     }
     @Override
     public void nextTurn() {
-        if (turnCount == 3) 
-            approachSystem();     
-        else if (turnCount == 0) 
+        if (turnCount == 3)
+            approachSystem();
+        else if (turnCount == 0)
             enterSystem();
         turnCount--;
     }
@@ -99,8 +100,8 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
             degradePlanet(targetSystem);
             moveToNextSystem();
         }
-        else 
-            crystalDestroyed();         
+        else
+            crystalDestroyed();
     }
     private void startCombat() {
         StarSystem targetSystem = galaxy().system(sysId);
@@ -110,12 +111,12 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
         StarSystem targetSystem = galaxy().system(sysId);
         targetSystem.eventKey(systemKey());
         Empire pl = player();
-        if (targetSystem.isColonized()) { 
+        if (targetSystem.isColonized()) {
             if (pl.knowsOf(targetSystem.empire()) || !pl.sv.name(sysId).isEmpty())
                 GNNNotification.notifyRandomEvent(notificationText("EVENT_SPACE_CRYSTAL", targetSystem.empire()), "GNN_Event_Crystal");
         }
         else if (pl.sv.isScouted(sysId))
-            GNNNotification.notifyRandomEvent(notificationText("EVENT_SPACE_CRYSTAL_1", null), "GNN_Event_Crystal");   
+            GNNNotification.notifyRandomEvent(notificationText("EVENT_SPACE_CRYSTAL_1", null), "GNN_Event_Crystal");
     }
     private void degradePlanet(StarSystem targetSystem) {
         Empire emp = targetSystem.empire();
@@ -157,7 +158,7 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
                         break;
                     }
                 }
-                if (loops > 10) 
+                if (loops > 10)
                     stopLooking = true;
             }
         }
@@ -172,9 +173,9 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
         StarSystem nextSys = galaxy().system(nextSysId);
         float slowdownEffect = max(1, 100.0f / galaxy().maxNumStarSystems());
         turnCount = (int) Math.ceil(1.5*slowdownEffect*nextSys.distanceTo(targetSystem));
-        sysId = nextSys.id;        
+        sysId = nextSys.id;
         if (turnCount <= 3)
-            approachSystem();     
+            approachSystem();
     }
     private String notificationText(String key, Empire emp)    {
         String s1 = text(key);
@@ -182,7 +183,7 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
             s1 = s1.replace("[system]", emp.sv.name(sysId));
             s1 = emp.replaceTokens(s1, "victim");
         }
-        else 
+        else
             s1 = s1.replace("[system]", player().sv.name(sysId));
         return s1;
     }
