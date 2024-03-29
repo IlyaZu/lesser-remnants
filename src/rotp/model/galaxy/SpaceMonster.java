@@ -42,7 +42,6 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
     }
     public Image image()  { return image(nameKey); }
     public void initCombat() { }
-    public void addCombatStack(CombatEntity c)  { combatStacks.add(c); }
     public SpaceMonster(String s) {
         nameKey = s;
     }

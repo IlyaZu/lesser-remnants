@@ -29,7 +29,7 @@ public class SpaceCrystal extends SpaceMonster {
     @Override
     public void initCombat() {
         combatStacks().clear();
-        addCombatStack(new CombatCrystal());
+        combatStacks().add(new CombatCrystal());
     }
     public void degradePlanet(StarSystem sys) {
         Colony col = sys.colony();
