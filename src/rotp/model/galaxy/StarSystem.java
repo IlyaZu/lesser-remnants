@@ -608,6 +608,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             }
         }
         if (!label2.isEmpty()) {
+        	g2.setColor(map.parent().systemLabelColor(this));
             g2.setFont(narrowFont(fontSize-2));
             int sw2 = g2.getFontMetrics().stringWidth(label2);
             drawString(g2,label2, x0-(sw2/2), y0+yAdj);
