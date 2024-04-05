@@ -66,18 +66,11 @@ import rotp.ui.sprites.MapControlSprite;
 
 public final class SystemsUI extends BasePanel implements IMapHandler, ActionListener, MouseWheelListener {
     private static final long serialVersionUID = 1L;
-    public static final Color backHiC = new Color(178,124,87);
-    public static final Color backLoC = new Color(112,85,68);
-    public static final Color rallyBackHiC = new Color(192,139,105);
-    public static final Color rallyBackLoC = new Color(77,55,34);
-    public static final Color rallyBorderC = new Color(208,172,148);
-    public static final Color darkShadingC = new Color(50,50,50);
-    public static final Color darkBrown = new Color(45,14,5);
-    public static final Color brown = new Color(64,24,13);
-    public static final Color sliderBoxBlue = new Color(34,140,142);
-    public static final Color mapMask = new Color(0,0,0,192);
-    public static final Color unselectedTabC = new Color(112,85,68);
-    public static final Color selectedTabC = new Color(178,124,87);
+    private static final Color rallyBackHiC = new Color(192,139,105);
+    private static final Color rallyBackLoC = new Color(77,55,34);
+    private static final Color rallyBorderC = new Color(208,172,148);
+    private static final Color unselectedTabC = new Color(112,85,68);
+    private static final Color selectedTabC = new Color(178,124,87);
 
     private static final String exploreTab = "Explore";
     private static final String expandTab = "Expand";
@@ -86,7 +79,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private String selectedTab = exploreTab;
 
     private MainTitlePanel titlePanel;
-    public static SystemsUI instance;
 
     private GalaxyMapPanel map;
     private LinearGradientPaint backGradient;
@@ -95,37 +87,66 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private final List<Sprite> controls = new ArrayList<>();
     private final Map<Integer,Integer> expandEnRouteSystems = new HashMap<>();
     private final Map<Integer,Integer> expandGuardedSystems = new HashMap<>();
-    Rectangle exploreBox = new Rectangle();
-    Rectangle expandBox = new Rectangle();
-    Rectangle exploitBox = new Rectangle();
-    Rectangle exterminateBox = new Rectangle();
+    private Rectangle exploreBox = new Rectangle();
+    private Rectangle expandBox = new Rectangle();
+    private Rectangle exploitBox = new Rectangle();
+    private Rectangle exterminateBox = new Rectangle();
 
-    // public for all
-    public StarSystem hoverSystem;
-    public StarSystem targetSystem;
     private float colonyShipRange;
 
-    JLayeredPane layers = new JLayeredPane();
+    private JLayeredPane layers = new JLayeredPane();
     public boolean animate = true;
 
-    public int SIDE_PANE_W;
+    private int SIDE_PANE_W;
     private LinearGradientPaint grayBackC;
     private LinearGradientPaint redBackC;
     private LinearGradientPaint greenBackC;
     private LinearGradientPaint brownBackC;
 
-    public String emptyNotes;
-    
     public SystemsUI() {
-        instance = this;
-        initModel();
+        int w, h;
+        if (!UserPreferences.windowed()) {
+            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+            w = size.width;
+            h = size.height;
+        }
+        else {
+            w = scaled(Rotp.IMG_W);
+            h = scaled(Rotp.IMG_H);
+        }
+        
+        int rightPaneW = scaled(250);
+
+        setBackground(Color.black);
+
+        map = new GalaxyMapPanel(this);
+        map.setBounds(0,0,w,h);
+
+        titlePanel = new MainTitlePanel(this, "SYSTEMS_TITLE");
+        titlePanel.setBounds(0,0,w-rightPaneW-s25, s45);
+        
+        displayPanel = new SystemInfoPanel(this);
+        displayPanel.setBounds(w-rightPaneW-s5,s5,rightPaneW,scaled(673));
+        
+        exitButton = new ExitSystemsButton(rightPaneW, s60, s10, s2);
+        exitButton.setBounds(w-rightPaneW-s5,h-s83,rightPaneW,s60);
+        
+        setLayout(new BorderLayout());
+        add(layers, BorderLayout.CENTER);
+        
+        layers.add(titlePanel, JLayeredPane.PALETTE_LAYER);
+        layers.add(displayPanel, JLayeredPane.PALETTE_LAYER);
+        layers.add(exitButton, JLayeredPane.PALETTE_LAYER);
+        layers.add(map, JLayeredPane.DEFAULT_LAYER);
+        setOpaque(false);
+
+        addMouseWheelListener(this);
     }
     public void init() {
         if (grayBackC == null)
             initGradients();
 
         // reset map everytime we open
-        targetSystem = null;
         map.init();
         displayPanel.init();
         
@@ -268,50 +289,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     public Color lightC()                          { return rallyBorderC; }
     @Override
     public GalaxyMapPanel map()         { return map; }
-    private void initModel() {
-        int w, h;
-        if (!UserPreferences.windowed()) {
-            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-            w = size.width;
-            h = size.height;
-        }
-        else {
-            w = scaled(Rotp.IMG_W);
-            h = scaled(Rotp.IMG_H);
-        }
-        
-        int rightPaneW = scaled(250);
-
-        setBackground(Color.black);
-
-        map = new GalaxyMapPanel(this);
-        map.setBounds(0,0,w,h);
-
-        titlePanel = new MainTitlePanel(this, "SYSTEMS_TITLE");
-        titlePanel.setBounds(0,0,w-rightPaneW-s25, s45);
-        
-        displayPanel = new SystemInfoPanel(this);
-        displayPanel.setBounds(w-rightPaneW-s5,s5,rightPaneW,scaled(673));
-        
-        exitButton = new ExitSystemsButton(rightPaneW, s60, s10, s2);
-        exitButton.setBounds(w-rightPaneW-s5,h-s83,rightPaneW,s60);
-        
-        setLayout(new BorderLayout());
-        add(layers, BorderLayout.CENTER);
-        
-        layers.add(titlePanel, JLayeredPane.PALETTE_LAYER);
-        layers.add(displayPanel, JLayeredPane.PALETTE_LAYER);
-        layers.add(exitButton, JLayeredPane.PALETTE_LAYER);
-        layers.add(map, JLayeredPane.DEFAULT_LAYER);
-        setOpaque(false);
-
-        addMouseWheelListener(this);
-    }
     @Override
     public boolean animating()    { return animate; }
     public void clearMapSelections() {
-        targetSystem = null;
-        hoverSystem = null;
         List<FlightPathSprite> paths = FlightPathSprite.workingPaths();
         paths.clear();
     }
@@ -990,7 +970,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             if (!selectedTab.equals(s)) {
                 softClick();
                 selectedTab = s;
-                instance.repaint();
+                repaint();
             }
         }
         @Override
