@@ -318,7 +318,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public Color alertColor(SystemView sv) {
         switch(selectedTab) {
-            case exploreTab:     return exploreAlertColor(sv);
             case expandTab:      return expandAlertColor(sv);
             case exploitTab:     return exploitAlertColor(sv);
             case exterminateTab: return exterminateAlertColor(sv);
@@ -506,38 +505,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         return "";
     }
-    private Color exploreAlertColor(SystemView sv) {
-        String eventMessage = randomEventStatus(sv);
-        if (!eventMessage.isEmpty()) {
-            if (sv.empire() == player())
-                return MainUI.redAlertC;
-            else
-                return MainUI.yellowAlertC;
-        }
-        
-        if (sv.scouted())
-            return null;
-        
-        if (sv.isGuarded())
-            return MainUI.redAlertC;
-        
-        float sysDistance = sv.distance();
-        Empire pl = player();
-        if (sysDistance <= pl.scoutRange()) {
-            if (!sv.isColonized() || pl.alliedWith(sv.empId()))
-                return MainUI.greenAlertC;
-            else if (pl.atWarWith(sv.empId()))
-                return MainUI.redAlertC;
-            else
-                return MainUI.yellowAlertC;
-        }
-        
-        String neededTechId = pl.rangeTechNeededToScout(sv.sysId);
-        if (neededTechId != null)
-            return MainUI.yellowAlertC;
-        
-        return null;
-    }
     private Color expandAlertColor(SystemView sv) {
         if (!sv.scouted())
             return null;
@@ -657,40 +624,11 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     }
     public String alertDescription(SystemView sv) {
         switch(selectedTab) {
-            case exploreTab:     return exploreAlertDescription(sv);
             case expandTab:      return expandAlertDescription(sv);
             case exploitTab:     return exploitAlertDescription(sv);
             case exterminateTab: return exterminateAlertDescription(sv);
         }
         return null;
-    }
-    private String exploreAlertDescription(SystemView sv) {
-        String eventMessage = randomEventStatus(sv);
-        if (!eventMessage.isEmpty())
-             return eventMessage;
-        
-        if (sv.scouted())
-            return null;
-        if (sv.isGuarded())
-            return text("SYSTEMS_UNSCOUTED_GUARDED");
-        
-        float sysDistance = sv.distance();
-        Empire pl = player();
-        if (sysDistance <= pl.scoutRange()) {
-            if (!sv.isColonized() || pl.alliedWith(sv.empId()))
-                return text("SYSTEMS_UNSCOUTED");
-            else if (pl.atWarWith(sv.empId()))
-                return text("SYSTEMS_UNSCOUTED_ENEMY");
-            else
-                return text("SYSTEMS_UNSCOUTED_COLONIZED");
-        }
-        
-        String neededTechId = pl.rangeTechNeededToScout(sv.sysId);
-        if (neededTechId != null) {
-            Tech t = tech(neededTechId);
-            return text("SYSTEMS_UNSCOUTED_NEED_TECH", t.name());
-        }
-        return text("SYSTEMS_UNSCOUTED_UNREACHABLE");
     }
     private String expandAlertDescription(SystemView sv) {
         if (!sv.scouted())
