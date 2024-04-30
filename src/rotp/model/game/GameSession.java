@@ -75,7 +75,7 @@ public final class GameSession implements Base, Serializable {
     private static final List<GameAlert> alerts = new ArrayList<>();
     private static int viewedAlerts;
 
-    private IGameOptions options;
+    private IGameOptions options = new MOO1GameOptions();
     private Galaxy galaxy;
     private final GameStatus status = new GameStatus();
     private boolean spyActivity = false;
@@ -189,9 +189,6 @@ public final class GameSession implements Base, Serializable {
                 notifications.remove(notif);
         }
             
-    }
-    public GameSession() {
-        options = RulesetManager.current().defaultRuleset();
     }
     public void startGame(IGameOptions newGameOptions) {
         stopCurrentGame();
