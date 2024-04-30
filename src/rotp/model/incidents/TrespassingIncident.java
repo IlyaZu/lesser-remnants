@@ -27,9 +27,9 @@ import rotp.ui.notifications.TrespassingAlert;
 
 public class TrespassingIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int sysId;
-    final int empMe;
-    final int empYou;
+    private final int sysId;
+    private final int empMe;
+    private final int empYou;
     
     public static void create(EmpireView view) {
         if (view.empire().alliedWith(view.owner().id))

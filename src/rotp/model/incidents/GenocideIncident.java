@@ -21,8 +21,8 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class GenocideIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empAttacker;
-    final int empVictim;
+    private final int empAttacker;
+    private final int empVictim;
 
     public static void create(Empire victim, Empire attacker) {
         for (Empire emp: Empire.allContacts(victim, attacker)) {

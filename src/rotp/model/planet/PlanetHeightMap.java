@@ -16,13 +16,12 @@ package rotp.model.planet;
 import rotp.util.Base;
 
 public final class PlanetHeightMap implements Base {
-    static final float ROOT3 = (float)Math.sqrt(3.0);
-    //static final float POWA = 1.0;    // power for altitude difference 
-    static final float dd1 = 0.45f;      // weight for altitude difference
-    static final float dd2 = 0.035f;     // weight for distance
-    static final float POW = 0.47f;      // power for distance function
+    private static final float ROOT3 = (float)Math.sqrt(3.0);
+    private static final float dd1 = 0.45f;      // weight for altitude difference
+    private static final float dd2 = 0.035f;     // weight for distance
+    private static final float POW = 0.47f;      // power for distance function
 
-    float ssa,ssb,ssc,ssd, ssas,ssbs,sscs,ssds,
+    private float ssa,ssb,ssc,ssd, ssas,ssbs,sscs,ssds,
       ssax,ssay,ssaz, ssbx,ssby,ssbz, sscx,sscy,sscz, ssdx,ssdy,ssdz;
 
     private float seaPct = 0.50f;
@@ -84,7 +83,7 @@ public final class PlanetHeightMap implements Base {
         seaLevel = calculateSeaLevel();
         generateTime = System.currentTimeMillis() - start;
     }
-    public byte calculateSeaLevel() {
+    private byte calculateSeaLevel() {
         int numNeeded = (int) (seaPct*totalCounts);
         int sum = 0;
         for (int i=0;i<counts.length;i++) {
@@ -94,7 +93,7 @@ public final class PlanetHeightMap implements Base {
         }
         return Byte.MAX_VALUE;
     }
-    public void mollweide() {
+    private void mollweide() {
         float pi = (float) Math.PI;
         for (int j=0; j<height; j++) {
             float y1 = pi*(2.0f*j-height)/width;
@@ -267,7 +266,6 @@ public final class PlanetHeightMap implements Base {
         // decrease contribution for very long distances
         // new altitude is:
         float e = (a+b)/2                                // average of end points
-               // + es*dd1*Math.pow(Math.abs(a-b),POWA) // commented out: POWA = 1.0, so simplify for speed
                     + es*dd1*(float)Math.abs(a-b)               // plus contribution for altitude diff
                     + es1*dd2*(float)Math.pow(lab,POW);          // plus contribution for distance
         float eax = ax-ex; float eay = ay-ey; float eaz = az-ez;

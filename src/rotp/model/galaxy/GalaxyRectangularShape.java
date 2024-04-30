@@ -21,9 +21,7 @@ import rotp.model.game.IGameOptions;
 
 public class GalaxyRectangularShape extends GalaxyShape {
     private static final long serialVersionUID = 1L;
-	
-	float adjust_density = 1.0f; // modnar: adjust stellar density
-	
+    
     public GalaxyRectangularShape(IGameOptions options) {
         opts = options;
     }
@@ -56,7 +54,7 @@ public class GalaxyRectangularShape extends GalaxyShape {
             return false;
         return true;
     }
-    float randomLocation(float max, float buff) {
+    private float randomLocation(float max, float buff) {
         return buff + (random() * (max-buff-buff));
     }
     @Override

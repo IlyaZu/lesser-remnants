@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,6 @@ public class SystemInfo implements Serializable, Base {
     public int maxTransportsToSend(int i) { return missing(i) ? 0  : view(i).maxTransportsToSend(); }
     public int maxTransportsToReceive(int i) { return missing(i) ? 0  : view(i).maxTransportsToReceive(); }
     public int rallyTurnsTo(int i, StarSystem s) { return view(i).rallyTurnsTo(s); }
-    //public float popNeeded(int i)       { return missing(i) ? 0 : view(i).popNeeded(); }
     public float maxPopToGive(int i, float pct)    { return missing(i) ? 0 : view(i).maxPopToGive(pct); }
 
     public float hostilityLevel(int i)     { return missing(i) ? 0 : view(i).hostilityLevel(); }
@@ -123,7 +122,6 @@ public class SystemInfo implements Serializable, Base {
                                                       view(i).removeStargate();
                                                  }
     public boolean hasFleetPlan(int i)           { return missing(i) ? false : view(i).hasFleetPlan(); }
-    public boolean hasFleetForEmpire(int i, Empire e) { return missing(i) ? false : view(i).hasFleetForCiv(e); }
     public boolean inShipRange(int i)            { return distances[i] <= empire().shipRange(); }
     public boolean inScoutRange(int i)           { return distances[i] <= empire().scoutRange(); }
     public boolean withinRange(int i, float r)   { return distances[i] <= r; }

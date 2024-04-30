@@ -29,9 +29,9 @@ public enum SphereShadowContext implements PaintContext {
     // mPoint is the center of the sphere we are shading
     // mPoint0 is the center of the sphere that represents the "lit" portion.
     //    if it offset from mPoint so that the uncovered area is fully shaded
-    protected Point2D mPoint, mPoint0;
-    protected Point2D mRadius, mRadius0;
-    protected Color mC1, mC2;
+    private Point2D mPoint, mPoint0;
+    private Point2D mRadius, mRadius0;
+    private Color mC1, mC2;
     public void set(Point2D p, Point2D p0, Color c2, Point2D r, Point2D r0) {
         mPoint = p;
         mPoint0 = p0;
@@ -68,16 +68,11 @@ public enum SphereShadowContext implements PaintContext {
                     // any point outside the light radius gets FULL shadow
                 else if (distance0 > radius0)
                     ratio = 1;
-                    // any point that is closer to the light-center than the sphere-center also
-                    // gets NO shading whatsoever. this avoids gradual shading in the "wrong" direction
-//             else if (distance0 <= distance)
-//                 ratio = 0;
                     // finally shade according to ratio from the light, but sharpen the edge after boundary checks
                 else if (ratio < 0.75f)
                     ratio = 0;
                 else
                     ratio = (ratio - 0.75f) * 4;
-
 
                 int base = (j * w + i) * 4;
                 data[base + 0] = (int)(mC1.getRed()   + ratio * (mC2.getRed()   - mC1.getRed()));

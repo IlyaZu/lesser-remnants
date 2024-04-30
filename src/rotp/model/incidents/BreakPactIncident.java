@@ -20,9 +20,9 @@ import rotp.model.empires.Empire;
 
 public class BreakPactIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empBreaker;
-    final int empMe;
-    final boolean spying;
+    private final int empBreaker;
+    private final int empMe;
+    private final boolean spying;
     
     public static BreakPactIncident create(Empire e1, Empire e2, boolean spy) {
         BreakPactIncident inc = new BreakPactIncident(e1, e2, spy);

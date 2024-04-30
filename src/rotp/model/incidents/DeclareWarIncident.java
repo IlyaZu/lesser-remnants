@@ -20,8 +20,8 @@ import rotp.model.empires.Empire;
 
 public class DeclareWarIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empAggressor;
-    final int empVictim;
+    private final int empAggressor;
+    private final int empVictim;
     
     public static DeclareWarIncident create(Empire e1, Empire e2) {
         DeclareWarIncident inc = new DeclareWarIncident(e1, e2);

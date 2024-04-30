@@ -24,17 +24,15 @@ import java.util.List;
 import rotp.model.game.IGameOptions;
 
 public class GalaxyEllipticalShape extends GalaxyShape {
-    public static final List<String> options1;
-    public static final List<String> options2;
+    private static final List<String> options1 = new ArrayList<>();
+    private static final List<String> options2 = new ArrayList<>();
     private static final long serialVersionUID = 1L;
     static {
-        options1 = new ArrayList<>();
         options1.add("SETUP_ELLIPSE_0");
         options1.add("SETUP_ELLIPSE_1");
         options1.add("SETUP_ELLIPSE_2");
         options1.add("SETUP_ELLIPSE_3");
         options1.add("SETUP_ELLIPSE_4");
-        options2 = new ArrayList<>();
         options2.add("SETUP_VOID_0");
         options2.add("SETUP_VOID_1");
         options2.add("SETUP_VOID_2");
@@ -42,10 +40,10 @@ public class GalaxyEllipticalShape extends GalaxyShape {
         options2.add("SETUP_VOID_4");
     }
 
-    Shape ellipse, hole;
-    float ellipseRatio = 2.0f;
-    float voidSize = 0.0f;
-	
+    private Shape ellipse, hole;
+    private float ellipseRatio = 2.0f;
+    private float voidSize = 0.0f;
+    
     public GalaxyEllipticalShape(IGameOptions options) {
         opts = options;
     }
@@ -121,7 +119,7 @@ public class GalaxyEllipticalShape extends GalaxyShape {
         else
             return ellipse.contains(x, y) && !hole.contains(x, y);
     }
-    float randomLocation(float max, float buff) {
+    private float randomLocation(float max, float buff) {
         return buff + (random() * (max-buff-buff));
     }
     @Override

@@ -25,10 +25,10 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class BioweaponIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empAttacker;
-    public final int empVictim;
-    public final int empMe;
-    public final int sysId;
+    private final int empAttacker;
+    private final int empVictim;
+    private final int empMe;
+    private final int sysId;
 
     public static void create(Empire victim, Empire attacker, StarSystem sys) {
         // build list of races that were in contact with victim & attacker

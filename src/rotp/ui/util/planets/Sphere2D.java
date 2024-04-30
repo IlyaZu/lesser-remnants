@@ -16,7 +16,6 @@
  */
 package rotp.ui.util.planets;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import rotp.model.planet.Planet;
@@ -28,8 +27,8 @@ public class Sphere2D implements Base {
     private final FastImage mapImage;
     public static final int FAST_PLANET_R = 50;
     public static final int SMALL_PLANET_R = 100;
-    public static Map<Integer, FastImage> cachedFastOvalImg = new HashMap<>();
-    public static Map<Integer, FastImage> cachedFastGlobeImg = new HashMap<>();
+    private static Map<Integer, FastImage> cachedFastOvalImg = new HashMap<>();
+    private static Map<Integer, FastImage> cachedFastGlobeImg = new HashMap<>();
 
     public Sphere2D(FastImage terrainImg, FastImage cloudImg, Planet p) {
         FastImage compositeImg = PlanetImager.createCompositeImage(terrainImg, p);
@@ -37,11 +36,8 @@ public class Sphere2D implements Base {
         mapImage = compositeImg;
     }
 
-    public int radius()                 { return radius; }
-    public FastImage mapImage()         { return mapImage; }
-
     private FastImage largeVisibleSphere(float pct, int r) {
-        return visibleSphere(mapImage(), radius, pct);
+        return visibleSphere(mapImage, radius, pct);
     }
     private FastImage visibleSphere(FastImage baseImg, int r, float pct) {
         float p0 = pct - (int) pct;
@@ -64,20 +60,14 @@ public class Sphere2D implements Base {
             int x0Max = xIntercept(y,1,r);
             int x1Min = xIntercept(y,0.25f,r);
             int x1Max = xIntercept(y,0.75f,r)+1;
-//            System.out.println("  y="+y+"   xInt:"+xInt+"   x0Min/Max:"+x0Min+"/"+x0Max+" x1MinMax:"+x1Min+"/"+x1Max);
             for (int x=x1Min;x<x1Max;x++) {
                 int x1 = x+xInt;   // ostensibly the pixel we need from the full image
-//                System.out.print("x:"+x+"            x0:"+x1);
-                if      (x1<x0Min) {
-//                    System.out.println("x1<x0min");
+                if (x1<x0Min) {
                     x1=x0Max+x1-x0Min;
                 } // check if in the fullImage oval
                 else if (x1>=x0Max) {
-//                    System.out.println("x1>x0max");
                     x1=x1+x0Min-x0Max;
                 }
-
-//                System.out.println("         final:"+x1+"   with XbBase:"+(x1+xBase));
 
                 int xb = x+x1Mid;
                 if (xb < 0) xb = 0;
@@ -107,7 +97,6 @@ public class Sphere2D implements Base {
         if (!cachedFastGlobeImg.containsKey(w))
             cachedFastGlobeImg.put(w,FastImage.sized(w, h));
         FastImage img =  cachedFastGlobeImg.get(w);
-        //long t0 = System.currentTimeMillis();
 
         float pi = (float) Math.PI;
         float x1MinPct = 0.5f-(1/(2*pi));
@@ -129,8 +118,6 @@ public class Sphere2D implements Base {
                 prevx0 = x0;
             }
         }
-        //long t1 = System.currentTimeMillis();
-        //log("t1:"+(t1-t0));
 
         return img;
     }
@@ -153,89 +140,8 @@ public class Sphere2D implements Base {
         int x1 = (int)(a*Math.sqrt(1-(tmp*tmp)));
         return x1;
     }
-    protected void smoothEdges(FastImage img, float pct, float x0Start, float x1Start, float size) {
-        int h = img.getHeight();
-        int w = img.getWidth();
-
-        int r = radius;
-        for (int y=0;y<h;y++) {
-            int x0Mid = (int) (x0Start+(int)(size*r*Math.PI));
-            int x0Min = Math.max(0, x0Mid+xIntercept(y,0.5f-(size/2), r)-2);
-            int x0Max = Math.min(w-1,x0Mid+xIntercept(y,0.5f+(size/2), r)+2);
-            int x1Mid = (int) (x1Start+(int)(size*r*Math.PI));
-            int x1Min = Math.max(0, x1Mid+xIntercept(y,0.5f-(size/2), r)-2);
-            int x1Max = Math.min(w-1,x1Mid+xIntercept(y,0.5f+(size/2), r)+2);
-
-            int pts = (int) (pct*(x0Max-x0Min)/2);   //100% smooth goes to midpoint
-//            System.out.println("x0:"+x0Min+"/"+x0Mid+"/"+x0Max+"   x1:"+x1Min+"/"+x1Mid+"/"+x1Max);
-//            System.out.println("img w:"+fullImage.getWidth()+"  y="+y+"   pts:"+pts+"   x0Min/Max:"+x0Min+"/"+x0Max);
-//            pts=0;
-
-            // blend x0 first
-            for (int n=0;n<pts;n++) {
-                // at n=0, 50% shared each... at n=pts... 100/0%.. at others pts+n/(2*pts)
-                float blendPct = (float)(pts+n)/(pts+pts);
-                if (((x0Min+n) < w) && ((x1Max-n) < w)) {
-                    int p0 = img.getRGB(x0Min+n,y);
-                    int p1 = img.getRGB(x1Max-n,y);
-                    img.setRGB(x0Min+n,y,blendedRGB(p0,p1,blendPct));
-                    img.setRGB(x1Max-n,y,blendedRGB(p1,p0,blendPct));
-                }
-            }
-            // if size < 1, blend x1
-            if (size < 1)
-                for (int n=0;n<pts;n++) {
-                    // at n=0, 50% shared each... at n=pts... 100/0%.. at others pts+n/(2*pts)
-                    float blendPct = (float)(pts+n)/(pts+pts);
-                    int p0 = img.getRGB(x1Min+n,y);
-                    int p1 = img.getRGB(x0Max-n,y);
-                    img.setRGB(x1Min+n,y,blendedRGB(p0,p1,blendPct));
-                    img.setRGB(x0Max-n,y,blendedRGB(p1,p0,blendPct));
-                }
-        }
-    }
-    protected void smoothEdges(BufferedImage img, float pct, int r) {
-        int h = img.getHeight();
-
-        for (int y=0;y<h;y++) {
-            int x0Mid = (int) (r*Math.PI);
-            int x0Min = x0Mid+xIntercept(y,0,r);
-            int x0Max = x0Mid+xIntercept(y,1,r)-1;
-            int pts = (int) (pct*(x0Max-x0Min)/2);   //100% smooth goes to midpoint
-//            System.out.println("img w:"+fullImage.getWidth()+"  y="+y+"   pts:"+pts+"   x0Min/Max:"+x0Min+"/"+x0Max);
-//            pts=0;
-            for (int n=0;n<pts;n++) {
-                // at n=0, 50% shared each... at n=pts... 100/0%.. at others pts+n/(2*pts)
-                float blendPct = (float)(pts+n)/(pts+pts);
-                int p0 = img.getRGB(x0Min+n,y);
-                int p1 = img.getRGB(x0Max-n,y);
-                img.setRGB(x0Min+n,y,blendedRGB(p0,p1,blendPct));
-                img.setRGB(x0Max-n,y,blendedRGB(p1,p0,blendPct));
-            }
-        }
-    }
-    protected int blendedRGB(int p0, int p1, float pct0) {
-        // pct of p0, (1-pct) of p1
-        float pct1 = 1 - pct0;
-
-        int a0 = p0 >> 24 & 0xff;
-        int r0 = p0 >> 16 & 0xff;
-        int g0 = p0 >> 8 & 0xff;
-        int b0 = p0 >> 0 & 0xff;
-        int a1 = p1 >> 24 & 0xff;
-        int r1 = p1 >> 16 & 0xff;
-        int g1 = p1 >> 8 & 0xff;
-        int b1 = p1 >> 0 & 0xff;
-
-        int ax = (int) ((pct0*a0)+(pct1*a1));
-        int rx = (int) ((pct0*r0)+(pct1*r1));
-        int gx = (int) ((pct0*g0)+(pct1*g1));
-        int bx = (int) ((pct0*b0)+(pct1*b1));
-
-        return (ax << 24)+(rx << 16)+(gx << 8)+bx;
-    }
-
-    protected int mergedRGB(FastImage img, int x, int y, int numX) {
+    
+    private int mergedRGB(FastImage img, int x, int y, int numX) {
         //if (numX == 0)
         //    return 0;
         if (numX < 2)
@@ -254,31 +160,5 @@ public class Sphere2D implements Base {
             b1 += (p0 >> 0 & 0xff);
         }
         return (a1/numX << 24)+(r1/numX << 16)+(g1/numX << 8)+b1/numX;
-    }
-    private FastImage squishCloudsToOval(FastImage clouds, FastImage base) {
-        // must be same size as terrain base image
-        if ((clouds.getWidth() != base.getWidth())
-                || (clouds.getHeight() != base.getHeight()))
-            return clouds;
-
-        for (int y=0;y<base.getHeight();y++) {
-            int x0 = -1;
-            int x1 = -1;
-            for (int x=0;x<base.getWidth();x++) {
-                if (base.getAlpha(x, y) == 255) {
-                    x0 = x;
-                    break;
-                }
-            }
-            for (int x=base.getWidth()-1;x>=0;x--) {
-                if (base.getAlpha(x, y) == 255) {
-                    x1 = x;
-                    break;
-                }
-            }
-            clouds.squishRow(y, x0, x1);
-        }
-
-        return clouds;
     }
 }

@@ -71,7 +71,7 @@ public class StarType implements Base {
             images = new HashMap<>();
         return images;
     }
-    public int maxRadius() {
+    private int maxRadius() {
         if (veryLowMemory())
             return 30;
         else if (lowMemory())

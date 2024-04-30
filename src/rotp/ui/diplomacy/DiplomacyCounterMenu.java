@@ -20,9 +20,6 @@ import java.util.List;
 import rotp.model.empires.Empire;
 
 public class DiplomacyCounterMenu extends DiplomacyRequestReply {
-    public DiplomacyCounterMenu(String  s) {
-        messageType = s;
-    }
     public static DiplomacyCounterMenu create(Empire player, Empire requestor, DiplomaticCounterReply r) {
         DiplomacyCounterMenu msg = new DiplomacyCounterMenu();
         msg.diplomat(requestor);
@@ -34,7 +31,7 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     public void diplomat(Empire v) {
         super.diplomat(v);
     }
-    public DiplomaticCounterReply reply()  { return (DiplomaticCounterReply) reply; }
+    private DiplomaticCounterReply reply()  { return (DiplomaticCounterReply) reply; }
     @Override
     public boolean showTalking()        { return false; }
     @Override

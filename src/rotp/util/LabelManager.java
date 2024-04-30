@@ -25,7 +25,7 @@ import java.util.List;
 import rotp.Rotp;
 
 public class LabelManager implements Base {
-    static LabelManager instance = new LabelManager();
+    private static LabelManager instance = new LabelManager();
     public static LabelManager current()  { return instance; }
     
     private String labelFile = "labels.txt";
@@ -52,17 +52,8 @@ public class LabelManager implements Base {
         }
         catch(UnsupportedEncodingException e) { return key; }
     }
-    public String realLabel(String key) {
-        byte[] value = labelMap.get(key);
-        try {
-            return (value == null) ? null : new String(value, "UTF-8");
-        }
-        catch(UnsupportedEncodingException e) { return null; }
-    }
     public String dialogue(String key) {
         List<String> value = dialogueMap.get(key);
-        //if (value == null) 
-        //    value = enDialogueMap.get(key);
         return (value == null) || value.isEmpty() ? key : random(value);
     }
     public void load(String dir) {
@@ -166,7 +157,7 @@ public class LabelManager implements Base {
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
     }
-    public void loadTechsFile(String dir) {
+    private void loadTechsFile(String dir) {
         log("loading Techs: ", dir, techsFile);
         
         String filename = dir+techsFile;

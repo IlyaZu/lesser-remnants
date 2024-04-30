@@ -38,8 +38,6 @@ public enum PlanetImager implements Base {
     private final static int LEFT_RIGHT_BOTTOM_TOP_INVERT = 6;
     private final static int RIGHT_LEFT_BOTTOM_TOP_INVERT = 7;
 
-    private PlanetImager() {
-    }
     private FastImage terrainBase() {
         if (terrainBase == null) {
             ImageIcon i = icon("images/planets/terrainMap_tiny.png");

@@ -42,7 +42,7 @@ import rotp.util.Base;
 
 public class ShipFleet implements Base, Sprite, Ship, Serializable {
     private static final long serialVersionUID = 1L;
-    enum Status { ORBITING, DEPLOYED, IN_TRANSIT, RETREAT_ON_ARRIVAL };
+    private enum Status { ORBITING, DEPLOYED, IN_TRANSIT, RETREAT_ON_ARRIVAL };
     public final int empId;
     private int sysId;
     private int destSysId = StarSystem.NULL_ID;
@@ -74,11 +74,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             destY = s.y();
         }
     }
-    public void destination(int i, float x, float y) {
-        destSysId = i;
-        destX = x;
-        destY = y;
-    }
     @Override
     public int displayPriority()        { return 8; }
     @Override
@@ -98,7 +93,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public StarSystem system()          { return galaxy().system(sysId); }
     public void system(StarSystem s)    { sysId = id(s); }
     public StarSystem destination()     { return galaxy().system(destSysId);  }
-    public float destY()                { return destY; }
     public void makeOrbiting()          { status = Status.ORBITING; }
     public void makeDeployed()          { status = Status.DEPLOYED; }
     public void makeInTransit()         { status = Status.IN_TRANSIT; }
@@ -113,8 +107,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             case RETREAT_ON_ARRIVAL: status = Status.IN_TRANSIT; break;
         }
     }
-    public void setXY(float x, float y) { fromX = x; fromY = y; }
-    public void setXY(StarSystem sys)   { fromX = sys.x(); fromY = sys.y(); }
     @Override
     public boolean isRallied()          { return rallySysId != StarSystem.NULL_ID; }
     public boolean isRalliedThisTurn()  {
@@ -183,13 +175,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         System.arraycopy(fl.num, 0, temp.num, 0, fl.num.length);
         return temp;
     }
-    public static ShipFleet copy(ShipFleet fl, List<ShipDesign> designs) {
-        // returns a new ship fleet with only stacks & count matching designs
-        ShipFleet temp = new ShipFleet(fl.empId, fl.system());
-        for (ShipDesign desn: designs)
-            temp.num[desn.id()] = fl.num[desn.id()];
-        return temp;
-    }
     private ShipFleet(int emp, ShipFleet f) {
         empId = emp;
         sysId = f.sysId;
@@ -202,15 +187,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         launchTurn = f.launchTurn;
         
         reloadBombs();
-    }
-    public ShipFleet(ShipFleet fl) {
-        empId = fl.empId;
-        sysId = fl.sysId;
-        fromX = fl.fromX;
-        fromY = fl.fromY;
-        destSysId = fl.destSysId;
-        destX = fl.destX;
-        destY = fl.destY;
     }
     @Override
     public FlightPathSprite pathSprite() {
@@ -225,18 +201,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         return pathSprite;
     }
     private ShipDesign design(int i) { return empire().shipLab().design(i); }
-    public ShipFleet matchingFleetWithin(List<ShipFleet> fleets, StarSystem dest) {
-        for (ShipFleet fl: fleets) {
-            if ((fl.empId == empId)
-            && (fl.destSysId == destSysId)
-            && (fl.slowestStackSpeed() == slowestStackSpeed())
-            && (fl.retreating() == retreating())
-            && (fl.rallySysId == rallySysId)) {
-                return fl;
-            }
-        }
-        return null;
-    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(Integer.toHexString(hashCode()));
@@ -316,25 +280,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         for (int i=0;i<num.length;i++)
             num[i] = 0;
     }
-    public int visibleNum(int emp, int i) {
-        ShipDesign d = design(i);
-        if ((emp == empId)
-        || ((d != null) && !d.allowsCloaking()))
-            return num[i];
-        else
-            return 0;
-    }
-    public boolean visibleTo(Empire emp) {
-        if (emp.canSeeShips(empId))
-            return true;
-
-        for (int i=0;i<num.length;i++) {
-            ShipDesign d = design(i);
-            if ((num[i] > 0) && (d != null) && !d.allowsCloaking())
-                return true;
-        }
-        return false;
-    }
     public boolean allowsScanning() {
         for (int i=0;i<num.length;i++) {
             ShipDesign d = design(i);
@@ -342,19 +287,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
                 return true;
         }
         return false;
-    }
-    public ShipDesign design(int emp, int num) {
-        int[] visible = visibleShips(emp);
-        int cnt = num;
-        for (int i=0;i<visible.length;i++) {
-            if (visible[i] > 0) {
-                if (cnt == 0)
-                    return design(i);
-                else
-                    cnt--;
-            }
-        }
-        return null;
     }
     public ShipDesign visibleDesign(int emp, int num) {
         int[] visible = visibleShips(emp);
@@ -589,9 +521,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         
         return true;
     }
-    public boolean canSend(Empire c) {
-        return canSend() && (empire() == c);
-    }
     public boolean canMassDeployTo(StarSystem sys) {
         if (sys == null)
             return false;
@@ -679,40 +608,11 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public int travelTurns(StarSystem dest) {
         return (int)Math.ceil(travelTime(dest));
     }
-    private int travelTurns(StarSystem dest, float speed) {
-        return (int)Math.ceil(travelTime(dest, speed));
-    }
-    public int fullTravelTurns(StarSystem finalDest, ShipDesign design) {
-        // calculate full travel turns for a ship in this fleet of type design
-        // to travel from its current position (may be in transit to another
-        // system) to the requested finalDest
-        
-        // if we can travel directly (i.e. in orbit or hyperspace comms), return
-        // turns to finalDest for the requested design
-        if (canSend())
-            return travelTurns(finalDest, design.warpSpeed());
-
-        // ok, fleet needs to reach its current dest and the travel to final dest
-        
-        // get turns to current dest
-        StarSystem currDest = destination();
-        int currTurns = travelTurns(currDest);
-        
-        // if we can then stargate hop, just add 1 turn
-        if (currDest.hasStargate(empire()) && finalDest.hasStargate(empire()))
-            return currTurns + 1;
-        
-        // calculate turns to next dest and then return total
-        int nextTurns = (int) Math.ceil(travelTime(currDest,finalDest,design.warpSpeed()));
-        return currTurns+nextTurns;
-    }
     public int travelTurnsRemaining()     {
         return (int)Math.ceil(arrivalTime - galaxy().currentTurn());
     }
-    public int numScouts()   { return numShipType(ShipDesign.SCOUT); }
     public int numFighters() { return numShipType(ShipDesign.FIGHTER); }
     public int numBombers()  { return numShipType(ShipDesign.BOMBER); }
-    public int numColonies() { return numShipType(ShipDesign.COLONY); }
     public boolean isEmpty()  { return numShips() == 0; }
     public int numShips ()   {
         int count = 0;
@@ -720,7 +620,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             count += num[i];
         return count;
     }
-    public int numShipType(int missionType) {
+    private int numShipType(int missionType) {
         int count = 0;
         for (int i=0;i<num.length;i++)
             if (num[i]>0) {
@@ -764,18 +664,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         }
         return false;
     }
-    public int[] colonyShips() {
-        // return the ship stacks which have colony ships
-        int[] colony = new int[num.length];
-        for (int i=0;i<num.length;i++) {
-            if (num[i] > 0) {
-                ShipDesign des = design(i);
-                if ((des != null) && des.hasColonySpecial())
-                    colony[i] = num[i];
-            }
-        }
-        return colony;
-    }
     public void disband() {
          galaxy().ships.deleteFleet(this);
     }
@@ -806,19 +694,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             log("disband#4 fleet: ", toString());
             disband();
         }
-    }
-    public int removeScrappedShips(int designId) {
-        int scrappedCount = num[designId];
-        // design has been scrapped
-        num[designId] = 0;
-        if (!hasShips()) 
-            disband();
-        
-        return scrappedCount;
-    }
-    public void removeShips(ShipFleet subfleet) {
-        for (int i=0;i<num.length;i++)
-            num[i] = max(0, num[i]-subfleet.num(i));
     }
     public void bombard() {
         StarSystem sys = system();
@@ -879,7 +754,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     }
     //
     // Fleet Sprite behavior is here now
-    public final static Comparator<ShipFleet> DEST_Y = (ShipFleet o1, ShipFleet o2) -> Base.compare(o1.destY(), o2.destY());
+    private final static Comparator<ShipFleet> DEST_Y = (o1, o2) -> Base.compare(o1.destY, o2.destY);
     public FlightPathSprite pathSpriteTo(StarSystem sys) {
         return new FlightPathSprite(this, sys);
     }

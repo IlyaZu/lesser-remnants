@@ -41,29 +41,21 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
     private static final long serialVersionUID = 1L;
     private static final Color backgroundHaze = new Color(0,0,0,160);
     
-    public static final Color lightBrown = new Color(178,124,87);
-    public static final Color brown = new Color(141,101,76);
-    public static final Color darkBrown = new Color(112,85,68);
-    public static final Color darkerBrown = new Color(75,55,39);
-    
-    Rectangle hoverBox;
-    Rectangle okBox = new Rectangle();
-    Rectangle defaultBox = new Rectangle();
-    BasePanel parent;
-    BaseText displayModeText;
-    BaseText mouseText;
-    BaseText autoColonizeText;
-    BaseText soundsText;
-    BaseText musicText;
-    BaseText graphicsText;
-    BaseText autoBombardText;
-    BaseText backupTurnsText;
-    BaseText saveDirText;
+    private Rectangle hoverBox;
+    private Rectangle okBox = new Rectangle();
+    private Rectangle defaultBox = new Rectangle();
+    private BasePanel parent;
+    private BaseText displayModeText;
+    private BaseText mouseText;
+    private BaseText autoColonizeText;
+    private BaseText soundsText;
+    private BaseText musicText;
+    private BaseText graphicsText;
+    private BaseText autoBombardText;
+    private BaseText backupTurnsText;
+    private BaseText saveDirText;
     
     public GameSettingsUI() {
-        init0();
-    }
-    private void init0() {
         setOpaque(false);
         Color textC = SystemPanel.whiteText;
         displayModeText =  new BaseText(this, false, 20, 20,-78,  textC, textC, hoverC, depressedC, textC, 0, 0);

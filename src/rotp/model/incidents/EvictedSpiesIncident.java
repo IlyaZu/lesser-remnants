@@ -21,8 +21,8 @@ import rotp.model.empires.EmpireView;
 
 public class EvictedSpiesIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empBreaker;
-    final int empMe;
+    private final int empBreaker;
+    private final int empMe;
     
     public static EvictedSpiesIncident create(EmpireView ev) {
         EvictedSpiesIncident inc = new EvictedSpiesIncident(ev.empire(), ev.owner());

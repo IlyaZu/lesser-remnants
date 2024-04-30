@@ -23,10 +23,10 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class SabotageRebellionIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empVictim;
-    final int empSpy;
-    final int sysId;
-    final int incited;
+    private final int empVictim;
+    private final int empSpy;
+    private final int sysId;
+    private final int incited;
 
     public static void addIncident(SabotageMission m) {
         // no incident if spy not caught

@@ -25,10 +25,10 @@ import rotp.ui.notifications.TechStolenAlert;
 
 public class EspionageTechIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empSpy;
-    public final int empVictim;
-    int empThief;
-    String techId;
+    private final int empSpy;
+    private final int empVictim;
+    private int empThief;
+    private String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
         super(calculateSeverity(ev));

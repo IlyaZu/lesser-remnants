@@ -54,29 +54,29 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     private static final Color cellBorderC = new Color(150,129,108);
     protected static final Color selectedC = new Color(178,124,87);
     protected static final Color unselectedC = new Color(112,85,68);
-    protected static final Color selectedRedC = new Color(192,0,0);
-    protected static final Color unselectedRedC = new Color(128,0,0);
-    public static final Color scrollBarC = new Color(211,166,125);
+    private static final Color selectedRedC = new Color(192,0,0);
+    private static final Color unselectedRedC = new Color(128,0,0);
+    private static final Color scrollBarC = new Color(211,166,125);
 
     public static final int LEFT = -1;
     public static final int CENTER = 0;
     public static final int RIGHT = 1;
 
     // unique ids for various button types that may be on a row
-    int TRANSPORT_SLIDER = 1;
-    int TRANSPORT_DECREMENT = 2;
-    int TRANSPORT_INCREMENT = 3;
-    int TRANSPORT_STOP = 4;
-    int SYSTEM_FLAG = 5;
+    private int TRANSPORT_SLIDER = 1;
+    private int TRANSPORT_DECREMENT = 2;
+    private int TRANSPORT_INCREMENT = 3;
+    private int TRANSPORT_STOP = 4;
+    private int SYSTEM_FLAG = 5;
 
     private final BasePanel topParent;
     protected Palette palette;
     private final List<Sprite> sprites = new ArrayList<>();
     private final List<List<SystemButton>> rowButtons = new ArrayList<>();
-    SystemButton hoveringButton;
+    private SystemButton hoveringButton;
 
     private final Rectangle listBox = new Rectangle();
-    Rectangle hoverBox;
+    private Rectangle hoverBox;
     private boolean dragging = false;
     private final int dragStartX = 0;
     private final int dragStartY = 0;
@@ -87,13 +87,13 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     private Column hoveringHeader;
     private Column selectedColumn;
     private boolean redrawHeaders = false;
-    final Rectangle listScroller = new Rectangle();
-    int startY = 0;
-    int maxY = 0;
-    int minDisplayY, maxDisplayY;
-    boolean scrolling = false;
-    int minSelectableIndex = -1;
-    int maxSelectableIndex = -1;
+    private final Rectangle listScroller = new Rectangle();
+    private int startY = 0;
+    private int maxY = 0;
+    private int minDisplayY, maxDisplayY;
+    private boolean scrolling = false;
+    private int minSelectableIndex = -1;
+    private int maxSelectableIndex = -1;
 
     public SystemListingUI(BasePanel p) {
         topParent = p;
@@ -499,7 +499,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         public final List<Column> columns = new ArrayList<>();
         public void addColumn(Column c)   { columns.add(c); }
     }
-    public abstract class Column implements Base {
+    public abstract class Column {
         public static final String YEARS_OR_TURNS = "YEARS_OR_TURNS";
         String headerKey;
         int width;

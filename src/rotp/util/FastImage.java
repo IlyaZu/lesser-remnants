@@ -18,7 +18,6 @@ package rotp.util;
 
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.PixelGrabber;
@@ -58,9 +57,6 @@ public class FastImage {
     public static FastImage from(Image img) {
         return img == null ? null : new FastImage(img);
     }
-    public static FastImage fromPixels(int[] px, int w, int h) {
-        return new FastImage(px, w, h);
-    }
     public static FastImage sized(int w, int h) {
         return new FastImage(w,h);
     }
@@ -81,29 +77,6 @@ public class FastImage {
         }
         return true;
     }
-    public FastImage copy() {
-        int[] newPx = new int[pixels.length];
-        for (int i=0;i<pixels.length;i++)
-            newPx[i]=pixels[i];
-        return FastImage.fromPixels(newPx, w, h);
-    }
-    public static FastImage fromExplosionImage(BufferedImage img) {
-        FastImage fi = new FastImage(img);
-        int w = fi.getWidth();
-        int h = fi.getHeight();
-        for (int x=0;x<w;x++) {
-            for (int y=0;y<h;y++) {
-                int px = fi.getRGB(x, y);
-                int r = px >> 16 & 0xff;
-                int g = px >> 8 & 0xff;
-                int b = px & 0xff;
-                // move blue channel to alpha and set blue to 0
-                int newPx = (b << 24)+(r << 16)+(g << 8)+0;
-                fi.setRGB(x, y, newPx);
-            }
-        }
-        return fi;
-    }
     public static FastImage fromHeightMap(PlanetHeightMap map) {
         int w = map.width();
         int h = map.height();
@@ -122,7 +95,6 @@ public class FastImage {
                 px[index] = newPixel;
             }
         }
-        //System.out.println("trans pixels: "+transPx);
         return new FastImage(px, w, h);
     }
     public int getWidth()                    { return w; }
@@ -132,97 +104,8 @@ public class FastImage {
     
     public void setRGB(int x, int y, int px) {
         if ((x < w) && (y < h))
-            pixels[(y*w)+x] = px; 
+            pixels[(y*w)+x] = px;
     }
-    // floats w & h, interpolating missing pixels
-    public FastImage smoothScale(int newW, int newH) {
-        if ((w != newW) || (h != newH))
-            image(image().getScaledInstance(newW, newH, Image.SCALE_SMOOTH));
-        return this;
-    }
-    public void squishRow(int y, int x0, int x1) {
-        int w = getWidth();
-        int w0 = x1-x0+1;
-        // nothing to squish
-        if (w == w0)
-            return;
-
-        int nullPx = (0 << 24)+(0 << 16)+(0 << 8)+0;
-        // "squish" entire row
-        if (x0 < 0) {
-            for (int x=0;x<w;x++)
-                setRGB(x, y, nullPx);
-            return;
-        }
-
-        int removeCount = w - w0;
-        float n = (float) w / removeCount;  
-        // ex: if w=1000 and removeCnt = 30, then skip every n=33.33rd pixel
-
-        // "squish" by radiating out from center, removing every nth pixel
-        // radiate from center to left
-        float cnt = n/2;
-        float targetCnt = n;
-        int newX = w/2;
-        for (int x=w/2; x>=0; x--) {
-            if ((cnt >= targetCnt) && (x > 0)) {
-                x--;
-                targetCnt += n;
-            }
-            setRGB(newX,y,getRGB(x,y));
-            newX--;
-            cnt++;
-        }
-        // radiate from center to right
-        cnt = n/2;
-        targetCnt = n;
-        newX = w/2;
-        for (int x=w/2; x<w; x++) {
-            if ((cnt >= targetCnt) && (x<(w-1))) {
-                x++;
-                targetCnt += n;
-            }
-            setRGB(newX,y,getRGB(x,y));
-            newX++;
-            cnt++;
-        }
-
-        // null out px left of x0 and right of x1
-        for (int x=0;x<x0;x++)
-            setRGB(x,y,nullPx);
-        for (int x=x1+1;x<w;x++)
-            setRGB(x,y,nullPx);
-    }
-    public void clip(Rectangle r) {
-        if (r == null)
-            return;
-
-        int px = 0;
-        int[] newPixels = new int[r.width * r.height];
-        for (int y=0;y<r.height;y++) {
-            for (int x=0;x<r.width;x++) 
-                newPixels[px++] = getRGB(r.x+x, r.y+y);
-        }
-
-        pixels = newPixels;
-        w = r.width;
-        h = r.height;
-    }
-    public void drawImage(Image img, int x0, int y0) {
-        drawImage(img, x0, y0, null);
-    }
-    public void drawImage(Image img, int x0, int y0, Rectangle bounds) {
-        FastImage fImg = FastImage.from(img);
-        fImg.clip(bounds);
-        int x = x0;
-        int y = y0;
-        for (int x1=0;x1<fImg.w;x1++) {
-            for (int y1=0;y1<fImg.h;y1++) 
-                setRGB(x+x1,y+y1,fImg.getRGB(x1,y1));
-        }
-    }
-
-
     private static int indexPosn(int x, int y, int w0) {
         return (y * w0) + x;
     }

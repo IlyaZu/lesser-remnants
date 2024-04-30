@@ -60,56 +60,36 @@ public final class SabotageUI extends BasePanel implements MouseListener {
     private static final String MAP_PANEL = "Map";
     private static final String RESULT_PANEL = "Result";
 
-    static SabotageUI instance;
-    static Color uiBackground = new Color(132,98,77);
-    static Color dataBackground = new Color(94,71,53);
-    static Color titleColor = new Color(114,155,201);
+    private static SabotageUI instance;
     private static final Color shadeBorderC = new Color(80,80,80);
-    static final Color dataBorders = new Color(160,160,160);
+    private static final Color dataBorders = new Color(160,160,160);
 
-    static final Color paneBorderDarker = new Color(61,41,28);
-    static final Color paneBorderDark = new Color(76,57,41);
-    static final Color paneBorderLighter = new Color(169,127,99);
-    static final Color paneBorderLight = new Color(151,112,90);
-    static final Color borderLight0 = new Color(169,127,99);
-    static final Color borderLight1 = new Color(151,112,90);
-    static final Color borderShade0 = new Color(85,64,47);
-    static final Color borderShade1 = new Color(62,60,108);
+    private static final int REQUEST_MISSION = 1;
+    private static final int SHOW_ANIMATION = 2;
+    private static final int SHOW_RESULTS = 3;
 
-    static final int REQUEST_MISSION = 1;
-    static final int SHOW_ANIMATION = 2;
-    static final int SHOW_RESULTS = 3;
-
-    LinearGradientPaint backGradient;
+    private LinearGradientPaint backGradient;
     private BasePanel cardPane;
     private final CardLayout cardLayout = new CardLayout();
     private SabotageMission mission;
     private GalaxyMapPane mapPane;
     private GalaxyMapPanel map;
-    SpyDetailPane spyDetailPanel;
-    SpySystemPanel spySystemPanel;
-    SabotageButtonsPanel spyButtonsPanel;
-    BasePanel titlePanel;
-    BasePanel promptPanel;
-    SabotageResultPanel resultPanel;
+    private SpyDetailPane spyDetailPanel;
+    private SpySystemPanel spySystemPanel;
+    private SabotageButtonsPanel spyButtonsPanel;
+    private BasePanel titlePanel;
+    private BasePanel promptPanel;
+    private SabotageResultPanel resultPanel;
     private final List<Sprite> controls = new ArrayList<>();
-    int animationIndex = 0;
-    int currentState;
-    int destroyCount = 0;
-    boolean inRebellion = false;
-    int explosionFrame = 0;
-    boolean inciteAudioPlayed = false;
-    boolean exited = false;
-    SoundClip audioClip = null;
-    int repaintCount = 0;
+    private int animationIndex = 0;
+    private int currentState;
+    private boolean inRebellion = false;
+    private SoundClip audioClip = null;
+    private int repaintCount = 0;
 
     public void init(SabotageMission sm, int sysId)       {
         mission = sm;
-        exited = false;
         currentState = REQUEST_MISSION;
-        destroyCount = 0;
-        explosionFrame = 0;
-        inciteAudioPlayed = false;
         backGradient = null;
         // reset map everytime we open
         removeSessionVar("SABOTAGEUI_MAP_INITIALIZED");
@@ -120,7 +100,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         repaintCount = 3;
         selectMapPanel();
     }
-    public StarSystem systemToDisplay() {
+    private StarSystem systemToDisplay() {
         if (mapPane.clickedSprite() instanceof StarSystem)
             return (StarSystem) mapPane.clickedSprite();
         else
@@ -132,19 +112,19 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         setOpaque(true);
         initModel();
     }
-    public void destroyFactories() {
+    private void destroyFactories() {
         mission.destroyFactories(systemToDisplay());
         session().enableSpyReport();
         advanceToNextState();
         return;
     }
-    public void destroyBases() {
+    private void destroyBases() {
         mission.destroyMissileBases(systemToDisplay());
         session().enableSpyReport();
         advanceToNextState();
         return;
     }
-    public void inciteRebellion() {
+    private void inciteRebellion() {
         StarSystem sys = systemToDisplay();
         Leader prevLeader = sys.empire().leader();
         mission.inciteRebellion(sys);
@@ -152,7 +132,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         session().enableSpyReport();
         advanceToNextState();
     }
-    public void cancelMission() {
+    private void cancelMission() {
         mission.cancelMission();
         currentState = SHOW_RESULTS;
         advanceToNextState();
@@ -175,7 +155,6 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             case SHOW_RESULTS:
                 if (audioClip != null)
                     audioClip.endPlaying();
-                exited = true;
                 repaint();
                 session().resumeNextTurnProcessing();
                 return;
@@ -207,8 +186,8 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         add(cardPane, BorderLayout.CENTER);
         addMouseListener(this);
     }
-    public void selectMapPanel()     { cardLayout.show(cardPane, MAP_PANEL); }
-    public void selectResultPanel()  { cardLayout.show(cardPane, RESULT_PANEL); }
+    private void selectMapPanel()     { cardLayout.show(cardPane, MAP_PANEL); }
+    private void selectResultPanel()  { cardLayout.show(cardPane, RESULT_PANEL); }
     @Override
     public void animate() {
         repaintCount--;
@@ -257,7 +236,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             advanceToNextState();
         }
     }
-    final class TitlePanel extends BasePanel {
+    private final class TitlePanel extends BasePanel {
         private static final long serialVersionUID = 1L;
         public TitlePanel () {
             setPreferredSize(new Dimension(getWidth(), s60));
@@ -276,7 +255,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             drawString(g,title, (w-sw)/2, s40);
         }
     }
-    class SpySystemPanel extends SystemPanel {
+    private class SpySystemPanel extends SystemPanel {
         private static final long serialVersionUID = 1L;
         UnexploredGraphicInfoPane unexploredPane;
         SystemGraphicPane exploredPane;
@@ -329,9 +308,9 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         protected void showUnexplored()   { detailLayout.show(cardPanel, UNEXPLORED); }
     }
 
-    final class SpyDetailPane extends BasePanel {
+    private final class SpyDetailPane extends BasePanel {
         private static final long serialVersionUID = 1L;
-        SystemPanel parent;
+        private SystemPanel parent;
 
         SpyDetailPane(SystemPanel p) {
             parent = p;
@@ -438,7 +417,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             }
         }
     }
-    final class SabotageButtonsPanel extends BasePanel implements MouseListener, MouseMotionListener {
+    private final class SabotageButtonsPanel extends BasePanel implements MouseListener, MouseMotionListener {
         private static final long serialVersionUID = 1L;
         private final Color grayEdgeC = new Color(59,59,59);
         private final Color grayMidC = new Color(93,93,93);
@@ -456,14 +435,11 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         private Shape hoverTarget;
         
         public SabotageButtonsPanel() {
-            init();
-            setPreferredSize(new Dimension(getWidth(),scaled(200)));
-        }
-        private void init() {
             setBackground(MainUI.paneBackground());
             setOpaque(true);
             addMouseListener(this);
             addMouseMotionListener(this);
+            setPreferredSize(new Dimension(getWidth(),scaled(200)));
         }
         @Override
         public void paintComponent(Graphics g0) {
@@ -704,7 +680,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             }
         }
     }
-    class SabotageResultPanel extends BasePanel {
+    private class SabotageResultPanel extends BasePanel {
         private static final long serialVersionUID = 1L;
         private Image panelBuffer;
         private List<Image> animationFrames;
@@ -798,7 +774,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             }
         }
     }
-    class SpyParentPanel extends BasePanel {
+    private class SpyParentPanel extends BasePanel {
         private static final long serialVersionUID = 1L;
         @Override
         public void paintComponent(Graphics g0) {
@@ -817,13 +793,10 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             g.fillRect(0,0,w, h);
         }
     }
-    class GalaxyMapPane extends BasePanel implements IMapHandler {
+    private class GalaxyMapPane extends BasePanel implements IMapHandler {
         private static final long serialVersionUID = 1L;
         private LinearGradientPaint backGradient;
         public GalaxyMapPane() {
-            init0();
-        }
-        private void init0() {
             setOpaque(true);
             setBackground(Color.black);
             spySystemPanel = new SpySystemPanel();

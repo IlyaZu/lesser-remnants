@@ -52,19 +52,17 @@ import rotp.util.Base;
 
 public class DiplomaticEmbassy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    public static final float MAX_ADJ_POWER = 10;
 
     public static final int TIMER_SPY_WARNING = 0;
     public static final int TIMER_ATTACK_WARNING = 1;
 
-    public static final int TECH_DELAY = 1;
-    public static final int TRADE_DELAY = 10;
-    public static final int PEACE_DELAY = 10;
-    public static final int PACT_DELAY = 20;
-    public static final int ALLIANCE_DELAY = 30;
-    public static final int JOINT_WAR_DELAY = 20;
-    public static final int UNALLY_DELAY = 30;
-    public static final int MAX_REQUESTS_TURN = 4;
+    private static final int TECH_DELAY = 1;
+    private static final int TRADE_DELAY = 10;
+    private static final int PEACE_DELAY = 10;
+    private static final int PACT_DELAY = 20;
+    private static final int ALLIANCE_DELAY = 30;
+    private static final int JOINT_WAR_DELAY = 20;
+    private static final int MAX_REQUESTS_TURN = 4;
 
     private final EmpireView view;
     private HashMap<String, List<String>> offeredTechs = new HashMap<>();

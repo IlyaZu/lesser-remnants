@@ -26,10 +26,10 @@ import rotp.ui.notifications.FactoriesDestroyedAlert;
 
 public class SabotageFactoriesIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empVictim;
-    final int empSpy;
-    final int sysId;
-    final int destroyed;
+    private final int empVictim;
+    private final int empSpy;
+    private final int sysId;
+    private final int destroyed;
 
     public static void addIncident(SabotageMission m) {
         EmpireView otherView = m.spies().view().otherView();

@@ -27,19 +27,10 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
 
 public class SphereShadowPaint implements Paint {
-    protected Point2D mPoint, mPoint0;
-    protected Point2D mRadius, mRadius0;
-    protected Color mShadowColor;
+    private Point2D mPoint, mPoint0;
+    private Point2D mRadius, mRadius0;
+    private Color mShadowColor;
 
-    /*
-    public SphereShadowPaint(float x, float y, float x0, float y0, Color c, Point2D r, Point2D r0) {
-        set(x, y, x0, y0, c, r, r0);
-    }
-
-    public SphereShadowPaint(float x, float y, Point2D r, Color c, int dir, float pct) {
-        set(x, y, r, c, dir, pct);
-    }
-    */
     public void set(float x, float y, Point2D r, Color c, int dir, float pct) {
         if (r.distance(0, 0) <= 0)
             throw new IllegalArgumentException("Radius must be greater than 0.");
@@ -56,15 +47,6 @@ public class SphereShadowPaint implements Paint {
         mRadius0 = new Point2D.Float(rdist+dist/2,0);
     }
 
-    public void set(float x, float y, float x0, float y0, Color c, Point2D r, Point2D r0) {
-        if (r.distance(0, 0) <= 0)
-            throw new IllegalArgumentException("Radius must be greater than 0.");
-        mPoint = new Point2D.Float(x, y);
-        mPoint0 = new Point2D.Float(x0, y0);
-        mShadowColor = c;
-        mRadius = r;
-        mRadius0 = r0;
-    }
     @Override
     public PaintContext createContext(ColorModel cm,
                                       Rectangle deviceBounds, Rectangle2D userBounds,
@@ -81,7 +63,6 @@ public class SphereShadowPaint implements Paint {
     public int getTransparency() {
         int a1 = mShadowColor.getAlpha();
         int a2 = 0;
-//      return TRANSLUCENT;
         return (((a1 & a2) == 0xff) ? OPAQUE : TRANSLUCENT);
     }
 }
