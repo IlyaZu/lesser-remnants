@@ -30,7 +30,6 @@ public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
     @Override
     public void diplomat(Empire emp) {
         super.diplomat(emp);
-        EmpireView v = player().viewForEmpire(emp);
         options.clear();
         options.add(DECLARE_WAR);
         options.add(EXIT);

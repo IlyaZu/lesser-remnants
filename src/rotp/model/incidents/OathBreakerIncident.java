@@ -26,10 +26,10 @@ public class OathBreakerIncident extends DiplomaticIncident {
     private static final float ALLIANCE_SEV = -30;
     private static final float PACT_SEV = -20;
     private final int oathBreakType;
-    final int empBreaker;
-    final int empVictim;
-    final boolean spying;
-    final boolean notify;
+    private final int empBreaker;
+    private final int empVictim;
+    private final boolean spying;
+    private final boolean notify;
     
     public static void alertBrokenAlliance(Empire breaker, Empire victim, boolean spy) {
         alertBrokenAlliance(breaker,victim,null,spy);

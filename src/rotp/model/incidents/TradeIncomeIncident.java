@@ -22,14 +22,14 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class TradeIncomeIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empMe;
-    public final int empYou;
+    private final int empMe;
+    private final int empYou;
     private final float profit;
 
     public static void create(EmpireView ev, float profit, float pct) {
         ev.owner().diplomatAI().noticeIncident(new TradeIncomeIncident(ev, profit, pct), ev.empire());
     }
-    public TradeIncomeIncident(EmpireView ev, float p, float pct) {
+    private TradeIncomeIncident(EmpireView ev, float p, float pct) {
         super(pct*12.5f); // 0 to 3.125
         profit = p;
         empMe = ev.owner().id;

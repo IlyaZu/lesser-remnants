@@ -21,9 +21,9 @@ import rotp.model.empires.EmpireView;
 
 public class AlliedWithEnemyIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empMe;
-    final int empYou;
-    final int empOther;
+    private final int empMe;
+    private final int empYou;
+    private final int empOther;
 
     public static void create(EmpireView view) {
         for (Empire ally: view.empire().allies()) {

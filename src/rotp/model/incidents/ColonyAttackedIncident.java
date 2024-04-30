@@ -22,10 +22,10 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class ColonyAttackedIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int sysId;
-    final int empDefender;
-    final int empAttacker;
-    final int popLost;
+    private final int sysId;
+    private final int empDefender;
+    private final int empAttacker;
+    private final int popLost;
 
     public static void create(CombatResults r) {
         ColonyAttackedIncident inc = new ColonyAttackedIncident(r);

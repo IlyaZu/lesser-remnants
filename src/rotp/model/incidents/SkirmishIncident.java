@@ -26,9 +26,9 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class SkirmishIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int sysId;
-    final int empMe;
-    final int empYou;
+    private final int sysId;
+    private final int empMe;
+    private final int empYou;
     
     public static void create(CombatResults result, Empire empire) {
         for (Empire emp: result.empires()) {

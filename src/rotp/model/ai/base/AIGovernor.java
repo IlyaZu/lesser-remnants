@@ -28,11 +28,11 @@ import rotp.model.planet.Planet;
 import rotp.util.Base;
 
 public class AIGovernor implements Base, Governor {
-    public static final int SHIP = Colony.SHIP;
-    public static final int DEFENSE = Colony.DEFENSE;
-    public static final int INDUSTRY = Colony.INDUSTRY;
-    public static final int ECOLOGY = Colony.ECOLOGY;
-    public static final int RESEARCH = Colony.RESEARCH;
+    private static final int SHIP = Colony.SHIP;
+    private static final int DEFENSE = Colony.DEFENSE;
+    private static final int INDUSTRY = Colony.INDUSTRY;
+    private static final int ECOLOGY = Colony.ECOLOGY;
+    private static final int RESEARCH = Colony.RESEARCH;
     private final Empire empire;
 
     public AIGovernor (Empire c) {

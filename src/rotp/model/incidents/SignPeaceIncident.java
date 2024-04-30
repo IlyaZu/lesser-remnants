@@ -20,8 +20,8 @@ import rotp.model.empires.Empire;
 
 public class SignPeaceIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empMe;
-    final int empYou;
+    private final int empMe;
+    private final int empYou;
     private final int endTurn;
     
     public static SignPeaceIncident create(Empire e1, Empire e2, int dur) {

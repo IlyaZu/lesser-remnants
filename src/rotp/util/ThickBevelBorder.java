@@ -39,19 +39,7 @@ public class ThickBevelBorder extends AbstractBorder implements Base {
     private int thick;
     private int step = 1;
     private final HashMap<Float,Color> colors = new HashMap<>();
-
-    public int thickness()  { return thick; }
-
-    public ThickBevelBorder(int thickness, Color innerColor, Color outerColor) {
-    	this(thickness, 1, innerColor, outerColor);
-    }
-    public ThickBevelBorder(int thickness, int s,  Color innerColor, Color outerColor) {
-        lIn = tIn = rIn = bIn = innerColor;
-        lOut = tOut = rOut = bOut = outerColor;
-        thick = scaled(thickness);
-        step = s;
-        numColors = 2;
-    }
+    
     public ThickBevelBorder(int thickness, int s,  Color innerColor, Color midColor, Color outerColor) {
         lIn  = tIn  = rIn  = bIn = innerColor;
         lMid = tMid = rMid = bMid = midColor;
@@ -76,30 +64,13 @@ public class ThickBevelBorder extends AbstractBorder implements Base {
         step = s;
         numColors = 2;
     }
-    public ThickBevelBorder(int thickness, int s, int r, Color tOutC, Color tMidC, Color tInC, Color lOutC, Color lMidC, Color lInC, Color bOutC, Color bMidC, Color bInC, Color rOutC, Color rMidC, Color rInC){
-        tOut = tOutC;
-        tMid = tMidC;
-        tIn = tInC;
-        bOut = bOutC;
-        bMid = bMidC;
-        bIn = bInC;
-        lOut = lOutC;
-        lMid = lMidC;
-        lIn = lInC;
-        rOut = rOutC;
-        rMid = rMidC;
-        rIn = rInC;
-        thick = scaled(thickness);
-        step = s;
-        numColors = 3;
-    }
-
+    
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         super.paintBorder(c, g, x, y, width, height);
         paintBorder(g,x,y,width,height);
     }
-    public void paintBorder(Graphics g, int x, int y, int width, int height) {
+    private void paintBorder(Graphics g, int x, int y, int width, int height) {
         Graphics2D g2d = (Graphics2D) g;
         
         for (int i=0;i<thick;i+=step) {

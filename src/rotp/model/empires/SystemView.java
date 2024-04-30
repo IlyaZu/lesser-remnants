@@ -34,28 +34,28 @@ import rotp.util.Base;
 
 public class SystemView implements IMappedObject, Base, Serializable {
     private static final long serialVersionUID = 1L;
-    protected static final int UNIMPORTANT = 0;
-    protected static final int INNER_SYSTEM = 1;
-    protected static final int BORDER_SYSTEM = 2;
-    protected static final int ATTACK_TARGET = 3;
+    private static final int UNIMPORTANT = 0;
+    private static final int INNER_SYSTEM = 1;
+    private static final int BORDER_SYSTEM = 2;
+    private static final int ATTACK_TARGET = 3;
     
     public static final int FLAG_NONE = 0;
-    static final int FLAG_WHITE = 1;
-    static final int FLAG_RED = 2;
-    static final int FLAG_BLUE = 3;
-    static final int FLAG_GREEN = 4;
-    static final int FLAG_YELLOW = 5;
-    static final int FLAG_AQUA = 6;
-    static final int FLAG_ORANGE = 7;
-    static final int FLAG_LTBLUE = 8;
-    static final int FLAG_PURPLE = 9;
-    static final int FLAG_PINK = 10;
+    private static final int FLAG_WHITE = 1;
+    private static final int FLAG_RED = 2;
+    private static final int FLAG_BLUE = 3;
+    private static final int FLAG_GREEN = 4;
+    private static final int FLAG_YELLOW = 5;
+    private static final int FLAG_AQUA = 6;
+    private static final int FLAG_ORANGE = 7;
+    private static final int FLAG_LTBLUE = 8;
+    private static final int FLAG_PURPLE = 9;
+    private static final int FLAG_PINK = 10;
 
     public static SystemView create(int sysId, int empId) {
         return new SystemView(sysId,empId);
     }
 
-    public final int ownerId;
+    private final int ownerId;
     public final int sysId;
     private StarSystem relocationSystem;
     private float hostilityLevel = 0;
@@ -418,8 +418,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public int lastReportTurn()              { return (int) max(spyTurn, scoutTurn); }
     public int spyReportAge()                { return galaxy().currentTurn() - lastReportTurn(); }
 
-    public float distanceTo(SystemView v)   { return system().distanceTo(v.system()); }
-
     public int desiredMissileBases() {
         return (empire() == owner()) ? colony().defense().maxBases() : 0;
     }
@@ -429,7 +427,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public boolean attackTarget()            { return locationSecurity() == ATTACK_TARGET; }
 
     public boolean isColonized()             { return (empire() != null) && (colony() != null); }
-    public boolean isInEmpire()              { return owner() == system().empire();}
     
     public boolean isAlert() {
         if (vName.isEmpty())
@@ -481,19 +478,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public float y()                               { return system().y();  }
 
     public boolean hasActiveTransport()        { return isColonized() && colony().transport().isActive(); }
-    public boolean hasFleetForCiv (Empire c) {
-        return system().hasFleetForEmpire(c);
-    }
-    public boolean inRange(float range) {
-        if (distance() <= range)
-            return true;
-        for (Empire ally: owner().allies()) {
-            if (ally.sv.withinRange(system().id, range))
-                return true;
-        }
-        return false;
-    }
-    public boolean inShipRange()  { return inRange(owner().tech().shipRange()); }
     public int maxPopToGive(float targetPopPct) {
         if (!colony().canTransport())
             return 0;

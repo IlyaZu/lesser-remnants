@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 
 public class OfferTradeMessage extends TurnNotificationMessage {
-    int tradeAmount = 0;
+    private int tradeAmount = 0;
     public OfferTradeMessage(String  s) {
         messageType = s;
     }
@@ -28,7 +28,7 @@ public class OfferTradeMessage extends TurnNotificationMessage {
     public void diplomat(Empire e)  {
         super.diplomat(e);
     }
-    public int tradeAmount()   {
+    private int tradeAmount()   {
         if (tradeAmount == 0)
             tradeAmount = view().trade().maxLevel();
         return tradeAmount;

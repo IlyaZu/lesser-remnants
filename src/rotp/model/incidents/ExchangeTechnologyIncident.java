@@ -21,8 +21,8 @@ import rotp.model.tech.Tech;
 
 public class ExchangeTechnologyIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empMe;
-    final int empYou;
+    private final int empMe;
+    private final int empYou;
     private final String received;
     private final String given;
     

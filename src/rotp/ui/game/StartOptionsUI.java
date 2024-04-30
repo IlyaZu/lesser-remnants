@@ -35,16 +35,11 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
     private static final long serialVersionUID = 1L;
     private static final Color backgroundHaze = new Color(0,0,0,160);
     
-    public static final Color lightBrown = new Color(178,124,87);
-    public static final Color brown = new Color(141,101,76);
-    public static final Color darkBrown = new Color(112,85,68);
-    public static final Color darkerBrown = new Color(75,55,39);
-    
-    Rectangle hoverBox;
-    Rectangle okBox = new Rectangle();
-    Rectangle defaultBox = new Rectangle();
-    BasePanel parent;
-    BaseText randomEventsText;
+    private Rectangle hoverBox;
+    private Rectangle okBox = new Rectangle();
+    private Rectangle defaultBox = new Rectangle();
+    private BasePanel parent;
+    private BaseText randomEventsText;
     
     public StartOptionsUI() {
         setOpaque(false);

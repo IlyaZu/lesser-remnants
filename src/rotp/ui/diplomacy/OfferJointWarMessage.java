@@ -19,7 +19,7 @@ package rotp.ui.diplomacy;
 import rotp.model.empires.Empire;
 
 public class OfferJointWarMessage extends TurnNotificationMessage {
-    Empire target;
+    private Empire target;
     public OfferJointWarMessage(String  s) {
         messageType = s;
     }

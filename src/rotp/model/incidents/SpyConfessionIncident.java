@@ -23,10 +23,10 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class SpyConfessionIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empVictim;
-    public final int empSpy;
-    public final int remainingSpies;
-    public final int missionType;
+    private final int empVictim;
+    private final int empSpy;
+    private final int remainingSpies;
+    private final int missionType;
     
     public SpyConfessionIncident(EmpireView ev, SpyNetwork spies) {
         super(calculateSeverity(ev, spies));

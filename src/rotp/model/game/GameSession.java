@@ -27,7 +27,6 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,13 +54,10 @@ import rotp.util.Base;
 
 public final class GameSession implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    public static final int CURRENT_SAVE_VERSION = 1;
-    public static final String SAVEFILE_DIRECTORY = ".";
     public static final String BACKUP_DIRECTORY = "backup";
     public static final String SAVEFILE_EXTENSION = ".rotp";
     public static final String RECENT_SAVEFILE = "recent"+SAVEFILE_EXTENSION;
-    public static final SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static final Object ONE_GAME_AT_A_TIME = new Object();
+    private static final Object ONE_GAME_AT_A_TIME = new Object();
     private static GameSession instance = new GameSession();
     public static GameSession instance()  { return instance; }
 
@@ -82,11 +78,9 @@ public final class GameSession implements Base, Serializable {
     private IGameOptions options;
     private Galaxy galaxy;
     private final GameStatus status = new GameStatus();
-    private long id;
     private boolean spyActivity = false;
     
     public GameStatus status()                   { return status; }
-    public long id()                             { return id; }
     public ExecutorService smallSphereService()  { return smallSphereService; }
 
     public void pauseNextTurnProcessing(String s)   {
@@ -138,7 +132,6 @@ public final class GameSession implements Base, Serializable {
     public boolean performingTurn()      { return performingTurn; }
     @Override
     public IGameOptions options()        { return options; }
-    public void options(IGameOptions o)  { options = o; }
     @Override
     public Galaxy galaxy()               { return galaxy; }
     public void galaxy(Galaxy g)         { galaxy = g; }
@@ -198,7 +191,7 @@ public final class GameSession implements Base, Serializable {
             
     }
     public GameSession() {
-        options(RulesetManager.current().defaultRuleset());
+        options = RulesetManager.current().defaultRuleset();
     }
     public void startGame(IGameOptions newGameOptions) {
         stopCurrentGame();
@@ -207,7 +200,6 @@ public final class GameSession implements Base, Serializable {
         startExecutors();
         
         synchronized(ONE_GAME_AT_A_TIME) {
-            id = (long) (Long.MAX_VALUE*random());
             GalaxyFactory.current().newGalaxy();
             log("Galaxy complete");
             status().startGame();
@@ -243,14 +235,6 @@ public final class GameSession implements Base, Serializable {
             }
         }
     }
-    public void removeVarValue(Object value) {
-        List<String> keys = new ArrayList<>();
-        keys.addAll(vars().keySet());
-        for (String key: keys) {
-            if (var(key) == value)
-                vars().remove(key);
-        }
-    }
     public void nextTurn() {
         if (performingTurn())
             return;
@@ -262,11 +246,6 @@ public final class GameSession implements Base, Serializable {
     public void waitUntilNextTurnCanProceed() {
         while(suspendNextTurn)
             sleep(200);
-    }
-    public boolean sufficientHeapSpace(IGameOptions opts) {
-        long maxHeap = Rotp.maxHeapMemory;
-        long reqHeap = 200;
-        return maxHeap > reqHeap;
     }
     public boolean inProgress()  { return status().inProgress(); }
     private Runnable nextTurnProcess() {
@@ -447,14 +426,11 @@ public final class GameSession implements Base, Serializable {
     public String backupDir() {
         return concat(saveDir(),"/",GameSession.BACKUP_DIRECTORY);
     }
-    public File saveFileNamed(String fileName) {
+    private File saveFileNamed(String fileName) {
         return new File(saveDir(), fileName);
     }
-    public File backupFileNamed(String fileName) {
+    private File backupFileNamed(String fileName) {
         return new File(backupDir(), fileName);
-    }
-    public File recentSaveFile() {
-        return new File(saveDir(), GameSession.RECENT_SAVEFILE);
     }
     private String backupFileName(int num) {
         Empire pl = player();
@@ -468,7 +444,7 @@ public final class GameSession implements Base, Serializable {
         String dash = "-";
         return concat(leader,dash,race,dash,gShape,dash,gSize,dash,diff,dash,opp,dash,turn,SAVEFILE_EXTENSION);
     }
-    public void saveRecentSession(boolean endOfTurn) {
+    private void saveRecentSession(boolean endOfTurn) {
         String filename = RECENT_SAVEFILE;
         try {
             saveSession(filename, false);
@@ -481,7 +457,7 @@ public final class GameSession implements Base, Serializable {
                 RotPUI.instance().mainUI().showAutosaveFailedPrompt(e.getMessage());
         }
     }
-    public void saveBackupSession(int turn) {
+    private void saveBackupSession(int turn) {
         String filename = "nofile";
         try {
             int backupTurns = UserPreferences.backupTurns();
@@ -602,7 +578,7 @@ public final class GameSession implements Base, Serializable {
         pl.setBounds(minX, maxX, minY, maxY);
         pl.setVisibleShips();
     }
-    static ThreadFactory minThreadFactory() {
+    private static ThreadFactory minThreadFactory() {
         return (Runnable r) -> {
             Thread t = new Thread(r);
             t.setPriority(Thread.MIN_PRIORITY);
