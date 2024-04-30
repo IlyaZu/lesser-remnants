@@ -50,7 +50,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageFactoriesIncident(otherView, m));
     }
     private SabotageFactoriesIncident(EmpireView ev, SabotageMission m) {
-    	super(calculateSeverity(ev, m));
+        super(calculateSeverity(ev, m));
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;

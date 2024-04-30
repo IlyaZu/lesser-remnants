@@ -590,7 +590,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                 y0 += scaled(fontSize-2);
             }
             else {
-            	int s1 = BasePanel.s1;
+                int s1 = BasePanel.s1;
                 int s2 = BasePanel.s2;
                 int boxW = sw + BasePanel.s8;
                 int fontH = scaled(fontSize);
@@ -608,7 +608,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             }
         }
         if (!label2.isEmpty()) {
-        	g2.setColor(map.parent().systemLabelColor(this));
+            g2.setColor(map.parent().systemLabelColor(this));
             g2.setFont(narrowFont(fontSize-2));
             int sw2 = g2.getFontMetrics().stringWidth(label2);
             drawString(g2,label2, x0-(sw2/2), y0+yAdj);

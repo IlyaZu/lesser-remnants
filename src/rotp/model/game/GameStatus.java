@@ -22,18 +22,18 @@ import rotp.util.Base;
 public class GameStatus implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     private enum Status {
-    	NO_GAME, IN_PROGRESS,
-    	LOSS_MILITARY, LOSS_DIPLOMATIC, LOSS_NO_COLONIES,
-    	WIN_MILITARY, WIN_DIPLOMATIC, WIN_COUNCIL_ALLIANCE;
+        NO_GAME, IN_PROGRESS,
+        LOSS_MILITARY, LOSS_DIPLOMATIC, LOSS_NO_COLONIES,
+        WIN_MILITARY, WIN_DIPLOMATIC, WIN_COUNCIL_ALLIANCE;
     }
     private Status status = Status.NO_GAME;
 
     public boolean inProgress()       { return status == Status.IN_PROGRESS; }
     public boolean lost() {
-    	return lostMilitary() || lostDiplomatic() || lostNoColonies(); 
+        return lostMilitary() || lostDiplomatic() || lostNoColonies();
     }
     public boolean won() {
-    	return wonCouncilAlliance() || wonMilitary() || wonDiplomatic();
+        return wonCouncilAlliance() || wonMilitary() || wonDiplomatic();
     }
     public boolean lostMilitary()         { return status == Status.LOSS_MILITARY; }
     public boolean lostDiplomatic()       { return status == Status.LOSS_DIPLOMATIC; }

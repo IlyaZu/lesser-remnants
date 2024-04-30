@@ -26,6 +26,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
     public final int empAttacker;
     public final int empAlly;
     public final int empMe;
+    
     public static void alert(Empire attacker, Empire defender, CombatResults res) {
         List<Empire> allies = defender.allies();
 
@@ -40,7 +41,7 @@ public class AttackedAllyIncident extends DiplomaticIncident {
         }
     }
     private AttackedAllyIncident(Empire e1, Empire e2, Empire e3, float sev) {
-    	super(sev);
+        super(sev);
         empAttacker = e1.id;
         empAlly = e2.id;
         empMe = e3.id;

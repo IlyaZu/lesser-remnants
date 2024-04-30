@@ -109,7 +109,7 @@ public class CombatShip extends CombatEntity {
     }
 
     private int designBeamRangeBonus() {
-        int rng = 0;   
+        int rng = 0;
         for (int j=0;j<ShipDesign.maxSpecials();j++)
             rng += design.special(j).beamRangeBonus();
         return rng;
@@ -247,7 +247,7 @@ public class CombatShip extends CombatEntity {
         return max(missileRange, weaponRange);
     }
     protected boolean useSmartRangeForBeams() {
-    	return false;
+        return false;
     }
     @Override
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
@@ -273,7 +273,7 @@ public class CombatShip extends CombatEntity {
         for (int i=0;i<shotsRemaining.length;i++) {
             boolean thisWeaponFired = shotsRemaining[i]<weaponAttacks[i];
             anyWeaponFired = anyWeaponFired || thisWeaponFired;
-            wpnTurnsToFire[i] = thisWeaponFired ? baseTurnsToFire[i] : wpnTurnsToFire[i]-1;          
+            wpnTurnsToFire[i] = thisWeaponFired ? baseTurnsToFire[i] : wpnTurnsToFire[i]-1;
         }
         
         if (!anyWeaponFired)
@@ -368,8 +368,8 @@ public class CombatShip extends CombatEntity {
     public boolean canAttack(CombatEntity st) {
         if (st == null)
             return false;
-        if (num <= 0) 
-        	return false;
+        if (num <= 0)
+            return false;
         if (st.inStasis)
             return false;
         for (int i=0;i<weapons.size();i++) {
@@ -390,7 +390,7 @@ public class CombatShip extends CombatEntity {
     public boolean isArmed() {
         for (int i=0;i<weapons.size();i++) {
             if (roundsRemaining[i] > 0) {
-            	int empireId = empire != null ? empire.id : Empire.NULL_ID;
+                int empireId = empire != null ? empire.id : Empire.NULL_ID;
                 // armed if: weapons are not bombs or if not allied with planet (& can bomb it)
                 if (!weapons.get(i).groundAttacksOnly())
                     return true;
@@ -405,7 +405,7 @@ public class CombatShip extends CombatEntity {
         float kills = 0;
         for (int i=0;i<weapons.size();i++) {
             ShipComponent comp = weapons.get(i);
-            if (!comp.isLimitedShotWeapon() || (roundsRemaining[i] > 0)) 
+            if (!comp.isLimitedShotWeapon() || (roundsRemaining[i] > 0))
             {
                 //ail: take attack and defense into account
                 float hitPct = 1.0f;
@@ -713,7 +713,7 @@ public class CombatShip extends CombatEntity {
 
         // open portal
         for (int i=0; i<10; i++) {
-            ui.paintCellImmediately(x,y); 
+            ui.paintCellImmediately(x,y);
            g.setColor(portalColor);
             if (reversed)
                 g.fillOval(x0+w0-(w0/16), y0+(h0/2)-(i*h0/20), w0*i/160, h0*i/10);

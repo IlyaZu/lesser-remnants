@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public class ThickBevelBorder extends AbstractBorder implements Base {
     private static final int LEFT = 2;
     private static final int BOTTOM = 3;
     private static final int RIGHT = 4;
-
+    
     private int numColors = 2;
     private Color tIn, bIn, lIn, rIn;
     private Color tOut, bOut, lOut, rOut;
@@ -61,7 +61,7 @@ public class ThickBevelBorder extends AbstractBorder implements Base {
         numColors = 3;
     }
     public ThickBevelBorder(int thickness, Color topOuter, Color topInner, Color leftOuter, Color leftInner, Color bottomOuter, Color bottomInner, Color rightOuter, Color rightInner) {
-    	this(thickness, 1, topOuter, topInner, leftOuter, leftInner, bottomOuter, bottomInner, rightOuter, rightInner);
+        this(thickness, 1, topOuter, topInner, leftOuter, leftInner, bottomOuter, bottomInner, rightOuter, rightInner);
     }
     public ThickBevelBorder(int thickness, int s, Color topColor1, Color topColor2, Color leftColor1, Color leftColor2, Color bottomColor1, Color bottomColor2, Color rightColor1, Color rightColor2){
         tOut = topColor1;
@@ -96,53 +96,53 @@ public class ThickBevelBorder extends AbstractBorder implements Base {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        super.paintBorder(c, g, x, y, width, height);     
+        super.paintBorder(c, g, x, y, width, height);
         paintBorder(g,x,y,width,height);
     }
     public void paintBorder(Graphics g, int x, int y, int width, int height) {
         Graphics2D g2d = (Graphics2D) g;
         
         for (int i=0;i<thick;i+=step) {
-        	float pct = (float) i/(thick-step);
-        	if (numColors == 2) {
-	            g2d.setColor(gradientColor(lIn, lOut, LEFT, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+i, step, height-i-i));
-	            g2d.setColor(gradientColor(tIn, tOut, TOP, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+i, width-i-i, step));
-	            g2d.setColor(gradientColor(rIn, rOut, RIGHT, pct));
-	            g2d.fill(new Rectangle2D.Float(x+width-i-step, y+i, step, height-i-i));
-	            g2d.setColor(gradientColor(bIn, bOut, BOTTOM, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+height-i-step, width-i-i, step));
-        	}
-        	else {
-	            g2d.setColor(gradientColor(lIn, lMid, lOut, LEFT, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+i, step, height-i-i));
-	            g2d.setColor(gradientColor(tIn, tMid, tOut, TOP, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+i, width-i-i, step));
-	            g2d.setColor(gradientColor(rIn, rMid, rOut, RIGHT, pct));
-	            g2d.fill(new Rectangle2D.Float(x+width-i-step, y+i, step, height-i-i));
-	            g2d.setColor(gradientColor(bIn, bMid, bOut, BOTTOM, pct));
-	            g2d.fill(new Rectangle2D.Float(x+i, y+height-i-step, width-i-i, step));
-        	}
-        }       
+            float pct = (float) i/(thick-step);
+            if (numColors == 2) {
+                g2d.setColor(gradientColor(lIn, lOut, LEFT, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+i, step, height-i-i));
+                g2d.setColor(gradientColor(tIn, tOut, TOP, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+i, width-i-i, step));
+                g2d.setColor(gradientColor(rIn, rOut, RIGHT, pct));
+                g2d.fill(new Rectangle2D.Float(x+width-i-step, y+i, step, height-i-i));
+                g2d.setColor(gradientColor(bIn, bOut, BOTTOM, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+height-i-step, width-i-i, step));
+            }
+            else {
+                g2d.setColor(gradientColor(lIn, lMid, lOut, LEFT, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+i, step, height-i-i));
+                g2d.setColor(gradientColor(tIn, tMid, tOut, TOP, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+i, width-i-i, step));
+                g2d.setColor(gradientColor(rIn, rMid, rOut, RIGHT, pct));
+                g2d.fill(new Rectangle2D.Float(x+width-i-step, y+i, step, height-i-i));
+                g2d.setColor(gradientColor(bIn, bMid, bOut, BOTTOM, pct));
+                g2d.fill(new Rectangle2D.Float(x+i, y+height-i-step, width-i-i, step));
+            }
+        }
     }
     private Color gradientColor(Color c2, Color c1, int side, float pct) {
-    	if (colors.containsKey(side+pct)) 
-    		return colors.get(side+pct);
-    	float adjPct = pct;
-    	int r0 = c1.getRed()   + (int) (adjPct * (c2.getRed() - c1.getRed()));
-    	int g0 = c1.getGreen() + (int) (adjPct * (c2.getGreen() - c1.getGreen()));
-    	int b0 = c1.getBlue()  + (int) (adjPct * (c2.getBlue() - c1.getBlue()));
-    	int a0 = c1.getAlpha() + (int) (adjPct * (c2.getAlpha() - c1.getAlpha()));
-    	Color c = new Color(bounds(0,r0,255),bounds(0,g0,255),bounds(0,b0,255),bounds(0,a0,255));
-    	colors.put(side+pct, c);
-    	return c;
+        if (colors.containsKey(side+pct))
+            return colors.get(side+pct);
+        float adjPct = pct;
+        int r0 = c1.getRed()   + (int) (adjPct * (c2.getRed() - c1.getRed()));
+        int g0 = c1.getGreen() + (int) (adjPct * (c2.getGreen() - c1.getGreen()));
+        int b0 = c1.getBlue()  + (int) (adjPct * (c2.getBlue() - c1.getBlue()));
+        int a0 = c1.getAlpha() + (int) (adjPct * (c2.getAlpha() - c1.getAlpha()));
+        Color c = new Color(bounds(0,r0,255),bounds(0,g0,255),bounds(0,b0,255),bounds(0,a0,255));
+        colors.put(side+pct, c);
+        return c;
     }
     private Color gradientColor(Color c3, Color c2, Color c1, int side, float pct) {
-    	if (pct <= 0.5)
-    		return gradientColor(c2,c1,side,2*pct);
-    	else
-    		return gradientColor(c3,c2,side,2*pct-1);
+        if (pct <= 0.5)
+            return gradientColor(c2,c1,side,2*pct);
+        else
+            return gradientColor(c3,c2,side,2*pct-1);
     }
     @Override
     public Insets getBorderInsets(Component c) {

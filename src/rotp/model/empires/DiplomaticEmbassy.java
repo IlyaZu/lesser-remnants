@@ -197,7 +197,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         peaceDuration--;
         treaty.nextTurn(empire());
     }
-    public boolean war()                    { return treaty.isWar(); 	}
+    public boolean war()                    { return treaty.isWar();     }
     public boolean noTreaty()               { return treaty.isNoTreaty(); }
     public boolean pact()                   { return treaty.isPact(); }
     public boolean alliance()               { return treaty.isAlliance(); }
@@ -269,7 +269,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean threatened()       { return threatened; }
     
     public boolean givenAidThisTurn() {
-    	return givenAidThisTurn;
+        return givenAidThisTurn;
     }
     
     public boolean tooManyRequests()        { return requestCount > currentMaxRequests; }
@@ -474,7 +474,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         // if oath broken, then create that incident as well
         switch(oathBreakType) {
             case 1:
-            	GNNAllianceBrokenNotice.create(owner(), empire());
+                GNNAllianceBrokenNotice.create(owner(), empire());
                 OathBreakerIncident.alertBrokenAlliance(owner(),empire(),requestor,false); break;
             case 2: OathBreakerIncident.alertBrokenPact(owner(),empire(),requestor,false); break;
         }
@@ -584,35 +584,35 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     
     private void driftRelations() {
-    	updateRelations((baseRelations()-relations)/50);
+        updateRelations((baseRelations()-relations)/50);
     }
     
     private void updateRelations(DiplomaticIncident incident) {
-    	updateRelations(incident.severity());
+        updateRelations(incident.severity());
     }
     
     private void updateRelations(float severity) {
-    	severity = adjustSeverity(severity);
-    	relations = bounds(-100, relations+severity, 100);
+        severity = adjustSeverity(severity);
+        relations = bounds(-100, relations+severity, 100);
     }
     
     private float adjustSeverity(float severity) {
-    	// Negative severity is treated the same with the relations range flipped.
-    	float adjustedRelations = relations * Math.signum(severity);
-    	
-    	float modifier;
-    	if (adjustedRelations < 0) {
-    		// relations is negative at this point so this is an add.
-    		modifier = 1 - adjustedRelations/50; // 1 to 3
-    	} else {
-    		modifier = 1 / (1 + adjustedRelations/25); // 1 to 1/5
-    	}
-    	
-    	return severity * modifier;
+        // Negative severity is treated the same with the relations range flipped.
+        float adjustedRelations = relations * Math.signum(severity);
+        
+        float modifier;
+        if (adjustedRelations < 0) {
+            // relations is negative at this point so this is an add.
+            modifier = 1 - adjustedRelations/50; // 1 to 3
+        } else {
+            modifier = 1 / (1 + adjustedRelations/25); // 1 to 1/5
+        }
+        
+        return severity * modifier;
     }
     
     private float baseRelations() {
-    	return owner().baseRelations(empire());
+        return owner().baseRelations(empire());
     }
 
     private void resetIncidents() {
@@ -634,14 +634,14 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
     }
     private void clearForgottenIncidents() {
-    	Iterator<DiplomaticIncident> incidentIterator = incidents.iterator();
-    	while (incidentIterator.hasNext()) {
-    		DiplomaticIncident incident = incidentIterator.next();
-    		if (incident.isForgotten()) {
-    			log("Forgetting: ", incident.toString());
-    			incidentIterator.remove();
-    		}
-    	}
+        Iterator<DiplomaticIncident> incidentIterator = incidents.iterator();
+        while (incidentIterator.hasNext()) {
+            DiplomaticIncident incident = incidentIterator.next();
+            if (incident.isForgotten()) {
+                log("Forgetting: ", incident.toString());
+                incidentIterator.remove();
+            }
+        }
     }
     private void beginTreaty() {
         treatyTurn = galaxy().currentTurn();

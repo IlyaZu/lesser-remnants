@@ -75,7 +75,7 @@ public class ShipView implements Base,Serializable {
     public boolean hasECM()             { return ecm != null; }
     public boolean ecmKnown()           { return ecmKnown; }
     public boolean hitsKnown()          { return hitsKnown; }
-    public boolean hasArmor()           { return armor != null;	}
+    public boolean hasArmor()           { return armor != null;    }
     public boolean armorKnown()         { return armorKnown; }
     public boolean hasEngine()          { return engine != null; }
     public boolean engineKnown()        { return engineKnown; }

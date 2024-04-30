@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,13 +33,13 @@ public class StarType implements Base {
     public static final String WHITE = "WHITE";
     public static final String BLUE = "BLUE";
     public static final String PURPLE = "PURPLE";
-	
+    
     private static RoundGradientPaint rgp;
     private static final HashMap<String, StarType> typeMap = new HashMap<>();
     public static StarType keyed(String s)       { return typeMap.get(s); }
     private static void addStarType(String s)    { typeMap.put(s, new StarType(s)); }
     private RoundGradientPaint rgp() {
-        if (rgp == null) 
+        if (rgp == null)
             rgp = new RoundGradientPaint();
         return rgp;
     }

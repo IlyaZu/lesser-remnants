@@ -23,12 +23,13 @@ public class EvictedSpiesIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empBreaker;
     final int empMe;
+    
     public static EvictedSpiesIncident create(EmpireView ev) {
         EvictedSpiesIncident inc = new EvictedSpiesIncident(ev.empire(), ev.owner());
         return inc;
     }
     private EvictedSpiesIncident(Empire e1, Empire e2) {
-    	super(-10);
+        super(-10);
         empBreaker = e1.id;
         empMe = e2.id;
     }

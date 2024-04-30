@@ -33,8 +33,8 @@ import rotp.ui.combat.ShipBattleUI;
 import rotp.util.Base;
 
 public class CombatManager implements Base {
-    private static final Comparator<CombatEntity> INITIATIVE = 
-    		(o1, o2) -> Base.compare(o2.initiativeRank(), o1.initiativeRank());
+    private static final Comparator<CombatEntity> INITIATIVE =
+            (o1, o2) -> Base.compare(o2.initiativeRank(), o1.initiativeRank());
     private static final int MAX_TURNS = 100;
     private static Thread autoRunThread;
     // combat vars
@@ -76,7 +76,7 @@ public class CombatManager implements Base {
         if (sys.hasMonster()) {
             battle(sys, sys.monster());
             galaxy().ships.disembarkFleets(system.id);
-            return;                   
+            return;
         }
         empiresInConflict = sys.empiresInConflict();
         log("Ship Combat starting in ", player().sv.name(sys.id), " between empires: ", empiresInConflict.toString());
@@ -102,7 +102,7 @@ public class CombatManager implements Base {
         Collections.shuffle(matchups);
         
         // decide for each matchup if we should start combat
-        // if a fleet retreats or is destroyed in one combat, it will 
+        // if a fleet retreats or is destroyed in one combat, it will
         //  be "null" in subsequent potential combats
         while (!matchups.isEmpty()) {
             EmpireMatchup match = matchups.get(0);
@@ -118,9 +118,9 @@ public class CombatManager implements Base {
             Empire homeEmpire = sys.empire();
             boolean startCombat = false;
             // if both fleets are armed, we always have combat
-            if (fleet1Armed && fleet2Armed) 
-                startCombat = true; 
-            // if we have a colony that belongs to either of the fleets, combat 
+            if (fleet1Armed && fleet2Armed)
+                startCombat = true;
+            // if we have a colony that belongs to either of the fleets, combat
             // rules are different
             else if (sys.isColonized()  && ((sys.empire() == emp1) || (sys.empire() == emp2))) {
                 // if colony is armed, we have combat
@@ -129,9 +129,9 @@ public class CombatManager implements Base {
                 // else if colony is unarmed we might have combat if one of the fleets is armed
                 // and there is a home fleet. If no home fleet, then this goes to the bombardment phase
                 else if (fleet1Armed || fleet2Armed) {
-                    if ((fleet1 != null) && (fleet1.empire() == homeEmpire)) 
+                    if ((fleet1 != null) && (fleet1.empire() == homeEmpire))
                         startCombat = true;
-                    else if ((fleet2 != null) && (fleet2.empire() == homeEmpire)) 
+                    else if ((fleet2 != null) && (fleet2.empire() == homeEmpire))
                         startCombat = true;
                }
             }
@@ -160,7 +160,7 @@ public class CombatManager implements Base {
             battle(sys, emp, monster);
             if (!monster.alive())
                 break;
-        }    
+        }
     }
     public boolean validSquare(int x, int y) {
         if ((x < 0) || (y< 0) || (x>maxX) || (y>maxY))
@@ -285,16 +285,16 @@ public class CombatManager implements Base {
 
         autoComplete = true;
         autoResolve = true;
-        performingStackTurn = true;       
+        performingStackTurn = true;
         while (shouldContinue())
             performNextStackTurn();
-    } 
+    }
     private boolean shouldContinue() {
         return autoComplete && !combatIsFinished();
     }
     public void continueToNextPlayerStack() {
         log("Continuing To Next Player Stack");
-        if (combatIsFinished()) 
+        if (combatIsFinished())
             return;
         
         performingStackTurn = true;
@@ -302,7 +302,7 @@ public class CombatManager implements Base {
         
         if (initialPause) {
             initialPause = false;
-            ui.paintAllImmediately();     
+            ui.paintAllImmediately();
             sleep(1000);
         }
         currentStack.performTurn();
@@ -312,7 +312,7 @@ public class CombatManager implements Base {
                 playerTurn = true;
             else
                 performNextStackTurn();
-            if (combatIsFinished()) 
+            if (combatIsFinished())
                 return;
         }
 
@@ -421,7 +421,7 @@ public class CombatManager implements Base {
                 else
                     retreatStack(sh, dest);
                 showAnimations = prevShow;
-            }          
+            }
         }
         
         // cancel the retreat of any ships that belong to the combat victor
@@ -433,7 +433,7 @@ public class CombatManager implements Base {
                 if (victor.shipLab().design(des.id()) == des) {
                     results.shipsRetreated().remove(des);
                     retreatsCancelled = true;
-                }        
+                }
             }
             if (retreatsCancelled)
                 galaxy().ships.cancelRetreatingFleets(victor.id, system().id);
@@ -726,7 +726,7 @@ public class CombatManager implements Base {
                 nearX.add(x1);
                 nearY.add(y1);
             }
-        } 
+        }
         int index = roll(0, nearX.size()-1);
         int tgtX = nearX.get(index);
         int tgtY = nearY.get(index);
@@ -814,7 +814,7 @@ public class CombatManager implements Base {
         if (st.canTeleport() && !interdiction)
             return true;
         
-        for (CombatEntity s: results.activeStacks()) {            
+        for (CombatEntity s: results.activeStacks()) {
             if(st.ignoreRepulsors() || (s.empire == st.empire) || s.inStasis)
                 continue;
             if(s.movePointsTo(x, y) <= s.repulsorRange())
@@ -886,7 +886,7 @@ public class CombatManager implements Base {
         int nextIndex = -1;
         int lastIndex =currentTurnList.size()-1;
         
-        // we need to find the next available stack to take a turn 
+        // we need to find the next available stack to take a turn
         // from the currentTurnList. Skip any stacks that are:
         // -- destroyed (by any earlier stack in the list)
         // -- unarmed colonies (they can't shoot or move, so skip)
@@ -942,7 +942,7 @@ public class CombatManager implements Base {
         for (CombatEntity stack: stacks) {
             List<CombatMissile> missiles = new ArrayList<>(stack.missiles());
             for (CombatMissile miss: missiles) {
-                if (miss.owner == st) 
+                if (miss.owner == st)
                     removeMissileFromCombat(miss);
             }
         }
@@ -979,12 +979,12 @@ public class CombatManager implements Base {
 
         // proposed path may be too long for this stack. If stack
         // can't teleport, cut down length of path
-        if (path.size() > st.move) 
+        if (path.size() > st.move)
             path.limitMoves((int)st.move);
 
         // movet the stack along it's path until done or destroyed (by missiles)
         for (int i=0;i<path.size();i++) {
-            if (!st.destroyed()) 
+            if (!st.destroyed())
                 moveStack(st, path.mapX(i), path.mapY(i));
         }
     }
@@ -995,7 +995,7 @@ public class CombatManager implements Base {
         st.teleportTo(x1,y1, 0.1f);
     }
     public void performAttackTarget(CombatEntity st) {
-        while (st.selectBestWeapon(st.target)) 
+        while (st.selectBestWeapon(st.target))
             st.fireWeapon(st.target);
     }
     public boolean[] validMoveMap(CombatEntity stack) {
@@ -1020,11 +1020,11 @@ public class CombatManager implements Base {
         // combat stacks are not traversable
         // enemy stacks may have a repulsor range that is also not traversable
         List<CombatEntity> stacks = new ArrayList<>(results.activeStacks());
-        for (CombatEntity s: stacks) {            
+        for (CombatEntity s: stacks) {
             int r = stack.ignoreRepulsors() || (s.empire == stack.empire) || s.inStasis ? 0 : s.repulsorRange();
-            if ((r == 0) && stack.canEat(s)) 
+            if ((r == 0) && stack.canEat(s))
                 continue;
-            else if (r == 0) 
+            else if (r == 0)
                 valid[(s.y+1)*gridW+(s.x+1)] = false;
             else {
                 for (int x=0-r;x<=r;x++) {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,11 @@ public class TradeRoute implements Base, Serializable {
     }
 
     public float profit() {
-    	return profit;
+        return profit;
     }
 
     public boolean atMaxProfit() {
-    	return profit >= maxProfit(); 
+        return profit >= maxProfit();
     }
 
     public float maxProfit() {
@@ -50,7 +50,7 @@ public class TradeRoute implements Base, Serializable {
     }
 
     public int level() {
-    	return level;
+        return level;
     }
 
     public int maxLevel() {
@@ -59,11 +59,11 @@ public class TradeRoute implements Base, Serializable {
     }
 
     public boolean active() {
-    	return level > 0;
+        return level > 0;
     }
 
     private EmpireView view() {
-    	return galaxy().empire(emp1).viewForEmpire(emp2);
+        return galaxy().empire(emp1).viewForEmpire(emp2);
     }
 
     public void assessTurn() {

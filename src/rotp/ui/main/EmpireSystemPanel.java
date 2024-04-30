@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ public class EmpireSystemPanel extends SystemPanel {
         Colony c = sys.colony();
         if (c == null)
             return;
-        if (!c.shipyard().canCycleDesign()) 
+        if (!c.shipyard().canCycleDesign())
             misClick();
         else {
             softClick();
@@ -159,7 +159,7 @@ public class EmpireSystemPanel extends SystemPanel {
         detailTopPane.add(infoPane, BorderLayout.CENTER);
         Color textC = new Color(204,204,204);
         spendingPane = new EmpireColonySpendingPane(this, MainUI.paneBackground(), textC, labelBorderHi, labelBorderLo);
-        if (parentSpritePanel.parent != null)  
+        if (parentSpritePanel.parent != null)
             spendingPane.mapListener(parentSpritePanel.parent.map());
         shipPane = new EmpireShipPane(this);
 
@@ -330,7 +330,7 @@ public class EmpireSystemPanel extends SystemPanel {
             String label = text("MAIN_COLONY_SHIPYARD_LIMIT");
             int sw1 = g.getFontMetrics().stringWidth(label);
             String none = text("MAIN_COLONY_SHIPYARD_LIMIT_NONE");
-            int sw2 = g.getFontMetrics().stringWidth(none);           
+            int sw2 = g.getFontMetrics().stringWidth(none);
             String amt = c.shipyard().buildLimitStr();
             int sw3 = g.getFontMetrics().stringWidth(amt);
             
@@ -340,7 +340,7 @@ public class EmpireSystemPanel extends SystemPanel {
             int x3 = x1+sw1+s5+max(sw2,sw3)+s5;
             int y3 = y1+s2;
             drawString(g,label, x1, y1);
-            drawString(g,amt, x2, y1);  
+            drawString(g,amt, x2, y1);
             
             limitBox.setBounds(x2-s3,y1-s15,x3-x2,s18);
             if (hoverBox == limitBox) {
@@ -472,7 +472,7 @@ public class EmpireSystemPanel extends SystemPanel {
             scaledFont(g, s, w-s10, 17, 13);
             if (!enabled)
                 g.setColor(gray90C);
-            else if (hoverBox == rallyPointBox)	
+            else if (hoverBox == rallyPointBox)
                 g.setColor(SystemPanel.yellowText);
             else
                 g.setColor(gray20C);
@@ -634,7 +634,7 @@ public class EmpireSystemPanel extends SystemPanel {
                     
             if (upArrow.contains(x,y))
                 incrementBuildLimit(adjAmt);
-            else if (downArrow.contains(x,y)) 
+            else if (downArrow.contains(x,y))
                 decrementBuildLimit(adjAmt);
             else if (limitBox.contains(x,y))
                 resetBuildLimit();
@@ -672,7 +672,7 @@ public class EmpireSystemPanel extends SystemPanel {
                 if (transportEnabled()) {
                     StarSystem sys =  parentSpritePanel.systemViewToDisplay();
                     if (sys != null) {
-                        TransportDeploymentPanel.enableAbandon = false; 
+                        TransportDeploymentPanel.enableAbandon = false;
                         parentSpritePanel.parent.clickedSprite(sys.transportSprite());
                     }
                     parentSpritePanel.repaint();
@@ -682,7 +682,7 @@ public class EmpireSystemPanel extends SystemPanel {
                 if (transportEnabled()) {
                     StarSystem sys =  parentSpritePanel.systemViewToDisplay();
                     if (sys != null)  {
-                        TransportDeploymentPanel.enableAbandon = true; 
+                        TransportDeploymentPanel.enableAbandon = true;
                         parentSpritePanel.parent.clickedSprite(sys.transportSprite());
                     }
                     parentSpritePanel.repaint();
@@ -743,7 +743,7 @@ public class EmpireSystemPanel extends SystemPanel {
                     decrementBuildLimit(adjAmt);
                 return;
             }
-            if (shipDesignBox.contains(x,y) 
+            if (shipDesignBox.contains(x,y)
             || shipNameBox.contains(x,y)) {
                 if (e.getWheelRotation() < 0)
                     nextShipDesign();

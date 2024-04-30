@@ -25,12 +25,13 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
     final int empYou;
     private final String received;
     private final String given;
+    
     public static ExchangeTechnologyIncident create(Empire e1, Empire e2, Tech recv, Tech give) {
         ExchangeTechnologyIncident inc = new ExchangeTechnologyIncident(e1, e2, recv, give);
         return inc;
     }
     private ExchangeTechnologyIncident(Empire e1, Empire e2, Tech recv, Tech give) {
-    	super(5);
+        super(5);
         empMe = e1.id;
         empYou = e2.id;
         received = recv.id();

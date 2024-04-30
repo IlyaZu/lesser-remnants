@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,9 +96,9 @@ public class AIGovernor implements Base, Governor {
             else
                 session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_FERTILE_COMPLETE", name));
         }
-        if (col.ecology().terraformCompletedThisTurn()) 
+        if (col.ecology().terraformCompletedThisTurn())
             session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_TERRAFORM_COMPLETE", name));
-        if (col.research().hasCompletedProject()) 
+        if (col.research().hasCompletedProject())
             session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_PROJECT_ENDED", name, col.research().completedProject().projectKey()));
             
         if (col.hasNewOrders() || (col.allocationRemaining() != 0) || session().awaitingAllocation(sys)) {
@@ -140,10 +140,10 @@ public class AIGovernor implements Base, Governor {
             col.setAllocation(DEFENSE,  min(orderedDef, maxDef));
         
         // 3. Unless we have just completed building a stargate or reached a ship
-        // limit, ensure that SHIP spending 
-        // is maintained. Ship spending is never allocated for player colonies by the AI 
+        // limit, ensure that SHIP spending
+        // is maintained. Ship spending is never allocated for player colonies by the AI
         //Governor so any spending here must be treated similarly to a player order
-        if (!col.locked(SHIP) 
+        if (!col.locked(SHIP)
         && !col.shipyard().stargateCompleted()
         && !col.shipyard().shipLimitReached())
             col.setAllocation(SHIP, prevShip);
@@ -176,16 +176,16 @@ public class AIGovernor implements Base, Governor {
         // if research not locked go there
         if (!col.locked(RESEARCH))
             col.addAllocation(RESEARCH, col.allocationRemaining());
-        else if (!col.locked(INDUSTRY)) 
+        else if (!col.locked(INDUSTRY))
             col.addAllocation(INDUSTRY, col.allocationRemaining());
-        else if (!col.locked(ECOLOGY)) 
+        else if (!col.locked(ECOLOGY))
             col.addAllocation(ECOLOGY, col.allocationRemaining());
         else if (!col.locked(DEFENSE))
             col.addAllocation(DEFENSE, col.allocationRemaining());
         else if (!col.locked(SHIP))
             col.addAllocation(SHIP, col.allocationRemaining());
     }
-    private void baseSetColonyAllocations(Colony col) {                
+    private void baseSetColonyAllocations(Colony col) {
         int maxAllocation = ColonySpendingCategory.MAX_TICKS;
 
         // for systems that have a research project, focus research and forget
@@ -264,23 +264,23 @@ public class AIGovernor implements Base, Governor {
         }
 
         // modnar: set 70% research overhead for inner colonies >85% full production
-		// or 20% research overhead for non-inner colonies >90% full production (not just border colonies)
-		// not applicable to rich/ultra-rich
-		// no need to allocate anything here, should be added in automatically to research at the end
-		int bases = (int) col.defense().bases();
+        // or 20% research overhead for non-inner colonies >90% full production (not just border colonies)
+        // not applicable to rich/ultra-rich
+        // no need to allocate anything here, should be added in automatically to research at the end
+        int bases = (int) col.defense().bases();
         int maxBases = col.defense().maxBases();
-		float resOverhead = 0.1f*netProd;
-		StarSystem sys = col.starSystem();
-		float prodPct = col.currentProductionCapacity();
-		if (bases >= maxBases) { // only if missile bases are in place
-			if ((prodPct > 0.85) && empire.sv.isInnerSystem(sys.id) && !col.planet().isResourceRich() && !col.planet().isResourceUltraRich()) { 
-				netProd -= 7*resOverhead;
-			}
-			if ((prodPct > 0.9) && !empire.sv.isInnerSystem(sys.id) && !col.planet().isResourceRich() && !col.planet().isResourceUltraRich()) { 
-				netProd -= 2*resOverhead;
-			}
-		}
-		
+        float resOverhead = 0.1f*netProd;
+        StarSystem sys = col.starSystem();
+        float prodPct = col.currentProductionCapacity();
+        if (bases >= maxBases) { // only if missile bases are in place
+            if ((prodPct > 0.85) && empire.sv.isInnerSystem(sys.id) && !col.planet().isResourceRich() && !col.planet().isResourceUltraRich()) {
+                netProd -= 7*resOverhead;
+            }
+            if ((prodPct > 0.9) && !empire.sv.isInnerSystem(sys.id) && !col.planet().isResourceRich() && !col.planet().isResourceUltraRich()) {
+                netProd -= 2*resOverhead;
+            }
+        }
+        
         // ship spending, if requested
         if (!col.shipyard().buildingObsoleteDesign()
         && (col.shipyard().desiredShips() > 0)

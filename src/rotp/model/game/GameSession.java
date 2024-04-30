@@ -386,7 +386,7 @@ public final class GameSession implements Base, Serializable {
     }
     public boolean processNotifications() {
         log("Processing player notifications: ", str(notifications().size()));
-        if (haveScoutedSystems()) 
+        if (haveScoutedSystems())
             session().addTurnNotification(new SystemsScoutedNotification());
 
         
@@ -402,11 +402,11 @@ public final class GameSession implements Base, Serializable {
         return true;
     }
     private String nextTurnTitle() {
-    	return text("MAIN_ADVANCING_YEAR", galaxy().currentTurn()+1);
+        return text("MAIN_ADVANCING_YEAR", galaxy().currentTurn()+1);
     }
     public void saveSession(String filename, boolean backup) throws Exception {
         log("Saving game as file: ", filename, "  backup: "+backup);
-        GameSession currSession = GameSession.instance();        
+        GameSession currSession = GameSession.instance();
         File theDir = backup ? new File(backupDir()) : new File(saveDir());
         if (!theDir.exists())
             theDir.mkdirs();
@@ -429,7 +429,7 @@ public final class GameSession implements Base, Serializable {
             bos.close();
             out.close();
             }
-            catch(IOException ex) {}            
+            catch(IOException ex) {}
         }
     }
     private void loadPreviousSession(GameSession gs, boolean startUp) {
@@ -465,7 +465,7 @@ public final class GameSession implements Base, Serializable {
         String diff = text(options().selectedGameDifficulty());
         String turn = "T"+pad4.format(num);
         String opp = "vs"+options().selectedNumberOpponents();
-        String dash = "-";               
+        String dash = "-";
         return concat(leader,dash,race,dash,gShape,dash,gSize,dash,diff,dash,opp,dash,turn,SAVEFILE_EXTENSION);
     }
     public void saveRecentSession(boolean endOfTurn) {
@@ -526,7 +526,7 @@ public final class GameSession implements Base, Serializable {
                     ZipEntry ze = zipFile.entries().nextElement();
                     InputStream zis = zipFile.getInputStream(ze);
                     newSession = loadObjectData(zis);
-                    if (newSession == null) 
+                    if (newSession == null)
                         throw new RuntimeException(text("LOAD_GAME_BAD_VERSION", filename));
                 }
             }
@@ -537,7 +537,7 @@ public final class GameSession implements Base, Serializable {
             loadPreviousSession(newSession, startUp);
             // do not autosave the current session if that is the file we are trying to reload
             if (!filename.equals(RECENT_SAVEFILE))
-                saveRecentSession(false); 
+                saveRecentSession(false);
         }
         catch(IOException e) {
             throw new RuntimeException(text("LOAD_GAME_BAD_VERSION", filename));

@@ -64,7 +64,7 @@ public class AIGeneral implements Base, General {
         rushShipSystems.clear();
 
         Galaxy gal = galaxy();
-        for (int id=0;id<empire.sv.count();id++) 
+        for (int id=0;id<empire.sv.count();id++)
             reviseFleetPlan(gal.system(id));
     }
     
@@ -84,7 +84,7 @@ public class AIGeneral implements Base, General {
         // increase planet value depending on size and factories (val is normalized below)
         // (4*pow(SIZE, 0.7) + min(20, sqrt(FACTORIES)))
         // min(20) is ballpark max invasion tech chances (400 factories)
-        // 
+        //
         // Normal,   size-100,    0 factories:  val = 100
         // Normal,   size-100,  100 factories:  val = 110
         // Normal,   size-100,  200 factories:  val = 115
@@ -252,14 +252,14 @@ public class AIGeneral implements Base, General {
         
         // for other empires that haven't threatened us
         if (!ev.embassy().threatened()) {
-        	considerSneakAttackFleet(ev, sys, enemyFleetSize);
+            considerSneakAttackFleet(ev, sys, enemyFleetSize);
         }
     }
     public boolean willingToInvade(EmpireView v, StarSystem sys) {
         if (!empire.canSendTransportsTo(sys))
             return false;
         float pop = empire.sv.population(sys.id);
-        float needed = troopsNecessaryToTakePlanet(v, sys);   
+        float needed = troopsNecessaryToTakePlanet(v, sys);
         // modnar: scale back willingness to take losses
         // Willing to take 1.1:1 losses to invade normal 100-pop size planet with 200 factories.
         // For invading normal 80-pop size planet with 320 factories, be willing to take ~1:1 losses.
@@ -270,7 +270,7 @@ public class AIGeneral implements Base, General {
         if (enemyFleetSize == 0)
             launchRebellionTroops(sys);
         else
-            setRepelFleetPlan(sys, enemyFleetSize);      
+            setRepelFleetPlan(sys, enemyFleetSize);
     }
     public void orderInvasionFleet(EmpireView v, StarSystem sys, float enemyFleetSize) {
         // modnar: scale up invasion multiplier with factories
@@ -288,7 +288,7 @@ public class AIGeneral implements Base, General {
         else if (empire.combatTransportPct() > 0) {
             // adj pct if enemy has subspace interdictors: fix by ajkfreelance
             float transPct = empire.combatTransportPct();
-            if (ev.spies().tech().subspaceInterdiction()) 
+            if (ev.spies().tech().subspaceInterdiction())
                 transPct /= 2;
             launchGroundTroops(v, sys, mult/transPct);
         }
@@ -517,7 +517,7 @@ public class AIGeneral implements Base, General {
     // modnar: setNormalFighterGuard added for possibly threatened
     private void setNormalFighterGuard(StarSystem sys, float priority) {
         float basesNeeded = empire.sv.desiredMissileBases(sys.id) - empire.sv.bases(sys.id);
-        if (basesNeeded <= 0) 
+        if (basesNeeded <= 0)
             return;
         float baseCost = empire.tech().newMissileBase().cost(empire);
         FleetPlan fp = empire.sv.fleetPlan(sys.id);
@@ -527,7 +527,7 @@ public class AIGeneral implements Base, General {
     }
     private void setMinimumFighterGuard(StarSystem sys, float priority) {
         float basesNeeded = empire.sv.desiredMissileBases(sys.id) - empire.sv.bases(sys.id);
-        if (basesNeeded <= 0) 
+        if (basesNeeded <= 0)
             return;
         float baseCost = empire.tech().newMissileBase().cost(empire);
         FleetPlan fp = empire.sv.fleetPlan(sys.id);

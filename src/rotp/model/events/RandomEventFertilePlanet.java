@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +30,11 @@ public class RandomEventFertilePlanet implements Base, Serializable, RandomEvent
     private int empId;
     private int sysId;
     @Override
-    public boolean goodEvent()    		{ return true; }
+    public boolean goodEvent()            { return true; }
     @Override
-    public boolean repeatable()    		{ return true; }
+    public boolean repeatable()            { return true; }
     @Override
-public String notificationText()    {
+    public String notificationText()    {
         String s1 = text("EVENT_FERTILE");
         s1 = s1.replace("[system]", galaxy().empire(empId).sv.name(sysId));
         s1 = galaxy().empire(empId).replaceTokens(s1, "target");
@@ -45,7 +46,7 @@ public String notificationText()    {
         List<StarSystem> systems = new ArrayList<>();
         for (StarSystem sys : emp.allColonizedSystems()) {
             Planet pl = sys.planet();
-            if (!pl.isEnvironmentFertile() && !pl.isEnvironmentGaia()) 
+            if (!pl.isEnvironmentFertile() && !pl.isEnvironmentGaia())
                 systems.add(sys);
         }
         if (systems.isEmpty())

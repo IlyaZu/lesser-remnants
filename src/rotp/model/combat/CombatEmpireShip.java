@@ -25,31 +25,31 @@ public class CombatEmpireShip extends CombatShip {
     private boolean atLastColony;
     private boolean bombardedThisTurn;
 
-	public CombatEmpireShip(ShipFleet fleet, int index, CombatManager manager) {
-		super(fleet.num(index), 
-				fleet.empire().shipLab().design(index), 
-				fleet.empire().ai().shipCaptain(), 
-				manager);
-		
-		this.fleet = fleet;
-		this.empire = fleet.empire();
+    public CombatEmpireShip(ShipFleet fleet, int index, CombatManager manager) {
+        super(fleet.num(index),
+                fleet.empire().shipLab().design(index),
+                fleet.empire().ai().shipCaptain(),
+                manager);
+        
+        this.fleet = fleet;
+        this.empire = fleet.empire();
         usingAI = empire.isAIControlled();
-		
-		this.attackLevel += empire.shipAttackBonus();
-		this.missileDefense += empire.shipDefenseBonus();
-		this.beamDefense += empire.shipDefenseBonus();
+        
+        this.attackLevel += empire.shipAttackBonus();
+        this.missileDefense += empire.shipDefenseBonus();
+        this.beamDefense += empire.shipDefenseBonus();
         
         this.atLastColony = (empire == mgr.system().empire()) && (empire.numColonies() == 1);
-	}
-	
+    }
+    
     @Override
     public boolean usingAI() {
-    	return usingAI;
+        return usingAI;
     }
-	
+    
     @Override
     public boolean hostileTo(CombatEntity st, StarSystem sys) {
-    	return st.isMonster() || empire.aggressiveWith(st.empire, sys);
+        return st.isMonster() || empire.aggressiveWith(st.empire, sys);
     }
     
     @Override
@@ -68,11 +68,11 @@ public class CombatEmpireShip extends CombatShip {
     
     @Override
     public void fireWeapon(CombatEntity targetStack, int index, boolean allShots) {
-    	super.fireWeapon(targetStack, index, allShots);
+        super.fireWeapon(targetStack, index, allShots);
         if (targetStack.isColony())
             bombardedThisTurn = true;
     }
-	
+    
     @Override
     public void loseShip() {
         int orig = num;
@@ -82,7 +82,7 @@ public class CombatEmpireShip extends CombatShip {
         fleet.removeShips(design().id(), shipsLost, true);
         empire.shipLab().recordDestruction(design(), shipsLost);
     }
-	
+    
     @Override
     public void becomeDestroyed() {
         fleet.removeShips(design().id(), num, true);
@@ -92,7 +92,7 @@ public class CombatEmpireShip extends CombatShip {
     
     @Override
     public boolean canRetreat() {
-    	return !atLastColony && (maneuverability > 0);
+        return !atLastColony && (maneuverability > 0);
     }
     
     @Override
@@ -106,7 +106,7 @@ public class CombatEmpireShip extends CombatShip {
     
     @Override
     public void endTurn() {
-    	super.endTurn();
+        super.endTurn();
         if (bombardedThisTurn)
             fleet.bombarded(design().id());
         bombardedThisTurn = false;
@@ -114,6 +114,6 @@ public class CombatEmpireShip extends CombatShip {
     
     @Override
     protected boolean useSmartRangeForBeams() {
-    	return empire.ai().shipCaptain().useSmartRangeForBeams();
+        return empire.ai().shipCaptain().useSmartRangeForBeams();
     }
 }

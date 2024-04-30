@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +28,8 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp) { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         
         Diplomat plAI = player().diplomatAI();
         Empire dip = diplomat();
@@ -57,7 +58,7 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
     @Override
     public boolean enabled(int i)       { return i < options.size(); }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (i >= options.size())
             return "";
         
@@ -69,9 +70,9 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
             case AID_MENU         : return text("DIPLOMACY_MENU_OFFER_AID");
             case THREATEN_MENU    : return text("DIPLOMACY_MENU_THREATEN");
             case WAR_MENU         : return text("DIPLOMACY_MENU_DECLARE_WAR");
-            case EXIT             : return text("DIPLOMACY_MENU_GOODBYE"); 
+            case EXIT             : return text("DIPLOMACY_MENU_GOODBYE");
         }
-        return ""; 
+        return "";
     }
     @Override
     public void select(int i) {
@@ -86,14 +87,14 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
 
         switch(choice) {
             case TREATY_MENU     : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TREATY_MENU); break;
-            case TRADE_MENU      : 
+            case TRADE_MENU      :
                 DiplomaticReply refusal = diplomat().diplomatAI().immediateRefusalToTrade(pl);
                 if (refusal != null) {
                     refusal.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
                     DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), refusal));
                 }
                 else
-                    DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TRADE_MENU); 
+                    DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TRADE_MENU);
                 break;
             case TECHNOLOGY_MENU :
                 if (pl.diplomatAI().techsAvailableForRequest(diplomat()).isEmpty()) {
@@ -102,17 +103,17 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
                     DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
                 }
                 else
-                     DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TECH_REQ_MENU); 
+                     DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TECH_REQ_MENU);
                 break;
             case AID_MENU        : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_OFFER_AID_MENU); break;
             case THREATEN_MENU   : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_THREATEN_MENU); break;
             case WAR_MENU        : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_DECLARE_WAR_MENU); break;
-            case EXIT            : 
+            case EXIT            :
             default              : escape(); break;
         }
     }
     @Override
     public void escape() {
-        RotPUI.instance().selectRacesPanel();		
+        RotPUI.instance().selectRacesPanel();
     }
 }

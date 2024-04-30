@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class FastImage {
     private int w;
     private int h;
     private int[] pixels;
-    public BufferedImage image() { 
+    public BufferedImage image() {
         if (pixels == null)
             return null;
         return new BufferedImage(
@@ -42,7 +42,7 @@ public class FastImage {
                 false,
                 null);
     }
-    public void image(Image img)  { 
+    public void image(Image img)  {
         if (img == null)
             pixels = null;
         else {
@@ -76,7 +76,7 @@ public class FastImage {
         for (int x=0;x<getWidth();x++) {
             for (int y=0;y<getHeight();y++) {
                 if (getRGB(x, y) != img.getRGB(x,y))
-                        return false;
+                    return false;
             }
         }
         return true;
@@ -112,7 +112,7 @@ public class FastImage {
         // to integers representing grayscale (0-255 for r,g,b)
         for (int x=0;x<w;x++) {
             for (int y=0;y<h;y++) {
-                int index = indexPosn(x,y,w); // find 1D index 
+                int index = indexPosn(x,y,w); // find 1D index
                 int v = map.col(x, y);
                 int alpha = 255;
                 if (v == Byte.MIN_VALUE)
@@ -128,9 +128,9 @@ public class FastImage {
     public int getWidth()                    { return w; }
     public int getHeight()                   { return h; }
     public int getRGB(int x, int y)          { return ((y*w)+x < 0) ? 0 : pixels[(y*w)+x]; }
-    public int getAlpha(int x, int y)        { return getRGB(x,y) >> 24 & 0xff;	}
-
-    public void setRGB(int x, int y, int px) { 
+    public int getAlpha(int x, int y)        { return getRGB(x,y) >> 24 & 0xff;    }
+    
+    public void setRGB(int x, int y, int px) {
         if ((x < w) && (y < h))
             pixels[(y*w)+x] = px; 
     }

@@ -50,12 +50,12 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
                 }
             }
             if (systemSeverity > 0)
-            	view.embassy().addIncident(new MilitaryBuildupIncident(view,sys, systemSeverity));
+                view.embassy().addIncident(new MilitaryBuildupIncident(view,sys, systemSeverity));
         }
     }
     
     private MilitaryBuildupIncident(EmpireView ev, StarSystem sys, float sev) {
-    	super(Math.max(-2.5f, sev));
+        super(Math.max(-2.5f, sev));
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

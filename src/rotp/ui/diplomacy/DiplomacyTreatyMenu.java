@@ -74,7 +74,7 @@ public class DiplomacyTreatyMenu extends DiplomaticMessage {
     @Override
     public boolean showTalking()                { return false; }
     @Override
-    public int numReplies()       		{ return options.size(); }
+    public int numReplies()               { return options.size(); }
     @Override
     public String reply(int i) {
         if (i >= options.size())

@@ -44,7 +44,7 @@ public class TrespassingIncident extends DiplomaticIncident {
     }
 
     private TrespassingIncident(EmpireView ev, StarSystem sys, ShipFleet fl) {
-    	super(calculateSeverity(sys, fl));
+        super(calculateSeverity(sys, fl));
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
@@ -63,8 +63,8 @@ public class TrespassingIncident extends DiplomaticIncident {
         
         float fleetPower = fl.firepower(sys.colony().defense().shieldLevel())/100.0f;
         
-    	float severity = multiplier * Math.max(1.0f, fleetPower);
-    	return Math.max(-10, severity);
+        float severity = multiplier * Math.max(1.0f, fleetPower);
+        return Math.max(-10, severity);
     }
 
     private String systemName()         { return player().sv.name(sysId); }

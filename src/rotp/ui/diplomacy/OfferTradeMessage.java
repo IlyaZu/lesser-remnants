@@ -34,7 +34,7 @@ public class OfferTradeMessage extends TurnNotificationMessage {
         return tradeAmount;
     }
     @Override
-    public int numReplies()       		{ return 2; }
+    public int numReplies()               { return 2; }
     @Override
     public boolean enabled(int i)       { return true; }
     @Override
@@ -50,12 +50,12 @@ public class OfferTradeMessage extends TurnNotificationMessage {
         log("OfferTradeMessage - selected: ", str(i));
         switch(i) {
             case 0:
-            	int tradeAmount = tradeAmount();
-            	EmpireView view = player().viewForEmpire(diplomat());
-            	view.embassy().establishTradeTreaty(tradeAmount);
-            	
-            	DiplomaticReply reply = DiplomaticReplies.announceTrade(
-            			view.otherView(), tradeAmount, galaxy().currentTurn());
+                int tradeAmount = tradeAmount();
+                EmpireView view = player().viewForEmpire(diplomat());
+                view.embassy().establishTradeTreaty(tradeAmount);
+                
+                DiplomaticReply reply = DiplomaticReplies.announceTrade(
+                        view.otherView(), tradeAmount, galaxy().currentTurn());
                 reply.resumeTurn(true);
                 DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
                 break;

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +26,8 @@ public class DiplomacyJointWarMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire v) { 
-        super.diplomat(v); 
+    public void diplomat(Empire v) {
+        super.diplomat(v);
         choices = diplomat().nonEnemiesKnownBy(player());
         while (choices.size() > MAX_CHOICES) {
             Empire rando = random(choices);
@@ -36,14 +37,14 @@ public class DiplomacyJointWarMenu extends DiplomaticMessage {
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numReplies()       	{ return choices.size()+1; }
+    public int numReplies()           { return choices.size()+1; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (i < choices.size())
             return choices.get(i).raceName();
         if (i == choices.size())
             return text("DIPLOMACY_MENU_FORGET_IT");
-        return ""; 
+        return "";
     }
     @Override
     public boolean enabled(int i)       { return i <= choices.size(); }
@@ -67,12 +68,12 @@ public class DiplomacyJointWarMenu extends DiplomaticMessage {
         if (reply.accepted() && (reply instanceof DiplomaticCounterReply)) {
             DiplomaticCounterReply counter = (DiplomaticCounterReply) reply;
             DiplomacyRequestReply menu = DiplomacyCounterMenu.create(player(), diplomat(), counter);
-            DiplomaticMessage.reply(menu);              
+            DiplomaticMessage.reply(menu);
         }
         else {
             reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
-            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
-        }       
+            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
+        }
     }
     @Override
     public void escape() {

@@ -23,14 +23,15 @@ public class AllianceIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empMe;
     final int empYou;
+    
     public static void create(EmpireView view) {
-    	DiplomaticEmbassy embassy = view.embassy();
-    	if (embassy.alliance()) {
-    		embassy.addIncident(new AllianceIncident(view));
-    	}
+        DiplomaticEmbassy embassy = view.embassy();
+        if (embassy.alliance()) {
+            embassy.addIncident(new AllianceIncident(view));
+        }
     }
     private AllianceIncident(EmpireView view) {
-    	super(3);
+        super(3);
         empMe = view.ownerId();
         empYou = view.empId();
     }

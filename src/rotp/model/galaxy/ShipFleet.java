@@ -66,8 +66,8 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     public void sysId(int i)            { sysId = i; }
     @Override
     public int destSysId()              { return destSysId; }
-    public void destSysId(int i)        { 
-        destSysId = i; 
+    public void destSysId(int i)        {
+        destSysId = i;
         if (hasDestination()) {
             StarSystem s = galaxy().system(destSysId);
             destX = s.x();
@@ -118,10 +118,10 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     @Override
     public boolean isRallied()          { return rallySysId != StarSystem.NULL_ID; }
     public boolean isRalliedThisTurn()  {
-        return isRallied() && (launchTurn == galaxy().currentTurn()); 
+        return isRallied() && (launchTurn == galaxy().currentTurn());
     }
     public boolean isRetreatingThisTurn() {
-        return retreating() && (launchTurn == galaxy().currentTurn()); 
+        return retreating() && (launchTurn == galaxy().currentTurn());
     }
     public boolean hasDestination()     { return destSysId != StarSystem.NULL_ID; }
     
@@ -190,7 +190,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             temp.num[desn.id()] = fl.num[desn.id()];
         return temp;
     }
-     private ShipFleet(int emp, ShipFleet f) {
+    private ShipFleet(int emp, ShipFleet f) {
         empId = emp;
         sysId = f.sysId;
         fromX = f.x();
@@ -270,7 +270,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         float currTurn = galaxy().currentTurn();
         if ((launchTurn == NOT_LAUNCHED) || (launchTurn == currTurn))
             return 0;
-        else 
+        else
             return (currTurn-launchTurn) / (arrivalTime-launchTurn);
     }
     public void launch() {
@@ -301,10 +301,10 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     @Override
     public boolean deployed()       { return isDeployed(); }
     public boolean launched()       { return launchTurn > NOT_LAUNCHED; }
-    public boolean canUndeploy()    { 
+    public boolean canUndeploy()    {
         if (isRalliedThisTurn())
             return true;
-        return isDeployed() && !retreating(); 
+        return isDeployed() && !retreating();
     }
     @Override
     public boolean inTransit()      { return isInTransit(); }
@@ -522,7 +522,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         arrivalTime = galaxy().currentTurn();
         if (hasDestination())
             arrivalTime += travelTime(destination());
-        if (arrivalTime <= galaxy().currentTurn()) 
+        if (arrivalTime <= galaxy().currentTurn())
             log("Error: ship arrivalTime <= currentTime");
     }
     public FleetOrders newOrders() {
@@ -639,8 +639,8 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         }
         return maxSpeed;
     }
-	// modnar: add firepowerAntiShip to only count weapons that can attack ships
-	public float firepowerAntiShip(float shield) {
+    // modnar: add firepowerAntiShip to only count weapons that can attack ships
+    public float firepowerAntiShip(float shield) {
         float dmg = 0;
         for (int i=0;i<num.length;i++) {
             if (num[i]>0) {
@@ -676,21 +676,21 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         }
         return travelTime(this,dest,speed);
     }
-    public int travelTurns(StarSystem dest) { 
-        return (int)Math.ceil(travelTime(dest));  
+    public int travelTurns(StarSystem dest) {
+        return (int)Math.ceil(travelTime(dest));
     }
-    private int travelTurns(StarSystem dest, float speed) { 
-        return (int)Math.ceil(travelTime(dest, speed));  
+    private int travelTurns(StarSystem dest, float speed) {
+        return (int)Math.ceil(travelTime(dest, speed));
     }
     public int fullTravelTurns(StarSystem finalDest, ShipDesign design) {
         // calculate full travel turns for a ship in this fleet of type design
-        // to travel from its current position (may be in transit to another 
+        // to travel from its current position (may be in transit to another
         // system) to the requested finalDest
         
-        // if we can travel directly (i.e. in orbit or hyperspace comms), return 
+        // if we can travel directly (i.e. in orbit or hyperspace comms), return
         // turns to finalDest for the requested design
-        if (canSend()) 
-            return travelTurns(finalDest, design.warpSpeed());  
+        if (canSend())
+            return travelTurns(finalDest, design.warpSpeed());
 
         // ok, fleet needs to reach its current dest and the travel to final dest
         
@@ -706,7 +706,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         int nextTurns = (int) Math.ceil(travelTime(currDest,finalDest,design.warpSpeed()));
         return currTurns+nextTurns;
     }
-    public int travelTurnsRemaining()     { 
+    public int travelTurnsRemaining()     {
         return (int)Math.ceil(arrivalTime - galaxy().currentTurn());
     }
     public int numScouts()   { return numShipType(ShipDesign.SCOUT); }
@@ -781,7 +781,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     }
     public void addFleet(ShipFleet fl) {
         if (this != fl) {
-            for (int i=0;i<num.length;i++) 
+            for (int i=0;i<num.length;i++)
                 num[i] += fl.num[i];
         }
     }
@@ -895,7 +895,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         return displayed && selectBox().contains(mapX, mapY);
     }
     @Override
-    public float selectDistance(GalaxyMapPanel map, int mapX, int mapY)  { 
+    public float selectDistance(GalaxyMapPanel map, int mapX, int mapY)  {
         float centerX = selectBox().x+(selectBox().width/2);
         float centerY = selectBox().y+(selectBox().height/2);
         return distance(mapX, mapY, centerX, centerY);
@@ -989,7 +989,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         int y = mapY(map);
         BufferedImage img;
         if (!isPotentiallyArmed(player()))
-        	img = empire().scoutImage();
+            img = empire().scoutImage();
         else if (hullPoints() >= 400)
             img = empire().shipImageLarge();
         else

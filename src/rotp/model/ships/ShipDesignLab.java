@@ -85,7 +85,7 @@ public class ShipDesignLab implements Base, Serializable {
         if (prototypeDesign == null)
             prototypeDesign = newBlankDesign(ShipDesign.SMALL);
         return prototypeDesign;
-    }  
+    }
     public boolean slotInUse(int slot) {
         return (slot == scoutDesignId) || (slot == bomberDesignId) || (slot == fighterDesignId)
                 || (slot == colonyDesignId) || (slot == destroyerDesignId);
@@ -205,7 +205,7 @@ public class ShipDesignLab implements Base, Serializable {
         designs[slot] = d;
         d.active(true);
         d.id(slot);
-        d.seq(slot); 
+        d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         scoutDesignId = slot;
         log("Empire: "+empire.name()+" creates scout design: "+d.name()+"  slot:"+slot);
@@ -216,7 +216,7 @@ public class ShipDesignLab implements Base, Serializable {
         designs[slot] = d;
         d.active(true);
         d.id(slot);
-        d.seq(slot); 
+        d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         colonyDesignId = slot;
         log("Empire: "+empire.name()+" creates colony design: "+d.name()+"  slot:"+slot);
@@ -226,7 +226,7 @@ public class ShipDesignLab implements Base, Serializable {
         designs[slot] = d;
         d.active(true);
         d.id(slot);
-        d.seq(slot); 
+        d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         empire().swapShipConstruction(fighterDesign(), d);
         fighterDesignId = slot;
@@ -238,7 +238,7 @@ public class ShipDesignLab implements Base, Serializable {
         designs[slot] = d;
         d.active(true);
         d.id(slot);
-        d.seq(slot); 
+        d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         bomberDesignId = slot;
         log("Empire: "+empire.name()+" creates bomber design: "+d.name()+"  slot:"+slot);
@@ -249,7 +249,7 @@ public class ShipDesignLab implements Base, Serializable {
         designs[slot] = d;
         d.active(true);
         d.id(slot);
-        d.seq(slot); 
+        d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         destroyerDesignId = slot;
         log("Empire: "+empire.name()+" creates destroyer design: "+d.name()+"  slot:"+slot);
@@ -666,13 +666,13 @@ public class ShipDesignLab implements Base, Serializable {
         for (ShipWeapon wpn : weapons()) {
             if (!wpn.noWeapon()) {
                 numWeapons = (int) (space/wpn.space(d));
-				
-				// modnar: accounting for planetDamageMod()
-				// correctly calculate damage estimate for attacking colony (in round-about way)
-				// beams and torpedoes do half damage against colonies, planetDamageMod() = 0.5f
-				// other weapons have planetDamageMod() = 1.0f, so this correction would have no effect for them
-				// average(beamMax/2-shield, beamMin/2-shield)  // correct formula
-				// = average(beamMax-2*shield, beamMin-2*shield)/2  // equivalent formula used here
+                
+                // modnar: accounting for planetDamageMod()
+                // correctly calculate damage estimate for attacking colony (in round-about way)
+                // beams and torpedoes do half damage against colonies, planetDamageMod() = 0.5f
+                // other weapons have planetDamageMod() = 1.0f, so this correction would have no effect for them
+                // average(beamMax/2-shield, beamMin/2-shield)  // correct formula
+                // = average(beamMax-2*shield, beamMin-2*shield)/2  // equivalent formula used here
                 wpnDamage = numWeapons * wpn.firepower(shieldLevel/wpn.planetDamageMod()) * wpn.planetDamageMod();
                 if (wpn.isLimitedShotWeapon()) {
                     float base = pow(2,wpn.shots());

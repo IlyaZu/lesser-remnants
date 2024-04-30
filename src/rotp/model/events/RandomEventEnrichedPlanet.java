@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +30,9 @@ public class RandomEventEnrichedPlanet implements Base, Serializable, RandomEven
     private int empId;
     private int sysId;
     @Override
-    public boolean goodEvent()    		{ return true; }
+    public boolean goodEvent()            { return true; }
     @Override
-    public boolean repeatable()    		{ return true; }
+    public boolean repeatable()            { return true; }
     @Override
     public String notificationText()    {
         String s1 = text("EVENT_ENRICHED");
@@ -45,7 +46,7 @@ public class RandomEventEnrichedPlanet implements Base, Serializable, RandomEven
         List<StarSystem> systems = new ArrayList<>();
         for (StarSystem sys : emp.allColonizedSystems()) {
             Planet planet = sys.planet();
-            if (!planet.isResourceRich() && !planet.isResourceUltraRich() && !planet.isArtifact()) 
+            if (!planet.isResourceRich() && !planet.isResourceUltraRich() && !planet.isArtifact())
                 systems.add(sys);
         }
         if (systems.isEmpty())

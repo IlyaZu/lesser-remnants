@@ -27,19 +27,19 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     private final float severity;
     
     public DiplomaticIncident(float severity) {
-    	this.severity = severity;
+        this.severity = severity;
     }
     
     public int turnOccurred() {
-    	return turnOccurred;
+        return turnOccurred;
     }
     
     public int duration() {
-    	return (int) Math.ceil(Math.abs(severity));
+        return (int) Math.ceil(Math.abs(severity));
     }
     
     public float severity() {
-    	return severity;
+        return severity;
     }
 
     public int timerKey()                { return -1; } // default -1 for timerKey index means no timer triggered

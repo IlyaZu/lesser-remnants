@@ -27,8 +27,9 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     public final int empSpy;
     public final int remainingSpies;
     public final int missionType;
+    
     public SpyConfessionIncident(EmpireView ev, SpyNetwork spies) {
-    	super(calculateSeverity(ev, spies));
+        super(calculateSeverity(ev, spies));
         remainingSpies = spies.numActiveSpies();
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
@@ -73,7 +74,7 @@ public class SpyConfessionIncident extends DiplomaticIncident {
         else if (missionType == 1)
             return DialogueManager.WARNING_ESPIONAGE;
         else
-            return DialogueManager.WARNING_SABOTAGE;        
+            return DialogueManager.WARNING_SABOTAGE;
     }
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }

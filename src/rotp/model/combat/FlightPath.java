@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,10 @@ public class FlightPath {
     private float sortValue = -1;
 
     public int size()             { return points.size(); }
-    public int mapX(int i)        { return (points.get(i) % gridW) -1; 	}
-    public int mapY(int i)        { return (points.get(i) / gridW) -1; 	}
+    public int mapX(int i)        { return (points.get(i) % gridW) -1;     }
+    public int mapY(int i)        { return (points.get(i) / gridW) -1;     }
     public void limitMoves(int n) {
-        if ((n >= 0) && points.size() > n) 
+        if ((n >= 0) && points.size() > n)
             points = points.subList(0,n);
     }
     private float sortValue()      {

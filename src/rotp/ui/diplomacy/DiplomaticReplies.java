@@ -21,63 +21,63 @@ import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
 
 public class DiplomaticReplies {
-	
-	public static DiplomaticReply announceTrade(EmpireView view, int amount, int turnOccurred) {
-		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
-		replaceToken(remark, "[amt]", Integer.toString(amount));
-		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply acceptTrade(EmpireView view, int amount) {
-		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
-		replaceToken(remark, "[amt]", Integer.toString(amount));
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply announcePact(EmpireView view, int turnOccurred) {
-		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_PACT, view);
-		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply acceptPact(EmpireView view) {
-		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_PACT, view);
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply announceAlliance(EmpireView view, int turnOccurred) {
-		StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_ALLIANCE, view);
-		replaceToken(remark, "[year]", Integer.toString(turnOccurred));
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply acceptAlliance(EmpireView view) {
-		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_ALLIANCE, view);
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
-		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
-		replaceToken(remark, "[amt]", Integer.toString(amount));
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	public static DiplomaticReply acceptTechnologyAid(EmpireView view, Tech tech) {
-		StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
-		replaceToken(remark, "[tech]", tech.name());
-		return new DiplomaticReply(true, remark.toString());
-	}
-	
-	private static StringBuilder baseRemark(String type, EmpireView view) {
-		String remarkString = DialogueManager.current().randomMessage(type, view);
-		StringBuilder remark = new StringBuilder(remarkString);
-		
-		replaceEmpireTokens(remark, "my", view.owner());
-		replaceEmpireTokens(remark, "your", view.empire());
-		
-		return remark;
-	}
+    
+    public static DiplomaticReply announceTrade(EmpireView view, int amount, int turnOccurred) {
+        StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_TRADE, view);
+        replaceToken(remark, "[amt]", Integer.toString(amount));
+        replaceToken(remark, "[year]", Integer.toString(turnOccurred));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptTrade(EmpireView view, int amount) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TRADE, view);
+        replaceToken(remark, "[amt]", Integer.toString(amount));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply announcePact(EmpireView view, int turnOccurred) {
+        StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_PACT, view);
+        replaceToken(remark, "[year]", Integer.toString(turnOccurred));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptPact(EmpireView view) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_PACT, view);
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply announceAlliance(EmpireView view, int turnOccurred) {
+        StringBuilder remark = baseRemark(DialogueManager.ANNOUNCE_ALLIANCE, view);
+        replaceToken(remark, "[year]", Integer.toString(turnOccurred));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptAlliance(EmpireView view) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_ALLIANCE, view);
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptFinancialAid(EmpireView view, int amount) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_FINANCIAL_AID, view);
+        replaceToken(remark, "[amt]", Integer.toString(amount));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptTechnologyAid(EmpireView view, Tech tech) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
+        replaceToken(remark, "[tech]", tech.name());
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    private static StringBuilder baseRemark(String type, EmpireView view) {
+        String remarkString = DialogueManager.current().randomMessage(type, view);
+        StringBuilder remark = new StringBuilder(remarkString);
+        
+        replaceEmpireTokens(remark, "my", view.owner());
+        replaceEmpireTokens(remark, "your", view.empire());
+        
+        return remark;
+    }
     
     private static void replaceEmpireTokens(StringBuilder remark, String prefix, Empire empire) {
         String fullPrefix = "[" + prefix + "_";
@@ -99,12 +99,12 @@ public class DiplomaticReplies {
     
     private static String getEmpireTokenValue(String token, Empire empire) {
         if (token.equals("_name")) {
-        	// leader name is special case, not in dictionary
+            // leader name is special case, not in dictionary
             return empire.leader().name();
         }
         else if (token.equals("_home")) {
-        	int capitalId = empire.capitalSysId();
-        	return empire.sv.name(capitalId);
+            int capitalId = empire.capitalSysId();
+            return empire.sv.name(capitalId);
         }
         else {
             return empire.label(token);
@@ -112,12 +112,12 @@ public class DiplomaticReplies {
     }
     
     private static void replaceToken(StringBuilder remark, String token, String value) {
-    	int tokenLength = token.length();
-    	int startIndex = remark.indexOf(token, 0);
-    	while (startIndex != -1) {
-    		remark.replace(startIndex, startIndex + tokenLength, value);
-    		startIndex = remark.indexOf(token, startIndex);
-    	}
+        int tokenLength = token.length();
+        int startIndex = remark.indexOf(token, 0);
+        while (startIndex != -1) {
+            remark.replace(startIndex, startIndex + tokenLength, value);
+            startIndex = remark.indexOf(token, startIndex);
+        }
     }
-	
+    
 }

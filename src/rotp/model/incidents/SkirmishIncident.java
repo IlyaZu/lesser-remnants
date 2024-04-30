@@ -86,7 +86,7 @@ public class SkirmishIncident extends DiplomaticIncident {
     }
     
     private SkirmishIncident(EmpireView ev,CombatResults res, float sev) {
-    	super(Math.max(-2.5f, sev/4));
+        super(Math.max(-2.5f, sev/4));
         sysId = res.system().id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;

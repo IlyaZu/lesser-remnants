@@ -28,6 +28,7 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
     final int empDefender;
     final int empAttacker;
     final int popLost;
+    
     public static void create(Empire attacker, Empire defender, StarSystem sys, int popLost) {
         if (defender.extinct())
             return;
@@ -39,7 +40,7 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
             System.err.println("Null embassy for defender:"+defender.raceName()+" attacker:"+attacker.raceName());
     }
     public ColonyCapturedIncident(Empire att, Empire def, StarSystem sys, int p) {
-    	super(-5 + Math.max(-7.5f, -p/4.0f));
+        super(-5 + Math.max(-7.5f, -p/4.0f));
         empAttacker = att.id;
         empDefender = def.id;
         sysId = sys.id;

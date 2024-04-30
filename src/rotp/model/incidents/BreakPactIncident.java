@@ -23,12 +23,13 @@ public class BreakPactIncident extends DiplomaticIncident {
     final int empBreaker;
     final int empMe;
     final boolean spying;
+    
     public static BreakPactIncident create(Empire e1, Empire e2, boolean spy) {
         BreakPactIncident inc = new BreakPactIncident(e1, e2, spy);
         return inc;
     }
     private BreakPactIncident(Empire e1, Empire e2, boolean spy) {
-    	super(-15);
+        super(-15);
         empBreaker = e1.id;
         empMe = e2.id;
         spying = spy;

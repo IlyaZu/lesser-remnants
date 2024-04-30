@@ -25,6 +25,7 @@ public class AssassinationIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     private final int empAssassin;
     private final int empVictim;
+    
     public static void create(Empire assassin, Empire victim) {
         AssassinationIncident inc = new AssassinationIncident(assassin, victim);
 
@@ -37,17 +38,17 @@ public class AssassinationIncident extends DiplomaticIncident {
                 AssassinationIncident inc2 = new AssassinationIncident(assassin, victim, vicEnemy);
                 EmpireView ev2 = vicEnemy.viewForEmpire(assassin);
                 ev2.embassy().openEmbassy();
-                vicEnemy.diplomatAI().noticeIncident(inc2, assassin);     
+                vicEnemy.diplomatAI().noticeIncident(inc2, assassin);
             }
         }
     }
     public AssassinationIncident(Empire ass, Empire vic) {
-    	super(-50);
+        super(-50);
         empAssassin = ass.id;
         empVictim = vic.id;
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
-    	super(50);
+        super(50);
         empAssassin = ass.id;
         empVictim = vic.id;
     }

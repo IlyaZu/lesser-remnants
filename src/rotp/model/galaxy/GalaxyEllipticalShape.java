@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,11 +102,11 @@ public class GalaxyEllipticalShape extends GalaxyShape {
         }
     }
     @Override
-    protected int galaxyWidthLY() { 
+    protected int galaxyWidthLY() {
         return (int) (Math.sqrt(ellipseRatio*maxStars*adjustedSizeFactor()));
     }
     @Override
-    protected int galaxyHeightLY() { 
+    protected int galaxyHeightLY() {
         return (int) (Math.sqrt((1/ellipseRatio)*maxStars*adjustedSizeFactor()));
     }
     @Override
@@ -128,23 +128,23 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     protected float sizeFactor(String size) {
         float adj = 1.0f;
         switch (opts.selectedGalaxySize()) {
-            case IGameOptions.SIZE_TINY:      return adj*8; 
-            case IGameOptions.SIZE_SMALL:     return adj*10; 
+            case IGameOptions.SIZE_TINY:      return adj*8;
+            case IGameOptions.SIZE_SMALL:     return adj*10;
             case IGameOptions.SIZE_SMALL2:    return adj*12;
-            case IGameOptions.SIZE_MEDIUM:    return adj*13; 
-            case IGameOptions.SIZE_MEDIUM2:   return adj*14; 
-            case IGameOptions.SIZE_LARGE:     return adj*16; 
-            case IGameOptions.SIZE_LARGE2:    return adj*18; 
-            case IGameOptions.SIZE_HUGE:      return adj*20; 
-            case IGameOptions.SIZE_HUGE2:     return adj*22; 
-            case IGameOptions.SIZE_MASSIVE:   return adj*24; 
-            case IGameOptions.SIZE_MASSIVE2:  return adj*26; 
-            case IGameOptions.SIZE_MASSIVE3:  return adj*28; 
-            case IGameOptions.SIZE_MASSIVE4:  return adj*30; 
-            case IGameOptions.SIZE_MASSIVE5:  return adj*32; 
-            case IGameOptions.SIZE_INSANE:    return adj*36; 
-            case IGameOptions.SIZE_LUDICROUS: return adj*49; 
-            default:             return adj*19; 
+            case IGameOptions.SIZE_MEDIUM:    return adj*13;
+            case IGameOptions.SIZE_MEDIUM2:   return adj*14;
+            case IGameOptions.SIZE_LARGE:     return adj*16;
+            case IGameOptions.SIZE_LARGE2:    return adj*18;
+            case IGameOptions.SIZE_HUGE:      return adj*20;
+            case IGameOptions.SIZE_HUGE2:     return adj*22;
+            case IGameOptions.SIZE_MASSIVE:   return adj*24;
+            case IGameOptions.SIZE_MASSIVE2:  return adj*26;
+            case IGameOptions.SIZE_MASSIVE3:  return adj*28;
+            case IGameOptions.SIZE_MASSIVE4:  return adj*30;
+            case IGameOptions.SIZE_MASSIVE5:  return adj*32;
+            case IGameOptions.SIZE_INSANE:    return adj*36;
+            case IGameOptions.SIZE_LUDICROUS: return adj*49;
+            default:             return adj*19;
         }
     }
 }

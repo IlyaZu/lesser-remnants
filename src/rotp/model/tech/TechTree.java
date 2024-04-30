@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,16 +108,16 @@ public final class TechTree implements Base, Serializable {
         return tradedTechNotifs;
     }
     public TechArmor topArmorTech()                                   { return (TechArmor) tech(topArmorTech); }
-    public void topArmorTech(TechArmor t)                             { topArmorTech = t.id();	}
-    public TechAtmosphereEnrichment topAtmoEnrichmentTech()           { return (TechAtmosphereEnrichment) tech(topAtmoEnrichmentTech);	}
+    public void topArmorTech(TechArmor t)                             { topArmorTech = t.id();    }
+    public TechAtmosphereEnrichment topAtmoEnrichmentTech()           { return (TechAtmosphereEnrichment) tech(topAtmoEnrichmentTech);    }
     public void topAtmoEnrichmentTech(TechAtmosphereEnrichment t)     { topAtmoEnrichmentTech = t.id(); }
     public TechAutomatedRepair topAutomatedRepairTech()               { return (TechAutomatedRepair) tech(topAutomatedRepairTech); }
     public void topAutomatedRepairTech(TechAutomatedRepair t)         { topAutomatedRepairTech = t.id(); }
     public TechBattleComputer topBattleComputerTech()                 { return (TechBattleComputer) tech(topBattleComputerTech); }
     public void topBattleComputerTech(TechBattleComputer t)           { topBattleComputerTech = t.id(); }
-    public TechBattleSuit topBattleSuitTech()                         { return (TechBattleSuit) tech(topBattleSuitTech);	}
+    public TechBattleSuit topBattleSuitTech()                         { return (TechBattleSuit) tech(topBattleSuitTech);    }
     public void topBattleSuitTech(TechBattleSuit t)                   { topBattleSuitTech = t.id();  }
-    public TechBiologicalAntidote topBiologicalAntidoteTech()         { return (TechBiologicalAntidote) tech(topBiologicalAntidoteTech);	}
+    public TechBiologicalAntidote topBiologicalAntidoteTech()         { return (TechBiologicalAntidote) tech(topBiologicalAntidoteTech);    }
     public void topBiologicalAntidoteTech(TechBiologicalAntidote t)   { topBiologicalAntidoteTech = t.id(); }
     public TechBiologicalWeapon topBiologicalWeaponTech()             { return (TechBiologicalWeapon) tech(topBiologicalWeaponTech); }
     public void topBiologicalWeaponTech(TechBiologicalWeapon t)       { topBiologicalWeaponTech = t.id(); }
@@ -125,7 +125,7 @@ public final class TechTree implements Base, Serializable {
     public void topBombWeaponTech(TechBombWeapon t)                   { topBombWeaponTech = t.id(); }
     public TechCloning topCloningTech()                               { return (TechCloning) tech(topCloningTech); }
     public void topCloningTech(TechCloning t)                         { topCloningTech = t.id(); }
-    public TechControlEnvironment topControlEnvironmentTech()         { return (TechControlEnvironment) tech(topControlEnvironmentTech);	}
+    public TechControlEnvironment topControlEnvironmentTech()         { return (TechControlEnvironment) tech(topControlEnvironmentTech);    }
     public void topControlEnvironmentTech(TechControlEnvironment t)   { topControlEnvironmentTech = t.id(); }
     public TechDeflectorShield topDeflectorShieldTech()               { return (TechDeflectorShield) tech(topDeflectorShieldTech); }
     public void topDeflectorShieldTech(TechDeflectorShield t)         { topDeflectorShieldTech = t.id(); }
@@ -169,7 +169,7 @@ public final class TechTree implements Base, Serializable {
     public TechSoilEnrichment topSoilEnrichmentTech()                 { return (TechSoilEnrichment) tech(topSoilEnrichmentTech); }
     public void topSoilEnrichmentTech(TechSoilEnrichment t)           { topSoilEnrichmentTech = t.id(); }
     public TechSubspaceInterdictor topSubspaceInterdictorTech()       { return (TechSubspaceInterdictor) tech(topSubspaceInterdictorTech); }
-    public void topSubspaceInterdictorTech(TechSubspaceInterdictor t) { topSubspaceInterdictorTech = t.id();	}
+    public void topSubspaceInterdictorTech(TechSubspaceInterdictor t) { topSubspaceInterdictorTech = t.id();    }
 
     public boolean[] colonizableHostility() {
         if (colonizableHostility == null) {
@@ -276,7 +276,7 @@ public final class TechTree implements Base, Serializable {
             }
         }
         else {
-            for (String techId: tradedTechs()) 
+            for (String techId: tradedTechs())
                 learnTech(techId);
         }
 
@@ -369,7 +369,7 @@ public final class TechTree implements Base, Serializable {
         return topControlEnvironmentTech == null ? PlanetType.HOSTILITY_MINIMAL : topControlEnvironmentTech().environment();
     }
     public void learnToColonizeHostility(int h) {
-        boolean[] hostility = colonizableHostility();     
+        boolean[] hostility = colonizableHostility();
         if (h < hostility.length)
             hostility[h] = true;
     }
@@ -467,7 +467,7 @@ public final class TechTree implements Base, Serializable {
         return range;
     }
     public String environmentTechNeededToColonize(int hostility) {
-        // returns the id of the currently unknown ecology tech we need 
+        // returns the id of the currently unknown ecology tech we need
         // to research in order to colonize planets of a certain hostitily level
         // if no tech is needed or it is impossible, return null
         int hostilityAllowed = topHostilityAllowed();
@@ -492,13 +492,13 @@ public final class TechTree implements Base, Serializable {
             if (t.isControlEnvironmentTech()) {
                 TechControlEnvironment t0 = (TechControlEnvironment) t;
                 if (t0.hostilityAllowed() >= hostility)
-                    return id;            
+                    return id;
             }
         }
-        return null;        
+        return null;
     }
     public String rangeTechNeededToScoutDistance(float dist) {
-        // returns the id of the currently unknown propulsion tech we need 
+        // returns the id of the currently unknown propulsion tech we need
         // to research in order for scout ships to reach range dist
         // if no tech is needed or it is impossible, return null
         float rsv = topReserveFuelRangeTech().range();
@@ -525,11 +525,11 @@ public final class TechTree implements Base, Serializable {
                 if (t0.range()+rsv >= dist)
                     return id;
             }
-        }      
-        return null;      
+        }
+        return null;
     }
     public String rangeTechNeededToReachDistance(float dist) {
-        // returns the id of the currently unknown propulsion tech we need 
+        // returns the id of the currently unknown propulsion tech we need
         // to research in order for normal ships to reach range dist
         // if no tech is needed or it is impossible, return null
         float range = ((TechFuelRange) tech(topFuelRangeTech)).range();
@@ -555,8 +555,8 @@ public final class TechTree implements Base, Serializable {
                 if (t0.range() >= dist)
                     return id;
             }
-        }      
-        return null;      
+        }
+        return null;
     }
     public float maxTechLevel() {
         float lvl = 0;
@@ -585,7 +585,7 @@ public final class TechTree implements Base, Serializable {
         // check to see if any categories are completed but
         // still have spending (not reallocated yet, so do it now)
         for (TechCategory cat: category) {
-            if (cat.researchCompleted() && (cat.allocation() > 0)) 
+            if (cat.researchCompleted() && (cat.allocation() > 0))
                 adjustTechAllocation(cat.index(), 0-cat.allocation(), true);
         }
     }
@@ -615,9 +615,9 @@ public final class TechTree implements Base, Serializable {
     public List<String> allKnownTechs() {
         List<String> techs = new ArrayList<>();
         TechCategory[] cats = category;
-        for (TechCategory cat: cats) 
+        for (TechCategory cat: cats)
             techs.addAll(cat.knownTechs());
-        return techs;        
+        return techs;
     }
     public List<Tech> allTechsOfType(int type) {
         List<Tech> techs = new ArrayList<>();

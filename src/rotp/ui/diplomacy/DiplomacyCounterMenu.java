@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,25 +31,25 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
     }
     private DiplomacyCounterMenu() { }
     @Override
-    public void diplomat(Empire v)               {
+    public void diplomat(Empire v) {
         super.diplomat(v);
     }
     public DiplomaticCounterReply reply()  { return (DiplomaticCounterReply) reply; }
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numDataLines()  {
+    public int numDataLines() {
         int lines = reply().techs().size();
         if (reply().bribe() >= 100)
             lines++;
         return lines;
     }
     @Override
-    public int numReplies()       	{ return 2; }
+    public int numReplies()           { return 2; }
     @Override
-    public String reply(int i)          {
+    public String reply(int i) {
         switch(i) {
-            case 0: 
+            case 0:
                 if (player().totalReserve() < reply().bribe())
                     return text("DIPLOMACY_MENU_ACCEPT_NEED_BC");
                 else
@@ -59,9 +59,9 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
         return "";
     }
     @Override
-    public String dataLine(int i) { 
+    public String dataLine(int i) {
         if (i >= numDataLines())
-            return ""; 
+            return "";
         List<String> techs = reply().techs();
         int bribe = reply().bribe();
         if (i < techs.size())
@@ -84,7 +84,7 @@ public class DiplomacyCounterMenu extends DiplomacyRequestReply {
             return;
         log("DiplomacyCounterMenu - selected: ", str(i));
         switch(i) {
-            case 0: 
+            case 0:
                 // get the reply which contains text response from AI
                 DiplomaticReply reply1 = diplomat().diplomatAI().receiveCounterJointWar(player(), reply());
                 reply1.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -208,7 +208,7 @@ public class Race implements Base, Serializable {
         remainingHomeworldNames.addAll(homeNames);
     }
     public String nextAvailableName() {
-        if (remainingRaceNames.isEmpty()) 
+        if (remainingRaceNames.isEmpty())
             loadNameList();
         String name = remainingRaceNames.remove(0);
         return name;
@@ -289,7 +289,7 @@ public class Race implements Base, Serializable {
     public float defaultRaceRelations()       { return defaultRaceRelations; }
     public void defaultRaceRelations(int d)   { defaultRaceRelations = d; }
     public float baseRelations(Race r) {
-    	return raceRelations.containsKey(r.id) ? raceRelations.get(r.id) : defaultRaceRelations();
+        return raceRelations.containsKey(r.id) ? raceRelations.get(r.id) : defaultRaceRelations();
     }
     public void baseRelations(String key, int d) { raceRelations.put(key, d); }
     public float labFlagX()                   { return labFlagX; }
@@ -431,7 +431,7 @@ public class Race implements Base, Serializable {
     public String randomSystemName(Empire emp) {
         // this is only called when a new system is scouted
         // the name is stored on the empire's system view for this system
-        // and transferred to the system when it is colonized 
+        // and transferred to the system when it is colonized
         List<String> allPossibleNames = masterNameList();
         int n = galaxy().numStarSystems();
         for (int i=0;i<n;i++) {

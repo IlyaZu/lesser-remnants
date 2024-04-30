@@ -33,7 +33,7 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         candidate.diplomatAI().noticeIncident(new CouncilVoteIncident(candidate, voter, votee, rival), voter);
     }
     private CouncilVoteIncident(Empire candidate, Empire voter, Empire votee, Empire rival) {
-    	super(calculateSeverity(votee, candidate));
+        super(calculateSeverity(votee, candidate));
         voteeId = id(votee);
         voterId = voter.id;
         candidateId = candidate.id;
@@ -53,13 +53,13 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     private static float calculateSeverity(Empire votee, Empire candidate) {
         if (votee == null) {
             // Abstain
-        	return -10;
+            return -10;
         } else if (votee.id == candidate.id) {
-        	// Voted for
-        	return 25;
+            // Voted for
+            return 25;
         } else {
-        	// Voted against
-        	return -20;
+            // Voted against
+            return -20;
         }
     }
     @Override

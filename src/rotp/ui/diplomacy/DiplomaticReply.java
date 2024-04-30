@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ public class DiplomaticReply {
     private boolean returnToMap;
 
     public DiplomaticReply(boolean accept, String remark) {
-    	this.accepted = accept;
+        this.accepted = accept;
         this.remark = remark;
     }
     
@@ -40,5 +40,5 @@ public class DiplomaticReply {
     
     public void decode(String key, String value) {
         remark = remark.replace(key, value);
-    }	
+    }
 }

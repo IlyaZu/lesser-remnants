@@ -708,7 +708,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         
         if (pl.atWarWith(sv.empId())) {
-        	return troopMsg;
+            return troopMsg;
         }
             
         // deal with enemy fleets orbiting systems around us

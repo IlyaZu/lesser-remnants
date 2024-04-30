@@ -24,6 +24,7 @@ public class ExpansionIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     int numSystems;
     final int empYou;
+    
     public static void create(EmpireView view) {
         int numberSystems = view.empire().numSystemsForCiv(view.empire());
         if (numberSystems < 6)
@@ -58,17 +59,17 @@ public class ExpansionIncident extends DiplomaticIncident {
         int maxSystemsWithoutPenalty = Math.max(5, (int) Math.ceil(allSystems / Math.pow(1.44225*numCivs, 0.75)));
 
         if (numberSystems > maxSystemsWithoutPenalty)
-        	view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
+            view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
     }
     @Override
     public boolean triggeredByAction()   { return false; }
     private ExpansionIncident(EmpireView ev, int num, float max) {
-    	super(calculateSeverity(ev, num, max));
+        super(calculateSeverity(ev, num, max));
         numSystems = num;
         empYou = ev.empire().id;
     }
     private static float calculateSeverity(EmpireView view, int numSystems, float maxSystems) {
-    	int empireId = view.empire().id;
+        int empireId = view.empire().id;
         float multiplier = 1.0f;
         // penalty doubled for xenophobes
         if (view.owner().leader().isXenophobic())
@@ -79,7 +80,7 @@ public class ExpansionIncident extends DiplomaticIncident {
         else if (!view.owner().pactWith(empireId))
             multiplier /= 1.5;
         
-        // if you are bigger than average but the viewer is 
+        // if you are bigger than average but the viewer is
         // even larger, the penalty is lessened by the square
         // of the proportion... i.e. if you are 1/2 the size
         // the penalty is 1/4th

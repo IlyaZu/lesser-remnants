@@ -22,12 +22,13 @@ public class BreakTradeIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empBreaker;
     final int empMe;
+    
     public static BreakTradeIncident create(Empire e1, Empire e2) {
         BreakTradeIncident inc = new BreakTradeIncident(e1, e2);
         return inc;
     }
     private BreakTradeIncident(Empire e1, Empire e2) {
-    	super(-5);
+        super(-5);
         empBreaker = e1.id;
         empMe = e2.id;
     }

@@ -27,13 +27,13 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
 
     public static void create(EmpireView view) {
         for (Empire ally: view.empire().allies()) {
-            if (view.owner().atWarWith(ally.id)) 
+            if (view.owner().atWarWith(ally.id))
                 view.embassy().addIncident(new AlliedWithEnemyIncident(view, ally));
         }
     }
     
     private AlliedWithEnemyIncident(EmpireView ev, Empire other) {
-    	super(-2.5f);
+        super(-2.5f);
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;

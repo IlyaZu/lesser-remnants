@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,16 +36,16 @@ public class DiplomacyTechCounterMenu extends DiplomacyRequestReply {
     }
     private DiplomacyTechCounterMenu() { }
     @Override
-    public void diplomat(Empire v)               {
+    public void diplomat(Empire v) {
         super.diplomat(v);
         counterOffers = diplomat().diplomatAI().techsRequestedForCounter(player(), requestedTech);
     }
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numReplies()       		{ return counterOffers.size()+1; }
+    public int numReplies()               { return counterOffers.size()+1; }
     @Override
-    public String reply(int i)          {
+    public String reply(int i) {
         if (i < counterOffers.size()){
             Tech tech = counterOffers.get(i);
             return  text(tech.name());
@@ -56,7 +57,7 @@ public class DiplomacyTechCounterMenu extends DiplomacyRequestReply {
         return "";
     }
     @Override
-    public String replyDetail(int i)          {
+    public String replyDetail(int i) {
         if (i < counterOffers.size()){
             Tech tech = counterOffers.get(i);
             return text("TECH_TRADE_TIER_COST_INFO", str(tech.quintile), str((int) tech.researchCost()));

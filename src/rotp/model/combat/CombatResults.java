@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2034 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,7 @@ public final class CombatResults implements Base {
         system = s;
         monster = null;
         
-        // set up default attacker/defender assignment. 
+        // set up default attacker/defender assignment.
         attacker = emp1;
         defender = emp2;
         
@@ -144,12 +144,12 @@ public final class CombatResults implements Base {
         
         // when there are two fleets in combat over a neutral colony (or in an
         // uncolonized system), then randomize which fleet is the "attacker" and
-        // which is the "defender". This prevents using the combat turn limit as 
+        // which is the "defender". This prevents using the combat turn limit as
         // a way to maintain control in a system without engaging in combat since
         // the expiring turn limit requires the attacker fleet to retreat
         if (neutralSystem) {
             if (random() < 0.5) {
-                attacker = emp1; 
+                attacker = emp1;
                 defender = emp2;
             }
             else {
@@ -216,14 +216,14 @@ public final class CombatResults implements Base {
             BioweaponIncident.create(defender(), e, system());
 
         if (monster != null) {
-            if (!monster.alive()) 
+            if (!monster.alive())
                 monster.plunder();
             return;
         }
         // if a neutral system, then a skirmish for all
         if (defender == null)
             for (Empire combatant: empires)
-            	SkirmishIncident.create(this, combatant);
+                SkirmishIncident.create(this, combatant);
         // if genocide, incidents already created at extinction time
         else if (defender.extinct())
                 return;
@@ -232,8 +232,8 @@ public final class CombatResults implements Base {
                 ColonyDestroyedIncident.create(this);
             else if (colonyStack.attacked)
                 ColonyAttackedIncident.create(this);
-            else 
-            	SkirmishIncident.create(this, defender);
+            else
+                SkirmishIncident.create(this, defender);
         }
         else
             SkirmishIncident.create(this, defender);

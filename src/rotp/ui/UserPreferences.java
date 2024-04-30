@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ public class UserPreferences {
     private static final String SENSITIVITY_MEDIUM = "GAME_SETTINGS_SENSITIVITY_MEDIUM";
     private static final String SENSITIVITY_LOW = "GAME_SETTINGS_SENSITIVITY_LOW";
     
-    
     private static final String PREFERENCES_FILE = "Remnants.cfg";
     private static final int MAX_BACKUP_TURNS = 10;
     private static final String keyFormat = "%-20s: ";
@@ -76,13 +75,13 @@ public class UserPreferences {
         screenSizePct = 93;
         backupTurns = 0;
         saveDir = "";
-        if (!playMusic) 
+        if (!playMusic)
             SoundManager.current().toggleMusic();
-        if (!playSounds) 
+        if (!playSounds)
             SoundManager.current().toggleSounds();
         musicVolume = 10;
         soundVolume = 10;
-        SoundManager.current().resetSoundVolumes(); 
+        SoundManager.current().resetSoundVolumes();
         save();
     }
     public static void setForNewGame() {
@@ -96,7 +95,7 @@ public class UserPreferences {
     public static boolean windowed()        { return displayMode.equals(WINDOW_MODE); }
     public static boolean borderless()      { return displayMode.equals(BORDERLESS_MODE); }
     public static String displayMode()      { return displayMode; }
-    public static void toggleDisplayMode()   { 
+    public static void toggleDisplayMode() {
         switch(displayMode) {
             case WINDOW_MODE:     displayMode = BORDERLESS_MODE; break;
             case BORDERLESS_MODE: displayMode = FULLSCREEN_MODE; break;
@@ -106,7 +105,7 @@ public class UserPreferences {
         save();
     }
     public static String graphicsMode()     { return graphicsMode; }
-    public static void toggleGraphicsMode()   { 
+    public static void toggleGraphicsMode() {
         switch(graphicsMode) {
             case GRAPHICS_HIGH:   graphicsMode = GRAPHICS_MEDIUM; break;
             case GRAPHICS_MEDIUM: graphicsMode = GRAPHICS_LOW; break;
@@ -115,7 +114,7 @@ public class UserPreferences {
         }
         save();
     }
-    public static void toggleSensitivityMode()   { 
+    public static void toggleSensitivityMode() {
         switch(sensitivityMode) {
             case SENSITIVITY_LOW:       sensitivityMode = SENSITIVITY_MEDIUM; break;
             case SENSITIVITY_MEDIUM:    sensitivityMode = SENSITIVITY_HIGH; break;
@@ -133,7 +132,7 @@ public class UserPreferences {
     public static void toggleAutoColonize()     { autoColonize = !autoColonize; save();  }
     public static boolean autoColonize()        { return autoColonize; }
     
-    public static void toggleAutoBombard()     { 
+    public static void toggleAutoBombard() {
         switch(autoBombardMode) {
             case AUTOBOMBARD_NO:     autoBombardMode = AUTOBOMBARD_NEVER; break;
             case AUTOBOMBARD_NEVER:  autoBombardMode = AUTOBOMBARD_YES; break;
@@ -154,7 +153,7 @@ public class UserPreferences {
     public static boolean playAnimations()  { return !graphicsMode.equals(GRAPHICS_LOW); }
     public static boolean antialiasing()    { return graphicsMode.equals(GRAPHICS_HIGH); }
     public static boolean playSounds()      { return playSounds; }
-    public static void toggleSounds()       { playSounds = !playSounds;	save(); }
+    public static void toggleSounds()       { playSounds = !playSounds;    save(); }
     public static boolean playMusic()       { return playMusic; }
     public static void toggleMusic()        { playMusic = !playMusic; save();  }
     public static int screenSizePct()       { return screenSizePct; }
@@ -170,16 +169,16 @@ public class UserPreferences {
     }
     public static String saveDir()          { return saveDir; }
     public static void saveDir(String s)    { saveDir = s; save(); }
-    public static String saveDirStr()       {
+    public static String saveDirStr() {
         if (saveDir.isEmpty())
             return SAVEDIR_DEFAULT;
         else
             return SAVEDIR_CUSTOM;
     }
     public static int backupTurns()         { return backupTurns; }
-    public static boolean backupTurns(int i)   { 
+    public static boolean backupTurns(int i) {
         int prev = backupTurns;
-        backupTurns = Math.min(Math.max(0,i),MAX_BACKUP_TURNS); 
+        backupTurns = Math.min(Math.max(0,i),MAX_BACKUP_TURNS);
         save();
         return prev != backupTurns;
     }
@@ -191,7 +190,6 @@ public class UserPreferences {
         save();
     }
     
-    
     public static void loadAndSave() {
         load();
         save();
@@ -199,8 +197,8 @@ public class UserPreferences {
     public static void load() {
         String path = Rotp.jarPath();
         File configFile = new File(path, PREFERENCES_FILE);
-		// modnar: change to InputStreamReader, force UTF-8
-		try ( BufferedReader in = new BufferedReader( new InputStreamReader( new FileInputStream(configFile), "UTF-8"));) {
+        // modnar: change to InputStreamReader, force UTF-8
+        try ( BufferedReader in = new BufferedReader( new InputStreamReader( new FileInputStream(configFile), "UTF-8"));) {
             String input;
             if (in != null) {
                 while ((input = in.readLine()) != null)
@@ -253,7 +251,7 @@ public class UserPreferences {
         String val = args[1].trim();
         // for values that may have embedded :, like the save dir path
         String fullVal = val;
-        for (int i=2;i<args.length;i++) 
+        for (int i=2;i<args.length;i++)
             fullVal = fullVal+":"+args[i];
         if (key.isEmpty() || val.isEmpty())
                 return;
@@ -379,24 +377,24 @@ public class UserPreferences {
         }
         return SENSITIVITY_MEDIUM;
     }
-    public static void increaseMusicLevel()    { 
-        musicVolume = Math.min(10, musicVolume+1); 
+    public static void increaseMusicLevel() {
+        musicVolume = Math.min(10, musicVolume+1);
         SoundManager.current().resetMusicVolumes();
         save();
     }
-    public static void decreaseMusicLevel()    { 
-        musicVolume = Math.max(0, musicVolume-1); 
-        SoundManager.current().resetMusicVolumes(); 
+    public static void decreaseMusicLevel() {
+        musicVolume = Math.max(0, musicVolume-1);
+        SoundManager.current().resetMusicVolumes();
         save();
     };
-    public static void increaseSoundLevel()    { 
-        soundVolume = Math.min(10, soundVolume+1); 
-        SoundManager.current().resetSoundVolumes(); 
+    public static void increaseSoundLevel() {
+        soundVolume = Math.min(10, soundVolume+1);
+        SoundManager.current().resetSoundVolumes();
         save();
     }
-    public static void decreaseSoundLevel()    { 
-        soundVolume = Math.max(0, soundVolume-1); 
-        SoundManager.current().resetSoundVolumes(); 
+    public static void decreaseSoundLevel() {
+        soundVolume = Math.max(0, soundVolume-1);
+        SoundManager.current().resetSoundVolumes();
         save();
     }
 }

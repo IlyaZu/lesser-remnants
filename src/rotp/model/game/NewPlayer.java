@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +31,7 @@ public class NewPlayer implements Serializable {
         race = def.id;
         leaderName = def.randomLeaderName();
         homeWorldName = def.defaultHomeworldName();
-        color = 0;	
+        color = 0;
     }
     public void copy(NewPlayer p) {
         race = p.race;

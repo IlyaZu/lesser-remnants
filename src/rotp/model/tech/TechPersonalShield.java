@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +37,8 @@ public final class TechPersonalShield extends Tech {
         switch(typeSeq) {
             case 0: groundAttackBonus = 0; break;
             case 1: groundAttackBonus = 10; break;
-            case 2:	groundAttackBonus = 20; break;
-            case 3:	groundAttackBonus = 30; break;
+            case 2: groundAttackBonus = 20; break;
+            case 3: groundAttackBonus = 30; break;
         }
     }
     @Override

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +26,8 @@ public class DiplomacyTradeMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp)               { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         EmpireView v = player().viewForEmpire(emp);
         choices = v.nominalTradeLevels();
     }
@@ -35,13 +36,13 @@ public class DiplomacyTradeMenu extends DiplomaticMessage {
     @Override
     public int numReplies()             { return choices.size()+1; }
     @Override
-    public String reply(int i) { 
+    public String reply(int i) {
         int maxIndex = choices.size();
         if (i < choices.size())
             return text("DIPLOMACY_TRADE_LEVEL",str(choices.get(i)));
         if (i == maxIndex)
             return text("DIPLOMACY_MENU_FORGET_IT");
-        return ""; 
+        return "";
     }
     @Override
     public boolean enabled(int i)        { return i <= choices.size();  }
@@ -68,7 +69,7 @@ public class DiplomacyTradeMenu extends DiplomaticMessage {
             reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
 
         // show reply
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
     public void escape() {
