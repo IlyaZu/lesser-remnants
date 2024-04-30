@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public void selectedGalaxySize(String s)     {
         int prevNumOpp = defaultOpponentsOptions();
-        selectedGalaxySize = s; 
+        selectedGalaxySize = s;
         if (selectedNumberOpponents() == prevNumOpp)
             selectedNumberOpponents(defaultOpponentsOptions());
         generateGalaxy();
@@ -108,14 +108,14 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public void selectedOpponentAIOption(String s) { selectedOpponentAIOption = s; }
     @Override
-    public String specificOpponentAIOption(int n)  { 
+    public String specificOpponentAIOption(int n)  {
             if ((specificOpponentAIOption == null) || (specificOpponentAIOption.length < n))
                 return selectedOpponentAIOption();
             else
                 return specificOpponentAIOption[n];
     }
     @Override
-    public void specificOpponentAIOption(String s, int n) { 
+    public void specificOpponentAIOption(String s, int n) {
         if (n < specificOpponentAIOption.length)
             specificOpponentAIOption[n] = s;
     }
@@ -163,7 +163,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public String name()                 { return "SETUP_RULESET_ORION"; }
     @Override
-    public void copyOptions(IGameOptions o) { 
+    public void copyOptions(IGameOptions o) {
         if (!(o instanceof MOO1GameOptions))
             return;
         
@@ -186,14 +186,14 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                 specificOpponentAIOption[i] = opt.specificOpponentAIOption[i];
         }
         
-        if (opt.player != null) 
+        if (opt.player != null)
             player.copy(opt.player);
         
-        setGalaxyShape(); 
+        setGalaxyShape();
         selectedGalaxyShapeOption1 = opt.selectedGalaxyShapeOption1;
         selectedGalaxyShapeOption2 = opt.selectedGalaxyShapeOption2;
 
-        generateGalaxy(); 
+        generateGalaxy();
     }
     @Override
     public GalaxyShape galaxyShape()   {
@@ -274,22 +274,22 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         int nStars = numberStarSystems();
         if (nStars < 200)
             return 1;
-        else 
+        else
             return min(10,sqrt(nStars/200f));
     }
     @Override
     public boolean isAutoPlay() {
-    	return autoPlayAIType != null;
+        return autoPlayAIType != null;
     }
     @Override
     public int selectedAI(Empire e) {
         if (e.isPlayer()) {
-        	if (isAutoPlay()) {
-        		return autoPlayAIType;
-        	} 
-        	else {
-        		return AI.BASE;  // doesn't matter; won't be used if autoplay off
-        	}
+            if (isAutoPlay()) {
+                return autoPlayAIType;
+            }
+            else {
+                return AI.BASE;  // doesn't matter; won't be used if autoplay off
+            }
         }
         else {
             switch(selectedOpponentAIOption()) {
@@ -388,22 +388,22 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public String randomPlayerStarType(Race r)     { return StarType.YELLOW; }
     @Override
-    public String randomRaceStarType(Race r)       { 
+    public String randomRaceStarType(Race r)       {
         List<String> types = new ArrayList<>();
         types.add(StarType.RED);
         types.add(StarType.ORANGE);
         types.add(StarType.YELLOW);
 
-        return random(types); 
+        return random(types);
     }
     @Override
-    public String randomOrionStarType()       { 
+    public String randomOrionStarType()       {
         List<String> types = new ArrayList<>();
         types.add(StarType.RED);
         types.add(StarType.ORANGE);
         types.add(StarType.YELLOW);
 
-        return random(types); 
+        return random(types);
     }
     @Override
     public Planet orionPlanet(StarSystem s) {
@@ -462,7 +462,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         list.add(SHAPE_ELLIPTICAL);
         return list;
     }
-	
+    
     @Override
     public List<String> galaxyShapeOptions1() { return galaxyShape.options1(); }
     @Override

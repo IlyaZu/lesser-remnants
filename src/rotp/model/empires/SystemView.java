@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,10 +93,10 @@ public class SystemView implements IMappedObject, Base, Serializable {
         system().name(s);
         vName = s;
     }
-    public Empire owner() { 
+    public Empire owner() {
         if (owner == null)
             owner = galaxy().empire(ownerId);
-        return owner; 
+        return owner;
     }
     public Empire empire()                   { return vEmpire; }
     public int empId()                       { return id(vEmpire); }
@@ -122,9 +122,9 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public boolean forwardRallies()          { return forwardRallies; }
     public void toggleForwardRallies()       { forwardRallies = !forwardRallies; }
-    public void stopRally() { 
+    public void stopRally() {
         relocationSystem = null;
-        system().rallySprite().stop(); 
+        system().rallySprite().stop();
     }
     public void goExtinct() {
         vEmpire = null;
@@ -136,7 +136,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
         clearHostility();
     }
     public int flagColorId()  { return flagColor; }
-    public Color flagColor() { 
+    public Color flagColor() {
         switch(flagColor) {
             case FLAG_RED:    return Color.red;
             case FLAG_WHITE:  return Color.white;
@@ -144,7 +144,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
             case FLAG_GREEN:  return Color.green;
             case FLAG_YELLOW: return Color.yellow;
         }
-        return null; 
+        return null;
     }
     public Image flagImage() {
         switch(flagColor) {
@@ -190,7 +190,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
             fleetPlan.clear();
     }
     public boolean hasFleetPlan() {
-        return (fleetPlan != null) 
+        return (fleetPlan != null)
            && (fleetPlan.needsShips() || fleetPlan.isRetreating());
     }
     public FleetPlan fleetPlan()  {
@@ -201,7 +201,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public void raiseHostility()                   { hostilityLevel++; }
     public void resetSystemData()                  { setLocationSecurity(); }
     public void refreshSystemEntryScan() {
-        vGuarded = system().hasMonster();      
+        vGuarded = system().hasMonster();
         if (vGuarded)
             setName();
     }
@@ -398,7 +398,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public boolean canSabotageBases()        { return bases() > 0; }
     public boolean canSabotageFactories()    { return factories() > 0; }
-    public boolean canInciteRebellion()      { 
+    public boolean canInciteRebellion()      {
         if (!isColonized())
             return false;
         if (colony().inRebellion())
@@ -440,9 +440,9 @@ public class SystemView implements IMappedObject, Base, Serializable {
         {
             for (ShipFleet fl: orbitingFleets()) {
                 if (fl.isPotentiallyArmed(player())) {
-                    if (player().atWarWith(fl.empId())) { 
+                    if (player().atWarWith(fl.empId())) {
                         return true;
-                    }  
+                    }
                 }
             }
         }
@@ -450,7 +450,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public String descriptiveName() {
         if (!isColonized()) {
-            if (!scouted()) 
+            if (!scouted())
                 return text("MAIN_UNSCOUTED");
             else if (system().planet().isEnvironmentNone())
                 return text("MAIN_NO_PLANETS");
@@ -476,9 +476,9 @@ public class SystemView implements IMappedObject, Base, Serializable {
     @Override
     public String toString()       { return concat("View: ", name()); }
     @Override
-    public float x()               	  			{ return system().x();  }
+    public float x()                                 { return system().x();  }
     @Override
-    public float y()             				  { return system().y();  }
+    public float y()                               { return system().y();  }
 
     public boolean hasActiveTransport()        { return isColonized() && colony().transport().isActive(); }
     public boolean hasFleetForCiv (Empire c) {

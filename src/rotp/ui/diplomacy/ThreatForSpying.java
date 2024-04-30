@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,35 +27,35 @@ public class ThreatForSpying extends TurnNotificationMessage {
         super.diplomat(e);
     }
     @Override
-    public int numReplies()       		{ return 3; }
+    public int numReplies()               { return 3; }
     @Override
     public boolean enabled(int i)       { return true; }
      @Override
-    public String reply(int i)          { 
+    public String reply(int i)          {
         switch (i) {
             case 0 : return text("DIPLOMACY_IGNORE_THREAT");
-            case 1 : 
+            case 1 :
                 String s = text("DIPLOMACY_HIDE_SPIES");
                 s = diplomat().replaceTokens(s, "alien");
                 return s;
-            case 2 : 
+            case 2 :
                 String s1 =  text("DIPLOMACY_SHUTDOWN_SPIES");
                 s1 = diplomat().replaceTokens(s1, "alien");
                 return s1;
         }
-        return ""; 
+        return "";
     }
     @Override
     public void select(int i) {
         log("ThreatForSpying - selected: ", str(i));
         switch(i) {
-            case 0: 
+            case 0:
                 escape(); break;
-            case 1: 
+            case 1:
                 player().hideSpiesAgainst(diplomat().id);
                 escape();
                 break;
-            case 2: 
+            case 2:
                 player().shutdownSpyNetworksAgainst(diplomat().id);
                 escape();
                 break;
@@ -67,8 +68,8 @@ public class ThreatForSpying extends TurnNotificationMessage {
         session().resumeNextTurnProcessing();
     }
     @Override
-    public String decode(String encodedMessage) { 
-        String s1 = super.decode(encodedMessage); 
+    public String decode(String encodedMessage) {
+        String s1 = super.decode(encodedMessage);
         return s1;
     }
 }

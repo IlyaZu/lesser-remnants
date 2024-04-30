@@ -30,8 +30,8 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp) { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         
         options.clear();
         int maxOffers = 5;
@@ -47,16 +47,16 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         }
         else {
             for (Tech t: techs)
-                options.add(OFFER_TECH);          
+                options.add(OFFER_TECH);
         }
         options.add(EXIT);
     }
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numReplies()       		{ return options.size(); }
+    public int numReplies()               { return options.size(); }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (options.get(i) == OFFER_MONEY)
             return text("DIPLOMACY_MENU_AMT", amounts.get(i));
         else if (options.get(i) == EXIT)
@@ -70,7 +70,7 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
             }
         }
         else
-            return ""; 
+            return "";
     }
     @Override
     public boolean enabled(int i)      { return i < options.size(); }
@@ -83,16 +83,16 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         log("DiplomacyOfferAidgitMenu - selected: ", str(i));
         DiplomaticReply reply;
         if (options.get(i) == OFFER_MONEY) {
-        	int amount = amounts.get(i);
-        	diplomatView.embassy().receiveFinancialAid(amount);
-        	reply = DiplomaticReplies.acceptFinancialAid(diplomatView, amount);
-        } 
+            int amount = amounts.get(i);
+            diplomatView.embassy().receiveFinancialAid(amount);
+            reply = DiplomaticReplies.acceptFinancialAid(diplomatView, amount);
+        }
         else if (options.get(i) == EXIT) {
              escape(); return;
         }
         else if (options.get(i) == OFFER_TECH) {
             if (techs.isEmpty()) {
-                DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_OFFER_TECH_MENU); 
+                DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_OFFER_TECH_MENU);
                 return;
             }
             else {

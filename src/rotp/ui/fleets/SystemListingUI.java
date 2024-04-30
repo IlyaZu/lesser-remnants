@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,7 +117,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     protected Color unselectedRedC(){ return unselectedRedC; }
     protected int dataFontSize()    { return 20; }
     @Override
-    public void open() { 
+    public void open() {
         int rowH = rowHeight();
         int listH = getHeight()-rowH;
         float displayedRows = (float) listH/rowH;
@@ -197,7 +197,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         g.setPaint(headerBack);
         g.fillRect(leftM,topM,w-leftM-rightM,rowHeight());
 
-
         int rowH = rowHeight()+cellSpacing;
         int listH = h-topM-rowH; // don't count header row in height
         int numRows = systems().size();
@@ -244,7 +243,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
                 x0 += (col.width() + cellSpacing);
             }
             row.w = x0-leftM;
-            if (isLastSelected(sys)) 
+            if (isLastSelected(sys))
                 anchorRow = row;
             sprites.add(row);
             y0 += rowH;
@@ -257,7 +256,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             g.setColor(SystemPanel.whiteText);
             g.drawRect(anchorRow.x, anchorRow.y-anchorRow.h-s1, anchorRow.w-s2, anchorRow.h+s2);
             g.setStroke(prev);
-        }        
+        }
         
         g.setClip(null);
         listBox.setBounds(0,row1Y,w,h-row1Y);
@@ -281,13 +280,13 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             }
         }
     }
-    public boolean scrollUp()    { 
+    public boolean scrollUp()    {
         int prevY = startY;
         startY = max(0, startY-s10);
         boolean changed = startY != prevY;
         return changed;
     }
-    public boolean scrollDown()  { 
+    public boolean scrollDown()  {
         int prevY = startY;
         startY = min(maxY, startY+s10);
         
@@ -357,24 +356,24 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         int dY = y-dragY;
         dragY = y;
         if (listScroller == hoverBox) {
-            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) { 
+            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)((float)dY*(h+maxY)/h);
                 if (dY < 0)
                     startY = max(0,startY+dListY);
-                else 
+                else
                     startY = min(maxY,startY+dListY);
             }
             repaint(listBox);
             return;
         }
         else if (listBox == hoverBox) {
-            if (listBox.contains(x,y)) { 
+            if (listBox.contains(x,y)) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+maxY)/h);
                 if (dListY < 0)
                     startY = max(0,startY+dListY);
-                else 
+                else
                     startY = min(maxY,startY+dListY);
             }
             repaint(listBox);
@@ -388,9 +387,9 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
 
         Rectangle prevHover = hoverBox;
         hoverBox = null;
-        if (listScroller.contains(x,y)) 
+        if (listScroller.contains(x,y))
             hoverBox = listScroller;
-        else if (listBox.contains(x,y)) 
+        else if (listBox.contains(x,y))
             hoverBox = listBox;
         
         if (prevHover != hoverBox) {
@@ -534,7 +533,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
 
             String title;
             if (headerKey.equals(YEARS_OR_TURNS)) {
-            	title = text("PLANETS_LIST_YEARS");
+                title = text("PLANETS_LIST_YEARS");
             }
             else
                 title = text(headerKey);
@@ -776,7 +775,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
                 drawString(g,detail, x0+s10, boxTopY+boxH-s2);
             else {
                 drawString(g,detailLines.get(0), x0+s10, y1+boxH-s12);
-                drawString(g,detailLines.get(1), x0+s10, y1+boxH+s1);            
+                drawString(g,detailLines.get(1), x0+s10, y1+boxH+s1);
             }
         }
     }
@@ -809,7 +808,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
                 return;
             String val = sys.getAttribute(attributeKey);
             int sw = g.getFontMetrics().stringWidth(val);
-            if (sw > w) 
+            if (sw > w)
                 scaledFont(g, val, w, dataFontSize()-1, 8);
             g.setColor(color(sys));
             switch(align) {
@@ -875,7 +874,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             else
                 nameField.setBackground(selectedC());
             
-
             nameField.setBounds(x, y-s30, w, s30);
             nameField.setVisible(true);
             nameField.repaint();
@@ -1252,7 +1250,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             int rot = e.getWheelRotation();
             if (rot < 0)
                 player().sv.toggleFlagColor(sys.id, true);
-            else 
+            else
                 player().sv.toggleFlagColor(sys.id, false);
         }
         @Override

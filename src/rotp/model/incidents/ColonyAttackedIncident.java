@@ -32,7 +32,7 @@ public class ColonyAttackedIncident extends DiplomaticIncident {
         r.defender().diplomatAI().noticeIncident(inc, r.attacker());
     }
     private ColonyAttackedIncident(CombatResults r) {
-    	super(-1.25f + Math.max(-10f, -r.popDestroyed()/4.0f));
+        super(-1.25f + Math.max(-10f, -r.popDestroyed()/4.0f));
         sysId = r.system().id;
         empDefender = r.defender().id;
         empAttacker = r.attacker().id;

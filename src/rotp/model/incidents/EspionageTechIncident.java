@@ -31,7 +31,7 @@ public class EspionageTechIncident extends DiplomaticIncident {
     String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
-    	super(calculateSeverity(ev));
+        super(calculateSeverity(ev));
         ev.embassy().resetAllianceTimer();
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)

@@ -415,10 +415,10 @@ public interface Base {
         }
     } 
     public default Tech tech(String id) {
-    	return TechLibrary.current().tech(id);
+        return TechLibrary.current().tech(id);
     }
     public default String displayYear() {
-    	return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
+        return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
     }
     public default List<String> substrings(String input, char delim) {
         return substrings(input,delim,0);
@@ -562,7 +562,7 @@ public interface Base {
             return null;
         }
         if (resource == null) {
-        	err("Base.icon() -- Resource not found:", n);
+            err("Base.icon() -- Resource not found:", n);
             return null;
         }
         else 

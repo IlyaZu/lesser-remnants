@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +96,7 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
     int bank()                     { return 0; }
 
     @Override
-    public void disableGlassPane() { 
+    public void disableGlassPane() {
         clearSettings();
         super.disableGlassPane();
     }
@@ -175,7 +176,7 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
         g.fillRect(boxX,boxY,boxW,boxH);
 
 
-        // draw title 
+        // draw title
         g.setFont(font(26));
         int sw = g.getFontMetrics().stringWidth(title);
         int x1 = (w-sw)/2;
@@ -211,7 +212,7 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
                     rect = new Rectangle(x3+colW-valW,y3-itemH,valW,itemH);
                     drawString(g,s, x3+colW-valW, y3-s2);
                     break;
-                default: 
+                default:
                     rect = new Rectangle(x3,y3-itemH,valW,itemH);
                     drawString(g,s, x3, y3-s2);
                     break;
@@ -245,7 +246,7 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
                     case JLabel.RIGHT:
                         drawString(g,val, x3+colW-valW, y3-4);
                         break;
-                    default: 
+                    default:
                         drawString(g,val, x3, y3-4);
                         break;
                 }
@@ -293,22 +294,22 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
     private void scrollDown() {
         int index = components().indexOf(selectedComponent());
         int bottomIndex = startIndex + MAX_LIST_SIZE;
-        if (index < 0) 
+        if (index < 0)
             return;
 
         select(min(index+1, numComponents()-1));
-        if (bottomIndex < numComponents()) 
+        if (bottomIndex < numComponents())
             startIndex++;
 
         repaint();
     }
     private void scrollUp() {
         int index = components().indexOf(selectedComponent());
-        if (index <= 0) 
+        if (index <= 0)
             return;
 
         select(index-1);
-        if (startIndex > 0) 
+        if (startIndex > 0)
             startIndex--;
 
         repaint();
@@ -354,7 +355,7 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
             softClick();
             select(hoverComp);
             disableGlassPane();
-            return;			
+            return;
         }
         if (hoverHeader != -1) {
             softClick();
@@ -378,12 +379,12 @@ public abstract class DesignSelectionUI extends BasePanel implements MouseListen
         boolean needRepaint = false;
         int prevHover = hoveringArrow;
         hoveringArrow = 0;
-        if (upArrow.contains(x, y)) 
+        if (upArrow.contains(x, y))
             hoveringArrow = 1;
-        else if (downArrow.contains(x,y)) 
+        else if (downArrow.contains(x,y))
             hoveringArrow = 2;
 
-        if (prevHover != hoveringArrow) 
+        if (prevHover != hoveringArrow)
             needRepaint = true;
 
         prevHover = hoverComp;

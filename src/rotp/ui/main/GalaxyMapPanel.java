@@ -71,7 +71,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
 
     private final IMapHandler parent;
 
-    // static fields shared across all galaxy map panels to keep them 
+    // static fields shared across all galaxy map panels to keep them
     // visually in synch
     private static Location center = new Location();
     private static float scaleX, scaleY;
@@ -103,8 +103,8 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
 
     public IMapHandler parent()                 { return parent; }
 
-    public void toggleDistanceDisplay()     	{ showDistance = !showDistance; }
-    public boolean showDistance()           	{ return showDistance; }
+    public void toggleDistanceDisplay()         { showDistance = !showDistance; }
+    public boolean showDistance()               { return showDistance; }
 
     public void clearHoverSprite()              { hoverSprite = null; }
     public Location currentFocus()        { return parent.mapFocus();  }
@@ -246,7 +246,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
             Composite prev = g2.getComposite();
             if (alpha < 1) {
                 Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER , alpha);
-                g2.setComposite(comp );     
+                g2.setComposite(comp );
             }
             drawBackgroundStars(g2);
             g2.setComposite(prev);
@@ -265,7 +265,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         g2.dispose();
     }
     private Image mapBuffer() {
-        if ((mapBuffer == null) || (mapBuffer.getWidth(this) != getWidth()) || (mapBuffer.getHeight(this) != getHeight())) 
+        if ((mapBuffer == null) || (mapBuffer.getWidth(this) != getWidth()) || (mapBuffer.getHeight(this) != getHeight()))
             generateNewMapBuffers();
         
         return mapBuffer;
@@ -340,7 +340,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         float parentStartingScale = parent.startingScalePct()*largestAxis;
         // however, if parent allows us to adjust the scale, then the
         // starting scale must be capped at the maximum adjustable scale
-        if (parent.canChangeMapScales()) 
+        if (parent.canChangeMapScales())
             parentStartingScale = min(parentStartingScale, maxScale());
         
         setScale(parentStartingScale);
@@ -430,7 +430,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         if ((areaOffsetX != 0) || (areaOffsetY != 0)) {
             float ctrX = parent.mapFocus().x();
             float ctrY = parent.mapFocus().y();
-            float mapOffsetX = fMapX(ctrX)- fMapX(ctrX-areaOffsetX);          
+            float mapOffsetX = fMapX(ctrX)- fMapX(ctrX-areaOffsetX);
             float mapOffsetY = fMapY(ctrY)-fMapY(ctrY-areaOffsetY);
             AffineTransform xForm = g.getTransform();
             xForm.setToIdentity();
@@ -443,28 +443,28 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         if (tmpRangeArea == null) {
             tmpRangeArea = new Area();
             for (StarSystem sv: alliedSystems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));       
+                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));
             for (StarSystem sv: systems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));       
+                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));
             scoutRangeArea = tmpRangeArea;
         }
         g.setColor(extendedBorder);
         g.setStroke(stroke2);
-        g.draw(tmpRangeArea);   
+        g.draw(tmpRangeArea);
 
 
         tmpRangeArea = shipRangeArea;
         if (tmpRangeArea == null) {
             tmpRangeArea = new Area();
             for (StarSystem sv: alliedSystems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));       
+                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));
             for (StarSystem sv: systems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));       
+                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));
             shipRangeArea = tmpRangeArea;
         }
         g.setColor(normalBorder);
         g.setStroke(stroke2);
-        g.draw(tmpRangeArea);   
+        g.draw(tmpRangeArea);
         
         g.setTransform(prevXForm);
     }
@@ -535,7 +535,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     }
     public void drawWorkingFlightPaths(Graphics2D g) {
         for (FlightPathSprite spr: FlightPathSprite.workingPaths()) {
-            if (parent.shouldDrawSprite(spr)) 
+            if (parent.shouldDrawSprite(spr))
                 spr.draw(this, g);
         }
     }
@@ -660,7 +660,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         // we need to recalculate the new focusX/Y before
         // recentering so that we can have the proper pixel
         // offset for the range areas
-        // only do this for changed X/Y values to avoid 
+        // only do this for changed X/Y values to avoid
         // introducing rounding errors
         if (deltaX != 0) {
             int focusX = mapX(parent.mapFocus().x());
@@ -668,7 +668,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         }
         if (deltaY != 0) {
             int focusY = mapY(parent.mapFocus().y());
-            newObjY = bounds(0, objY(focusY-deltaY), sizeY());      
+            newObjY = bounds(0, objY(focusY-deltaY), sizeY());
         }
         
         areaOffsetX += (objX-newObjX);
@@ -704,8 +704,8 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         if (zoomTimer.isRunning())
             return;
 
-        if (playAnimations() && (animationCount() % 5 == 0)) 
-            repaint();	
+        if (playAnimations() && (animationCount() % 5 == 0))
+            repaint();
     }
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
@@ -743,13 +743,13 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
                 selectX1 = x;
             }
             else if (x < selectX0) {
-                selectX0 = x; selectX1 = prevSelectX1; 
+                selectX0 = x; selectX1 = prevSelectX1;
             }
             if (y > selectY0) {
                 selectY1 = y;
             }
             else if (y < selectY0) {
-                selectY0 = y; selectY1 = prevSelectY1; 
+                selectY0 = y; selectY1 = prevSelectY1;
             }
             paintImmediately(boundsX0, boundsY0, s5+boundsX1-boundsX0, s5+boundsY1-boundsY0);
         }
@@ -790,19 +790,19 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         
         // skip the check if we are currently in the midst of a check
         if (searchingSprite)
-            return;      
+            return;
         searchingSprite = true;
         try { hoverSprite = spriteAt(x,y); }
         finally { searchingSprite = false; }
         
         // still hovering over same sprite... do nothing
-        if (hoverSprite == prevHover) 
+        if (hoverSprite == prevHover)
             return;
         
         // if sprite changed, but we are also still over the prevHover
         // if the prevHover is higher display priority than the new,
-        // then do nothing. What is the point of this? If a fleet is in 
-        // the same area as a system (lower priority), then we want to 
+        // then do nothing. What is the point of this? If a fleet is in
+        // the same area as a system (lower priority), then we want to
         // display the fleet until we mouse away from it because it is
         // drawn over the system.
         if ((prevHover != null) && prevHover.isSelectableAt(this,x,y)) {
@@ -840,13 +840,13 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     public void mouseReleased(MouseEvent e) {
         boolean shift = e.isShiftDown();
         if (dragSelecting) {
-            if ((selectX0 != selectX1) && (selectY0 != selectY1)) 
+            if ((selectX0 != selectX1) && (selectY0 != selectY1))
                 parent.dragSelect(selectX0, selectY0, selectX1, selectY1, shift);
             selectX0 = selectX1 = selectY0 = selectY1 = 0;
             dragSelecting = false;
             repaint();
-            return;               
-        }       
+            return;
+        }
 
         if (e.getButton() > 3)
             return;
@@ -855,7 +855,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         boolean rightClick = SwingUtilities.isRightMouseButton(e);
         Sprite newSelection = hoverSprite;
 
-        if (newSelection == null) 
+        if (newSelection == null)
             parent.clickingNull(1, rightClick);
         else if ((clicks == 1) || newSelection.acceptDoubleClicks())
             parent.clickingOnSprite(newSelection, 1, rightClick, true);

@@ -27,13 +27,14 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
     public final int empAttacker;
     public final int empEnemy;
     public final int empMe;
+    
     public static void alert(Empire attacker, Empire defender, CombatResults res) {
         List<Empire> allEnemies = new ArrayList<>();
         
         for (Empire emp: defender.contactedEmpires()) {
             if (defender.atWarWith(emp.id))
                 allEnemies.add(emp);
-        }        
+        }
 
         float severity = Math.min(3.75f, 12.5f * res.damageSustained(defender));
         if (((int)severity) > 0) {
@@ -46,7 +47,7 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
         }
     }
     private AttackedEnemyIncident(Empire e1, Empire e2, Empire e3, float sev) {
-    	super(sev);
+        super(sev);
         empAttacker = e1.id;
         empEnemy = e2.id;
         empMe = e3.id;

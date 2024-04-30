@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +29,8 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp) { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         
         Diplomat plAI = player().diplomatAI();
         Empire dip = diplomat();
@@ -49,7 +50,7 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
     @Override
     public boolean showTalking()                { return false; }
     @Override
-    public int numReplies()       		{ return options.size(); }
+    public int numReplies()               { return options.size(); }
     @Override
     public String reply(int i) {
         if (i >= options.size())
@@ -61,7 +62,7 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
             case STOP_SPYING      : return text("DIPLOMACY_MENU_STOP_SPYING");
             case STOP_ATTACKING   : return text("DIPLOMACY_MENU_STOP_ATTACKING");
             case WAR_MENU         : return text("DIPLOMACY_MENU_DECLARE_WAR");
-            case EXIT             : return text("DIPLOMACY_MENU_FORGET_IT"); 
+            case EXIT             : return text("DIPLOMACY_MENU_FORGET_IT");
         }
         return "";
     }
@@ -93,7 +94,7 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
 
         reply.returnToMap(returnToMap);
         // show reply
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
     public void escape() {

@@ -23,12 +23,13 @@ public class SignPeaceIncident extends DiplomaticIncident {
     final int empMe;
     final int empYou;
     private final int endTurn;
+    
     public static SignPeaceIncident create(Empire e1, Empire e2, int dur) {
         SignPeaceIncident inc = new SignPeaceIncident(e1, e2, dur);
         return inc;
     }
     private SignPeaceIncident(Empire e1, Empire e2, int dur) {
-    	super(20);
+        super(20);
         empMe = e1.id;
         empYou = e2.id;
         endTurn = turnOccurred()+dur;

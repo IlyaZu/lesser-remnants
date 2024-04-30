@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,7 +119,7 @@ public class MainUI extends BasePanel implements IMapHandler {
 
     public SpriteDisplayPanel displayPanel() { return displayPanel; }
     public void hideDisplayPanel()           {
-        displayPanel.setVisible(false); 
+        displayPanel.setVisible(false);
     }
     public void showDisplayPanel()           { displayPanel.setVisible(true); }
     public void clearOverlay()               { overlay = overlayNone; }
@@ -228,14 +228,14 @@ public class MainUI extends BasePanel implements IMapHandler {
         }
         
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         if (helpFrame == 0)
             return;
         helpFrame++;
-        if (helpFrame > numHelpFrames) 
+        if (helpFrame > numHelpFrames)
             cancelHelp();
         loadHelpUI();
         repaint();
@@ -363,7 +363,7 @@ public class MainUI extends BasePanel implements IMapHandler {
             }
         }
         else {
-            loadButtonBarHelpFrame();          
+            loadButtonBarHelpFrame();
         }
 
         helpUI.open(this);
@@ -383,10 +383,10 @@ public class MainUI extends BasePanel implements IMapHandler {
     @Override
     public boolean masksMouseOver(int x, int y)       { return displayPanelMasks(x, y) || overlay.masksMouseOver(x,y); }
     @Override
-    public Color alertColor(SystemView sv)            { 
+    public Color alertColor(SystemView sv)            {
         if (sv.isAlert())
             return redAlertC;
-        return null; 
+        return null;
     }
     @Override
     public boolean displayNextTurnNotice() {
@@ -439,7 +439,7 @@ public class MainUI extends BasePanel implements IMapHandler {
         if (lastHoveringSprite() != null)
             lastHoveringSprite().mouseExit(map);
         
-        if ((o instanceof StarSystem) 
+        if ((o instanceof StarSystem)
         && (lastHoveringSprite() instanceof StarSystem)
         && (clickedSprite() instanceof ShipFleet)) {
             lastHoveringSprite().mouseExit(map);
@@ -478,7 +478,7 @@ public class MainUI extends BasePanel implements IMapHandler {
             if (FlightPathSprite.workingPaths().contains(fp))
                 return true;
             return fp.isPlayer() || fp.aggressiveToPlayer();
-        }      
+        }
         return true;
     }
     @Override
@@ -496,24 +496,24 @@ public class MainUI extends BasePanel implements IMapHandler {
     @Override
     public Sprite clickedSprite()            { return (Sprite) sessionVar("MAINUI_CLICKED_SPRITE"); }
     @Override
-    public void clickedSprite(Sprite s)      { 
-        sessionVar("MAINUI_CLICKED_SPRITE", s); 
+    public void clickedSprite(Sprite s)      {
+        sessionVar("MAINUI_CLICKED_SPRITE", s);
         if (s instanceof StarSystem)
             lastSystemSelected(s);
     }
     @Override
     public Sprite hoveringSprite()           { return (Sprite) sessionVar("MAINUI_HOVERING_SPRITE"); }
-    public void hoveringSprite(Sprite s)     { 
-        sessionVar("MAINUI_HOVERING_SPRITE", s); 
+    public void hoveringSprite(Sprite s)     {
+        sessionVar("MAINUI_HOVERING_SPRITE", s);
         if (s == null)
-           return; 
-        if (s.hasDisplayPanel() && !session().performingTurn()) 
-            showDisplayPanel(); 
+           return;
+        if (s.hasDisplayPanel() && !session().performingTurn())
+            showDisplayPanel();
     }
     public Sprite lastHoveringSprite()       { return (Sprite) sessionVar("MAINUI_LAST_HOVERING_SPRITE"); }
     public void lastHoveringSprite(Sprite s) { sessionVar("MAINUI_LAST_HOVERING_SPRITE", s); }
     @Override
-    public Border mapBorder()                   { return null; 	}
+    public Border mapBorder()                   { return null;     }
     @Override
     public boolean canChangeMapScales()         { return overlay.canChangeMapScale(); }
     @Override
@@ -530,9 +530,9 @@ public class MainUI extends BasePanel implements IMapHandler {
         if (!map.showDistance())
             return null;
         Sprite spr = clickedSprite();
-        if (spr instanceof IMappedObject) 
+        if (spr instanceof IMappedObject)
             return (IMappedObject) spr;
-        return null;        
+        return null;
     }
     @Override
     public void animate() {
@@ -553,12 +553,12 @@ public class MainUI extends BasePanel implements IMapHandler {
         map.hoverSprite = clickedSprite();
     }
     public void resumeTurn() {
-        clearOverlay();        
+        clearOverlay();
         session().resumeNextTurnProcessing();
         repaint();
     }
     public void resumeOutsideTurn() {
-        clearOverlay();        
+        clearOverlay();
         showDisplayPanel();
         repaint();
     }
@@ -656,7 +656,7 @@ public class MainUI extends BasePanel implements IMapHandler {
         int y3 = scaled(490);
         int w3 = scaled(300);
         HelpSpec sp8 = helpUI.addBlueHelpText(x3,y3,w3, 4, text("MAIN_HELP_1H"));
-        sp8.setLine(x3+(w2*3/4), y3, w-scaled(54), scaled(430));        
+        sp8.setLine(x3+(w2*3/4), y3, w-scaled(54), scaled(430));
 
         if (showTreasuryResearchBar()) {
             int x12 = scaled(115);
@@ -727,7 +727,7 @@ public class MainUI extends BasePanel implements IMapHandler {
         int y8 = scaled(605);
         int w8 = scaled(250);
         HelpSpec sp8 = helpUI.addBlueHelpText(x8,y8,w8, 3, text("MAIN_HELP_2H"));
-        sp8.setLine(w-scaled(64), y8, w-scaled(64), scaled(582));    
+        sp8.setLine(w-scaled(64), y8, w-scaled(64), scaled(582));
 
         int x9 = x1;
         int y9 = scaled(115);

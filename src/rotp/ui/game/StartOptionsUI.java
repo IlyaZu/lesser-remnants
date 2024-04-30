@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,7 +77,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         int h = getHeight();
         Graphics2D g = (Graphics2D) g0;
         
-        
         // draw background "haze"
         g.setColor(backgroundHaze);
         g.fillRect(0, 0, w, h);
@@ -107,7 +106,6 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         
         Stroke prev = g.getStroke();
         g.setStroke(stroke3);
-
         
         // left column
         // Gap made by galaxy age setting removal
@@ -117,7 +115,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         int h2 = s90;
         
         // Gap made by star density removal
-        y2 += (h2+s20);      
+        y2 += (h2+s20);
        
         // Gap made by nebula frequency settings removal
         y2 += (h2+s20);
@@ -148,7 +146,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         }
         
         // Gap made by AI hostility settings removal
-        y2 += (h2+s20);     
+        y2 += (h2+s20);
        
         // Gap made by Council rebellion removal
         y2 += (h2+s20);
@@ -250,7 +248,7 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = okBox;
         else if (defaultBox.contains(x,y))
             hoverBox = defaultBox;
-		
+        
         if (hoverBox != prevHover) {
             if (prevHover == randomEventsText.bounds())
                 randomEventsText.mouseExit();

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -516,7 +516,7 @@ public class SystemMassQueryPanel extends BasePanel {
             String s = text("FLEETS_RELOCATE_LABEL");
             g.setFont(narrowFont(17));
             this.scaledFont(g, s, scaled(120), 17, 14);
-            if (hoverBox == rallyPointBox)	
+            if (hoverBox == rallyPointBox)
                 g.setColor(SystemPanel.yellowText);
             else
                 g.setColor(SystemPanel.blackText);
@@ -595,7 +595,7 @@ public class SystemMassQueryPanel extends BasePanel {
             }
         }
         private void setAllShipDesigns() {
-            for (StarSystem sys: topParent.filteredSystems) 
+            for (StarSystem sys: topParent.filteredSystems)
                 sys.colony().shipyard().switchToDesign(topParent.currDesign);
         }
         private Image initializedBackgroundImage(int w, int h) {

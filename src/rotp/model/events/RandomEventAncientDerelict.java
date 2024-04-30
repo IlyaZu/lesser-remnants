@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +29,9 @@ public class RandomEventAncientDerelict implements Base, Serializable, RandomEve
     private static final int MAX_TECHS_DISCOVERED = 10;
     private int empId;
     @Override
-    public boolean goodEvent()    		{ return true; }
+    public boolean goodEvent()            { return true; }
     @Override
-    public boolean repeatable()    		{ return false; }
+    public boolean repeatable()            { return false; }
     @Override
     public String notificationText()    {
         String s1 = text("EVENT_DERELICT");

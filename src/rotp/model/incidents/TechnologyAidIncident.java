@@ -25,15 +25,16 @@ public class TechnologyAidIncident extends DiplomaticIncident {
     public final int empMe;
     public final int empYou;
     private final String techId;
+    
     public static void create(Empire emp, Empire donor, String techId) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         emb.addIncident(new TechnologyAidIncident(emp, donor, techId));
         
-        for (Empire enemy: emp.warEnemies()) 
+        for (Empire enemy: emp.warEnemies())
             EnemyAidIncident.create(enemy, emp, donor, techId);
     }
     private TechnologyAidIncident(Empire emp, Empire donor, String tId) {
-    	super(calculateSeverity(emp, tId));
+        super(calculateSeverity(emp, tId));
         empYou = donor.id;
         empMe = emp.id;
         techId = tId;
@@ -43,13 +44,13 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         int rpValue = (int)emp.ai().scientist().researchBCValue(tech);
 
         float pct = rpValue / emp.totalPlanetaryProduction();
-        return Math.min(15,25*pct); 
+        return Math.min(15,25*pct);
     }
     @Override
     public String title()        { return text("INC_TECHNOLOGY_AID_TITLE"); }
     @Override
-    public String description()  { 
-    	return decode(text("INC_TECHNOLOGY_AID_DESC"));
+    public String description()  {
+        return decode(text("INC_TECHNOLOGY_AID_DESC"));
     }
     @Override
     public String decode(String s) {

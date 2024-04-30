@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,11 +32,11 @@ public final class ShipEngine extends ShipComponent {
     public TechEngineWarp tech()      { return (TechEngineWarp) super.tech(); }
     public float powerOutput()       { return tech().powerOutput(); }
     @Override
-	// modnar: add in cost miniaturization for Ship Engine
+    // modnar: add in cost miniaturization for Ship Engine
     public float cost(ShipDesign d)  {
-		Empire emp = d == null ? null : d.empire();
+        Empire emp = d == null ? null : d.empire();
         return tech().costMiniaturization(emp) * tech().baseCost();
-	}
+    }
     @Override
     public float space(ShipDesign d) { return d.enginesRequired()* size(d); }
     public int warp()                 { return tech().warp();  }

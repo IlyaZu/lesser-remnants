@@ -28,13 +28,14 @@ public class ColonyInvadedIncident extends DiplomaticIncident {
     final int empDefender;
     final int empAttacker;
     final int popLost;
+    
     public static void create(Empire attacker, Empire defender, StarSystem sys, int popLost) {
         ColonyInvadedIncident inc = new ColonyInvadedIncident(attacker, defender, sys, popLost);
         EmpireView ev = defender.viewForEmpire(attacker);
         ev.embassy().addIncident(inc);
     }
     public ColonyInvadedIncident(Empire att, Empire def, StarSystem sys, int p) {
-    	super(-2.5f + Math.max(-7.5f, -p/4.0f));
+        super(-2.5f + Math.max(-7.5f, -p/4.0f));
         sysId = sys.id;
         empDefender = def.id;
         empAttacker = att.id;

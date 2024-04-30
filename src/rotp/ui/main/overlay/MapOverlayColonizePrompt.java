@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,9 @@ import rotp.ui.sprites.ColonizeYesSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayColonizePrompt extends MapOverlay {
-	private final int nameLengthLimit = 24;
+    private final int nameLengthLimit = 24;
     private final Color dlgBox = new Color(123,123,123,192);
-	
+    
     private Color maskC = new Color(40,40,40,160);
     private Area mask;
     private BufferedImage planetImg;
@@ -178,7 +178,7 @@ public class MapOverlayColonizePrompt extends MapOverlay {
                 parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, (boxH-boxH1)/3);
                 imgG.dispose();
             }
-            else 
+            else
                 planetImg = sys.planet().type().panoramaImage();
         }
         g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH-boxH1, null);
@@ -330,8 +330,8 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         int textTopPad = BasePanel.s4;
         int textBottomPad = BasePanel.s3;
         int textWidth = boxW - s15 - flagButton.width();
-        g.fillRect(x1 - textXPad, y1 - s30 - textTopPad, 
-        		textWidth + textXPad * 2, s40 + textBottomPad);
+        g.fillRect(x1 - textXPad, y1 - s30 - textTopPad,
+                textWidth + textXPad * 2, s40 + textBottomPad);
         
         // planet name
         g.setFont(narrowFont(40));
@@ -348,19 +348,19 @@ public class MapOverlayColonizePrompt extends MapOverlay {
     public boolean handleKeyPress(KeyEvent e) {
         return true;
     }
-    @Override 
-    public boolean handleKeyTyped(KeyEvent e) { 
-    	char keyChar = e.getKeyChar();
-    	if (Character.isLetterOrDigit(keyChar) || ' ' == keyChar) {
-    		if (sysName.length() < nameLengthLimit) {
-        		sysName += e.getKeyChar();
-    		}
-    	} else if ('\b' == keyChar && sysName.length() != 0) {
-    		sysName = sysName.substring(0, sysName.length()-1);
-    	}
-    	
-    	parent.repaint(); 
-    	return true;
+    @Override
+    public boolean handleKeyTyped(KeyEvent e) {
+        char keyChar = e.getKeyChar();
+        if (Character.isLetterOrDigit(keyChar) || ' ' == keyChar) {
+            if (sysName.length() < nameLengthLimit) {
+                sysName += e.getKeyChar();
+            }
+        } else if ('\b' == keyChar && sysName.length() != 0) {
+            sysName = sysName.substring(0, sysName.length()-1);
+        }
+        
+        parent.repaint();
+        return true;
     }
     class SystemFlagSprite extends MapSprite {
         private int mapX, mapY, buttonW, buttonH;

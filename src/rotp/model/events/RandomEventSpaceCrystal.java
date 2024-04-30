@@ -37,9 +37,9 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
     @Override
     public String systemKey()                   { return "MAIN_PLANET_EVENT_CRYSTAL"; }
     @Override
-    public boolean goodEvent()    		{ return false; }
+    public boolean goodEvent()            { return false; }
     @Override
-    public boolean repeatable()    		{ return false; }
+    public boolean repeatable()            { return false; }
     @Override
     public boolean monsterEvent()               { return true; }
     @Override

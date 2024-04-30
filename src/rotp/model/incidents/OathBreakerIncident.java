@@ -30,6 +30,7 @@ public class OathBreakerIncident extends DiplomaticIncident {
     final int empVictim;
     final boolean spying;
     final boolean notify;
+    
     public static void alertBrokenAlliance(Empire breaker, Empire victim, boolean spy) {
         alertBrokenAlliance(breaker,victim,null,spy);
     }
@@ -61,7 +62,7 @@ public class OathBreakerIncident extends DiplomaticIncident {
         }
     }
     private OathBreakerIncident(Empire brk, Empire vic, Empire obs, int type, float sev, boolean spy) {
-    	super(calculateSeverity(obs, sev));
+        super(calculateSeverity(obs, sev));
         empBreaker = brk.id;
         empVictim = vic.id;
         spying = spy;

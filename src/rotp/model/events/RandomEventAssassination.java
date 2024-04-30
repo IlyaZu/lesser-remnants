@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,9 @@ public class RandomEventAssassination implements Base, Serializable, RandomEvent
     private static final long serialVersionUID = 1L;
     private int empAssassin, empVictim;
     @Override
-    public boolean goodEvent()    		{ return false; }
+    public boolean goodEvent()            { return false; }
     @Override
-    public boolean repeatable()    		{ return true; }
+    public boolean repeatable()            { return true; }
     @Override
     public String notificationText()    {
         String s1 = text("EVENT_ASSASSINATION");
@@ -59,7 +59,7 @@ public class RandomEventAssassination implements Base, Serializable, RandomEvent
         // from the victim and we want the GNN notice to show up first
         if (assassin.isPlayerControlled())
             GNNNotification.notifyImmediateEvent(notificationText(), "GNN_Event_Assassin");
-        else if (victim.isPlayerControlled() 
+        else if (victim.isPlayerControlled()
         || player().hasContact(assassin)
         || player().hasContact(victim))
             GNNNotification.notifyRandomEvent(notificationText(), "GNN_Event_Assassin");

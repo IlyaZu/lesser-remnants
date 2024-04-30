@@ -91,10 +91,10 @@ public abstract class CombatEntity implements Base {
         if (cloaked)
             return 200+initiative();
         // modnar: replace canTeleport from this 'if' check
-		// In ShipCombatManager.java, the CombatStack.INITIATIVE comparison/sort in setupBattle
-		// is called before currentStack.beginTurn(). So while beginTurn() in this file
-		// sets the correct value for canTeleport, it won't be used for initiative ordering.
-		// This change correctly gives boosted turn/initiative order for ship stacks with teleporters.
+        // In ShipCombatManager.java, the CombatStack.INITIATIVE comparison/sort in setupBattle
+        // is called before currentStack.beginTurn(). So while beginTurn() in this file
+        // sets the correct value for canTeleport, it won't be used for initiative ordering.
+        // This change correctly gives boosted turn/initiative order for ship stacks with teleporters.
         else if (hasTeleporting() && !mgr.interdiction())
             return 100+initiative();
         else
@@ -138,7 +138,7 @@ public abstract class CombatEntity implements Base {
     public boolean canFireWeapon()  { return false; }
     public boolean canFireWeaponAtTarget(CombatEntity st)  { return false; }
     public boolean immuneToStasis() { return false; }
-    public float autoMissPct()      { return 0; } 
+    public float autoMissPct()      { return 0; }
     public boolean interceptsMissile(ShipWeaponMissileType wpn)  { return random() < missileInterceptPct(wpn);}
     public float missileInterceptPct(ShipWeaponMissileType wpn)  { return 0; }
     public float maneuverablity()     { return maneuverability; }
@@ -181,7 +181,7 @@ public abstract class CombatEntity implements Base {
     public int weaponRange(ShipComponent c) {
         if (!c.isBeamWeapon())
             return c.range();
-        return c.range()+beamRangeBonus;     
+        return c.range()+beamRangeBonus;
     }
 
     public boolean isTurnComplete() {
@@ -265,12 +265,12 @@ public abstract class CombatEntity implements Base {
             ;
 
         distance += plannedDistance;
-        move -= plannedDistance;        
+        move -= plannedDistance;
         return !destroyed();
     }
     public boolean submoveTo(float x1, float y1) {
         boolean b = submoveTo(x1,y1, targetingMissiles);
-        if (mgr.showAnimations()) 
+        if (mgr.showAnimations())
             mgr.ui.paintAllImmediately(20);
         
         return b;
@@ -300,13 +300,13 @@ public abstract class CombatEntity implements Base {
         offsetX += xIncr;
         distY -= stepDist;
         if (distY <= 0) {
-            y = (int) y1; 
+            y = (int) y1;
             offsetY = 0;
         }
         
         distX -= stepDist;
         if (distX <= 0) {
-            x = (int) x1; 
+            x = (int) x1;
             offsetX = 0;
         }
         
@@ -329,7 +329,7 @@ public abstract class CombatEntity implements Base {
         for (CombatMissile miss : targetCopy)
             missilesFinished = miss.pursue(MOVE_STEP) && missilesFinished;
         
-        if (mgr.showAnimations()) 
+        if (mgr.showAnimations())
             mgr.ui.paintAllImmediately(20);
 
         return missilesFinished;
@@ -343,7 +343,7 @@ public abstract class CombatEntity implements Base {
         float dx = x() - target.x();
         float dy = y() - target.y();
 
-        if (dy > 0) 
+        if (dy > 0)
             return (float)(Math.PI - Math.atan(dx/dy));
         else if (dy < 0) {
             if (dx > 0)
@@ -511,10 +511,10 @@ public abstract class CombatEntity implements Base {
         int st1X = mgr.ui.stackX(this);
         int st1Y = mgr.ui.stackY(this);
         int x1 = st1X+stW/2;
-        int y1 = st1Y+stH/2;        
+        int y1 = st1Y+stH/2;
         Graphics2D g = (Graphics2D) mgr.ui.getGraphics();
-        drawAttackResult(g,x1,y1,x1, dmg,result);   
-        mgr.ui.paintAllImmediately();    
+        drawAttackResult(g,x1,y1,x1, dmg,result);
+        mgr.ui.paintAllImmediately();
     }
     public void drawAttackResult(Graphics g, int x1, int y1, int x0, float dmg, String result) {
         if (!mgr.showAnimations())
@@ -557,7 +557,7 @@ public abstract class CombatEntity implements Base {
 
         for (int i=0;i<FRAMES;i++) {
             long t0 = System.currentTimeMillis();
-            if (!mgr.showAnimations()) 
+            if (!mgr.showAnimations())
                 break;
             mgr.ui.paintImmediately(clipX,clipY,clipW,clipH);
             g.setFont(font[i]);
@@ -630,7 +630,7 @@ public abstract class CombatEntity implements Base {
             g.drawImage(img, x1, y1, x1+w1, y1+h1, 0, 0, w0, h0, ui);
         
         g.setComposite(prevComp);
-        if (overlayImg != null) 
+        if (overlayImg != null)
             g.drawImage(overlayImg, x1, y1, ui);
             
         int y2 = y+stackH-BasePanel.s5;

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU GeneraFl Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -234,7 +234,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         return amt;
     }
     public int allocationRemaining()              { return MAX_TICKS - totalAmountAllocated(); }
-    public float totalPlanetaryResearch()         { 
+    public float totalPlanetaryResearch()         {
         float totalBC = research().totalSpending();
         float productAdj = planet().productionAdj();
         if (empire.divertColonyExcessToResearch()) {
@@ -242,12 +242,12 @@ public final class Colony implements Base, IMappedObject, Serializable {
             totalBC += defense().excessSpending() / productAdj;
             totalBC += industry().excessSpending() / productAdj;
             totalBC += ecology().excessSpending();
-        }        
+        }
         float totalRP = totalBC * research().researchBonus();
         return max(0, totalRP-research().projectRemainingBC());
     }
-    public float totalPlanetaryResearchSpending() { 
-        float totalBC = research().totalSpending(); 
+    public float totalPlanetaryResearchSpending() {
+        float totalBC = research().totalSpending();
         float productAdj = planet().productionAdj();
         if (empire.divertColonyExcessToResearch()) {
             totalBC += shipyard().excessSpending() / productAdj;
@@ -256,7 +256,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             totalBC += ecology().excessSpending();
         }
         return totalBC;
-    }  
+    }
     public String printString() {
         return empire.sv.name(starSystem().id) + "-- pop:"
                 + (float) Math.round(population() * 100) / 100 + " reb:"
@@ -279,7 +279,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public boolean hasOrders()               { return !orders.isEmpty(); }
     
     public boolean isDeveloped()  {
-        return defense().isCompleted() && industry().isCompleted() && ecology().isCompleted(); 
+        return defense().isCompleted() && industry().isCompleted() && ecology().isCompleted();
     }
 
     public float orderAmount(Colony.Orders order) {
@@ -465,7 +465,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
                     , str(research().allocation()) , "]");
         keepEcoLockedToClean = empire().isPlayerControlled() && (allocation[ECOLOGY] <= cleanupAllocation());
         previousPopulation = population;
-        reallocationRequired = false;          
+        reallocationRequired = false;
         ensureProperSpendingRates();
         validateOnLoad();
         
@@ -523,7 +523,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         checkEcoAtClean();
         
         if (reallocationRequired)
-            empire().governorAI().setColonyAllocations(this);            
+            empire().governorAI().setColonyAllocations(this);
 
     }
     public void addFollowUpSpendingOrder(float orderAmt) {
@@ -535,7 +535,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         ColonyEcology eco = ecology();
         ColonyIndustry ind = industry();
         ColonyDefense def = defense();
-        if (!eco.terraformCompleted()) 
+        if (!eco.terraformCompleted())
             addColonyOrder(Colony.Orders.TERRAFORM, orderAmt);
         else if (!ind.isCompleted())
             addColonyOrder(Colony.Orders.FACTORIES, orderAmt);
@@ -548,7 +548,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     }
     public void checkEcoAtClean() {
         recalcSpendingForNewTaxRate = false;
-        if (locked[ECOLOGY]) 
+        if (locked[ECOLOGY])
             return;
         
         int cleanAlloc = ecology().cleanupAllocationNeeded();
@@ -811,7 +811,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         return colonyTaxPct;
     }
     public void ensureProperSpendingRates() {
-        if (recalcSpendingForNewTaxRate) 
+        if (recalcSpendingForNewTaxRate)
             checkEcoAtClean();
     }
     public float totalProductionIncome() {
@@ -820,7 +820,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         
         ensureProperSpendingRates();
 
-        float prod = production();       
+        float prod = production();
         float reserveCost = prod * colonyTaxPct();
         float securityCost = prod * empire.totalSecurityCostPct();
         float shipCost = prod * empire.shipMaintCostPerBC();
@@ -971,7 +971,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public void acceptTransport(Transport t) {
         if (!t.empire().canColonize(starSystem())) {
             // no appropriate alert message for this transport loss. This is an edge case anyway
-            // as it occurs only when the destination system has been rendered inhabitable by a 
+            // as it occurs only when the destination system has been rendered inhabitable by a
             // random event while the transport was in transits
             t.size(0);
             return;
@@ -1021,9 +1021,9 @@ public final class Colony implements Base, IMappedObject, Serializable {
                         + tr.empire().raceName() + " transports");
         
         if (!tr.empire().canColonize(starSystem())) {
-            if (tr.empire().isPlayerControlled()) 
+            if (tr.empire().isPlayerControlled())
                 TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
-            else if (empire().isPlayerControlled()) 
+            else if (empire().isPlayerControlled())
                 InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
             tr.size(0);
             return;
@@ -1044,7 +1044,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         resistTransportWithFleet(tr);
         if (tr.size() == 0) {
-        	return;
+            return;
         }
 
         float startingPop = population();
@@ -1094,12 +1094,12 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // choose most effective missile dmg
         int missileDmg = 0;
         if (empire().aggressiveWith(tr.empId())) {
-        	MissileBase base = defense().missileBase();
+            MissileBase base = defense().missileBase();
             TechMissileWeapon scatter = base.scatterPack() == null ? null : base.scatterPack().tech();
             TechMissileWeapon missile = defense().missileBase().missile().tech();
             if (scatter != null)
                 missileDmg = 3*max(missile.damage(), scatter.damage() * scatter.scatterAttacks());
-            else 
+            else
                 missileDmg = 3*missile.damage();
         }
 
@@ -1128,9 +1128,9 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // player notification only.
         if (tr.size() == 0) {
             log(concat(str(tr.launchSize()), " ", tr.empire().raceName(), " transports perished at ", name()));
-            if (tr.empire().isPlayerControlled()) 
+            if (tr.empire().isPlayerControlled())
                 TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
-            else if (empire().isPlayerControlled()) 
+            else if (empire().isPlayerControlled())
                 InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
         }
     }
@@ -1288,12 +1288,12 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // update system views of civs that would notice
         empire.sv.refreshFullScan(sys.id);
         List<ShipFleet> fleets = sys.orbitingFleets();
-        for (ShipFleet fl : fleets) 
+        for (ShipFleet fl : fleets)
             fl.empire().sv.refreshFullScan(sys.id);
         
         for (Empire emp: galaxy().empires()) {
-            if (emp.knowsOf(empire) && !emp.sv.name(sys.id).isEmpty()) 
-                emp.sv.view(sys.id).setEmpire();                   
+            if (emp.knowsOf(empire) && !emp.sv.name(sys.id).isEmpty())
+                emp.sv.view(sys.id).setEmpire();
         }
     }
     public void destroy() {
@@ -1317,12 +1317,12 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // update system views of civs that would notice
         empire.sv.refreshFullScan(sys.id);
         List<ShipFleet> fleets = sys.orbitingFleets();
-        for (ShipFleet fl : fleets) 
+        for (ShipFleet fl : fleets)
             fl.empire().sv.refreshFullScan(sys.id);
         
         for (Empire emp: galaxy().empires()) {
-            if (emp.knowsOf(empire) && !emp.sv.name(sys.id).isEmpty()) 
-                emp.sv.view(sys.id).setEmpire();                   
+            if (emp.knowsOf(empire) && !emp.sv.name(sys.id).isEmpty())
+                emp.sv.view(sys.id).setEmpire();
         }
     }
 }

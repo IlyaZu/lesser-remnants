@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,26 +38,26 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
     private DiplomacyTechOfferMenu() { }
     public boolean hasCounterOffers()  { return !counterOffers.isEmpty(); }
     @Override
-    public void diplomat(Empire v)               { 
-        super.diplomat(v); 
+    public void diplomat(Empire v) {
+        super.diplomat(v);
         counterOffers = requestee.diplomatAI().techsRequestedForCounter(diplomat(), requestedTech);
     }
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numReplies()       		{ return counterOffers.size()+1; }
+    public int numReplies()               { return counterOffers.size()+1; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (i < counterOffers.size()){
             Tech tech = counterOffers.get(i);
             return text(tech.name());
         }
         if (i == counterOffers.size())
             return text("DIPLOMACY_MENU_FORGET_IT");
-        return ""; 
+        return "";
     }
     @Override
-    public String replyDetail(int i)          {
+    public String replyDetail(int i) {
         if (i < counterOffers.size()){
             Tech tech = counterOffers.get(i);
             return text("TECH_TRADE_TIER_COST_INFO", str(tech.quintile), str((int) tech.researchCost()));
@@ -64,11 +65,11 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
         return "";
     }
     @Override
-    public String requestDetail()          {
+    public String requestDetail() {
         return text("TECH_TRADE_TIER_COST_INFO", str(requestedTech.quintile), str((int) requestedTech.researchCost()));
     }
     @Override
-    public boolean enabled(int i) { 
+    public boolean enabled(int i) {
         return i <= counterOffers.size();
     }
     @Override
@@ -92,7 +93,7 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
 
         log("Replying to tech offer");
         // show reply confirmation from AI
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
         log("Replying to tech offer - finished");
     }
     @Override
@@ -100,8 +101,8 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
         session().resumeNextTurnProcessing();
     }
     @Override
-    public String decode(String encodedMessage) { 
-        String s1 = super.decode(encodedMessage); 
+    public String decode(String encodedMessage) {
+        String s1 = super.decode(encodedMessage);
         s1 = s1.replace("[tech]", requestedTech.name());
         return s1;
     }

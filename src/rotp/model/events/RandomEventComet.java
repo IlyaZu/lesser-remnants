@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,9 +37,9 @@ public class RandomEventComet implements Base, Serializable, RandomEvent {
     @Override
     public String systemKey()                   { return "MAIN_PLANET_EVENT_COMET"; }
     @Override
-    public boolean goodEvent()    		{ return false; }
+    public boolean goodEvent()            { return false; }
     @Override
-    public boolean repeatable()    		{ return true; }
+    public boolean repeatable()            { return true; }
     @Override
     public String notificationText()    {
         String s1 = text("EVENT_COMET");
@@ -133,7 +134,7 @@ public class RandomEventComet implements Base, Serializable, RandomEvent {
     }
     private void destroyColony() {
         galaxy().events().removeActiveEvent(this);
-        StarSystem sys = galaxy().system(sysId);       
+        StarSystem sys = galaxy().system(sysId);
         sys.addEvent(new SystemRandomEvent("SYSEVENT_COMET"));
         sys.clearEvent();
         sys.planet().sufferImpactEvent(); // destroys colony, downgrades planet type to Barren

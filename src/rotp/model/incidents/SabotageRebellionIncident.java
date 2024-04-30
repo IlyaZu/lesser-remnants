@@ -40,7 +40,7 @@ public class SabotageRebellionIncident extends DiplomaticIncident {
         otherView.embassy().resetPactTimer();
     }
     private SabotageRebellionIncident(EmpireView ev, SabotageMission m) {
-    	super(calculateSeverity(ev, m));
+        super(calculateSeverity(ev, m));
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;

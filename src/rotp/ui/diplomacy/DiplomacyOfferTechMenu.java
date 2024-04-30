@@ -28,24 +28,24 @@ public class DiplomacyOfferTechMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp)               { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         choices = player().diplomatAI().offerableTechnologies(emp);
     }
     @Override
     public boolean showTalking()            { return false; }
     @Override
-    public int numReplies()          	    { return choices.size()+1; }
+    public int numReplies()                  { return choices.size()+1; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (i < choices.size())
             return text(choices.get(i).name());
         if (i == choices.size())
             return text("DIPLOMACY_MENU_FORGET_IT");
-        return ""; 
+        return "";
     }
     @Override
-    public boolean enabled(int i) { 
+    public boolean enabled(int i) {
         return i <= choices.size();
     }
     @Override
@@ -67,7 +67,7 @@ public class DiplomacyOfferTechMenu extends DiplomaticMessage {
         DiplomaticReply reply = DiplomaticReplies.acceptTechnologyAid(view, tech);
 
         reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
     public void escape() {

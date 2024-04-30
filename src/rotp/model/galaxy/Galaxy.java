@@ -59,7 +59,7 @@ public class Galaxy implements Base, Serializable {
     private transient Map<String, Integer> raceSystemCtr = new HashMap<>();
 
     public GalacticCouncil council()         { return council; }
-    public RandomEvents events()       		 { return events; }
+    public RandomEvents events()                { return events; }
     public List<Nebula> nebulas()            { return nebulas; }
     public Empire[] empires()                { return empires; }
     public int maxNumStarSystems()           { return starSystems.length; }
@@ -175,7 +175,7 @@ public class Galaxy implements Base, Serializable {
         for (Nebula neb: nebulas) {
             if (neb.contains(x,y))
                 return neb;
-        }        
+        }
         return null;
     }
     public Empire empireMatching(int color, int shape) {
@@ -214,7 +214,7 @@ public class Galaxy implements Base, Serializable {
         NoticeMessage.resetSubstatus(text("TURN_TRANSPORTS"));
         for (int i=0; i<gal.numStarSystems(); i++)
             gal.system(i).resolvePendingTransports();
-    	
+        
         // check bombardment
         NoticeMessage.resetSubstatus(text("TURN_BOMBARDMENT"));
         checkForPlanetaryBombardment();
@@ -247,7 +247,7 @@ public class Galaxy implements Base, Serializable {
                             if (fleetEmp.ai().promptForBombardment(sys, fl))
                                 BombardSystemNotification.create(sys.id, fl, true);
                         }
-                    }                
+                    }
                 }
             }
         }
@@ -257,7 +257,7 @@ public class Galaxy implements Base, Serializable {
             Empire home = sys.empire();
             List<ShipFleet> fleets = sys.orbitingFleets();
             if ((home == null) && !fleets.isEmpty()){
-                for (ShipFleet fl: fleets) 
+                for (ShipFleet fl: fleets)
                     fl.checkColonize();
             }
         }
@@ -360,8 +360,8 @@ public class Galaxy implements Base, Serializable {
     }
     public int numColonizedSystems() {
         int num = 0;
-        for (Empire e: empires) 
-            num += e.numColonizedSystems();       
+        for (Empire e: empires)
+            num += e.numColonizedSystems();
         return num;
     }
     public int friendlyPopApproachingSystem(StarSystem sys) {

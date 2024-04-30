@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,27 +27,27 @@ public class OfferPeaceMessage extends TurnNotificationMessage {
         super.diplomat(e);
     }
     @Override
-    public int numReplies()       		{ return 2; }
+    public int numReplies()               { return 2; }
     @Override
     public boolean enabled(int i)       { return true; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i)          {
         switch (i) {
             case 0 : return text("DIPLOMACY_ACCEPT_END_WAR");
             case 1 : return text("DIPLOMACY_DECLINE_OFFER");
         }
-        return ""; 
+        return "";
     }
     @Override
     public void select(int i) {
         log("OfferPeaceMessage - selected: ", str(i));
         switch(i) {
-        case 0: 
+        case 0:
             DiplomaticReply reply = player().diplomatAI().acceptOfferPeace(diplomat());
             reply.resumeTurn(true);
-            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
             break;
-        case 1: 
+        case 1:
         default:
             escape(); break;
         }
@@ -57,8 +58,8 @@ public class OfferPeaceMessage extends TurnNotificationMessage {
         session().resumeNextTurnProcessing();
     }
     @Override
-    public String decode(String encodedMessage) { 
-        String s1 = super.decode(encodedMessage); 
+    public String decode(String encodedMessage) {
+        String s1 = super.decode(encodedMessage);
         return s1;
     }
 }

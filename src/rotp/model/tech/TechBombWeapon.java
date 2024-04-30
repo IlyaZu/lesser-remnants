@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ public final class TechBombWeapon extends Tech {
     }
     @Override
     public float warModeFactor()        { return 2; }
-    public int range()			         {  return 1; }
+    public int range()                     {  return 1; }
     @Override
     public boolean providesShipComponent()  { return true; }
     @Override
@@ -168,7 +168,7 @@ public final class TechBombWeapon extends Tech {
         if (!source.mgr.showAnimations())
             return;
 
-        ShipBattleUI ui = source.mgr.ui;       
+        ShipBattleUI ui = source.mgr.ui;
         Graphics2D g = (Graphics2D) ui.getGraphics();
         Stroke prev = g.getStroke();
         g.setColor(Color.white);
@@ -190,7 +190,7 @@ public final class TechBombWeapon extends Tech {
         // animation is doing this 4 times
         for (int n=0;n<FRAMES;n++) {
             ui.paintAllImmediately();
-            if (!source.mgr.showAnimations()) 
+            if (!source.mgr.showAnimations())
                 break;
             for (int i = -2; i < 3; i++) {
                 int xAdj = i * xSpacing;
@@ -206,10 +206,10 @@ public final class TechBombWeapon extends Tech {
         
         String missLabel = dmg < 0 ? text("SHIP_COMBAT_DEFLECTED") : text("SHIP_COMBAT_MISS");
 
-        if (target.destroyed()) 
-            target.drawAttackResult(g, x1,y1,x0, -1,text("SHIP_COMBAT_DESTROYED")); 
+        if (target.destroyed())
+            target.drawAttackResult(g, x1,y1,x0, -1,text("SHIP_COMBAT_DESTROYED"));
         else
-            target.drawAttackResult(g, x1,y1,x0, dmg,missLabel);   
+            target.drawAttackResult(g, x1,y1,x0, dmg,missLabel);
         ui.paintAllImmediately();
     }
 }

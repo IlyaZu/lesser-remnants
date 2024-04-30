@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ import rotp.util.sound.SoundClip;
 
 public class GroundBattleUI extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
-	// modnar: MAX_SOLDIERS = 500 causes bugs when troops > 500
-	// other parts of the code has been changed to work around having any such max value
+    // modnar: MAX_SOLDIERS = 500 causes bugs when troops > 500
+    // other parts of the code has been changed to work around having any such max value
     private static final int MAX_SOLDIERS = 500;
     private static final int MAX_SHIPS = 3;
     private final static int[] attackerState = new int[MAX_SOLDIERS];
@@ -132,7 +132,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
         initLandscapeImage(colony);
         
-        if (tr.size() < tr.launchSize()) 
+        if (tr.size() < tr.launchSize())
             subtitle = text("INVASION_SOME_TROOPS_LANDED", str(tr.size()), str(tr.launchSize()));
         else
             subtitle = text("INVASION_TROOPS_LANDED", str(tr.size()));
@@ -385,8 +385,8 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         ColonyDefense defense = colony.defense();
         int x0 = (w/2)+s40;
         int y0 = textY;
-		// modnar: use Math.min(MAX_SOLDIERS,totalDefenders) to draw defenders
-		// avoid bug with more than 500 troops
+        // modnar: use Math.min(MAX_SOLDIERS,totalDefenders) to draw defenders
+        // avoid bug with more than 500 troops
         drawTroops(g, Math.min(MAX_SOLDIERS,totalDefenders), false, x0, y0-s40);
 
         if (!landing()) {
@@ -398,8 +398,8 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             // draw attacker15s
             x0 = s40;
             y0 = textY;
-			// modnar: use Math.min(MAX_SOLDIERS,totalAttackers) to draw defenders
-			// avoid bug with more than 500 attackers
+            // modnar: use Math.min(MAX_SOLDIERS,totalAttackers) to draw defenders
+            // avoid bug with more than 500 attackers
             drawTroops(g, Math.min(MAX_SOLDIERS,totalAttackers), true, x0, y0-s40);
             // draw attacker info
             g.setFont(narrowFont(40));
@@ -505,9 +505,9 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         Integer deadIndex;
         if (attacker) {
             // kill off attackers with index higher than 500 first
-            if (remainingAttackers.size() >= MAX_SOLDIERS) 
+            if (remainingAttackers.size() >= MAX_SOLDIERS)
                 deadIndex = remainingAttackers.size() - 1;
-            else 
+            else
                 deadIndex = random(remainingAttackers);
             if (deadIndex < attackerState.length)
                 attackerState[deadIndex] = BEGIN_DYING;
@@ -515,9 +515,9 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         }
         else {
             // kill off attackers with index higher than 500 first
-            if (remainingDefenders.size() >= MAX_SOLDIERS) 
+            if (remainingDefenders.size() >= MAX_SOLDIERS)
                 deadIndex = remainingDefenders.size() - 1;
-            else 
+            else
                 deadIndex = random(remainingDefenders);
             if (deadIndex < defenderState.length)
                 defenderState[deadIndex] = BEGIN_DYING;
@@ -599,7 +599,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
                 int yAdj = troop % 2 == 0 ? s10 : 0;
                 if (attack) {
                     int frame = attackerState[count];   // ATTACKER_END_DYING... 0... ATTACKER_END_FIRING
-                    if (frame > BEGIN_DYING) 
+                    if (frame > BEGIN_DYING)
                         iconImg = frame < attackerFrames.size() ? attackerFrames.get(frame) : null;
                     else {
                         int deathFrame = 0-frame-1;
@@ -620,7 +620,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
                     else {
                         int deathFrame = 0-frame-1;
                         iconImg = deathFrame < defenderDeathFrames.size() ? defenderDeathFrames.get(0-frame-1) : null;
-                    } 
+                    }
 
                     defenderX[count] = x0;
                     defenderY[count] = y0+yAdj;
@@ -685,16 +685,16 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
         int victimX = attackerX[0]+(attackerImgW/2);
         int victimY = attackerY[0]+(attackerImgH/2);
-		
-		// modnar: adjust firing to prevent >500 troop bug
-		if (victim >= MAX_SOLDIERS) {
-			victimX = attackerX[MAX_SOLDIERS-1]+(attackerImgW/2);
-			victimY = attackerY[MAX_SOLDIERS-1]+(attackerImgH/2);
-		}
-		else {
-			victimX = attackerX[victim]+(attackerImgW/2);
-			victimY = attackerY[victim]+(attackerImgH/2);
-		}
+        
+        // modnar: adjust firing to prevent >500 troop bug
+        if (victim >= MAX_SOLDIERS) {
+            victimX = attackerX[MAX_SOLDIERS-1]+(attackerImgW/2);
+            victimY = attackerY[MAX_SOLDIERS-1]+(attackerImgH/2);
+        }
+        else {
+            victimX = attackerX[victim]+(attackerImgW/2);
+            victimY = attackerY[victim]+(attackerImgH/2);
+        }
 
         //log("firing at attacker#"+victim+"  from:"+gunX+"@"+gunY+"  to:"+victimX+"@"+victimY+"  gun:"+defenderGunX+"@"+defenderGunY);
         defenderWeapon.drawEffect(g, gunX, gunY, victimX, victimY);
@@ -763,7 +763,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
                 if (frame < descendingFrameRefs.get(i))
                     return descendingFrames.get(i);
                 frame -= descendingFrameRefs.get(i);
-            }      
+            }
             return descendingFrames.get(descendingFrames.size()-1);
         }
         private Image nextOpeningShipImage() {
@@ -772,7 +772,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
                 if (frame < openingFrameRefs.get(i))
                     return openingFrames.get(i);
                 frame -= openingFrameRefs.get(i);
-            }      
+            }
             return openingFrames.get(openingFrames.size()-1);
         }
     }

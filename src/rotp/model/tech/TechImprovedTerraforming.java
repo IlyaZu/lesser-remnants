@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +34,7 @@ public final class TechImprovedTerraforming extends Tech {
         init();
     }
     @Override
-    public Colony.Orders followup()			       { return Colony.Orders.TERRAFORM; }
+    public Colony.Orders followup()                   { return Colony.Orders.TERRAFORM; }
     @Override
     public void init() {
         super.init();

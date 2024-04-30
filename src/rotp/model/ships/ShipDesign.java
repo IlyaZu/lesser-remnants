@@ -119,7 +119,7 @@ public final class ShipDesign extends Design {
                 image = Base.colorizer.makeColor(shipColor, image);
         }
         return image;
-    }  
+    }
     public String sizeDesc() {
         switch (size()) {
             case ShipDesign.SMALL:  return text("SHIP_DESIGN_SIZE_SMALL");
@@ -394,8 +394,8 @@ public final class ShipDesign extends Design {
     public float firepowerAntiShip(float shield) {
         float dmg = 0;
         for (int i=0;i<maxWeapons();i++)
-			if (weapon(i).canAttackShips()) {
-				dmg += (wpnCount(i) * weapon(i).firepower(shield));
+            if (weapon(i).canAttackShips()) {
+                dmg += (wpnCount(i) * weapon(i).firepower(shield));
             }
         return dmg;
     }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,12 +57,12 @@ public class GalacticCouncil implements Base, Serializable {
     public Empire leader()             { return leader; }
 
     public List<Empire> voters() {
-        if (voters == null) 
+        if (voters == null)
             voters = new ArrayList<>(empires());
         return voters;
     }
     public List<Empire> empires() {
-        if (empires == null) 
+        if (empires == null)
             initEmpires();
         return empires;
     }
@@ -237,10 +237,10 @@ public class GalacticCouncil implements Base, Serializable {
 
         // if leader is elected, end the game
         if (leader != null) {
-        	end();
+            end();
             return;
         }
-        else 
+        else
             ensureFullContact();
 
         // create incidents between voters and the candidates

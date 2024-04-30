@@ -31,13 +31,13 @@ public class GenocideIncident extends DiplomaticIncident {
         }
     }
     private GenocideIncident(Empire obs, Empire att, Empire vic) {
-    	super(calculateSeverity(obs, att, vic));
+        super(calculateSeverity(obs, att, vic));
         empAttacker = att.id;
         empVictim = vic.id;
     }
     private static float calculateSeverity(Empire obs, Empire att, Empire vic) {
         float severity = -50;
-        if (att.alliedWith(obs.id) && obs.atWarWith(vic.id)) 
+        if (att.alliedWith(obs.id) && obs.atWarWith(vic.id))
             severity /= 2;
         return severity;
     }

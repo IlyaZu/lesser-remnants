@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@ import rotp.Rotp;
 public class LabelManager implements Base {
     static LabelManager instance = new LabelManager();
     public static LabelManager current()  { return instance; }
-
+    
     private String labelFile = "labels.txt";
     private String dialogueFile = "dialogue.txt";
     private final String techsFile = "techs.txt";
@@ -34,7 +35,7 @@ public class LabelManager implements Base {
     private final HashMap<String,byte[]> labelMap = new HashMap<>();
     private final HashMap<String,List<String>> dialogueMap = new HashMap<>();
     private final List<String> introLines = new ArrayList<>();
-
+    
     public boolean hasLabel(String key)    { return labelMap.containsKey(key); }
     public boolean hasDialogue(String key) { return dialogueMap.containsKey(key); }
     public boolean hasIntroduction()       { return !introLines.isEmpty(); }
@@ -47,14 +48,14 @@ public class LabelManager implements Base {
     public String label(String key) {
         byte[] value = labelMap.get(key);
         try {
-        return (value == null) ? key : new String(value, "UTF-8");
+            return (value == null) ? key : new String(value, "UTF-8");
         }
         catch(UnsupportedEncodingException e) { return key; }
     }
     public String realLabel(String key) {
         byte[] value = labelMap.get(key);
         try {
-        return (value == null) ? null : new String(value, "UTF-8");
+            return (value == null) ? null : new String(value, "UTF-8");
         }
         catch(UnsupportedEncodingException e) { return null; }
     }
@@ -65,9 +66,9 @@ public class LabelManager implements Base {
         return (value == null) || value.isEmpty() ? key : random(value);
     }
     public void load(String dir) {
-    	loadLabelFile(dir);
-    	loadTechsFile(dir);
-    	loadDialogueFile(dir);
+        loadLabelFile(dir);
+        loadTechsFile(dir);
+        loadDialogueFile(dir);
     }
     public void loadIntroFile(String dir) {
         log("loading Intro: ", dir, introFile);
@@ -77,33 +78,33 @@ public class LabelManager implements Base {
             err("can't find intro file! ", dir, introFile);
             return;
         }
-
+        
         // intro file found... reset list of intro lines
         introLines.clear();
         int wc = 0;
         try {
             String input;
             while ((input = in.readLine()) != null) {
-            	if (!isComment(input)) {
+                if (!isComment(input)) {
                     introLines.add(input);
                     if (Rotp.countWords)
                         wc += substrings(input, ' ').size();
                 }
             }
         }
-        catch (IOException e) { 
-        	err("LabelManager.loadIntroFile -- IOException: " + e); 
+        catch (IOException e) {
+            err("LabelManager.loadIntroFile -- IOException: " + e);
         }
         finally {
-        	try {
-                        in.close();
-			} catch (IOException e) {
-	        	err("LabelManager.loadIntroFile2 -- IOException: " + e); 
-			}
+            try {
+                in.close();
+            } catch (IOException e) {
+                err("LabelManager.loadIntroFile2 -- IOException: " + e);
+            }
         }
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
-            
+        
     }
     public void loadLabelFile(String dir) {
         log("loading Labels: ", dir, labelFile);
@@ -113,22 +114,22 @@ public class LabelManager implements Base {
             err("can't find label file! ", dir, labelFile);
             return;
         }
-
+        
         int wc = 0;
         try {
             String input;
             while ((input = in.readLine()) != null)
                 wc += loadLabelLine(input);
         }
-        catch (IOException e) { 
-        	err("LabelManager.loadLabelFile -- IOException: ", e.toString()); 
+        catch (IOException e) {
+            err("LabelManager.loadLabelFile -- IOException: ", e.toString());
         }
         finally {
-        	try {
-                        in.close();
-                    } catch (IOException e) {
-                        err("LabelManager.loadLabelFile2 -- IOException: " + e); 
-                    }
+            try {
+                in.close();
+            } catch (IOException e) {
+                err("LabelManager.loadLabelFile2 -- IOException: " + e);
+            }
         }
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
@@ -145,22 +146,22 @@ public class LabelManager implements Base {
             err("can't find dialogue file! ", dir, dialogueFile);
             return;
         }
-
+        
         int wc = 0;
         try {
             String input;
             while ((input = in.readLine()) != null)
                 wc += loadDialogueLine(input, dialogueMap);
         }
-        catch (IOException e) { 
-        	err("LabelManager.loadDialogueFile -- IOException: ", e.toString()); 
+        catch (IOException e) {
+            err("LabelManager.loadDialogueFile -- IOException: ", e.toString());
         }
         finally {
             try {
-                    in.close();
-                } catch (IOException e) {
-                    err("LabelManager.loadDialogueFile2 -- IOException: " + e); 
-                }
+                in.close();
+            } catch (IOException e) {
+                err("LabelManager.loadDialogueFile2 -- IOException: " + e);
+            }
         }
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
@@ -174,36 +175,36 @@ public class LabelManager implements Base {
             err("can't find techs file! ", dir, techsFile);
             return;
         }
-
+        
         int wc = 0;
         try {
             String input;
             while ((input = in.readLine()) != null)
                 wc += loadLabelLine(input);
         }
-        catch (IOException e) { 
-            err("LabelManager.loadTechsFile -- IOException: ", e.toString()); 
+        catch (IOException e) {
+            err("LabelManager.loadTechsFile -- IOException: ", e.toString());
         }
         finally {
             try {
                 in.close();
             } catch (IOException e) {
-                err("LabelManager.loadTechsFile2 -- IOException: " + e); 
+                err("LabelManager.loadTechsFile2 -- IOException: " + e);
             }
         }
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
     }
     private int loadLabelLine(String input) {
-    	if (isComment(input))
+        if (isComment(input))
             return 0;
- 
+        
         List<String> vals = substrings(input, '|');
         if (vals.size() < 2)
             return 0;
         
         int wc = 0;
-        try {      
+        try {
             labelMap.put(vals.get(0), vals.get(1).getBytes("UTF-8"));
             if (Rotp.countWords)
                 wc = substrings(vals.get(1), ' ').size();
@@ -212,9 +213,9 @@ public class LabelManager implements Base {
         return wc;
     }
     private int loadDialogueLine(String input, HashMap<String,List<String>> map) {
-    	if (isComment(input))
+        if (isComment(input))
             return 0;
- 
+        
         List<String> vals = substrings(input, '|');
         if (vals.size() < 2)
             return 0;
@@ -222,7 +223,7 @@ public class LabelManager implements Base {
         String key = vals.get(0);
         if (!map.containsKey(key))
             map.put(key, new ArrayList<>());
-        	
+        
         map.get(key).add(vals.get(1));
         
         if (Rotp.countWords)

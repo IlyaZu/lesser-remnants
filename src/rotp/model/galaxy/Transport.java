@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,6 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     private transient FlightPathSprite pathSprite;
     private transient StarSystem hoveringDest;
 
-
     public Empire empire()                   { return empire; }
     private TechArmor troopArmor()           { return (TechArmor) tech(troopArmorId); }
     private TechBattleSuit troopBattleSuit() { return (TechBattleSuit) tech(troopBattleSuitId); }
@@ -80,14 +79,14 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     @Override
     public boolean hasDisplayPanel()            { return true; }
     @Override
-    public boolean persistOnClick()             { return empire() == player(); }    
+    public boolean persistOnClick()             { return empire() == player(); }
     public boolean surrenderOnArrival()         { return size < 0; }
     
     public void orderToSurrenderOnArrival()    {  size = -1; }
     public void toggleSurrenderOnArrival() {
         if (surrenderOnArrival())
             size = originalSize;
-        else 
+        else
             orderToSurrenderOnArrival();
     }
 
@@ -227,12 +226,12 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     }
 
     public float range()                        { return empire.tech().shipRange(); }
-    public float travelTime(StarSystem dest)    { 
+    public float travelTime(StarSystem dest)    {
         float normalTime;
         if (speed == 0)
             normalTime = travelTime(this, dest, empire().tech().transportTravelSpeed());
         else
-            normalTime = travelTime(this, dest, speed); 
+            normalTime = travelTime(this, dest, speed);
         
         if ((from.empire() == dest.empire()) && (from.empire() == empire)
         && from.colony().shipyard().hasStargate() && dest.colony().shipyard().hasStargate())
@@ -319,12 +318,12 @@ public class Transport implements Base, Ship, Sprite, Serializable {
                 dest.colony().resistTransport(this);
         }
         else if (dest.colony().inRebellion()) {
-        	dest.colony().resistTransportWithFleet(this);
+            dest.colony().resistTransportWithFleet(this);
             dest.colony().resistTransportWithRebels(this);
-        } 
+        }
         else {
-        	dest.colony().resistTransportWithFleet(this);
-        	dest.colony().acceptTransport(this);
+            dest.colony().resistTransportWithFleet(this);
+            dest.colony().acceptTransport(this);
         }
 
         //Transport is gone. If selected on the map, de-select and replace with target system

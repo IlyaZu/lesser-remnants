@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,29 +27,29 @@ public class ThreatForAttack extends TurnNotificationMessage {
         super.diplomat(e);
     }
     @Override
-    public int numReplies()       		{ return 2; }
+    public int numReplies()               { return 2; }
     @Override
     public boolean enabled(int i)       { return true; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i)          {
         switch (i) {
             case 0 : return text("DIPLOMACY_IGNORE_THREAT");
-            case 1 : 
+            case 1 :
                 String s = text("DIPLOMACY_RETREAT_SHIPS");
                 s = diplomat().replaceTokens(s, "alien");
                 return s;
         }
-        return ""; 
+        return "";
     }
     @Override
     public void select(int i) {
         log("ThreatForAttack - selected: ", str(i));
         switch(i) {
-        case 1: 
+        case 1:
             player().retreatShipsFrom(diplomat().id);
             escape();
             break;
-        case 0: 
+        case 0:
         default:
             escape(); break;
         }
@@ -58,8 +59,8 @@ public class ThreatForAttack extends TurnNotificationMessage {
         session().resumeNextTurnProcessing();
     }
     @Override
-    public String decode(String encodedMessage) { 
-        String s1 = super.decode(encodedMessage); 
+    public String decode(String encodedMessage) {
+        String s1 = super.decode(encodedMessage);
         return s1;
     }
 }

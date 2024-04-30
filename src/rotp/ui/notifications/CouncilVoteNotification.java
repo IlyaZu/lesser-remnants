@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@ public class CouncilVoteNotification implements TurnNotification {
     public static void create() {
         (new CouncilVoteNotification()).notifyPlayer();
     }
-    private CouncilVoteNotification() {  }	
+    private CouncilVoteNotification() {  }
     @Override
     public String displayOrder() { return COUNCIL_NOTIFY; }
     @Override

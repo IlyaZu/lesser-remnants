@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +28,8 @@ public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire emp)               { 
-        super.diplomat(emp); 
+    public void diplomat(Empire emp) {
+        super.diplomat(emp);
         EmpireView v = player().viewForEmpire(emp);
         options.clear();
         options.add(DECLARE_WAR);
@@ -39,14 +40,14 @@ public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
     @Override
     public int numReplies()             { return 2; }
     @Override
-    public String reply(int i) { 
+    public String reply(int i) {
         if (i >= options.size())
             return "";
         
         int choice = options.get(i);
         switch(choice) {
             case DECLARE_WAR          : return text("DIPLOMACY_MENU_DECLARE_WAR");
-            case EXIT                 : return text("DIPLOMACY_MENU_FORGET_IT"); 
+            case EXIT                 : return text("DIPLOMACY_MENU_FORGET_IT");
         }
         return "";
     }
@@ -77,7 +78,7 @@ public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
         reply.returnToMap(returnToMap());
 
         // show reply
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
     public void escape() {

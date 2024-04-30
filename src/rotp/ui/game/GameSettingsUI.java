@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,7 +111,6 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
         int h = getHeight();
         Graphics2D g = (Graphics2D) g0;
         
-        
         // draw background "haze"
         g.setColor(backgroundHaze);
         g.fillRect(0, 0, w, h);
@@ -178,7 +177,7 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
         for (String line: lines) {
             y3 += lineH;
             drawString(g,line, x2+s20, y3);
-        }       
+        }
         
         y2 += (h2+s20);
         g.setColor(SystemPanel.blackText);
@@ -274,7 +273,6 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
             y3 += lineH;
             drawString(g,line, x2+s20, y3);
         }
-
         
         y2 += (h2+s20);
         g.setColor(SystemPanel.blackText);
@@ -395,7 +393,7 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
         String val;
         if (turns == 0)
             val = text("GAME_SETTINGS_BACKUP_OFF");
-        else 
+        else
             val = text("GAME_SETTINGS_BACKUP_ON", str(turns));
         
         return text("GAME_SETTINGS_BACKUP", val+"   ");
@@ -522,7 +520,7 @@ public class GameSettingsUI extends BasePanel implements MouseListener, MouseMot
             hoverBox = okBox;
         else if (defaultBox.contains(x,y))
             hoverBox = defaultBox;
-		
+        
         if (hoverBox != prevHover) {
             if (prevHover == mouseText.bounds())
                 mouseText.mouseExit();

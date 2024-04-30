@@ -29,13 +29,13 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     
     public static void create(EmpireView view) {
         for (Empire ally: view.owner().allies()) {
-            if (ally.atWarWith(view.empId())) 
-            	view.embassy().addIncident(new AtWarWithAllyIncident(view, ally));
+            if (ally.atWarWith(view.empId()))
+                view.embassy().addIncident(new AtWarWithAllyIncident(view, ally));
         }
     }
 
     private AtWarWithAllyIncident(EmpireView ev, Empire other) {
-    	super(-2.5f);
+        super(-2.5f);
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
@@ -49,9 +49,9 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ALLIANCE_WAR; }
     @Override
-    public boolean triggersWar()     { 
+    public boolean triggersWar()     {
         Galaxy g = galaxy();
-        return !g.empire(empMe).alliedWith(empYou); 
+        return !g.empire(empMe).alliedWith(empYou);
     }
     @Override
     public String decode(String s) {

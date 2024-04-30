@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +30,11 @@ public class OfferJointWarMessage extends TurnNotificationMessage {
     @Override
     public void target(Empire e)        { target = e; }
     @Override
-    public int numReplies()       	{ return 2; }
+    public int numReplies()           { return 2; }
     @Override
     public boolean enabled(int i)       { return true; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i)          {
         switch (i) {
             case 0 : return text("DIPLOMACY_ACCEPT_JOIN_WAR");
             case 1 :
@@ -42,18 +43,18 @@ public class OfferJointWarMessage extends TurnNotificationMessage {
                 else
                     return text("DIPLOMACY_DECLINE_OFFER");
         }
-        return ""; 
+        return "";
     }
     @Override
     public void select(int i) {
         log("OfferPactMessage - selected: ", str(i));
         switch(i) {
-        case 0: 
+        case 0:
             DiplomaticReply reply = player().diplomatAI().acceptOfferJointWar(diplomat(), target);
             reply.resumeTurn(true);
-            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
             break;
-        case 1: 
+        case 1:
         default:
             escape(); break;
         }
@@ -67,12 +68,11 @@ public class OfferJointWarMessage extends TurnNotificationMessage {
         }
             
         reply.resumeTurn(true);
-        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+        DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
-    public String decode(String encodedMessage) { 
-        
-        String s1 = diplomat().decode(encodedMessage, player(), target); 
+    public String decode(String encodedMessage) {
+        String s1 = diplomat().decode(encodedMessage, player(), target);
         return s1;
     }
 }

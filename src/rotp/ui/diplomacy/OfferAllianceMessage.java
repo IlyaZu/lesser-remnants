@@ -28,7 +28,7 @@ public class OfferAllianceMessage extends TurnNotificationMessage {
         super.diplomat(e);
     }
     @Override
-    public int numReplies()       		{ return 2; }
+    public int numReplies()               { return 2; }
     @Override
     public boolean enabled(int i)       { return true; }
     @Override

@@ -27,6 +27,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
     public final int empEnemy;
     private int amount;
     private String techId;
+    
     public static EnemyAidIncident create(Empire emp, Empire enemy, Empire donor, int amt) {
         // it's possible to give aid to someone who is not at war with you but is
         // on the enemies list because undeclared war footing
@@ -50,7 +51,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         return inc;
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, int amt) {
-    	super(calculateFinancialAidSeverity(emp, amt));
+        super(calculateFinancialAidSeverity(emp, amt));
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;
@@ -61,7 +62,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         return -Math.min(5, 5*pct);
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, String tId) {
-    	super(calculateTechAidSeverity(enemy, tId));
+        super(calculateTechAidSeverity(enemy, tId));
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;

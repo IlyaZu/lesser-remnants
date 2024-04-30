@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ public interface IGameOptions {
     public List<String> randomEventOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
-	
+    
     public List<String> gameDifficultyOptions();
     public int maximumOpponentsOptions();
     public int defaultOpponentsOptions();
@@ -117,7 +117,7 @@ public interface IGameOptions {
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
     public void specificOpponentAIOption(String s, int empId);
-	
+    
     public String selectedGalaxyShapeOption1();
     public void selectedGalaxyShapeOption1(String s);
     public String selectedGalaxyShapeOption2();

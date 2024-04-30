@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,11 +47,11 @@ public final class ShipArmor extends ShipComponent {
     @Override
     public String desc(ShipDesign d) { return text(desc(), (int) hits(d)); }
     @Override
-	// modnar: add in cost miniaturization for Armor
+    // modnar: add in cost miniaturization for Armor
     public float cost(ShipDesign d) {
-		Empire emp = d == null ? null : d.empire();
+        Empire emp = d == null ? null : d.empire();
         return tech().costMiniaturization(emp) * tech().baseCost(d.size(), reinforced);
-	}
+    }
     @Override
     public float size(ShipDesign d) {
         Empire emp = d == null ? null : d.empire();

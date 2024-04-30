@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,5 +19,5 @@ package rotp.ui.main;
 public interface MapSpriteViewer {
     default boolean hoverOverFleets()               { return true;  }
     default boolean hoverOverSystems()              { return true; }
-    default boolean hoverOverFlightPaths()          { return true; }	
+    default boolean hoverOverFlightPaths()          { return true; }
 }

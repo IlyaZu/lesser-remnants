@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy`
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public final class TechMissileWeapon extends Tech {
     @Override
     public boolean canBeMiniaturized()      { return true; }
     @Override
-    public Colony.Orders followup()	      { return Colony.Orders.BASES; }
+    public Colony.Orders followup()          { return Colony.Orders.BASES; }
     @Override
     public float baseReallocateAmount()          { return .10f; }
     public ImageIcon icon(int count) {
@@ -234,13 +234,13 @@ public final class TechMissileWeapon extends Tech {
     public boolean isMissileWeaponTech()    { return true; }
     @Override
     public boolean isMissileBaseWeapon()    { return (baseMissile != null); }
-    public float range()			       { return 0; }
+    public float range()                   { return 0; }
     @Override
     public boolean providesShipComponent()  { return true; }
     @Override
     public boolean isObsolete(Empire c) {
         if (isMissileBaseWeapon()) {
-            if (attacks > 1) 
+            if (attacks > 1)
                 return (c.tech().topBaseScatterPackTech() != null) && (typeSeq < c.tech().topBaseScatterPackTech().typeSeq);
             else
                 return (c.tech().topBaseMissileTech() != null) && (typeSeq < c.tech().topBaseMissileTech().typeSeq);
@@ -252,7 +252,7 @@ public final class TechMissileWeapon extends Tech {
         super.provideBenefits(c);
         if (isMissileBaseWeapon()) {
             if (!isObsolete(c)) {
-                if (attacks > 1) 
+                if (attacks > 1)
                     c.tech().topBaseScatterPackTech(this);
                 else
                     c.tech().topBaseMissileTech(this);
@@ -343,7 +343,7 @@ public final class TechMissileWeapon extends Tech {
         int y1 = st1Y+stH/2;
 
         Graphics2D g = (Graphics2D) ui.getGraphics();
-        target.drawAttackResult(g,x1,y1,x1, dmg,text("SHIP_COMBAT_MISS"));   
+        target.drawAttackResult(g,x1,y1,x1, dmg,text("SHIP_COMBAT_MISS"));
         ui.paintAllImmediately();
     }
 }

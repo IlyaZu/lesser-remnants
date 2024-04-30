@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,26 +26,26 @@ public class DiplomacyTechRequestMenu extends DiplomaticMessage {
         messageType = s;
     }
     @Override
-    public void diplomat(Empire v)               { 
-        super.diplomat(v); 
+    public void diplomat(Empire v) {
+        super.diplomat(v);
         choices = player().diplomatAI().techsAvailableForRequest(diplomat());
     }
     @Override
     public boolean showTalking()        { return false; }
     @Override
-    public int numReplies()       		{ return choices.size()+1; }
+    public int numReplies()               { return choices.size()+1; }
     @Override
-    public String reply(int i)          { 
+    public String reply(int i) {
         if (i < choices.size()){
             Tech tech = choices.get(i);
             return  text(tech.name());
         }
         if (i == choices.size())
             return text("DIPLOMACY_MENU_FORGET_IT");
-        return ""; 
+        return "";
     }
     @Override
-    public String replyDetail(int i)          {
+    public String replyDetail(int i) {
         if (i < choices.size()){
             Tech tech = choices.get(i);
             return text("TECH_TRADE_TIER_COST_INFO", str(tech.quintile), str((int) tech.researchCost()));
@@ -52,7 +53,7 @@ public class DiplomacyTechRequestMenu extends DiplomaticMessage {
         return "";
     }
     @Override
-    public boolean enabled(int i) { 
+    public boolean enabled(int i) {
         return i <= choices.size();
     }
     @Override
@@ -76,7 +77,7 @@ public class DiplomacyTechRequestMenu extends DiplomaticMessage {
         }
         else {
             reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
-            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));	
+            DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
             return;
         }
         // a null reply means we need to create a follow-up menu of counter-offer techs to choose from

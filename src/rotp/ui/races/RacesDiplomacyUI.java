@@ -56,8 +56,8 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         "RELATIONS_NEUTRAL", "RELATIONS_RELAXED", "RELATIONS_AMIABLE", "RELATIONS_CALM", "RELATIONS_AFFABLE",
         "RELATIONS_PEACEFUL", "RELATIONS_FRIENDLY", "RELATIONS_UNITY", "RELATIONS_HARMONY" };
     private static final Color unselectedC = new Color(112,85,68);
-    private static final Comparator<DiplomaticIncident> DATE = 
-    		(o1, o2) -> Integer.compare(o2.turnOccurred(), o1.turnOccurred());
+    private static final Comparator<DiplomaticIncident> DATE =
+            (o1, o2) -> Integer.compare(o2.turnOccurred(), o1.turnOccurred());
 
     private final Color greenEdgeC = new Color(44,59,30);
     private final Color greenMidC = new Color(70,93,48);
@@ -136,7 +136,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         }
         g.setPaint(backGradient);
         g.fillRect(0,h/2,w, h/2);
-        if (parent.selectedEmpire().isPlayer()) 
+        if (parent.selectedEmpire().isPlayer())
             paintPlayerData(g);
         else
             paintAIData(g);
@@ -146,7 +146,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         setBorder(newEmptyBorder(5,5,5,5));
         addMouseMotionListener(this);
         addMouseListener(this);
-        addMouseWheelListener(this);        
+        addMouseWheelListener(this);
     }
     private void paintPlayerData(Graphics2D g) {
         Empire emp = parent.selectedEmpire();
@@ -201,14 +201,14 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         drawAIDiplomaticEvents(g, emp, x0, s295, w0, h-s295-s10);
         drawAIDiplomacyBureau(g, emp, x1, s10, w1, s135);
         drawAITradeSummary(g, emp, x1, s150, w1, s175);
-        drawAIForeignRelations(g, emp, x1, s330, w1, h-s330-s10);          
+        drawAIForeignRelations(g, emp, x1, s330, w1, h-s330-s10);
         drawRaceIcon(g, emp, s60, s30, s200, s200);
         drawEmpireName(g, emp, s260, s30, s370, s50);
     }
     private void drawRaceIconBase(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
         Shape rect = new RoundRectangle2D.Float(x,y,w,h,w/8, h/8);
-        g.fill(rect);  
+        g.fill(rect);
     }
     private void drawRaceIcon(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(Color.black);
@@ -371,7 +371,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         //year or turn
         g.setFont(narrowFont(20));
         int x1 = x0;
-        int w1 = s60;         
+        int w1 = s60;
         String year = text("RACES_DIPLOMACY_EVENT_YEAR");
         int sw = g.getFontMetrics().stringWidth(year);
         drawShadowedString(g, year, 1, x0+(w1-sw)/2, y0+s23, Color.black, SystemPanel.whiteText);
@@ -460,7 +460,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setClip(null);
         
         incidentListBox.setBounds(x0,y1,w0,listH);
-        if ((hoverShape == incidentListBox) 
+        if ((hoverShape == incidentListBox)
         && (fullListH > listH)) {
             g.setColor(Color.yellow);
             prev = g.getStroke();
@@ -649,7 +649,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         drawString(g,taxStr, x+s20, y4);
         int sw4 = g.getFontMetrics().stringWidth(taxStr);
 
-         // draw string on right for pct 
+         // draw string on right for pct
         String cost = text("RACES_INTEL_PERCENT_AMT",(int)(player().internalSecurityCostPct()*100));
         sw = g.getFontMetrics().stringWidth(cost);
         drawString(g,cost, x+w-s20-sw, y4);
@@ -692,7 +692,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         ptY[0]=y+(h/2);  ptY[1]=ptY[0]-sz; ptY[2]=ptY[0]+sz;
         Color buttonC = hoverShape == buttonDecr ? SystemPanel.yellowText :  Color.black;
         buttonDecr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             buttonDecr.addPoint(ptX[i], ptY[i]);
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
 
@@ -700,7 +700,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         ptX[0]=x1+w1+sz+s3; ptX[1]=ptX[0]-sz; ptX[2]=ptX[0]-sz;
         ptY[0]=y+(h/2);  ptY[1]=ptY[0]-sz; ptY[2]=ptY[0]+sz;
         buttonIncr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             buttonIncr.addPoint(ptX[i], ptY[i]);
         buttonC = hoverShape == buttonIncr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -910,7 +910,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         g.setClip(null);
         
         incidentListBox.setBounds(x1,y1,w1,listH);
-        if ((hoverShape == incidentListBox) 
+        if ((hoverShape == incidentListBox)
         && (fullListH > listH)) {
             g.setColor(Color.yellow);
             prev = g.getStroke();
@@ -1128,7 +1128,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
                 int x3b = x2+w2-sw1-rightM;
                 drawString(g,treaty, x3b, y3);
             }
-        }      
+        }
         relationsYMax = max(0, fullListH-listH);
         if (relationsYMax == 0)
             relationsScroller.setBounds(0,0,0,0);
@@ -1149,7 +1149,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
             }
         }
         g.setClip(null);
-        if ((hoverShape == relationsListBox) 
+        if ((hoverShape == relationsListBox)
         && (fullListH > listH)) {
             g.setColor(Color.yellow);
             Stroke prev = g.getStroke();
@@ -1219,7 +1219,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         if (!view.diplomats())
             return;
         
-        DiplomaticMessage.show(parent.selectedEmpire().viewForEmpire(player()), DialogueManager.DIPLOMACY_MAIN_MENU);     
+        DiplomaticMessage.show(parent.selectedEmpire().viewForEmpire(player()), DialogueManager.DIPLOMACY_MAIN_MENU);
     }
     public void openManageDiplomatsPane() {
         softClick();
@@ -1251,7 +1251,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
             int prevY = incidentY;
             if (count < 0)
                 incidentY = max(0,incidentY-s10);
-            else 
+            else
                 incidentY = min(incidentYMax,incidentY+s10);
             if (incidentY != prevY)
                 repaint(incidentListBox);
@@ -1269,7 +1269,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
             int prevY = relationsY;
             if (count < 0)
                 relationsY = max(0,relationsY-s10);
-            else 
+            else
                 relationsY = min(relationsYMax,relationsY+s10);
             if (relationsY != prevY)
                 repaint(relationsListBox);
@@ -1283,48 +1283,48 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         int dY = y-dragY;
         dragY = y;
         if (incidentScroller == hoverShape) {
-            if ((y >= incidentListBox.y) || (y <= (incidentListBox.y+incidentListBox.height))) { 
+            if ((y >= incidentListBox.y) || (y <= (incidentListBox.y+incidentListBox.height))) {
                 int h = (int) incidentListBox.getHeight();
                 int dListY = (int)((float)dY*(h+incidentYMax)/h);
                 if (dY < 0)
                     incidentY = max(0,incidentY+dListY);
-                else 
+                else
                     incidentY = min(incidentYMax,incidentY+dListY);
             }
             repaint(incidentListBox);
             return;
         }
         else if (incidentListBox == hoverShape) {
-            if (incidentListBox.contains(x,y)) { 
+            if (incidentListBox.contains(x,y)) {
                 int h = (int) incidentListBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+incidentYMax)/h);
                 if (dListY < 0)
                     incidentY = max(0,incidentY+dListY);
-                else 
+                else
                     incidentY = min(incidentYMax,incidentY+dListY);
             }
             repaint(incidentListBox);
             return;
         }
         else if (relationsScroller == hoverShape) {
-            if ((y >= relationsListBox.y) || (y <= (relationsListBox.y+relationsListBox.height))) { 
+            if ((y >= relationsListBox.y) || (y <= (relationsListBox.y+relationsListBox.height))) {
                 int h = (int) relationsListBox.getHeight();
                 int dListY = (int)((float)dY*(h+relationsYMax)/h);
                 if (dY < 0)
                     relationsY = max(0,relationsY+dListY);
-                else 
+                else
                     relationsY = min(relationsYMax,relationsY+dListY);
             }
             repaint(relationsListBox);
             return;
         }
         else if (relationsListBox == hoverShape) {
-            if (relationsListBox.contains(x,y)) { 
+            if (relationsListBox.contains(x,y)) {
                 int h = (int) relationsListBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+relationsYMax)/h);
                 if (dListY < 0)
                     relationsY = max(0,relationsY+dListY);
-                else 
+                else
                     relationsY = min(relationsYMax,relationsY+dListY);
             }
             repaint(relationsListBox);
@@ -1358,7 +1358,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         else if (manageDiplomatsBox.contains(x,y))
             hoverShape = manageDiplomatsBox;
 
-        if (hoverShape != prevHover) 
+        if (hoverShape != prevHover)
             repaint();
     }
     @Override

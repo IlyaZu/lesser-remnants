@@ -22,12 +22,13 @@ public class DeclareWarIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     final int empAggressor;
     final int empVictim;
+    
     public static DeclareWarIncident create(Empire e1, Empire e2) {
         DeclareWarIncident inc = new DeclareWarIncident(e1, e2);
         return inc;
     }
     private DeclareWarIncident(Empire e1, Empire e2) {
-    	super(-70);
+        super(-70);
         empAggressor = e1.id;
         empVictim = e2.id;
     }

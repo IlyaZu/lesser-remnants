@@ -21,12 +21,13 @@ public class KillGuardianIncident extends DiplomaticIncident {
     final int empMe;
     final int empYou;
     String monsterKey;
+    
     public static KillGuardianIncident create(int e1, int e2, String key) {
         KillGuardianIncident inc = new KillGuardianIncident(e1, e2, key);
         return inc;
     }
     private KillGuardianIncident(int e1, int e2, String key) {
-    	super(100);
+        super(100);
         empMe = e1;
         empYou = e2;
         monsterKey = key;

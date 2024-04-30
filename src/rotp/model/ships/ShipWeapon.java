@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ public class ShipWeapon extends ShipComponent {
             shieldLevel = target.shieldLevel() / planetDamageMod();
             dmg = firepower(shieldLevel) * num * planetDamageMod();
         }
-		
+        
         if (dmg == 0)
             return 0;
         //ail: The only thing that makes sense to return here is our total damage divided by the target's hitpoints
@@ -77,7 +77,7 @@ public class ShipWeapon extends ShipComponent {
         pct = max(.05f, pct);
         if(isBeamWeapon())
         {
-            shieldLevel /= planetDamageMod(); 
+            shieldLevel /= planetDamageMod();
             beamMod = planetDamageMod();
         }
         if(isBioWeapon() && target.num == 0)
@@ -98,7 +98,7 @@ public class ShipWeapon extends ShipComponent {
         pct = max(.05f, pct);
         if(isBeamWeapon())
         {
-            shieldLevel /= planetDamageMod(); 
+            shieldLevel /= planetDamageMod();
             beamMod = planetDamageMod();
         }
         if(isBioWeapon() && target.num == 0)
@@ -141,6 +141,6 @@ public class ShipWeapon extends ShipComponent {
         try {
             tech().drawSuccessfulAttack(source, target, source.weaponNum(this), dmg);
         }
-        catch(Exception e) { }              
+        catch(Exception e) { }
     }
 }

@@ -59,7 +59,7 @@ public class OrionGuardianShip extends SpaceMonster {
         for (Empire emp1: galaxy().empires())
             emp1.sv.view(sysId).refreshSystemEntryScan();
     }
-
+    
     private void notifyGalaxy() {
         Empire slayerEmp = lastAttacker();
         for (Empire emp: galaxy().empires()) {
