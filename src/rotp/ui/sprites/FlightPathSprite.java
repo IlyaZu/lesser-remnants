@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -245,11 +246,11 @@ public class FlightPathSprite extends MapSprite {
             else
                 g2.setStroke(rallyStroke[1][animationIndex]);
         }
-        else if (workingPaths().contains(this)) 
+        else if (workingPaths().contains(this))
             g2.setStroke(workingLine(scale,animationIndex));
-        else if (hovering) 
+        else if (hovering)
             g2.setStroke(hoveringLine(scale, animationIndex));
-        else 
+        else
             g2.setStroke(pathLine(scale, animationIndex));
 
         g2.setColor(c0);
@@ -269,7 +270,7 @@ public class FlightPathSprite extends MapSprite {
         if (fr == null)
             return lines[0][index];
         
-        if (fr.hovering())            
+        if (fr.hovering())
             return hoveringLine(scale,index);
 
         return lines[0][index];
