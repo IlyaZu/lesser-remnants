@@ -72,9 +72,6 @@ public class ShipRelocationSprite extends MapSprite {
     }
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
-        if (map.inOverview())
-            return;
-
         pathSprite().draw(map, g2);
     }
 }
