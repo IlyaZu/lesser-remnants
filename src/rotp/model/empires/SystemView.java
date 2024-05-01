@@ -124,7 +124,7 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public void toggleForwardRallies()       { forwardRallies = !forwardRallies; }
     public void stopRally() {
         relocationSystem = null;
-        system().rallySprite().stop();
+        system().rallySprite().clear();
     }
     public void goExtinct() {
         vEmpire = null;
