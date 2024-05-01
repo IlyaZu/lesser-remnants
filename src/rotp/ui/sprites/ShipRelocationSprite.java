@@ -37,11 +37,6 @@ public class ShipRelocationSprite extends MapSprite {
         clickedDest = null;
         hoveringDest = null;
     }
-    public void stop() {
-        pathSprite = null;
-        clickedDest = null;
-        hoveringDest = null;
-    }
     public void clickedDest(StarSystem sv)    { clickedDest = sv; }
     public void hoveringDest(StarSystem sv)   { hoveringDest = sv; }
     public StarSystem rallySystem()           { return player().sv.rallySystem(from.id); }
