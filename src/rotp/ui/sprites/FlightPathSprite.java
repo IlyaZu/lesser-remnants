@@ -28,7 +28,6 @@ import rotp.model.Sprite;
 import rotp.model.colony.Colony;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.Ship;
-import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
 import rotp.model.game.GameSession;
@@ -217,14 +216,6 @@ public class FlightPathSprite extends MapSprite {
     private void draw(Graphics2D g2, int animationCount, float scale, boolean hovering, int x1, int y1, int x2, int y2, Color c0) {
         if (lines == null)
             initStrokes();
-
-        // unless we are a working path, we should never display if our
-        // associated ship is not also displayed
-        if (!workingPaths().contains(this)) {
-           // never draw a flight path if the associated ship is not drawn
-            if ((ship != null) && (ship instanceof ShipFleet) && !ship.displayed())
-                return;
-        }
 
         displayed = true;
         setSelectionArea(x1,y1,x2,y2);
