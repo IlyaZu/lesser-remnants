@@ -195,7 +195,7 @@ public class FlightPathSprite extends MapSprite {
         else if (fr != null)
             drawPlanetPath(map, g2, to);
     }
-    public void drawPlanetPath(GalaxyMapPanel map, Graphics2D g2, StarSystem dest) {
+    private void drawPlanetPath(GalaxyMapPanel map, Graphics2D g2, StarSystem dest) {
         int x1 = fr.centerMapX(map);
         int y1 = fr.centerMapY(map);
         int x2 = dest.centerMapX(map);

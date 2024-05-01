@@ -37,8 +37,14 @@ public class ShipRelocationSprite extends MapSprite {
         clickedDest = null;
         hoveringDest = null;
     }
-    public void clickedDest(StarSystem sv)    { clickedDest = sv; }
-    public void hoveringDest(StarSystem sv)   { hoveringDest = sv; }
+    public void clickedDest(StarSystem sv) {
+        clickedDest = sv;
+        pathSprite().destination(starSystem());
+    }
+    public void hoveringDest(StarSystem sv)   {
+        hoveringDest = sv;
+        pathSprite().destination(starSystem());
+    }
     public StarSystem rallySystem()           { return player().sv.rallySystem(from.id); }
     public StarSystem homeSystemView()        { return (StarSystem) source(); }
     public boolean forwardRallies()           { return player().sv.forwardRallies(from.id); }
@@ -69,8 +75,6 @@ public class ShipRelocationSprite extends MapSprite {
         if (map.inOverview())
             return;
 
-        StarSystem displayDest = starSystem();
-        if (displayDest != null)
-            pathSprite().drawPlanetPath(map, g2, displayDest);
+        pathSprite().draw(map, g2);
     }
 }
