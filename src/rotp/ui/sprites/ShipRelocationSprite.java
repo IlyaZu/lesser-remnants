@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,18 @@
 package rotp.ui.sprites;
 
 import java.awt.Graphics2D;
-import rotp.model.galaxy.Ship;
 import rotp.model.galaxy.StarSystem;
 import rotp.ui.main.GalaxyMapPanel;
 
 public class ShipRelocationSprite extends MapSprite {
-    StarSystem from;
-    StarSystem clickedDest;
-    StarSystem hoveringDest;
-    FlightPathSprite pathSprite;
+    private StarSystem from;
+    private StarSystem clickedDest;
+    private StarSystem hoveringDest;
+    private FlightPathSprite pathSprite;
+    
     public StarSystem from()                  { return from; }
     public boolean isActive()                 { return rallySystem() != null; }
     public ShipRelocationSprite(StarSystem tr) {
-        init(tr);
-    }
-    private void init(StarSystem tr) {
         source(tr);
         from = tr;
     }
@@ -45,7 +42,6 @@ public class ShipRelocationSprite extends MapSprite {
         clickedDest = null;
         hoveringDest = null;
     }
-    public boolean hasSelectedDestination()   { return clickedDest != null; }
     public void clickedDest(StarSystem sv)    { clickedDest = sv; }
     public void hoveringDest(StarSystem sv)   { hoveringDest = sv; }
     public StarSystem rallySystem()           { return player().sv.rallySystem(from.id); }
@@ -55,12 +51,11 @@ public class ShipRelocationSprite extends MapSprite {
 
     private FlightPathSprite pathSprite() {
         if (pathSprite == null)
-            pathSprite =  pathSpriteTo(rallySystem());
+            pathSprite =  new FlightPathSprite(from, rallySystem());
         return pathSprite;
     }
-    public Ship ship()              { return homeSystemView().colony().transport(); }
     @Override
-    public StarSystem starSystem()       {
+    public StarSystem starSystem() {
         if (hoveringDest != null)
             return hoveringDest;
         else if (clickedDest != null)
@@ -74,16 +69,13 @@ public class ShipRelocationSprite extends MapSprite {
     public boolean isSelectableAt(GalaxyMapPanel map, int mapX, int mapY) {
         return false;
     }
-    public FlightPathSprite pathSpriteTo(StarSystem sys) {
-        return new FlightPathSprite(from, sys);
-    }
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
-        if (map.inOverview()) 
+        if (map.inOverview())
             return;
 
         StarSystem displayDest = starSystem();
-        if (displayDest != null) 
+        if (displayDest != null)
             pathSprite().drawPlanetPath(map, g2, displayDest);
     }
 }

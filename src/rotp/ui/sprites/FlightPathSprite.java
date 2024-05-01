@@ -36,18 +36,18 @@ import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 
 public class FlightPathSprite extends MapSprite {
-    static Stroke[][] lines;
-    static Stroke[][] rallyStroke;
-    static final Color rallyColor = new Color(96,0,128);
-    Ship ship;
-    StarSystem fr;
-    StarSystem to;
-    boolean isColonyRelocation = false;
-    Polygon selectionArea;
-    static int animationSpeed = 5;
-    int ptX[] = new int[8];
-    int ptY[] = new int[8];
-    boolean displayed = false;
+    private static Stroke[][] lines;
+    private static Stroke[][] rallyStroke;
+    private static final Color rallyColor = new Color(96,0,128);
+    private Ship ship;
+    private StarSystem fr;
+    private StarSystem to;
+    private boolean isColonyRelocation = false;
+    private Polygon selectionArea;
+    private static int animationSpeed = 5;
+    private int ptX[] = new int[8];
+    private int ptY[] = new int[8];
+    private boolean displayed = false;
 
     public static void workingPath(FlightPathSprite s) {
         List<FlightPathSprite> paths = workingPaths();
@@ -72,7 +72,6 @@ public class FlightPathSprite extends MapSprite {
     public static void clearWorkingPaths() {
         workingPaths().clear();
     }
-    public FlightPathSprite()  {}
     public FlightPathSprite(Ship s, StarSystem sv) {
         ship = s;
         to = sv;
@@ -122,10 +121,9 @@ public class FlightPathSprite extends MapSprite {
         }
         return c0;
     }
-    public Sprite from()                       { return (Sprite) ship; }
+    private Sprite from()                       { return (Sprite) ship; }
     public Ship ship()                         { return ship; }
-
-    public void to(StarSystem sv)              { to = sv; }
+    
     @Override
     public int displayPriority()               { return 3; }
     @Override
@@ -189,16 +187,13 @@ public class FlightPathSprite extends MapSprite {
     }
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
-        draw(map, g2, to);
-    }
-    public void draw(GalaxyMapPanel map, Graphics2D g2, StarSystem dest) {
         displayed = false;
-        if (dest == null)
+        if (to == null)
             return;
         else if (ship != null)
-            drawShipPath(map,g2,dest);
+            drawShipPath(map, g2, to);
         else if (fr != null)
-            drawPlanetPath(map,g2,dest);
+            drawPlanetPath(map, g2, to);
     }
     public void drawPlanetPath(GalaxyMapPanel map, Graphics2D g2, StarSystem dest) {
         int x1 = fr.centerMapX(map);
@@ -219,7 +214,7 @@ public class FlightPathSprite extends MapSprite {
 
         draw(g2, map.animationCount(), map.scaleX(), isHovering, x1, y1, x2, y2, lineColor(map, dest));
     };
-    public void draw(Graphics2D g2, int animationCount, float scale, boolean hovering, int x1, int y1, int x2, int y2, Color c0) {
+    private void draw(Graphics2D g2, int animationCount, float scale, boolean hovering, int x1, int y1, int x2, int y2, Color c0) {
         if (lines == null)
             initStrokes();
 
