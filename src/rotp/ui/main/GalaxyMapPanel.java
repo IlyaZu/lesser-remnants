@@ -521,14 +521,15 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         // comodification exception here without this copy
         List<Ship> visibleShips = new ArrayList<>(pl.visibleShips());
         for (Ship sh: visibleShips) {
+            // Draw paths even if the ship is not because the path could still cross the viewing window
+            boolean isShipMoving = sh.deployed() || sh.retreating() || sh.inTransit() || sh.isRallied();
+            if (pl.knowETA(sh) && isShipMoving && parent.shouldDrawSprite(sh.pathSprite())) {
+                sh.pathSprite().draw(this, g);
+            }
+            
             sh.setDisplayed(this);
             if (sh.displayed()) {
                 Sprite spr = (Sprite) sh;
-                // if we are drawing the ship, then check if its flight path should be drawn first
-                if (pl.knowETA(sh) && (sh.deployed() || sh.retreating() || sh.inTransit() || sh.isRallied())
-                && parent.shouldDrawSprite(sh.pathSprite())) {
-                    sh.pathSprite().draw(this,g);
-                }
                 spr.draw(this, g);
             }
         }
