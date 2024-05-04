@@ -77,7 +77,6 @@ public interface Diplomat {
     default int techLevelRank() { return 1; }
     default int facCapRank() { return 1; }
     default int militaryRank(Empire etc, boolean inAttackRange) { return 1; }
-    default boolean readyForWar(EmpireView v, boolean considerBestVictim) { return true; }
     default boolean techIsAdequateForWar() { return true; }
     default boolean minWarTechsAvailable() { return true; }
 }
