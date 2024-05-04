@@ -99,7 +99,7 @@ public class FleetPlan implements Base, Serializable {
     }
     public boolean overlaps(FleetPlan fp) {
         for (int i=0;i<needed.length;i++) {
-            if ((needed[i] > 0) && (fp.needed[i] > 0)) 
+            if ((needed[i] > 0) && (fp.needed[i] > 0))
                 return true;
         }
         return false;
@@ -180,7 +180,6 @@ public class FleetPlan implements Base, Serializable {
                     ShipDesign planDesign = lab().design(designId);
                     if (planDesign.validMission(destId)) {
                         int numToUse = min(needed[designId], available);
-                        planDesign.addUsedCount(numToUse);
                         needed[designId] -= numToUse;
                         orders.removeShips(designId, numToUse);
                     }

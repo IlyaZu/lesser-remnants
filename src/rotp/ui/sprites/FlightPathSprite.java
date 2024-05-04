@@ -38,12 +38,12 @@ public class FlightPathSprite extends MapSprite {
     private static Stroke[][] lines;
     private static Stroke[][] rallyStroke;
     private static final Color rallyColor = new Color(96,0,128);
+    private static final int animationSpeed = 5;
     private Ship ship;
     private StarSystem fr;
     private StarSystem to;
     private boolean isColonyRelocation = false;
     private Polygon selectionArea;
-    private static int animationSpeed = 5;
     private int ptX[] = new int[8];
     private int ptY[] = new int[8];
     private boolean displayed = false;

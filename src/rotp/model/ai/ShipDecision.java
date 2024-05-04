@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +65,7 @@ public class ShipDecision implements Base, Serializable {
             if (!systemsCommitted.contains(sysId))
                 systemsCommitted.add(sysId);
         }
-        else 
+        else
             assignFleetOrdersToPlan(orders);
 
         // if satisfied, remove ship from fleet plan to eliminate from future decisions
@@ -84,13 +85,12 @@ public class ShipDecision implements Base, Serializable {
 
         // reassign fleet if possible (may currently be in transit to another location)
         if (fleetOrders.owningFleet.canSend() && fleetOrders.owningFleet.canSendDesignTo(bestDesign, shipPlan.plan.destId)) {
-            if (shipPlan.plan.goToStagingPoint) 
+            if (shipPlan.plan.goToStagingPoint)
                 fleetOrders.reassignShip(bestDesign, shipPlan.plan.currentDestId(), numShips);
             else
                 fleetOrders.reassignShip(bestDesign, shipPlan.plan.destId, numShips);
         }
 
-        bestDesign.addUsedCount(numShips);
         shipPlan.num -= numShips;
         shipPlan.bc -= (numShips * bestDesign.cost());
         sysId = StarSystem.NULL_ID;
@@ -119,7 +119,7 @@ public class ShipDecision implements Base, Serializable {
         shipPlan.num--;
         shipPlan.bc -= shipPlan.design.cost();
         
-        if (shipPlan.plan.priority() >= FleetPlan.INTERCEPT) 
+        if (shipPlan.plan.priority() >= FleetPlan.INTERCEPT)
             sys.empire().generalAI().rushShipSystems().add(sys);
     }
 }

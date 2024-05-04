@@ -20,7 +20,6 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import rotp.model.combat.CombatEntity;
 import rotp.model.galaxy.Galaxy;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.PlanetType;
@@ -58,7 +57,6 @@ public final class ShipDesign extends Design {
     private int size = SMALL;
     private int mission = SCOUT;
     public int remainingLife = 999; // once obsolete, this is minimum num turns to survive before scrapping
-    private int usedCount = 0;       // # ships used by FleetCommander... updated each turn
     private float perTurnDmg = 0;
     private String iconKey;
     private int shipColor;
@@ -88,16 +86,11 @@ public final class ShipDesign extends Design {
     public void weapon(int i, ShipWeapon c)   { weapon[i] = c; }
     public void special(int i, ShipSpecial c) { special[i] = c; }
     public void wpnCount(int i, int n)        { wpnCount[i] = n; }
-    public void weapon(int i, ShipWeapon c, int n) {
-        weapon[i] = c;
-        wpnCount[i] = n;
-    }
     public int size()                       { return size; }
     public void size(int i)                 { size = i; }
     public int mission()                    { return mission; }
     public void mission(int i)              { mission = i; }
     public int remainingLife()              { return remainingLife; }
-    public void addUsedCount(int i)         { usedCount += i; }
     public float perTurnDamage()            { return perTurnDmg; }
     public void perTurnDamage(float d)      { perTurnDmg = d; }
     public String iconKey()                 { return iconKey; }
@@ -214,14 +207,6 @@ public final class ShipDesign extends Design {
         }
         return -1;
     }
-    protected int adjustedPixel(int pixel, int amt) {
-        float adj = (float) amt / 12;
-        if (adj > 0)
-            return min(255, pixel+(int) (adj*(255-pixel)));
-        if (adj < 0)
-            return max(0, (int)((1+adj)*pixel));
-        return pixel;
-    }
     public boolean matchesDesign(ShipDesign d) {
         return matchesDesign(d, false);
     }
@@ -287,11 +272,12 @@ public final class ShipDesign extends Design {
         }
         return (int) Math.ceil(costBC);
     }
-    public float hullPoints() { return hullPoints(size()); }
-    public float totalSpace() { return totalSpace(size()); }
-    public float totalSpace(int s) {
+    public float hullPoints() {
+        return hullPoints(size());
+    }
+    public float totalSpace() {
         float techBonus = 1 + (.02f * empire().tech().construction().techLevel());
-        switch(s) {
+        switch(size()) {
             case SMALL  : return 40 * techBonus;
             case MEDIUM : return 200 * techBonus;
             case LARGE  : return 1000 * techBonus;
@@ -305,11 +291,7 @@ public final class ShipDesign extends Design {
             remainingLife = turns;
         }
     }
-    public float spaceUsed() { return spaceUsed(size()); }
-    public float spaceUsed(int s) {
-        int tempSize = size();
-        size(s);
-
+    public float spaceUsed() {
         float space = 0;
         space += computer().space(this);
         space += shield().space(this);
@@ -320,10 +302,8 @@ public final class ShipDesign extends Design {
             space += (wpnCount(i) * weapon(i).space(this));
         for (int i=0; i<maxSpecials(); i++)
             space += special(i).space(this);
-        size(tempSize);
         return space;
     }
-    public int enginesUsed() { return (int) Math.ceil(enginesRequired()); }
     public float enginesRequired() {
         float engines = 0;
         engines += computer().enginesRequired(this);
@@ -405,18 +385,6 @@ public final class ShipDesign extends Design {
             dmg += (wpnCount(i) * weapon(i).firepower(shield));
         return dmg;
     }
-    public float firepower(CombatEntity target, int wpn) {
-        float dmg = wpnCount(wpn) * weapon(wpn).firepower(target.shieldLevel());
-        if (weapon(wpn).isStreamingWeapon() && (dmg > target.maxHits()))
-            dmg *= (dmg/target.maxHits());
-        return dmg;
-    }
-    public float estimatedKills(CombatEntity source, CombatEntity target) {
-        float kills = 0;
-        for (int i=0;i<maxWeapons();i++)
-            kills += weapon(i).estimatedKills(source, target, wpnCount(i));
-        return kills;
-    }
     public float availableSpace()                { return totalSpace() - spaceUsed(); }
     public float availableSpaceForWeaponSlot(int i)  { return availableSpace() + (wpnCount(i) * weapon(i).space(this)); }
     public List<ShipSpecial> availableSpecialsForSlot(int slot) {
@@ -445,14 +413,10 @@ public final class ShipDesign extends Design {
         }
         return maneuvers;
     }
-    public void changeIcon()  { iconKey(lab().nextAvailableIconKey(size(), iconKey));  }
-    public void changeSize(int newSize) {
-        size(newSize);
-        iconKey(lab().nextAvailableIconKey(size(), null));
-    }
     public void setSmallestSize() {
         for (int i=SMALL;i<=HUGE;i++) {
-            changeSize(i);
+            size(i);
+            iconKey(lab().nextAvailableIconKey(size(), null));
             if (availableSpace() >= 0)
                 return;
         }
@@ -466,7 +430,7 @@ public final class ShipDesign extends Design {
             default     : return 0;
         }
     }
-    public int baseCost() {
+    private int baseCost() {
         switch(size()) {
             case SMALL  : return 6;
             case MEDIUM : return 36;
@@ -475,7 +439,7 @@ public final class ShipDesign extends Design {
             default     : return 0;
         }
     }
-    public int baseMissileDefense() {
+    private int baseDefense() {
         switch(size()) {
             case SMALL  : return 2;
             case MEDIUM : return 1;
@@ -505,19 +469,11 @@ public final class ShipDesign extends Design {
         return max(speed,1);
     }
     public int maneuverability() {
-        int speed = baseMissileDefense() + maneuver().level();
+        int speed = baseDefense() + maneuver().level();
         for (int i=0;i<maxSpecials();i++)
             speed += special(i).speedBonus();
         // always guarantee a minimum design speed of 1
         return max(1, speed);
-    }
-    public float weaponRange(ShipComponent c) {
-        if (!c.isBeamWeapon())
-            return c.range();
-        float rng = c.range();
-        for (int j=0;j<maxSpecials();j++)
-            rng += special(j).beamRangeBonus();
-        return rng;
     }
     public float targetShieldMod(ShipComponent c) {
         float shieldMod = 1.0f;
@@ -541,13 +497,13 @@ public final class ShipDesign extends Design {
         return maxIntercept;
     }
     public int missileDefense() {
-        int defense = baseMissileDefense() + ecm().level() + maneuver().level();
+        int defense = baseDefense() + ecm().level() + maneuver().level();
         for (int i=0;i<maxSpecials();i++)
             defense += special(i).defenseBonus();
         return defense;
     }
     public int beamDefense() {
-        int defense = baseMissileDefense() + maneuver().level();
+        int defense = baseDefense() + maneuver().level();
         for (int i=0;i<maxSpecials();i++)
             defense += special(i).defenseBonus();
         return defense;
@@ -602,34 +558,7 @@ public final class ShipDesign extends Design {
         }
         return null;
     }
-    public boolean canUpgradeBattleComputer() {
-        return empire().tech().topBattleComputerTech().level > computer().tech().level();
-    }
-    public boolean canUpgradeDeflectorShield() {
-        return empire().tech().topDeflectorShieldTech().level > shield().tech().level();
-    }
-    public boolean canUpgradeEcmJammer() {
-        return empire().tech().topECMJammerTech().level > ecm().tech().level();
-    }
-    public boolean canUpgradeHullArmor() {
-        return !armor().reinforced() || empire().tech().topArmorTech().level > armor().tech().level();
-    }
-    public boolean canUpgradeEngine() {
-        return empire().tech().topEngineWarpTech().level > engine().tech().level();
-    }
-    public boolean canUpgradeManeuver() {
-        return empire().tech().topEngineWarpTech().level > maneuver().tech().level();
-    }
-    public boolean unused(int shipCount, float minUsePct)       {
-        // design is considered "unused" if there are some constructed
-        // but less than 20% are being allocated by the FleetCommander
-        return (shipCount > 0) && (usedCount < (shipCount * minUsePct));
-    }
-    public void checkForUse(int shipCount, float minUsePct) {
-            //unused method
-    }
     public void preNextTurn() {
         resetBuildCount();
-        usedCount = 0;
     }
 }

@@ -16,14 +16,22 @@
  */
 package rotp.model.combat;
 
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
-
 import rotp.model.ai.interfaces.ShipCaptain;
 import rotp.model.empires.Empire;
 import rotp.model.empires.ShipView;
-import rotp.model.ships.*;
+import rotp.model.ships.ShipComponent;
+import rotp.model.ships.ShipDesign;
+import rotp.model.ships.ShipWeapon;
+import rotp.model.ships.ShipWeaponMissileType;
 import rotp.model.tech.TechCloaking;
 import rotp.model.tech.TechStasisField;
 import rotp.ui.BasePanel;
@@ -141,7 +149,6 @@ public class CombatShip extends CombatEntity {
     public boolean canScan()        { return design.allowsScanning(); }
     @Override
     public float autoMissPct()      { return displacementPct; }
-    private ShipComponent selectedWeapon() { return weapons.get(selectedWeaponIndex); }
     @Override
     public float bombDamageMod()   { return 0; }
     @Override
@@ -339,7 +346,7 @@ public class CombatShip extends CombatEntity {
         if ((roundsRemaining[index] > 0) && (shotsRemaining[index] > 0)) {
             shotsRemaining[index] = shotsRemaining[index]-shotsTaken;
             uncloak();
-            ShipComponent selectedWeapon = selectedWeapon();
+            ShipComponent selectedWeapon = weapons.get(selectedWeaponIndex);
             // some weapons (beams) can fire multiple per round
             int count = num*shotsTaken*weaponCount[index];
             if (selectedWeapon.isMissileWeapon()) {

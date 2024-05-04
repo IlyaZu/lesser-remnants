@@ -79,7 +79,7 @@ public class AISpyMaster implements Base, SpyMaster {
             return;
         }
 
-        // if we are not in war preparations and we've received threats 
+        // if we are not in war preparations and we've received threats
         // about spying, then no spending
         if (!emb.isEnemy() && spies.threatened()) {
             spies.allocation(0);
@@ -90,13 +90,13 @@ public class AISpyMaster implements Base, SpyMaster {
 
         if (emb.war())
             maxSpiesNeeded = 2;
-        else if (emb.noTreaty()) 
+        else if (emb.noTreaty())
             maxSpiesNeeded = 1;
         else if (emb.pact())
             maxSpiesNeeded = 1;
         else if (emb.atPeace())
             maxSpiesNeeded = 1;
-        else if (emb.alliance()) 
+        else if (emb.alliance())
             maxSpiesNeeded = 0;
         
         if (spies.numActiveSpies() >= spies.maxSpies())

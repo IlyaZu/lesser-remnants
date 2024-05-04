@@ -24,9 +24,6 @@ public final class ShipArmor extends ShipComponent {
     private boolean reinforced = false;
 
     public boolean reinforced()   { return reinforced; }
-    public ShipArmor() {
-        sequence(0);
-    }
     public ShipArmor(TechArmor t, boolean r) {
         tech(t);
         reinforced = r;
