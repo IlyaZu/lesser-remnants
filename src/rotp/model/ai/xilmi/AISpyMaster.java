@@ -1,6 +1,6 @@
  /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,13 +148,6 @@ public class AISpyMaster implements Base, SpyMaster {
         //When I'm ruthless or they can't reach me anyways, no reason to listen to their threats
         if(empire.leader().isRuthless() || !v.empire().inShipRange(empire.id))
             shouldHide = false;
-        
-        //check if they are in trouble. If they are, we don't care about their threat
-        if(shouldHide)
-        {
-            if(empire.diplomatAI().readyForWar(v, false))
-                shouldHide = false;
-        }
         
         if (!emb.isEnemy() && shouldHide) {
             if(v.empire().leader().isXenophobic())
