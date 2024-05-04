@@ -19,6 +19,7 @@ package rotp.model.empires;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -265,10 +266,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void heedThreat()          { threatened = true; }
     public void ignoreThreat()        { threatened = false; }
     public boolean threatened()       { return threatened; }
-    
-    public boolean givenAidThisTurn() {
-        return givenAidThisTurn;
-    }
     
     public boolean tooManyRequests()        { return requestCount > currentMaxRequests; }
     public float otherRelations()          { return otherEmbassy().relations(); }
@@ -673,5 +670,65 @@ public class DiplomaticEmbassy implements Base, Serializable {
         owner().tech().acquireTechThroughTrade(techId, empire().id);
         otherEmbassy().givenAidThisTurn = true;
         TechnologyAidIncident.create(owner(), empire(), techId);
+    }
+    
+    public boolean canOfferAid() {
+        if (givenAidThisTurn || !view.diplomats() || anyWar() || !owner().inEconomicRange(view.empId())) {
+            return false;
+        }
+        
+        // do we have money to give?
+        if (!offerAidAmounts().isEmpty())
+            return true;
+        
+        // if not, do we have techs to give?
+        return !offerableTechnologies().isEmpty();
+    }
+    
+    public List<Integer> offerAidAmounts() {
+        float reserve = owner().totalReserve();
+        List<Integer> amts = new ArrayList<>();
+        if (reserve > 25000) {
+            amts.add(10000); amts.add(5000); amts.add(1000); amts.add(500);
+        }
+        else if (reserve > 10000) {
+            amts.add(5000); amts.add(1000); amts.add(500); amts.add(100);
+        }
+        else if (reserve > 2500) {
+            amts.add(1000); amts.add(500); amts.add(100); amts.add(50);
+        }
+        else if (reserve > 1000) {
+            amts.add(500); amts.add(100); amts.add(50);
+        }
+        else if (reserve > 250) {
+            amts.add(100); amts.add(50);
+        }
+        else if (reserve > 100) {
+            amts.add(50);
+        }
+        return amts;
+    }
+    
+    public List<Tech> offerableTechnologies() {
+        List<String> allMyTechIds = owner().tech().allKnownTechs();
+        List<String> theirTechIds = empire().tech().allKnownTechs();
+        List<String> theirTradedTechIds = empire().tech().tradedTechs();
+        allMyTechIds.removeAll(theirTechIds);
+        allMyTechIds.removeAll(theirTradedTechIds);
+         
+        List<Tech> techs = new ArrayList<>();
+        for (String id: allMyTechIds)
+            techs.add(tech(id));
+        
+        int maxTechs = 5;
+        // sort unknown techs by our research value
+        Tech.comparatorCiv = owner();
+        Collections.sort(techs, Tech.RESEARCH_VALUE);
+        if (techs.size() > maxTechs) {
+            for (int i = techs.size()-1; i >= maxTechs; i--) {
+                techs.remove(i);
+            }
+        }
+        return techs;
     }
 }

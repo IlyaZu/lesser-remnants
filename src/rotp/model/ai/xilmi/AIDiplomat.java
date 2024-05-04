@@ -67,76 +67,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
 
     //-----------------------------------
-    //  OFFER AID
-    //-----------------------------------
-    @Override
-    public boolean canOfferAid(Empire e) {
-        if (empire.viewForEmpire(e).embassy().givenAidThisTurn()) {
-            return false;
-        }
-        
-        if (!diplomats(id(e)) || empire.atWarWith(id(e)) || !empire.inEconomicRange(id(e)))
-            return false;
-                
-        // do we have money to give?
-        if (!offerAidAmounts().isEmpty())
-            return true;
-        
-        // if not, do we have techs to give?
-        return !offerableTechnologies(e).isEmpty();
-    }
-    @Override
-    public List<Tech> offerableTechnologies(Empire e) {
-        List<String> allMyTechIds = empire.tech().allKnownTechs();
-        List<String> hisTechIds = e.tech().allKnownTechs();
-        List<String> hisTradedTechIds = e.tech().tradedTechs();
-        allMyTechIds.removeAll(hisTechIds);
-        allMyTechIds.removeAll(hisTradedTechIds);
-         
-        List<Tech> allTechs = new ArrayList<>();
-        for (String id: allMyTechIds)
-        {
-            if(willingToTradeTech(tech(id), e))
-                allTechs.add(tech(id));
-        }
-        allTechs.removeAll(e.tech().tradedTechs());
-        
-        int maxTechs = 5;
-        // sort unknown techs by our research value
-        Tech.comparatorCiv = empire;
-        Collections.sort(allTechs, Tech.RESEARCH_VALUE);
-        if (allTechs.size() <= maxTechs)
-            return allTechs;
-        List<Tech> techs = new ArrayList<>(maxTechs);
-        for (int i=0; i<maxTechs;i++)
-            techs.add(allTechs.get(i));
-        return techs;
-    }
-    @Override
-    public List<Integer> offerAidAmounts() {
-        float reserve = empire.totalReserve();
-        List<Integer> amts = new ArrayList<>();
-        if (reserve > 25000) {
-            amts.add(10000);amts.add(5000); amts.add(1000); amts.add(500);
-        }
-        else if (reserve > 10000) {
-            amts.add(5000); amts.add(1000); amts.add(500); amts.add(100);
-        }
-        else if (reserve > 2500) {
-            amts.add(1000);amts.add(500); amts.add(100); amts.add(50);
-        }
-        else if (reserve > 1000) {
-            amts.add(500); amts.add(100); amts.add(50);
-        }
-        else if (reserve > 250) {
-            amts.add(100); amts.add(50);
-        }
-        else if (reserve > 100) {
-            amts.add(50);
-        }
-        return amts;
-    }
-    //-----------------------------------
     //  EXCHANGE TECHNOLOGY
     //-----------------------------------
     @Override
@@ -192,7 +122,8 @@ public class AIDiplomat implements Base, Diplomat {
     }
     @Override
     public List<Tech> techsAvailableForRequest(Empire diplomat) {
-        List<Tech> allUnknownTechs = diplomat.diplomatAI().offerableTechnologies(empire);
+        DiplomaticEmbassy embassy = diplomat.viewForEmpire(empire).embassy();
+        List<Tech> allUnknownTechs = embassy.offerableTechnologies();
 
         List<Tech> allTechs = new ArrayList<>();
         for (int i=0; i<allUnknownTechs.size();i++) {
@@ -221,7 +152,8 @@ public class AIDiplomat implements Base, Diplomat {
             return new ArrayList<>();
 
         // what are all of the unknown techs that we could ask for
-        List<Tech> allTechs = requestor.diplomatAI().offerableTechnologies(empire);
+        DiplomaticEmbassy embassy = requestor.viewForEmpire(empire).embassy();
+        List<Tech> allTechs = embassy.offerableTechnologies();
         Tech.comparatorCiv = empire;
         Collections.sort(allTechs, tech.OBJECT_TRADE_PRIORITY);
         // include only those techs which have a research value >= the trade value
@@ -262,7 +194,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (!willingToOfferTechExchange(v))
             return false;
 
-        List<Tech> availableTechs = v.empire().diplomatAI().offerableTechnologies(empire);
+        DiplomaticEmbassy otherEmbassy = v.otherView().embassy();
+        List<Tech> availableTechs = otherEmbassy.offerableTechnologies();
         if (availableTechs.isEmpty())
             return false;
 

@@ -18,6 +18,7 @@ package rotp.ui.diplomacy;
 
 import java.util.ArrayList;
 import java.util.List;
+import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
@@ -35,8 +36,9 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         
         options.clear();
         int maxOffers = 5;
-        amounts = player().diplomatAI().offerAidAmounts();
-        techs = player().diplomatAI().offerableTechnologies(emp);
+        DiplomaticEmbassy embassy = view().otherView().embassy();
+        amounts = embassy.offerAidAmounts();
+        techs = embassy.offerableTechnologies();
         for (int amt: amounts)
             options.add(OFFER_MONEY);
         
