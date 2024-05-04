@@ -19,6 +19,7 @@ package rotp.ui.diplomacy;
 import java.util.ArrayList;
 import java.util.List;
 import rotp.model.ai.interfaces.Diplomat;
+import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.ui.RotPUI;
 
@@ -34,6 +35,8 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
         Diplomat plAI = player().diplomatAI();
         Empire dip = diplomat();
         
+        DiplomaticEmbassy embassy = view().otherView().embassy();
+        
         options.clear();
         if (plAI.canOfferDiplomaticTreaties(dip))
             options.add(TREATY_MENU);
@@ -41,7 +44,7 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
             options.add(TRADE_MENU);
         if (plAI.canExchangeTechnology(dip))
             options.add(TECHNOLOGY_MENU);
-        if (plAI.canOfferAid(dip))
+        if (embassy.canOfferAid())
             options.add(AID_MENU);
         // only add war menu if threaten not available
         if (plAI.canThreaten(dip))

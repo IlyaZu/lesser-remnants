@@ -18,6 +18,7 @@ package rotp.ui.diplomacy;
 
 import java.util.ArrayList;
 import java.util.List;
+import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
@@ -30,7 +31,8 @@ public class DiplomacyOfferTechMenu extends DiplomaticMessage {
     @Override
     public void diplomat(Empire emp) {
         super.diplomat(emp);
-        choices = player().diplomatAI().offerableTechnologies(emp);
+        DiplomaticEmbassy embassy = view().otherView().embassy();
+        choices = embassy.offerableTechnologies();
     }
     @Override
     public boolean showTalking()            { return false; }
