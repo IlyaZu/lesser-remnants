@@ -158,7 +158,7 @@ public class ShipView implements Base,Serializable {
     }
     private void scanComputer() {
         computer = design.computer();
-        attackLevel = (int) design.attackLevel()+empire.shipAttackBonus();
+        attackLevel = design.attackLevel()+empire.shipAttackBonus();
         computerKnown = true;
         attackLevelKnown = true;
     }
