@@ -32,7 +32,7 @@ This is also now removed.
 
 This win condition is redundant as:
 * If you are a Galactic Council candidate, your allies can demonstrate their loyalty by voting for you. If they don't then I don't think you've won.
-* If you are not a Galactic Council candidate, you are in a prime osition to win via Council Alliance condition. If can't then there is still a game to play.
+* If you are not a Galactic Council candidate, you are in a prime position to win via Council Alliance condition. If you can't then there is still a game to play.
 
 ## Stability
 
