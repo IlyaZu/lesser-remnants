@@ -449,8 +449,8 @@ public final class ShipDesign extends Design {
         }
     }
     public float hits()        { return armor().hits(this); }
-    public float initiative() {
-        float lvl = computer().level() + maneuverability();
+    public int initiative() {
+        int lvl = computer().level() + maneuverability();
         for (ShipSpecial spec: special)
             lvl += spec.initiativeBonus();
         return lvl;
