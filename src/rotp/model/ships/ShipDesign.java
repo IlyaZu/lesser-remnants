@@ -455,7 +455,7 @@ public final class ShipDesign extends Design {
             lvl += spec.initiativeBonus();
         return lvl;
     }
-    public float attackLevel() {
+    public int attackLevel() {
         int lvl = computer().level();
         for (ShipSpecial spec: special)
             lvl += spec.attackBonus();

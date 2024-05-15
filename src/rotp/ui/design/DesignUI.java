@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1411,7 +1411,7 @@ public class DesignUI extends BasePanel {
             str = ""+des.beamDefense();
             sw = g.getFontMetrics().stringWidth(str);
             drawString(g,str, x3-sw, y4);
-            str = ""+ (int)des.attackLevel();
+            str = ""+ des.attackLevel();
             sw = g.getFontMetrics().stringWidth(str);
             drawString(g,str, x3-sw, y5);
             str = ""+ des.combatSpeed();
