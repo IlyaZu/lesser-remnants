@@ -467,7 +467,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             if (!currStack.usingAI()) {
                 for (int y0 = 0; y0 < GRID_COUNT_Y; y0++) {
                     for (int x0 = 0; x0 < GRID_COUNT_X; x0++) {
-                        if (mgr.canTacticallyMoveTo(currStack, x0, y0) && (currStack.pathTo(x0, y0) != null)) 
+                        if (mgr.canTacticallyMoveTo(currStack, x0, y0) && (currStack.pathTo(x0, y0) != null))
                             g.fill(combatGrids[x0][y0]);
                     }
                 }
@@ -524,10 +524,10 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             shipMoveButton.reset();
             shipTeleportButton.reset();
             if (mgr.canTacticallyMoveTo(currentStack, hoveringX, hoveringY)) {
-                if (shipTravelPath != null) 
+                if (shipTravelPath != null)
                     shipMoveButton.setData(currentStack, hoveringX, hoveringY);
             }
-            if (mgr.canTeleportTo(currentStack, hoveringX, hoveringY)) 
+            if (mgr.canTeleportTo(currentStack, hoveringX, hoveringY))
                 shipTeleportButton.setData(currentStack, hoveringX, hoveringY);
             int buttons = shipActionButtons.size();
             for (int i=0;i<buttons;i++)
@@ -535,7 +535,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         }
         else if (targetStack == currentStack) {
             shipDoneButton.setData(currentStack, hoveringX, hoveringY);
-            if (targetStack.canRetreat()) 
+            if (targetStack.canRetreat())
                 shipRetreatButton.setData(currentStack, hoveringX, hoveringY);
         }
         else if (targetStack.inStasis) {
@@ -1281,7 +1281,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
 
                 tacticalBox.setBounds(0,0,0,0);
                 String tacticalText = showTacticalInfo() ? text("SHIP_COMBAT_STATS_ON") : text("SHIP_COMBAT_STATS_OFF");
-                int ctrX = x+(w-buttW)/2; 
+                int ctrX = x+(w-buttW)/2;
                 drawButton(g, tacticalButtonBackC, tacticalText, tacticalBox, yellowButtonEdgeC, yellowButtonCenterC, ctrX, buttY, buttW, buttH, false);
 
                 String nextText = text("SHIP_COMBAT_NEXT");
@@ -1416,7 +1416,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         
         g.setFont(narrowFont(40));
         String prompt;
-        if (sysName.isEmpty()) 
+        if (sysName.isEmpty())
             prompt = text("SHIP_COMBAT_TITLE_UNNAMED");
         else
             prompt = text("SHIP_COMBAT_TITLE", sysName);
@@ -1424,7 +1424,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         int x1 = x0+(w0-sw)/2;
         int y1 = y0+h0-s12;
         g.setColor(Color.white);
-        drawString(g,prompt, x1, y1); 
+        drawString(g,prompt, x1, y1);
         
         Empire victor = mgr.results().victor();
         Empire colonyEmp = mgr.results().colonyStack == null ? null : mgr.results().colonyStack.empire;
@@ -1464,7 +1464,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             int yAdj = y2+s85+(index*shipBoxH);
             int xAdj = i%2 == 0 ? x2+s20 : x2+w2-s50-shipW;
             drawShipResult(g, xAdj, yAdj, shipW, shipH, design, start, dead, retr, false);
-        }  
+        }
         if (colonyEmp == leftEmpire) {
             int rows= (ships.size()+1)/2;
             drawPlanetResult(g, sysName, false, x2+s20, y2+s80+(rows*shipBoxH), shipH);
@@ -1513,7 +1513,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             if (colonyEmp == rightEmpire) {
                 int rows= (ships.size()+1)/2;
                 drawPlanetResult(g, sysName, true, x3+w3-shipH-s20, y3+s80+(rows*shipBoxH), shipH);
-            }        
+            }
         }
 
         drawSkipText(g, true);
@@ -1585,7 +1585,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         drawString(g,str(currFact), factX+sw+s22, dataY);
 
         if ((currBase+baseLost) > 0) {
-            drawString(g,text("SHIP_COMBAT_SYSTEM_BASE"), baseX, headerY); 
+            drawString(g,text("SHIP_COMBAT_SYSTEM_BASE"), baseX, headerY);
             amt = str(currBase+baseLost);
             sw = g.getFontMetrics().stringWidth(amt);
             drawString(g,amt, baseX, dataY);
@@ -1613,13 +1613,13 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             g.setFont(narrowFont(30));
             String summary = text("SHIP_COMBAT_RESULTS_RETREATED");
             int sw0 = g.getFontMetrics().stringWidth(summary);
-            drawBorderedString(g, summary, x+(w-sw0)/2, y+h/2+s5, Color.black, Color.yellow);              
+            drawBorderedString(g, summary, x+(w-sw0)/2, y+h/2+s5, Color.black, Color.yellow);
         }
         else if (start == dead) {
             g.setFont(narrowFont(30));
             String summary = text("SHIP_COMBAT_RESULTS_DESTROYED");
             int sw0 = g.getFontMetrics().stringWidth(summary);
-            drawBorderedString(g, summary, x+(w-sw0)/2, y+h/2+s5, Color.black, Color.red);              
+            drawBorderedString(g, summary, x+(w-sw0)/2, y+h/2+s5, Color.black, Color.red);
         }
         g.setFont(narrowFont(18));
         g.setColor(SystemPanel.whiteText);
@@ -1698,7 +1698,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     }
     private void retreatStack(CombatEntity stack, boolean inCombat) {
         if (mgr.combatIsFinished() || mgr.autoResolve)
-            return; 
+            return;
         if (!stack.canRetreat() || !stack.empire.isPlayerControlled())
             return;
         StarSystem dest = player().ai().shipCaptain().retreatSystem(mgr.system());
@@ -1750,7 +1750,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     }
     private void retreatAllPlayerShips(boolean inCombat) {
         List<CombatEntity> stacks = new ArrayList<>(mgr.activeStacks());
-        for (CombatEntity stack: stacks) 
+        for (CombatEntity stack: stacks)
             retreatStack(stack, inCombat);
         mgr.showAnimations = true;
         mgr.autoComplete = true;
@@ -1767,10 +1767,10 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             return;
         int k = e.getKeyCode();
         switch(k) {
-            case KeyEvent.VK_SHIFT: 
+            case KeyEvent.VK_SHIFT:
                 shiftPressed = false;
                 repaint();
-                return;    
+                return;
         }
     }
     @Override
@@ -1783,10 +1783,10 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             case KeyEvent.VK_CAPS_LOCK:
                 repaint();
                 return;
-            case KeyEvent.VK_SHIFT: 
+            case KeyEvent.VK_SHIFT:
                 shiftPressed = true;
                 repaint();
-                return; 
+                return;
             case KeyEvent.VK_1:   clickActionButton(1, rightClick);  return;
             case KeyEvent.VK_2:   clickActionButton(2, rightClick);  return;
             case KeyEvent.VK_3:   clickActionButton(3, rightClick);  return;
@@ -1795,27 +1795,27 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             case KeyEvent.VK_6:   clickActionButton(6, rightClick);  return;
             case KeyEvent.VK_7:   clickActionButton(7, rightClick);  return;
             case KeyEvent.VK_8:   clickActionButton(8, rightClick);  return;
-            case KeyEvent.VK_LEFT: 
+            case KeyEvent.VK_LEFT:
                 log("left");
                 mouseGridX = max(0,mouseGridX-1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 repaint();
                 return;
-            case KeyEvent.VK_RIGHT: 
+            case KeyEvent.VK_RIGHT:
                 log("right");
                 mouseGridX = min(GRID_COUNT_X-1,mouseGridX+1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 newTargetGridCell();
                 repaint();
                 return;
-            case KeyEvent.VK_UP: 
+            case KeyEvent.VK_UP:
                 log("up");
                 mouseGridY = max(0,mouseGridY-1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 newTargetGridCell();
                 repaint();
                 return;
-            case KeyEvent.VK_DOWN: 
+            case KeyEvent.VK_DOWN:
                 log("down");
                 mouseGridY = min(GRID_COUNT_Y-1,mouseGridY+1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
@@ -1881,10 +1881,10 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         }
 
         if (hoverBox == resolveBox) {
-            if (!mgr.autoResolve) 
+            if (!mgr.autoResolve)
                 autoResolve();
         }
-        else if (hoverBox == retreatBox) 
+        else if (hoverBox == retreatBox)
             retreatAllPlayerShips(true);
         if (hoverBox == tacticalBox)
             toggleTacticalDisplay();
@@ -1903,7 +1903,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         int x = e.getX();
         int y = e.getY();
         mouseMovedTo(x,y);
-    }   
+    }
     private void mouseMovedTo(int x, int y) {
         Rectangle prevHover = hoverBox;
         Rectangle prevGrid = currentGrid;
@@ -1967,7 +1967,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         if (hoverBox == null)
             hoverBox = currentGrid;
 
-        if (currentGrid != prevGrid) 
+        if (currentGrid != prevGrid)
             newTargetGridCell();
 
         if ((hoverBox != prevHover) || (currentGrid != prevGrid))
@@ -2187,7 +2187,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             CombatEntity curr = mgr.currentStack();
             mgr.performMoveStackAlongPath(curr, fp);
             
-            // possible for the stack we are moving to die during the move 
+            // possible for the stack we are moving to die during the move
             // (missiles) so if it's complete and the new current Stack is
             // the AI then continue until we get to another player stack
             if (curr.isTurnComplete() || curr.destroyed()) {
@@ -2265,16 +2265,16 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             if (shots < 2 )
                 return text("SHIP_COMBAT_ACTION_WPN_COUNT", current.wpnName(index), str(current.wpnCount(index)));
             else
-                return text("SHIP_COMBAT_ACTION_WPN_COUNT_SHOTS", current.wpnName(index), str(current.wpnCount(index)), str(shots));            
+                return text("SHIP_COMBAT_ACTION_WPN_COUNT_SHOTS", current.wpnName(index), str(current.wpnCount(index)), str(shots));
         }
         @Override
         String hoverLabel()   {
             CombatEntity current = mgr.currentStack();
             if (!current.shipComponentValidTarget(index,ship))
                 return text("SHIP_COMBAT_ACTION_RANGE");
-            else if (current.shipComponentIsOutOfMissiles(index)) 
+            else if (current.shipComponentIsOutOfMissiles(index))
                 return text("SHIP_COMBAT_ACTION_NO_MISSILES");
-            else if (current.shipComponentIsOutOfBombs(index)) 
+            else if (current.shipComponentIsOutOfBombs(index))
                 return text("SHIP_COMBAT_ACTION_NO_BOMBS");
             else if (current.shipComponentIsUsed(index))
                 return text("SHIP_COMBAT_ACTION_FIRED");
@@ -2285,7 +2285,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         }
         @Override
         boolean hovering() {
-            return super.hovering() || (hoverBox == shipFireAllButton); 
+            return super.hovering() || (hoverBox == shipFireAllButton);
         }
         @Override
         public void clickAction(boolean rightClick) {
@@ -2342,7 +2342,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         }
         @Override
         boolean hovering() {
-            return super.hovering() || (hoverBox == shipFireAllButton); 
+            return super.hovering() || (hoverBox == shipFireAllButton);
         }
         @Override
         public void clickAction(boolean rightClick) {

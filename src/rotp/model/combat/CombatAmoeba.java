@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public class CombatAmoeba extends CombatEntity {
         maxHits = hits = 3500;
         maxMove = move = 2;
         beamDefense = 1;
-        missileDefense = 1;     
+        missileDefense = 1;
         reversed = random() < .5;
         captain = new AmoebaShipCaptain();
         image = image("SPACE_AMOEBA");
@@ -56,8 +56,8 @@ public class CombatAmoeba extends CombatEntity {
     @Override
     public boolean ignoreRepulsors()    { return true; }
     @Override
-    public boolean canAttack(CombatEntity target)  { 
-        if (target.destroyed()) 
+    public boolean canAttack(CombatEntity target)  {
+        if (target.destroyed())
             return false;
         if (target.isColony() && !target.isArmed())
             return false;
@@ -66,8 +66,8 @@ public class CombatAmoeba extends CombatEntity {
     @Override
     public boolean selectBestWeapon(CombatEntity target)       { return canAttack(target); }
     @Override
-    public void fireWeapon(CombatEntity target)  { 
-        if ((x == target.x) && (y == target.y)) 
+    public void fireWeapon(CombatEntity target)  {
+        if ((x == target.x) && (y == target.y))
             eatShips(target);
     }
     public void eatShips(CombatEntity st) {
@@ -79,7 +79,7 @@ public class CombatAmoeba extends CombatEntity {
         // only eats ships
         if (st.isShip()) {
             st.drawFadeOut(.025f);
-            st.mgr.destroyStack(st); 
+            st.mgr.destroyStack(st);
         }
         else if (st.isColony()) {
             CombatColony cStack = (CombatColony) st;
@@ -102,11 +102,11 @@ public class CombatAmoeba extends CombatEntity {
         
         // if we made it successfully to the new dest
         // and there happens to be a ship here, eat it
-        if (stillAlive) 
+        if (stillAlive)
             eatShips(potentialFood);
         return stillAlive;
     }
-    @Override 
+    @Override
     protected float takeDamage(float damage, float shieldAdj) {
         if (inStasis)
             return 0;
@@ -124,6 +124,6 @@ public class CombatAmoeba extends CombatEntity {
             return damage;
         }
         
-        return actualDamage; 
+        return actualDamage;
     }
 }
