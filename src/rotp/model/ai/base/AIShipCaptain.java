@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,11 +101,11 @@ public class AIShipCaptain implements Base, ShipCaptain {
             }
 
             // if can attack target this turn, fire when ready
-            if (stack.canAttack(stack.target)) 
+            if (stack.canAttack(stack.target))
                 mgr.performAttackTarget(stack);
          
             // SANITY CHECK:
-            // make sure we fall out if we haven't moved 
+            // make sure we fall out if we haven't moved
             // and we are still picking the same target
             if ((prevMove == stack.move) && (prevTarget == stack.target)) {
                 turnActive = false;
@@ -131,7 +131,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         boolean currentCanBomb = false;
         for (CombatEntity target : potentialTargets) {
             // pct of target that this stack thinks it can kill
-            float killPct = max(stack.estimatedKillPct(target), expectedPopLossPct(stack, target)); 
+            float killPct = max(stack.estimatedKillPct(target), expectedPopLossPct(stack, target));
             // threat level target poses to this stack (or its ward if applicable)
             CombatEntity ward = stack.hasWard() ? stack.ward() : stack;
             // want to adjust threat upward as target gets closer to ward
@@ -139,13 +139,13 @@ public class AIShipCaptain implements Base, ShipCaptain {
             // treat those who can move to bombing range (distAfterMove == 1) as maximum threats
             if (ward.isColony()) {
                 CombatColony colony = (CombatColony) ward;
-                float popLossPct  =  expectedPopLossPct(target, colony); 
+                float popLossPct  =  expectedPopLossPct(target, colony);
                 float baseLossPct = target.estimatedKillPct(colony);
                 float maxLossPct = max(popLossPct,baseLossPct);
-                // if this is the first potential target that can reach and damage the colony, 
+                // if this is the first potential target that can reach and damage the colony,
                 // ignore any previous selected targets
                 if ((!currentCanBomb) && (distAfterMove <= 1) && (maxLossPct > 0.05f)) {
-                    threatLevel = maxLossPct;                     
+                    threatLevel = maxLossPct;
                     currentCanBomb = true;
                     bestTarget = null;
                     maxDesirability = -1;
@@ -159,12 +159,12 @@ public class AIShipCaptain implements Base, ShipCaptain {
                 // based on threat and distance
                 else {
                     float rangeAdj = 10.0f/distAfterMove;
-                    threatLevel = rangeAdj * maxLossPct;                     
-                } 
+                    threatLevel = rangeAdj * maxLossPct;
+                }
             }
             else {
                 float rangeAdj = 10.0f/distAfterMove;
-                threatLevel = rangeAdj * target.estimatedKillPct(ward);  
+                threatLevel = rangeAdj * target.estimatedKillPct(ward);
             }
             if (killPct > 0) {
                 killPct = min(1,killPct);
@@ -249,7 +249,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
     public static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt, int range) {
         if (st.movePointsTo(tgt) <= range) {
             return new FlightPath();
-        }        
+        }
         int r = range;
         if (tgt.isColony() && st.hasBombs())
             r = 1;
@@ -265,7 +265,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
-            } 
+            }
             else {
                 for (int x1=tgt.x+r; x1>=tgt.x-r; x1--) {
                     for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
@@ -274,7 +274,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                     }
                 }
             }
-        } 
+        }
         else {
             if (st.y > tgt.y) {
                 for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
@@ -283,7 +283,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
-            } 
+            }
             else {
                 for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
                     for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
@@ -297,10 +297,10 @@ public class AIShipCaptain implements Base, ShipCaptain {
          // there is no path to get in optimal firing range of target!
         if (validPaths.isEmpty()) {
             // are we within max firing range? if so, go with that
-            if (st.movePointsTo(tgt) <= st.maxFiringRange(tgt)) 
-                return new FlightPath();          
+            if (st.movePointsTo(tgt) <= st.maxFiringRange(tgt))
+                return new FlightPath();
             return null;
-        }  
+        }
 
         Collections.sort(validPaths,FlightPath.SORT);
         return validPaths.get(0);
@@ -315,7 +315,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             return false;
         
         // PLAYER STACKS
-        // 
+        //
         // when auto-resolving, retreat player stacks ONLY when not
         // retreating would violate a pact, or when the stack is unarmed
         // armed stacks will otherwise fight to the death, per player expectations
@@ -323,29 +323,29 @@ public class AIShipCaptain implements Base, ShipCaptain {
             return inPact || !currStack.isArmed();
      
         // AI STACKS
-        if (!currStack.canRetreat()) 
+        if (!currStack.canRetreat())
             return false;
         
-        if (!currStack.canMove()) 
+        if (!currStack.canMove())
             return false;
 
         // don't retreat if we still have missiles in flight
         List<CombatEntity> activeStacks = new ArrayList<>(currStack.mgr.activeStacks());
         for (CombatEntity st: activeStacks) {
             for (CombatMissile miss: st.missiles()) {
-                if (miss.owner == currStack) 
+                if (miss.owner == currStack)
                     return false;
             }
         }
         
         // if stack is pacted with colony and doesn't want war, then retreat
         // modnar: change condition to only "doesn't want war"
-        if ((colView != null) && !colView.embassy().wantWar())  
+        if ((colView != null) && !colView.embassy().wantWar())
             return true;
 
         // if stack has ward still in combat, don't retreat
         if (currStack.hasWard() && currStack.isArmed()) {
-            if (activeStacks.contains(currStack.ward())) 
+            if (activeStacks.contains(currStack.ward()))
                 return false;
         }
         
@@ -374,7 +374,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         allies().clear(); enemies().clear();
 
         for (CombatEntity st : combat().activeStacks()) {
-            if (st.isMonster()) 
+            if (st.isMonster())
                 enemies.add(st);
             else {
                 if (stack.empire.alliedWith(id(st.empire)))
@@ -538,7 +538,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                         int baseDir = 0;
                         for (int i=0; i<basePaths.length;i++) {
                             if (basePaths[i] == deltas[dir]) {
-                                baseDir = i; 
+                                baseDir = i;
                                 break;
                             }
                         }

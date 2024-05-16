@@ -156,7 +156,7 @@ public class DesignUI extends BasePanel {
         specialSelectionUI   = new DesignSpecialSelectionUI();
         confirmScrapUI   = new ConfirmScrapUI();
         confirmCreateUI   = new ConfirmCreateUI();
-        for (int i=0;i<copyButtonArea.length;i++) 
+        for (int i=0;i<copyButtonArea.length;i++)
             copyButtonArea[i] = new Rectangle();
         for (int i=0;i<weaponFieldArea.length;i++) {
             weaponFieldArea[i] = new Rectangle();
@@ -171,7 +171,7 @@ public class DesignUI extends BasePanel {
             specialsFieldDecr[i] = new Polygon();
             specialsFieldIncr[i] = new Polygon();
         }
-        for (int i=0;i<shipColorArea.length;i++) 
+        for (int i=0;i<shipColorArea.length;i++)
             shipColorArea[i] = new Rectangle();
     }
     public void init() {
@@ -242,14 +242,14 @@ public class DesignUI extends BasePanel {
         helpFrame = 1;
         
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         if (helpFrame == 0)
             return;
         helpFrame++;
-        if (helpFrame > 4) 
+        if (helpFrame > 4)
             cancelHelp();
         loadHelpUI();
         repaint();
@@ -334,26 +334,26 @@ public class DesignUI extends BasePanel {
         int w10 = scaled(280);
         int y10 = scaled(180);
         HelpUI.HelpSpec sp10 = helpUI.addBrownHelpText(x10,y10,w10, 2, text("SHIP_DESIGN_HELP_1I"));
-        sp10.setLine(x10, y10+(sp10.height()/2), scaled(665), scaled(203));        
+        sp10.setLine(x10, y10+(sp10.height()/2), scaled(665), scaled(203));
 
         int x11 = scaled(730);
         int w11 = scaled(280);
         int y11 = scaled(240);
         HelpUI.HelpSpec sp11 = helpUI.addBrownHelpText(x11,y11,w11, 2, text("SHIP_DESIGN_HELP_1J"));
-        sp11.setLine(x11, y11+(sp11.height()/2), scaled(665), scaled(225));        
+        sp11.setLine(x11, y11+(sp11.height()/2), scaled(665), scaled(225));
 
         int x12 = scaled(630);
         int w12 = scaled(280);
         int y12 = scaled(300);
         HelpUI.HelpSpec sp12 = helpUI.addBrownHelpText(x12,y12,w12, 2, text("SHIP_DESIGN_HELP_1K"));
-        sp12.setLine(scaled(690), y12, scaled(665), scaled(250));        
+        sp12.setLine(scaled(690), y12, scaled(665), scaled(250));
 
         if (!configPanel.shipDesign().active()) {
             int x13 = scaled(430);
             int w13 = scaled(280);
             int y13 = scaled(360);
             HelpUI.HelpSpec sp13 = helpUI.addBrownHelpText(x13,y13,w13, 2, text("SHIP_DESIGN_HELP_1L"));
-            sp13.setLine(scaled(560), y13, scaled(540), scaled(275));   
+            sp13.setLine(scaled(560), y13, scaled(540), scaled(275));
         }
     }
     private void loadHelpFrame2() {
@@ -417,19 +417,19 @@ public class DesignUI extends BasePanel {
         int w10 = scaled(280);
         int y10 = scaled(360);
         HelpUI.HelpSpec sp10 = helpUI.addBrownHelpText(x10,y10,w10, 2, text("SHIP_DESIGN_HELP_2I"));
-        sp10.setLine(x10+w10, y10+(sp10.height()/2), scaled(830), y10+(sp10.height()/2), scaled(880), scaled(310));        
+        sp10.setLine(x10+w10, y10+(sp10.height()/2), scaled(830), y10+(sp10.height()/2), scaled(880), scaled(310));
 
         int x11 = scaled(30);
         int w11 = scaled(280);
         int y11 = scaled(350);
         HelpUI.HelpSpec sp11 = helpUI.addBrownHelpText(x11,y11,w11, 6, text("SHIP_DESIGN_HELP_2J"));
-        sp11.setLine(x11+(w11/2), y11, x11+(w11/2), scaled(300));        
+        sp11.setLine(x11+(w11/2), y11, x11+(w11/2), scaled(300));
 
         int x12 = scaled(270);
         int w12 = scaled(240);
         int y12 = scaled(10);
         HelpUI.HelpSpec sp12 = helpUI.addBrownHelpText(x12,y12,w12, 2, text("SHIP_DESIGN_HELP_2K"));
-        sp12.setLine(scaled(490), y12+sp12.height(), scaled(490), scaled(80));        
+        sp12.setLine(scaled(490), y12+sp12.height(), scaled(490), scaled(80));
     }
     private void loadHelpFrame3() {
         HelpUI helpUI = RotPUI.helpUI();
@@ -510,9 +510,9 @@ public class DesignUI extends BasePanel {
         for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) {
             ShipDesign des = player().shipLab().design(i);
             if ((firstActive < 0) && des.active())
-               firstActive = i;     
+               firstActive = i;
             if ((firstAvailable < 0) && !des.active())
-               firstAvailable = i;     
+               firstAvailable = i;
         }
         
         if (firstActive >= 0) {
@@ -560,9 +560,9 @@ public class DesignUI extends BasePanel {
         for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) {
             ShipDesign des = player().shipLab().design(i);
             if ((firstActive < 0) && des.active())
-               firstActive = i;     
+               firstActive = i;
             if ((firstAvailable < 0) && !des.active())
-               firstAvailable = i;     
+               firstAvailable = i;
         }
         
         if (firstActive >= 0) {
@@ -660,7 +660,7 @@ public class DesignUI extends BasePanel {
             else if (k == KeyEvent.VK_C) {
                 configPanel.clearDesign();
                 return;
-            }            
+            }
         }
     }
     private void exit(boolean pauseNextTurn) {
@@ -829,7 +829,7 @@ public class DesignUI extends BasePanel {
                 g.setStroke(stroke5);
                 g.setColor(SystemPanel.yellowText);
                 g.drawRect(boxX, boxY, w-s4, h-s59);
-            }            
+            }
         }
         @Override
         public void mouseClicked(MouseEvent e) { }
@@ -951,7 +951,7 @@ public class DesignUI extends BasePanel {
 
                 if (constructionCounts[des.id()] > 0) {
                     String desc4 = text("SHIP_DESIGN_SLOT_DESC4");
-                    int sw4 = g.getFontMetrics().stringWidth(desc4);                
+                    int sw4 = g.getFontMetrics().stringWidth(desc4);
                     String val4= str(constructionCounts[des.id()]);
                     drawString(g,desc4, leftM, s82);
                     drawString(g,val4, leftM+sw4+s5, s82);
@@ -1052,7 +1052,7 @@ public class DesignUI extends BasePanel {
             int y = e.getY();
             Shape prevHover = hoverTarget;
             hoverTarget = null;
-            if (copyButtonArea[designNum].contains(x,y)) 
+            if (copyButtonArea[designNum].contains(x,y))
                 hoverTarget = copyButtonArea[designNum];
                 
             if (hoverTarget != prevHover)
@@ -1114,9 +1114,9 @@ public class DesignUI extends BasePanel {
             addMouseListener(this);
             addMouseWheelListener(this);
         }
-        private ShipDesign shipDesign()   { 
+        private ShipDesign shipDesign()   {
             ShipDesignLab lab = player().shipLab();
-            return selectedSlot < 0 ? lab.prototypeDesign() : lab.design(selectedSlot); 
+            return selectedSlot < 0 ? lab.prototypeDesign() : lab.design(selectedSlot);
         }
         private void loadShipImages() {
             if (shipDesign() == null)
@@ -1200,7 +1200,7 @@ public class DesignUI extends BasePanel {
             g2.setColor(darkBrown);
             Shape rect = new RoundRectangle2D.Float(x,y,w,h,w/8, h/8);
             g2.setClip(rect);
-            g2.fill(rect);  
+            g2.fill(rect);
                
             g2.setClip(null);
         }
@@ -1246,7 +1246,7 @@ public class DesignUI extends BasePanel {
 
             BufferedImage img = shipImages.get(shipImageIndex);
 
-            if (des.shipColor() > 0) 
+            if (des.shipColor() > 0)
                 img = Base.colorizer.makeColor(des.shipColor(), img);
 
             g.drawImage(img, 0, 0, this);
@@ -1278,7 +1278,7 @@ public class DesignUI extends BasePanel {
         }
         private void drawSummaryInfo(Graphics2D g, ShipDesign des, int x, int y, int w, int h) {
             String name;
-            if (selectedSlot < 0) 
+            if (selectedSlot < 0)
                 name = text("SHIP_DESIGN_PROTOTYPE_TITLE");
             else if (des.active())
                 name = des.name();
@@ -1455,7 +1455,7 @@ public class DesignUI extends BasePanel {
                 for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) {
                     ShipDesign des1 = player().shipLab().design(i);
                     if ((firstAvailable < 0) && !des1.active())
-                       firstAvailable = i;     
+                       firstAvailable = i;
                 }
                 
                 if (firstAvailable < 0) {
@@ -1781,10 +1781,10 @@ public class DesignUI extends BasePanel {
                 int cIndex = ShipDesign.shipColors[i];
                 shipColorArea[i].setBounds(boxX, boxY, boxW-s5, boxH);
                 if (cIndex > 0) {
-                    g.setColor(ImageColorizer.color(cIndex));             
+                    g.setColor(ImageColorizer.color(cIndex));
                     g.fill(shipColorArea[i]);
                 }
-                if (hoverTarget == shipColorArea[i]) 
+                if (hoverTarget == shipColorArea[i])
                     g.setColor(Color.yellow);
                 else if (des.shipColor() == cIndex) {
                     g.setStroke(stroke2);
@@ -1861,7 +1861,7 @@ public class DesignUI extends BasePanel {
             g.setFont(narrowFont(15));
             g.setColor(darkestBrown);
             List<String> descLines = wrappedLines(g, compDesc, w2);
-            if (descLines.size() == 1) 
+            if (descLines.size() == 1)
                 drawString(g,descLines.get(0), x2, y2);
             else if (descLines.size() > 1) {
                 drawString(g,descLines.get(0), x2, y2-s5);
@@ -2010,7 +2010,7 @@ public class DesignUI extends BasePanel {
             g.setColor(darkestBrown);
             descLines = wrappedLines(g, shieldDesc, w2);
 
-            if (descLines.size() == 1) 
+            if (descLines.size() == 1)
                 drawString(g,descLines.get(0), x2, y4);
             else if (descLines.size() > 1) {
                 drawString(g,descLines.get(0), x2, y4-s5);
@@ -2132,7 +2132,7 @@ public class DesignUI extends BasePanel {
             g.setFont(narrowFont(15));
             g.setColor(darkestBrown);
             List<String> descLines = wrappedLines(g, ecmDesc, w2);
-            if (descLines.size() == 1) 
+            if (descLines.size() == 1)
                 drawString(g,descLines.get(0), x2, y2);
             else if (descLines.size() > 1) {
                 drawString(g,descLines.get(0), x2, y2-s5);
@@ -2205,7 +2205,7 @@ public class DesignUI extends BasePanel {
             g.setFont(narrowFont(15));
             g.setColor(darkestBrown);
             descLines = wrappedLines(g, manvDesc, w2);
-            if (descLines.size() == 1) 
+            if (descLines.size() == 1)
                 drawString(g,descLines.get(0), x2, y3);
             else if (descLines.size() > 1) {
                 drawString(g,descLines.get(0), x2, y3-s5);
@@ -2556,7 +2556,7 @@ public class DesignUI extends BasePanel {
                 for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) {
                     ShipDesign des1 = player().shipLab().design(i);
                     if ((firstAvailable < 0) && !des1.active())
-                       firstAvailable = i;     
+                       firstAvailable = i;
                 }
                 selectedSlot = firstAvailable;
                 configPanel.shipDesign().copyFrom(player().shipLab().prototypeDesign());
@@ -3050,22 +3050,22 @@ public class DesignUI extends BasePanel {
                 }
                 if (hoverTarget == weaponCountDecr[i]) {
                     softClick();
-                    if (shiftPressed) 
+                    if (shiftPressed)
                         shipWeaponCountDecrement(i,5);
                     else if (ctrlPressed)
                         shipWeaponCountDecrement(i,20);
                     else
-                        shipWeaponCountDecrement(i,1); 
+                        shipWeaponCountDecrement(i,1);
                     return;
                 }
                 if (hoverTarget == weaponCountIncr[i]) {
                     softClick();
-                    if (shiftPressed) 
-                        shipWeaponCountIncrement(i,5); 
-                    else if (ctrlPressed) 
-                        shipWeaponCountIncrement(i,20); 
+                    if (shiftPressed)
+                        shipWeaponCountIncrement(i,5);
+                    else if (ctrlPressed)
+                        shipWeaponCountIncrement(i,20);
                     else
-                        shipWeaponCountIncrement(i,1); 
+                        shipWeaponCountIncrement(i,1);
                     return;
                 }
             }
@@ -3170,19 +3170,19 @@ public class DesignUI extends BasePanel {
                 }
                 if (hoverTarget == weaponCountArea[i]) {
                     if (count > 0) {
-                        if (shiftPressed) 
+                        if (shiftPressed)
                             shipWeaponCountDecrement(i,5);
-                        else if (ctrlPressed) 
+                        else if (ctrlPressed)
                             shipWeaponCountDecrement(i,20);
-                        else 
+                        else
                             shipWeaponCountDecrement(i,1);
                     }
                     else {
-                        if (shiftPressed) 
+                        if (shiftPressed)
                             shipWeaponCountIncrement(i,5);
-                        else if (ctrlPressed) 
+                        else if (ctrlPressed)
                             shipWeaponCountIncrement(i,20);
-                        else 
+                        else
                             shipWeaponCountIncrement(i,1);
                     }
                     return;

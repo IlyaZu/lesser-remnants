@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             FlightPath bestPathToTarget;
             bestPathToTarget = chooseTarget(stack, false, false);
             CombatEntity tgtBeforeClose = currentTarget;
-            if (stack.isColony() && stack.canAttack(currentTarget)) 
+            if (stack.isColony() && stack.canAttack(currentTarget))
             {
                 stack.target = currentTarget;
                 mgr.performAttackTarget(stack);
@@ -95,9 +95,9 @@ public class AIShipCaptain implements Base, ShipCaptain {
             //ail: if our target to move to is not the same as the target we can currently shoot at, we shoot before moving
             // check for retreating
             if(tgtBeforeClose != null && stack.movePointsTo(tgtBeforeClose) > stack.move + stack.optimalFiringRange(tgtBeforeClose))
-            {  
+            {
                 chooseTarget(stack, true, false);
-                if (stack.canAttack(currentTarget)) 
+                if (stack.canAttack(currentTarget))
                     performSmartAttackTarget(stack, currentTarget);
                 currentTarget = tgtBeforeClose;
             }
@@ -127,7 +127,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             
             // if we need to move towards target, do it now
             if(currentTarget != null && stack.movePointsTo(currentTarget) >= stack.move + stack.optimalFiringRange(currentTarget))
-            {  
+            {
                 if (wantToRetreat(stack) && stack.canRetreat()) {
                     CombatShip shipStack = (CombatShip) stack;
                     StarSystem dest = retreatSystem(shipStack.mgr.system());
@@ -137,7 +137,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                     }
                 }
             }
-            boolean moved = false;            
+            boolean moved = false;
             if (currentTarget != null) {
                 boolean repulsorDefender = stack.repulsorRange() >= 1 && currentTarget.maxFiringRange(stack) <= stack.repulsorRange() && stack.hasWard() && !currentTarget.canCloak && !currentTarget.canTeleport();
                 if(repulsorDefender)
@@ -181,18 +181,18 @@ public class AIShipCaptain implements Base, ShipCaptain {
             if(currentTarget != null && currentTarget.isColony())
             {
                 chooseTarget(stack, false, true);
-                if (stack.canAttack(currentTarget)) 
+                if (stack.canAttack(currentTarget))
                     performSmartAttackTarget(stack, currentTarget);
                 //now chhose our previous target again
                 chooseTarget(stack, false, false);
             }
-            if (stack.canAttack(currentTarget)) 
+            if (stack.canAttack(currentTarget))
                 performSmartAttackTarget(stack, currentTarget);
             else
             {
                 //ail: if we couldn't attack our move-to-target, we try and see if anything else can be attacked from where we are
                 chooseTarget(stack, true, false);
-                if (stack.canAttack(currentTarget)) 
+                if (stack.canAttack(currentTarget))
                     performSmartAttackTarget(stack, currentTarget);
             }
             
@@ -256,7 +256,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                 }
             }
             // SANITY CHECK:
-            // make sure we fall out if we haven't moved 
+            // make sure we fall out if we haven't moved
             // and we are still picking the same target
             if ((prevMove == stack.move) && (prevTarget == currentTarget)) {
                 turnActive = false;
@@ -368,7 +368,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             if(target.cloaked && (!allTargetsCloaked || stack.hasWard()) && stack.isShip())
                 continue;
             // pct of target that this stack thinks it can kill
-            float killPct = max(stack.estimatedKillPct(target), expectedPopLossPct(stack, target)); 
+            float killPct = max(stack.estimatedKillPct(target), expectedPopLossPct(stack, target));
             //reduce attractiveness of target depending on how much damage it already has incoming from missiles
             // threat level target poses to this stack (or its ward if applicable)
             CombatEntity ward = stack.hasWard() ? stack.ward() : stack;
@@ -629,7 +629,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
     private static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt, int range) {
         if (st.movePointsTo(tgt) <= range) {
             return new FlightPath();
-        }        
+        }
         int r = range;
         if (tgt.isColony() && st.hasBombs())
             r = 1;
@@ -645,7 +645,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
-            } 
+            }
             else {
                 for (int x1=tgt.x+r; x1>=tgt.x-r; x1--) {
                     for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
@@ -654,7 +654,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                     }
                 }
             }
-        } 
+        }
         else {
             if (st.y > tgt.y) {
                 for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
@@ -663,7 +663,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
-            } 
+            }
             else {
                 for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
                     for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
@@ -678,7 +678,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         if (validPaths.isEmpty()) {
             // ail: no longer being content when we are within max-firing-range, we'll run a loop with slowly increasing range instead
             return null;
-        }  
+        }
 
         Collections.sort(validPaths,FlightPath.SORT);
         return validPaths.get(0);
@@ -693,7 +693,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             return false;
         
         // PLAYER STACKS
-        // 
+        //
         // when auto-resolving, retreat player stacks ONLY when not
         // retreating would violate a pact, or when the stack is unarmed
         // armed stacks will otherwise fight to the death, per player expectations
@@ -712,10 +712,10 @@ public class AIShipCaptain implements Base, ShipCaptain {
         }
      
         // AI STACKS
-        if (!currStack.canRetreat()) 
+        if (!currStack.canRetreat())
             return false;
         
-        if (!currStack.canMove()) 
+        if (!currStack.canMove())
             return false;
         
         // threatened to be completely disabled by warp-dissipater
@@ -728,7 +728,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         List<CombatEntity> activeStacks = new ArrayList<>(currStack.mgr.activeStacks());
         for (CombatEntity st: activeStacks) {
             for (CombatMissile miss: st.missiles()) {
-                if (miss.owner == currStack) 
+                if (miss.owner == currStack)
                     return facingOverwhelmingForce(currStack, true);
                 if (miss.target == currStack && st.isShip())
                 {
@@ -749,7 +749,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         
         // if stack is pacted with colony and doesn't want war, then retreat
         // ail: Whether I want a war or not depends on whether the other faction is an enemy, not on relation!
-        if ((colView != null) && !empire.enemies().contains(colView.empire()))  
+        if ((colView != null) && !empire.enemies().contains(colView.empire()))
             return true;
         
         // don't retreat if all enemies can only target planets
@@ -777,7 +777,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         // build list of allies & enemies
         allies().clear(); enemies().clear();
         for (CombatEntity st : combat().activeStacks()) {
-            if (st.isMonster()) 
+            if (st.isMonster())
                 enemies.add(st);
             else {
                 if (stack.empire.alliedWith(id(st.empire)))
@@ -1052,7 +1052,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                         int baseDir = 0;
                         for (int i=0; i<basePaths.length;i++) {
                             if (basePaths[i] == deltas[dir]) {
-                                baseDir = i; 
+                                baseDir = i;
                                 break;
                             }
                         }

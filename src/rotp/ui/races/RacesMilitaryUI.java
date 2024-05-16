@@ -74,8 +74,8 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         renameShipUI = new RacesShipRenameUI();
         initModel();
     }
-    public void changedEmpire()     { 
-        renameBoxes.clear();      
+    public void changedEmpire()     {
+        renameBoxes.clear();
         ships = null;
         shipY = 0;
     }
@@ -106,7 +106,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         }
         g.setPaint(backGradient);
         g.fillRect(0,h/2,w, h/2);
-        if (parent.selectedEmpire().isPlayer()) 
+        if (parent.selectedEmpire().isPlayer())
             paintPlayerData(g);
         else
             paintAIData(g);
@@ -117,7 +117,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         setBorder(newEmptyBorder(5,5,5,5));
         addMouseMotionListener(this);
         addMouseListener(this);
-        addMouseWheelListener(this);       
+        addMouseWheelListener(this);
     }
     public BufferedImage shipIconBackImg() {
         if (shipIconBackImg == null) {
@@ -173,7 +173,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
     private void drawRaceIconBase(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
         Shape rect = new RoundRectangle2D.Float(x,y,w,h,w/8, h/8);
-        g.fill(rect);  
+        g.fill(rect);
     }
     private void drawRaceIcon(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(Color.black);
@@ -226,7 +226,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         drawSizeBox(g, text("RACES_MILITARY_SMALL"),  pl.shipCount(ShipDesign.SMALL),  x1, y0, boxW, s25, false);
         drawSizeBox(g, text("RACES_MILITARY_LARGE"),  pl.shipCount(ShipDesign.LARGE),  x2, y0, boxW, s25, false);
         drawSizeBox(g, text("RACES_MILITARY_MEDIUM"), pl.shipCount(ShipDesign.MEDIUM), x1, y1, boxW, s25, false);
-        drawSizeBox(g, text("RACES_MILITARY_HUGE"),   pl.shipCount(ShipDesign.HUGE),   x2, y1, boxW, s25, false); 
+        drawSizeBox(g, text("RACES_MILITARY_HUGE"),   pl.shipCount(ShipDesign.HUGE),   x2, y1, boxW, s25, false);
     }
     private void drawAIBaseInfo(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
@@ -252,7 +252,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         drawSizeBox(g, text("RACES_MILITARY_SMALL"),  fv.small(),  x1, y0, boxW, s25, fv.noReport());
         drawSizeBox(g, text("RACES_MILITARY_LARGE"),  fv.large(),  x2, y0, boxW, s25, fv.noReport());
         drawSizeBox(g, text("RACES_MILITARY_MEDIUM"), fv.medium(), x1, y1, boxW, s25, fv.noReport());
-        drawSizeBox(g, text("RACES_MILITARY_HUGE"),   fv.huge(),   x2, y1, boxW, s25, fv.noReport()); 
+        drawSizeBox(g, text("RACES_MILITARY_HUGE"),   fv.huge(),   x2, y1, boxW, s25, fv.noReport());
 
         int y2 = y+h-s10;
         g.setColor(SystemPanel.blackText);
@@ -314,12 +314,12 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         g.setFont(narrowFont(15));
         String bonus = concat("+",str((int)tech.troopCombatAdj(false)));
         sw = g.getFontMetrics().stringWidth(bonus);
-        drawString(g,bonus, x+w-s10-sw, y0);      
+        drawString(g,bonus, x+w-s10-sw, y0);
         
         g.setColor(RacesUI.darkBrown);
         g.fillRect(x, y+h-s35, w, s35);
         
-        y0 += s32;        
+        y0 += s32;
         int y1 = y0+s8;
         int x1 = x0+s35;
         String maxBaseStr = text("RACES_MILITARY_DEF_MISSILE_MAX");
@@ -342,7 +342,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         ptX[0]=x1-s3-sz; ptX[1]=ptX[0]+sz; ptX[2]=ptX[0]+sz/2;
         ptY[0]=y1-s9;  ptY[1]=ptY[0];    ptY[2]=y1-s16;
         maxBasesIncr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             maxBasesIncr.addPoint(ptX[i], ptY[i]);
         Color buttonC = hoverShape == maxBasesIncr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -351,7 +351,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         ptX[0]=x1-s3-sz; ptX[1]=ptX[0]+sz; ptX[2]=ptX[0]+sz/2;
         ptY[0]=y1-s6;    ptY[1]=ptY[0];    ptY[2]=y1+s1;
         maxBasesDecr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             maxBasesDecr.addPoint(ptX[i], ptY[i]);
         buttonC = hoverShape == maxBasesDecr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -363,7 +363,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
             g.setColor(SystemPanel.yellowText);
             g.draw(maxBasesBox);
             g.setStroke(prev);
-        }       
+        }
     }
     private void drawAIDefenseInfo(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
@@ -421,7 +421,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
     private void drawShipDesignTitle(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         int y0 = y+h-s5;
         // these x values should match those in method drawShipDesign(
-        int x1 = x+scaled(245)+s10; 
+        int x1 = x+scaled(245)+s10;
         int x3 = x+scaled(550)+s10;
         int x4 = x+scaled(735)+s10;
         
@@ -477,7 +477,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
             }
         }
         g.setClip(null);
-        if ((hoverShape == shipListBox) 
+        if ((hoverShape == shipListBox)
         && (fullListH > listH)) {
             g.setColor(Color.yellow);
             Stroke prev = g.getStroke();
@@ -494,7 +494,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         int x0 = x+((w-sw)/2);
         drawShadowedString(g, str, 2, x0, y+(h/4)-s15, Color.black, SystemPanel.whiteText);
     }
-    private void  drawShipDesign(Graphics2D g, Empire emp, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipDesign(Graphics2D g, Empire emp, ShipView view, int x, int y, int w, int h) {
         int x0 = x;
         int x1 = x+scaled(245);
         int x2 = x+scaled(395);
@@ -517,9 +517,9 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         g.drawLine(x3, y, x3, y+h);
         g.drawLine(x4, y, x4, y+h);
         g.drawLine(x5, y, x5, y+h);
-        g.setStroke(prev);       
+        g.setStroke(prev);
     }
-    private void  drawShipNameAndIcon(Graphics2D g, ShipView view, int x, int y, int w, int h) {     
+    private void  drawShipNameAndIcon(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         int x0 = x+w*11/20;
         int w0 = x+w-x0-s5;
         int y0 = y+s5;
@@ -545,18 +545,18 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         
         String status, status2 = null;
         if (view.empire().isPlayer()) {
-            if (d.scrapped()) 
+            if (d.scrapped())
                 status = text("RACES_MILITARY_INACTIVE");
             else
                 status = text("RACES_MILITARY_ACTIVE");
         }
         else {
             int age = galaxy().currentTurn() - view.lastViewTurn();
-            if (age < 1) 
+            if (age < 1)
                 status = text("RACES_MILITARY_ACTIVE");
             else {
                 status = text("RACES_MILITARY_LAST_SEEN");
-                status2 = text("RACES_MILITARY_SCAN_AGE", str(age));               
+                status2 = text("RACES_MILITARY_SCAN_AGE", str(age));
             }
         }
         g.setColor(SystemPanel.blackText);
@@ -571,11 +571,11 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
             sw = g.getFontMetrics().stringWidth(status2);
             x1 = x+((x0-x-sw)/2);
             y1 += s16;
-            drawString(g,status2, x1, y1);          
+            drawString(g,status2, x1, y1);
         }
-        drawShipIcon(g, view, x0, y0, w0, h0); 
+        drawShipIcon(g, view, x0, y0, w0, h0);
     }
-    private void  drawShipIcon(Graphics2D g, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipIcon(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         g.setColor(Color.black);
         RoundRectangle2D roundRect = new RoundRectangle2D.Float(x,y,w,h,s20,s20);
         g.fill(roundRect);
@@ -599,7 +599,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         int y1 = y+((h-h1)/2);
         g.drawImage(img, x1, y1, x1+w1, y1+h1, 0, 0, w0, h0, this);
     }
-    private void  drawShipTactical1(Graphics2D g, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipTactical1(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         String unk = text("RACES_MILITARY_UNSCANNED");
 
         ShipDesign d = view.design();
@@ -635,7 +635,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         sw = g.getFontMetrics().stringWidth(val);
         drawString(g,val, x+w-sw-s10, y3);
     }
-    private void  drawShipTactical2(Graphics2D g, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipTactical2(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         String unk = text("RACES_MILITARY_UNSCANNED");
  
         ShipDesign d = view.design();
@@ -672,7 +672,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         drawString(g,val, x+w-sw-s10, y3);
 
     }
-    private void  drawShipWeapons(Graphics2D g, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipWeapons(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         ShipDesign d = view.design();
         g.setFont(narrowFont(15));
 
@@ -695,14 +695,14 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         else {
             for (int i=0;i<ShipDesign.maxWeapons();i++) {
                 if (view.weaponKnown(i)) {
-                    if (view.hasWeapon(i)) 
+                    if (view.hasWeapon(i))
                         drawString(g,text("RACES_MILITARY_WEAPON_CNT", str(d.wpnCount(i)), d.weapon(i).name()), x0, y0);
                 }
                 y0 += lineH;
-            }    
+            }
         }
     }
-    private void  drawShipSpecials(Graphics2D g, ShipView view, int x, int y, int w, int h) { 
+    private void  drawShipSpecials(Graphics2D g, ShipView view, int x, int y, int w, int h) {
         ShipDesign d = view.design();
         g.setFont(narrowFont(15));
 
@@ -721,7 +721,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
             }
             else if (i == 0)
                 drawString(g,text("RACES_MILITARY_UNSCANNED_LONG"), x0, y0);
-        }   
+        }
     }
     private void drawSizeBox(Graphics g, String size, int count, int x, int y, int w, int h, boolean hideVal) {
         g.setColor(SystemPanel.blackText);
@@ -746,24 +746,24 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         int dY = y-dragY;
         dragY = y;
         if (shipScroller == hoverShape) {
-            if ((y >= shipListBox.y) || (y <= (shipListBox.y+shipListBox.height))) { 
+            if ((y >= shipListBox.y) || (y <= (shipListBox.y+shipListBox.height))) {
                 int h = (int) shipListBox.getHeight();
                 int dListY = (int)((float)dY*(h+shipYMax)/h);
                 if (dListY < 0)
                     shipY = max(0,shipY+dListY);
-                else 
+                else
                     shipY = min(shipYMax,shipY+dListY);
             }
             repaint(shipListBox);
             return;
         }
         else if (shipListBox == hoverShape) {
-            if (shipListBox.contains(x,y)) { 
+            if (shipListBox.contains(x,y)) {
                 int h = (int) shipListBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+shipYMax)/h);
                 if (dListY < 0)
                     shipY = max(0,shipY+dListY);
-                else 
+                else
                     shipY = min(shipYMax,shipY+dListY);
             }
             repaint(shipListBox);
@@ -795,14 +795,14 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
                 break;
             }
         }
-        if ((hoverShape != prevHover) 
+        if ((hoverShape != prevHover)
         || (hoverNameBox != prevNameBox))
             repaint();
     }
     @Override
     public void mouseClicked(MouseEvent e) { }
     @Override
-    public void mousePressed(MouseEvent e) { 
+    public void mousePressed(MouseEvent e) {
         dragY = e.getY();
     }
     @Override
@@ -851,7 +851,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
             int prevY = shipY;
             if (count < 0)
                 shipY = max(0,shipY-s10);
-            else 
+            else
                 shipY = min(shipYMax,shipY+s10);
             if (shipY != prevY)
                 repaint(shipListBox);
