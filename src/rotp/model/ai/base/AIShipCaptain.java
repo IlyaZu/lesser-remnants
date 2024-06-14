@@ -73,7 +73,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
 
         // check for retreating
         if (wantToRetreat(stack)) {
-            CombatShip shipStack = (CombatShip) stack;
+            CombatEmpireShip shipStack = (CombatEmpireShip) stack;
             StarSystem dest = retreatSystem(shipStack.mgr.system());
             if (dest != null) {
                 mgr.retreatStack(shipStack, dest);
@@ -570,7 +570,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         int y1 = pt1 / w;
         return Math.max(Math.abs(x0-x1), Math.abs(y0-y1));
     }
-    private float expectedBombardDamage(CombatShip ship, CombatColony colony) {
+    private float expectedBombardDamage(CombatEmpireShip ship, CombatColony colony) {
         int num = ship.num;
         float damage = 0.0f;
 
@@ -581,7 +581,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             damage += d.special(j).estimatedBombardDamage(d, colony);
         return damage;
     }
-    private float expectedBioweaponDamage(CombatShip ship, CombatColony colony) {
+    private float expectedBioweaponDamage(CombatEmpireShip ship, CombatColony colony) {
         int num = ship.num;
         float popLoss = 0.0f;
 
@@ -590,7 +590,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             popLoss += (num * d.wpnCount(j) * d.weapon(j).estimatedBioweaponDamage(ship, colony));
         return popLoss;
     }
-    private float expectedPopulationLoss(CombatShip ship, CombatColony colony) {
+    private float expectedPopulationLoss(CombatEmpireShip ship, CombatColony colony) {
         float popLost = 0;
         float bombDamage = expectedBombardDamage(ship, colony);
         if (colony.num == 0)
@@ -603,12 +603,12 @@ public class AIShipCaptain implements Base, ShipCaptain {
         return popLost+bioDamage;
     }
     private float expectedPopLossPct(CombatEntity source, CombatEntity target) {
-        if (!source.isShip())
+        if (!source.isEmpireShip())
             return 0;
         if (!target.isColony())
             return 0;
         
-        CombatShip ship = (CombatShip) source;
+        CombatEmpireShip ship = (CombatEmpireShip) source;
         CombatColony colony = (CombatColony) target;
         
         if (colony.destroyed())

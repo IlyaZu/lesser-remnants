@@ -100,7 +100,7 @@ public class AmoebaShipCaptain implements Base, ShipCaptain {
         List<CombatEntity> activeStacks = new ArrayList<>(mgr.activeStacks());
         List<CombatEntity> potentialTargets = new ArrayList<>();
         for (CombatEntity st: activeStacks) {
-            if (st.isShip() || st.isColony())
+            if (st.isEmpireShip() || st.isColony())
                 potentialTargets.add(st);
         }
         if ((colony != null) && !colony.isArmed())

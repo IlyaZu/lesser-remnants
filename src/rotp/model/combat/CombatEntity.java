@@ -100,7 +100,7 @@ public abstract class CombatEntity implements Base {
         else
             return initiative();
     }
-    public boolean isShip()             { return false; }
+    public boolean isEmpireShip()       { return false; }
     public boolean isColony()           { return false; }
     public boolean isMonster()          { return false; }
     public boolean isPlayerControlled() { return (empire != null) && empire.isPlayerControlled(); }

@@ -18,7 +18,7 @@ package rotp.model.ships;
 
 import rotp.model.combat.CombatEntity;
 import rotp.model.combat.CombatColony;
-import rotp.model.combat.CombatShip;
+import rotp.model.combat.CombatEmpireShip;
 import rotp.model.tech.TechShipNullifier;
 
 public final class ShipSpecialShipNullifier extends ShipSpecial {
@@ -48,8 +48,8 @@ public final class ShipSpecialShipNullifier extends ShipSpecial {
         int compRed = roll(tech().minComputerRed, tech().maxComputerRed);
         int ecmRed = roll(tech().minECMRed, tech().maxECMRed);
 
-        if (target.isShip()) {
-            CombatShip st = (CombatShip) target;
+        if (target.isEmpireShip()) {
+            CombatEmpireShip st = (CombatEmpireShip) target;
             st.attackLevel = max(0, target.attackLevel - compRed);
             st.maxMove = max(0, st.maxMove - tech().speedRed);
             st.missileDefense = max(0, target.missileDefense - ecmRed - tech().manvRed);

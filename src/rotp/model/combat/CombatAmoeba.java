@@ -52,7 +52,7 @@ public class CombatAmoeba extends CombatEntity {
     @Override
     public boolean hostileTo(CombatEntity st, StarSystem sys)      { return !(st instanceof CombatAmoeba); }
     @Override
-    public boolean canEat(CombatEntity st)  { return (st instanceof CombatShip) || (st instanceof CombatColony); }
+    public boolean canEat(CombatEntity st)  { return (st instanceof CombatEmpireShip) || (st instanceof CombatColony); }
     @Override
     public boolean ignoreRepulsors()    { return true; }
     @Override
@@ -73,11 +73,11 @@ public class CombatAmoeba extends CombatEntity {
     public void eatShips(CombatEntity st) {
         if (st == null)
             return;
-        if (!st.isShip() && !st.isColony())
+        if (!st.isEmpireShip() && !st.isColony())
             return;
         
         // only eats ships
-        if (st.isShip()) {
+        if (st.isEmpireShip()) {
             st.drawFadeOut(.025f);
             st.mgr.destroyStack(st);
         }

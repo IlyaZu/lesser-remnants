@@ -1331,8 +1331,8 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         drawShadowedString(g, label, 3, x1, y1, SystemPanel.textShadowC, c0);
     }
     private void drawStack(Graphics2D g, CombatEntity st, int x, int y, int w, int h) {
-        if (st.isShip()) {
-            CombatShip sh = (CombatShip) st;
+        if (st.isEmpireShip()) {
+            CombatEmpireShip sh = (CombatEmpireShip) st;
             ShipDesign d = sh.design();
             int count = counts.containsKey(d) ? counts.get(d) : 0;
             if (count > 0)
@@ -1702,7 +1702,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         if (!stack.canRetreat() || !stack.empire.isPlayerControlled())
             return;
         StarSystem dest = player().ai().shipCaptain().retreatSystem(mgr.system());
-        mgr.retreatStack((CombatShip)stack, dest);
+        mgr.retreatStack((CombatEmpireShip)stack, dest);
         
         if (inCombat && mgr.currentStack().usingAI())
             mgr.continueToNextPlayerStack();
