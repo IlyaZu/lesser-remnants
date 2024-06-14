@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public class OrionGuardianCaptain implements Base, ShipCaptain {
         List<CombatEntity> activeStacks = new ArrayList<>(mgr.activeStacks());
         List<CombatEntity> potentialTargets = new ArrayList<>();
         for (CombatEntity st: activeStacks) {
-            if (st.isShip())
+            if (st.isEmpireShip())
                 potentialTargets.add(st);
         }
         FlightPath bestPath = null;

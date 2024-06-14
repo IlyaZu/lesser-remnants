@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 package rotp.model.ships;
 
 import rotp.model.combat.CombatEntity;
-import rotp.model.combat.CombatShip;
+import rotp.model.combat.CombatEmpireShip;
 import rotp.model.tech.TechStasisField;
 
 public final class ShipSpecialStasisField extends ShipSpecial {
     private static final long serialVersionUID = 1L;
-    transient CombatShip target;
+    transient CombatEmpireShip target;
     public ShipSpecialStasisField (TechStasisField t) {
         tech(t);
         sequence(t.level + .05f);
@@ -39,7 +39,7 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     public String desc()           { return tech().brief(); }
     @Override
     public boolean validTarget(CombatEntity tgt) {
-        if (!tgt.isShip())
+        if (!tgt.isEmpireShip())
             return false;
         if (tgt.immuneToStasis())
             return false;
@@ -53,8 +53,8 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     public void fireUpon(CombatEntity source, CombatEntity tgt, int count)   {
         if (tgt.immuneToStasis())
             return;
-        if (tgt.isShip()) {
-            target = (CombatShip) tgt;
+        if (tgt.isEmpireShip()) {
+            target = (CombatEmpireShip) tgt;
             tech().drawSpecialAttack(source, target, 1, 0);
             target.inStasis = true;
             target.missiles().clear();

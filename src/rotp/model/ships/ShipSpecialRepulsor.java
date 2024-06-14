@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public final class ShipSpecialRepulsor extends ShipSpecial {
         makeSuccessfulAttack(source, target);
     }
     private void makeSuccessfulAttack(CombatEntity source, CombatEntity target) {
-        if (target.isShip()|| target.isMonster()) {
+        if (target.isEmpireShip()|| target.isMonster()) {
             tech().drawSpecialAttack(source, target, 1, 0);
         }
     }

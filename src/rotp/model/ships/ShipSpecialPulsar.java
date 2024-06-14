@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ public final class ShipSpecialPulsar extends ShipSpecial {
         for (int x0=source.x-1; x0<=source.x+1; x0++) {
             for (int y0=source.y-1; y0<=source.y+1; y0++) {
                 CombatEntity st = source.mgr.stackAt(x0,y0);
-                if ((st != null) && st.isShip() && (st != source)) 
+                if ((st != null) && st.isEmpireShip() && (st != source))
                     st.takePulsarDamage(dam, 1);
             }
         }

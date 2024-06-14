@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package rotp.model.ships;
 
 import rotp.model.combat.CombatEntity;
 import rotp.model.combat.CombatColony;
-import rotp.model.combat.CombatShip;
+import rotp.model.combat.CombatEmpireShip;
 import rotp.model.tech.TechStreamProjector;
 
 public final class ShipSpecialProjector extends ShipSpecial {
@@ -46,8 +46,8 @@ public final class ShipSpecialProjector extends ShipSpecial {
     @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count)      {
         float armorMod = tech().armorMod(count);
-        if (target.isShip()) {
-            CombatShip st = (CombatShip) target;
+        if (target.isEmpireShip()) {
+            CombatEmpireShip st = (CombatEmpireShip) target;
             st.maxHits = (int) st.maxHits*armorMod;
             st.hits = min(st.hits-1, st.maxHits);
         }

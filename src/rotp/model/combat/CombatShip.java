@@ -124,8 +124,6 @@ public class CombatShip extends CombatEntity {
     }
 
     @Override
-    public boolean isShip()          { return true;  }
-    @Override
     public String name()             { return str(num)+":"+design.name(); }
     @Override
     public ShipDesign design()       { return design; }
@@ -577,9 +575,9 @@ public class CombatShip extends CombatEntity {
         if (transparency < 1)
             g.setComposite(prevComp);
 
-        if (mgr.currentStack().isShip()) {
-            CombatShip shipStack = (CombatShip) mgr.currentStack();
-            if (!mgr.performingStackTurn ) {
+        if (mgr.currentStack().isEmpireShip()) {
+            CombatEmpireShip shipStack = (CombatEmpireShip) mgr.currentStack();
+            if (!mgr.performingStackTurn) {
                 if (shipStack.design == design) {
                     Stroke prev = g.getStroke();
                     g.setStroke(BasePanel.stroke2);

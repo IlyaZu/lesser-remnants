@@ -43,6 +43,11 @@ public class CombatEmpireShip extends CombatShip {
     }
     
     @Override
+    public boolean isEmpireShip() {
+        return true;
+    }
+    
+    @Override
     public boolean usingAI() {
         return usingAI;
     }

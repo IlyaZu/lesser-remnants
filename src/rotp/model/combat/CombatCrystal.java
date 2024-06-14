@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class CombatCrystal extends CombatEntity {
             for (int y0=y-1; y0<=y+1; y0++) {
                 CombatEntity st = mgr.stackAt(x0,y0);
                 if ((st != null) && (st != this)) {
-                    if (st.isShip() || st.isMonster() || st.isColony()) {
+                    if (st.isEmpireShip() || st.isMonster() || st.isColony()) {
                         st.drawDamageTaken(dam, attackText);
                         st.takePulsarDamage(dam, 1);
                         st.attackLevel = max(0, st.attackLevel-1);

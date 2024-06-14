@@ -411,8 +411,8 @@ public class CombatManager implements Base {
         // if they have nowhere to retreat, destroy them (don't show retreat animation in this case)
         List<CombatEntity> activeStacks = new ArrayList<>(results.activeStacks());
         for (CombatEntity st: activeStacks) {
-            if (st.inStasis && st.isShip()) {
-                CombatShip sh = (CombatShip) st;
+            if (st.inStasis && st.isEmpireShip()) {
+                CombatEmpireShip sh = (CombatEmpireShip) st;
                 StarSystem dest = sh.empire.retreatSystem(system());
                 boolean prevShow = showAnimations;
                 showAnimations = false;
@@ -457,7 +457,7 @@ public class CombatManager implements Base {
 
         results.logIncidents();
     }
-    public void retreatStack(CombatShip stack, StarSystem s) {
+    public void retreatStack(CombatEmpireShip stack, StarSystem s) {
         log("Retreating: ", stack.fullName());
         performingStackTurn = true;
         stack.drawRetreat();
@@ -469,8 +469,8 @@ public class CombatManager implements Base {
     }
     public void destroyStack(CombatEntity stack) {
         log("Destroyed: ", stack.fullName());
-        if (stack instanceof CombatShip)
-            results.addShipStackDestroyed(((CombatShip)stack).design(), stack.origNum);
+        if (stack instanceof CombatEmpireShip)
+            results.addShipStackDestroyed(((CombatEmpireShip)stack).design(), stack.origNum);
         else if (stack instanceof CombatColony)
             results.addBasesDestroyed(stack.num);
 
@@ -595,8 +595,8 @@ public class CombatManager implements Base {
 
         List<CombatEntity> activeStacks = new ArrayList<>(results.activeStacks());
         for (CombatEntity st : activeStacks) {
-            if ((st.empire == e) && st.isShip()) {
-                CombatShip ship = (CombatShip) st;
+            if ((st.empire == e) && st.isEmpireShip()) {
+                CombatEmpireShip ship = (CombatEmpireShip) st;
                 if (ship.retreat()) {
                     retreatingStacks.add(ship);
                 }
@@ -739,8 +739,8 @@ public class CombatManager implements Base {
         for (CombatEntity st : results.activeStacks()) {
             if (st.canScan()) {
                 for (CombatEntity st2 : results.activeStacks()) {
-                    if (st2.isShip()) {
-                        CombatShip sh2 = (CombatShip) st2;
+                    if (st2.isEmpireShip()) {
+                        CombatEmpireShip sh2 = (CombatEmpireShip) st2;
                         st.empire.scanDesign(sh2.design(), st2.empire);
                     }
                 }
