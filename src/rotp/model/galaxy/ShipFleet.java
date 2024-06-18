@@ -711,7 +711,7 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             if (num[i] > 0) {
                 ShipDesign d = design(i);
                 if (d != null) {
-                    CombatShip shipStack = new CombatEmpireShip(this, i, mgr);
+                    CombatShip shipStack = CombatEmpireShip.make(this, i, mgr);
                     for (int j=0;j<ShipDesign.maxWeapons();j++) {
                         int wpnCount = d.wpnCount(j);
                         int attackCount = d.weapon(j).attacksPerRound();

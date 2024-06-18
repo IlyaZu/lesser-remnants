@@ -475,11 +475,10 @@ public final class ShipDesign extends Design {
         // always guarantee a minimum design speed of 1
         return max(1, speed);
     }
-    public float targetShieldMod(ShipComponent c) {
+    public float beamShieldMod() {
         float shieldMod = 1.0f;
-        if (c.isBeamWeapon()) {
-            for (int i = 0; i < maxSpecials(); i++)
-                shieldMod *= special(i).beamShieldMod();
+        for (int i = 0; i < maxSpecials(); i++) {
+            shieldMod *= special(i).beamShieldMod();
         }
         return shieldMod;
     }
@@ -522,12 +521,6 @@ public final class ShipDesign extends Design {
         }
         return false;
     }
-    public float blackHoleDef() {
-        float def = 0;
-        for (int i=0;i<maxSpecials();i++)
-            def = max(def,special(i).blackHoleDef());
-        return def;
-    }
     public boolean allowsScanning() {
         for (int i=0;i<maxSpecials();i++) {
             if (special(i).allowsScanning())
@@ -544,12 +537,8 @@ public final class ShipDesign extends Design {
     public int warpSpeed() {
         return engine().warp();
     }
-    public boolean hasColonySpecial() { return colonySpecial() != null; }
-    public float missPct() {
-        float pct = 0.0f;
-        for (ShipSpecial spec: special)
-            pct = max(pct, spec.missPct());
-        return pct;
+    public boolean hasColonySpecial() {
+        return colonySpecial() != null;
     }
     public ShipSpecialColony colonySpecial() {
         for (int i=0; i<maxSpecials(); i++) {
@@ -557,6 +546,12 @@ public final class ShipDesign extends Design {
                 return (ShipSpecialColony) special(i);
         }
         return null;
+    }
+    public float repairPct() {
+        float healPct = 0;
+        for (ShipSpecial spec: special)
+            healPct = max(healPct, spec.shipRepairPct());
+        return healPct;
     }
     public void preNextTurn() {
         resetBuildCount();

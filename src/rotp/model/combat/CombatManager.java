@@ -501,7 +501,7 @@ public class CombatManager implements Base {
             if (fl.num(i) > 0) {
                 ShipDesign d = fl.empire().shipLab().design(i);
                 if (d != null) {
-                    CombatShip stack = new CombatEmpireShip(fl, i, this);
+                    CombatShip stack = CombatEmpireShip.make(fl, i, this);
                     if (stack.isArmed())
                         stack.ward(colonyWard);
                     addStackToCombat(stack);

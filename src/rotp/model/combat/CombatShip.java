@@ -29,7 +29,7 @@ import rotp.model.ai.interfaces.ShipCaptain;
 import rotp.model.empires.Empire;
 import rotp.model.empires.ShipView;
 import rotp.model.ships.ShipComponent;
-import rotp.model.ships.ShipDesign;
+import rotp.model.ships.ShipSpecial;
 import rotp.model.ships.ShipWeapon;
 import rotp.model.ships.ShipWeaponMissileType;
 import rotp.model.tech.TechCloaking;
@@ -38,20 +38,106 @@ import rotp.ui.BasePanel;
 import rotp.ui.combat.ShipBattleUI;
 
 public class CombatShip extends CombatEntity {
-    private final ShipDesign design;
-    private int selectedWeaponIndex = 0;
-    private final List<ShipComponent> weapons = new ArrayList<>();
-    private float displacementPct = 0;
-
-    private int[] weaponCount = new int[7];
-    public int[] weaponAttacks = new int[7];
-    private int[] shotsRemaining = new int[7];
-    public int[] roundsRemaining = new int[7]; // how many rounds you can fire (i.e. missiles)
-    private int[] baseTurnsToFire = new int[7]; // how many turns to wait before you can fire again
-    private int[] wpnTurnsToFire = new int[7]; // how many turns to wait before you can fire again
-    private int repulsorRange = 0;
-    private CombatEntity ward;
+    private final int initiative;
+    private final boolean isTeleporting;
+    private final boolean isScanning;
+    private final float missChance;
+    private final float blackHoleDefence;
+    private final int repulsorRange;
+    private final float beamShieldMod;
     
+    private final List<ShipSpecial> specials;
+
+    private final List<ShipComponent> weapons = new ArrayList<>();
+    private int selectedWeaponIndex = 0;
+    
+    private final int[] weaponCount = new int[7];
+    public final int[] weaponAttacks = new int[7];
+    private final int[] shotsRemaining = new int[7];
+    public final int[] roundsRemaining = new int[7]; // how many rounds you can fire (i.e. missiles)
+    private final int[] baseTurnsToFire = new int[7]; // how many turns to wait before you can fire again
+    private final int[] wpnTurnsToFire = new int[7]; // how many turns to wait before you can fire again
+    
+    private CombatEntity ward;
+
+    private final String name;
+    
+    public CombatShip(int count, float hits, float shield,
+            int attack, int beamDefense, int missileDefense,
+            int maneuverability, int move, int initiative,
+            List<WeaponGroup> weaponGroups, List<ShipSpecial> specials,
+            Image image, String name,
+            ShipCaptain captian, CombatManager manager) {
+        
+        this.mgr = manager;
+        this.captain = captian;
+        this.origNum = this.num = count;
+        this.startingMaxHits = this.maxHits = this.hits = hits;
+        this.maxShield = this.shield = manager.system().inNebula() ? 0 : shield;
+        this.attackLevel = attack;
+        this.beamDefense = beamDefense;
+        this.missileDefense = missileDefense;
+        this.maneuverability = maneuverability;
+        this.maxMove = this.move = move;
+        this.initiative = initiative;
+        this.image = image;
+        this.name = name;
+
+        for (WeaponGroup weaponGroup : weaponGroups) {
+            ShipWeapon weapon = weaponGroup.getWeapon();
+            this.weaponCount[this.weapons.size()] = weaponGroup.getCount();
+            this.weaponAttacks[this.weapons.size()] = weapon.attacksPerRound();
+            this.roundsRemaining[this.weapons.size()] = weapon.shots();
+            this.baseTurnsToFire[this.weapons.size()] = weapon.turnsToFire();
+            this.wpnTurnsToFire[this.weapons.size()] = 1;
+            this.weapons.add(weaponGroup.getWeapon());
+        }
+        
+        boolean isTeleporting = false;
+        boolean isScanning = false;
+        float missChance = 0.0f;
+        float blackHoleDefence = 0.0f;
+        int repulsorRange = 0;
+        float beamShieldMod = 1.0f;
+        for (ShipSpecial special : specials) {
+            if (special.isWeapon()) {
+                this.weaponCount[this.weapons.size()] = 1;
+                this.weaponAttacks[this.weapons.size()] = 1;
+                this.roundsRemaining[this.weapons.size()] = 1;
+                this.baseTurnsToFire[this.weapons.size()] = 1;
+                this.wpnTurnsToFire[this.weapons.size()] = 1;
+                this.weapons.add(special);
+            }
+            if (special.allowsCloaking()) {
+                this.canCloak = true;
+            }
+            if (special.allowsTeleporting()) {
+                isTeleporting = true;
+            }
+            if (special.allowsScanning()) {
+                isScanning = true;
+            }
+            missChance = Math.max(missChance, special.missPct());
+            repairPct = Math.max(repairPct, special.shipRepairPct());
+            blackHoleDefence = Math.max(blackHoleDefence, special.blackHoleDef());
+            repulsorRange = Math.max(repulsorRange, special.repulsorRange());
+            beamRangeBonus += special.beamRangeBonus();
+            beamShieldMod *= special.beamShieldMod();
+        }
+        this.isTeleporting = isTeleporting;
+        this.isScanning = isScanning;
+        this.missChance = missChance;
+        this.blackHoleDefence = blackHoleDefence;
+        this.repulsorRange = repulsorRange;
+        this.beamShieldMod = beamShieldMod;
+        
+        this.specials = specials;
+
+        System.arraycopy(weaponAttacks, 0, shotsRemaining, 0, shotsRemaining.length);
+        
+        cloak();
+    }
+
     @Override
     public String toString() {
         if (target != null)
@@ -59,74 +145,14 @@ public class CombatShip extends CombatEntity {
         else
             return shortString();
     }
+    
     @Override
     public String shortString() {
-        return concat(design.name(), " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
+        return concat(name, " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
     }
-
-    public CombatShip(int count, ShipDesign design, ShipCaptain captian, CombatManager m) {
-        mgr = m;
-        this.design = design;
-        this.captain = captian;
-        origNum = num = count;
-        startingMaxHits = maxHits = hits = design.hits();
-        maxMove = move = design.moveRange();
-        maxShield = shield = m.system().inNebula() ? 0 : design.shieldLevel();
-        attackLevel = design.attackLevel();
-        maneuverability = design.maneuverability();
-        repulsorRange = design.repulsorRange();
-        missileDefense = design.missileDefense();
-        beamDefense = design.beamDefense();
-        displacementPct = design.missPct();
-        repairPct = designShipRepairPct();
-        beamRangeBonus = designBeamRangeBonus();
-        image = design.image();
-        
-        canCloak = design.allowsCloaking();
-        cloak();
-
-        for (int i=0;i<ShipDesign.maxWeapons();i++) {
-            if (validWeapon(i) && (design.wpnCount(i) > 0)) {
-                weaponCount[weapons.size()] = design.wpnCount(i);
-                weaponAttacks[weapons.size()] = design.weapon(i).attacksPerRound();
-                roundsRemaining[weapons.size()] = design.weapon(i).shots();
-                baseTurnsToFire[weapons.size()] = design.weapon(i).turnsToFire();
-                wpnTurnsToFire[weapons.size()] = 1;
-                weapons.add(design.weapon(i));
-            }
-        }
-        for (int i=0;i<ShipDesign.maxSpecials();i++) {
-            if (design.special(i).isWeapon()) {
-                weaponCount[weapons.size()] = 1;
-                weaponAttacks[weapons.size()] = 1;
-                roundsRemaining[weapons.size()] = 1;
-                baseTurnsToFire[weapons.size()] = 1;
-                wpnTurnsToFire[weapons.size()] = 1;
-                weapons.add(design.special(i));
-            }
-        }
-
-        System.arraycopy(weaponAttacks, 0, shotsRemaining, 0, shotsRemaining.length);
-    }
-
-    public float designShipRepairPct() {
-        float healPct = 0;
-        for (int i=0;i<ShipDesign.maxSpecials();i++)
-            healPct = max(healPct, design.special(i).shipRepairPct());
-        return healPct;
-    }
-
-    private int designBeamRangeBonus() {
-        int rng = 0;
-        for (int j=0;j<ShipDesign.maxSpecials();j++)
-            rng += design.special(j).beamRangeBonus();
-        return rng;
-    }
-
+    
     @Override
-    public String name()             { return str(num)+":"+design.name(); }
-    @Override
-    public ShipDesign design()       { return design; }
+    public String name()             { return str(num)+":"+name; }
     @Override
     public CombatEntity ward()             { return ward; }
     @Override
@@ -136,21 +162,19 @@ public class CombatShip extends CombatEntity {
     @Override
     public int repulsorRange()            { return repulsorRange; }
     @Override
-    public float designCost()             { return design.cost(); }
-    @Override
     public int numWeapons()               { return weapons.size(); }
     @Override
     public ShipComponent weapon(int i)    { return weapons.get(i); }
     @Override
-    public boolean hasTeleporting() { return design.allowsTeleporting(); }
+    public boolean hasTeleporting() { return isTeleporting; }
     @Override
-    public boolean canScan()        { return design.allowsScanning(); }
+    public boolean canScan()        { return isScanning; }
     @Override
-    public float autoMissPct()      { return displacementPct; }
+    public float autoMissPct()      { return missChance; }
     @Override
     public float bombDamageMod()   { return 0; }
     @Override
-    public float blackHoleDef()    { return design.blackHoleDef(); }
+    public float blackHoleDef()    { return blackHoleDefence; }
     @Override
     public boolean ignoreRepulsors()    { return cloaked || canTeleport(); }
     @Override
@@ -256,10 +280,14 @@ public class CombatShip extends CombatEntity {
     }
     @Override
     public float missileInterceptPct(ShipWeaponMissileType wpn)   {
-        return design.missileInterceptPct(wpn);
+        float maxIntercept = 0.0f;
+        for (ShipSpecial special : specials) {
+            maxIntercept = Math.max(maxIntercept, special.missileIntercept(wpn));
+        }
+        return maxIntercept;
     }
     @Override
-    public int wpnCount(int i) { return design.wpnCount(i); }
+    public int wpnCount(int i) { return weaponCount[i]; }
     @Override
     public int shotsRemaining(int i) { return shotsRemaining[i]; }
     @Override
@@ -298,7 +326,7 @@ public class CombatShip extends CombatEntity {
     }
     @Override
     public float initiative() {
-        return design.initiative();
+        return initiative;
     }
     @Override
     public boolean selectBestWeapon(CombatEntity target) {
@@ -364,10 +392,6 @@ public class CombatShip extends CombatEntity {
         if (shotsRemaining[index] == 0)
             rotateToUsableWeapon(targetStack);
         target.damageSustained = 0;
-    }
-    private boolean validWeapon(int i) {
-        ShipWeapon wpn = design.weapon(i);
-        return wpn.isWeapon() && !wpn.noWeapon();
     }
     @Override
     public boolean canAttack(CombatEntity st) {
@@ -525,21 +549,14 @@ public class CombatShip extends CombatEntity {
     }
     @Override
     public float targetShieldMod(ShipComponent c) {
-        return design.targetShieldMod(c);
-    }
-    @Override
-    public void loseShip() {
-        int orig = num;
-        super.loseShip();
-        int shipsLost = orig-num;
-
-        // record losses
-        if (!destroyed())  // if destroyed, already recorded lose in super.loseShip()
-            mgr.results().addShipDestroyed(design, shipsLost);
+        if (c.isBeamWeapon()) {
+            return beamShieldMod;
+        }
+        return 1.0f;
     }
     @Override
     public void drawStack(ShipBattleUI ui, Graphics2D g, int origCount, int x, int y, int stackW, int stackH) {
-        Image img = design.image();
+        Image img = image;
 
         int w0 = img.getWidth(null);
         int h0 = img.getHeight(null);
@@ -578,7 +595,7 @@ public class CombatShip extends CombatEntity {
         if (mgr.currentStack().isEmpireShip()) {
             CombatEmpireShip shipStack = (CombatEmpireShip) mgr.currentStack();
             if (!mgr.performingStackTurn) {
-                if (shipStack.design == design) {
+                if (shipStack == this) {
                     Stroke prev = g.getStroke();
                     g.setStroke(BasePanel.stroke2);
                     g.setColor(ShipBattleUI.currentBorderC);
@@ -592,7 +609,7 @@ public class CombatShip extends CombatEntity {
         int y2 = y+stackH-BasePanel.s5;
         g.setFont(narrowFont(16));
         int nameMgn = ui.showTacticalInfo() ? iconW + BasePanel.s5 : BasePanel.s5;
-        String name = ui.showTacticalInfo() ? design.name() : text("SHIP_COMBAT_COUNT_NAME", str(num), design.name());
+        String name = ui.showTacticalInfo() ? this.name : text("SHIP_COMBAT_COUNT_NAME", str(num), this.name);
         scaledFont(g, name, stackW-nameMgn,16,8);
         int sw2 = g.getFontMetrics().stringWidth(name);
         int x1mgn = reversed || !ui.showTacticalInfo() ? x1 : x1+iconW;
