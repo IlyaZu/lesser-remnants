@@ -91,7 +91,10 @@ public class ShipWeapon extends ShipComponent {
     @Override
     public float estimatedBombardDamage(ShipDesign des, CombatColony target) {
         int num = bombardAttacks();
-        float shieldMod = des.targetShieldMod(this);
+        float shieldMod = 1.0f;
+        if (isBeamWeapon()) {
+            shieldMod = des.beamShieldMod();
+        }
         float shieldLevel = shieldMod * target.shieldLevel();
         float beamMod = 1;
         float pct = (5 + des.attackLevel() - target.bombDefense()) / 10;
