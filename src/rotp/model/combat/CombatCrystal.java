@@ -47,13 +47,13 @@ public class CombatCrystal extends CombatEntity {
     @Override
     public boolean immuneToStasis()     { return true; }
     @Override
-    public void reloadWeapons()         { weaponUsed = false; };
+    public void reloadWeapons()         { weaponUsed = false; }
     @Override
     public boolean hostileTo(CombatEntity st, StarSystem sys)  { return true; }
     @Override
     public boolean selectBestWeapon(CombatEntity target)       { return !weaponUsed; }
     @Override
-    public void fireWeapon(CombatEntity target)  { 
+    public void fireWeapon(CombatEntity target)  {
         weaponUsed = true;
         float dam = roll(1,MAX_WEAPON_DAMAGE);
 
@@ -73,7 +73,7 @@ public class CombatCrystal extends CombatEntity {
                     if (st.isColony() && st.destroyed()) {
                         CombatColony cStack = (CombatColony) st;
                         st.mgr.destroyStack(st);
-                        RandomEventSpaceCrystal.monster.degradePlanet(st.mgr.system());                   
+                        RandomEventSpaceCrystal.monster.degradePlanet(st.mgr.system());
                         cStack.colonyDestroyed = true;
                     }
                 }
@@ -84,7 +84,7 @@ public class CombatCrystal extends CombatEntity {
     public float initiativeRank() {
         return 100;
     }
-    public void drawAttack() { 
+    public void drawAttack() {
         if (!mgr.showAnimations())
             return;
         

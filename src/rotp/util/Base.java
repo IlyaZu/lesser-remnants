@@ -383,20 +383,20 @@ public interface Base {
         // using K/M/B for thousands, millions and billions
         if (amt < 1e4)
             return str(amt);
-        else if (amt < 1e5) 
-            return text("NUM_FORMAT_THOUSANDS", df1.format(amt/1000f));       
+        else if (amt < 1e5)
+            return text("NUM_FORMAT_THOUSANDS", df1.format(amt/1000f));
         else if (amt < 1e6) {
             amt = amt/1000;
-            return text("NUM_FORMAT_THOUSANDS", amt);            
+            return text("NUM_FORMAT_THOUSANDS", amt);
         }
         else if (amt < 1e7) {
             String amtStr =df2.format(amt/1000000f);
             return text("NUM_FORMAT_MILLIONS", amtStr);
-        }   
+        }
         else if (amt < 1e8) {
             String amtStr =df1.format(amt/1000000f);
             return text("NUM_FORMAT_MILLIONS", amtStr);
-        }   
+        }
         else if (amt < 1e9) {
             amt = amt / 1000000;
             return text("NUM_FORMAT_MILLIONS", amt);
@@ -413,7 +413,7 @@ public interface Base {
             amt = amt/1000000000;
             return text("NUM_FORMAT_BILLIONS", amt);
         }
-    } 
+    }
     public default Tech tech(String id) {
         return TechLibrary.current().tech(id);
     }
@@ -451,7 +451,7 @@ public interface Base {
                 res *= d;
         }
         else if (e < 0) {
-            for (int i=-1;i>=e;i--) 
+            for (int i=-1;i>=e;i--)
                 res /= d;
                 }
         return res;
@@ -565,15 +565,15 @@ public interface Base {
             err("Base.icon() -- Resource not found:", n);
             return null;
         }
-        else 
+        else
             return new ImageIcon(resource);
     }
     public default InputStream fileInputStream(String n) {
         String fullString = "../rotp/" +n;
 
-        try { return new FileInputStream(new File(Rotp.jarPath(), n)); } 
+        try { return new FileInputStream(new File(Rotp.jarPath(), n)); }
         catch (FileNotFoundException e) {
-            try { return new FileInputStream(fullString); } 
+            try { return new FileInputStream(fullString); }
             catch (FileNotFoundException ex) {
                 return Rotp.class.getResourceAsStream(n);
             }
@@ -597,12 +597,12 @@ public interface Base {
         boolean exists = (fis != null) || (zipStream != null);
         
         try {
-            if (fis != null) 
-                fis.close();    
+            if (fis != null)
+                fis.close();
             else if (zipStream != null)
                 zipStream.close();
         }
-        catch(IOException e) {};
+        catch(IOException e) {}
         
         return exists;
     }
@@ -691,9 +691,9 @@ public interface Base {
             char[] oldDigits = LanguageManager.latinDigits;
             char[] newDigits = LanguageManager.customDigits;
             int n = min(oldDigits.length, newDigits.length);
-            for (int j=0;j<n;j++) 
-                s = s.replace(oldDigits[j], newDigits[j]);           
-        }           
+            for (int j=0;j<n;j++)
+                s = s.replace(oldDigits[j], newDigits[j]);
+        }
         return s;
     }
     public default String strFormat(String fmt, int n) { return String.format(fmt, n);  }
@@ -803,7 +803,7 @@ public interface Base {
                     currentLine = word;
                 }
                 else
-                    currentLine = newLine;                
+                    currentLine = newLine;
             }
         }
         else {

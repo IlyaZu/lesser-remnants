@@ -42,7 +42,7 @@ import rotp.util.Base;
 
 public class ShipFleet implements Base, Sprite, Ship, Serializable {
     private static final long serialVersionUID = 1L;
-    private enum Status { ORBITING, DEPLOYED, IN_TRANSIT, RETREAT_ON_ARRIVAL };
+    private enum Status { ORBITING, DEPLOYED, IN_TRANSIT, RETREAT_ON_ARRIVAL }
     public final int empId;
     private int sysId;
     private int destSysId = StarSystem.NULL_ID;
