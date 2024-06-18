@@ -46,15 +46,15 @@ public class OrionGuardianCaptain implements Base, ShipCaptain {
             prevTarget = stack.target;
             FlightPath bestPathToTarget = chooseTarget(stack);
             // if we need to move towards target, do it now
-            if ((bestPathToTarget != null) && (bestPathToTarget.size() > 0)) 
+            if ((bestPathToTarget != null) && (bestPathToTarget.size() > 0))
                 mgr.performMoveStackAlongPath(stack, bestPathToTarget);
 
             // if can attack target this turn, fire when ready
-            if (stack.canAttack(stack.target)) 
+            if (stack.canAttack(stack.target))
                 mgr.performAttackTarget(stack);
             
             // SANITY CHECK:
-            // make sure we fall out if we haven't moved 
+            // make sure we fall out if we haven't moved
             // and we are still picking the same target
             if ((prevMove == stack.move) && (prevTarget == stack.target))
                 stack.move = 0;

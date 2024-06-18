@@ -42,6 +42,7 @@ public abstract class CombatEntity implements Base {
     public static final Color missileDefenseColor = new Color(64,160,64);
     public static final Color populationColor = new Color(0,128,0);
     public static final Color factoryColor = new Color(128,0,0);
+    
     public Empire empire;
     public CombatManager mgr;
     public ShipCaptain captain;
@@ -206,7 +207,7 @@ public abstract class CombatEntity implements Base {
         for (CombatMissile miss : missiles)
             miss.beginTurn();
     }
-    public void reloadWeapons() { };
+    public void reloadWeapons() { }
     public void attemptToHeal() {
         if (hits >= startingMaxHits)
             return;
