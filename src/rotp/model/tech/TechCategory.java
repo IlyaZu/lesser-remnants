@@ -32,12 +32,12 @@ public final class TechCategory implements Base, Serializable {
     public static final int PROPULSION = 4;
     public static final int WEAPON = 5;
     
-    public static float RESEARCH_INTEREST = 0.25f;
+    private static final float RESEARCH_INTEREST = 0.25f;
     public static final int MAX_ALLOCATION_TICKS = 60;
     private static final int MAX_QUINTILES = 20;
-    private static String[] researchKeys = { "TECH_RESEARCH_COMPUTER", "TECH_RESEARCH_CONSTRUCTION",
+    private static final String[] researchKeys = { "TECH_RESEARCH_COMPUTER", "TECH_RESEARCH_CONSTRUCTION",
                     "TECH_RESEARCH_FORCE_FIELD", "TECH_RESEARCH_PLANETOLOGY", "TECH_RESEARCH_PROPULSION", "TECH_RESEARCH_WEAPON" };
-    private static String[] categoryKeys = { "TECH_COMPUTERS", "TECH_CONSTRUCTION", "TECH_FORCE_FIELDS",
+    private static final String[] categoryKeys = { "TECH_COMPUTERS", "TECH_CONSTRUCTION", "TECH_FORCE_FIELDS",
                     "TECH_PLANETOLOGY", "TECH_PROPULSION", "TECH_WEAPONS" };
     public static String id(int i) {
         switch (i) {
