@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,11 +73,11 @@ public final class TechCategory implements Base, Serializable {
     public List<String> knownTechs()       { return knownTechs; }
     public String currentTech()            { return currentTech; }
     public String currentTechName()        { return tech(currentTech).name(); }
-    public boolean currentTech(Tech t)        { 
+    public boolean currentTech(Tech t)        {
         if (!id().equals(t.cat.id()))
             return false;
         researchStarted = true;
-        currentTech = t.id(); 
+        currentTech = t.id();
         return true;
     }
     public boolean locked()                { return researchCompleted || locked; }
@@ -186,8 +186,8 @@ public final class TechCategory implements Base, Serializable {
         possibleTechs.clear();
 
         Object[] techsByQuintile =new Object[MAX_QUINTILES];
-        for (int i=0;i<MAX_QUINTILES;i++) 
-            techsByQuintile[i] = new ArrayList<String>();      
+        for (int i=0;i<MAX_QUINTILES;i++)
+            techsByQuintile[i] = new ArrayList<String>();
 
         for (int i=0;i<baseCat.possibleTechs.size();i++) {
             String id = baseCat.possibleTechs.get(i);
@@ -228,28 +228,28 @@ public final class TechCategory implements Base, Serializable {
     public String techDescription1(boolean key) {
         switch(index) {
                 case 0: return key ? text("TECH_FACTORY_CONTROLS") : text("TECH_FACTORY_CONTROLS_BONUS", tree.empire().maxRobotControls());
-                case 1: 
+                case 1:
                     if (key)
                         return text("TECH_WASTE_REDUCTION");
                    else if (tree.factoryWasteMod() == 1)
                         return text("TECH_WASTE_REDUCTION_NONE");
                  else
                         return text("TECH_WASTE_REDUCTION_AMT", (100-(int)(tree.factoryWasteMod()*100)));
-                case 2: 
+                case 2:
                     if (key)
                         return text("TECH_PLANETARY_SHIELDS");
                     else if  (tree.maxPlanetaryShieldLevel() == 0)
                         return text("TECH_PLANETARY_SHIELDS_NONE");
                     else
                         return text("TECH_PLANETARY_SHIELDS_CLASS", (int)tree.maxPlanetaryShieldLevel());
-                case 3: 
+                case 3:
                     if (key)
                         return text("TECH_TERRAFORM");
                     else if  (tree.terraformAdj() == 0)
                         return text("TECH_TERRAFORM_NO_BONUS");
                     else
                         return text("TECH_TERRAFORM_BONUS", (int)tree.terraformAdj());
-                case 4: 
+                case 4:
                     if (key)
                         return text("TECH_SHIP_RANGE");
                     else {
@@ -259,7 +259,7 @@ public final class TechCategory implements Base, Serializable {
                         else
                             return text("TECH_SHIP_RANGE_AMT", df1.format(tree.shipRange()));
                     }
-                case 5: 
+                case 5:
                     if (key)
                         return text("TECH_GROUND_COMBAT");
                     else if  (tree.weaponGroundBonus() == 0)
@@ -271,14 +271,14 @@ public final class TechCategory implements Base, Serializable {
     }
     public String techDescription2(boolean key) {
         switch(index) {
-            case 0: 
+            case 0:
                 if (key)
                     return text("TECH_PLANET_SCANNER");
                 else if (tree.empire().planetScanningRange() == 0)
                     return text("TECH_PLANET_SCANNER_NONE");
                 else
                     return text("TECH_PLANET_SCANNER_RANGE", (int)tree.empire().planetScanningRange());
-            case 1: 
+            case 1:
                 int bonus = (int)(tree.armorGroundBonus() +tree.battleSuitGroundBonus());
                 if (key)
                     return text("TECH_GROUND_COMBAT");
@@ -286,7 +286,7 @@ public final class TechCategory implements Base, Serializable {
                     return text("TECH_GROUND_COMBAT_NO_BONUS");
                 else
                     return text("TECH_GROUND_COMBAT_BONUS", bonus);
-            case 2: 
+            case 2:
                 if (key)
                     return text("TECH_GROUND_COMBAT");
                 else if  (tree.shieldGroundBonus() == 0)
@@ -414,21 +414,21 @@ public final class TechCategory implements Base, Serializable {
     }
     public int costForTech(Tech t) {
         float rawCost = baseResearchCost() * t.level * t.level * racialMod();
-        if (rawCost > 1000000000) 
+        if (rawCost > 1000000000)
             return (int)Math.ceil(rawCost/100000000)*100000000;
-        else if (rawCost > 100000000) 
+        else if (rawCost > 100000000)
             return (int)Math.ceil(rawCost/10000000)*10000000;
-        else if (rawCost > 10000000) 
+        else if (rawCost > 10000000)
             return (int)Math.ceil(rawCost/1000000)*1000000;
-        else if (rawCost > 1000000) 
+        else if (rawCost > 1000000)
             return (int)Math.ceil(rawCost/100000)*100000;
-        else if (rawCost > 100000) 
+        else if (rawCost > 100000)
             return (int)Math.ceil(rawCost/10000)*10000;
-        else if (rawCost > 10000) 
+        else if (rawCost > 10000)
             return (int)Math.ceil(rawCost/1000)*1000;
-        else if (rawCost > 1000) 
+        else if (rawCost > 1000)
             return (int)Math.ceil(rawCost/100)*100;
-        else if (rawCost > 100) 
+        else if (rawCost > 100)
             return (int)Math.ceil(rawCost/10)*10;
         else
             return (int) Math.ceil(rawCost);
@@ -474,7 +474,7 @@ public final class TechCategory implements Base, Serializable {
         // and when all category techs have been research
         // knowntechs contains currentTech is an error condition
         // that needs to be recovered from
-        if (((currentTech == null) && (totalBC > 0)) 
+        if (((currentTech == null) && (totalBC > 0))
         || knownTechs.contains(currentTech)){
             List<String> techs = techIdsAvailableForResearch();
             if (techs.isEmpty())
@@ -494,7 +494,7 @@ public final class TechCategory implements Base, Serializable {
             return;
         }
         
-        if (random() < discoveryChance()) 
+        if (random() < discoveryChance())
             tree.empire().learnTech(currentTech);
     }
     public void setTechToResearch() {
