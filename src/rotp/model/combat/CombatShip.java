@@ -44,6 +44,7 @@ public class CombatShip extends CombatEntity {
     private final float missChance;
     private final float blackHoleDefence;
     private final int repulsorRange;
+    private final int beamRangeBonus;
     private final float beamShieldMod;
     
     private final List<ShipSpecial> specials;
@@ -98,6 +99,7 @@ public class CombatShip extends CombatEntity {
         float missChance = 0.0f;
         float blackHoleDefence = 0.0f;
         int repulsorRange = 0;
+        int beamRangeBonus = 0;
         float beamShieldMod = 1.0f;
         for (ShipSpecial special : specials) {
             if (special.isWeapon()) {
@@ -129,6 +131,7 @@ public class CombatShip extends CombatEntity {
         this.missChance = missChance;
         this.blackHoleDefence = blackHoleDefence;
         this.repulsorRange = repulsorRange;
+        this.beamRangeBonus = beamRangeBonus;
         this.beamShieldMod = beamShieldMod;
         
         this.specials = specials;
@@ -554,6 +557,14 @@ public class CombatShip extends CombatEntity {
         }
         return 1.0f;
     }
+    
+    private int weaponRange(ShipComponent c) {
+        if (!c.isBeamWeapon()) {
+            return c.range();
+        }
+        return c.range()+beamRangeBonus;
+    }
+    
     @Override
     public void drawStack(ShipBattleUI ui, Graphics2D g, int origCount, int x, int y, int stackW, int stackH) {
         Image img = image;
