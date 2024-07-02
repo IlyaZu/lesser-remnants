@@ -95,7 +95,8 @@ public final class TechCategory implements Base, Serializable {
         index = i;
         tree = tr;
         discoveryPct = p;
-        init();
+        if (!tree.spy())
+            buildResearchList();
     }
 
     public boolean researchCompleted() { return researchCompleted; }
@@ -120,10 +121,6 @@ public final class TechCategory implements Base, Serializable {
         allocation(MAX_ALLOCATION_TICKS);
     }
     public float baseResearchCost()  { return 40f; }
-    private void init() {
-        if (!tree.spy())
-            buildResearchList();
-    }
     public void addPossibleTech(String id) {
         if (!possibleTechs.contains(id))
             possibleTechs.add(id);
