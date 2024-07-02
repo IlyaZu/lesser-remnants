@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import rotp.model.combat.CombatEntity;
+import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
 import rotp.util.Base;
 
@@ -41,7 +42,7 @@ public class SpaceMonster implements Base, NamedObject, Serializable {
         return combatStacks;
     }
     public Image image()  { return image(nameKey); }
-    public void initCombat() { }
+    public void initCombat(CombatManager manager) { }
     public SpaceMonster(String s) {
         nameKey = s;
     }

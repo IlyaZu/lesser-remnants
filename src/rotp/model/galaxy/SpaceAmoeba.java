@@ -18,7 +18,8 @@ package rotp.model.galaxy;
 
 import rotp.model.colony.Colony;
 import rotp.model.combat.CombatAmoeba;
-import static rotp.model.events.RandomEventSpaceAmoeba.monster;
+import rotp.model.combat.CombatManager;
+import rotp.model.events.RandomEventSpaceAmoeba;
 import rotp.model.planet.PlanetType;
 
 public class SpaceAmoeba extends SpaceMonster {
@@ -27,7 +28,7 @@ public class SpaceAmoeba extends SpaceMonster {
         super("SPACE_AMOEBA");
     }
     @Override
-    public void initCombat() {
+    public void initCombat(CombatManager manager) {
         combatStacks().clear();
         combatStacks().add(new CombatAmoeba());
     }
@@ -36,7 +37,7 @@ public class SpaceAmoeba extends SpaceMonster {
         if (col != null) {
             float prevFact = col.industry().factories();
             col.industry().factories(prevFact*0.1f);
-            sys.empire().lastAttacker(monster);
+            sys.empire().lastAttacker(RandomEventSpaceAmoeba.monster);
             col.destroy();
         }
         sys.planet().degradeToType(PlanetType.BARREN);

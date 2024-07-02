@@ -81,7 +81,7 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
     }
     private void enterSystem() {
         monster.visitSystem(sysId);
-        monster.initCombat();
+        monster.initCombat(galaxy().shipCombat());
         StarSystem targetSystem = galaxy().system(sysId);
         targetSystem.clearEvent();
         Colony col = targetSystem.colony();

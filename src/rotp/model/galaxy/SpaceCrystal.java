@@ -18,6 +18,7 @@ package rotp.model.galaxy;
 
 import rotp.model.colony.Colony;
 import rotp.model.combat.CombatCrystal;
+import rotp.model.combat.CombatManager;
 import rotp.model.events.RandomEventSpaceCrystal;
 import rotp.model.planet.PlanetType;
 
@@ -27,7 +28,7 @@ public class SpaceCrystal extends SpaceMonster {
         super("SPACE_CRYSTAL");
     }
     @Override
-    public void initCombat() {
+    public void initCombat(CombatManager manager) {
         combatStacks().clear();
         combatStacks().add(new CombatCrystal());
     }
