@@ -32,7 +32,6 @@ public final class TechCategory implements Base, Serializable {
     public static final int PROPULSION = 4;
     public static final int WEAPON = 5;
     
-    public static int ATTEMPTS = 0;
     public static float RESEARCH_INTEREST = 0.25f;
     public static final int MAX_ALLOCATION_TICKS = 60;
     private static final int MAX_QUINTILES = 20;
@@ -72,7 +71,6 @@ public final class TechCategory implements Base, Serializable {
     public void index(int i)               { index = i; }
     public List<String> knownTechs()       { return knownTechs; }
     public String currentTech()            { return currentTech; }
-    public String currentTechName()        { return tech(currentTech).name(); }
     public boolean currentTech(Tech t)        {
         if (!id().equals(t.cat.id()))
             return false;
@@ -311,21 +309,6 @@ public final class TechCategory implements Base, Serializable {
                 max = t.level;
         }
         return max(1, ((.80f * max) + ids.size() - free));
-    }
-    public void knowAll() {
-        for (String id: possibleTechs()) {
-            Tech t = tech(id);
-            if (!t.restricted)
-                addKnownTech(id);
-        }
-    }
-    public void knowAll(int maxLevel, float pct) {
-        TechCategory baseCat = TechLibrary.baseCategory[index];
-        for (String id: baseCat.allTechs()) {
-            Tech t = tech(id);
-            if (!t.restricted && (t.level <= maxLevel) && (random() < pct))
-                addKnownTech(t.id());
-        }
     }
     private Tech techNamed(String name) {
         for (String id: possibleTechs()) {
