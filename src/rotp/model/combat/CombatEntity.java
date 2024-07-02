@@ -67,7 +67,6 @@ public abstract class CombatEntity implements Base {
     public float shield = 0;
     public float hits = 0;
     public float repairPct = 0;
-    public int beamRangeBonus = 0;
     public boolean inStasis = false;
     public boolean cloaked = false;
     public boolean canCloak = false;
@@ -179,11 +178,6 @@ public abstract class CombatEntity implements Base {
     public void reverse()                           { reversed = !reversed; }
     public List<CombatMissile> missiles()       { return targetingMissiles; }
     public void addMissile(CombatMissile miss)  { targetingMissiles.add(miss); }
-    public int weaponRange(ShipComponent c) {
-        if (!c.isBeamWeapon())
-            return c.range();
-        return c.range()+beamRangeBonus;
-    }
 
     public boolean isTurnComplete() {
         if (inStasis)
