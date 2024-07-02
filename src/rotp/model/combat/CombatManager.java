@@ -152,7 +152,7 @@ public class CombatManager implements Base {
         }
     }
     public void battle(StarSystem sys, SpaceMonster monster) {
-        monster.initCombat();
+        monster.initCombat(this);
         empiresInConflict = sys.empiresInConflict();
         List<Empire> empires = new ArrayList<>(empiresInConflict);
         Collections.shuffle(empires);

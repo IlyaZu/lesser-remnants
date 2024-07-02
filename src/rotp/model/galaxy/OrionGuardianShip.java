@@ -19,7 +19,9 @@ package rotp.model.galaxy;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import rotp.model.combat.CombatGuardian;
+import rotp.model.ai.OrionGuardianCaptain;
+import rotp.model.combat.CombatManager;
+import rotp.model.combat.CombatMonster;
 import rotp.model.empires.Empire;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.KillGuardianIncident;
@@ -32,9 +34,9 @@ public class OrionGuardianShip extends SpaceMonster {
         techs.add("ShipWeapon:16");  // death ray
     }
     @Override
-    public void initCombat() {
+    public void initCombat(CombatManager manager) {
         combatStacks().clear();
-        combatStacks().add(new CombatGuardian());
+        combatStacks().add(CombatMonster.makeGuardian(new OrionGuardianCaptain(), manager));
     }
     @Override
     public Image image()  { return image("ORION_GUARDIAN"); }
