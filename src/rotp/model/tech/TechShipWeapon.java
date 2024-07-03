@@ -56,7 +56,7 @@ public final class TechShipWeapon extends Tech {
     
     public float comparableDamageValue() {
         return 7.0f* level * 0.5f*(damageLow() + damageHigh()) * attacksPerRound / enemyShieldMod / (size + power);
-    }  
+    }
     protected String soundEffect() { return "ShipLaser"; }
 
     public TechShipWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
@@ -467,7 +467,7 @@ public final class TechShipWeapon extends Tech {
     }
     private void drawAttack(CombatEntity source, CombatEntity target, int x0, int y0, int x1, int y1, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
-        if (!source.mgr.showAnimations()) 
+        if (!source.mgr.showAnimations())
             return;
 
         ShipComponent wpn = source.weapon(wpnNum);
@@ -499,7 +499,7 @@ public final class TechShipWeapon extends Tech {
             else if ((source.x > target.x) && (source.y > target.y))
                 xMod = -1;
             for (int n = -5; n < 6; n++) {
-                if (!source.mgr.showAnimations()) 
+                if (!source.mgr.showAnimations())
                     break;
                 ui.paintCellsImmediately(source.x,target.x,source.y,target.y);
                 int adj = scaled(n)*3;
@@ -516,7 +516,7 @@ public final class TechShipWeapon extends Tech {
 
         String missLabel = dmg < 0 ? text("SHIP_COMBAT_DEFLECTED") : text("SHIP_COMBAT_MISS");
         g.setStroke(prev);
-        target.drawAttackResult(g,x1,y1,x0, dmg,missLabel);   
+        target.drawAttackResult(g,x1,y1,x0, dmg,missLabel);
         ui.paintAllImmediately();
     }
 }
