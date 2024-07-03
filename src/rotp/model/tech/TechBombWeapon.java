@@ -27,8 +27,8 @@ public final class TechBombWeapon extends Tech {
     private int damageLow = 0;
     private int damageHigh = 1;
 
-    public int damageLow()  { return (int) (session().damageBonus() * damageLow); }
-    public int damageHigh() { return (int) (session().damageBonus() * damageHigh); }
+    public int damageLow()  { return damageLow; }
+    public int damageHigh() { return damageHigh; }
 
     public TechBombWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
         id(typeId, seq);
