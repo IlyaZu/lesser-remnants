@@ -350,7 +350,7 @@ public class TransportDeploymentPanel extends SystemPanel {
             Empire pl = player();
             StarSystem dest = destination();
             StarSystem from = system();
-            if (from == null)
+            if (from == null || dest == null)
                 return;
             String fromName = pl.sv.name(from.id);
 
