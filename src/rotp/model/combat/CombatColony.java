@@ -253,16 +253,16 @@ public class CombatColony extends CombatEntity {
     @Override
     public int wpnCount(int i)          { return num; }
     @Override
-    public int numWeapons()             { 
+    public int numWeapons()             {
         if (num == 0)
             return 0;
         return scatterPack == null ? 1 : 2;
     }
     @Override
-    public ShipComponent weapon(int i)  { 
+    public ShipComponent weapon(int i)  {
         if (i == 0)
-            return missile; 
-        else 
+            return missile;
+        else
             return scatterPack;
     }
     @Override
