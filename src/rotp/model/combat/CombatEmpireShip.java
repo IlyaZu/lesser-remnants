@@ -40,6 +40,7 @@ public class CombatEmpireShip extends CombatShip {
         int attack = design.attackLevel() + empire.shipAttackBonus();
         int beamDefense = design.beamDefense() + empire.shipDefenseBonus();
         int missileDefense = design.missileDefense() + empire.shipDefenseBonus();
+        int initiative = design.initiative() + empire.shipInitiativeBonus();
         boolean isAtLastColony = (empire == manager.system().empire()) && (empire.numColonies() == 1);
         
         List<WeaponGroup> weaponGroups = new LinkedList<>();
@@ -58,7 +59,7 @@ public class CombatEmpireShip extends CombatShip {
         
         return new CombatEmpireShip(fleet.num(index), design.hits(), design.shieldLevel(),
                 attack, beamDefense, missileDefense,
-                design.maneuverability(), design.moveRange(), design.initiative(),
+                design.maneuverability(), design.moveRange(), initiative,
                 weaponGroups, specials,
                 design.image(), design.name(),
                 design, fleet, empire,
@@ -112,11 +113,6 @@ public class CombatEmpireShip extends CombatShip {
     @Override
     public boolean hostileTo(CombatEntity st, StarSystem sys) {
         return st.isMonster() || empire.aggressiveWith(st.empire, sys);
-    }
-    
-    @Override
-    public float initiative() {
-        return super.initiative() + empire.shipInitiativeBonus();
     }
     
     @Override
