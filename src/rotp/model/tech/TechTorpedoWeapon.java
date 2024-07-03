@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +41,7 @@ public final class TechTorpedoWeapon extends Tech {
     public int shots = 1;
     public int range = 0;
 
-    public int damage()  { return (int) (session().damageBonus() * damage); }
+    public int damage()  { return damage; }
 
     @Override
     public String imageKey()   { return imageKey; }

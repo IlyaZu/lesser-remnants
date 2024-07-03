@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,10 +49,10 @@ public final class TechShipWeapon extends Tech {
     private transient Color beamColor;
     private Stroke weaponStroke;
 
-    public int damageLow()       { return (int) (session().damageBonus() * damageLow); }
-    public int damageHigh()      { return (int) (session().damageBonus() * damageHigh); }
-    public int heavyDamageLow()  { return (int) (session().damageBonus() * heavyDamageLow); }
-    public int heavyDamageHigh() { return (int) (session().damageBonus() * heavyDamageHigh); }
+    public int damageLow()       { return damageLow; }
+    public int damageHigh()      { return damageHigh; }
+    public int heavyDamageLow()  { return heavyDamageLow; }
+    public int heavyDamageHigh() { return heavyDamageHigh; }
     
     public float comparableDamageValue() {
         return 7.0f* level * 0.5f*(damageLow() + damageHigh()) * attacksPerRound / enemyShieldMod / (size + power);
