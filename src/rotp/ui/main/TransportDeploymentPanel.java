@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ public class TransportDeploymentPanel extends SystemPanel {
     public boolean hoverOverFlightPaths()          { return false; }
     @Override
     public boolean useHoveringSprite(Sprite o) {
-        if (!canConsume(o)) 
+        if (!canConsume(o))
             return false;
 
         Sprite sprite =  parentSpritePanel.spriteToDisplay();
@@ -400,7 +400,7 @@ public class TransportDeploymentPanel extends SystemPanel {
             drawString(g,popLabel, leftM, y0);
 
             // draw slider
-            if (enableAbandon) 
+            if (enableAbandon)
                 transportSprite().amt(maxSendingSize);
             else {
                 if (transportSprite().amt() > maxSendingSize)
@@ -725,7 +725,7 @@ public class TransportDeploymentPanel extends SystemPanel {
         @Override
         public void mouseEntered(MouseEvent e) { }
         @Override
-        public void mouseExited(MouseEvent e) { 
+        public void mouseExited(MouseEvent e) {
             if (hoverBox != null) {
                 hoverBox = null;
                 repaint();
@@ -911,15 +911,15 @@ public class TransportDeploymentPanel extends SystemPanel {
             if (e.getButton() > 3)
                 return;
             if (e.getClickCount() > 1)
-                return;;
+                return;
              int x = e.getX();
             int y = e.getY();
 
-            if (cancelBox.contains(x,y)) 
+            if (cancelBox.contains(x,y))
                 parent.cancel();
-            else if (sendBox.contains(x,y)) 
+            else if (sendBox.contains(x,y))
                 parent.acceptTransport();
-            else if (clearBox.contains(x,y)) 
+            else if (clearBox.contains(x,y))
                 parent.clearTransport();
         }
     }
