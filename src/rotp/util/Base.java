@@ -145,12 +145,6 @@ public interface Base {
         str = str.replace("%1", val1);
         return str.replace("%2", String.valueOf(val2));
     }
-    public default String text(String key, String val1, String val2, int val3) {
-        String str = text(key);
-        str = str.replace("%1", val1);
-        str = str.replace("%2", val2);
-        return str.replace("%3", String.valueOf(val3));
-    }
     public default Font dlgFont(int size) {
         return FontManager.current().dlgFont(size);
     }
