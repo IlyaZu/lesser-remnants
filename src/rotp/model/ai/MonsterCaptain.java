@@ -26,7 +26,7 @@ import rotp.model.combat.CombatManager;
 import rotp.model.galaxy.StarSystem;
 import rotp.util.Base;
 
-public class OrionGuardianCaptain implements Base, ShipCaptain {
+public class MonsterCaptain implements Base, ShipCaptain {
     @Override
     public StarSystem retreatSystem(StarSystem fr) { return null; }
     @Override
