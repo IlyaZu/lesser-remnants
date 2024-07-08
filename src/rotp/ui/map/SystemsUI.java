@@ -72,11 +72,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private static final Color unselectedTabC = new Color(112,85,68);
     private static final Color selectedTabC = new Color(178,124,87);
 
-    private static final String exploreTab = "Explore";
     private static final String expandTab = "Expand";
     private static final String exploitTab = "Exploit";
     private static final String exterminateTab = "Exterminate";
-    private String selectedTab = exploreTab;
+    private String selectedTab = expandTab;
 
     private MainTitlePanel titlePanel;
 
@@ -87,7 +86,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private final List<Sprite> controls = new ArrayList<>();
     private final Map<Integer,Integer> expandEnRouteSystems = new HashMap<>();
     private final Map<Integer,Integer> expandGuardedSystems = new HashMap<>();
-    private Rectangle exploreBox = new Rectangle();
     private Rectangle expandBox = new Rectangle();
     private Rectangle exploitBox = new Rectangle();
     private Rectangle exterminateBox = new Rectangle();
@@ -435,13 +433,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         int y1 = scaled(300);
         HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("SYSTEMS_HELP_1A"));
 
-        int x2 = exploreBox.x-s90;
         int w2 = scaled(190);
-        int x2a = x2+(w2/2)+s45;
         int y2 = s80;
         int y2a = s44;
-        HelpUI.HelpSpec sp2 = helpUI.addBrownHelpText(x2, y2, w2, 5, text("SYSTEMS_HELP_1B"));
-        sp2.setLine(x2a, y2, x2a, y2a);
         
         int x3 = expandBox.x-s60;
         int x3a = x3+(w2/2)+s30;
@@ -760,13 +754,8 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public String systemLabel2(StarSystem sys) {
         Empire pl = player();
-        float rng = pl.scoutRange();
         SystemView sv = pl.sv.view(sys.id);
         switch(selectedTab) {
-            case exploreTab:
-                float dist = sv.distance();
-                String distStr = df1.format(Math.ceil(10*dist)/10);
-                return (dist > 0) && (dist < rng+rng) ? text("SYSTEMS_RANGE", distStr) : "";
             case expandTab:
                 if (!sv.scouted())
                     return "";
@@ -878,7 +867,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             int x0 = gap+helpW;
             int y0 = h - s12;
             String title = text(titleKey);
-            String dipLabel = text("SYSTEMS_TAB_EXPLORE");
             String intLabel = text("SYSTEMS_TAB_EXPAND");
             String milLabel = text("SYSTEMS_TAB_EXPLOIT");
             String statusLabel = text("SYSTEMS_TAB_EXTERMINATE");
@@ -895,9 +883,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             int tabSpacing = tabW+gap;
 
             x0 += (titleW+titleSpacing);
-            drawTab(g,x0,0,tabW,h,dipLabel, exploreBox, selectedTab.equals(exploreTab));
-
-            x0 += tabSpacing;
             drawTab(g,x0,0,tabW,h,intLabel, expandBox, selectedTab.equals(expandTab));
 
             x0 += tabSpacing;
@@ -952,16 +937,14 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         public void selectNextTab() {
             switch(selectedTab) {
-                case exploreTab:     selectTab(expandTab); break;
                 case expandTab:      selectTab(exploitTab); break;
                 case exploitTab:     selectTab(exterminateTab); break;
-                case exterminateTab: selectTab(exploreTab); break;
+                case exterminateTab: selectTab(expandTab); break;
             }
         }
         public void selectPreviousTab() {
             switch(selectedTab) {
-                case exploreTab :    selectTab(exterminateTab); break;
-                case expandTab:      selectTab(exploreTab); break;
+                case expandTab:      selectTab(exterminateTab); break;
                 case exploitTab:     selectTab(expandTab); break;
                 case exterminateTab: selectTab(exploitTab); break;
             }
@@ -993,9 +976,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             if (hoverBox == null)
                 misClick();
             else {
-                if (hoverBox == exploreBox)
-                    selectTab(exploreTab);
-                else if (hoverBox == expandBox)
+                if (hoverBox == expandBox)
                     selectTab(expandTab);
                 else if (hoverBox == exploitBox)
                     selectTab(exploitTab);
@@ -1012,9 +993,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             int x = e.getX();
             int y = e.getY();
             Rectangle prevHover = hoverBox;
-            if (exploreBox.contains(x,y))
-                hoverBox = exploreBox;
-            else if (expandBox.contains(x,y))
+            if (expandBox.contains(x,y))
                 hoverBox = expandBox;
             else if (exploitBox.contains(x,y))
                 hoverBox = exploitBox;
