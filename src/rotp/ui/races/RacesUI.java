@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,14 +102,14 @@ public class RacesUI extends BasePanel {
     public void showHelp() {
         helpFrame = 1;
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         if (helpFrame == 0)
             return;
         helpFrame++;
-        if (helpFrame > 2) 
+        if (helpFrame > 2)
             cancelHelp();
         loadHelpUI();
         repaint();
@@ -130,19 +130,19 @@ public class RacesUI extends BasePanel {
                         if (emp.isPlayer())
                             loadHelpUI1();
                         else
-                            loadHelpUI2(); 
+                            loadHelpUI2();
                         break;
                     case INTELLIGENCE_PANEL:
                         if (emp.isPlayer())
                             loadHelpUI3();
                         else
-                            loadHelpUI4(); 
+                            loadHelpUI4();
                         break;
                     case MILITARY_PANEL:
-                        loadHelpUI5(); 
+                        loadHelpUI5();
                         break;
-                    case STATUS_PANEL: 
-                        loadHelpUI6(); 
+                    case STATUS_PANEL:
+                        loadHelpUI6();
                         break;
                 }
                 break;
@@ -377,7 +377,7 @@ public class RacesUI extends BasePanel {
         empires.add(player());
         List<EmpireView> contacts = player().contacts();
         Collections.sort(contacts, EmpireView.PLAYER_LIST_ORDER);
-        for (EmpireView v: contacts) 
+        for (EmpireView v: contacts)
             empires.add(v.empire());
         
         // auto-select the last selected empire
@@ -417,7 +417,7 @@ public class RacesUI extends BasePanel {
         }
     }
     public void selectedIconEmpire(Empire e)  {
-        if (e != selectedIconEmpire()) 
+        if (e != selectedIconEmpire())
             sessionVar("RACESUI_ICON_EMPIRE", e);
     }
     public Shape selectedIconShape() {
@@ -429,14 +429,14 @@ public class RacesUI extends BasePanel {
         if (index <= 0)
             return false;
         selectedEmpire(empires.get(index-1));
-        return true;    
+        return true;
     }
     private boolean selectNextEmpire() {
         int index = empires.indexOf(selectedEmpire());
         if ((index + 1) >= empires.size())
             return false;
         selectedEmpire(empires.get(index+1));
-        return true;    
+        return true;
     }
     public EmpireView selectedView() {
         Empire selectedEmpire = selectedEmpire();
@@ -476,7 +476,7 @@ public class RacesUI extends BasePanel {
         cardPanel.add(intelPanel, INTELLIGENCE_PANEL);
         cardPanel.add(militaryPanel, MILITARY_PANEL);
         cardPanel.add(statusPanel, STATUS_PANEL);
-        cardLayout.show(cardPanel, DIPLOMACY_PANEL);       
+        cardLayout.show(cardPanel, DIPLOMACY_PANEL);
         
         BasePanel mainPanel = new BasePanel();
         mainPanel.setOpaque(false);
@@ -852,7 +852,7 @@ public class RacesUI extends BasePanel {
         private Empire hoverEmp;
         private boolean hoveringIcon;
         int dragY;
-        int contactsY, contactsYMax;    
+        int contactsY, contactsYMax;
         int contactH, listH;
         Rectangle contactsListBox = new Rectangle();
         Rectangle contactsScroller = new Rectangle();
@@ -867,7 +867,7 @@ public class RacesUI extends BasePanel {
             addMouseMotionListener(this);
             addMouseWheelListener(this);
         }
-        public void init() { 
+        public void init() {
             contactsY = 0;
             contactH = s100;
         }
@@ -1044,7 +1044,7 @@ public class RacesUI extends BasePanel {
             EmpireView view = player().viewForEmpire(emp);
             boolean dipGone = view.embassy().diplomatGone();
             boolean otherDipGone = view.otherView().embassy().diplomatGone();
-            if (!inRange) 
+            if (!inRange)
                 text = text("RACES_OUT_OF_RANGE");
             else if (dipGone && otherDipGone)
                 text = text("RACES_DIPLOMATS_RECALLED");
@@ -1118,7 +1118,7 @@ public class RacesUI extends BasePanel {
         }
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-            int count = e.getUnitsToScroll();           
+            int count = e.getUnitsToScroll();
             boolean hoveringEmp = false;
             for (Rectangle rect: contactBoxes.values()) {
                 if (hoverShape == rect) {
@@ -1130,7 +1130,7 @@ public class RacesUI extends BasePanel {
                 int prevY = contactsY;
                 if (count < 0)
                     contactsY = max(0,contactsY-s10);
-                else 
+                else
                     contactsY = min(contactsYMax,contactsY+s10);
                 if (contactsY != prevY)
                     repaint(contactsListBox);
@@ -1138,30 +1138,30 @@ public class RacesUI extends BasePanel {
             }
         }
         @Override
-        public void mouseDragged(MouseEvent e) { 
+        public void mouseDragged(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
             int dY = y-dragY;
             dragY = y;
             if (contactsScroller == hoverShape) {
-                if ((y >= contactsListBox.y) || (y <= (contactsListBox.y+contactsListBox.height))) { 
+                if ((y >= contactsListBox.y) || (y <= (contactsListBox.y+contactsListBox.height))) {
                     int h = (int) contactsListBox.getHeight();
                     int dListY = (int)((float)dY*(h+contactsYMax)/h);
                     if (dY < 0)
                         contactsY = max(0,contactsY+dListY);
-                    else 
+                    else
                         contactsY = min(contactsYMax,contactsY+dListY);
                 }
                 repaint(contactsListBox);
                 return;
             }
             else if (hoverEmp != null) {
-                if (contactsListBox.contains(x,y)) { 
+                if (contactsListBox.contains(x,y)) {
                     //ail: dragging inside of the list should not be accelerated
                     int dListY = -dY;
                     if (dListY < 0)
                         contactsY = max(0,contactsY+dListY);
-                    else 
+                    else
                         contactsY = min(contactsYMax,contactsY+dListY);
                 }
                 repaint(contactsListBox);
@@ -1195,16 +1195,16 @@ public class RacesUI extends BasePanel {
                     }
                 }
             }
-            if (contactsScroller.contains(x,y)) 
+            if (contactsScroller.contains(x,y))
                 hoverShape = contactsScroller;
  
             if (hoverShape != prevHover)
-                repaint();     
+                repaint();
         }
         @Override
         public void mouseClicked(MouseEvent mouseEvent) { }
         @Override
-        public void mousePressed(MouseEvent e) { 
+        public void mousePressed(MouseEvent e) {
             dragY = e.getY();
         }
         @Override
@@ -1233,7 +1233,7 @@ public class RacesUI extends BasePanel {
                 }
                 else if (hoverEmp != selectedEmpire())
                     selectedEmpire(hoverEmp);
-                instance.repaint();                    
+                instance.repaint();
             }
         }
     }
