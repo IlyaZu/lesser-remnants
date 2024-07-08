@@ -328,7 +328,7 @@ public class CombatShip extends CombatEntity {
         }
     }
     @Override
-    public float initiative() {
+    public int initiative() {
         return initiative;
     }
     @Override
