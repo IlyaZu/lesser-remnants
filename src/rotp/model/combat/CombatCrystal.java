@@ -81,7 +81,7 @@ public class CombatCrystal extends CombatEntity {
         }
     }
     @Override
-    public float initiativeRank() {
+    public int initiativeRank() {
         return 100;
     }
     public void drawAttack() {

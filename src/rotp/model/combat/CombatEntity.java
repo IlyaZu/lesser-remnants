@@ -86,8 +86,8 @@ public abstract class CombatEntity implements Base {
     public String fullName()            { return concat(str(num), ":", raceName(), " ", name()); }
     private String raceName()            { return empire != null ? empire.raceName() : name(); }
     public abstract String name();
-    public float initiative()           { return 0; }
-    public float initiativeRank() {
+    public int initiative()           { return 0; }
+    public int initiativeRank() {
         if (cloaked)
             return 200+initiative();
         // modnar: replace canTeleport from this 'if' check

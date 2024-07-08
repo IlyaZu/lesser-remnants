@@ -91,7 +91,7 @@ public class CombatColony extends CombatEntity {
     @Override
     public float designCost()          { return  missileBase().cost(colony.empire()); }
     @Override
-    public float initiative()         { return isArmed() ? TechScanner.BATTLE_SCANNER_INITIATIVE : -1; }
+    public int initiative()         { return isArmed() ? TechScanner.BATTLE_SCANNER_INITIATIVE : -1; }
     @Override
     public boolean hasWard()          { return true; }
     @Override
