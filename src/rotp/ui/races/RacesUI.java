@@ -156,7 +156,7 @@ public class RacesUI extends BasePanel {
         int x1 = scaled(150);
         int w1 = scaled(400);
         int y1 = scaled(270);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("RACES_HELP_0A"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("RACES_HELP_0A"));
 
         int x2 = diplomacyBox.x-s30;
         int w2 = scaled(160);
@@ -285,7 +285,7 @@ public class RacesUI extends BasePanel {
         int x4 = scaled(255);
         int w4 = scaled(360);
         int y4 = scaled(445);
-        HelpUI.HelpSpec sp4 = helpUI.addBrownHelpText(x4, y4, w4, 3, text("RACES_HELP_3C"));
+        helpUI.addBrownHelpText(x4, y4, w4, 3, text("RACES_HELP_3C"));
     }
     private void loadHelpUI4() {
         int w = getWidth();
@@ -306,7 +306,7 @@ public class RacesUI extends BasePanel {
         int x4 = scaled(255);
         int w4 = scaled(360);
         int y4 = scaled(445);
-        HelpUI.HelpSpec sp4 = helpUI.addBrownHelpText(x4, y4, w4, 3, text("RACES_HELP_4C"));
+        helpUI.addBrownHelpText(x4, y4, w4, 3, text("RACES_HELP_4C"));
     }
     private void loadHelpUI5() {
         int w = getWidth();
@@ -341,32 +341,32 @@ public class RacesUI extends BasePanel {
             int x2 = scaled(350);
             int w2 = scaled(300);
             int y2 = scaled(100);
-            HelpUI.HelpSpec sp2 = helpUI.addBrownHelpText(x2, y2, w2, 5, text("RACES_HELP_6A"));
+            helpUI.addBrownHelpText(x2, y2, w2, 5, text("RACES_HELP_6A"));
         }
         else {
             int x2 = scaled(350);
             int w2 = scaled(300);
             int y2 = scaled(100);
-            HelpUI.HelpSpec sp2 = helpUI.addBrownHelpText(x2, y2, w2, 5, text("RACES_HELP_6A2"));
+            helpUI.addBrownHelpText(x2, y2, w2, 5, text("RACES_HELP_6A2"));
         }
         
         int x3 = playerSelected ? scaled(140) : scaled(115);
         int w3 = scaled(190);
         int y3 = scaled(405);
-        HelpUI.HelpSpec sp3 = helpUI.addBrownHelpText(x3, y3, w3, 3, text("RACES_HELP_6B"));
+        helpUI.addBrownHelpText(x3, y3, w3, 3, text("RACES_HELP_6B"));
         
         int x4 = x3+barW;
-        HelpUI.HelpSpec sp4 = helpUI.addBrownHelpText(x4, y3, w3, 3, text("RACES_HELP_6C"));
+        helpUI.addBrownHelpText(x4, y3, w3, 3, text("RACES_HELP_6C"));
         
         int x5 = x4+barW;
-        HelpUI.HelpSpec sp5 = helpUI.addBrownHelpText(x5, y3, w3, 3, text("RACES_HELP_6D"));
+        helpUI.addBrownHelpText(x5, y3, w3, 3, text("RACES_HELP_6D"));
         
         int y6 = y3+barH;
-        HelpUI.HelpSpec sp6 = helpUI.addBrownHelpText(x3, y6, w3, 3, text("RACES_HELP_6E"));
+        helpUI.addBrownHelpText(x3, y6, w3, 3, text("RACES_HELP_6E"));
         
-        HelpUI.HelpSpec sp7 = helpUI.addBrownHelpText(x4, y6, w3, 3, text("RACES_HELP_6F"));
+        helpUI.addBrownHelpText(x4, y6, w3, 3, text("RACES_HELP_6F"));
         
-        HelpUI.HelpSpec sp8 = helpUI.addBrownHelpText(x5, y6, w3, 3, text("RACES_HELP_6G"));
+        helpUI.addBrownHelpText(x5, y6, w3, 3, text("RACES_HELP_6G"));
     }
     public void init() {
         diploPanel.init();

@@ -154,7 +154,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         int x1 = scaled(150);
         int w1 = scaled(400);
         int y1 = scaled(330);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 5, text("TECH_HELP_1A"));
+        helpUI.addBrownHelpText(x1, y1, w1, 5, text("TECH_HELP_1A"));
 
         int x2 = scaled(10);
         int w2 = scaled(160);
