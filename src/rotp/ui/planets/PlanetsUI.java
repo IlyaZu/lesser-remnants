@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -248,14 +248,14 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     public void showHelp() {
         helpFrame = 1;
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         if (helpFrame == 0)
             return;
         helpFrame++;
-        if (helpFrame > 2) 
+        if (helpFrame > 2)
             cancelHelp();
         loadHelpUI();
         repaint();
@@ -562,7 +562,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             case KeyEvent.VK_5:
                 spendingPane.keyPressed(e); return;
             case KeyEvent.VK_F:
-                colonyFoundedPane.toggleFlagColor(shift); 
+                colonyFoundedPane.toggleFlagColor(shift);
                 instance.repaint();
                 return;
             case KeyEvent.VK_A:
@@ -603,7 +603,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
 
         if (sys == null) {
             sys = (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM");
-            sessionVar("COLONYUI_ANCHOR_SYSTEM", sys);  
+            sessionVar("COLONYUI_ANCHOR_SYSTEM", sys);
         }
         return sys;
     }
@@ -680,7 +680,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         else
             systems.add(sys);
         
-        if (toggled) 
+        if (toggled)
             setAnchorSystem(sys, updateFieldValues);
         
         if (systems.size() == 1)
@@ -779,7 +779,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     }
     private void finish(boolean disableNextTurn) {
         displayedSystems = null;
-        sessionVar("COLONYUI_ANCHOR_SYSTEM", null); 
+        sessionVar("COLONYUI_ANCHOR_SYSTEM", null);
         buttonClick();
         RotPUI.instance().selectMainPanel(disableNextTurn);
     }
@@ -1232,7 +1232,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             
             List<Colony> colonies = new ArrayList<>();
             if (systems.isEmpty())
-                return colonies;           
+                return colonies;
             
             for (StarSystem sys1: systems) {
                 Colony c = sys1.colony();
@@ -1302,17 +1302,17 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 return;
 
             currBuildLimit = colonies.get(0).shipyard().buildLimit();
-            for (Colony c: colonies) 
+            for (Colony c: colonies)
                 currBuildLimit = min(currBuildLimit,c.shipyard().buildLimit());
             
-            String limitStr = currBuildLimit == 0 ? text("MAIN_COLONY_SHIPYARD_LIMIT_NONE") : str(currBuildLimit); 
+            String limitStr = currBuildLimit == 0 ? text("MAIN_COLONY_SHIPYARD_LIMIT_NONE") : str(currBuildLimit);
 
             g.setFont(narrowFont(16));
             g.setColor(Color.black);
             String label = text("MAIN_COLONY_SHIPYARD_LIMIT");
             int sw1 = g.getFontMetrics().stringWidth(label);
             String none = text("MAIN_COLONY_SHIPYARD_LIMIT_NONE");
-            int sw2 = g.getFontMetrics().stringWidth(none);           
+            int sw2 = g.getFontMetrics().stringWidth(none);
             String amt = limitStr;
             int sw3 = g.getFontMetrics().stringWidth(amt);
             
@@ -1322,7 +1322,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             int x3 = x1+sw1+s5+max(sw2,sw3)+s5;
             int y3 = y1+s2;
             drawString(g,label, x1, y1);
-            drawString(g,amt, x2, y1);  
+            drawString(g,amt, x2, y1);
             
             limitBox.setBounds(x2-s3,y1-s15,x3-x2,s18);
             if (hoverBox == limitBox) {
@@ -1471,7 +1471,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         }
         private void setAllShipDesigns() {
             List<Colony> colonies = colonies();
-            for (Colony c: colonies) 
+            for (Colony c: colonies)
                 c.shipyard().switchToDesign(currDesign);
         }
         private void incrementBuildLimit() {
@@ -1530,7 +1530,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
 
             if (upArrow.contains(x,y))
                 incrementBuildLimit();
-            else if (downArrow.contains(x,y)) 
+            else if (downArrow.contains(x,y))
                 decrementBuildLimit();
             else if (limitBox.contains(x,y))
                 resetBuildLimit();
@@ -1597,7 +1597,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                     decrementBuildLimit();
                 return;
             }
-            if (shipDesignBox.contains(x,y) 
+            if (shipDesignBox.contains(x,y)
             || shipNameBox.contains(x,y)) {
                 if (e.getWheelRotation() < 0)
                     nextShipDesign(false);
@@ -1759,7 +1759,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             instance.controlSelectedSystem(sys, updateFieldValues);
         }
         @Override
-        protected boolean isSelected(StarSystem sys) { 
+        protected boolean isSelected(StarSystem sys) {
             return instance.selectedSystems().contains(sys);
         }
         @Override
@@ -2054,7 +2054,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
 
              // draw check box
             g.setFont(narrowFont(14));
-            String opt = text("PLANETS_RESERVE_ONLY_DEVELOPED"); 
+            String opt = text("PLANETS_RESERVE_ONLY_DEVELOPED");
             int optSW = g.getFontMetrics().stringWidth(opt);
             int checkW = s12;
             int totalW = checkW+s6+optSW;
@@ -2220,7 +2220,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                     player().empireTaxLevel(newLevel);
                     repaint();
                     planetDisplayPane.repaint();
-                }                   
+                }
             }
         }
         @Override

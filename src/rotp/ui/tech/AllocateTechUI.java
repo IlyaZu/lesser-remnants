@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,11 +121,11 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         totalPlanetaryResearchSpending = player().totalPlanetaryResearchSpending();
         resetData();
     }
-    public void adjustPlanetaryResearch(float amt) { 
+    public void adjustPlanetaryResearch(float amt) {
         if (totalPlanetaryResearch != -1)
             totalPlanetaryResearch += amt;
     }
-    public void resetPlanetaryResearch() { 
+    public void resetPlanetaryResearch() {
         totalPlanetaryResearch = -1;
     }
     public float totalPlanetaryResearch() {
@@ -140,9 +140,9 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
     @Override
     public void showHelp() {
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         cancelHelp();
     }
@@ -277,14 +277,14 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         Point2D.Float techPt = currentTechs[selectedCategory];
         if (techPt != null) {
             int y1 = (int) techPt.y-treeY+treeBox.y;
-            int x1 = (int) techPt.x-treeX+treeBox.x;       
+            int x1 = (int) techPt.x-treeX+treeBox.x;
             TechCategory cat = player().tech().category(selectedCategory);
             Tech tech = tech(cat.currentTech());
             String costLbl = techCostString(cat, tech);
             g.setFont(narrowFont(20));
             int costSW = g.getFontMetrics().stringWidth(costLbl);
             g.setColor(Color.black);
-            drawString(g,costLbl, x1-costSW, y1);        
+            drawString(g,costLbl, x1-costSW, y1);
         }
         
         // draw right-side panel
@@ -330,7 +330,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
 
         TechTree tree = player().tech();
         int totalSpending = (int) totalPlanetaryResearchSpending;
-        int totalResearch = 0;       
+        int totalResearch = 0;
         for (int i=0;i<cats;i++)
              totalResearch += tree.category(i).currentResearch(totalPlanetaryResearch());
 
@@ -455,7 +455,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         }
         else if (cost > 10000)
             return text("TECH_TOTAL_RP",shortFmt(cost));
-        else 
+        else
             return text("TECH_TOTAL_RP",cost);
     }
     private void drawCategorySlider(Graphics2D g, int catNum, int x, int y, int w, int h) {
@@ -648,8 +648,8 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
 
     }
     private BufferedImage visualTree() {
-        if (visualTree == null) 
-            initVisualTree();        
+        if (visualTree == null)
+            initVisualTree();
         return visualTree;
     }
     private void initVisualTree() {
@@ -714,7 +714,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
             desc = text("TECH_FIRST_TIER_DESC");
         else if (tier < 10)
             desc = text("TECH_NEXT_TIER_DESC");
-        else 
+        else
             desc = text("TECH_FUTURE_TIER_DESC");
 
         g.setColor(tierBackC);
@@ -784,7 +784,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
             backC = knownTechC;
             textC = Color.black;
         }
-        else if (tech.id.equals(currentT)) 
+        else if (tech.id.equals(currentT))
             backC = currentTechC;
         
         Color c0 = backC;
@@ -835,7 +835,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
                 int costSW = g.getFontMetrics().stringWidth(costLbl);
                 g.setColor(Color.black);
                 drawString(g,costLbl, x+w-s10-costSW, y0);
-            }            
+            }
         }
 
         g.setColor(techUnderscoreC);
@@ -889,7 +889,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
 
         int quintile = currentTech.quintile;
         // 400px per quintile, 1 starts at 0.  2 & up start at visual 200
-        if (quintile > 1) 
+        if (quintile > 1)
             treeX = scaled((400*quintile)-600);
     }
     private void equalize() {
@@ -1174,7 +1174,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
     private Shape hoverShape(int x, int y) {
         if (treeBox.contains(x,y)) {
             for (RoundRectangle2D.Float box: techSelections.keySet()) {
-                if (box.contains(x+treeX-treeBox.x,y+treeY-treeBox.y)) 
+                if (box.contains(x+treeX-treeBox.x,y+treeY-treeBox.y))
                     return box;
             }
         }
@@ -1183,7 +1183,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         if (helpBox.contains(x,y))
             return helpBox;
         else if (techBox.contains(x,y))
-            return techBox;                    
+            return techBox;
         for (int i=0;i<catBox.length;i++) {
             if (catBox[i].contains(x,y))
                 return catBox[i];

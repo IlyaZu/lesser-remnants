@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -306,7 +306,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         if (shift) {
             List<StarSystem> allSystems = new ArrayList<>(selectedSystems);
             for (StarSystem s: allSystems) {
-                int mapX = s.mapX(map);    
+                int mapX = s.mapX(map);
                 int mapY = s.mapY(map);
                 if (box.contains(mapX,mapY)) {
                     selectedSystems.remove(s);
@@ -319,20 +319,20 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
             List<StarSystem> allSystems = new ArrayList<>(player().allColonizedSystems());
             allSystems.removeAll(selectedSystems);
             for (StarSystem s: allSystems) {
-                int mapX = s.mapX(map);    
+                int mapX = s.mapX(map);
                 int mapY = s.mapY(map);
                 if (box.contains(mapX,mapY)) {
                     selectedSystems.add(s);
                     filteredSystems.add(s);
                     updated = true;
                 }
-            }        
+            }
         }
 
         if (shift) {
             List<ShipFleet> allFleets = new ArrayList<>(selectedFleets);
             for (ShipFleet fl: allFleets) {
-                int mapX = fl.mapX(map);   
+                int mapX = fl.mapX(map);
                 int mapY = fl.mapY(map);
                 if (box.contains(mapX,mapY)) {
                     selectedFleets.remove(fl);
@@ -345,7 +345,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
             List<ShipFleet> allFleets = player().assignableFleets();
             allFleets.removeAll(selectedFleets);
             for (ShipFleet fl: allFleets) {
-                int mapX = fl.mapX(map);   
+                int mapX = fl.mapX(map);
                 int mapY = fl.mapY(map);
                 if (box.contains(mapX,mapY)) {
                     selectedFleets.add(fl);
@@ -354,7 +354,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
                 }
             }
         }
-         return updated; 
+         return updated;
     }
     public void removeDisbandedFleets() {
         selectedFleets.removeIf(fl->fl.isEmpty());
@@ -379,7 +379,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         repaint();
     }
     public boolean allowedDesign(int n) {
-        if (fleetDesignFilters[n].checked) 
+        if (fleetDesignFilters[n].checked)
             return true;
         
         for (ShipDesignFilter f: fleetDesignFilters) {
@@ -701,10 +701,10 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         }
     }
     @Override
-    public Color alertColor(SystemView sv)            { 
+    public Color alertColor(SystemView sv)            {
         if (sv.isAlert())
             return MainUI.redAlertC;
-        return null; 
+        return null;
     }
     @Override
     public boolean forwardMouseEvents()             { return mapIsMasked(); }
@@ -800,7 +800,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
             if (FlightPathSprite.workingPaths().contains(fp))
                 return true;
             return fp.isPlayer() || fp.aggressiveToPlayer();
-        }      
+        }
         return true;
     }
     @Override
@@ -823,13 +823,13 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         return false;
     }
     @Override
-    public Sprite clickedSprite()      { 
-        if (filteredSystems.size() == 1) 
+    public Sprite clickedSprite()      {
+        if (filteredSystems.size() == 1)
             return filteredSystems.get(0);
         else if (filteredSystems.isEmpty() && (filteredFleets.size() == 1))
             return filteredFleets.get(0);
         else
-            return null; 
+            return null;
     }
     @Override
     public void clickedSprite(Sprite s) {
@@ -859,14 +859,14 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
     public void showHelp() {
         helpFrame = 1;
         loadHelpUI();
-        repaint();   
+        repaint();
     }
-    @Override 
+    @Override
     public void advanceHelp() {
         if (helpFrame == 0)
             return;
         helpFrame++;
-        if (helpFrame > 2) 
+        if (helpFrame > 2)
             cancelHelp();
         loadHelpUI();
         repaint();
@@ -876,7 +876,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
             case 1: loadHelpFrame1(); return;
             case 2: loadHelpFrame2(); return;
         }
-    }    
+    }
     private void loadHelpFrame1() {
         int w = getWidth();
         HelpUI helpUI = RotPUI.helpUI();
@@ -1162,8 +1162,8 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
                 checked = !checked;
                 return true;
             }
-            if (QueryFilter.this.hoveringText(x,y)) 
-                return clickText();        
+            if (QueryFilter.this.hoveringText(x,y))
+                return clickText();
             return false;
         }
     }
