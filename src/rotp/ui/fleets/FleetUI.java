@@ -884,7 +884,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         int x0 = scaled(75);
         int w0 = scaled(400);
         int y0 = scaled(200);
-        HelpUI.HelpSpec sp0 = helpUI.addBrownHelpText(x0, y0, w0, 5, text("FLEETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x0, y0, w0, 5, text("FLEETS_HELP_ALL"));
 
         int x1 = w-scaled(700);
         int w1 = scaled(415);
@@ -929,7 +929,7 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         int x0 = scaled(75);
         int w0 = scaled(400);
         int y0 = scaled(200);
-        HelpUI.HelpSpec sp0 = helpUI.addBrownHelpText(x0, y0, w0, 5, text("FLEETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x0, y0, w0, 5, text("FLEETS_HELP_ALL"));
 
         int x1 = w-scaled(700);
         int w1 = scaled(415);

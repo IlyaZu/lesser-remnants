@@ -280,7 +280,7 @@ public class DesignUI extends BasePanel {
         int x1 = scaled(350);
         int w1 = scaled(430);
         int y1 = scaled(470);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
 
         int x2 = scaled(120);
         int w2 = scaled(280);
@@ -363,7 +363,7 @@ public class DesignUI extends BasePanel {
         int x1 = scaled(350);
         int w1 = scaled(430);
         int y1 = scaled(470);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
 
         int x2 = scaled(730);
         int w2 = scaled(280);
@@ -438,7 +438,7 @@ public class DesignUI extends BasePanel {
         int x1 = scaled(50);
         int w1 = scaled(430);
         int y1 = scaled(80);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
 
         int x2 = scaled(30);
         int w2 = scaled(280);
@@ -490,7 +490,7 @@ public class DesignUI extends BasePanel {
         int x1 = scaled(50);
         int w1 = scaled(430);
         int y1 = scaled(80);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
 
         int x2 = scaled(30);
         int w2 = scaled(280);
@@ -540,7 +540,7 @@ public class DesignUI extends BasePanel {
         int x1 = scaled(50);
         int w1 = scaled(430);
         int y1 = scaled(80);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 8, text("SHIP_DESIGN_HELP_ALL"));
 
         int x2 = scaled(30);
         int w2 = scaled(280);
@@ -2283,7 +2283,7 @@ public class DesignUI extends BasePanel {
             int x6 = x5+w5; int w6 = w*5/100;
             int x7 = x6+w6; int w7 = w*5/100;
             int x8 = x7+w7; int w8 = w*5/100;
-            int x9 = x8+w8; int w9 = w*29/100;
+            int x9 = x8+w8;
 
             // draw headers
             g.setColor(Color.black);
@@ -2448,7 +2448,7 @@ public class DesignUI extends BasePanel {
             int x3 = x2+w2; int w3 = w*5/100;
             int x4 = x3+w3; int w4 = w*7/100;
             int x5 = x4+w4; int w5 = w*5/100;
-            int x6 = x5+w5; int w6 = w*40/100;
+            int x6 = x5+w5;
 
             // draw headers
             g.setColor(Color.black);

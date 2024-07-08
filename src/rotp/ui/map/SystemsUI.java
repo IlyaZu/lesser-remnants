@@ -316,7 +316,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public void clickingNull(int cnt, boolean right) {
         displayPanel.useNullClick(cnt, right);
-    };
+    }
     @Override
     public void clickingOnSprite(Sprite o, int count, boolean rightClick, boolean click) {
         if ((o instanceof ShipFleet) || (o instanceof Transport) || (o instanceof FlightPathSprite))
@@ -431,7 +431,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         int x1 = scaled(150);
         int w1 = scaled(400);
         int y1 = scaled(300);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("SYSTEMS_HELP_1A"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("SYSTEMS_HELP_1A"));
 
         int w2 = scaled(190);
         int y2 = s80;

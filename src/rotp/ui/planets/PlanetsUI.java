@@ -286,7 +286,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         int x1 = scaled(150);
         int w1 = scaled(400);
         int y1 = scaled(270);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
 
         int x2 = ecologyBox.x;
         int w2 = scaled(200);
@@ -341,7 +341,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         int x1 = scaled(200);
         int w1 = scaled(400);
         int y1 = scaled(350);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
 
         int x1a = scaled(10);
         int w1a = scaled(130);
@@ -397,7 +397,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         int x1 = scaled(200);
         int w1 = scaled(400);
         int y1 = scaled(350);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
 
         int x1a = scaled(10);
         int w1a = scaled(130);
@@ -459,7 +459,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         int x1 = scaled(200);
         int w1 = scaled(400);
         int y1 = scaled(350);
-        HelpUI.HelpSpec sp1 = helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
+        helpUI.addBrownHelpText(x1, y1, w1, 4, text("PLANETS_HELP_ALL"));
 
         int x1a = scaled(10);
         int w1a = scaled(130);
