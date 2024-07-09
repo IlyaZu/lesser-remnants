@@ -34,7 +34,7 @@ import rotp.util.Base;
 
 public class CombatManager implements Base {
     private static final Comparator<CombatEntity> INITIATIVE =
-            (o1, o2) -> Base.compare(o2.initiativeRank(), o1.initiativeRank());
+            (o1, o2) -> Base.compare(o2.initiative(), o1.initiative());
     private static final int MAX_TURNS = 100;
     private static Thread autoRunThread;
     // combat vars

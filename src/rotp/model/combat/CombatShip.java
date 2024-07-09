@@ -329,7 +329,17 @@ public class CombatShip extends CombatEntity {
     }
     @Override
     public int initiative() {
-        return initiative;
+        if (cloaked)
+            return 200+initiative;
+        // modnar: replace canTeleport from this 'if' check
+        // In ShipCombatManager.java, the CombatStack.INITIATIVE comparison/sort in setupBattle
+        // is called before currentStack.beginTurn(). So while beginTurn() in this file
+        // sets the correct value for canTeleport, it won't be used for initiative ordering.
+        // This change correctly gives boosted turn/initiative order for ship stacks with teleporters.
+        else if (hasTeleporting() && !mgr.interdiction())
+            return 100+initiative;
+        else
+            return initiative;
     }
     @Override
     public boolean selectBestWeapon(CombatEntity target) {
