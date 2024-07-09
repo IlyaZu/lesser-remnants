@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,6 @@ import rotp.ui.util.planets.PlanetImager;
 import rotp.util.AnimationManager;
 import rotp.util.ImageManager;
 import rotp.util.LanguageManager;
-import rotp.util.Logger;
 import rotp.util.sound.SoundManager;
 
 public class RotPUI extends BasePanel implements ActionListener, KeyListener {
@@ -89,7 +88,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private boolean drawNextTurnNotice = true;
     private static Throwable startupException;
     static {
-        Logger.registerLogListener(Logger::logToFile);
         // needed for opening ui
         try { UserPreferences.load(); }
         catch (Throwable t) { startupException = t; System.out.println("Err: UserPreferences init "+t.getMessage()); }
