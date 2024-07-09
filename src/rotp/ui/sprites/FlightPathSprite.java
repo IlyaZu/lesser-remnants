@@ -200,7 +200,7 @@ public class FlightPathSprite extends MapSprite {
 
         boolean isHovering = hovering || map.parent().isClicked(this);
         draw(g2, map.animationCount(), map.scaleX(), isHovering, x1, y1, x2, y2, lineColor(map, dest));
-    };
+    }
     private void drawShipPath(GalaxyMapPanel map, Graphics2D g2, StarSystem dest) {
         Sprite spr = (Sprite) ship;
         int x1 = spr.centerMapX(map);
@@ -210,7 +210,7 @@ public class FlightPathSprite extends MapSprite {
         boolean isHovering = hovering || map.parent().isClicked(this) ;
 
         draw(g2, map.animationCount(), map.scaleX(), isHovering, x1, y1, x2, y2, lineColor(map, dest));
-    };
+    }
     private void draw(Graphics2D g2, int animationCount, float scale, boolean hovering, int x1, int y1, int x2, int y2, Color c0) {
         if (lines == null)
             initStrokes();
