@@ -244,7 +244,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         init();
     }
     public void processNotifications(List<TurnNotification> notifications) {
-        for (TurnNotification tn: notifications) 
+        for (TurnNotification tn: notifications)
             processNotification(tn);
     }
     public void processNotification(TurnNotification tn) {
@@ -274,10 +274,10 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         //toggleAnimations();
         repaint();
     }
-    public static IGameOptions newOptions() { 
+    public static IGameOptions newOptions() {
         if (newGameOptions == null)
             createNewOptions();
-        return newGameOptions; 
+        return newGameOptions;
     }
     public static void createNewOptions()               { newGameOptions = new MOO1GameOptions(); }
     public static void clearNewOptions()                { newGameOptions = null; }
@@ -289,9 +289,9 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             timer.stop();
     }
     public static RotPUI instance()                  { return instance; }
-    public static HelpUI helpUI()                    { return instance.helpUI; } 
-    public static StartOptionsUI startOptionsUI()    { return instance.startOptionsUI; } 
-    public static GameSettingsUI gameSettingsUI()    { return instance.gameSettingsUI; } 
+    public static HelpUI helpUI()                    { return instance.helpUI; }
+    public static StartOptionsUI startOptionsUI()    { return instance.startOptionsUI; }
+    public static GameSettingsUI gameSettingsUI()    { return instance.gameSettingsUI; }
 
     @Override
     public void paint(Graphics g) {
@@ -315,11 +315,11 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     public void selectSetupGalaxyPanel() { setupGalaxyUI.init(); selectPanel(SETUP_GALAXY_PANEL, setupGalaxyUI);  }
     public void selectLoadGamePanel()  { loadGameUI.init(); selectPanel(LOAD_PANEL, loadGameUI);  }
     public void selectSaveGamePanel()  { saveGameUI.init(); selectPanel(SAVE_PANEL, saveGameUI);  }
-    public void selectIntroPanel()     { 
-        mainUI.init(false); 
-        selectPanel(MAIN_PANEL, mainUI()); 
-        enableGlassPane(raceIntroUI); 
-        repaint(); 
+    public void selectIntroPanel()     {
+        mainUI.init(false);
+        selectPanel(MAIN_PANEL, mainUI());
+        enableGlassPane(raceIntroUI);
+        repaint();
     }
     public void selectMainPanel()      { selectMainPanel(false); }
     public void selectMainPanel(boolean pauseNextTurn)      {
@@ -352,7 +352,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         selectPanel(MAIN_PANEL, mainUI());
         repaint();
     }
-    public void selectGamePanel()      { 
+    public void selectGamePanel()      {
         gameUI.init();
         if (!UserPreferences.windowed())
             selectDialogPanel(GAME_PANEL, gameUI);
@@ -541,7 +541,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             session().waitUntilNextTurnCanProceed();
         } finally {
             drawNextTurnNotice = true;
-        }      
+        }
     }
 
     public void selectDiplomaticMessagePanel(DiplomaticNotification notif) {
@@ -617,9 +617,9 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         setBackground(Color.CYAN);
         setLayout(layout);
 
-        if (!UserPreferences.windowed()) 
+        if (!UserPreferences.windowed())
             dialogPane.addToLayout(gameUI, GAME_PANEL);
-        else 
+        else
             add(gameUI, GAME_PANEL);
                 
         add(setupRaceUI, SETUP_RACE_PANEL);
@@ -723,7 +723,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         else if (selectedPanel != null)
             selectedPanel.keyTyped(e);
     }
-    public class LargeDialogPane extends BasePanel { 
+    public class LargeDialogPane extends BasePanel {
         private static final long serialVersionUID = 1L;
         private final CardLayout dialogLayout = new CardLayout();
         private final BasePanel dialogHolder = new BasePanel();
@@ -735,7 +735,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         private void initModel() {
             setOpaque(true);
             setBackground(Color.black);
-            dialogHolder.setLayout(dialogLayout);            
+            dialogHolder.setLayout(dialogLayout);
             
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
             int border = s10;
