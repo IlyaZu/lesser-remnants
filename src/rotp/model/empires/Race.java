@@ -415,7 +415,7 @@ public class Race implements Base, Serializable {
             modAccum += personalityPct[i];
             if (r < modAccum)
                 return i;
-        };
+        }
         return 0;
     }
     public int randomLeaderObjective() {
@@ -425,7 +425,7 @@ public class Race implements Base, Serializable {
             modAccum += objectivePct[i];
             if (r < modAccum)
                 return i;
-        };
+        }
         return 0;
     }
     public String randomSystemName(Empire emp) {

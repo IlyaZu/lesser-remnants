@@ -642,7 +642,7 @@ public final class ImageColorizer implements Base {
 
                 int min = min(r0,g0,b0);
                 r1 = min;
-                g1 = (sum - min) / 2;;
+                g1 = (sum - min) / 2;
                 b1 = g1;
 
                 int newPixel = (a0 << 24)+(r1 << 16)+(g1 << 8)+b1;

@@ -227,7 +227,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         return planet;
     }
     public void planet(Planet p)                { planet = p; }
-    public Colony colony()                      { return planet().colony(); };
+    public Colony colony()                      { return planet().colony(); }
     public boolean hasBonusTechs()              { return planet().hasBonusTechs(); }
 
     public boolean inNebula()                   { return inNebula; }
