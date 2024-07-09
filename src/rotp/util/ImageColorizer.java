@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +35,7 @@ public final class ImageColorizer implements Base {
     boolean onlyBlue = false;
     Color specificColor;
     Rectangle scope = null;
-    HashMap<Integer,Integer> transforms = new HashMap<>(); 
+    HashMap<Integer,Integer> transforms = new HashMap<>();
 
     private static final Color COLOR_AQUA = new Color(37,239,210);
     private static final Color COLOR_PURPLE = new Color(255,128,255);
@@ -52,7 +53,7 @@ public final class ImageColorizer implements Base {
     public static final int PURPLE = 3;
     public static final int AQUA = 4;
     public static final int WHITE = 5;
-    public static final int GRAY = 6; 
+    public static final int GRAY = 6;
     public static final int BLACK = 7;
     public static final int RED = 8;
     public static final int GREEN = 9;
@@ -114,7 +115,7 @@ public final class ImageColorizer implements Base {
         int min = Math.min(r, Math.min(g, b));
         int max = Math.max(r, Math.max(g, b));
 
-        if ((specificColor != null) 
+        if ((specificColor != null)
         && (r == specificColor.getRed()
         && (g == specificColor.getGreen())
         && (b == specificColor.getBlue())))
@@ -127,12 +128,12 @@ public final class ImageColorizer implements Base {
             return true;
         if (onlyYellow && (r > b) && (r > g))
             return true;
-        if (onlyBlack 
+        if (onlyBlack
         && ((avgGrayLevel > sum/3)
         ||  (minGrayLevel > min)
         ||  (maxGrayLevel > max)))
             return true;
-        if (onlyWhite 
+        if (onlyWhite
         && ((avgGrayLevel < sum/3)
         ||  (minGrayLevel < min)
         ||  (maxGrayLevel < max)))
@@ -192,7 +193,7 @@ public final class ImageColorizer implements Base {
             case RED:         return r > sum/3;
             case GREEN:       return g > sum/3;
             case BLUE:        return b > sum/3;
-            case YELLOW:    
+            case YELLOW:
                     return (((float)r/g) < 2) && (((float)g/r) < 2) && (r>b) && (g>b);
         }
         return false;
@@ -209,7 +210,7 @@ public final class ImageColorizer implements Base {
         int r1, g1, b1;
 
         switch(colorId) {
-            case TRANSPARENT: 
+            case TRANSPARENT:
                 return 0;
             case RED:
                 r1 = max;

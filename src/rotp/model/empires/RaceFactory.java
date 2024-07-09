@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -234,7 +234,7 @@ public enum RaceFactory implements Base {
         int wc = 0;
         
         if (Rotp.countWords)
-            wc = substrings(value,',').size();  // uncomment 
+            wc = substrings(value,',').size();  // uncomment
         
         if (key.equalsIgnoreCase("name"))          { r.parseRaceNames(value, langDir); return wc; }
         if (key.equalsIgnoreCase("desc1"))         { r.description1 = value; return wc; }
