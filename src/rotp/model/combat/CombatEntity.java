@@ -87,19 +87,6 @@ public abstract class CombatEntity implements Base {
     private String raceName()            { return empire != null ? empire.raceName() : name(); }
     public abstract String name();
     public int initiative()           { return 0; }
-    public int initiativeRank() {
-        if (cloaked)
-            return 200+initiative();
-        // modnar: replace canTeleport from this 'if' check
-        // In ShipCombatManager.java, the CombatStack.INITIATIVE comparison/sort in setupBattle
-        // is called before currentStack.beginTurn(). So while beginTurn() in this file
-        // sets the correct value for canTeleport, it won't be used for initiative ordering.
-        // This change correctly gives boosted turn/initiative order for ship stacks with teleporters.
-        else if (hasTeleporting() && !mgr.interdiction())
-            return 100+initiative();
-        else
-            return initiative();
-    }
     public boolean isEmpireShip()       { return false; }
     public boolean isColony()           { return false; }
     public boolean isMonster()          { return false; }
