@@ -129,8 +129,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     public void scaleX(float s)      { scaleX = s; }
     public void scaleY(float s)      { scaleY = s; }
 
-    public boolean inOverview() { return 80f <= scaleX; }
-
     public boolean displays(IMappedObject obj) {
         if (center() == null)
             return true;
@@ -596,30 +594,28 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         Galaxy gal = galaxy();
         Empire pl = player();
         List<Ship> ships = null;
-        if (!inOverview()) {
-            if (parent.hoverOverFleets()) {
-                ships = new ArrayList<>(pl.visibleShips());
-                ships.sort(EMPIRE_ID);
-                float minDistance = Float.MAX_VALUE;
-                Sprite closestShip = null;
-                for (Ship sh: ships) {
-                    if (sh.displayed()) {
-                        Sprite spr = (Sprite) sh;
-                        if (parent.shouldDrawSprite(spr)
-                        && spr.isSelectableAt(this, x1, y1)) {
-                            float dist = spr.selectDistance(this, x1, y1);
-                            if (dist == 0)
-                               return spr;
-                            if (dist < minDistance) {
-                                minDistance = dist;
-                                closestShip = spr;
-                            }
+        if (parent.hoverOverFleets()) {
+            ships = new ArrayList<>(pl.visibleShips());
+            ships.sort(EMPIRE_ID);
+            float minDistance = Float.MAX_VALUE;
+            Sprite closestShip = null;
+            for (Ship sh: ships) {
+                if (sh.displayed()) {
+                    Sprite spr = (Sprite) sh;
+                    if (parent.shouldDrawSprite(spr)
+                    && spr.isSelectableAt(this, x1, y1)) {
+                        float dist = spr.selectDistance(this, x1, y1);
+                        if (dist == 0)
+                           return spr;
+                        if (dist < minDistance) {
+                            minDistance = dist;
+                            closestShip = spr;
                         }
                     }
                 }
-                if (closestShip != null)
-                    return closestShip;
             }
+            if (closestShip != null)
+                return closestShip;
         }
         if (parent.hoverOverSystems()) {
             for (int id=0;id<gal.numStarSystems();id++) {
@@ -633,17 +629,15 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
             if (path.isSelectableAt(this,x1,y1))
                 return path;
         }
-        if (!inOverview()) {
-            if (parent.hoverOverFlightPaths()) {
-                if (ships == null)
-                    ships = new ArrayList<>(pl.visibleShips());
-                for (Ship sh: ships) {
-                    if (sh.displayed()) {
-                        FlightPathSprite fpSpr = sh.pathSprite();
-                        if (parent.shouldDrawSprite(fpSpr)
-                        && fpSpr.isSelectableAt(this, x1, y1))
-                            return fpSpr;
-                    }
+        if (parent.hoverOverFlightPaths()) {
+            if (ships == null)
+                ships = new ArrayList<>(pl.visibleShips());
+            for (Ship sh: ships) {
+                if (sh.displayed()) {
+                    FlightPathSprite fpSpr = sh.pathSprite();
+                    if (parent.shouldDrawSprite(fpSpr)
+                    && fpSpr.isSelectableAt(this, x1, y1))
+                        return fpSpr;
                 }
             }
         }

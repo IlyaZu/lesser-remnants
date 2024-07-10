@@ -839,8 +839,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         displayed = false;
         if (!map.displays(this))
             return;
-        if (map.inOverview())
-            return;
 
         // because fleets can be disbanded asynchronously to the ui thread,
         // make sure this fleet is still active before drawing
@@ -855,9 +853,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
         if (!displayed)
-            return;
-        
-        if (map.inOverview())
             return;
         
         int x = mapX(map);
