@@ -185,7 +185,7 @@ public class FlightPathSprite extends MapSprite {
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
         displayed = false;
-        if (to == null || map.inOverview())
+        if (to == null)
             return;
         else if (ship != null)
             drawShipPath(map, g2, to);
