@@ -30,7 +30,6 @@ import rotp.model.empires.Leader.Personality;
 import rotp.model.planet.PlanetType;
 import rotp.model.ships.ShipDesign;
 import rotp.util.Base;
-import rotp.util.ImageTransformer;
 import rotp.util.LabelManager;
 
 public class Race implements Base, Serializable {
@@ -102,7 +101,6 @@ public class Race implements Base, Serializable {
     public String dlgWarKey, dlgNormKey,dlgPactKey;
     public String winSplashKey, lossSplashKey;
     public Color winTextC, lossTextC;
-    public ImageTransformer diplomacyTransformer;
     public List<String> raceNames = new ArrayList<>();
     public List<String> homeSystemNames = new ArrayList<>();
     public List<String> leaderNames = new ArrayList<>();

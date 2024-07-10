@@ -23,7 +23,6 @@ import rotp.Rotp;
 import rotp.util.AnimationManager;
 import rotp.util.Base;
 import rotp.util.ImageManager;
-import rotp.util.PixelShifter;
 
 public enum RaceFactory implements Base {
     INSTANCE;
@@ -149,7 +148,6 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("gnnHost"))          { r.gnnHostKey = value; return; }
         if (key.equalsIgnoreCase("gnnColor"))         { r.gnnColor = value; return; }
         if (key.equalsIgnoreCase("gnnTextColor"))     { r.gnnTextColor = parseColor(value); return; }
-        if (key.equalsIgnoreCase("diplomatXform"))    { r.diplomacyTransformer = PixelShifter.createFrom(value); }
         if (key.equalsIgnoreCase("winSplash"))        { r.parseWinSplash(value); return; }
         if (key.equalsIgnoreCase("lossSplash"))       { r.parseLossSplash(value); return; }
         if (key.equalsIgnoreCase("flagSize"))         { r.flagSize(value); return; }
