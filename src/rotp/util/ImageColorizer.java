@@ -141,19 +141,6 @@ public final class ImageColorizer implements Base {
 
         return false;
     }
-    public static BufferedImage transformImage(BufferedImage img, ImageTransformer xform) {
-        if (xform == null)
-            return img;
-
-        int w = img.getWidth();
-        int h = img.getHeight();
-
-        for (int y = 0; y <h; y++) {
-            for (int x = 0; x < w; x++) 
-                img.setRGB(x,y,xform.transformPixel(img.getRGB(x,y)));
-        }
-                return img;
-    }
     public BufferedImage transformImage(BufferedImage img) {
         Rectangle rect = getScope(img);
         int w = img.getWidth();
