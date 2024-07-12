@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import rotp.model.ai.interfaces.Diplomat;
+import rotp.model.ai.base.AIDiplomat;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
@@ -44,23 +44,18 @@ import rotp.model.incidents.SpyConfessionIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
-import rotp.ui.diplomacy.DiplomaticCounterReply;
-import rotp.ui.diplomacy.DiplomaticMessage;
 import rotp.ui.diplomacy.DiplomaticReplies;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
-import rotp.util.Base;
 
-public class AIDiplomat implements Base, Diplomat {
+public class AIXilmiDiplomat extends AIDiplomat {
     private final Empire empire;
     private float cumulativeSeverity = 0;
 
-    public AIDiplomat (Empire c) {
+    public AIXilmiDiplomat (Empire c) {
+        super(c);
         empire = c;
     }
-    @Override
-    public String toString()   { return concat("Diplomat: ", empire.raceName()); }
 
     private boolean diplomats(int empId) {
         return empire.viewForEmpire(empId).diplomats();
@@ -69,57 +64,7 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  EXCHANGE TECHNOLOGY
     //-----------------------------------
-    @Override
-    public boolean canExchangeTechnology(Empire e) {
-        // to trade technology with another empire, all of the following must be true:
-        // 1 - we have diplomats active
-        // 2 - we are not at war
-        // 3 - we are in economic range
-        // 4 - they have techs they are willing to trade to us (i.e. do we have compensation)
-        return diplomats(id(e))
-                && !empire.atWarWith(id(e))
-                && empire.inEconomicRange(id(e))
-                && !techsAvailableForRequest(e).isEmpty();
-    }
 
-    @Override
-    public DiplomaticReply receiveRequestTech(Empire diplomat, Tech tech) {
-        if (empire.isPlayerControlled()) {
-            EmpireView v = diplomat.viewForEmpire(empire);
-            // 1st, create the reply for the AI asking the player for the tech
-            DiplomaticReply reply = v.otherView().accept(DialogueManager.OFFER_TECH_EXCHANGE);
-            // decode the [tech] field in the reply text
-            reply.decode("[tech]", tech.name());
-            // 2nd, create the counter-offer menu that the player would present to the AI
-            DiplomacyTechOfferMenu menu = DiplomacyTechOfferMenu.create(empire, diplomat, reply, tech);
-            // if counter offers available, display the request in modal
-            if (menu.hasCounterOffers())
-                DiplomaticMessage.replyModal(menu);
-            return null;
-        }
-
-        EmpireView v = empire.viewForEmpire(diplomat);
-        
-        // modnar: add in readyForTech check, limits one tech trade per turn per empire
-        // this also prevents trading the same tech multiple times to the same empire
-        if (!v.embassy().readyForTech())
-            return v.refuse(DialogueManager.DECLINE_OFFER);
-        
-        List<Tech> counterTechs = empire.diplomatAI().techsRequestedForCounter(diplomat, tech);
-        if (counterTechs.isEmpty())
-            return v.refuse(DialogueManager.DECLINE_TECH_TRADE);
-
-        // accept and present a menu of counter-offer techs
-        return v.otherView().accept(DialogueManager.DIPLOMACY_TECH_CTR_MENU);
-    }
-    @Override
-    public DiplomaticReply receiveCounterOfferTech(Empire diplomat, Tech offeredTech, Tech requestedTech) {
-        EmpireView view = empire.viewForEmpire(diplomat);
-        view.embassy().resetTechTimer();
-        System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" gets "+offeredTech.name()+" Trade-Value: "+offeredTech.tradeValue(empire) + " for "+requestedTech.name()+" "+requestedTech.tradeValue(empire)+" from "+diplomat.name());
-        DiplomaticIncident inc = view.embassy().exchangeTechnology(offeredTech, requestedTech);
-        return view.otherView().accept(DialogueManager.ACCEPT_TECH_EXCHANGE, inc);
-    }
     @Override
     public List<Tech> techsAvailableForRequest(Empire diplomat) {
         DiplomaticEmbassy embassy = diplomat.viewForEmpire(empire).embassy();
@@ -256,12 +201,7 @@ public class AIDiplomat implements Base, Diplomat {
     //-----------------------------------
     //  TRADE TREATIES
     //-----------------------------------
-    @Override
-    public boolean canOfferDiplomaticTreaties(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        return true;
-    }
+
     @Override
     public boolean canOfferTradeTreaty(Empire e) {
         if (!empire.inEconomicRange(id(e)))
@@ -418,18 +358,6 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident inc = v.embassy().signPeace();
         return v.otherView().accept(DialogueManager.ACCEPT_PEACE, inc);
     }
-    @Override
-    public DiplomaticReply acceptOfferPeace(Empire requestor) {
-        EmpireView v = requestor.viewForEmpire(empire);
-        DiplomaticIncident inc = v.embassy().signPeace();
-        return v.otherView().accept(DialogueManager.ANNOUNCE_PEACE, inc);
-    }
-    @Override
-    public DiplomaticReply refuseOfferPeace(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        v.embassy().resetPeaceTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
-    }
     private boolean willingToOfferPeace(EmpireView v) {
         if (!v.embassy().war())
             return false;
@@ -488,12 +416,6 @@ public class AIDiplomat implements Base, Diplomat {
         else
             return v.refuse(DialogueManager.DECLINE_OFFER);
     }
-    @Override
-    public DiplomaticReply refuseOfferPact(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        v.embassy().resetPactTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
-    }
     //ail: pacts just restrict us unnecessarily
     private boolean willingToOfferPact(EmpireView v) {
         return false;
@@ -541,12 +463,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
         else
             return refuseOfferAlliance(requestor);
-    }
-    @Override
-    public DiplomaticReply refuseOfferAlliance(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        v.embassy().resetAllianceTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
     }
     private boolean willingToOfferAlliance(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
@@ -642,17 +558,6 @@ public class AIDiplomat implements Base, Diplomat {
         
         return v.refuse(DialogueManager.DECLINE_OFFER, target);
     }
-    @Override
-    public DiplomaticReply receiveCounterJointWar(Empire requestor, DiplomaticCounterReply counter) {
-        for (String techId: counter.techs())
-            empire.tech().acquireTechThroughTrade(techId, requestor.id);
-        
-        if (counter.bribe() > 0) {
-            empire.addToTreasury(counter.bribe());
-            requestor.addToTreasury(0-counter.bribe());
-        }
-        return agreeToJointWar(requestor, counter.target());
-    }
     private DiplomaticReply agreeToJointWar(Empire requestor, Empire target) {
         int targetId = target.id;
         if (!requestor.atWarWith(targetId))
@@ -661,24 +566,6 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident inc =  empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
         return empire.viewForEmpire(requestor).accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
     }
-    @Override
-    public DiplomaticReply acceptOfferJointWar(Empire requestor, Empire target) {
-        int targetId = target.id;
-        if (!requestor.atWarWith(targetId))
-            requestor.viewForEmpire(targetId).embassy().declareWar();
- 
-        DiplomaticIncident inc = empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return empire.viewForEmpire(requestor).accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
-    }
-    @Override
-    public DiplomaticReply refuseOfferJointWar(Empire requestor, Empire target) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        v.embassy().resetJointWarTimer();
-        
-        if (empire.alliedWith(requestor.id) && requestor.atWarWith(target.id))
-            return requestor.diplomatAI().receiveBreakAlliance(empire);
-        return null;
-    }
     //-----------------------------------
     //  BREAK TREATIES
     //-----------------------------------
@@ -686,29 +573,11 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
     @Override
-    public boolean canThreaten(Empire e) {
-        if (!diplomats(id(e)))
-            return false;
-        return canEvictSpies(e) || canThreatenSpying(e) || canThreatenAttacking(e);
-    }
-    @Override
     public boolean canThreatenSpying(Empire e) {
         return false;
     }
     @Override
     public boolean canEvictSpies(Empire e) {
-        return false;
-    }
-    @Override
-    public boolean canThreatenAttacking(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (empire.atWarWith(id(e)))
-            return false;
-        
-        EmpireView v = e.viewForEmpire(empire);
-        if (v.embassy().hasCurrentAttackIncident())
-            return true;
         return false;
     }
     @Override
@@ -761,15 +630,6 @@ public class AIDiplomat implements Base, Diplomat {
         
         v.embassy().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-    }
-    @Override
-    public DiplomaticReply receiveDeclareWar(Empire e) {
-        EmpireView v = empire.viewForEmpire(e);
-
-        v.embassy().noteRequest();
-        DiplomaticIncident inc = v.embassy().declareWar();
-
-        return empire.respond(DialogueManager.DECLARE_HATE_WAR, inc, e);
     }
     private boolean decidedToBreakAlliance(EmpireView view) {
         if (!wantToBreakAlliance(view))
@@ -1002,31 +862,6 @@ public class AIDiplomat implements Base, Diplomat {
             return true;
         }
         return false;
-    }
-    @Override
-    public boolean wantToDeclareWarOfHate(EmpireView v) {
-        if (v.embassy().atPeace())
-            return false;
-        
-        // from -70 to -90
-        float warThreshold = v.empire().leader().hateWarThreshold();
-        
-        // modnar: change war threshold by number of our wars vs. number of their wars
-        // try not to get into too many wars, and pile on if target is in many wars
-        float enemyMod = (float) (10 * (v.empire().numEnemies() - empire.numEnemies()));
-        warThreshold += enemyMod;
-        
-        // allied with an enemy? not good
-        if (v.embassy().alliedWithEnemy())
-            warThreshold += 30;
-        
-        // higher contempt = more likely to increase war
-        // positive contempt raises the threshold = more likely for war
-        // if relative power is 3, then contempt mod is 30 or -30
-        float contemptMod = 10 * v.scaleOfContempt();
-        warThreshold += contemptMod;
-        
-        return (v.embassy().relations() <= warThreshold);
     }
     @Override
     public boolean wantToDeclareWarOfOpportunity(EmpireView v) {
