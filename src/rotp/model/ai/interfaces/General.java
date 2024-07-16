@@ -37,7 +37,6 @@ public interface General {
     default boolean allowedToBomb(StarSystem sys) { return true; }
     default boolean strongEnoughToAttack() { return true; }
     default boolean isRusher() { return false; }
-    default float timeToKill(Empire attacker, Empire defender) { return Float.MIN_VALUE; }
     default int minTransportSize() { return 5; }
     default boolean needScoutRepellers() { return false; }
     default boolean sensePotentialAttack() { return false; }
