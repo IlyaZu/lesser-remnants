@@ -169,7 +169,7 @@ public final class EmpireView implements Base, Serializable {
         
         // if in unity, it refreshes views for all of the empire's colonies
         
-        // all other cases, it only refreshes the views for the empire's 
+        // all other cases, it only refreshes the views for the empire's
         // known colonies, PLUS one additional previously-unknown colony
         // per spy network. Unknown colonies closest in distance to this
         // empire are learned first
@@ -186,7 +186,7 @@ public final class EmpireView implements Base, Serializable {
         // if there are some unknown, all add if unity else sort by distance
         // and add 1 for each spy network
         if (!allUnknownSystems.isEmpty()) {
-            if (embassy().alliance()) 
+            if (embassy().alliance())
                 allKnownSystems.addAll(allUnknownSystems);
             else {
                 int spyNetworks = spies().activeSpies().size();

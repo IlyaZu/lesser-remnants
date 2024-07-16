@@ -122,7 +122,7 @@ public class AI implements Base {
     private ColonyTransporter createColony(StarSystem sys, int minTransports) {
         int sysId = id(sys);
         float targetPct = empire.governorAI().targetPopPct(sysId);
-        int popNeeded = popNeeded(sysId, targetPct);        
+        int popNeeded = popNeeded(sysId, targetPct);
         int maxPopToGive = (int) empire.sv.maxPopToGive(sysId, targetPct);
         if ((popNeeded < minTransports) && (maxPopToGive < minTransports))
             return null;
@@ -212,7 +212,7 @@ public class AI implements Base {
                 autoBomb = true;
             // auto-bombard set to whenever at war?
             boolean atWar = empire.atWarWith(sys.empId());
-            if (UserPreferences.autoBombardWar() && atWar) 
+            if (UserPreferences.autoBombardWar() && atWar)
                 autoBomb = true;
             // auto-bombard set to whenever at war and not invading?
             int transports = empire.transportsInTransit(sys);

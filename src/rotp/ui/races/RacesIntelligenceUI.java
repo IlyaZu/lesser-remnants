@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,22 +112,22 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         }
         g.setPaint(backGradient);
         g.fillRect(0,h/2,w, h/2);
-        if (parent.selectedEmpire().isPlayer()) 
+        if (parent.selectedEmpire().isPlayer())
             paintPlayerData(g);
         else
             paintAIData(g);
     }
     private void initModel() {
-        for (int i=0;i<techBoxes.length;i++) 
+        for (int i=0;i<techBoxes.length;i++)
             techBoxes[i] = new Rectangle();
-        for (int i=0;i<techScrollers.length;i++) 
+        for (int i=0;i<techScrollers.length;i++)
             techScrollers[i] = new Rectangle();
         
         setBackground(RacesUI.darkerBrown);
         setBorder(newEmptyBorder(5,5,5,5));
         addMouseMotionListener(this);
         addMouseListener(this);
-        addMouseWheelListener(this);        
+        addMouseWheelListener(this);
     }
     private void paintPlayerData(Graphics2D g) {
         // ai data only buttons - clear them
@@ -173,7 +173,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
     private void drawRaceIconBase(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
         Shape rect = new RoundRectangle2D.Float(x,y,w,h,w/8, h/8);
-        g.fill(rect);  
+        g.fill(rect);
     }
     private void drawRaceIcon(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(Color.black);
@@ -223,7 +223,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             y4 += s10;
 
         int h0 = h;
-        if (lines.size() > 2) 
+        if (lines.size() > 2)
             h0 += s16;
         
         g.setColor(RacesUI.darkBrown);
@@ -255,7 +255,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-s20-sw, y2);
         
-         // draw string on right for pct 
+         // draw string on right for pct
         String cost = text("RACES_INTEL_PERCENT_AMT",(int)(player().requestedSecurityCostPct()*100));
         sw = g.getFontMetrics().stringWidth(cost);
         drawString(g,cost, x+w-s20-sw, y3);
@@ -331,7 +331,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptX[0]=x1-s3-sz; ptX[1]=ptX[0]+sz; ptX[2]=ptX[0]+sz/2;
         ptY[0]=y2-s9;  ptY[1]=ptY[0];    ptY[2]=y2-s16;
         spyMaxIncr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             spyMaxIncr.addPoint(ptX[i], ptY[i]);
         Color buttonC = hoverShape == spyMaxIncr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -340,7 +340,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptX[0]=x1-s3-sz; ptX[1]=ptX[0]+sz; ptX[2]=ptX[0]+sz/2;
         ptY[0]=y2-s6;    ptY[1]=ptY[0];    ptY[2]=y2+s1;
         spyMaxDecr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             spyMaxDecr.addPoint(ptX[i], ptY[i]);
         buttonC = hoverShape == spyMaxDecr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -361,7 +361,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-mgn-sw, y2);
        
-         // draw string on right for pct 
+         // draw string on right for pct
         g.setColor(SystemPanel.blackText);
         String newSpies = view.spies().newSpiesExpected();
         sw = g.getFontMetrics().stringWidth(newSpies);
@@ -425,7 +425,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         drawJnknownTechCategory(g, emp, tree.forceField(),  2, x3, y1, w1, h1);
         drawJnknownTechCategory(g, emp, tree.planetology(), 3, x1, y2, w1, h1);
         drawJnknownTechCategory(g, emp, tree.propulsion(),  4, x2, y2, w1, h1);
-        drawJnknownTechCategory(g, emp, tree.weapon(),      5, x3, y2, w1, h1);   
+        drawJnknownTechCategory(g, emp, tree.weapon(),      5, x3, y2, w1, h1);
     }
     private void drawTechnologyLists(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
@@ -446,7 +446,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         drawTechCategory(g, emp, tree.forceField(),  2, x3, y1, w1, h1);
         drawTechCategory(g, emp, tree.planetology(), 3, x1, y2, w1, h1);
         drawTechCategory(g, emp, tree.propulsion(),  4, x2, y2, w1, h1);
-        drawTechCategory(g, emp, tree.weapon(),      5, x3, y2, w1, h1);   
+        drawTechCategory(g, emp, tree.weapon(),      5, x3, y2, w1, h1);
     }
     private void drawTechCategory(Graphics2D g, Empire emp, TechCategory cat, int num, int x, int y, int w, int h) {
         g.setColor(SystemPanel.whiteText);
@@ -501,7 +501,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             }
         }
         techYMax[num] = max(0, s21+(rowH*rows) - listH);
-        if (techYMax[num] == 0) 
+        if (techYMax[num] == 0)
             techScrollers[num].setBounds(0,0,0,0);
         else {
             g.setColor(RacesUI.scrollBarC);
@@ -576,7 +576,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             }
         }
         techYMax[num] = max(0, s21+(rowH*rows) - listH);
-        if (techYMax[num] == 0) 
+        if (techYMax[num] == 0)
             techScrollers[num].setBounds(0,0,0,0);
         else {
             g.setColor(RacesUI.scrollBarC);
@@ -651,7 +651,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             if (!view.spies().isHide() && pl.alliedWith(emp.id))
                 treatyBreak = true;
             else if (view.spies().isSabotage() && pl.pactWith(emp.id))
-                treatyBreak = true;  
+                treatyBreak = true;
         }
         
         if (!view.embassy().anyWar() && (view.spies().maxSpies() > 0)
@@ -690,7 +690,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         }
         
         String desc2 = "";
-        if (triggerWar) 
+        if (triggerWar)
             desc2 = text("RACES_INTEL_SPY_WARNING_WAR");
         else if (treatyBreak)
             desc2 = text("RACES_INTEL_SPY_WARNING");
@@ -702,7 +702,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             for (String line: lines2) {
                 y2 += s16;
                 drawString(g,line, x+s15, y2);
-            }           
+            }
         }
     }
     private void drawSecuritySliderBar(Graphics2D g, int x, int y, int w, int h) {
@@ -736,7 +736,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptY[0]=y+(h/2);  ptY[1]=ptY[0]-sz; ptY[2]=ptY[0]+sz;
         Color buttonC = hoverShape == buttonDecr ? SystemPanel.yellowText :  Color.black;
         buttonDecr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             buttonDecr.addPoint(ptX[i], ptY[i]);
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
 
@@ -744,7 +744,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptX[0]=x1+w1+sz+s3; ptX[1]=ptX[0]-sz; ptX[2]=ptX[0]-sz;
         ptY[0]=y+(h/2);  ptY[1]=ptY[0]-sz; ptY[2]=ptY[0]+sz;
         buttonIncr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             buttonIncr.addPoint(ptX[i], ptY[i]);
         buttonC = hoverShape == buttonIncr ? SystemPanel.yellowText :  Color.black;
         drawShadedPolygon(g, ptX, ptY, buttonC, s1, -s1);
@@ -771,7 +771,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptX[0] = leftM; ptX[1] = leftM+buttonW; ptX[2] = leftM+buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         missionDecr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
            missionDecr.addPoint(ptX[i], ptY[i]);
         if (hoverShape == missionDecr)
             g.setColor(SystemPanel.yellowText);
@@ -783,7 +783,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         ptX[0] = rightM; ptX[1] = rightM-buttonW; ptX[2] = rightM-buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         missionIncr.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             missionIncr.addPoint(ptX[i], ptY[i]);
         if (hoverShape == missionIncr)
             g.setColor(SystemPanel.yellowText);
@@ -860,7 +860,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
     private void previousSpyMission() {
         EmpireView view = player().viewForEmpire(parent.selectedEmpire());
         if (view != null)
-            view.spies().prevMission();        
+            view.spies().prevMission();
     }
     private void increaseMaxSpies() {
         EmpireView view = player().viewForEmpire(parent.selectedEmpire());
@@ -872,7 +872,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
     private void decreaseMaxSpies() {
         EmpireView view = player().viewForEmpire(parent.selectedEmpire());
         if (view != null) {
-            view.spies().decreaseMaxSpies();        
+            view.spies().decreaseMaxSpies();
             setValues();
         }
     }
@@ -924,7 +924,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         unknownTechs.clear();
         techOwners.clear();
         Empire emp = parent.selectedEmpire();
-        if (emp.isPlayer()) 
+        if (emp.isPlayer())
             loadAllUnknownTechs();
         else
             loadAllTechs(emp);
@@ -954,7 +954,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
                         techOwners.put(id, new ArrayList<>());
                     techOwners.get(id).add(emp);
                 }
-            }        
+            }
         }
     }
     private void loadAllTechs(Empire emp) {
@@ -997,7 +997,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
                 int prevY = techY[i];
                 if (count < 0)
                     techY[i] = max(0,techY[i]-s10);
-                else 
+                else
                     techY[i] = min(techYMax[i],techY[i]+s10);
                 if (techY[i] != prevY)
                     repaint(techBoxes[i]);
@@ -1027,31 +1027,31 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         }
     }
     @Override
-    public void mouseDragged(MouseEvent e) { 
+    public void mouseDragged(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
         int dY = y-dragY;
         dragY = y;
         for (int i=0;i<techBoxes.length;i++) {
             if (techScrollers[i] == hoverShape) {
-                if ((y >= techBoxes[i].y) || (y <= (techBoxes[i].y+techBoxes[i].height))) { 
+                if ((y >= techBoxes[i].y) || (y <= (techBoxes[i].y+techBoxes[i].height))) {
                     int h = (int) techBoxes[i].getHeight();
                     int dListY = (int)((float)dY*(h+techYMax[i])/h);
                     if (dY < 0)
                         techY[i] = max(0,techY[i]+dListY);
-                    else 
+                    else
                         techY[i] = min(techYMax[i],techY[i]+dListY);
                 }
                 repaint(techBoxes[i]);
                 return;
             }
             else if (techBoxes[i] == hoverShape) {
-                if (techBoxes[i].contains(x,y)) { 
+                if (techBoxes[i].contains(x,y)) {
                     int h = (int) techBoxes[i].getHeight();
                     int dListY = (int)(-(float)dY*(h+techYMax[i])/h);
                     if (dListY < 0)
                         techY[i] = max(0,techY[i]+dListY);
-                    else 
+                    else
                         techY[i] = min(techYMax[i],techY[i]+dListY);
                 }
                 repaint(techBoxes[i]);
@@ -1066,9 +1066,9 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         Shape prevHover = hoverShape;
         hoverShape = null;
         for (int i=0;i<techBoxes.length;i++) {
-            if (techScrollers[i].contains(x,y)) 
+            if (techScrollers[i].contains(x,y))
                 hoverShape = techScrollers[i];
-            else if (techBoxes[i].contains(x,y)) 
+            else if (techBoxes[i].contains(x,y))
                 hoverShape = techBoxes[i];
         }
         if (spyMaxIncr.contains(x,y))
@@ -1092,13 +1092,13 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
         else if (missionIncr.contains(x,y))
             hoverShape = missionIncr;
 
-        if (hoverShape != prevHover) 
-            repaint();     
+        if (hoverShape != prevHover)
+            repaint();
     }
     @Override
     public void mouseClicked(MouseEvent mouseEvent) { }
     @Override
-    public void mousePressed(MouseEvent e) { 
+    public void mousePressed(MouseEvent e) {
         dragY = e.getY();
     }
     @Override

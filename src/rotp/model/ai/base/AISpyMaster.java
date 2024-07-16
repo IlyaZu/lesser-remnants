@@ -1,6 +1,6 @@
  /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public class AISpyMaster implements Base, SpyMaster {
             return;
         }
 
-        // if we are not in war preparations and we've received threats 
+        // if we are not in war preparations and we've received threats
         // about spying, then no spending
         boolean shouldHide = false;
         if (!v.embassy().anyWar() && (v.spies().maxSpies() > 0)
@@ -98,13 +98,13 @@ public class AISpyMaster implements Base, SpyMaster {
 
         if (emb.war())
             maxSpiesNeeded = 2;
-        else if (emb.noTreaty()) 
+        else if (emb.noTreaty())
             maxSpiesNeeded = 1;
         else if (emb.pact())
             maxSpiesNeeded = 1;
         else if (emb.atPeace())
             maxSpiesNeeded = 1;
-        else if (emb.alliance()) 
+        else if (emb.alliance())
             maxSpiesNeeded = 1;
 
         if (spies.numActiveSpies() >= maxSpiesNeeded)
@@ -180,7 +180,7 @@ public class AISpyMaster implements Base, SpyMaster {
             }
             else if (leader.isXenophobic() && canEspionage)
                 spies.beginEspionage();
-            else if (relations < -20) 
+            else if (relations < -20)
                 spies.beginHide();
             else if (leader.isTechnologist() && canEspionage)
                 spies.beginEspionage();
