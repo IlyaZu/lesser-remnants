@@ -90,7 +90,7 @@ public class AIGeneral implements Base, General {
         //empire.tech().learnAll();
         //System.out.println(galaxy().currentTurn()+" "+empire.name()+" "+empire.leader().name()+" personality: "+empire.leader().personality()+" objective: "+empire.leader().objective());
         Galaxy gal = galaxy();
-        for (int id=0;id<empire.sv.count();id++) 
+        for (int id=0;id<empire.sv.count();id++)
             reviseFleetPlan(gal.system(id));
         additionalColonizersToBuild = additionalColonizersToBuild(false);
         if(empire.atWar() || sensePotentialAttack())
@@ -99,7 +99,7 @@ public class AIGeneral implements Base, General {
             ShipDesignLab lab = empire.shipLab();
             float fighterCost = 0.0f;
             float colonizerCost = 0.0f;
-            for (int i=0;i<counts.length;i++) 
+            for (int i=0;i<counts.length;i++)
             {
                 if(lab.design(i).hasColonySpecial())
                 {
@@ -170,7 +170,7 @@ public class AIGeneral implements Base, General {
         // increase planet value depending on size and factories (val is normalized below)
         // (4*pow(SIZE, 0.7) + min(20, sqrt(FACTORIES)))
         // min(20) is ballpark max invasion tech chances (400 factories)
-        // 
+        //
         // Normal,   size-100,    0 factories:  val = 100
         // Normal,   size-100,  100 factories:  val = 110
         // Normal,   size-100,  200 factories:  val = 115
@@ -635,7 +635,7 @@ public class AIGeneral implements Base, General {
         if(totalEmpirePopulationCapacity >= 0 && emp == empire && emp.isAIControlled())
             return totalEmpirePopulationCapacity;
         float capacity = 0;
-        for (int id=0;id<emp.sv.count();id++) 
+        for (int id=0;id<emp.sv.count();id++)
         {
             StarSystem current = galaxy().system(id);
             if(current.colony() == null)
@@ -669,7 +669,7 @@ public class AIGeneral implements Base, General {
         if(myFighterCost >= 0)
             return myFighterCost;
         float fighterCost = 0.0f;
-        for (ShipDesign design:empire.shipLab().designs()) 
+        for (ShipDesign design:empire.shipLab().designs())
         {
             if(design.hasColonySpecial())
                 continue;
@@ -837,7 +837,7 @@ public class AIGeneral implements Base, General {
             additional = max((int)Math.ceil(additional), empire.numColonies() / 5);
         //System.out.println(galaxy().currentTurn()+" "+empire.name()+" required colonizers: "+additional);
         int[] counts = galaxy().ships.shipDesignCounts(empire.id);
-        for (int i=0;i<counts.length;i++) 
+        for (int i=0;i<counts.length;i++)
         {
             if(empire.shipLab().design(i).hasColonySpecial())
             {
@@ -891,7 +891,7 @@ public class AIGeneral implements Base, General {
             fighterNeed = empire.allColonizedSystems().size();
         }
         int[] counts = galaxy().ships.shipDesignCounts(empire.id);
-        for (int i=0;i<counts.length;i++) 
+        for (int i=0;i<counts.length;i++)
         {
             if(empire.shipLab().design(i).isArmedForShipCombat())
                 fighterNeed -= counts[i];
@@ -907,7 +907,7 @@ public class AIGeneral implements Base, General {
             int[] counts = galaxy().ships.shipDesignCounts(empire.id);
             for (int i=0;i<ShipDesignLab.MAX_DESIGNS; i++) {
                 ShipDesign d = empire.shipLab().design(i);
-                if (d.active() && d.isArmed() && !d.isColonyShip()) 
+                if (d.active() && d.isArmed() && !d.isColonyShip())
                     totalArmedFleetCost += (counts[i] * d.cost());
             }
         }
@@ -917,7 +917,7 @@ public class AIGeneral implements Base, General {
         return false;
     }
     @Override
-    public boolean allowedToBomb(StarSystem sys) { 
+    public boolean allowedToBomb(StarSystem sys) {
         Empire emp = sys.empire();
         if(empire.enemies().contains(emp))
         {
@@ -942,8 +942,8 @@ public class AIGeneral implements Base, General {
     @Override
     public boolean isRusher()
     {
-        if(empire.race().shipAttackBonus() > 0 
-                || empire.race().shipDefenseBonus() > 0 
+        if(empire.race().shipAttackBonus() > 0
+                || empire.race().shipDefenseBonus() > 0
                 || isInvader()
                 || empire.race().spyInfiltrationAdj() > 0)
             return true;
@@ -1096,7 +1096,7 @@ public class AIGeneral implements Base, General {
         int[] counts = galaxy().ships.shipDesignCounts(empire.id);
         for (int i=0;i<ShipDesignLab.MAX_DESIGNS; i++) {
             ShipDesign d = empire.shipLab().design(i);
-            if (d.active() && d.isArmed() && !d.isColonyShip()) 
+            if (d.active() && d.isArmed() && !d.isColonyShip())
             {
                 float keepScore = (1 - d.availableSpace()/d.totalSpace()) * (float)d.engine().warp() / (float)empire.shipLab().fastestEngine().warp();
                 keepScore *= keepScore;

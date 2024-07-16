@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -363,8 +363,8 @@ public class AIScientist implements Base, Scientist {
             empire.tech().weapon().adjustAllocation(+10);
         }
         
-        int totalAlloc = empire.tech().computer().allocation() + empire.tech().construction().allocation() 
-        + empire.tech().forceField().allocation() + empire.tech().planetology().allocation() 
+        int totalAlloc = empire.tech().computer().allocation() + empire.tech().construction().allocation()
+        + empire.tech().forceField().allocation() + empire.tech().planetology().allocation()
         + empire.tech().propulsion().allocation() + empire.tech().weapon().allocation();
         
         int roundingFix = 60 - totalAlloc;
@@ -439,7 +439,7 @@ public class AIScientist implements Base, Scientist {
             roundingFix--;
             if(roundingFix <= 0)
                 break;
-        }  
+        }
     }
     @Override
     public void setTechToResearch(TechCategory cat) {
@@ -544,7 +544,7 @@ public class AIScientist implements Base, Scientist {
     }
     @Override
     public float warTradeBCValue(Tech t) {
-        return t.warModeFactor() * t.researchCost(); 
+        return t.warModeFactor() * t.researchCost();
     }
     private float researchValueBonus(Tech t) {
         TechCategory cat = empire.tech().category(t.cat.index());

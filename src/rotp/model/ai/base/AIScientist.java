@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -276,7 +277,7 @@ public class AIScientist implements Base, Scientist {
     }
     @Override
     public float warTradeBCValue(Tech t) {
-        return t.warModeFactor() * t.researchCost(); 
+        return t.warModeFactor() * t.researchCost();
     }
     private float researchValueBonus(Tech t) {
         TechCategory cat = empire.tech().category(t.cat.index());

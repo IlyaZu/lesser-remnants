@@ -381,8 +381,8 @@ public final class Empire implements Base, NamedObject, Serializable {
     public void loadStartingShipDesigns() {
         shipLab.init(this);
     }
-    public boolean isPlayer()            { return id == PLAYER_ID; };
-    public boolean isAI()                { return id != PLAYER_ID; };
+    public boolean isPlayer()            { return id == PLAYER_ID; }
+    public boolean isAI()                { return id != PLAYER_ID; }
     public boolean isPlayerControlled()  { return !isAIControlled(); }
     public boolean isAIControlled()      { return isAI() || options().isAutoPlay(); }
     public Color color()                 { return options().color(bannerColor); }
