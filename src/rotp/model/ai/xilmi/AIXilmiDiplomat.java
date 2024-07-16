@@ -925,60 +925,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         log(view+" - Declaring war based on opportunity");
         view.embassy().beginWarPreparations(DialogueManager.DECLARE_OPPORTUNITY_WAR, null);
     }
-    @Override
-    public Empire councilVoteFor(Empire civ1, Empire civ2) {
-        EmpireView cv1 = empire.viewForEmpire(civ1);
-        EmpireView cv2 = empire.viewForEmpire(civ2);
-
-        // check special allied victory condition and vote for bigger one
-        if(empire == civ1 && cv2.embassy().alliance() && civ2.totalEmpirePopulation() >= empire.totalEmpirePopulation())
-            return castVoteFor(civ2);
-        if(empire == civ2 && cv1.embassy().alliance() && civ1.totalEmpirePopulation() >= empire.totalEmpirePopulation())
-            return castVoteFor(civ1);
-        
-        // always vote for yourself
-        if (civ1 == empire)   return castVoteFor(civ1);
-        if (civ2 == empire)   return castVoteFor(civ2);
-        
-        if(!empire.inEconomicRange(cv2.empId()) || !empire.inEconomicRange(cv1.empId()) || !empire.contactedEmpires().contains(civ1) || !empire.contactedEmpires().contains(civ2))
-            return castVoteFor(null);
-        
-        // if allied with one, vote for that ally
-        if (cv1.embassy().alliance() && !cv2.embassy().alliance())
-            return castVoteFor(civ1);
-        if (cv2.embassy().alliance() && !cv1.embassy().alliance())
-            return castVoteFor(civ2);
-
-        // if at war with one, vote for other (if contacted)
-        if (cv1.embassy().anyWar() && !cv2.embassy().anyWar())
-            return castVoteFor(civ2);
-        if (cv2.embassy().anyWar() && !cv1.embassy().anyWar())
-            return castVoteFor(civ1);
-        
-        //ail: I want it to be deterministic, so I pick whoever I fear more
-        if(empire.generalAI().timeToKill(civ1, empire) < empire.generalAI().timeToKill(civ2, empire) && empire.generalAI().timeToKill(empire, civ1) > empire.generalAI().timeToKill(civ1, empire))
-            return castVoteFor(civ1);
-        if(empire.generalAI().timeToKill(civ2, empire) < empire.generalAI().timeToKill(civ1, empire) && empire.generalAI().timeToKill(empire, civ2) > empire.generalAI().timeToKill(civ2, empire))
-            return castVoteFor(civ2);
-        // return undecided
-        return castVoteFor(null);
-    }
-    private boolean giveLoyaltyTo(Empire c) {
-        // ail: Very simple decision
-        return empire.generalAI().timeToKill(empire, c) > empire.generalAI().timeToKill(c, empire);
-    }
-    // ----------------------------------------------------------
-// PRIVATE METHODS
-// ----------------------------------------------------------
-    private Empire castVoteFor(Empire c) {
-        if(c != null && c != empire && !giveLoyaltyTo(c))
-            c = null;
-        if (c == null)
-            empire.lastCouncilVoteEmpId(Empire.ABSTAIN_ID);
-        else
-            empire.lastCouncilVoteEmpId(c.id);
-        return c;
-    }
     //-----------------------------------
     // INCIDENTS
     //-----------------------------------

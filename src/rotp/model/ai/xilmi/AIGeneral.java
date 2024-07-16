@@ -35,7 +35,6 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipDesignLab;
 import rotp.model.tech.Tech;
-import rotp.model.tech.TechBombWeapon;
 import rotp.util.Base;
 
 public class AIGeneral implements Base, General {
@@ -575,63 +574,6 @@ public class AIGeneral implements Base, General {
                 }
             }
         }
-    }
-    @Override
-    public float timeToKill(Empire attacker, Empire defender)
-    {
-        float avgFleetDistance = 0;
-        float fleetDistanceCounts = 0;
-        float avgProductionDistance = 0;
-        float productionDistanceCounts = 0;
-        for(StarSystem theirs: defender.allColonizedSystems())
-        {
-            for(ShipFleet fleet: attacker.allFleets())
-            {
-                float speed = fleet.slowestStackSpeed();
-                if(theirs.inNebula())
-                    speed = 1;
-                avgFleetDistance += max(fleet.distanceTo(theirs) / speed, 1) * fleet.bcValue();
-                //fleet.travelTimeTo(theirs, fleet.slowestStackSpeed()) * fleet.bcValue();
-                fleetDistanceCounts += fleet.bcValue();
-            }
-            for(StarSystem mine: attacker.allColonizedSystems())
-            {
-                float speed = attacker.tech().topSpeed();
-                if(theirs.inNebula())
-                    speed = 1;
-                float colonyContributionValue = mine.colony().totalIncome() * mine.planet().productionAdj();
-                //System.out.println(attacker.name()+" "+mine.name()+" can make "+newGrownPopulation+" per turn. so far: "+popDistanceCounts);
-                float dist = mine.distanceTo(theirs);
-                avgProductionDistance += max(dist / speed, 1) * colonyContributionValue;
-                productionDistanceCounts += colonyContributionValue;
-            }
-        }
-        if(fleetDistanceCounts > 0)
-            avgFleetDistance /= fleetDistanceCounts;
-        if(productionDistanceCounts > 0)
-            avgProductionDistance /= productionDistanceCounts;
-        avgFleetDistance *= 2;
-        avgProductionDistance *= 2;
-        float averageDamagerPerBc = 0;
-        TechBombWeapon bomb = attacker.tech().topBombWeaponTech();
-        averageDamagerPerBc = (max(0, bomb.damageLow() - defender.tech().maxPlanetaryShieldLevel()) + max(0, bomb.damageHigh() - defender.tech().maxPlanetaryShieldLevel())) / 2;
-        averageDamagerPerBc /= bomb.cost * bomb.costMiniaturization(attacker) * 4;
-        
-        float killTime = Float.MAX_VALUE;
-        if(avgFleetDistance == 0)
-            avgFleetDistance = Float.MAX_VALUE;
-        if(avgProductionDistance == 0)
-            avgProductionDistance = Float.MAX_VALUE;
-        float ProductionTurnsForKillInOneTurn = Float.MAX_VALUE;
-        if(averageDamagerPerBc > 0)
-        {
-            killTime = defender.totalPlanetaryPopulation() * 200 / (attacker.totalFleetCost() * averageDamagerPerBc) + avgFleetDistance;
-            ProductionTurnsForKillInOneTurn = defender.totalPlanetaryPopulation() * 200 / (attacker.totalPlanetaryProduction() * averageDamagerPerBc) + avgProductionDistance;
-        }
-        //System.out.println(attacker.name()+" vs. "+defender.name()+" popKillTime: "+PopKillTime+" totalPopGrowthPerTurnPotential: "+totalPopGrowthPerTurnPotential+" avgPopDistance: "+avgPopDistance);
-        float totalKillTime = 1 / (1 / killTime + 1 / ProductionTurnsForKillInOneTurn);
-        //System.out.println(attacker.name()+" vs. "+defender.name()+" totalKillTime: "+totalKillTime+" ship-killtime: "+killTime+" prod-killtime: "+ProductionTurnsForKillInOneTurn);
-        return totalKillTime;
     }
     @Override
     public Empire bestVictim() {
