@@ -81,7 +81,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
     private final int[] timers = new int[20];
     private float relations;
-    private int peaceDuration = 0; // obsolete - sunset at some point
     private int tradeTimer = 0;
     private int lastRequestedTradeLevel = 0;
     private int tradeRefusalCount = 0;
@@ -193,7 +192,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         return false;
     }
     public void nextTurn(float prod) {
-        peaceDuration--;
         treaty.nextTurn(empire());
     }
     public boolean war()                    { return treaty.isWar();     }
@@ -379,7 +377,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
             return false;
         return !peaceTreatyInEffect();
     }
-    public boolean peaceTreatyInEffect()   { return treaty.isPeace() || (peaceDuration > 0); }
+    public boolean peaceTreatyInEffect()   { return treaty.isPeace(); }
     private void setTreaty(DiplomaticTreaty tr) {
         treaty = tr;
         otherEmbassy().treaty = tr;
