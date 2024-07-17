@@ -355,7 +355,7 @@ public class CombatManager implements Base {
         if (system.empire() == emp1)
             return;
         DiplomaticEmbassy emb1 = emp1.viewForEmpire(emp2).embassy();
-        if (!emb1.anyWar()) {
+        if (!emb1.war()) {
             if (emb1.onWarFooting())
                 emb1.declareWar();
         }

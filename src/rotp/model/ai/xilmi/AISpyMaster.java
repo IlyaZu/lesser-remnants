@@ -136,7 +136,7 @@ public class AISpyMaster implements Base, SpyMaster {
 
         // we've been warned and they are not our enemy (i.e. no war preparations)
         boolean shouldHide = false;
-        if (!v.embassy().anyWar() && (v.spies().maxSpies() > 0)
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
         && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
             //System.out.println(empire.galaxy().currentTurn()+" "+ empire.name()+" we have been recently warned to stop spying by "+v.embassy().empire()+" "+v.otherView().embassy().timers[DiplomaticEmbassy.TIMER_SPY_WARNING]);
             if (!v.spies().isHide()
@@ -180,7 +180,7 @@ public class AISpyMaster implements Base, SpyMaster {
             }
             return;
         }
-        if (emb.anyWar()) {
+        if (emb.war()) {
             if (canEspionage)
             {
                 spies.beginEspionage();
@@ -261,9 +261,9 @@ public class AISpyMaster implements Base, SpyMaster {
         EmpireView v2 = empire.viewForEmpire(e2);
 
         // throw enemies under the bus first
-        if (v1.embassy().anyWar() && !v2.embassy().anyWar())
+        if (v1.embassy().war() && !v2.embassy().war())
             return e1;
-        if (!v1.embassy().anyWar() && v2.embassy().anyWar())
+        if (!v1.embassy().war() && v2.embassy().war())
             return e2;
 
         // throw allies under the bus last

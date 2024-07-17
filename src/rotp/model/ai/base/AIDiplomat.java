@@ -1010,7 +1010,7 @@ public class AIDiplomat implements Base, Diplomat {
             return;
 
         if (willingToOfferPeace(v)) {
-            if (v.embassy().anyWar())
+            if (v.embassy().war())
                 v.empire().diplomatAI().receiveOfferPeace(empire);
             else
                 v.embassy().endWarPreparations();
@@ -1107,7 +1107,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
         // no warnings if at war
         DiplomaticEmbassy emb = view.embassy();
-        if (emb.anyWar())
+        if (emb.war())
             return false;
         float threshold = 0 - warningThreshold(view);
         log(view+": checkIssueWarning. Threshold: "+ threshold);
@@ -1145,7 +1145,7 @@ public class AIDiplomat implements Base, Diplomat {
     private boolean decidedToDeclareWar(EmpireView view) {
         if (empire.isPlayerControlled())
             return false;
-        if (view.embassy().anyWar())
+        if (view.embassy().war())
             return false;
         if(!empire.inShipRange(view.empId()))
             return false;
@@ -1326,13 +1326,13 @@ public class AIDiplomat implements Base, Diplomat {
             return castVoteFor(civ2);
 
         // if at war with one, vote for other (if contacted)
-        if (cv1.embassy().anyWar() && !cv2.embassy().anyWar()) {
+        if (cv1.embassy().war() && !cv2.embassy().war()) {
             if (cv2.embassy().contact())
                 return castVoteFor(civ2);
             else
                 return castVoteFor(null);
         }
-        if (cv2.embassy().anyWar() && !cv1.embassy().anyWar()) {
+        if (cv2.embassy().war() && !cv1.embassy().war()) {
             if (cv1.embassy().contact())
                 return castVoteFor(civ1);
             else

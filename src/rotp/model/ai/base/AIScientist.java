@@ -419,7 +419,7 @@ public class AIScientist implements Base, Scientist {
 
         int maxDmg = 0;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 TechBiologicalWeapon enemyWeapon = v.spies().tech().topBiologicalWeaponTech();
                 if (enemyWeapon != null)
                     maxDmg = max(maxDmg, enemyWeapon.maxDamage);
@@ -449,7 +449,7 @@ public class AIScientist implements Base, Scientist {
 
         int maxAntidote = 0;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 TechBiologicalAntidote enemyAntidote = v.spies().tech().topBiologicalAntidoteTech();
                 if (enemyAntidote != null)
                     maxAntidote = max(maxAntidote, enemyAntidote.attackReduction);
@@ -1094,7 +1094,7 @@ public class AIScientist implements Base, Scientist {
     public float baseValue(TechSubspaceInterdictor t) {
         boolean anyEnemiesHaveTeleporter = false;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 if (v.spies().tech().knowsTechOfType(Tech.TELEPORTER))
                         anyEnemiesHaveTeleporter = true;
             }
@@ -1114,7 +1114,7 @@ public class AIScientist implements Base, Scientist {
     public float baseValue(TechTeleporter t) {
         boolean allEnemiesHaveInterdiction = true;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 if (v.spies().tech().knowsTechOfType(Tech.SUBSPACE_INTERDICTOR))
                         allEnemiesHaveInterdiction = false;
             }
