@@ -1374,7 +1374,7 @@ public final class Empire implements Base, NamedObject, Serializable {
     }
     public boolean atWar() {
         for (EmpireView v: empireViews()) {
-            if ((v != null) && !v.empire().extinct() && v.embassy().anyWar())
+            if ((v != null) && !v.empire().extinct() && v.embassy().war())
                 return true;
         }
         return false;
@@ -1573,7 +1573,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         int n = 0;
         for (EmpireView v : empireViews()) {
             if ((v!= null) && !v.empire().extinct
-            && (v.embassy().anyWar() || v.embassy().onWarFooting()))
+            && (v.embassy().war() || v.embassy().onWarFooting()))
                 n++;
         }
         return n;
@@ -1582,7 +1582,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         List<Empire> r = new ArrayList<>();
         for (EmpireView v : empireViews()) {
             if ((v!= null) && !v.empire().extinct
-            && v.embassy().anyWar())
+            && v.embassy().war())
                 r.add(v.empire());
         }
         return r;
@@ -1591,7 +1591,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         List<Empire> r = new ArrayList<>();
         for (EmpireView v : empireViews()) {
             if ((v!= null) && !v.empire().extinct
-            && (v.embassy().anyWar() || v.embassy().onWarFooting()))
+            && (v.embassy().war() || v.embassy().onWarFooting()))
                 r.add(v.empire());
         }
         return r;
@@ -1604,7 +1604,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         for (int i=0;i<map.length;i++) {
             EmpireView v = empViews[i];
             map[i] = (v != null) && !v.empire().extinct
-                        && (v.embassy().anyWar() || v.embassy().onWarFooting());
+                        && (v.embassy().war() || v.embassy().onWarFooting());
         }
         return map;
     }
@@ -1612,7 +1612,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         List<EmpireView> r = new ArrayList<>();
         for (EmpireView v : empireViews()) {
             if ((v!= null) && !v.empire().extinct
-            && (v.embassy().anyWar() || v.embassy().onWarFooting()))
+            && (v.embassy().war() || v.embassy().onWarFooting()))
                 r.add(v);
         }
         return r;
@@ -1727,7 +1727,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         EmpireView v = viewForEmpire(empId);
         if (v == null)
             return false;
-        return v.embassy().anyWar();
+        return v.embassy().war();
     }
     public boolean hasTradeWith(Empire c) {
         if (c == this) return false;

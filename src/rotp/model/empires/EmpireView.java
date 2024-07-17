@@ -71,7 +71,7 @@ public final class EmpireView implements Base, Serializable {
         return !embassy.diplomatGone() && !otherView().embassy.diplomatGone();
     }
     public Image flag() {
-        if (embassy().anyWar())
+        if (embassy().war())
             return empire().race().flagWar();
         else if (embassy().isFriend())
             return empire().race().flagPact();
@@ -79,12 +79,12 @@ public final class EmpireView implements Base, Serializable {
             return empire().race().flagNorm();
     }
     public Image dialogueBox() {
-        if (embassy().anyWar())
+        if (embassy().war())
             return owner().race().dialogWar();
         else if (embassy().isFriend())
             return owner().race().dialogPact();
         else
-                    return owner().race().dialogNorm();
+            return owner().race().dialogNorm();
     }
     public float scaleOfContempt() {
         // returns 0 if equal power

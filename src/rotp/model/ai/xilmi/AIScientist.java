@@ -792,7 +792,7 @@ public class AIScientist implements Base, Scientist {
     public float baseValue(TechSubspaceInterdictor t) {
         boolean anyEnemiesHaveTeleporter = false;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 if (v.spies().tech().knowsTechOfType(Tech.TELEPORTER))
                         anyEnemiesHaveTeleporter = true;
                 if (v.spies().tech().knowsTechOfType(Tech.COMBAT_TRANSPORTER))
@@ -807,7 +807,7 @@ public class AIScientist implements Base, Scientist {
     public float baseValue(TechTeleporter t) {
         boolean allEnemiesHaveInterdiction = true;
         for (EmpireView v: empire.empireViews()) {
-            if ((v != null) && v.embassy().anyWar()) {
+            if ((v != null) && v.embassy().war()) {
                 if (v.spies().tech().knowsTechOfType(Tech.SUBSPACE_INTERDICTOR))
                         allEnemiesHaveInterdiction = false;
             }

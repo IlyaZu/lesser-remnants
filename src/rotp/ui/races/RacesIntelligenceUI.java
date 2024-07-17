@@ -654,7 +654,7 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
                 treatyBreak = true;
         }
         
-        if (!view.embassy().anyWar() && (view.spies().maxSpies() > 0)
+        if (!view.embassy().war() && (view.spies().maxSpies() > 0)
         && view.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
             if (!view.spies().isHide()
             || (view.empire().leader().isXenophobic())) {

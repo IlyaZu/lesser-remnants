@@ -701,7 +701,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         decidedToIssueWarning(v);
 
         if (willingToOfferPeace(v)) {
-            if (v.embassy().anyWar())
+            if (v.embassy().war())
                 v.empire().diplomatAI().receiveOfferPeace(empire);
             else
                 v.embassy().endWarPreparations();
@@ -777,7 +777,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return false;
         // no warnings if at war
         DiplomaticEmbassy emb = view.embassy();
-        if (emb.anyWar())
+        if (emb.war())
             return false;
         float threshold = 0 - warningThreshold(view);
         log(view+": checkIssueWarning. Threshold: "+ threshold);
@@ -818,7 +818,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
     private boolean decidedToDeclareWar(EmpireView view) {
         if (empire.isPlayerControlled())
             return false;
-        if (view.embassy().anyWar())
+        if (view.embassy().war())
             return false;
         if (!view.inEconomicRange())
             return false;
@@ -934,7 +934,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         
         view.embassy().addIncident(inc);
 
-        if (inc.triggersWar() && !view.embassy().anyWar())
+        if (inc.triggersWar() && !view.embassy().war())
             beginIncidentWar(view, inc);
     }
    private boolean warWeary(EmpireView v) {

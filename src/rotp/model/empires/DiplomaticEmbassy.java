@@ -367,9 +367,9 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
         return false;
     }
-    public boolean canAttackWithoutPenalty() { return anyWar() || noTreaty(); }
+    public boolean canAttackWithoutPenalty() { return war() || noTreaty(); }
     public boolean canAttackWithoutPenalty(StarSystem s) {
-        if (anyWar() || noTreaty())
+        if (war() || noTreaty())
             return true;
         if (pact())
             return (s.hasColonyForEmpire(owner()) || s.hasColonyForEmpire(empire()));
@@ -385,8 +385,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.otherView().setSuggestedAllocations();
     }
     public boolean isFriend()    { return pact() || alliance(); }
-    public boolean isEnemy()     { return anyWar() || onWarFooting(); }
-    public boolean anyWar()      { return war(); }
+    public boolean isEnemy()     { return war() || onWarFooting(); }
     public boolean atPeace()     { return peaceTreatyInEffect(); }
 
     public DiplomaticIncident exchangeTechnology(Tech offeredTech, Tech requestedTech) {
@@ -429,7 +428,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.trade().stopRoute();
 
         // if we're not at war yet, start it and inform player if he is involved
-        if (!anyWar()) {
+        if (!war()) {
             setTreaty(new TreatyWar(view.owner(), view.empire()));
             if (view.empire().isPlayerControlled()) {
                 if ((casusBelli == null) || casusBelli.isEmpty())
@@ -671,7 +670,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     
     public boolean canOfferAid() {
-        if (givenAidThisTurn || !view.diplomats() || anyWar() || !owner().inEconomicRange(view.empId())) {
+        if (givenAidThisTurn || !view.diplomats() || war() || !owner().inEconomicRange(view.empId())) {
             return false;
         }
         

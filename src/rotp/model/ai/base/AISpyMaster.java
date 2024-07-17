@@ -49,7 +49,7 @@ public class AISpyMaster implements Base, SpyMaster {
         for (EmpireView cv : empire.empireViews()) {
             if ((cv != null) && cv.embassy().contact() && cv.inEconomicRange()) {
                 alone = false;
-                if (cv.embassy().anyWar())
+                if (cv.embassy().war())
                     paranoia += 3; // modnar: more internal security paranoia
                 if (cv.embassy().noTreaty())
                     paranoia += 2; // modnar: more internal security paranoia
@@ -81,7 +81,7 @@ public class AISpyMaster implements Base, SpyMaster {
         // if we are not in war preparations and we've received threats
         // about spying, then no spending
         boolean shouldHide = false;
-        if (!v.embassy().anyWar() && (v.spies().maxSpies() > 0)
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
         && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
             if (!v.spies().isHide()
             || (v.empire().leader().isXenophobic())) {
@@ -135,7 +135,7 @@ public class AISpyMaster implements Base, SpyMaster {
 
         // we've been warned and they are not our enemy (i.e. no war preparations)
         boolean shouldHide = false;
-        if (!v.embassy().anyWar() && (v.spies().maxSpies() > 0)
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
         && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
             if (!v.spies().isHide()
             || (v.empire().leader().isXenophobic())) {
@@ -192,7 +192,7 @@ public class AISpyMaster implements Base, SpyMaster {
         }
         
         // if at war, defer to war strategy: 1) steal war techs, 2) sabotage, 3) steal techs
-        if (emb.anyWar()) {
+        if (emb.war()) {
             List<Tech> warTechs = new ArrayList<>();
             for (String tId: v.spies().possibleTechs()) {
                 Tech t = tech(tId);
@@ -218,7 +218,7 @@ public class AISpyMaster implements Base, SpyMaster {
         // invoked when a Sabotage attempt is successful
         // unfinished - AI needs to choose best sabotage type
 
-        if (v.embassy().anyWar()) {
+        if (v.embassy().war()) {
             if (!v.spies().baseTargets().isEmpty())
                 return Sabotage.MISSILES;
             else if (!v.spies().factoryTargets().isEmpty())
@@ -285,9 +285,9 @@ public class AISpyMaster implements Base, SpyMaster {
         EmpireView v2 = empire.viewForEmpire(e2);
 
         // throw enemies under the bus first
-        if (v1.embassy().anyWar() && !v2.embassy().anyWar())
+        if (v1.embassy().war() && !v2.embassy().war())
             return e1;
-        if (!v1.embassy().anyWar() && v2.embassy().anyWar())
+        if (!v1.embassy().war() && v2.embassy().war())
             return e2;
 
         // throw allies under the bus last

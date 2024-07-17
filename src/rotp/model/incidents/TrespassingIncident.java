@@ -50,7 +50,7 @@ public class TrespassingIncident extends DiplomaticIncident {
         empYou = ev.empire().id;
 
         // if it is player's ships in orbit, notify player only if not at war
-        if (ev.empire().isPlayerControlled() && !ev.embassy().anyWar())
+        if (ev.empire().isPlayerControlled() && !ev.embassy().war())
             TrespassingAlert.create(empMe, sysId);
     }
 
