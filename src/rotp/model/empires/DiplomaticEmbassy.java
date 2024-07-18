@@ -63,7 +63,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private static final int PACT_DELAY = 20;
     private static final int ALLIANCE_DELAY = 30;
     private static final int JOINT_WAR_DELAY = 20;
-    private static final int MAX_REQUESTS_TURN = 4;
 
     private final EmpireView view;
     private HashMap<String, List<String>> offeredTechs = new HashMap<>();
@@ -92,7 +91,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int diplomatGoneTimer = 0;
     private int warningLevel = 0;
     private boolean tradePraised = false;
-    private int currentMaxRequests = MAX_REQUESTS_TURN;
     private int requestCount = 0;
     private int minimumPraiseLevel = 0;
     private int minimumWarnLevel = 0;
@@ -265,7 +263,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void ignoreThreat()        { threatened = false; }
     public boolean threatened()       { return threatened; }
     
-    public boolean tooManyRequests()        { return requestCount > currentMaxRequests; }
     public float otherRelations()          { return otherEmbassy().relations(); }
     public int contactAge()                 { return (galaxy().currentTurn() - contactTurn); }
     public DiplomaticEmbassy otherEmbassy() { return view.otherView().embassy(); }
@@ -344,7 +341,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         
         diplomatGoneTimer--;
         requestCount = 0;
-        currentMaxRequests = min(currentMaxRequests+1, MAX_REQUESTS_TURN);
         minimumPraiseLevel = min(20,minimumPraiseLevel);
         minimumWarnLevel = min(20, minimumWarnLevel);
         minimumPraiseLevel = minimumPraiseLevel() - 1;
