@@ -148,7 +148,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
             return;
         }
     }
-    public void contact(boolean b)                       { contact = b; }
     public List<DiplomaticIncident> newIncidents() {
         if (newIncidents == null)
             newIncidents = new ArrayList<>();
@@ -543,15 +542,15 @@ public class DiplomaticEmbassy implements Base, Serializable {
         OathBreakerIncident.alertBrokenAlliance(owner(),empire(),caughtSpying);
         return inc;
     }
-    public void setContact() {
+    public void makeContact() {
         if (!contact()) {
             contactTurn = galaxy().currentTurn();
-            contact(true);
+            contact = true;
         }
     }
     public void makeFirstContact() {
         log("First Contact: ", owner().name(), " & ", empire().name());
-        setContact();
+        makeContact();
         if (empire().isPlayerControlled())
             DiplomaticNotification.create(view, owner().leader().dialogueContactType());
     }
