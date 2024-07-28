@@ -566,16 +566,12 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void addIncident(DiplomaticIncident inc) {
         log(view.toString(), ": Adding incident- ", str(inc.severity()), ":", inc.toString());
         incidents.add(inc);
-        updateRelations(inc);
+        updateRelations(inc.severity());
         treaty.noticeIncident(inc);
     }
     
     private void driftRelations() {
         updateRelations((baseRelations()-relations)/50);
-    }
-    
-    private void updateRelations(DiplomaticIncident incident) {
-        updateRelations(incident.severity());
     }
     
     private void updateRelations(float severity) {
