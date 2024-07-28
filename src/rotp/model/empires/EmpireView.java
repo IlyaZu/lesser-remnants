@@ -154,7 +154,7 @@ public final class EmpireView implements Base, Serializable {
         if (!owner.hasContacted(empire.id))
             embassy.makeFirstContact();
         else
-            embassy.setContact();
+            embassy.makeContact();
 
         trade.setContact();
 
