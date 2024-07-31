@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +28,6 @@ public class RaceCombatAnimation implements Base {
     public float scale = 1.0f;
     public int xSpacing, ySpacing;
 
-    public Image notFiring()            { return currentFrame(iconKey, Race.notFiring);  }
     public List<Image> firingFrames()   { return AnimationManager.current().allImages(iconKey); }
 
     public void iconSpec(String s) {

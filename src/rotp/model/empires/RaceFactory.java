@@ -125,7 +125,6 @@ public enum RaceFactory implements Base {
 
         if (key.equalsIgnoreCase("key"))              { r.id = value; return; }
         if (key.equalsIgnoreCase("langKey"))          { r.langKey = value; return; }
-        if (key.equalsIgnoreCase("homestarType"))     { r.homeworldStarType = value; return; }
         if (key.equalsIgnoreCase("homeworldType"))    { r.homeworldPlanetType = value; return; }
         if (key.equalsIgnoreCase("homeworldKey"))     { r.homeworldKey(parseInt(value)); return; }
         if (key.equalsIgnoreCase("homeworldSize"))    { r.homeworldSize = parseInt(value); return; }
@@ -191,7 +190,6 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("spyFactories"))  { r.spyFactoryFrames(parseInt(value)); return; }
         if (key.equalsIgnoreCase("spyMissiles"))   { r.spyMissileFrames(parseInt(value)); return; }
         if (key.equalsIgnoreCase("spyRebellion"))  { r.spyRebellionFrames(parseInt(value)); return; }
-        if (key.equalsIgnoreCase("espionageXY"))   { r.espionageXY(substrings(value, '@')); return; }
         if (key.equalsIgnoreCase("dialogTextX"))   { parseDialogTextMargins(r, substrings(value, ',')); return; }
         if (key.equalsIgnoreCase("dialogTextY"))   { r.dialogTopY = parseInt(value); return; }
         if (key.equalsIgnoreCase("fortress"))      { r.parseFortress(value); return; }
@@ -199,8 +197,6 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("introTextX"))    { r.introTextX = parseInt(value); return; }
         if (key.equalsIgnoreCase("councilDiplo"))  { r.parseCouncilDiplomatLocation(value); return; }
         if (key.equalsIgnoreCase("homeworld"))     { r.homeworldKey(parseInt(value)); return; }
-        if (key.equalsIgnoreCase("voice"))         { r.voiceKey = value; return; }
-        if (key.equalsIgnoreCase("ambience"))      { r.ambienceKey = value; return; }
         if (key.equalsIgnoreCase("species"))       { parseRaceSpeciesMods(r, substrings(value, ',')); return; }
         if (key.equalsIgnoreCase("preferredship")) { parseRaceShipSize(r, substrings(value,',')); return; }
         if (key.equalsIgnoreCase("shipmod"))       { parseRaceShipMods(r, substrings(value,',')); return; }
@@ -215,7 +211,6 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("objective"))     { parseRaceObjectiveMods(r, value); return; }
         if (key.equalsIgnoreCase("relations"))     { parseRaceRelationsMods(r, substrings(value,',')); return; }
         if (key.equalsIgnoreCase("shipdesign"))    { parseShipDesignMods(r, substrings(value,',')); return; }
-        if (key.equalsIgnoreCase("available"))     { parseRaceAvailableFlags(r, value); return; }
     }
 
     private int loadRaceLangLine(Race r, String input, String langDir) {
@@ -257,11 +252,6 @@ public enum RaceFactory implements Base {
         r.dialogRightMargin = parseInt(vals.get(1));
     }
     private void parseRaceSpeciesMods(Race r, List<String> vals) {
-        if (vals.size() < 2)
-            err("Race ", r.name(), " is missing some species vars");
-
-        // field #1 is species type (carbon,silicate,robotic) -
-        r.speciesType = parseInt(vals.get(0));
         r.ignoresPlanetEnvironment = (parseInt(vals.get(1)) == 1);
     }
     private void parseRaceShipSize(Race r, List<String> vals) {
@@ -358,15 +348,5 @@ public enum RaceFactory implements Base {
             if (i < maxMods)
             r.shipDesignMods[i] = val;
         }
-    }
-    private void parseRaceAvailableFlags(Race r, String input) {
-        List<String> vals = this.substrings(input, ',');
-        if (vals.size() < 2)
-            return;
-        // field #1 is available to player
-        r.availablePlayer = !vals.get(0).equalsIgnoreCase("no");
-
-        // field #2 is available to AI
-        r.availableAI = !vals.get(1).equalsIgnoreCase("no");
     }
 }

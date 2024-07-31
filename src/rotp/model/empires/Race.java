@@ -43,21 +43,16 @@ public class Race implements Base, Serializable {
         return races;
     }
 
-    public static final List<String> notTalking, closed, open, notFiring;
+    private static final List<String> notTalking, closed;
 
     static {
         notTalking = new ArrayList<>();
         notTalking.add("Mouth");
-        open = new ArrayList<>();
-        open.add("Closed");
         closed = new ArrayList<>();
         closed.add("Open");
-        notFiring = new ArrayList<>();
-        notFiring.add("Firing");
     }
 
     public String id;
-    public String setupName;
     public String langKey;
     public String description1, description2, description3;
     public String directoryName;
@@ -95,16 +90,12 @@ public class Race implements Base, Serializable {
     public RaceCombatAnimation troopDeath4H = new RaceCombatAnimation();
     public List<String> fortressKeys = new ArrayList<>();
     public String shieldKey;
-    public String voiceKey;
-    public String ambienceKey;
     public String flagWarKey, flagNormKey, flagPactKey;
     public String dlgWarKey, dlgNormKey,dlgPactKey;
     public String winSplashKey, lossSplashKey;
-    public Color winTextC, lossTextC;
     public List<String> raceNames = new ArrayList<>();
     public List<String> homeSystemNames = new ArrayList<>();
     public List<String> leaderNames = new ArrayList<>();
-    private final List<String> soundKeys = new ArrayList<>();
     public List<String> systemNames = new ArrayList<>();
 
     public List<String> shipNamesSmall = new ArrayList<>();
@@ -119,8 +110,6 @@ public class Race implements Base, Serializable {
     private final HashMap<String, Integer> raceRelations = new HashMap<>();
     private LabelManager labels;
 
-    public int speciesType;
-    public String homeworldStarType;
     public String homeworldPlanetType;
     public int homeworldSize;
     public String preferredShipSet;
@@ -144,10 +133,7 @@ public class Race implements Base, Serializable {
     public float[] techMod = new float[] { 1, 1, 1, 1, 1, 1 };
     public boolean ignoresPlanetEnvironment = false;
     public boolean ignoresFactoryRefit = false;
-    public boolean availablePlayer = true;
-    public boolean availableAI = true;
     private float labFlagX = 0;
-    public int espionageX, espionageY;
     private int spyFactoryFrames = 0;
     private int spyMissileFrames = 0;
     private int spyRebellionFrames = 0;
@@ -174,13 +160,6 @@ public class Race implements Base, Serializable {
     public int dialogRightMargin()         { return dialogRightMargin; }
     public int dialogTopY()                { return dialogTopY; }
 
-    public Race () {
-        leaderNames.add("Leader");
-        for (int i=0;i<personalityPct.length;i++)
-            personalityPct[i] = 1;
-        for (int i=0;i<objectivePct.length;i++)
-            objectivePct[i] = 1;
-    }
     public Race(String dirPath) {
         directoryName = dirPath;
         labels = new LabelManager();
@@ -298,11 +277,6 @@ public class Race implements Base, Serializable {
     public void spyMissileFrames(int d)       { spyMissileFrames = d; }
     public int spyRebellionFrames()           { return spyRebellionFrames; }
     public void spyRebellionFrames(int d)     { spyRebellionFrames = d; }
-    public void espionageXY(List<String> vals) {
-        espionageX = parseInt(vals.get(0));
-        if (vals.size() > 1)
-            espionageY = parseInt(vals.get(1));
-    }
     public Image flagWar()                    { return image(flagWarKey); }
     public Image flagNorm()                   { return image(flagNormKey); }
     public Image flagPact()                   { return image(flagPactKey); }
@@ -464,7 +438,6 @@ public class Race implements Base, Serializable {
         }
         return null;
     }
-    public void addSoundKey(String s)   { soundKeys.add(s); }
     public void parseFortress(String s) {
         //  f1|f2|f3|f4, spec
         //   reconstructs as this list:
@@ -508,25 +481,11 @@ public class Race implements Base, Serializable {
     }
     public void parseWinSplash(String s) {
         List<String> vals = substrings(s, ',');
-        if (vals.size() != 4)
-            err("Invalid Win Splash string: ", s);
-
         winSplashKey  = vals.get(0);
-        int r = parseInt(vals.get(1));
-        int g = parseInt(vals.get(2));
-        int b = parseInt(vals.get(3));
-        winTextC = new Color(r,g,b);
     }
     public void parseLossSplash(String s) {
         List<String> vals = substrings(s, ',');
-        if (vals.size() != 4)
-            err("Invalid Loss Splash string: ", s);
-
         lossSplashKey  = vals.get(0).trim();
-        int r = parseInt(vals.get(1).trim());
-        int g = parseInt(vals.get(2).trim());
-        int b = parseInt(vals.get(3).trim());
-        lossTextC = new Color(r,g,b);
     }
     public void parseCouncilDiplomatLocation(String s) {
         List<String> vals = substrings(s, ',');
