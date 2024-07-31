@@ -233,6 +233,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
             if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
+                v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
         }
@@ -342,6 +343,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         int bonus = requestor.diplomacyBonus();
         EmpireView v = empire.viewForEmpire(requestor);
         if ((bonus+random(100)) < empire.leader().diplomacyAnnoyanceMod(v)) {
+            v.embassy().withdrawAmbassador();
             return v.refuse(DialogueManager.DECLINE_ANNOYED);
         }
 
@@ -396,7 +398,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
 
         if (requestor.isPlayerControlled()) {
             if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-                //v.embassy().withdrawAmbassador();
+                v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
         }
@@ -445,7 +447,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
             if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-                //v.embassy().withdrawAmbassador();
+                v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
         }
@@ -581,31 +583,11 @@ public class AIXilmiDiplomat extends AIDiplomat {
         return false;
     }
     @Override
-    public DiplomaticReply receiveBreakPact(Empire e) {
-        EmpireView v = empire.viewForEmpire(e);
-        v.embassy().noteRequest();
-        DiplomaticIncident inc = v.otherView().embassy().breakPact();
-        return v.otherView().accept(DialogueManager.RESPOND_BREAK_PACT, inc);
-    }
-    @Override
-    public DiplomaticReply receiveBreakAlliance(Empire e) {
-        EmpireView v = empire.viewForEmpire(e);
-        v.embassy().noteRequest();
-        DiplomaticIncident inc = v.otherView().embassy().breakAlliance();
-        return v.otherView().accept(DialogueManager.RESPOND_BREAK_ALLIANCE, inc);
-    }
-    @Override
-    public DiplomaticReply receiveBreakTrade(Empire e) {
-        EmpireView v = empire.viewForEmpire(e);
-        v.embassy().noteRequest();
-        DiplomaticIncident inc = v.otherView().embassy().breakTrade();
-        return v.otherView().accept(DialogueManager.RESPOND_BREAK_TRADE, inc);
-    }
-    @Override
     public DiplomaticReply receiveThreatStopSpying(Empire dip) {
         EmpireView v = empire.viewForEmpire(dip);
         
         v.embassy().noteRequest();
+        v.embassy().withdrawAmbassador();
         
         v.spies().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
@@ -615,6 +597,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         EmpireView v = empire.viewForEmpire(dip);
         
         v.embassy().noteRequest();
+        v.embassy().withdrawAmbassador();
 
         EvictedSpiesIncident inc = EvictedSpiesIncident.create(v);
         v.embassy().addIncident(inc);
@@ -627,6 +610,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         EmpireView v = empire.viewForEmpire(dip);
 
         v.embassy().noteRequest();
+        v.embassy().withdrawAmbassador();
         
         v.embassy().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
