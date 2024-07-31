@@ -4,10 +4,10 @@
 
 Everyone seems to agree that Master of Orion is brilliant due to its simplicity and elegance, yet most 4X games since have only added features.
 This is understandable as feature removals aren't exactly an exciting thing to put on the back of the box.
-Fortunately, this is a hobbyist endeavour free of such constraints and, as such, the project aims to answer "What if Remnants of the Precursors but less?" in gory detail.
+Fortunately, this is a hobbyist endeavour free any of such constraints and, as such, the project aims to answer "What if Remnants of the Precursors but less?" in gory detail.
 
-Expect mostly removals from code, UI, story and game mechanics. 
-If not removed, an attempt will be made to tweak the afore mentioned to simply work better.
+To this end when a problem is found with the code/UI/story/game mechanics - the first solution to be considered will be removal.
+If that is deemed not to be a valid solution, minimalistic changes to the aforementioned will be considered.
 No new features are planned.
 
 ## Notable Changes
