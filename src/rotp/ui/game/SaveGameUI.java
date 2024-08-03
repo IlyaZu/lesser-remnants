@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +104,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
         start = 0;
         end = 0;
         newFileField.setFont(narrowFont(20));
-        newFileField.setText(GameUI.gameName);                
+        newFileField.setText(GameUI.gameName);
         saving = false;
 
         sortListing();
@@ -272,7 +273,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private void saveGame() {
         String fName = fullSelectedFileName();
         if (!fName.isEmpty())
-            saveGame(fName);        
+            saveGame(fName);
     }
     private boolean canSelect()    { return selectIndex >= 0; }
     private String fullSelectedFileName() {
@@ -344,7 +345,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
             am.put(SAVE_ACTION, new SaveAction());
 
             setLayout(null);
-            add(newFileField);            
+            add(newFileField);
         }
         @Override
         public void paintComponent(Graphics g0) {

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -227,11 +228,11 @@ public class GalaxyFactory implements Base {
         int empId = startId;
         
         // since we may have more races than colors we will need to reset the
-        // color list each time we run out. 
+        // color list each time we run out.
         for (int h=0;h<maxRaces;h++) {
             Race r = Race.keyed(alienRaces.get(h));
             EmpireSystem empSystem = empSystems.get(h);
-            if (raceColors.isEmpty()) 
+            if (raceColors.isEmpty())
                 raceColors = opts.possibleColors();
             Integer colorId = raceColors.remove(0);
             StarSystem sys = StarSystemFactory.current().newSystemForRace(r,g);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -173,7 +173,7 @@ public class ExploredSystemPanel extends SystemPanel {
         @Override
         public void mouseEntered(MouseEvent e) { }
         @Override
-        public void mouseExited(MouseEvent e) { 
+        public void mouseExited(MouseEvent e) {
             if (hoverBox != null) {
                 hoverBox = null;
                 repaint();

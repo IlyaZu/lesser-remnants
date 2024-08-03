@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +45,7 @@ import rotp.ui.RotPUI;
 import rotp.ui.main.SystemPanel;
 
 public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseMotionListener, ActionListener {
-    private static final long serialVersionUID = 1L;    
+    private static final long serialVersionUID = 1L;
     static final int SCIENTIST_VIEW = 0;
     static final int SPY_VIEW = 1;
     static final int TROOPER_VIEW = 2;
@@ -107,7 +108,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
     private boolean shouldFrameEmpire() { return (mission != null) && (frameEmpire1 != null) && (frameEmpire2 != null); }
     private boolean showCompletion() {
         TechCategory cat = player().tech().category(tech.cat.index());
-        return player().isPlayerControlled() && (background == BACKGROUND_LABORATORY) && cat.researchCompleted(); 
+        return player().isPlayerControlled() && (background == BACKGROUND_LABORATORY) && cat.researchCompleted();
     }
 
     public DiscoverTechUI() {
@@ -310,7 +311,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
 
         if (mode == MODE_SHOW_TECH)
             drawTechDiscovery(g, title);
-        else if (mode == MODE_REALLOCATE) 
+        else if (mode == MODE_REALLOCATE)
             drawReallocation(g);
         else if (mode == MODE_COMPLETED)
             drawCompletion(g);
@@ -525,7 +526,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
                case 5: detail = text("TECH_COMPLETED_WEAPON"); break;
                default: detail = "Unknown tech category: "+tech.cat.index(); break;
            }
-           detail2 = text("TECH_COMPLETED_VERIFY"); 
+           detail2 = text("TECH_COMPLETED_VERIFY");
         }
 
         int sideMgn = scaled(150);
@@ -780,7 +781,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
             case KeyEvent.VK_SPACE:
                 if (mode == MODE_SHOW_TECH)
                     handleShowTechAction();
-                else if (mode == MODE_COMPLETED) 
+                else if (mode == MODE_COMPLETED)
                     handleModeCompletedAction();
                 return;
             case KeyEvent.VK_1:
