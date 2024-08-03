@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +33,6 @@ public final class TechFutureForceField extends Tech {
     public boolean isFutureTech()  { return true; }
     @Override
     public int futureTechLevel()         { return typeSeq+1; } // number is zero-based
-    // all future techs can always be research
-    @Override
-    public float discoveryPct()          { return 1.0f; }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,6 @@ public class Tech implements Base {
     @Override
     public String toString() { return concat("Tech: ", name); }
 
-    public float discoveryPct()          { return cat.discoveryPct(); }
     public String name()                  { return text(name); }
     public Integer level()                { return level; }
     public String detail()                { return text(detail); }
