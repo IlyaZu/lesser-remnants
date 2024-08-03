@@ -58,9 +58,6 @@ public final class TechCategory implements Base, Serializable {
     private final List<String> knownTechs = new ArrayList<>();
     // possible techs are what remains of the normal research tree
     private final List<String> possibleTechs = new ArrayList<>();
-    // bonus techs are special techs that can be researched regardless of their
-// location on the research tree. Typically granted by artifact planets.
-    private final List<String> bonusTechs = new ArrayList<>();
     private TechTree tree;
     private float discoveryPct = 1;
     private float totalBC = 0;
@@ -130,15 +127,6 @@ public final class TechCategory implements Base, Serializable {
             knownTechs().add(id);
             Collections.sort(knownTechs, Tech.LEVEL);
         }
-    }
-    private void addBonusTech(String id)      {  bonusTechs.add(id); }
-    public void allowResearch(String id) {
-        if (knownTechs().contains(id))
-            return;
-        if (possibleTechs.contains(id))
-            return;
-        addPossibleTech(id);
-        addBonusTech(id);
     }
     public void spyKnownTechs(TechCategory cat) { spyKnownTechs(cat, 99); }
     private void spyKnownTechs(TechCategory cat, int maxLevel) {
@@ -356,8 +344,7 @@ public final class TechCategory implements Base, Serializable {
 
         for (String id: possibleTechs()) {
             Tech t = tech(id);
-            if (bonusTechs.contains(id)
-            || ((t.quintile() <= q) && possibleTechs.contains(id))) {
+            if ((t.quintile() <= q) && possibleTechs.contains(id)) {
                 r.add(id);
                 if (first == null)
                     first = id;
@@ -380,8 +367,7 @@ public final class TechCategory implements Base, Serializable {
 
         for (String id: possibleTechs()) {
             Tech t = tech(id);
-            if (bonusTechs.contains(id)
-            || ((t.quintile() <= q) && possibleTechs.contains(id))) {
+            if ((t.quintile() <= q) && possibleTechs.contains(id)) {
                 r.add(t);
                 if (first == null)
                     first = t;
@@ -494,7 +480,6 @@ public final class TechCategory implements Base, Serializable {
         if (tree.spy())
             return newTech;
 
-        bonusTechs.remove(id);
         possibleTechs.remove(id);
         
         if (newTech)

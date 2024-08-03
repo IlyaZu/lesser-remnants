@@ -592,9 +592,6 @@ public final class TechTree implements Base, Serializable {
     public Tech randomUnknownTech(int minLevel, int levelDiff) {
         return random(category).randomUnknownTech(minLevel, levelDiff);
     }
-    public void allowResearch(String id) {
-        category[tech(id).cat.index()].allowResearch(id);
-    }
     public boolean knows(Tech t) {
         return t == null ? true : category[t.cat.index()].knownTechs().contains(t.id());
     }
@@ -625,9 +622,6 @@ public final class TechTree implements Base, Serializable {
             }
         }
         return techs;
-    }
-    public boolean studying(String id) {
-        return id == null ? false : category[tech(id).cat.index()].currentTech().equals(id);
     }
     public List<Tech> techsUnknownTo(Empire empire) {
         List<Tech> result = new ArrayList<>();
