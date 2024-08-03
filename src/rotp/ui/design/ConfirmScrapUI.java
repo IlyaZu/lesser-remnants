@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +24,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.List;
 import rotp.model.ships.ShipDesign;
-import rotp.model.ships.ShipImage;
 import rotp.ui.BasePanel;
 import rotp.ui.main.SystemPanel;
 
@@ -94,7 +94,6 @@ public final class ConfirmScrapUI extends BasePanel implements MouseListener, Mo
         int count = galaxy().ships.shipDesignCount(player().id, targetDesign.id());
 
         int y0 = boxY+mgn+shipH;
-        int x0 = boxX+mgn+mgn;
         int w0 = shipW-mgn-mgn;
         String titleString = text("SHIP_DESIGN_SCRAP_CONFIRM1", targetDesign.name());
 

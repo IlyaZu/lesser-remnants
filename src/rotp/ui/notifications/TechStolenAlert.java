@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +20,8 @@ import rotp.model.game.GameSession;
 
 public class TechStolenAlert extends GameAlert {
     private final int empSpy;
-    private final String techId;
-    public static void create(int emp, String t) {
-        GameSession.instance().addAlert(new TechStolenAlert(emp,t));
+    public static void create(int emp) {
+        GameSession.instance().addAlert(new TechStolenAlert(emp));
     }
     @Override
     public String description() {
@@ -29,8 +29,7 @@ public class TechStolenAlert extends GameAlert {
         desc = galaxy().empire(empSpy).replaceTokens(desc, "alien");
         return desc;
     }
-    private TechStolenAlert(int emp, String t) {
+    private TechStolenAlert(int emp) {
         empSpy = emp;
-        techId = t;
     }
 }

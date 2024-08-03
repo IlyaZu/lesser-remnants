@@ -38,7 +38,7 @@ public enum FontManager implements Base {
     private final Map<String,String[]> languageFontNames = new HashMap<>(); // maps lang code to filenames of font
     private final Map<String,Font> languageFonts = new HashMap<>();       // maps filename of font to a font[]
     private final Map<String,Font[]> allFonts = new HashMap<>();
-    private int dlgSize, narrowSize, plainSize, introSize,  logoSize, languageSize;
+    private int dlgSize, narrowSize, plainSize, introSize,  logoSize;
 
     @Override
     public Font dlgFont(int n) { return getFont(dlgFont, n, dlgSize); }

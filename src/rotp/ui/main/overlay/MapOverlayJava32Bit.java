@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +62,6 @@ public class MapOverlayJava32Bit extends MapOverlay {
         int s7 = BasePanel.s7;
         int s10 = BasePanel.s10;
         int s20 = BasePanel.s20;
-        int s25 = BasePanel.s25;
         int s35 = BasePanel.s35;
 
         int x0 = scaled(330);
@@ -211,6 +211,6 @@ public class MapOverlayJava32Bit extends MapOverlay {
             //if (click)
             //    softClick();
             parent.ok();
-        };
+        }
     }
 }

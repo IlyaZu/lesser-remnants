@@ -137,7 +137,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
             saveDir = new File(saveDirPath);
             backupDirPath = saveDirPath+"/"+GameSession.BACKUP_DIRECTORY;
             backupDir = new File(backupDirPath);
-            hasBackupDir = backupDir.exists() && backupDir.isDirectory();;
+            hasBackupDir = backupDir.exists() && backupDir.isDirectory();
             fileList = saveDir.listFiles(filter);
         }
         long sSize = fileList.length;
@@ -696,7 +696,6 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
                         selectIndex = i;
                 }
                 if (!saveFiles.isEmpty()) {
-                    int fileIndex = start+selectIndex;
                     selectedFile = selectedFileName(selectIndex);
                 }
                 current.repaint();

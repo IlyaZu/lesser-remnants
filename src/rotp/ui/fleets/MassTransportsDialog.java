@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import rotp.model.empires.Empire;
 import rotp.model.galaxy.StarSystem;
 import rotp.ui.BasePanel;
 import rotp.ui.main.SystemPanel;
@@ -120,7 +119,6 @@ public class MassTransportsDialog extends BasePanel {
     }
     public void initSystems() {
         StarSystem.TARGET_SYSTEM = topParent.targetSystem;
-        Empire pl = player();
         sourceSystems.clear();
         sourceSystems.addAll(topParent.filteredSystems);
         sourceSystems.remove(topParent.targetSystem);
@@ -201,11 +199,9 @@ public class MassTransportsDialog extends BasePanel {
         private static final long serialVersionUID = 1L;
         private DataView view;
         private StarSystem selectedSystem;
-        private final int[] sysIds;
         private SystemSetTransportsColumn transportsCol;
         TransportTargetListingUI(BasePanel p) {
             super(p);
-            sysIds = new int[MAX_ROWS];
         }
         @Override
         protected DataView dataView()         { return view; }

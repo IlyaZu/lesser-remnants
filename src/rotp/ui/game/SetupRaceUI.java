@@ -523,8 +523,6 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
             return;
         if (hoverBox == null)
             return;
-        int x = e.getX();
-        int y = e.getY();
         search:
         if (hoverBox == cancelBox)
             goToMainMenu();

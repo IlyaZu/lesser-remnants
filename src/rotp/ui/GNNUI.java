@@ -48,7 +48,6 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
 
     private final static int EVENT_FADE_IN_FRAME = 30;
     private final static int NUM_EVENT_FADE_FRAMES = 5;
-    private boolean exited = false;
     private String messageText;
     private String eventId;
     private Image eventImg;
@@ -70,7 +69,6 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
         messageText = title;
         eventId = id;
         empires = empireList;
-        exited = false;
         frameCtr = 0;
         eventImg = player().race().gnnEvent(eventId);
         player().race().resetGNN(id);
@@ -170,7 +168,6 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
             return;
         }
         softClick();
-        exited = true;
         repaint();
         session().resumeNextTurnProcessing();
     }
