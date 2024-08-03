@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,7 +153,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             if ((fleet.system() == s) && !fleet.isInTransit()) {
                 tentativeDest(null);
                 FlightPathSprite.clearWorkingPaths();
-                return false;                
+                return false;
             }
             return true;
         }
@@ -191,7 +192,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
     public void sendFleet() {
         // attempts to send fleet (OK button) if that selected
         // vars are valid
-        if (!canSendFleet()) 
+        if (!canSendFleet())
             return;
 
         ShipFleet newFleet = adjustedFleet();
@@ -205,7 +206,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             boolean newFleetCreated = galaxy().ships.deploySubfleet(displayedFleet, newFleet.num, selectedDest().id);
             // newFleet isEmpty if it was the entire fleet selected
             if (newFleetCreated) {
-                if (displayedFleet.isEmpty()) 
+                if (displayedFleet.isEmpty())
                     cancelFleet();
                 else {
                     selectNewFleet(displayedFleet);
@@ -241,7 +242,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
     private void adjustStacksToMatchFleet(ShipFleet selected, ShipFleet deployed) {
         int selectedCount = 0;
         for (int i=0;i<stackAdjustment.length;i++) {
-            if (selected.num(i) <= deployed.num(i)) 
+            if (selected.num(i) <= deployed.num(i))
                 stackAdjustment[i] = 0;
             else
                 stackAdjustment[i] = deployed.num(i) - selected.num(i);
@@ -249,7 +250,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         }
         // if what remains is a selected fleet adjusted down to 0, then
         // clear the adjustments
-        if (selectedCount == 0) 
+        if (selectedCount == 0)
             clearStackAdjustments();
     }
     @Override
@@ -278,7 +279,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             if (tentativeDest() == null)
                 return false;
             if (haveClickedOnCurrentFleet()) {
-                if (selectedDest() == null) 
+                if (selectedDest() == null)
                     FlightPathSprite.clearWorkingPaths();
                 else
                     adjustedFleet().use(selectedDest(), parent.parent);
@@ -333,18 +334,18 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             return false;
         }
 
-        if (o instanceof FlightPathSprite)  
-            return true;    
+        if (o instanceof FlightPathSprite)
+            return true;
 
         // clicking on anything but a systemview
         // will leave this screen
-        if (!(o instanceof StarSystem)) 
+        if (!(o instanceof StarSystem))
             return false;
 
         // special case check:
         // on Cancel, then selected fleet is null and we get
         // here when the last selected system is reselected
-        if (selectedFleet() == null) 
+        if (selectedFleet() == null)
             return false;
         
         if (selectedFleet().empire() != player())
@@ -352,16 +353,16 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         
         StarSystem sys = (StarSystem) o;
 
-        if (selectedFleet().destSysId() == sys.id) 
+        if (selectedFleet().destSysId() == sys.id)
             return false;
 
         tentativeDest(sys);
         // don't accept clicks for out of range systems
         // but consume the click (to stay on this view)
         ShipFleet adjustedFleet = adjustedFleet();
-        if (adjustedFleet == null) 
+        if (adjustedFleet == null)
             return false;
-        if (!adjustedFleet.canReach(sys)) { 
+        if (!adjustedFleet.canReach(sys)) {
             misClick();
             return true;
         }
@@ -517,7 +518,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
                 str1 = text("MAIN_FLEET_TITLE");
                 str1 = fl.empire().replaceTokens(str1, "fleet");
             }
-            else 
+            else
                 str1 = text("MAIN_FLEET_TITLE_UNKNOWN");
             drawBorderedString(g, str1, 2, s15, s42, Color.black, SystemPanel.orangeText);
 
@@ -570,8 +571,8 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             else {
                 StarSystem sys1 = fl.system();
                 String str2 = sys1 == null ? "" : text("MAIN_FLEET_LOCATION", pl.sv.name(sys1.id));
-                if (str2.isEmpty()) 
-                    log("ERROR: No system assigned to fleet ");             
+                if (str2.isEmpty())
+                    log("ERROR: No system assigned to fleet ");
                 int sw2 = g.getFontMetrics().stringWidth(str2);
                 drawString(g,str2, w-sw2-s10, y0);
                 y0 -= s25;
@@ -590,9 +591,9 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             List<ShipFleet> fleets = fl.empire().orderedFleets();
 
             int index = fleets.indexOf(fl);
-            if (forward) 
+            if (forward)
                 index = (index == (fleets.size()-1)) ? 0 : index + 1;
-            else 
+            else
                 index = (index == 0) ? fleets.size()-1 : index -1;
 
             IMapHandler topPanel = parent.parent.parent;
@@ -727,7 +728,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
                             if (destName.isEmpty())
                                 text = text("MAIN_FLEET_ETA_UNNAMED", dist);
                             else
-                                text = text("MAIN_FLEET_ETA_NAMED", destName, dist);  
+                                text = text("MAIN_FLEET_ETA_NAMED", destName, dist);
                         }
                     }
                     else {
@@ -735,7 +736,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
                         g.setColor(SystemPanel.redText);
                         if (name.isEmpty())
                             text = text("MAIN_FLEET_INVALID_DESTINATION2");
-                        else 
+                        else
                             text = text("MAIN_FLEET_INVALID_DESTINATION", name);
                     }
                 }
@@ -1097,9 +1098,9 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             hoverBox = null;
             hoverBox2 = null;
             
-            if (retreatBox.contains(x,y)) 
+            if (retreatBox.contains(x,y))
                 hoverBox = retreatBox;
-            else if (rallyBox.contains(x,y)) 
+            else if (rallyBox.contains(x,y))
                 hoverBox = rallyBox;
             hoverStackNum = -1;
             for (int i=0;i<shipBox.length;i++) {
@@ -1278,7 +1279,7 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
                     return;
                 }
                 else if (!fleet.canSendTo(id(dest))) {
-                    if (fleet.retreating()) 
+                    if (fleet.retreating())
                         drawFullInvalidRetreatButton(g);
                     else
                         drawFullCancelButton(g);

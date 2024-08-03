@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +20,7 @@ import rotp.model.planet.Planet;
 import rotp.model.planet.PlanetType;
 import rotp.model.tech.TechControlEnvironment;
  
-public final class ShipSpecialColony extends ShipSpecial { 
+public final class ShipSpecialColony extends ShipSpecial {
     private static final long serialVersionUID = 1L;
     public ShipSpecialColony(TechControlEnvironment t) {
         tech(t);

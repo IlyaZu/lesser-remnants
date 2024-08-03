@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@ package rotp.model.ai.xilmi;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedMap; 
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Iterator;
 
@@ -98,7 +99,7 @@ public class NewShipTemplate implements Base {
     private ShipDesign bestDesign(ShipDesigner ai, DesignType role) {
         // create a blank design, one for each size. Add the current design as a 5th entry
         ShipDesign[] shipDesigns = new ShipDesign[4];
-        for (int i = 0; i<4; i++) 
+        for (int i = 0; i<4; i++)
         {
             shipDesigns[i] = newDesign(ai, role, i);
         }
@@ -160,7 +161,7 @@ public class NewShipTemplate implements Base {
             if(design.firepowerAntiShip(0) > 0)
                 absorbPct = max(biggestWeaponDesign.firepowerAntiShip(design.shieldLevel()) / biggestWeaponDesign.firepowerAntiShip(0), 0.05f); //more than 95% absorb will be normalized so score doesn't become infinity
             float mitigation = Float.MAX_VALUE;
-            if(hitPct > 0 && absorbPct > 0)    
+            if(hitPct > 0 && absorbPct > 0)
                 mitigation = (1 / hitPct) * (1 / absorbPct);
             defScore *= mitigation;
             score *= defScore;
@@ -203,7 +204,7 @@ public class NewShipTemplate implements Base {
                 if(biggestBombSize > 0)
                     weaponSizeMod *= ai.empire().generalAI().defenseRatio() + (1 - ai.empire().generalAI().defenseRatio()) * bombWpnSize / biggestBombSize;
                 else
-                    weaponSizeMod *= ai.empire().generalAI().defenseRatio(); 
+                    weaponSizeMod *= ai.empire().generalAI().defenseRatio();
             score *= weaponSizeMod;
             //System.out.print("\n"+ai.empire().name()+" "+design.name()+" Role: "+role+" size: "+design.size()+" score: "+score+" dmgPerCostLimit: "+dmgPerCostLimit+" tonnageScore: "+design.spaceUsed() / design.cost()+" defscore: "+defScore+" wpnScore: "+weaponSizeMod+" costlimit: "+costLimit+" spaceWpnSize: "+spaceWpnSize+" bomb-adpt: "+ai.bombingAdapted(design)+" specialsMod: "+specialsMod+" absorbPct: "+absorbPct+ " hitPct: "+hitPct);
             designSorter.put(score, design);
@@ -212,7 +213,7 @@ public class NewShipTemplate implements Base {
                 break;
         }
         // lastKey is design with greatest damage
-        return designSorter.get(designSorter.lastKey()); 
+        return designSorter.get(designSorter.lastKey());
     }
     
     public void nameDesign(ShipDesigner ai, ShipDesign d)
@@ -240,7 +241,7 @@ public class NewShipTemplate implements Base {
         setFastestEngine(ai, d);
         // battle computers are always the priority in MOO1 mechanics
         if(role != role.DESTROYER)
-            setBestBattleComputer(ai, d); 
+            setBestBattleComputer(ai, d);
         
         float totalSpace = d.availableSpace();
         Race race = ai.empire().dataRace();
@@ -331,7 +332,7 @@ public class NewShipTemplate implements Base {
         }
 
         // initial separation of the free space left onto weapons and non-weapons/specials
-        float moduleSpaceRatio = race.shipDesignMods[MODULE_SPACE];        
+        float moduleSpaceRatio = race.shipDesignMods[MODULE_SPACE];
         float modulesSpace = totalSpace * moduleSpaceRatio;
 
         // arbitrary initial weighting of what isn't weapons
@@ -340,17 +341,17 @@ public class NewShipTemplate implements Base {
         {
             shieldWeight = 0;
         }
-        int ecmWeight = 3;    
+        int ecmWeight = 3;
         ecmWeight = (int)Math.round(ecmWeight * 2 * enemyMissilePercentage);
         int maneuverWeight = 2;
-        int armorWeight = 3; 
-        int specialsWeight = 4; 
-        boolean sameSpeedAllowed = true; 
-        boolean reinforcedArmorAllowed = true; 
+        int armorWeight = 3;
+        int specialsWeight = 4;
+        boolean sameSpeedAllowed = true;
+        boolean reinforcedArmorAllowed = true;
         
         // if we have a large ship, let's let the AI use more specials; it may have to differentiate designs more
         if (size >= ShipDesign.LARGE)
-            specialsWeight += 1; 
+            specialsWeight += 1;
 
         // the sum of shield, ECM, maneuver and armor weights may be not exactly equal to modulesSpace
         // however, unless it isn't 1.0 or close to it of available space after engines and BC, it doesn't matter
@@ -459,7 +460,7 @@ public class NewShipTemplate implements Base {
         }
         //Since destroyer is always tiny and we want to make sure we have a weapon, the computer is added afterwards
         if(role == role.DESTROYER)
-            setBestBattleComputer(ai, d); 
+            setBestBattleComputer(ai, d);
         ai.lab().iconifyDesign(d);
         for (int i = 0; i <= 2; ++i) {
             if (d.special(i) != null) {
@@ -731,7 +732,7 @@ public class NewShipTemplate implements Base {
                 specials.put(currentScore, spec);
             //System.out.print("\n"+ai.empire().name()+" "+d.name()+" "+spec.name()+" score "+currentScore+" space: "+spec.space(d)+"/"+d.totalSpace());
         }
-        return specials; 
+        return specials;
     }
 
     private float setFittingSpecial(ShipDesigner ai, ShipDesign d, float spaceAllowed, SortedMap<Float, ShipSpecial> specials, boolean skipBeamBonus) {
@@ -741,7 +742,7 @@ public class NewShipTemplate implements Base {
         if(specials.isEmpty())
             return spaceAllowed;
         
-        float remainingSpace = spaceAllowed; 
+        float remainingSpace = spaceAllowed;
         
         boolean alreadyInertial = false;
         for(ShipSpecial spec : specials.values())
@@ -778,7 +779,7 @@ public class NewShipTemplate implements Base {
         }
 
         // yeah, sorry, that was the most straightforward Java-ish method I found to get top three
-        if (!relationsMap.isEmpty()) { 
+        if (!relationsMap.isEmpty()) {
             Iterator<EmpireView> worstNeighbors = relationsMap.values().iterator();
             for (int i = 0; (i < rivalsNum) && (worstNeighbors.hasNext()); i++) {
                 rivalTech.add(worstNeighbors.next().spies().tech());
@@ -848,7 +849,7 @@ public class NewShipTemplate implements Base {
             if(bestWeapon == null)
             {
                 shield -= 1;
-                //if we couldn't find any ranged-weapon that does damage, we allow 
+                //if we couldn't find any ranged-weapon that does damage, we allow
                 if(shield < 0 && prohibitMissiles == true && mustBeRanged == true)
                 {
                     shield = startingShield;
@@ -878,7 +879,7 @@ public class NewShipTemplate implements Base {
         {
             //maximum hitpoints a colony can have * hitpoints per point of population
             float highestPopulation = 0;
-            for (int id=0;id<ai.empire().sv.count();id++) 
+            for (int id=0;id<ai.empire().sv.count();id++)
             {
                 StarSystem current = galaxy().system(id);
                 if(current.planet().maxSize() > highestPopulation)

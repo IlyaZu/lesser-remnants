@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -211,7 +212,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
 
         g.setFont(narrowFont(20));
 
-        // limit tech list size to 10, starting at tech index     
+        // limit tech list size to 10, starting at tech index
         for (int i=0;i<techDisplaySize;i++) {
             String id = availableTechs.get(i+techIndex);
             Tech t = tech(id);
@@ -224,7 +225,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
                 detail = detail + " "+obsDesc;
             g.setFont(narrowFont(14));
             List<String> lines = wrappedLines(g, detail, techWidth-s20);
-             if (id.equals(hoverTech)) 
+             if (id.equals(hoverTech))
                 g.setColor(AllocateTechUI.currentTechC);
             else
                 g.setColor(darkBrown);
@@ -279,7 +280,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
                 g.setStroke(prev);
             }
         }
-        g.setClip(null);      
+        g.setClip(null);
         return screenImg;
     }
     private void scrollList(int i) {
@@ -341,11 +342,11 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
                 }
             }
         }
-        if (contactsScroller.contains(x,y)) 
+        if (contactsScroller.contains(x,y))
             hoverShape = contactsScroller;
  
         if (hoverShape != prevHover)
-            repaint();        
+            repaint();
     }
     @Override
     public void mouseClicked(MouseEvent e) { }
@@ -354,7 +355,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
     @Override
     public void mouseExited(MouseEvent e) { }
     @Override
-    public void mousePressed(MouseEvent e) {   
+    public void mousePressed(MouseEvent e) {
         dragY = e.getY();
     }
     @Override
@@ -377,12 +378,12 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
         int dY = y-dragY;
         dragY = y;
         if (contactsScroller == hoverShape) {
-            if ((y >= contactsListBox.y) || (y <= (contactsListBox.y+techListBox.height))) { 
+            if ((y >= contactsListBox.y) || (y <= (contactsListBox.y+techListBox.height))) {
                 int h = (int) techListBox.getHeight();
                 int dListY = (int)((float)dY*(h+techsYMax)/h);
                 if (dY < 0)
                     techsY = max(0,techsY+dListY);
-                else 
+                else
                     techsY = min(techsYMax,techsY+dListY);
             }
             repaint(techListBox);
@@ -407,7 +408,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
         int prevY = techsY;
         if (count < 0)
             techsY = max(0,techsY-s10);
-        else 
+        else
             techsY = min(techsYMax,techsY+s10);
         if (techsY != prevY) {
             repaint(techListBox);
@@ -427,7 +428,7 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
             case KeyEvent.VK_ENTER:
                 selectTech(hoverTech); return;
         }
-        if (techsY != prevY) 
+        if (techsY != prevY)
             repaint(techListBox);
     }
 }

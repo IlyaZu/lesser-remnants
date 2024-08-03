@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +86,7 @@ public class ShipPlan implements Base, Serializable {
                         decision.turns = turns;
                         decision.fleetOrders = orders;
                         decision.bestDesign = design;
-                        decision.shipCurrPriority = priority;  
+                        decision.shipCurrPriority = priority;
                     }
                 }
             }

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +55,7 @@ public enum FontManager implements Base {
     @Override
     public Font logoFont(int n)    { return getFont(logoFont, n, logoSize); }
     private Font getFont(String filename, int size, int scale) {
-        if (!allFonts.containsKey(filename)) 
+        if (!allFonts.containsKey(filename))
             createFontTable(filename, null);
         
         int n = min(MAX_FONT_SIZE, size);
@@ -71,7 +72,7 @@ public enum FontManager implements Base {
         allFonts.put(filename, fonts);
         
         // index 0 is the base font that we use to re-derive
-        // the others when the window size changes 
+        // the others when the window size changes
         fonts[0] = f;
         
         for (int size=1;size<=MAX_FONT_SIZE;size++) {
@@ -84,7 +85,7 @@ public enum FontManager implements Base {
         for (String key: allFonts.keySet()) {
             Font[] fonts = allFonts.get(key);
             Font baseFont = fonts[0];
-            for (int size=1;size<=MAX_FONT_SIZE;size++) 
+            for (int size=1;size<=MAX_FONT_SIZE;size++)
                 fonts[size] = baseFont.deriveFont((float) scaled(size));
         }
     }

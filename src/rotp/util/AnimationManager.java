@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +74,7 @@ public enum AnimationManager implements Base {
         Animation anim = animations.get(key);
 
         for (AnimationImage imgSpec: anim.images) {
-            for (AnimationImageFrame frame: imgSpec.frames) 
+            for (AnimationImageFrame frame: imgSpec.frames)
                 results.add(frame.image());
         }
         return results;
@@ -99,7 +100,7 @@ public enum AnimationManager implements Base {
             return;
              
         // get the animation image for the specified index
-        List<AnimationImage> imageSpecs = anim.images;        
+        List<AnimationImage> imageSpecs = anim.images;
         if (imgIndex > (imageSpecs.size()-1))
             return;
 
@@ -136,7 +137,7 @@ public enum AnimationManager implements Base {
         Animation anim = animations.get(key);
         if (anim != null)
             result = anim.currentFrame(exclusionKeys);
-        else 
+        else
             result = newFullScreenImage(ImageManager.current().image(key));
 
         // err if no animation or image found matching the requested key
@@ -453,7 +454,7 @@ public enum AnimationManager implements Base {
             List<String> vals = this.substrings(spec, ':');
             imageKey = vals.get(0);
 
-            if (!ImageManager.current().valid(imageKey)) 
+            if (!ImageManager.current().valid(imageKey))
                 err("Animation references invalid image key: ", imageKey);
 
             msLo = vals.size() < 2 ? 1 : Math.max(0,parseInt(vals.get(1)));

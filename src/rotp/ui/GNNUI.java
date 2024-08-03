@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,7 +110,7 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
         // fade in event image
         if (frameCtr > EVENT_FADE_IN_FRAME) {
             Composite prevComposite = g.getComposite();
-            if (frameCtr > (EVENT_FADE_IN_FRAME + NUM_EVENT_FADE_FRAMES)) 
+            if (frameCtr > (EVENT_FADE_IN_FRAME + NUM_EVENT_FADE_FRAMES))
                 g.drawImage(eventImg, 0, 0, resizedW, resizedH, 0, 0, eventImg.getWidth(null), eventImg.getHeight(null), null);
             else {
                 float fluxPct = 0.3f + (float) (frameCtr - 30) / 10;

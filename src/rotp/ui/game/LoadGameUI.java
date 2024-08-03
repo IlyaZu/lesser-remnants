@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -130,7 +131,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         FilenameFilter filter = (File dir, String name1) -> name1.toLowerCase().endsWith(ext);
         File[] fileList = saveDir.listFiles(filter);
         
-          // fileList = null if prefs pointing to an invalid folder...default to jarPath 
+          // fileList = null if prefs pointing to an invalid folder...default to jarPath
         if (fileList == null) {
             saveDirPath = Rotp.jarPath();
             saveDir = new File(saveDirPath);
@@ -147,12 +148,12 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         if (hasBackupDir) {
             long bSize = backupDir.listFiles(filter).length;
             backupDirInfo = text("LOAD_GAME_BACKUP_DIR", (int)bSize);
-        }       
+        }
 
-        File[] filesList;           
-        if (showingBackups) 
+        File[] filesList;
+        if (showingBackups)
             filesList = backupDir.listFiles(filter);
-        else 
+        else
             filesList = saveDir.listFiles(filter);
         
         File autoSave = new File(saveDir, GameSession.RECENT_SAVEFILE);
@@ -160,7 +161,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
             hasAutosave = true;
             saveFiles.add(text("LOAD_GAME_AUTOSAVE"));
             saveDates.add(fileDateFmt.format(autoSave.lastModified()));
-            saveSizes.add(autoSave.length());        
+            saveSizes.add(autoSave.length());
         }
         
         switch(sortOrder) {
@@ -204,7 +205,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         if (fn.endsWith(ext)
         && !fn.equalsIgnoreCase(GameSession.RECENT_SAVEFILE)) {
             List<String> parts = substrings(fn, '.');
-            if (!parts.get(0).trim().isEmpty()) 
+            if (!parts.get(0).trim().isEmpty())
                 return fn.substring(0, fn.length()-ext.length());
         }
         return "";
@@ -362,7 +363,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         repaint();
         buttonClick();
         String dirName = showingBackups ? session().backupDir() : session().saveDir();
-        final Runnable load = () -> {           
+        final Runnable load = () -> {
             GameSession.instance().loadSession(dirName, s, false);
         };
         SwingUtilities.invokeLater(load);
@@ -678,11 +679,11 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
                 return;
             }
             if (hoverBox == backupDirBox) {
-                if (!showingBackups) 
+                if (!showingBackups)
                     toggleSaveBackupListing();
             }
             if (hoverBox == saveDirBox) {
-                if (showingBackups) 
+                if (showingBackups)
                     toggleSaveBackupListing();
             }
             if (count == 2)

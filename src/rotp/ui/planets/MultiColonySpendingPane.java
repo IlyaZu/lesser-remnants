@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
         y0 += buttonH;
 
         y0 += s15;
-        g.setColor(SystemPanel.blackText);            
+        g.setColor(SystemPanel.blackText);
         String desc = text("FLEETS_ADJUST_SPENDING_DESC2");
         if (!player().ignoresPlanetEnvironment())
             desc = desc + " " + text("FLEETS_ADJUST_SPENDING_DESC3");
@@ -207,7 +207,7 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
         if (i != selectedCat) {
             selectedCat = i;
             repaint();
-        }        
+        }
     }
     public void setSpendingLevel(float pct) {
         List<StarSystem> systems = parent.systemsToDisplay();
@@ -252,15 +252,15 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
                 return;
             }
         }
-        if (hoverBox == spending0Box) 
+        if (hoverBox == spending0Box)
             setSpendingLevel(0);
-        else if (hoverBox == spending25Box) 
+        else if (hoverBox == spending25Box)
             setSpendingLevel(0.25f);
-        else if (hoverBox == spending50Box) 
+        else if (hoverBox == spending50Box)
             setSpendingLevel(0.5f);
-        else if (hoverBox == spending75Box) 
+        else if (hoverBox == spending75Box)
             setSpendingLevel(0.75f);
-        else if (hoverBox == spendingMaxBox) 
+        else if (hoverBox == spendingMaxBox)
             setSpendingLevel(1);
         
         
@@ -421,7 +421,7 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
             g.setColor(c2);
             g.fillRect(boxL+boxBorderW(), boxTopY, boxW-(2*boxBorderW()), boxH);
 
-            if (colony.warning(category))  
+            if (colony.warning(category))
                 g.setColor(c1a);
             else
                 g.setColor(c1);
@@ -429,7 +429,7 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
             Rectangle fillRect;
             
             
-            if (pct == 1)           
+            if (pct == 1)
                 fillRect = new Rectangle(boxL+boxBorderW(), boxTopY+s2, boxW-(2*boxBorderW()), boxH-s3);
             else
                 fillRect = new Rectangle(boxL+boxBorderW(), boxTopY+s2, (int) (pct*(boxW-(2*boxBorderW()))), boxH-s3);
