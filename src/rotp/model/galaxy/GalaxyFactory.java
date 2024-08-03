@@ -20,7 +20,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import rotp.model.empires.Empire;
 import rotp.model.empires.Race;
 import rotp.model.galaxy.GalaxyShape.EmpireSystem;
@@ -220,7 +219,7 @@ public class GalaxyFactory implements Base {
                 playerCExcluded = true;
             else
                 raceColors.add(i);
-        };
+        }
 
         // possible the galaxy shape could not fit in all of the races
         int maxRaces = min(alienRaces.size(), empSystems.size());

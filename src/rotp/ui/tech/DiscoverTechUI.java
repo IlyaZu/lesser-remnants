@@ -411,9 +411,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
             drawButton(g, frameBackC2, "2", frameEmpire2.name(), frameButton2, x3b, y3, buttonW, buttonH);
     }
     private void drawReallocation(Graphics2D g) {
-        int w = getWidth();
-        int h = getHeight();
-
         int bdr = s10;
         int titleLineH = s25;
         int optionH = s35;
@@ -502,9 +499,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         g.setStroke(prev2);
     }
     private void drawCompletion(Graphics2D g) {
-        int w = getWidth();
-        int h = getHeight();
-
         int bdr = s10;
         int titleLineH = s25;
         int detailLineH = s18;

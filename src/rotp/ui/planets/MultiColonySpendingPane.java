@@ -300,7 +300,6 @@ public class MultiColonySpendingPane extends BasePanel implements MouseListener,
     @Override
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
-        int mods = e.getModifiersEx();
         switch (k) {
             case KeyEvent.VK_1:
 

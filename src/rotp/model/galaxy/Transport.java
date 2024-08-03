@@ -281,7 +281,7 @@ public class Transport implements Base, Ship, Sprite, Serializable {
             else {
                 log(concat(str(size), " ", empire.name(), " transports perished at ", dest.name()));
                 if (empire.isPlayerControlled())
-                    TransportsPerishedAlert.create(targetEmp, dest);
+                    TransportsPerishedAlert.create(dest);
                 size = 0;
             }
         }

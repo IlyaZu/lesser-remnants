@@ -275,7 +275,6 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
         if (!fName.isEmpty())
             saveGame(fName);
     }
-    private boolean canSelect()    { return selectIndex >= 0; }
     private String fullSelectedFileName() {
         String fileName = newFileField.getText().trim();
         if (!fileName.isEmpty())

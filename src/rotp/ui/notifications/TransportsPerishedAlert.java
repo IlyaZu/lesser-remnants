@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +16,20 @@
  */
 package rotp.ui.notifications;
 
-import rotp.model.empires.Empire;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.game.GameSession;
 
 public class TransportsPerishedAlert extends GameAlert {
-    private final Empire empire;
     private final StarSystem system;
-    public static void create(Empire e, StarSystem s) {
-        GameSession.instance().addAlert(new TransportsPerishedAlert(e,s));
+    public static void create(StarSystem s) {
+        GameSession.instance().addAlert(new TransportsPerishedAlert(s));
     }
     @Override
     public String description() {
         return text("MAIN_ALERT_TRANSPORTS_PERISHED", systemName());
     }
     private String systemName() { return player().sv.name(system.id); }
-    private TransportsPerishedAlert(Empire e, StarSystem s) {
-        empire = e;
+    private TransportsPerishedAlert(StarSystem s) {
         system = s;
     }
 }

@@ -50,7 +50,7 @@ import rotp.util.Base;
 public class NewShipTemplate implements Base {
     private static final NewShipTemplate instance = new NewShipTemplate();
 
-    enum DesignType { FIGHTER, BOMBER, DESTROYER };
+    enum DesignType { FIGHTER, BOMBER, DESTROYER }
 
     // indices for race shipDesignMods
     public static final int COST_MULT_S = 0;
@@ -102,13 +102,6 @@ public class NewShipTemplate implements Base {
         for (int i = 0; i<4; i++)
         {
             shipDesigns[i] = newDesign(ai, role, i);
-        }
-
-        int ReachableSystems = 0;
-        for (int id=0;id<ai.empire().sv.count();id++) 
-        {
-            if(ai.empire().sv.inShipRange(id))
-                ReachableSystems++;
         }
         
         SortedMap<Float, ShipDesign> designSorter = new TreeMap<>();
@@ -907,34 +900,14 @@ public class NewShipTemplate implements Base {
         return null;
     }
     
-    private float shipProductionBudget(ShipDesigner ai, int topSystems) {
-        // how many BCs can topSystems number of top producing colonies
-        // crank into ship production with shipRatio ratio per turn
-
-        List<StarSystem> systems = ai.empire().allColonizedSystems();
-        List<Float> systemsProduction = new ArrayList<>();
-
-        for (StarSystem sys: systems)
-            systemsProduction.add(sys.colony().production());
-        
-        Collections.sort(systemsProduction, Collections.reverseOrder());
-        
-        float totalShipProduction = 0f;
-        for (int i = 0; (i<topSystems) && (i<systemsProduction.size()); i++)
-            totalShipProduction += systemsProduction.get(i);
-
-        return totalShipProduction;
-    }
     private float bioWeaponScoreMod(ShipDesigner ai)
     {
         float scoreMod = 1;
         float totalMissileBaseCost = 0;
-        float totalShipCost = 0;
         float totalPopulationCost = 0;
         for(Empire enemy : ai.empire().contactedEmpires())
         {
             totalMissileBaseCost += enemy.totalMissileBaseCost();
-            totalShipCost += enemy.shipMaintCostPerBC();
             totalPopulationCost += enemy.totalPlanetaryPopulation() * enemy.tech().populationCost();
         }
         if(totalMissileBaseCost > 0)

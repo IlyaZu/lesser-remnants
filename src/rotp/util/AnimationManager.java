@@ -44,9 +44,6 @@ public enum AnimationManager implements Base {
     private final HashMap<String, Animation> animations = new HashMap<>();
     private final HashMap<String, List<String>> explosions = new HashMap<>();
 
-    private static int imgKey(int w, int h) {
-        return (w*1000)+h;
-    }
     private AnimationManager() {
         loadAnimationList(animationListFile);
         loadExplosions();
@@ -70,7 +67,6 @@ public enum AnimationManager implements Base {
         if ((key == null) || key.isEmpty())
             return results;
 
-        Rectangle area = null;
         Animation anim = animations.get(key);
 
         for (AnimationImage imgSpec: anim.images) {
@@ -86,13 +82,6 @@ public enum AnimationManager implements Base {
 
         List<String> specs = substrings(animationSpecifier, ',');
         String key = specs.get(0);
-        Rectangle area = null;
-
-        try {
-            area = specs.size() > 1 ? parseArea(specs.get(1)) : null;
-        } catch (Exception e) {
-            err(e.getMessage());
-        }
 
         // get an animation with this name
         Animation anim = animations.get(key);

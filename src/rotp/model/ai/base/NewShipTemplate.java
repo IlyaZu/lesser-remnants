@@ -49,7 +49,7 @@ public class NewShipTemplate implements Base {
     private static final NewShipTemplate instance = new NewShipTemplate();
     private static final ShipDesign mockDesign = new ShipDesign();
 
-    enum DesignType { FIGHTER, BOMBER, DESTROYER };
+    enum DesignType { FIGHTER, BOMBER, DESTROYER }
 
     // indices for race shipDesignMods
     public static final int COST_MULT_S = 0;
@@ -848,9 +848,6 @@ public class NewShipTemplate implements Base {
             return new DesignDamageSpec();
         else
             return dmgSpecs.remove(0);
-    }
-    private boolean ineffective(ShipDesign d) {
-        return d.perTurnDamage() == 0;
     }
     class DesignDamageSpec {
         public int numWeapons = 0;

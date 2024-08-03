@@ -16,7 +16,6 @@
  */
 package rotp.model.ships;
 
-import rotp.model.planet.Planet;
 import rotp.model.planet.PlanetType;
 import rotp.model.tech.TechControlEnvironment;
  

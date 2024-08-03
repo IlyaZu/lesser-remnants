@@ -31,7 +31,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-import rotp.model.empires.Empire;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.PlanetType;
 import rotp.ui.BasePanel;
@@ -86,8 +85,7 @@ public class ExploredSystemPanel extends SystemPanel {
             StarSystem sys = parent.systemViewToDisplay();
             if (sys == null)
                 return;
-            Empire pl = player();
-
+            
             super.paintComponent(g);
             int h = getHeight();
             int w = getWidth();
