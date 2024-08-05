@@ -23,8 +23,6 @@ import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
 import rotp.model.empires.Race;
 import rotp.model.ships.ShipDesign;
-import rotp.ui.BasePanel;
-import rotp.ui.combat.ShipBattleUI;
 import rotp.util.Base;
 
 public class Tech implements Base {
@@ -250,45 +248,4 @@ public class Tech implements Base {
     } // order that we are willing to trade away techs
     // from lowest-level to highest-level
     ;
-    public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
-        ShipBattleUI ui = source.mgr.ui;
-        if (ui == null)
-            return;
-
-        if (!source.mgr.showAnimations())
-            return;
-
-        int stW = ui.stackW();
-        int stH = ui.stackH();
-        int st0X = ui.stackX(source);
-        int st0Y = ui.stackY(source);
-        int st1X = ui.stackX(target);
-        int st1Y = ui.stackY(target);
-
-        int x0 = st0X > st1X ? st0X+(stW/3) :st0X+(stW*2/3);
-        int y0 = st0Y+stH/2;
-        int x1 = st1X+stW/2;
-        int y1 = st1Y+stH/2;
-
-        Graphics2D g = (Graphics2D) ui.getGraphics();
-        Stroke prev = g.getStroke();
-
-        g.setColor(Color.yellow);
-        g.setStroke(BasePanel.baseStroke(1));
-
-        g.drawLine(x0, y0, x1, y1);
-
-        g.setStroke(prev);
-
-        if (dmg > 0) {
-            g.setFont(narrowFont(20));
-            String s = "-"+(int)Math.ceil(dmg);
-            int sw = g.getFontMetrics().stringWidth(s);
-            int x= x1-(sw/2);
-            drawBorderedString(g, s, x, y1, Color.white, Color.red);
-        }
-        sleep(250);
-        ui.paintAllImmediately();
-        sleep(250);
-    }
 }

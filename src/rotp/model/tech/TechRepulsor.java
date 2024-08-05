@@ -67,7 +67,6 @@ public final class TechRepulsor extends Tech {
         ShipSpecialRepulsor sh = new ShipSpecialRepulsor(this);
         c.shipLab().addSpecial(sh);
     }
-    @Override
     public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
         if (ui == null)
