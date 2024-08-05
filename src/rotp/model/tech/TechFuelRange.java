@@ -46,18 +46,18 @@ public final class TechFuelRange extends Tech {
             case 5: range = 8;   break;
             case 6: range = 9;   break;
             case 7: range = 10;  break;
-            case 8: range = 99999; 
+            case 8: range = 99999;
                     unlimited = true;
                     break;
         }
     }
     @Override
-    public String detail() { 
+    public String detail() {
         float rng = range();
-        if (rng == (int) rng) 
+        if (rng == (int) rng)
             return text(detail, (int) rng);
         else
-            return text(detail, df1.format(range())); 
+            return text(detail, df1.format(range()));
     }
     @Override
     public boolean isFuelRangeTech()     { return true; }
@@ -72,7 +72,7 @@ public final class TechFuelRange extends Tech {
     @Override
     public void provideBenefits(Empire c) {
         super.provideBenefits(c);
-        if (! isObsolete(c)) 
+        if (! isObsolete(c))
             c.tech().topFuelRangeTech(this);
     }
 }

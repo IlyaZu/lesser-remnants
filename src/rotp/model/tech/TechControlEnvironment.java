@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ public final class TechControlEnvironment extends Tech {
     public float baseSize(ShipDesign d) { return 700; }
     @Override
     public boolean isObsolete(Empire c) {
-        TechControlEnvironment topTech = c.tech().topControlEnvironmentTech();        
+        TechControlEnvironment topTech = c.tech().topControlEnvironmentTech();
         return (topTech != null) && (topTech.environment() > environment()) ;
     }
     @Override
