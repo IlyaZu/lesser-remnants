@@ -86,7 +86,6 @@ public final class TechEnergyPulsar extends Tech {
         c.shipLab().addSpecial(sh);
     }
 
-    @Override
     public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
         if (!source.mgr.showAnimations())

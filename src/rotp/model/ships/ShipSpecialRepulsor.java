@@ -34,6 +34,8 @@ public final class ShipSpecialRepulsor extends ShipSpecial {
     @Override
     public boolean isWeapon()            { return true; }
     @Override
+    public TechRepulsor tech()       { return (TechRepulsor) super.tech(); }
+    @Override
     public int range()                   { return 1; }
     @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count) {

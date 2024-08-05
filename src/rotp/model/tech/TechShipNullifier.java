@@ -96,7 +96,6 @@ public final class TechShipNullifier extends Tech {
         ShipSpecialShipNullifier sh = new ShipSpecialShipNullifier (this);
         c.shipLab().addSpecial(sh);
     }
-    @Override
     public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
         if (ui == null)

@@ -93,7 +93,6 @@ public final class TechStreamProjector extends Tech {
     public float baseValue(Empire c) {
         return c.ai().scientist().baseValue(this);
     }
-    @Override
     public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
         if (ui == null)
