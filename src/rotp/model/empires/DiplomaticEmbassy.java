@@ -73,9 +73,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int contactTurn = 0;
     private int treatyTurn = -1;
     private boolean warFooting = false;
-    // using 'casus belli' as variable name since using that word means I made a smart AI
-    private String casusBelli;
-    private DiplomaticIncident casusBelliInc;
+    private String warCauseId;
+    private DiplomaticIncident warCauseIncident;
     private DiplomaticTreaty treaty;
 
     private final int[] timers = new int[20];
@@ -109,33 +108,33 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean onWarFooting()                        { return warFooting; }
     public void beginWarPreparations(String cb, DiplomaticIncident inc) {
         // dont replace an existing casus belli unless the new one is worse
-        if (casusBelliInc != null) {
-            if (casusBelliInc.moreSevere(inc))
+        if (warCauseIncident != null) {
+            if (warCauseIncident.moreSevere(inc))
                 return;
         }
         warFooting = true;
-        casusBelli = cb;
-        casusBelliInc = inc;
+        warCauseId = cb;
+        warCauseIncident = inc;
         view.spies().ignoreThreat();
         ignoreThreat();
     }
     public void endWarPreparations() {
         warFooting = false;
-        casusBelli = null;
-        casusBelliInc = null;
+        warCauseId = null;
+        warCauseIncident = null;
     }
     private void evaluateWarPreparations() {
         // we are assessing turn and about to enter diplomacy. Are our reasons
         // for going to war still relevant? If not, fuhgeddaboudit
-        if (casusBelliInc != null) {
-            if (!casusBelliInc.triggersWar())
+        if (warCauseIncident != null) {
+            if (!warCauseIncident.triggersWar())
                 endWarPreparations();
             return;
         }
         
-        if (casusBelli != null) {
+        if (warCauseId != null) {
             // re-evaluate hate and opportunity
-            switch(casusBelli) {
+            switch(warCauseId) {
                 case DialogueManager.DECLARE_HATE_WAR:
                     if (!view.owner().diplomatAI().wantToDeclareWarOfHate(view))
                         endWarPreparations();
@@ -405,8 +404,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
         // any existing casus belli. This ensures that a DeclareWarIncident is returned
         // instead of some existing casus belli incident. This ensures that [other...]
         // tags are replaced properly in the war announcement to the player
-        casusBelli = null;
-        casusBelliInc = null;
+        warCauseId = null;
+        warCauseIncident = null;
         return declareWar(requestor);
     }
     public DiplomaticIncident declareWar() {
@@ -426,10 +425,10 @@ public class DiplomaticEmbassy implements Base, Serializable {
         if (!war()) {
             setTreaty(new TreatyWar(view.owner(), view.empire()));
             if (view.empire().isPlayerControlled()) {
-                if ((casusBelli == null) || casusBelli.isEmpty())
+                if ((warCauseId == null) || warCauseId.isEmpty())
                     DiplomaticNotification.createAndNotify(view, DialogueManager.DECLARE_HATE_WAR);
                 else
-                    DiplomaticNotification.createAndNotify(view, casusBelli);
+                    DiplomaticNotification.createAndNotify(view, warCauseId);
             }
         }
 
@@ -440,12 +439,12 @@ public class DiplomaticEmbassy implements Base, Serializable {
         otherEmbassy().withdrawAmbassador();
 
         // add war-causing incident to embassy
-        DiplomaticIncident inc = casusBelliInc;
+        DiplomaticIncident inc = warCauseIncident;
         if (inc == null) {
-            if (casusBelli == null)
+            if (warCauseId == null)
                 inc = DeclareWarIncident.create(owner(), empire());
             else {
-                switch(casusBelli) {
+                switch(warCauseId) {
                     case DialogueManager.DECLARE_ERRATIC_WAR :
                         inc = ErraticWarIncident.create(owner(), empire()); break;
                     case DialogueManager.DECLARE_HATE_WAR:
