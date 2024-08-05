@@ -46,18 +46,18 @@ public final class TechReserveFuelRange extends Tech {
     @Override
     public String detail() {
         float rng = range();
-        if (rng == (int) rng) 
+        if (rng == (int) rng)
             return text(detail, (int) rng);
         else
-            return text(detail, df1.format(range())); 
+            return text(detail, df1.format(range()));
     }
     @Override
-    public String brief() { 
+    public String brief() {
         float rng = range();
-        if (rng == (int) rng) 
+        if (rng == (int) rng)
             return text(shDesc, (int) rng);
         else
-            return text(shDesc, df1.format(range())); 
+            return text(shDesc, df1.format(range()));
     }
     @Override
     public boolean isObsolete(Empire c) {

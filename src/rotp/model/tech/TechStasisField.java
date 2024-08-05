@@ -65,7 +65,7 @@ public final class TechStasisField extends Tech {
 
         ShipSpecialStasisField sh = new ShipSpecialStasisField(this);
         c.shipLab().addSpecial(sh);
-    }        
+    }
     @Override
     public void drawSpecialAttack(CombatEntity source, CombatEntity target, int wpnNum, float dmg) {
         ShipBattleUI ui = source.mgr.ui;
@@ -105,7 +105,7 @@ public final class TechStasisField extends Tech {
         int x0 = ui.boxW*7/4;
         int y0 = (ui.boxH*3/2)-(h0/2);
         Color c0 = new Color(160,160,160);
-        for (int i=0;i<n;i++) 
+        for (int i=0;i<n;i++)
             frames[i] = newBufferedImage(ui.boxW*3, ui.boxH*3);
         for (int i=0;i<n;i++) {
             for (int j=i;j<n;j++) {
@@ -148,7 +148,7 @@ public final class TechStasisField extends Tech {
         
         // draw attack
         for (int h=0; h<repeat; h++) {
-            if (!source.mgr.showAnimations()) 
+            if (!source.mgr.showAnimations())
                 break;
             ui.paintCellsImmediately(source.x, target.x, source.y, target.y);
             g0.drawImage(shading[h],tgtBox.x, tgtBox.y, null);

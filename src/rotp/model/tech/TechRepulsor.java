@@ -104,7 +104,7 @@ public final class TechRepulsor extends Tech {
         int h0 = rect.height/8;
         int x0 = ui.boxW*7/4;
         int y0 = (ui.boxH*3/2)-(h0/2);
-        for (int i=0;i<n;i++) 
+        for (int i=0;i<n;i++)
             frames[i] = newBufferedImage(ui.boxW*3, ui.boxH*3);
         for (int i=0;i<n;i++) {
             for (int j=i;j<n;j++) {
@@ -132,7 +132,7 @@ public final class TechRepulsor extends Tech {
         
         // draw attack
         for (int h=0; h<repeat; h++) {
-            if (!source.mgr.showAnimations()) 
+            if (!source.mgr.showAnimations())
                 break;
             ui.paintCellsImmediately(source.x, target.x, source.y, target.y);
             for (int i=0; i<n; i++) {

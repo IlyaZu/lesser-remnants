@@ -116,7 +116,7 @@ public final class TechEnergyPulsar extends Tech {
             int y0 = ui.boxH;
             int w0 = rect.width;
             int h0 = rect.height;
-            for (int i=0;i<n;i++) 
+            for (int i=0;i<n;i++)
                 frames[i] = newBufferedImage(ui.boxW*3, ui.boxH*3);
             for (int i=0;i<n;i++) {
                 int alpha = (int) (255*((float)(n-i)/n));
@@ -139,7 +139,7 @@ public final class TechEnergyPulsar extends Tech {
         int startX = rect.x-ui.boxW;
         int startY = rect.y-ui.boxH;
         for (int i=0; i<n; i++) {
-            if (!source.mgr.showAnimations()) 
+            if (!source.mgr.showAnimations())
                 break;
             long t0 = System.currentTimeMillis();
             ui.paintCellsImmediately(x-1, x+1, y-1,y+1);

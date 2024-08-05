@@ -114,7 +114,7 @@ public final class TechBlackHole extends Tech {
             r0 -= dR;
         }
 
-        target.drawAttackResult(g, startX,startY,sourceX, dmg,text("SHIP_COMBAT_MISS"));   
+        target.drawAttackResult(g, startX,startY,sourceX, dmg,text("SHIP_COMBAT_MISS"));
         g.setStroke(prev);
 
         ui.paintAllImmediately();
