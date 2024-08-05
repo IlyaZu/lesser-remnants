@@ -370,14 +370,6 @@ public final class TechShipWeapon extends Tech {
     @Override
     public float warModeFactor()        { return 2; }
     @Override
-    public boolean providesShipComponent()  { return true; }
-    @Override
-    public float baseCost()   { return cost; }
-    @Override
-    public float baseSize()   { return size; }
-    @Override
-    public float basePower()   { return power; }
-    @Override
     public boolean isObsolete(Empire c) {
         TechShipWeapon top = c.tech().topShipWeaponTech();
         if (top == null)

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,8 +86,6 @@ public final class TechShipNullifier extends Tech {
     public boolean isTechNullifier()      { return minComputerRed > 0; }
     @Override
     public float warModeFactor()        { return 1.5f; }
-    @Override
-    public boolean providesShipComponent()  { return true; }
     @Override
     public float baseValue(Empire c) {
         return c.ai().scientist().baseValue(this);

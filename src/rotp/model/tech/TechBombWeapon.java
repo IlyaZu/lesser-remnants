@@ -87,8 +87,6 @@ public final class TechBombWeapon extends Tech {
     public float warModeFactor()        { return 2; }
     public int range()                     {  return 1; }
     @Override
-    public boolean providesShipComponent()  { return true; }
-    @Override
     public boolean isObsolete(Empire c) {
         return damageHigh < c.tech().bombAttackLevel();
     }
