@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,8 +92,6 @@ public final class TechArmor extends Tech {
     }
     @Override
     public float warModeFactor()           { return 3; }
-    @Override
-    public boolean providesShipComponent()  { return true; }
     @Override
     public boolean isObsolete(Empire c)     { return groundAttackBonus < c.tech().armorGroundBonus(); }
     @Override

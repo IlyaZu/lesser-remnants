@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,8 +63,6 @@ public final class TechFuelRange extends Tech {
     public boolean isFuelRangeTech()     { return true; }
     @Override
     public float expansionModeFactor()  { return 3; }
-    @Override
-    public boolean providesShipComponent()  { return true; }
     @Override
     public boolean isObsolete(Empire c) {
         return range() < c.tech().shipRange();

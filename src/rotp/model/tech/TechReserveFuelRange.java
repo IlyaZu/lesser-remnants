@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,8 +59,6 @@ public final class TechReserveFuelRange extends Tech {
         else
             return text(shDesc, df1.format(range())); 
     }
-    @Override
-    public boolean providesShipComponent()  { return true; }
     @Override
     public boolean isObsolete(Empire c) {
         return (c.tech().topReserveFuelRangeTech() != null)

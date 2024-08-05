@@ -91,7 +91,6 @@ public class Tech implements Base {
     public String effectKey;
 
     public String name = "";
-    public String capsName = "";
     public String detail = "";
     public String item = null;
     public String shDesc = "";
@@ -110,12 +109,6 @@ public class Tech implements Base {
     public void id(String s, int i)  { id = concat(s,":", str(i)); }
     public Tech () {  }
 
-    public Tech(int lv, int seq, TechCategory c) {
-        typeSeq = seq;
-        level = lv;
-        cat = c;
-        init();
-    }
     public void init() {
         quintile = (level+4)/5;
     }
@@ -136,17 +129,11 @@ public class Tech implements Base {
     public boolean isTechNullifier()      { return false; }
 
     public boolean isControlEnvironmentTech() { return false; }
-    public boolean isMissileWeaponTech()    { return false; }
-    public boolean isMissileBaseWeapon()    { return false; }
-    public boolean isRoboticControlsTech()  { return false; }
-    public boolean isPlanetaryShieldTech()  { return false; }
     public boolean isFuelRangeTech()        { return false; }
     public boolean isFutureTech()           { return false; }
     public boolean isObsolete(Empire c)     { return false; }
 
     public boolean isType(int type)         { return techType == type; }
-
-    public boolean providesShipComponent()  { return false; }
 
     public float warModeFactor()           { return 1; }
     public float expansionModeFactor()     { return 1; }
@@ -158,11 +145,7 @@ public class Tech implements Base {
     public boolean canBeResearched(Race r)  { return true; }
 
     public float baseReallocateAmount()   { return 0.25f; }
-    public float tradeValue(Empire civ)    { return level; }
     public float baseValue(Empire civ)     { return level; }
-    public float baseCost()                { return cost; }
-    public float baseSize()                { return size; }
-    public float basePower()               { return power; }
 
     public float baseCost(ShipDesign d)    { return cost; }
     public float baseSize(ShipDesign d)    { return size; }

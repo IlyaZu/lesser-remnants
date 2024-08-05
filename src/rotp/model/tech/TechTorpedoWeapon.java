@@ -120,15 +120,9 @@ public final class TechTorpedoWeapon extends Tech {
     }
     @Override
     public float warModeFactor()        { return 2; }
-    @Override
-    public boolean isMissileWeaponTech()  { return true; }
-    @Override
-    public boolean isMissileBaseWeapon()  { return false; }
     public float range()   { return 0; }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
-    @Override
-    public boolean providesShipComponent()  { return true; }
     @Override
     public boolean isObsolete(Empire c) {
         return false;
