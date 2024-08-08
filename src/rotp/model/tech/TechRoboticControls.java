@@ -24,20 +24,11 @@ public final class TechRoboticControls extends Tech {
     public int mark;
 
     public TechRoboticControls (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.ROBOTIC_CONTROLS, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public Colony.Orders followup()                   { return Colony.Orders.FACTORIES; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.ROBOTIC_CONTROLS;
-
+    private void init() {
         switch(typeSeq) {
             case 0: mark = 3;  break;
             case 1: mark = 4;  break;
@@ -46,6 +37,9 @@ public final class TechRoboticControls extends Tech {
             case 4: mark = 7;  break;
         }
     }
+    
+    @Override
+    public Colony.Orders followup()                   { return Colony.Orders.FACTORIES; }
     @Override
     public boolean isObsolete(Empire c) {
         return mark < c.tech().baseRobotControls();

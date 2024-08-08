@@ -42,19 +42,11 @@ public final class TechShipNullifier extends Tech {
     private transient Color beamColor;
 
     public TechShipNullifier (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.SHIP_NULLIFIER, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.SHIP_NULLIFIER;
+    private void init() {
         switch(typeSeq) {
             case 0:
                 cost = 300;
@@ -80,6 +72,9 @@ public final class TechShipNullifier extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public boolean isWarpDissipator()     { return speedRed > 0; }
     @Override

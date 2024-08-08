@@ -38,20 +38,11 @@ public final class TechStreamProjector extends Tech {
     private transient Color beamColor;
 
     public TechStreamProjector(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.STREAM_PROJECTOR, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.STREAM_PROJECTOR;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 range = 2;
@@ -77,6 +68,9 @@ public final class TechStreamProjector extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()        { return 2; }
     public float armorMod(int ships) {

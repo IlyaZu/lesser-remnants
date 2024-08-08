@@ -21,13 +21,8 @@ import rotp.model.empires.Empire;
 public final class TechFutureForceField extends Tech {
     int number;
     public TechFutureForceField (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        level = lv;
-        cat = c;
+        super(c, Tech.FUTURE_FORCE_FIELD, typeId, seq, lv);
         free = b;
-        techType = Tech.FUTURE_FORCE_FIELD;
-        typeSeq = seq;
-        init();
     }
     @Override
     public boolean isFutureTech()  { return true; }

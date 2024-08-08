@@ -26,22 +26,11 @@ public final class TechEngineWarp extends Tech {
     public String shName;
 
     public TechEngineWarp(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.ENGINE_WARP, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public String detail()                { return text(detail, warp()); }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.ENGINE_WARP;
-
+    private void init() {
         switch(typeSeq) {
             case 0: warp = 1; break;
             case 1: warp = 2; break;
@@ -54,6 +43,11 @@ public final class TechEngineWarp extends Tech {
             case 8: warp = 9; break;
         }
     }
+    
+    @Override
+    public String detail()                { return text(detail, warp()); }
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     public int warp()                    { return warp; }
     @Override
     public float warModeFactor()        { return 1.5f; }

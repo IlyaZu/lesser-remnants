@@ -31,18 +31,11 @@ public final class TechScanner extends Tech {
     public boolean special = false;
 
     public TechScanner (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.SCANNER, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.SCANNER;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 special=true;
@@ -71,6 +64,7 @@ public final class TechScanner extends Tech {
                 break;
         }
     }
+    
     @Override
     public boolean isObsolete(Empire c) {
         return (shipRange < c.shipScanningRange()) && (planetRange < c.planetScanningRange());

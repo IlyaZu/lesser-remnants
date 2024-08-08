@@ -35,20 +35,11 @@ public final class TechRepulsor extends Tech {
     private transient Color beamColor;
 
     public TechRepulsor (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.REPULSOR, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.REPULSOR;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 range = 1;
@@ -59,6 +50,9 @@ public final class TechRepulsor extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
     @Override

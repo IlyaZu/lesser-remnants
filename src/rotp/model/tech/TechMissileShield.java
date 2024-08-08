@@ -27,19 +27,11 @@ public final class TechMissileShield extends Tech {
     public MissileBaseMissileShield baseMissileShield;
 
     public TechMissileShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.MISSILE_SHIELD, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.MISSILE_SHIELD;
+    private void init() {
         baseMissileShield = new MissileBaseMissileShield(this);
         baseBlockAdjPerLevel = .01f;
         switch(typeSeq) {
@@ -48,6 +40,9 @@ public final class TechMissileShield extends Tech {
             case 2: baseBlockPct = 1.00f; break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()        { return 1.5f; }
     @Override

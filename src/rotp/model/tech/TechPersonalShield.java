@@ -22,18 +22,11 @@ public final class TechPersonalShield extends Tech {
     public int groundAttackBonus = -1;
 
     public TechPersonalShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.PERSONAL_SHIELD, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.PERSONAL_SHIELD;
-
+    private void init() {
         switch(typeSeq) {
             case 0: groundAttackBonus = 0; break;
             case 1: groundAttackBonus = 10; break;

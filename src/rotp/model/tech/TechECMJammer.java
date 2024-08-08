@@ -26,19 +26,11 @@ public final class TechECMJammer extends Tech {
     public MissileBaseECM baseECM;
 
     public TechECMJammer (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.ECM_JAMMER, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.ECM_JAMMER;
+    private void init() {
         baseECM = new MissileBaseECM(this);
 
         switch(typeSeq) {
@@ -88,6 +80,9 @@ public final class TechECMJammer extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()           { return 1.5f; }
     @Override

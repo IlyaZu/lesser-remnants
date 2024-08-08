@@ -21,13 +21,8 @@ import rotp.model.empires.Empire;
 public final class TechFuturePropulsion extends Tech {
     int number;
     public TechFuturePropulsion (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        level = lv;
-        cat = c;
+        super(c, Tech.FUTURE_PROPULSION, typeId, seq, lv);
         free = b;
-        techType = Tech.FUTURE_PROPULSION;
-        typeSeq = seq;
-        init();
     }
     @Override
     public boolean isFutureTech()  { return true; }

@@ -47,30 +47,11 @@ public final class TechTorpedoWeapon extends Tech {
     public String imageKey()   { return imageKey; }
 
     public TechTorpedoWeapon (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.TORPEDO_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    public ImageIcon icon(int count) {
-        List<ImageIcon> icons = iconsForType(imageType);
-        int i = (int) Math.sqrt(count);
-        if (i < 1)
-            return icons.get(0);
-        else if (i > icons.size())
-            return icons.get(icons.size()-1);
-        else
-            return icons.get(i-1);
-    }
-    public Image image(int count) {
-        return icon(count).getImage();
-    }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.TORPEDO_WEAPON;
+    private void init() {
         turnsToFire = 2;
 
         switch(typeSeq) {
@@ -117,6 +98,20 @@ public final class TechTorpedoWeapon extends Tech {
                 imageKey = "TORPEDO_PLASMA";
                 break;
         }
+    }
+    
+    public ImageIcon icon(int count) {
+        List<ImageIcon> icons = iconsForType(imageType);
+        int i = (int) Math.sqrt(count);
+        if (i < 1)
+            return icons.get(0);
+        else if (i > icons.size())
+            return icons.get(icons.size()-1);
+        else
+            return icons.get(i-1);
+    }
+    public Image image(int count) {
+        return icon(count).getImage();
     }
     @Override
     public float warModeFactor()        { return 2; }

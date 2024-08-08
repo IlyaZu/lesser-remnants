@@ -28,20 +28,11 @@ public final class TechBiologicalWeapon extends Tech {
     public int maxDamage;
 
     public TechBiologicalWeapon (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BIOLOGICAL_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BIOLOGICAL_WEAPON;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 minDamage = 1;
@@ -66,6 +57,9 @@ public final class TechBiologicalWeapon extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()           { return 2; }
     @Override

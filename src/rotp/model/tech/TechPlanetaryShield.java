@@ -23,20 +23,11 @@ public final class TechPlanetaryShield extends Tech {
     public int damage;
 
     public TechPlanetaryShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.PLANETARY_SHIELD, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public Colony.Orders followup()                   { return Colony.Orders.SHIELD; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.PLANETARY_SHIELD;
-
+    private void init() {
         switch(typeSeq) {
             case 0: damage = 5;  break;
             case 1: damage = 10; break;
@@ -44,6 +35,9 @@ public final class TechPlanetaryShield extends Tech {
             case 3: damage = 20; break;
         }
     }
+    
+    @Override
+    public Colony.Orders followup()                   { return Colony.Orders.SHIELD; }
     @Override
     public float warModeFactor()        { return 2; }
     @Override

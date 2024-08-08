@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +22,11 @@ public final class TechBattleSuit extends Tech {
     public int groundCombatBonus;
 
     public TechBattleSuit (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BATTLE_SUIT, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BATTLE_SUIT;
+    private void init() {
         switch(typeSeq) {
             case 0: groundCombatBonus = 0; break;
             case 1: groundCombatBonus = 10; break;

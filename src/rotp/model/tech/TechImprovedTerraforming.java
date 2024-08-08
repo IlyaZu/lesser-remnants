@@ -26,20 +26,11 @@ public final class TechImprovedTerraforming extends Tech {
 
     public int increase()   { return (int) (increase * session().populationBonus()); }
     public TechImprovedTerraforming(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.IMPROVED_TERRAFORMING, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public Colony.Orders followup()                   { return Colony.Orders.TERRAFORM; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.IMPROVED_TERRAFORMING;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 increase = 10;
@@ -79,6 +70,9 @@ public final class TechImprovedTerraforming extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public Colony.Orders followup()                   { return Colony.Orders.TERRAFORM; }
     @Override
     public boolean isObsolete(Empire c) {
         return increase < c.tech().terraformAdj();

@@ -60,19 +60,11 @@ public final class TechShipWeapon extends Tech {
     protected String soundEffect() { return "ShipLaser"; }
 
     public TechShipWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.SHIP_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.SHIP_WEAPON;
+    private void init() {
         dashStroke = 0;
 
         switch(typeSeq) {
@@ -365,6 +357,9 @@ public final class TechShipWeapon extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
     @Override

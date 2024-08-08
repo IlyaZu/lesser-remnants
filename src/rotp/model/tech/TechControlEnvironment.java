@@ -27,19 +27,11 @@ public final class TechControlEnvironment extends Tech {
     public String specialName;
 
     public TechControlEnvironment (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.CONTROL_ENVIRONMENT, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.CONTROL_ENVIRONMENT;
+    private void init() {
         switch(typeSeq) {
             case 0: hostilityAllowed = PlanetType.HOSTILITY_MINIMAL; return;
             case 1: hostilityAllowed = PlanetType.HOSTILITY_BARREN; return;
@@ -50,6 +42,9 @@ public final class TechControlEnvironment extends Tech {
             case 6: hostilityAllowed = PlanetType.HOSTILITY_RADIATED; return;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public boolean isControlEnvironmentTech()    { return true; }
     public int environment()                     { return hostilityAllowed; }
