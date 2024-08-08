@@ -95,7 +95,6 @@ public class Tech implements Base {
     public String item2 = null;
     public String shDesc2 = "";
 
-    public int sequence;
     public final int quintile;
     public boolean restricted = false;
     public boolean free = false;
