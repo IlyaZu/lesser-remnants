@@ -24,24 +24,18 @@ public final class TechDisplacement extends Tech {
     public float missPct = 0;
 
     public TechDisplacement(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.DISPLACEMENT, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.DISPLACEMENT;
-
+    private void init() {
         switch(typeSeq) {
             case 0: missPct = .33f; break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public void provideBenefits(Empire c) {
         super.provideBenefits(c);

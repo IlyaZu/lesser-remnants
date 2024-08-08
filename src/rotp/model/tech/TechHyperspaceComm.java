@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +19,9 @@ package rotp.model.tech;
 import rotp.model.empires.Empire;
 
 public final class TechHyperspaceComm extends Tech {
-    public TechHyperspaceComm (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+    public TechHyperspaceComm(String typeId, int lv, int seq, boolean b, TechCategory c) {
+        super(c, Tech.HYPERSPACE_COMM, typeId, seq, lv);
         free = b;
-        init();
-    }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.HYPERSPACE_COMM;
     }
     @Override
     public void provideBenefits(Empire c) {

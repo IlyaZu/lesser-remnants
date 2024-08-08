@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,23 +23,13 @@ public final class TechSoilEnrichment extends Tech {
     public float growthMod;
     public int planetaryIncrease;
     public int environment;
+    
     public TechSoilEnrichment(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.SOIL_ENRICHMENT, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean promptToReallocate()     { return super.promptToReallocate() && !player().ignoresPlanetEnvironment(); }
-    @Override
-    public Colony.Orders followup()         { return Colony.Orders.SOIL; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.SOIL_ENRICHMENT;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 growthMod = 1.5f;
@@ -54,6 +45,11 @@ public final class TechSoilEnrichment extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean promptToReallocate()     { return super.promptToReallocate() && !player().ignoresPlanetEnvironment(); }
+    @Override
+    public Colony.Orders followup()         { return Colony.Orders.SOIL; }
     @Override
     public boolean isObsolete(Empire c) {
         return (c.tech().topSoilEnrichmentTech() != null) && (level  < c.tech().topSoilEnrichmentTech().level);

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,23 +23,11 @@ public final class TechAtmosphereEnrichment extends Tech {
     public static TechAtmosphereEnrichment hostileTech;
 
     public TechAtmosphereEnrichment(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.ATMOSPHERE_ENRICHMENT, typeId, seq, lv);
         free = b;
         init();
     }
-    public float sizeIncrease(float baseSize)  {
-        return 20;
-    }
-    @Override
-    public Colony.Orders followup()                   { return Colony.Orders.ATMOSPHERE; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.ATMOSPHERE_ENRICHMENT;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 cost = 150;
@@ -46,6 +35,12 @@ public final class TechAtmosphereEnrichment extends Tech {
                 break;
         }
     }
+    
+    public float sizeIncrease(float baseSize)  {
+        return 20;
+    }
+    @Override
+    public Colony.Orders followup()                   { return Colony.Orders.ATMOSPHERE; }
     @Override
     public float baseValue(Empire c)   { return c.ai().scientist().baseValue(this); }
     @Override

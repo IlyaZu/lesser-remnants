@@ -26,19 +26,11 @@ public final class TechBattleComputer extends Tech {
     public MissileBaseComputer baseComputer;
 
     public TechBattleComputer (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BATTLE_COMPUTER, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BATTLE_COMPUTER;
+    private void init() {
         baseComputer = new MissileBaseComputer(this);
 
         switch(typeSeq) {
@@ -92,6 +84,9 @@ public final class TechBattleComputer extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()           { return 2; }
     @Override

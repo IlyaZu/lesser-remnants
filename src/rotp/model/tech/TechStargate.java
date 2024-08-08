@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,24 +21,18 @@ import rotp.model.empires.Empire;
 public final class TechStargate extends Tech {
     public static float MAINTENANCE = 300;
     public TechStargate(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.STARGATE, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.STARGATE;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 cost = 3000;
                 break;
         }
     }
+    
     @Override
     public void provideBenefits(Empire c) {
         super.provideBenefits(c);

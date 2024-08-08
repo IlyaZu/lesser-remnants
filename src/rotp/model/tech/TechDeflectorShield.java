@@ -26,19 +26,11 @@ public final class TechDeflectorShield extends Tech {
     public MissileBaseShield baseShield;
 
     public TechDeflectorShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.DEFLECTOR_SHIELD, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.DEFLECTOR_SHIELD;
+    private void init() {
         baseShield = new MissileBaseShield(this);
 
         switch(typeSeq) {
@@ -94,6 +86,9 @@ public final class TechDeflectorShield extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()        { return 2; }
     @Override

@@ -28,21 +28,11 @@ public final class TechArmor extends Tech {
     public MissileBaseArmor baseArmor;
 
     public TechArmor (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.ARMOR, typeId, seq, lv);
         free = b;
         init();
     }
-    public String shortName()    {  return item(); }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-
-        techType = Tech.ARMOR;
+    private void init() {
         baseArmor = new MissileBaseArmor(this);
 
         switch(typeSeq) {
@@ -90,6 +80,10 @@ public final class TechArmor extends Tech {
                 break;
         }
     }
+    
+    public String shortName()    {  return item(); }
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()           { return 3; }
     @Override

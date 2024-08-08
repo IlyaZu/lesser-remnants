@@ -31,20 +31,11 @@ public final class TechBombWeapon extends Tech {
     public int damageHigh() { return damageHigh; }
 
     public TechBombWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BOMB_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BOMB_WEAPON;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 damageLow = 3;
@@ -83,6 +74,9 @@ public final class TechBombWeapon extends Tech {
                 break;
         }
     }
+
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()        { return 2; }
     public int range()                     {  return 1; }

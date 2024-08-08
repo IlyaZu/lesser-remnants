@@ -25,19 +25,11 @@ public final class TechBeamFocus extends Tech {
     public int rangeAdj = 0;
 
     public TechBeamFocus (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BEAM_FOCUS, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BEAM_FOCUS;
+    private void init() {
         switch(typeSeq) {
             case 0:
                 rangeAdj = 3;
@@ -47,6 +39,9 @@ public final class TechBeamFocus extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()           { return 1.5f; }
     @Override

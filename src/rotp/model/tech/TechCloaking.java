@@ -28,20 +28,11 @@ public final class TechCloaking extends Tech {
     public float move = 0;
 
     public TechCloaking (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.CLOAKING, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.CLOAKING;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 range = 1;
@@ -49,6 +40,9 @@ public final class TechCloaking extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public void provideBenefits(Empire c) {
         super.provideBenefits(c);

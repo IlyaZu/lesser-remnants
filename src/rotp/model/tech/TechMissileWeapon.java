@@ -60,37 +60,11 @@ public final class TechMissileWeapon extends Tech {
     public String imageKey()   { return imageKey; }
 
     public TechMissileWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.MISSILE_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public Colony.Orders followup()          { return Colony.Orders.BASES; }
-    @Override
-    public float baseReallocateAmount()          { return .10f; }
-    public ImageIcon icon(int count) {
-        List<ImageIcon> icons = iconsForType(imageType);
-        int i = (int) Math.sqrt(count);
-        if (i < 1)
-            return icons.get(0);
-        else if (i > icons.size())
-            return icons.get(icons.size()-1);
-        else
-            return icons.get(i-1);
-    }
-    public Image image(int count) {
-            return icon(count).getImage();
-    }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.MISSILE_WEAPON;
-
+    private void init() {
         switch(typeSeq) {
             case 0: // NUCLEAR MISSILE
                 damage = 4;
@@ -225,6 +199,26 @@ public final class TechMissileWeapon extends Tech {
                 imageKey = "MISSILE_SCATTER_PACK_X";
                 break;
         }
+    }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
+    @Override
+    public Colony.Orders followup()          { return Colony.Orders.BASES; }
+    @Override
+    public float baseReallocateAmount()          { return .10f; }
+    public ImageIcon icon(int count) {
+        List<ImageIcon> icons = iconsForType(imageType);
+        int i = (int) Math.sqrt(count);
+        if (i < 1)
+            return icons.get(0);
+        else if (i > icons.size())
+            return icons.get(icons.size()-1);
+        else
+            return icons.get(i-1);
+    }
+    public Image image(int count) {
+            return icon(count).getImage();
     }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }

@@ -80,11 +80,11 @@ public class Tech implements Base {
     public static final int FUTURE_PROPULSION = 94;
     public static final int FUTURE_WEAPON = 95;
 
-    public String id;
-    public int techType;
-    public int typeSeq;
-    public int level;
-    public TechCategory cat;
+    public final String id;
+    public final int techType;
+    public final int typeSeq;
+    public final int level;
+    public final TechCategory cat;
     public String iconFilename;
     public String effectKey;
 
@@ -96,20 +96,24 @@ public class Tech implements Base {
     public String shDesc2 = "";
 
     public int sequence;
-    public int quintile = 0;
+    public final int quintile;
     public boolean restricted = false;
     public boolean free = false;
     public float cost = 0;
     public float size = 0;
     public float power = 0;
 
-    public String id()               { return id; }
-    public void id(String s, int i)  { id = concat(s,":", str(i)); }
-    public Tech () {  }
-
-    public void init() {
-        quintile = (level+4)/5;
+    public Tech(TechCategory category, int techType, String typeId, int typeSeq, int level) {
+        this.cat = category;
+        this.techType = techType;
+        this.id = typeId + ":" + typeSeq;
+        this.typeSeq = typeSeq;
+        this.level = level;
+        this.quintile = (level+4)/5;
     }
+    
+    public String id()               { return id; }
+
     @Override
     public String toString() { return concat("Tech: ", name); }
 

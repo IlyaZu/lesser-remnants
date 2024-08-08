@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,18 +35,11 @@ public final class TechHandWeapon extends Tech {
     public boolean rifle = false;
     public int deathType = COLLAPSE;
     public TechHandWeapon (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.HAND_WEAPON, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.HAND_WEAPON;
-
+    private void init() {
         switch(typeSeq) {
            case 0:
                 rifle = false;
@@ -91,6 +85,7 @@ public final class TechHandWeapon extends Tech {
                 break;
         }
     }
+    
     @Override
     public float warModeFactor()        { return 3; }
     @Override

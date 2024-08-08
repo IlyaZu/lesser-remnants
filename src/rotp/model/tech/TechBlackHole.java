@@ -28,19 +28,11 @@ public final class TechBlackHole extends Tech {
     public int range = 1;
 
     public TechBlackHole(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.BLACK_HOLE, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.BLACK_HOLE;
+    private void init() {
         switch(typeSeq) {
             case 0:
                 cost = 275;
@@ -49,6 +41,9 @@ public final class TechBlackHole extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
     @Override

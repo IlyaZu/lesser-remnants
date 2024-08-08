@@ -26,20 +26,11 @@ public final class TechShipInertial extends Tech {
     public float blackHoleEffectMod;
 
     public TechShipInertial(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        id(typeId, seq);
-        typeSeq = seq;
-        level = lv;
-        cat = c;
+        super(c, Tech.SHIP_INERTIAL, typeId, seq, lv);
         free = b;
         init();
     }
-    @Override
-    public boolean canBeMiniaturized()      { return true; }
-    @Override
-    public void init() {
-        super.init();
-        techType = Tech.SHIP_INERTIAL;
-
+    private void init() {
         switch(typeSeq) {
             case 0:
                 defenseBonus = 2;
@@ -53,6 +44,9 @@ public final class TechShipInertial extends Tech {
                 break;
         }
     }
+    
+    @Override
+    public boolean canBeMiniaturized()      { return true; }
     @Override
     public float warModeFactor()        { return 1.5f; }
     @Override
