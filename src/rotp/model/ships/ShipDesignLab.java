@@ -268,7 +268,7 @@ public class ShipDesignLab implements Base, Serializable {
     public ShipDesign startingFighterDesign() {
         ShipDesign design = newBlankDesign(ShipDesign.SMALL);
         design.engine(engines().get(0));
-        design.addWeapon(beamWeapon(0, false), 1);
+        design.addWeapon(beamWeapon(false), 1);
         design.mission(ShipDesign.FIGHTER);
         if (empire.isAI())
             nameDesign(design);
@@ -279,8 +279,8 @@ public class ShipDesignLab implements Base, Serializable {
     }
     public ShipDesign startingBomberDesign() {
         ShipDesign design = newBlankDesign(ShipDesign.MEDIUM);
-        design.addWeapon(bombWeapon(0), 2);
-        design.addWeapon(beamWeapon(0, false), 2);
+        design.addWeapon(bombWeapon(), 2);
+        design.addWeapon(beamWeapon(false), 2);
         design.mission(ShipDesign.BOMBER);
         if (empire.isAI())
             nameDesign(design);
@@ -292,8 +292,8 @@ public class ShipDesignLab implements Base, Serializable {
     public ShipDesign startingDestroyerDesign() {
         ShipDesign design = newBlankDesign(ShipDesign.MEDIUM);
         design.mission(ShipDesign.DESTROYER);
-        design.addWeapon(missileWeapon(0, 2), 1);
-        design.addWeapon(beamWeapon(0, false), 3);
+        design.addWeapon(missileWeapon(2), 1);
+        design.addWeapon(beamWeapon(false), 3);
         if (empire.isAI())
             nameDesign(design);
         else
@@ -510,31 +510,30 @@ public class ShipDesignLab implements Base, Serializable {
         specials().add(c);
         Collections.sort(specials(),ShipComponent.SELECTION_ORDER);
     }
-    public ShipWeapon beamWeapon(int seq, boolean heavy) {
+    public ShipWeapon beamWeapon(boolean heavy) {
         for (ShipWeapon wpn : weapons()) {
             if (wpn.isBeamWeapon()) {
                 ShipWeaponBeam wpn2 = (ShipWeaponBeam) wpn;
-                if ((wpn2.tech().sequence == seq) && (wpn2.heavy() == heavy))
+                if (wpn2.heavy() == heavy)
                     return wpn;
             }
         }
         return null;
     }
-    public ShipWeapon missileWeapon(int seq, int shots) {
+    public ShipWeapon missileWeapon(int shots) {
         for (ShipWeapon wpn : weapons()) {
             if (wpn.isMissileWeapon()) {
                 ShipWeaponMissile wpn2 = (ShipWeaponMissile) wpn;
-                if ((wpn2.tech().sequence == seq) && (wpn2.shots() == shots))
+                if (wpn2.shots() == shots)
                     return wpn;
             }
         }
         return null;
     }
-    public ShipWeapon bombWeapon(int seq) {
+    public ShipWeapon bombWeapon() {
         for (ShipWeapon wpn : weapons()) {
             if (wpn.groundAttacksOnly()) {
-                if (((ShipWeaponBomb) wpn).tech().sequence == seq)
-                    return wpn;
+                return wpn;
             }
         }
         return null;
