@@ -133,7 +133,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         sourceEmpire = player();
         researchedTech = true;
         player().race().resetScientist();
-        title = text("TECH_DISCOVERY_TITLE", text(tech().cat.key()));
+        title = text("TECH_DISCOVERY_TITLE", text(tech().cat.id()));
         title = player().replaceTokens(title, "player");
         finished = false;
         mission = null;
