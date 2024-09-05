@@ -37,8 +37,6 @@ public final class TechCategory implements Base, Serializable {
     private static final int MAX_QUINTILES = 20;
     private static final String[] researchKeys = { "TECH_RESEARCH_COMPUTER", "TECH_RESEARCH_CONSTRUCTION",
                     "TECH_RESEARCH_FORCE_FIELD", "TECH_RESEARCH_PLANETOLOGY", "TECH_RESEARCH_PROPULSION", "TECH_RESEARCH_WEAPON" };
-    private static final String[] categoryKeys = { "TECH_COMPUTERS", "TECH_CONSTRUCTION", "TECH_FORCE_FIELDS",
-                    "TECH_PLANETOLOGY", "TECH_PROPULSION", "TECH_WEAPONS" };
     public static String id(int i) {
         switch (i) {
             case COMPUTER     : return "TECH_COMPUTERS";
@@ -81,7 +79,6 @@ public final class TechCategory implements Base, Serializable {
     public float totalBC()                 { return totalBC; }
     public float techLevel()               { return currentTechLevel(); }
     public String researchKey()            { return researchKeys[index]; }
-    public String key()                    { return categoryKeys[index]; }
     public boolean isWeaponTechCategory()  { return (this == tree.weapon()); }
     private float racialMod()             { return tree == null? 1.0f : tree.empire().techMod(index); }
     public float discoveryPct()           { return discoveryPct; }

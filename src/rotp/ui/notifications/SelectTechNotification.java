@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +26,7 @@ public class SelectTechNotification implements TurnNotification {
         category = cat;
     }
     @Override
-    public String displayOrder() { return SELECT_NEW_TECH+category.key(); }
+    public String displayOrder() { return SELECT_NEW_TECH+category.id(); }
     @Override
     public void notifyPlayer() {
         RotPUI.instance().selectSelectNewTechPanel(category);
