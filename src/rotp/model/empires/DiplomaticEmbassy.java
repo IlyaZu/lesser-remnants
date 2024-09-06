@@ -575,8 +575,9 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     
     private float adjustSeverity(float severity) {
+        float adjustedRelations = relations - baseRelations();
         // Negative severity is treated the same with the relations range flipped.
-        float adjustedRelations = relations * Math.signum(severity);
+        adjustedRelations = adjustedRelations * Math.signum(severity);
         
         float modifier;
         if (adjustedRelations < 0) {
