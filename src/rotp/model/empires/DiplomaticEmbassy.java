@@ -33,6 +33,7 @@ import rotp.model.incidents.BreakPactIncident;
 import rotp.model.incidents.BreakTradeIncident;
 import rotp.model.incidents.DeclareWarIncident;
 import rotp.model.incidents.DiplomaticIncident;
+import rotp.model.incidents.DriftRelationsIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
 import rotp.model.incidents.ExpansionIncident;
@@ -303,7 +304,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void assessTurn() {
         log(view+" Embassy: assess turn");
         evaluateWarPreparations();
-        driftRelations();
         resetIncidents();
 
         // player refusals are remembered for the
@@ -569,10 +569,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         treaty.noticeIncident(inc);
     }
     
-    private void driftRelations() {
-        updateRelations((baseRelations()-relations)/50);
-    }
-    
     private void updateRelations(float severity) {
         severity = adjustSeverity(severity);
         relations = bounds(-100, relations+severity, 100);
@@ -593,11 +589,14 @@ public class DiplomaticEmbassy implements Base, Serializable {
         return severity * modifier;
     }
     
-    private float baseRelations() {
+    public float baseRelations() {
         return owner().baseRelations(empire());
     }
 
     private void resetIncidents() {
+        // Drift relations first so it can be forgotten immediately as the incident cannot be displayed.
+        DriftRelationsIncident.create(view);
+        
         newIncidents().clear();
         clearForgottenIncidents();
         
