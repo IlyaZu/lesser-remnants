@@ -16,7 +16,6 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.EmpireView;
 
 public class SimpleIncident extends DiplomaticIncident {
@@ -27,24 +26,16 @@ public class SimpleIncident extends DiplomaticIncident {
     private final int myEmpireId;
     private final int yourEmpireId;
 
-    public static void createAllianceIncident(EmpireView view) {
-        DiplomaticEmbassy embassy = view.embassy();
-        if (embassy.alliance()) {
-            SimpleIncident incident = new SimpleIncident(3,
-                    "INC_SIGNED_ALLIANCE_TITLE", "INC_SIGNED_ALLIANCE_DESC",
-                    view.ownerId(), view.empId());
-            embassy.addIncident(incident);
-        }
+    public static SimpleIncident createAllianceIncident(EmpireView view) {
+        return new SimpleIncident(3,
+                "INC_SIGNED_ALLIANCE_TITLE", "INC_SIGNED_ALLIANCE_DESC",
+                view.ownerId(), view.empId());
     }
     
-    public static void createPactIncident(EmpireView view) {
-        DiplomaticEmbassy embassy = view.embassy();
-        if (embassy.pact()) {
-            SimpleIncident incident = new SimpleIncident(1.5f,
-                    "INC_SIGNED_PACT_TITLE", "INC_SIGNED_PACT_DESC",
-                    view.ownerId(), view.empId());
-            embassy.addIncident(incident);
-        }
+    public static SimpleIncident createPactIncident(EmpireView view) {
+        return new SimpleIncident(1.5f,
+                "INC_SIGNED_PACT_TITLE", "INC_SIGNED_PACT_DESC",
+                view.ownerId(), view.empId());
     }
     
     private SimpleIncident(float severity,
