@@ -21,10 +21,10 @@ import rotp.model.empires.EmpireView;
 public class DriftRelationsIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
 
-    public static void create(EmpireView view) {
+    public static DriftRelationsIncident create(EmpireView view) {
         DiplomaticEmbassy embassy = view.embassy();
         float severity = (embassy.baseRelations() - embassy.relations()) / 50;
-        embassy.addIncident(new DriftRelationsIncident(severity));
+        return new DriftRelationsIncident(severity);
     }
     
     private DriftRelationsIncident(float severity) {

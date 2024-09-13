@@ -595,13 +595,17 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
     private void resetIncidents() {
         // Drift relations first so it can be forgotten immediately as the incident cannot be displayed.
-        DriftRelationsIncident.create(view);
+        addIncident(DriftRelationsIncident.create(view));
         
         newIncidents().clear();
         clearForgottenIncidents();
         
-        SimpleIncident.createPactIncident(view);
-        SimpleIncident.createAllianceIncident(view);
+        if (pact()) {
+            addIncident(SimpleIncident.createPactIncident(view));
+        }
+        if (alliance()) {
+            addIncident(SimpleIncident.createAllianceIncident(view));
+        }
         AtWarWithAllyIncident.create(view);
         AlliedWithEnemyIncident.create(view);
         TrespassingIncident.create(view);
@@ -614,6 +618,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
                 newIncidents().add(incident);
         }
     }
+    
     private void clearForgottenIncidents() {
         Iterator<DiplomaticIncident> incidentIterator = incidents.iterator();
         while (incidentIterator.hasNext()) {
