@@ -33,12 +33,12 @@ import rotp.model.incidents.ColonyDestroyedIncident;
 import rotp.model.incidents.ColonyInvadedIncident;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.EspionageTechIncident;
-import rotp.model.incidents.EvictedSpiesIncident;
 import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SabotageBasesIncident;
 import rotp.model.incidents.SabotageFactoriesIncident;
+import rotp.model.incidents.SimpleIncident;
 import rotp.model.incidents.SkirmishIncident;
 import rotp.model.incidents.SpyConfessionIncident;
 import rotp.model.tech.Tech;
@@ -599,8 +599,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         v.embassy().noteRequest();
         v.embassy().withdrawAmbassador();
 
-        EvictedSpiesIncident inc = EvictedSpiesIncident.create(v);
-        v.embassy().addIncident(inc);
+        v.embassy().addIncident(SimpleIncident.createEvictedSpiesIncident(v));
         
         v.spies().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
