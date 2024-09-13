@@ -34,12 +34,12 @@ import rotp.model.incidents.ColonyDestroyedIncident;
 import rotp.model.incidents.ColonyInvadedIncident;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.EspionageTechIncident;
-import rotp.model.incidents.EvictedSpiesIncident;
 import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.MilitaryBuildupIncident;
 import rotp.model.incidents.OathBreakerIncident;
 import rotp.model.incidents.SabotageBasesIncident;
 import rotp.model.incidents.SabotageFactoriesIncident;
+import rotp.model.incidents.SimpleIncident;
 import rotp.model.incidents.SkirmishIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
@@ -863,8 +863,7 @@ public class AIDiplomat implements Base, Diplomat {
         v.embassy().noteRequest();
         v.embassy().withdrawAmbassador();
 
-        EvictedSpiesIncident inc = EvictedSpiesIncident.create(v);
-        v.embassy().addIncident(inc);
+        v.embassy().addIncident(SimpleIncident.createEvictedSpiesIncident(v));
         
         if (empire.atWarWith(dip.id) || v.embassy().onWarFooting()) {
             v.spies().ignoreThreat();

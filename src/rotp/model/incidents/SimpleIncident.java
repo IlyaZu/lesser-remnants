@@ -38,6 +38,12 @@ public class SimpleIncident extends DiplomaticIncident {
                 view.ownerId(), view.empId());
     }
     
+    public static SimpleIncident createEvictedSpiesIncident(EmpireView view) {
+        return new SimpleIncident(-10,
+                "INC_EVICTED_SPIES_TITLE", "INC_EVICTED_SPIES_DESC",
+                view.ownerId(), view.empId());
+    }
+    
     private SimpleIncident(float severity,
             String titleKey, String descriptionKey,
             int myEmpireId, int yourEmpireId) {
