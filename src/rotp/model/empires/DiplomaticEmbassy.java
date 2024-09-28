@@ -29,7 +29,6 @@ import rotp.model.incidents.AlliedWithEnemyIncident;
 import rotp.model.incidents.AtWarWithAllyIncident;
 import rotp.model.incidents.BreakAllianceIncident;
 import rotp.model.incidents.BreakPactIncident;
-import rotp.model.incidents.BreakTradeIncident;
 import rotp.model.incidents.DeclareWarIncident;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.DriftRelationsIncident;
@@ -479,7 +478,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public DiplomaticIncident breakTrade() {
         view.trade().stopRoute();
-        DiplomaticIncident inc = BreakTradeIncident.create(owner(), empire());
+        DiplomaticIncident inc = SimpleIncident.createBreakTradeIncident(view);
         otherEmbassy().addIncident(inc);
         return inc;
     }

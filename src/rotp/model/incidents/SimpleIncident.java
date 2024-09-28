@@ -44,6 +44,12 @@ public class SimpleIncident extends DiplomaticIncident {
                 view.ownerId(), view.empId());
     }
     
+    public static SimpleIncident createBreakTradeIncident(EmpireView view) {
+        return new SimpleIncident(-5,
+                "INC_BROKE_TRADE_TITLE", "INC_BROKE_TRADE_DESC",
+                view.empId(), view.ownerId());
+    }
+    
     private SimpleIncident(float severity,
             String titleKey, String descriptionKey,
             int myEmpireId, int yourEmpireId) {
