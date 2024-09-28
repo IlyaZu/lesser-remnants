@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,13 +73,13 @@ public class EspionageMission implements Base, Serializable {
         //  2) in economic range of the victim
         //  3) not an ally of the victim
         for (Empire framedEmp : spyContacts) {
-            if (victimContacts.contains(framedEmp) 
-             && victimEmp.inEconomicRange(framedEmp.id) 
+            if (victimContacts.contains(framedEmp)
+             && victimEmp.inEconomicRange(framedEmp.id)
              && !victimEmp.alliedWith(framedEmp.id))
                 potentialFrames.add(framedEmp);
         }
 
-        // of all of the potential empires we can frame, we 
+        // of all of the potential empires we can frame, we
         // have the opportunity to choose between two to frame
         if (potentialFrames.size() > 1) {
             Empire frame1 = random(potentialFrames);

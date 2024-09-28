@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2024 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,11 +109,11 @@ public final class SpyNetwork implements Base, Serializable {
     
     public int maxSpies()            { return maxSpies; }
     public void maxSpies(int n)      { maxSpies = max(0,n); }
-    public void increaseMaxSpies()   { 
-        maxSpies++; 
+    public void increaseMaxSpies()   {
+        maxSpies++;
         view().owner().flagColoniesToRecalcSpending();
     }
-    public void decreaseMaxSpies()   { 
+    public void decreaseMaxSpies()   {
         maxSpies = max(0, maxSpies-1);
         view().owner().flagColoniesToRecalcSpending();
     }
@@ -158,14 +158,14 @@ public final class SpyNetwork implements Base, Serializable {
             case HIDE:       mission = Mission.ESPIONAGE; break;
             case ESPIONAGE:  mission = Mission.SABOTAGE; break;
             case SABOTAGE:   mission = Mission.HIDE; break;
-        }        
+        }
     }
     public void prevMission() {
         switch(mission) {
             case HIDE:       mission = Mission.SABOTAGE; break;
             case ESPIONAGE:  mission = Mission.HIDE; break;
             case SABOTAGE:   mission = Mission.ESPIONAGE; break;
-        }        
+        }
     }
     public boolean hasSpies()        { return !activeSpies.isEmpty(); }
     public List<Spy> activeSpies()   { return activeSpies; }
@@ -177,18 +177,18 @@ public final class SpyNetwork implements Base, Serializable {
         return possibleTechs;
     }
     public int allocation()           { return allocation; }
-    public void allocation(int i)     { 
-        allocation = bounds(0,i,MAX_SPENDING_TICKS); 
+    public void allocation(int i)     {
+        allocation = bounds(0,i,MAX_SPENDING_TICKS);
         view().owner().flagColoniesToRecalcSpending();
     }
     public float allocationPct()     { return (float) allocation/MAX_SPENDING_TICKS; }
-    public float allocationCostPct() { 
+    public float allocationCostPct() {
         if (numActiveSpies() >= maxSpies)
             return 0;
         if (!view.inEconomicRange())
             return 0;
 
-        return allocationPct() * MAX_SPENDING_PCT; 
+        return allocationPct() * MAX_SPENDING_PCT;
     }
     public void decreaseSpending()    { allocation(allocation-1); }
     public void increaseSpending()    { allocation(allocation+1); }
@@ -332,7 +332,7 @@ public final class SpyNetwork implements Base, Serializable {
                 session().enableSpyReport();
                 report().recordTechsLearned(newPossible);
             }
-        }  
+        }
     }
     public void noteTradedTech(Tech t) {
         TechCategory cat = tech.category(t.cat.index());
@@ -363,7 +363,7 @@ public final class SpyNetwork implements Base, Serializable {
         // make sure we don't try to steal any techs that we just traded for
         // but haven't received yet
         List<String> recentlyTradedTechs = owner().tech().tradedTechs();
-        for (String techId: recentlyTradedTechs) 
+        for (String techId: recentlyTradedTechs)
             possibleTechs().remove(techId);
         
         // no unknown techs to potentially steal
@@ -407,7 +407,7 @@ public final class SpyNetwork implements Base, Serializable {
         
         report().stolenTech(eMission.stolenTech());
         Empire framedEmpire = eMission.framedEmpire();
-        // log which empire we framed on our spy report, and the 
+        // log which empire we framed on our spy report, and the
         // fact that they were framed on their spy report
         if (framedEmpire != null) {
             report().framedEmpire(framedEmpire);
