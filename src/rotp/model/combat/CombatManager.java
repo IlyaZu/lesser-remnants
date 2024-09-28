@@ -463,7 +463,6 @@ public class CombatManager implements Base {
         results.addShipsRetreated(stack.design(), stack.num);
         removeFromCombat(stack);
         stack.retreatToSystem(s);
-        //turnDone(stack);
         performingStackTurn = false;
     }
     public void destroyStack(CombatEntity stack) {
@@ -685,7 +684,6 @@ public class CombatManager implements Base {
                     if (st.x > 5)
                         st.reverse();
                     stackIndex++;
-                    //log("Ship Stack: "+st);
                 }
             }
             empIndex++;
