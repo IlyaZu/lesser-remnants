@@ -202,16 +202,15 @@ public class CombatManager implements Base {
 
         setupBattle(emp1, emp2);
 
-        if (combatIsFinished())
-            return;
+        if (!combatIsFinished()) {
+            checkDeclareWar(emp1, emp2);
+            checkDeclareWar(emp2, emp1);
 
-        checkDeclareWar(emp1, emp2);
-        checkDeclareWar(emp2, emp1);
-
-        if (playerInBattle())
-            RotPUI.instance().promptForShipCombat(this);
-        else {
-            resolveAllCombat();
+            if (playerInBattle())
+                RotPUI.instance().promptForShipCombat(this);
+            else {
+                resolveAllCombat();
+            }
         }
         endOfCombat();
     }
@@ -225,13 +224,13 @@ public class CombatManager implements Base {
         monster.lastAttacker(emp);
         log("Resolving ship battle between empire1:", emp.name(), "  monster:", monster.name());
         setupBattle(emp, monster);
-        if (combatIsFinished())
-            return;
-
-        if (emp.isPlayerControlled())
-            RotPUI.instance().promptForShipCombat(this);
-        else {
-            resolveAllCombat();
+        
+        if (!combatIsFinished()) {
+            if (emp.isPlayerControlled())
+                RotPUI.instance().promptForShipCombat(this);
+            else {
+                resolveAllCombat();
+            }
         }
         endOfCombat();
     }
@@ -858,7 +857,6 @@ public class CombatManager implements Base {
             finished = true;
             if (showAnimations())
                 ui.showResult();
-            endOfCombat();
             return true;
         }
         return false;
