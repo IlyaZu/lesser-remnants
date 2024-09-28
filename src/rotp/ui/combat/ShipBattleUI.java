@@ -46,22 +46,21 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     public static final int AUTO_RESOLVE = 1;
     public static final int RETREAT_ALL = 2;
     private enum Display { INTRO, RESULT }
-    static final Color shipCountTextC = new Color(255,240,78);
-    static final Color grayBackC = new Color(123,123,123);
-    static final Color hostileBorderC = new Color(151,18,23);
+    private static final Color grayBackC = new Color(123,123,123);
+    private static final Color hostileBorderC = new Color(151,18,23);
     public static final Color currentBorderC = new Color(163,123,0);
-    static final Color friendlyBorderC = new Color(79,79,79);
-    static final Color yellowButtonCenterC = new Color(120,120,42);
-    static final Color yellowButtonEdgeC = new Color(92,92,21);
-    static final Color redButtonCenterC = new Color(120,45,42);
-    static final Color redButtonEdgeC = new Color(92,20,21);
-    static final Color greenButtonCenterC = new Color(70,93,47);
-    static final Color greenButtonEdgeC = new Color(44,59,30);
-    static final Color grayButtonCenterC = new Color(128,128,128);
-    static final Color grayButtonEdgeC = new Color(92,92,92);
-    static final Color greenQuickButtonC = new Color(70,93,47);
-    static final Color grayQuickButtonC = new Color(92,92,92,128);
-    static final Color lineColor = new Color(150,150,150);
+    private static final Color friendlyBorderC = new Color(79,79,79);
+    private static final Color yellowButtonCenterC = new Color(120,120,42);
+    private static final Color yellowButtonEdgeC = new Color(92,92,21);
+    private static final Color redButtonCenterC = new Color(120,45,42);
+    private static final Color redButtonEdgeC = new Color(92,20,21);
+    private static final Color greenButtonCenterC = new Color(70,93,47);
+    private static final Color greenButtonEdgeC = new Color(44,59,30);
+    private static final Color grayButtonCenterC = new Color(128,128,128);
+    private static final Color grayButtonEdgeC = new Color(92,92,92);
+    private static final Color greenQuickButtonC = new Color(70,93,47);
+    private static final Color grayQuickButtonC = new Color(92,92,92,128);
+    private static final Color lineColor = new Color(150,150,150);
     private static final Color grayLeftC = new Color(173,173,173);
     private static final Color grayRightC = new Color(115,115,115);
     private static final Color grayBorderC = new Color(210,210,210);
@@ -69,27 +68,26 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     public static final Color spaceBlue = new Color(0,0,32);
     private static final int GRID_COUNT_X = 10;
     private static final int GRID_COUNT_Y = 8;
-    int ptX[] = new int[GRID_COUNT_X+1];
-    int ptY[] = new int[GRID_COUNT_Y+1];
+    private int ptX[] = new int[GRID_COUNT_X+1];
+    private int ptY[] = new int[GRID_COUNT_Y+1];
     public int boxH = -1;
     public int boxW = -1;
 
     private int mouseGridX = 0;
     private int mouseGridY = 0;
-    int planetX = 250;
-    int planetY = 200;
-    int planetR = 400;
-    int pad = s10;
-    int barH = s45;
-    float planetRotateSpeed = 0.1f;
+    private int planetX = 250;
+    private int planetY = 200;
+    private int planetR = 400;
+    private int pad = s10;
+    private int barH = s45;
+    private float planetRotateSpeed = 0.1f;
     private boolean drawingPlanet = false;
-    boolean showPlanet = false;
-    boolean exited = false;
-    boolean shiftPressed = false;
-    boolean showTactics = true;
-    BufferedImage renderedPlanetImage;
-    Image[] asteroids = new Image[16];
-    public int[][] asteroidRoll = new int[GRID_COUNT_X][GRID_COUNT_Y];
+    private boolean showPlanet = false;
+    private boolean shiftPressed = false;
+    private boolean showTactics = true;
+    private BufferedImage renderedPlanetImage;
+    private Image[] asteroids = new Image[16];
+    private int[][] asteroidRoll = new int[GRID_COUNT_X][GRID_COUNT_Y];
     private final Color shadeC = new Color(255,255,255,20);
 
     private LinearGradientPaint menuBackC;
@@ -104,48 +102,45 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     private LinearGradientPaint leftGrayActionBackC;
     private LinearGradientPaint rightGreenActionBackC;
     private LinearGradientPaint rightGrayActionBackC;
-    Map<ShipDesign, Integer> leftFleet = new LinkedHashMap<>();
-    Map<ShipDesign, Integer> rightFleet = new LinkedHashMap<>();
-    final Map<ShipDesign, Integer> counts = new LinkedHashMap<>();
-    Empire leftEmpire;
-    Empire rightEmpire;
-    SpaceMonster monster;
+    private Map<ShipDesign, Integer> leftFleet = new LinkedHashMap<>();
+    private Map<ShipDesign, Integer> rightFleet = new LinkedHashMap<>();
+    private final Map<ShipDesign, Integer> counts = new LinkedHashMap<>();
+    private Empire leftEmpire;
+    private Empire rightEmpire;
+    private SpaceMonster monster;
 
-    Display mode;
-    CombatManager  mgr;
+    private Display mode;
+    private CombatManager  mgr;
 
-    Rectangle planetBox = new Rectangle();
-    Rectangle hoverBox;
-    Rectangle currentGrid;
-    Rectangle resolveBox = new Rectangle();
-    Rectangle retreatBox = new Rectangle();
-    Rectangle tacticalBox = new Rectangle();
-    Rectangle exitBox = new Rectangle();
-    Rectangle playPauseBox = new Rectangle();
-    Rectangle nextBox = new Rectangle();
+    private Rectangle planetBox = new Rectangle();
+    private Rectangle hoverBox;
+    private Rectangle currentGrid;
+    private Rectangle resolveBox = new Rectangle();
+    private Rectangle retreatBox = new Rectangle();
+    private Rectangle tacticalBox = new Rectangle();
+    private Rectangle exitBox = new Rectangle();
+    private Rectangle playPauseBox = new Rectangle();
+    private Rectangle nextBox = new Rectangle();
     public Rectangle[][] combatGrids = new Rectangle[GRID_COUNT_X][GRID_COUNT_Y];
-    List<ShipActionButton> shipActionButtons = new ArrayList<>();
-    Rectangle shipButtonOverlay = new Rectangle();
-    FlightPath shipTravelPath = null;
-    ShipDoneButton shipDoneButton = new ShipDoneButton();
-    ShipMoveButton shipMoveButton = new ShipMoveButton();
-    ShipFireAllButton shipFireAllButton = new ShipFireAllButton();
-    ShipTeleportButton shipTeleportButton = new ShipTeleportButton();
-    ShipRetreatButton shipRetreatButton = new ShipRetreatButton();
-    ShipWeaponButton[] shipWeaponButton = new ShipWeaponButton[ShipDesign.maxWeapons];
-    ShipSpecialButton[] shipSpecialButton = new ShipSpecialButton[ShipDesign.maxSpecials];
-    Robot robot;
+    private List<ShipActionButton> shipActionButtons = new ArrayList<>();
+    private Rectangle shipButtonOverlay = new Rectangle();
+    private FlightPath shipTravelPath = null;
+    private ShipDoneButton shipDoneButton = new ShipDoneButton();
+    private ShipMoveButton shipMoveButton = new ShipMoveButton();
+    private ShipFireAllButton shipFireAllButton = new ShipFireAllButton();
+    private ShipTeleportButton shipTeleportButton = new ShipTeleportButton();
+    private ShipRetreatButton shipRetreatButton = new ShipRetreatButton();
+    private ShipWeaponButton[] shipWeaponButton = new ShipWeaponButton[ShipDesign.maxWeapons];
+    private ShipSpecialButton[] shipSpecialButton = new ShipSpecialButton[ShipDesign.maxSpecials];
+    private Robot robot;
 
-    Color[] redColors = new Color[3];
-    Color[] greenColors = new Color[3];
-    Color[] yellowColors = new Color[3];
-    Color[] grayColors = new Color[3];
-    BufferedImage combatBackground;
+    private Color[] redColors = new Color[3];
+    private Color[] greenColors = new Color[3];
+    private Color[] yellowColors = new Color[3];
+    private Color[] grayColors = new Color[3];
+    private BufferedImage combatBackground;
 
     public ShipBattleUI() {
-        init();
-    }
-    private void init() {
         try {
             robot = new Robot();
         } catch (AWTException ex) {  err("Could not create robot in ShipBattleUI");  }
@@ -246,7 +241,6 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         mgr.ui(this);
         mgr.showAnimations = true;
         mgr.setInitialPause();
-        exited = false;
         mode = Display.INTRO;
         renderedPlanetImage = mgr.system().planet().image(planetR, 135);
 
@@ -1714,7 +1708,6 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     public void finish() {
         if (mgr.combatIsFinished()) {
             mode = Display.RESULT;
-            exited = true;
             repaint();
         }
         else {
