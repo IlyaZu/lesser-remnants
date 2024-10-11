@@ -102,7 +102,6 @@ public class DialogueManager implements Base {
     public static final String WARNING_COLONY_ATTACKED  = "Warning-ColonyAttacked";
     public static final String WARNING_COLONY_INVADED   = "Warning-ColonyInvaded";
     public static final String WARNING_GENOCIDE         = "Warning-Genocide";
-    public static final String WARNING_BIOWEAPON        = "Warning-Bioweapon";
     public static final String DECLARE_ASSASSIN_WAR     = "DeclareWar-Assassin";
     public static final String DECLARE_ATTACKED_WAR     = "DeclareWar-Attack";
     public static final String DECLARE_HATE_WAR         = "DeclareWar-Hate";
@@ -224,7 +223,6 @@ public class DialogueManager implements Base {
         addMessage(new ThreatForSpying(WARNING_SABOTAGE));
         addMessage(new ThreatForAttack(WARNING_COLONY_INVADED));
         addMessage(new ThreatForAttack(WARNING_COLONY_ATTACKED));
-        addMessage(new TurnNotificationMessage(WARNING_BIOWEAPON));
         addMessage(new TurnNotificationMessage(WARNING_GENOCIDE));
         addMessage(new TurnNotificationMessage(DECLARE_ERRATIC_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_HATE_WAR));

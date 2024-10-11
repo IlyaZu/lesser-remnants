@@ -121,21 +121,6 @@ public class Leader implements Base, Serializable {
 
         return baseRatio;
     }
-    public float bioweaponMod() {
-        float objMod = 1.0f;
-        switch(objective) {
-            case ECOLOGIST:  objMod = 2.0f;
-        }
-        switch(personality) {
-            case PACIFIST:   return objMod*1;
-            case HONORABLE:  return objMod*1.5f;
-            case XENOPHOBIC: return objMod*0.5f;
-            case RUTHLESS:   return 0;
-            case AGGRESSIVE: return objMod*0.5f;
-            case ERRATIC:    return objMod*0.5f;
-            default:         return objMod*1;
-        }
-    }
     public float diplomacyAnnoyanceMod(EmpireView v) {
         // # of requests past the initial
         int addl = max(0, v.embassy().requestCount()-1);

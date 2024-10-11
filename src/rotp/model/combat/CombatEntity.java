@@ -161,7 +161,6 @@ public abstract class CombatEntity implements Base {
 
     public boolean aggressiveWith(CombatEntity st)    { return empire.aggressiveWith(st.empire, mgr.system()); }
 
-    public void usedBioweapons() { mgr.results().addBioweaponUse(empire); }
     public void reverse()                           { reversed = !reversed; }
     public List<CombatMissile> missiles()       { return targetingMissiles; }
     public void addMissile(CombatMissile miss)  { targetingMissiles.add(miss); }

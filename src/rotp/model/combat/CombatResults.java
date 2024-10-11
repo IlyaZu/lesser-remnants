@@ -25,7 +25,6 @@ import rotp.model.galaxy.SpaceMonster;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.incidents.AttackedAllyIncident;
 import rotp.model.incidents.AttackedEnemyIncident;
-import rotp.model.incidents.BioweaponIncident;
 import rotp.model.incidents.ColonyAttackedIncident;
 import rotp.model.incidents.ColonyDestroyedIncident;
 import rotp.model.incidents.SkirmishIncident;
@@ -42,7 +41,6 @@ public final class CombatResults implements Base {
     private Map<ShipDesign, Integer> shipsDestroyed = new HashMap<>();
     private Map<ShipDesign, Integer> shipsRetreated = new HashMap<>();
     int basesDestroyed = 0;
-    private List<Empire> usedBioweapons = new ArrayList<>();
 
     public StarSystem system()            { return system; }
     public Empire defender()              { return defender; }
@@ -86,10 +84,6 @@ public final class CombatResults implements Base {
             return empires.get(1);
         else
             return empires.get(0);
-    }
-    public void addBioweaponUse(Empire e) {
-        if (!usedBioweapons.contains(e))
-            usedBioweapons.add(e);
     }
     public float damageSustained(Empire e) {
         // calculates total damage sustained and results pct of total prod affected
@@ -212,9 +206,6 @@ public final class CombatResults implements Base {
             shipsRetreated.put(d, count);
     }
     public void logIncidents() {
-        for (Empire e: usedBioweapons)
-            BioweaponIncident.create(defender(), e, system());
-
         if (monster != null) {
             if (!monster.alive())
                 monster.plunder();
