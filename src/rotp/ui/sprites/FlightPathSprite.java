@@ -34,7 +34,7 @@ import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 
 public class FlightPathSprite extends MapSprite {
-    private static List<FlightPathSprite> WORKING_PATHS;
+    private static final List<FlightPathSprite> WORKING_PATHS = new ArrayList<>();
     private static Stroke[][] lines;
     private static Stroke[][] rallyStroke;
     private static final Color rallyColor = new Color(96,0,128);
@@ -61,9 +61,6 @@ public class FlightPathSprite extends MapSprite {
         paths.add(s);
     }
     public static List<FlightPathSprite> workingPaths() {
-        if (WORKING_PATHS == null) {
-            WORKING_PATHS = new ArrayList<>();
-        }
         return WORKING_PATHS;
     }
     public static void clearWorkingPaths() {
