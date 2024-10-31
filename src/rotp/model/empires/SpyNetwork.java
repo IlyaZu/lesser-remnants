@@ -335,7 +335,7 @@ public final class SpyNetwork implements Base, Serializable {
         }
     }
     public void noteTradedTech(Tech t) {
-        TechCategory cat = tech.category(t.cat.index());
+        TechCategory cat = tech.category(t.categoryIndex());
         cat.addKnownTech(t.id());
     }
     private boolean sendSpiesToInfiltrate() {

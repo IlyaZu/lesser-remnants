@@ -67,7 +67,7 @@ public final class TechCategory implements Base, Serializable {
     public List<String> knownTechs()       { return knownTechs; }
     public String currentTech()            { return currentTech; }
     public boolean currentTech(Tech t)        {
-        if (!id().equals(t.cat.id()))
+        if (t.categoryIndex() != index())
             return false;
         researchStarted = true;
         currentTech = t.id();
@@ -448,7 +448,7 @@ public final class TechCategory implements Base, Serializable {
         
         // error case where current tech does not belong to this category, force
         // a new selection, but keep RP in this category
-        if ((currentTech != null) && !tech(currentTech).cat.id().equals(id())) {
+        if (currentTech != null && tech(currentTech).categoryIndex() != index()) {
             List<String> techs = techIdsAvailableForResearch();
             if (techs.isEmpty())
                 return; // we are out of techs... skip this category

@@ -825,7 +825,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
             // of recreating the visual tree image. To do this, for each current tech
             // we save off the x/y positioning of the cost label for later reference.
             if (tech.id.equals(currentT)) {
-                int catId = tech.cat.index();
+                int catId = tech.categoryIndex();
                 Point2D.Float pt = new Point2D.Float(x+w-s10,y0);
                 currentTechs[catId] = pt;
             }

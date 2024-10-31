@@ -107,7 +107,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
     private boolean shouldReallocate()  { return player().isPlayerControlled() && tech.promptToReallocate() && !tech.isObsolete(player()); }
     private boolean shouldFrameEmpire() { return (mission != null) && (frameEmpire1 != null) && (frameEmpire2 != null); }
     private boolean showCompletion() {
-        TechCategory cat = player().tech().category(tech.cat.index());
+        TechCategory cat = player().tech().category(tech.categoryIndex());
         return player().isPlayerControlled() && (background == BACKGROUND_LABORATORY) && cat.researchCompleted();
     }
 
@@ -133,7 +133,8 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         sourceEmpire = player();
         researchedTech = true;
         player().race().resetScientist();
-        title = text("TECH_DISCOVERY_TITLE", text(tech().cat.id()));
+        String categoryId = TechCategory.id(tech().categoryIndex());
+        title = text("TECH_DISCOVERY_TITLE", text(categoryId));
         title = player().replaceTokens(title, "player");
         finished = false;
         mission = null;
@@ -511,14 +512,14 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
             detail2 = "";
         }
         else {
-           switch (tech.cat.index()) {
+           switch (tech.categoryIndex()) {
                case 0: detail = text("TECH_COMPLETED_COMPUTER"); break;
                case 1: detail = text("TECH_COMPLETED_CONSTRUCTION"); break;
                case 2: detail = text("TECH_COMPLETED_FORCE_FIELD"); break;
                case 3: detail = text("TECH_COMPLETED_PLANETOLOGY"); break;
                case 4: detail = text("TECH_COMPLETED_PROPULSION"); break;
                case 5: detail = text("TECH_COMPLETED_WEAPON"); break;
-               default: detail = "Unknown tech category: "+tech.cat.index(); break;
+               default: detail = "Unknown tech category: "+tech.categoryIndex(); break;
            }
            detail2 = text("TECH_COMPLETED_VERIFY");
         }

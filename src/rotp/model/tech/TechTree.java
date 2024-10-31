@@ -593,7 +593,7 @@ public final class TechTree implements Base, Serializable {
         return random(category).randomUnknownTech(minLevel, levelDiff);
     }
     public boolean knows(Tech t) {
-        return t == null ? true : category[t.cat.index()].knownTechs().contains(t.id());
+        return t == null ? true : category[t.categoryIndex()].knownTechs().contains(t.id());
     }
     public boolean knowsTechOfType(int type) {
         for (TechCategory cat: category) {
@@ -671,7 +671,7 @@ public final class TechTree implements Base, Serializable {
     }
     public boolean learnTech(String id) {
         newTechs().add(id);
-        return category[tech(id).cat.index()].learnTech(id);
+        return category[tech(id).categoryIndex()].learnTech(id);
     }
     public int popIncreaseCost() {
         return topTerraformingTech == null ? TechImprovedTerraforming.BASE_COST : topTerraformingTech().costPerMillion;
