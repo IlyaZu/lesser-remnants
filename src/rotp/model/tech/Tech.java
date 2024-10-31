@@ -84,7 +84,7 @@ public class Tech implements Base {
     public final int techType;
     public final int typeSeq;
     public final int level;
-    public final TechCategory cat;
+    private final TechCategory cat;
     public String iconFilename;
     public String effectKey;
 
@@ -111,7 +111,13 @@ public class Tech implements Base {
         this.quintile = (level+4)/5;
     }
     
-    public String id()               { return id; }
+    public String id() {
+        return id;
+    }
+    
+    public int categoryIndex() {
+        return cat.index();
+    }
 
     @Override
     public String toString() { return concat("Tech: ", name); }
@@ -163,7 +169,7 @@ public class Tech implements Base {
     public boolean canBeMiniaturized()      { return false; }
 
     public float sizeMiniaturization(Empire emp) {
-        TechCategory empireCat = emp == null ? cat : emp.tech().category(cat.index());
+        TechCategory empireCat = emp == null ? cat : emp.tech().category(categoryIndex());
         int catLevel = (int) empireCat.techLevel();
         if ((level >= catLevel) || !canBeMiniaturized())
             return 1;
@@ -176,7 +182,7 @@ public class Tech implements Base {
         }
     }
     public float costMiniaturization(Empire emp) {
-        TechCategory empireCat = emp == null ? cat : emp.tech().category(cat.index());
+        TechCategory empireCat = emp == null ? cat : emp.tech().category(categoryIndex());
         int catLevel = (int) empireCat.techLevel();
         if ((level >= catLevel) || !canBeMiniaturized())
             return 1;

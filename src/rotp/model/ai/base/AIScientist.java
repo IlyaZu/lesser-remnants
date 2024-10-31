@@ -280,7 +280,7 @@ public class AIScientist implements Base, Scientist {
         return t.warModeFactor() * t.researchCost();
     }
     private float researchValueBonus(Tech t) {
-        TechCategory cat = empire.tech().category(t.cat.index());
+        TechCategory cat = empire.tech().category(t.categoryIndex());
         // if we have not researched a tech in this quintile yet
         // and we are not researching a tech in this quintile,
         // then the perceived value is 10% of the tech level

@@ -23,6 +23,7 @@ import java.util.List;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.incidents.EspionageTechIncident;
 import rotp.model.tech.Tech;
+import rotp.model.tech.TechCategory;
 import rotp.util.Base;
 
 public class EspionageMission implements Base, Serializable {
@@ -47,7 +48,7 @@ public class EspionageMission implements Base, Serializable {
         
         // build a list of possible techs to steal by category
         for (Tech t: techs) {
-            String catId = t.cat.id();
+            String catId = TechCategory.id(t.categoryIndex());
             if (!techPossibles.containsKey(catId))
                 techPossibles.put(catId, new ArrayList<>());
             techPossibles.get(catId).add(t.id());
