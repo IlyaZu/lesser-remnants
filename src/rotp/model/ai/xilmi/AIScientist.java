@@ -861,19 +861,16 @@ public class AIScientist implements Base, Scientist {
             {
                 for(Tech tech : ev.spies().unknownTechs())
                 {
-                    //System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" could steal "+tech.name()+" from "+ev.empire().name());
                     if(tech.isFutureTech())
                         continue;
                     if(tech.categoryIndex() == TechCategory.COMPUTER)
                         continue;
                     if(tech.isObsolete(empire))
                         continue;
-                    //System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" want to steal "+tech.name()+" from "+ev.empire().name());
                     stealables++;
                 }
             }
         }
-        //System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" stealables: "+stealables);
         return stealables;
     }
 }
