@@ -107,8 +107,8 @@ public class DialogueManager implements Base {
     public static final String DECLARE_HATE_WAR         = "DeclareWar-Hate";
     public static final String DECLARE_OPPORTUNITY_WAR  = "DeclareWar-Opportunity";
     public static final String DECLARE_SPYING_WAR       = "DeclareWar-Spying";
-    public static final String DECLARE_ERRATIC_WAR      = "DeclareWar-Erratic"; 
-    public static final String DECLARE_ALLIANCE_WAR     = "DeclareWar-Alliance"; 
+    public static final String DECLARE_ERRATIC_WAR      = "DeclareWar-Erratic";
+    public static final String DECLARE_ALLIANCE_WAR     = "DeclareWar-Alliance";
 
     public HashMap<String, DiplomaticMessage> messages = new HashMap<>();
     public List<DialogString> strings = new ArrayList<>();
@@ -134,11 +134,11 @@ public class DialogueManager implements Base {
         List<DialogString> matchingStrings = new ArrayList<>();
         for (DialogString str: strings) {
             if (str.matchesType(type) && str.fitsContext(view))
-                matchingStrings.add(str); 
+                matchingStrings.add(str);
         }
         if (matchingStrings.isEmpty())
             return concat("Message not found. type:", type);
-        else 
+        else
             return speaker.race().dialogue(random(matchingStrings).key());
     }
     public String randomMessage(String type, EmpireView view) {
@@ -147,11 +147,11 @@ public class DialogueManager implements Base {
         List<DialogString> matchingStrings = new ArrayList<>();
         for (DialogString str: strings) {
             if (str.matchesType(type) && str.fitsContext(view))
-                matchingStrings.add(str); 
+                matchingStrings.add(str);
         }
         if (matchingStrings.isEmpty())
             return concat("Message not found. type:", type);
-        else 
+        else
             return diplomat.race().dialogue(random(matchingStrings).key());
     }
     private void loadMessages() {
@@ -245,7 +245,7 @@ public class DialogueManager implements Base {
         try {
             String line;
             while ((line = in.readLine()) != null) {
-                if (!isComment(line)) 
+                if (!isComment(line))
                     strings.add(new DialogString(line));
             }
         }
