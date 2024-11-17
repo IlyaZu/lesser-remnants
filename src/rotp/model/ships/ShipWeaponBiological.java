@@ -63,7 +63,7 @@ public final class ShipWeaponBiological extends ShipWeapon {
 
         float totalDamage = 0;
         for (int i=0;i<count;i++) {
-            if (random() < pct) 
+            if (random() < pct)
             {
                 float currentDamage = roll(minDamage(), maxDamage());
                 currentDamage = max(0, currentDamage - target.empire.tech().antidoteLevel());

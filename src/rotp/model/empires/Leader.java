@@ -153,7 +153,7 @@ public class Leader implements Base, Serializable {
             case EXPANSIONIST:  b = -5; break;
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
-        }     
+        }
         c = 10*affinityMod(personality, other.leader().personality);
         return a+b+c;
     }
@@ -176,7 +176,7 @@ public class Leader implements Base, Serializable {
             case EXPANSIONIST:  b = 10; break;
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
-        }        
+        }
         c = 10*affinityMod(personality, other.leader().personality);
         return a+b+c;
     }
@@ -199,7 +199,7 @@ public class Leader implements Base, Serializable {
             case EXPANSIONIST:  b = 0; break;
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
-        }        
+        }
         return a+b;
     }
     public float hateWarThreshold() {
@@ -232,7 +232,7 @@ public class Leader implements Base, Serializable {
             case EXPANSIONIST:  b = 0; break;
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
-        }        
+        }
         return a+b;
     }
     private int affinityMod(Personality p1, Personality p2) {
@@ -289,6 +289,6 @@ public class Leader implements Base, Serializable {
                 }
             default:
                 return neutral;
-        }        
+        }
     }
 }
