@@ -25,16 +25,14 @@ public class TradeRoute implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     private static final int UNIT = 25;
 
-    private final int emp1;
-    private final int emp2;
+    private final EmpireView view;
     private int level = 0;
     private float profit = 0;
     private float ownerProd = 0;
     private float civProd = 0;
 
     public TradeRoute (EmpireView view) {
-        emp1 = view.owner().id;
-        emp2 = view.empire().id;
+        this.view = view;
     }
 
     public float profit() {
@@ -46,7 +44,7 @@ public class TradeRoute implements Base, Serializable {
     }
 
     public float maxProfit() {
-        return level * (1 + view().owner().tradePctBonus());
+        return level * (1 + view.owner().tradePctBonus());
     }
 
     public int level() {
@@ -62,37 +60,33 @@ public class TradeRoute implements Base, Serializable {
         return level > 0;
     }
 
-    private EmpireView view() {
-        return galaxy().empire(emp1).viewForEmpire(emp2);
-    }
-
     public void assessTurn() {
-        if (!view().inEconomicRange()) {
+        if (!view.inEconomicRange()) {
             stopRoute();
             return;
         }
         
         // anticipate maxLevel() potentially dropping as empires shrink
-        civProd = view().empire().totalPlanetaryProduction();
-        ownerProd = view().owner().totalPlanetaryProduction();
+        civProd = view.empire().totalPlanetaryProduction();
+        ownerProd = view.owner().totalPlanetaryProduction();
         if (level > maxLevel())
             level = maxLevel();
         
         float prevProfit = profit;
         
-        float pct = (roll(1,200) + view().embassy().relations() + 25) / 6000.0f;
+        float pct = (roll(1,200) + view.embassy().relations() + 25) / 6000.0f;
         profit = min(maxProfit(), profit + (pct * level) );
         if (atMaxProfit() && profit > prevProfit) {
-            if (view().owner().isPlayer())
-               TradeTreatyMaturedAlert.create(view().empId(), level);
+            if (view.owner().isPlayer())
+               TradeTreatyMaturedAlert.create(view.empId(), level);
         }
         if (active())
-            TradeIncomeIncident.create(view(), profit, profit/ownerProd);
+            TradeIncomeIncident.create(view, profit, profit/ownerProd);
     }
 
     public void setContact() {
-        civProd = view().empire().totalPlanetaryProduction();
-        ownerProd = view().owner().totalPlanetaryProduction();
+        civProd = view.empire().totalPlanetaryProduction();
+        ownerProd = view.owner().totalPlanetaryProduction();
     }
 
     public void startRoute(int newLevel) {
@@ -104,24 +98,24 @@ public class TradeRoute implements Base, Serializable {
 
         profit = newPct * newLevel;
         level = newLevel;
-        view().owner().flagColoniesToRecalcSpending();
+        view.owner().flagColoniesToRecalcSpending();
 
         //if not done yet, increase the route on the "other" side of the relationship
-        EmpireView otherView = view().otherView();
+        EmpireView otherView = view.otherView();
         if (otherView.trade().level() != newLevel)
             otherView.trade().startRoute(newLevel);
     }
 
     private float startPct() {
-        return -.3f + view().owner().tradePctBonus();
+        return -.3f + view.owner().tradePctBonus();
     }
 
     public void stopRoute() {
         level = 0;
         profit = 0;
-        view().owner().flagColoniesToRecalcSpending();
+        view.owner().flagColoniesToRecalcSpending();
         
-        EmpireView otherView = view().otherView();
+        EmpireView otherView = view.otherView();
         if (otherView.trade().active())
             otherView.trade().stopRoute();
     }
