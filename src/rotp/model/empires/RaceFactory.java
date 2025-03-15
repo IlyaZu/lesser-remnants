@@ -291,9 +291,6 @@ public enum RaceFactory implements Base {
         // field #1 is trade bonus modifier (as %)
         r.tradePctBonus = (float) parseInt(vals.get(0)) / 100;
 
-        // field #2 is positive DP modifier (as %)
-        r.positiveDPMod = (float) parseInt(vals.get(1)) / 100;
-
         // field #3 is diplomatic relations modifier (as %)
         r.diplomacyBonus = parseInt(vals.get(2));
     }
