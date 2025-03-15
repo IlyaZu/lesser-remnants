@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,11 +111,9 @@ public class MapOverlayAllocateSystems extends MapOverlay {
         int s3 = BasePanel.s3;
         int s7 = BasePanel.s7;
         int s10 = BasePanel.s10;
-        int s15 = BasePanel.s15;
         int s20 = BasePanel.s20;
         int s25 = BasePanel.s25;
         int s30 = BasePanel.s30;
-        int s35 = BasePanel.s35;
 
         int x0 = ui.getWidth()-scaled(680);
         int y0 = scaled(215);
@@ -127,39 +125,22 @@ public class MapOverlayAllocateSystems extends MapOverlay {
         int x1 = x0 + s7;
         int y1 = y0 + s7;
         int w1 = w0 - s7 - s7;
-        int h1 = scaled(65);
+        int h1 = scaled(50);
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1, w1, h1);
 
         int x2 = x1;
         int y2 = y1+h1+s3;
         int w2 = w1;
-        int h2 = scaled(112);
+        int h2 = scaled(127);
         g.setColor(MainUI.paneBackground);
         g.fillRect(x2, y2, w2, h2);
-
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1*4/9;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1+h1-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
 
         // draw title
         String titleStr = text("MAIN_ALLOCATE_TITLE");
         g.setFont(narrowFont(22));
-        int sw1 = g.getFontMetrics().stringWidth(titleStr);
-        int rightW = w1-leftW;
-        int x1b = x1+leftW+((rightW-sw1)/2);
-        drawShadowedString(g, titleStr, 3, x1b, y1+h1-s35, SystemPanel.textShadowC, SystemPanel.whiteText);
-
-        // draw notice number
-        String noticeStr = text("MAIN_ALLOCATE_NOTICE_NUMBER", str(systemIndex+1), str(orderedSystems.size()));
-        g.setFont(narrowFont(16));
-        int x1c = x1b+scaled(20);
-        g.setColor(SystemPanel.blackText);
-        drawString(g,noticeStr, x1c, y1+h1-s15);
+        int x1b = x1+s10;
+        drawShadowedString(g, titleStr, 3, x1b, y1+s30, SystemPanel.textShadowC, SystemPanel.whiteText);
 
         //draw arrow
         int r1 = x1+w1;

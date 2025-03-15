@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -167,24 +167,14 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1b, w1, h1b);
         
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1*4/9;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
+        int x2 = x1+s10;
+        int y2 = y1b+s5;
 
         // draw title
         String titleStr = text("COUNCIL_CONVENE_TITLE");
-        g.setFont(narrowFont(22));
-        sw = g.getFontMetrics().stringWidth(titleStr);
-        int rightW = w1-leftW;
-        int x1b = x1+leftW+((rightW-sw)/2);
-        drawShadowedString(g, titleStr, 3, x1b, y1a+h1a-s25, SystemPanel.textShadowC, SystemPanel.whiteText);
+        g.setFont(narrowFont(26));
+        drawShadowedString(g, titleStr, 3, x2, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
 
-        int x2 = x1+s10;
-        int y2 = y1b+s5;
         g.setFont(narrowFont(lineTextSize));
         g.setColor(SystemPanel.blackText);
         for (String line: lines1) {
@@ -349,25 +339,17 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1a, w1, h1a);
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1b, w1, h1b);
-        
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1/2;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
 
         // draw title
-        int x1b = x1+leftW+s10;
+        int x1b = x1+s10;
+        String titleStr = text("COUNCIL_CAST_PROMPT_TITLE");
+        g.setFont(narrowFont(26));
+        drawShadowedString(g, titleStr, 3, x1b, y1a+s30, SystemPanel.textShadowC, SystemPanel.whiteText);
+
         String prompt = text("COUNCIL_CAST_PROMPT", str(c.nextVotes()));
         g.setColor(SystemPanel.blackText);
-        g.setFont(narrowFont(15)); 
-        drawString(g,prompt, x1b, y1a+h1a-s45);
-        
-        String titleStr = text("COUNCIL_CAST_PROMPT_TITLE");
-        g.setFont(narrowFont(22));
-        drawShadowedString(g, titleStr, 3, x1b, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.whiteText);
+        g.setFont(narrowFont(15));
+        drawString(g,prompt, x1b, y1a+s50);
         
         // paint candidates
         int w3 = scaled(200);
@@ -514,23 +496,19 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.fillRect(x1, y1a, w1, h1a);
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1b, w1, h1b);
-        
-        
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1*4/9;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
 
         // draw title
+        int x1a = x1+s10;
         String titleStr = text("COUNCIL_ADJOURN_TITLE");
-        g.setFont(narrowFont(22));
-        sw = g.getFontMetrics().stringWidth(titleStr);
-        int rightW = w1-leftW;
-        int x1b = x1+leftW+((rightW-sw)/2);
-        drawShadowedString(g, titleStr, 3, x1b, y1a+h1a-s25, SystemPanel.textShadowC, SystemPanel.whiteText);
+        g.setFont(narrowFont(26));
+        drawShadowedString(g, titleStr, 3, x1a, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
+        
+        // draw year/turn info
+        int x1b = x1+w1-s10;
+        String yearStr = displayYear();
+        int sw = g.getFontMetrics().stringWidth(yearStr);
+        g.setFont(narrowFont(26));
+        drawShadowedString(g, yearStr, 3, x1b-sw, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
 
         int x2 = x1+s10;
         int y2 = y1b+s5;
@@ -605,19 +583,11 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1b, w1, h1b);
         
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1*4/9;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
-
         // draw title
-        int x1b = x1+leftW+s5;
+        int x1b = x1+s10;
         String titleStr = text("COUNCIL_ELECTED_TITLE");
         g.setFont(narrowFont(26));
-        drawShadowedString(g, titleStr, 3, x1b, y1a+h1a-s20, SystemPanel.textShadowC, SystemPanel.whiteText);
+        drawShadowedString(g, titleStr, 3, x1b, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
         
         // paint candidates
         int w3 = scaled(480);
@@ -679,24 +649,26 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         int empireBoxSpace = s7;
         int rows = min(MAX_ROWS, rowsNeeded);
         int listH = (rows*empireBoxH)+((rows-1)*empireBoxSpace);
+        int h1 = s70;
         
+        int bdr = s10;
+        int buttonH = s30;
         int scrollW = s12;
         int w0= scaled(585);
         if (needsScroll)
             w0 += scrollW;
-        int h0= listH+scaled(135);
+        int h0= bdr+h1+s5+listH+bdr+buttonH+bdr;
         int x0= (w-w0)/2;
         int y0= scaled(270)-(rows*s50);
         
         int w1 = scaled(565);
-        int h1 = s75;
-        int x1 = x0+s10;
-        int y1 = y0+s7;
+        int x1 = x0+bdr;
+        int y1 = y0+bdr;
         
         int w2 = w1;
         int x2 = x1;
         int h2 = listH;
-        int y2 = y1+h1+s10;
+        int y2 = y1+h1+s5;
         
         g.setColor(MainUI.paneShadeC2);
         g.fillRect(x0, y0, w0, h0);
@@ -704,32 +676,21 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1, w1, h1);
         
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int leftW = w1/2;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1+h1-s25, SystemPanel.textShadowC, SystemPanel.orangeText);
-
         // draw title
-        int x1b = x1+leftW+s10;
+        int x1b = x1+s10;
+        String titleStr = text("COUNCIL_SUMMARY_TITLE");
+        g.setFont(narrowFont(26));
+        drawShadowedString(g, titleStr, 3, x1b, y1+s30, SystemPanel.textShadowC, SystemPanel.whiteText);
+        
         g.setColor(SystemPanel.blackText);
-        g.setFont(narrowFont(15)); 
-        
+        g.setFont(narrowFont(15));
         String prompt = text("COUNCIL_SUMMARY", str(c.votesToElect()));
-        List<String> lines = wrappedLines(g, prompt, w1-leftW-s20);
-        int y1b = y1+h1-s42-(s8*lines.size());
-        
+        List<String> lines = wrappedLines(g, prompt, w1-s20);
+        int y1b = y1+s50;
         for (String line: lines) {
             drawString(g,line, x1b, y1b);
             y1b += s16;
         }
-        
-        y1b += s15;
-        String titleStr = text("COUNCIL_SUMMARY_TITLE");
-        g.setFont(narrowFont(26));
-        drawShadowedString(g, titleStr, 3, x1b, y1b, SystemPanel.textShadowC, SystemPanel.whiteText);
         
         g.setClip(x2,y2,w2,h2);
         int y2a = needsScroll ? y2-scrollbarY : y2;
@@ -766,8 +727,8 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         }
         
         g.setFont(narrowFont(20));
-        int buttonH = s30;
-        int buttonY = y2+h2+s7;       
+
+        int buttonY = y2+h2+bdr;
         float[] dist = {0.0f, 0.5f, 1.0f};
         Color[] colors = {greenEdgeC, greenMidC, greenEdgeC};
         

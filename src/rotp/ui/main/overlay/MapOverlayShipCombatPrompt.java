@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
     int sysId;
     ShipFleet fleet;
     int pop, bases, fact, shield;
-    public int boxX, boxY, boxW, boxH;
     boolean drawSprites = false;
     public CombatManager mgr;
     AutoResolveBattleSprite resolveButton = new AutoResolveBattleSprite();
@@ -114,22 +113,27 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         int s25 = BasePanel.s25;
         int s30 = BasePanel.s30;
         int s40 = BasePanel.s40;
-        int s50 = BasePanel.s50;
         int s60 = BasePanel.s60;
 
         int w = ui.getWidth();
         int h = ui.getHeight();
 
         int bdrW = s7;
-        boxW = scaled(540);
+        int boxW = scaled(540);
         int boxH1 = BasePanel.s68;
         int boxH2 = scaled(172);
-        int buttonPaneH = scaled(35);
-        boxH = boxH1 + boxH2 + buttonPaneH;
+        int buttonPaneH = scaled(40);
+        int boxH = boxH1 + boxH2 + buttonPaneH;
         
-        boxX = -s40+(w/2);
-        boxY = -s40+(h-boxH)/2;
+        int boxX = -s40+(w/2);
+        int boxY = -s40+(h-boxH)/2;
 
+        // dimensions of the shade pane
+        int x0 = boxX-bdrW;
+        int y0 = boxY-bdrW;
+        int w0 = boxW+bdrW+bdrW;
+        int h0 = boxH+bdrW+bdrW;
+        
         // draw map mask
         if (mask == null) {
             int r = s60;
@@ -147,7 +151,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         g.fill(mask);
         // draw border
         g.setColor(MainUI.paneShadeC);
-        g.fillRect(boxX-bdrW, boxY-bdrW, boxW+bdrW+bdrW, boxH+bdrW+bdrW);
+        g.fillRect(x0, y0, w0, h0);
 
         // draw Box
         g.setColor(MainUI.paneBackground);
@@ -187,14 +191,14 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH2, null);
 
         // draw header info
-        int leftW = boxW * 2/5;
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int x0 = boxX+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x0, boxY+boxH1-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
+        int x1 = boxX+s15;
 
-        
+        // print prompt string
+        String sysName = player().sv.name(sys.id);
+        String promptStr = scouted ? text("SHIP_COMBAT_TITLE_SYSTEM", sysName) : text("SHIP_COMBAT_TITLE_UNSCOUTED");
+        int promptFontSize = scaledFont(g, promptStr, x1-s30, 24, 14);
+        g.setFont(narrowFont(promptFontSize));
+        drawShadowedString(g, promptStr, 4, x1, boxY+boxH1-s40, SystemPanel.textShadowC, Color.white);
         
         Empire aiEmpire = mgr.results().aiEmpire();
         String titleStr;
@@ -204,29 +208,21 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
             titleStr = text("SHIP_COMBAT_TITLE_DESC");
             titleStr = aiEmpire.replaceTokens(titleStr, "alien");
         }
-        g.setColor(Color.black);
-        int titleFontSize = scaledFont(g, titleStr, boxW-leftW, 20, 14);
-        g.setFont(narrowFont(titleFontSize));
-        drawString(g,titleStr, boxX+leftW, boxY+s20);
-
-        // print prompt string
-        String sysName = player().sv.name(sys.id);
-        String promptStr = scouted ? text("SHIP_COMBAT_TITLE_SYSTEM", sysName) : text("SHIP_COMBAT_TITLE_UNSCOUTED");
-        int promptFontSize = scaledFont(g, promptStr, boxW-leftW-s30, 24, 20);
-        g.setFont(narrowFont(promptFontSize));
-        drawShadowedString(g, promptStr, 4, boxX+leftW, boxY+s50, SystemPanel.textShadowC, Color.white);
+        g.setColor(Color.darkGray);
+        g.setFont(narrowFont(16));
+        drawString(g,titleStr, x1, boxY+boxH1-s20);
 
         // init and draw battle and resolve buttons
         parent.addNextTurnControl(battleButton);
         battleButton.init(this, g);
-        battleButton.mapX(boxX+boxW-battleButton.width());
-        battleButton.mapY(boxY+boxH-battleButton.height());
+        battleButton.mapX(x0+w0-battleButton.width()-s10);
+        battleButton.mapY(y0+h0-battleButton.height()-s10);
         battleButton.draw(parent.map(), g);
         
         if (aiEmpire != null) {
             parent.addNextTurnControl(resolveButton);
             resolveButton.init(this, g);
-            resolveButton.mapX(boxX);
+            resolveButton.mapX(x0+s10);
             resolveButton.mapY(battleButton.mapY());
             resolveButton.draw(parent.map(), g);
 
@@ -241,7 +237,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
             return;
         
         // draw planet info, from bottom up
-        int x1 = boxX+s15;
         int y1 = boxY+boxH1+boxH2-s10;
         int lineH = s20;
         int desiredFont = 18;

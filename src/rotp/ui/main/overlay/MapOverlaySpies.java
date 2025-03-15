@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -193,20 +193,13 @@ public class MapOverlaySpies extends MapOverlay {
         int threatW = threatenButton.getWidth(g);
         int threatX = intelX-threatW-BasePanel.s5;
         threatenButton.setBounds(threatX,buttonY,threatW,buttonH);
-        
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1+BasePanel.s45, SystemPanel.textShadowC, SystemPanel.orangeText);
 
         // draw title
         String subtitle = text("NOTICE_SPIES_TITLE");
         g.setFont(narrowFont(26));
-        sw = g.getFontMetrics().stringWidth(subtitle);
-        x1a = x1+((leftW-sw)/2);
-        drawShadowedString(g, subtitle, 3, x1a, y1+BasePanel.s85, SystemPanel.textShadowC, Color.white);
+        int sw = g.getFontMetrics().stringWidth(subtitle);
+        int x1a = x1+((leftW-sw)/2);
+        drawShadowedString(g, subtitle, 3, x1a, y1+BasePanel.s45, SystemPanel.textShadowC, Color.white);
 
         if (labImg == null) {
             labImg = asBufferedImage(pl.race().laboratory());

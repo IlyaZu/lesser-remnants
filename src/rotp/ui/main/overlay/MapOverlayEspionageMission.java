@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -146,7 +146,6 @@ public class MapOverlayEspionageMission extends MapOverlay {
         }
         int s7 = BasePanel.s7;
         int s20 = BasePanel.s20;
-        int s45 = BasePanel.s45;
         int s50 = BasePanel.s50;
         int s60 = BasePanel.s60;
 
@@ -180,14 +179,8 @@ public class MapOverlayEspionageMission extends MapOverlay {
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1, w1, h1);
 
-        // draw year/turn info
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
         int leftW = scaled(250);
         int rightW = w1-leftW;
-        int x1a = x1+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1a, y1+s45, SystemPanel.textShadowC, SystemPanel.orangeText);
 
         // draw title
         String title = text("NOTICE_ESPIONAGE_TITLE");

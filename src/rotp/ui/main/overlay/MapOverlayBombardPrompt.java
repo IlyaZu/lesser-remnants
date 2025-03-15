@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -142,24 +142,30 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         int s20 = BasePanel.s20;
         int s25 = BasePanel.s25;
         int s30 = BasePanel.s30;
-        int s35 = BasePanel.s35;
         int s40 = BasePanel.s40;
-        int s50 = BasePanel.s50;
         int s60 = BasePanel.s60;
 
         int w = ui.getWidth();
         int h = ui.getHeight();
 
-        int transportH = transports > 0 ? s20 : 0;
+        int transportH = transports > 0 && !bombarded ? s15 : 0;
         
         int bdrW = s7;
         int boxW = scaled(540);
-        int boxH = scaled(245)+transportH;
-        int boxH1 = BasePanel.s73+transportH;
+        int boxH1 = BasePanel.s68 + transportH;
+        int boxH2 = scaled(172);
+        int buttonPaneH = s40;
+        int boxH = boxH1 + boxH2 + buttonPaneH;
 
         int boxX = -s40+(w/2);
-        int boxY = s40+(h-boxH)/2;
+        int boxY = -s40+(h-boxH)/2;
 
+        // dimensions of the shade pane
+        int x0 = boxX-bdrW;
+        int y0 = boxY-bdrW;
+        int w0 = boxW+bdrW+bdrW;
+        int h0 = boxH+bdrW+bdrW;
+        
         // draw map mask
         if (mask == null) {
             int r = s60;
@@ -177,7 +183,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         g.fill(mask);
         // draw border
         g.setColor(MainUI.paneShadeC);
-        g.fillRect(boxX-bdrW, boxY-bdrW, boxW+bdrW+bdrW, boxH+bdrW+bdrW);
+        g.fillRect(x0, y0, w0, h0);
 
         // draw Box
         g.setColor(MainUI.paneBackground);
@@ -187,12 +193,12 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         // draw planet image
         if (planetImg == null) {
             if (sys.planet().type().isAsteroids()) {
-                planetImg = newBufferedImage(boxW, boxH-boxH1);
+                planetImg = newBufferedImage(boxW, boxH2);
                 Graphics imgG = planetImg.getGraphics();
                 imgG.setColor(Color.black);
-                imgG.fillRect(0, 0, boxW, boxH-boxH1);
-                drawBackgroundStars(imgG, boxW, boxH-boxH1);
-                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, (boxH-boxH1)/3);
+                imgG.fillRect(0, 0, boxW, boxH2);
+                drawBackgroundStars(imgG, boxW, boxH2);
+                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, boxH2/3);
                 imgG.dispose();
             }
             else {
@@ -214,82 +220,42 @@ public class MapOverlayBombardPrompt extends MapOverlay {
                 }
             }
         }
-        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH-boxH1, null);
+        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH2, null);
 
         // draw header info
-        int leftW = boxW * 35/100;
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int x0 = boxX+((leftW-sw)/2);
-        int ya = boxY+boxH1-s20-(transportH/2);
-        drawBorderedString(g, yearStr, 2, x0, ya, SystemPanel.textShadowC, SystemPanel.orangeText);
+        int x1 = boxX+s15;
 
         if (bombarded) {
             String titleStr = text("MAIN_BOMBARD_COMPLETE");
-            g.setFont(narrowFont(24));
-            drawShadowedString(g, titleStr, 4, boxX+leftW, boxY+s30, SystemPanel.textShadowC, Color.white);
-            String contStr = text("CLICK_CONTINUE");
-            g.setColor(Color.black);
-            g.setFont(narrowFont(14));
-            drawString(g,contStr, boxX+leftW, boxY+s50);
-            // click to continue sprite
-            parent.addNextTurnControl(clickSprite);
+            int titleFontSize = scaledFont(g, titleStr, x1-s30, 24, 14);
+            g.setFont(narrowFont(titleFontSize));
+            drawShadowedString(g, titleStr, 4, x1, boxY+boxH1-s40, SystemPanel.textShadowC, Color.white);
         }
         else {
-            String titleStr = text("MAIN_BOMBARD_TITLE", sysName);
-            titleStr = sys.empire().replaceTokens(titleStr, "alien");
-            g.setColor(Color.black);
-            int titleFontSize = scaledFont(g, titleStr, boxW-leftW, 20, 14);
-            g.setFont(narrowFont(titleFontSize));
-            drawString(g,titleStr, boxX+leftW, boxY+s25);
+            // print prompt string
+            String promptStr = text("MAIN_BOMBARD_PROMPT");
+            int promptFontSize = scaledFont(g, promptStr, x1-s30, 24, 14);
+            g.setFont(narrowFont(promptFontSize));
+            drawShadowedString(g, promptStr, 4, x1, boxY+boxH1-s40-transportH, SystemPanel.textShadowC, Color.white);
+            
+            String detailStr = text("MAIN_BOMBARD_TITLE", sysName);
+            detailStr = sys.empire().replaceTokens(detailStr, "alien");
+            g.setColor(Color.darkGray);
+            g.setFont(narrowFont(16));
+            drawString(g,detailStr, x1, boxY+boxH1-s20-transportH);
 
             if (transports > 0) {
                 String subtitleStr = text("MAIN_BOMBARD_TROOPS", str(transports));
                 subtitleStr = player().replaceTokens(subtitleStr, "alien");
-                g.setColor(Color.black);
-                int subtitleFontSize = min(titleFontSize-2, scaledFont(g, subtitleStr, boxW-leftW, 20, 14));
-                g.setFont(narrowFont(subtitleFontSize));
-                drawString(g,subtitleStr, boxX+leftW, boxY+s25+transportH);         
+                g.setColor(Color.darkGray);
+                g.setFont(narrowFont(16));
+                drawString(g,subtitleStr, x1, boxY+boxH1-s15);
             }
-            
-            // calc width needed for yes/no buttons
-            g.setFont(narrowFont(20));
-            String yesStr = text("MAIN_BOMBARD_YES");
-            String noStr = text("MAIN_BOMBARD_NO");
-            int swYes = g.getFontMetrics().stringWidth(yesStr);
-            int swNo = g.getFontMetrics().stringWidth(noStr);
-            int buttonW = s20+Math.max(swYes, swNo);
-
-            // print prompt string
-            String promptStr = text("MAIN_BOMBARD_PROMPT");
-            int promptFontSize = scaledFont(g, promptStr, boxW-leftW-buttonW-buttonW-s30, 24, 20);
-            g.setFont(narrowFont(promptFontSize));
-            int swPrompt = g.getFontMetrics().stringWidth(promptStr);
-            int promptY = boxY+s35+transportH;
-            drawShadowedString(g, promptStr, 4, boxX+leftW, promptY+s20, SystemPanel.textShadowC, Color.white);
-
-            // draw yes/no buttons
-            g.setFont(narrowFont(20));
-            int buttonY = promptY;
-            int buttonH = s30;
-            int x2 = boxX+leftW+swPrompt+s10;
-            int x3 = x2+buttonW+s10;
-            // yes button
-            parent.addNextTurnControl(yesButton);
-            yesButton.parent(this);
-            yesButton.setBounds(x2, buttonY, buttonW, buttonH);
-            yesButton.draw(parent.map(), g);
-            // no button
-            parent.addNextTurnControl(noButton);
-            noButton.parent(this);
-            noButton.setBounds(x3, buttonY, buttonW, buttonH);
-            noButton.draw(parent.map(), g);
         }
 
         // draw top data line
         int y0a = boxY+boxH1+s20;
-        int x0a = boxX+s10;
+        int x0a = x1;
 
         int pad = s30;
         int p1 = BasePanel.s5;
@@ -300,10 +266,10 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         String shieldStr = text("MAIN_BOMBARD_SHIELD", shield);
 
         String allText = concat(popStr,dmgStr,factStr,dmgStr,baseStr,dmgStr,shieldStr);
-        int fontSize1 = scaledFont(g, allText, boxW-s10-s10-(3*pad)-(3*p1), 20, 13);
+        int fontSize1 = scaledFont(g, allText, boxW-s15-s15-(3*pad)-(3*p1), 20, 13);
         g.setFont(narrowFont(fontSize1));
         int allsw = g.getFontMetrics().stringWidth(allText);
-        pad = (boxW-allsw-(3*p1)-s10-s10)/3;
+        pad = (boxW-allsw-(3*p1)-s15-s15)/3;
         int dmgW = g.getFontMetrics().stringWidth(dmgStr)+p1;
 
         drawBorderedString(g, popStr, 1, x0a, y0a, Color.black, Color.white);
@@ -336,15 +302,14 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         drawBorderedString(g, shieldStr, 1, x0a, y0a, Color.black, Color.white);
 
         // draw planet info, from bottom up
-        int x1 = boxX+s15;
-        int y1 = boxY+boxH-s10;
+        int y1 = boxY+boxH-buttonPaneH-s10;
         int lineH = s20;
         int desiredFont = 18;
 
         if (pl.sv.isUltraPoor(sys.id)) {
             g.setColor(SystemPanel.redText);
             String s1 = text("MAIN_SCOUT_ULTRA_POOR_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -352,7 +317,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.sv.isPoor(sys.id)) {
             g.setColor(SystemPanel.redText);
             String s1 = text("MAIN_SCOUT_POOR_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -360,7 +325,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.sv.isRich(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_RICH_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -368,7 +333,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.sv.isUltraRich(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_ULTRA_RICH_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -377,7 +342,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         if (pl.sv.isOrionArtifact(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_ANCIENTS_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -385,7 +350,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.sv.isArtifact(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_ARTIFACTS_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -394,7 +359,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         if (pl.isEnvironmentHostile(sys)) {
             g.setColor(SystemPanel.redText);
             String s1 = text("MAIN_SCOUT_HOSTILE_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -402,7 +367,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.isEnvironmentFertile(sys)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_FERTILE_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -410,7 +375,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         else if (pl.isEnvironmentGaia(sys)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_GAIA_DESC");
-            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 15);
+            int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
             drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
             y1 -= lineH;
@@ -432,26 +397,58 @@ public class MapOverlayBombardPrompt extends MapOverlay {
 
         // planet name
         y1 -= scaled(5);
-        g.setFont(narrowFont(32));
+        g.setFont(narrowFont(40));
         drawBorderedString(g, sysName, 1, x1, y1, Color.darkGray, SystemPanel.orangeText);
 
         // planet flag
         parent.addNextTurnControl(flagButton);
         flagButton.init(this, g);
         flagButton.mapX(boxX+boxW-flagButton.width()+s10);
-        flagButton.mapY(boxY+boxH-flagButton.height()+s10);
+        flagButton.mapY(boxY+boxH-buttonPaneH-flagButton.height()+s10);
         flagButton.draw(parent.map(), g);
 
         if (sys.empire() == null) {
             g.setColor(destroyedMaskC);
-            g.fillRect(boxX, boxY+boxH1, boxW, boxH-boxH1);
+            g.fillRect(boxX, boxY+boxH1, boxW, boxH2);
             String s = text("MAIN_BOMBARD_DESTROYED");
             int fontSize = scaledFont(g, s, boxW-s10, 50, 30);
             g.setFont(narrowFont(fontSize));
-            sw = g.getFontMetrics().stringWidth(s);
-            x0 = boxX+((boxW-sw)/2);
-            int y0 = boxY+boxH1+scaled(fontSize+20);
-            this.drawBorderedString(g, s, 2, x0, y0, Color.black, destroyedTextC);
+            int sw = g.getFontMetrics().stringWidth(s);
+            int x2 = boxX+((boxW-sw)/2);
+            int y2 = boxY+boxH1+scaled(fontSize+20);
+            this.drawBorderedString(g, s, 2, x2, y2, Color.black, destroyedTextC);
+        }
+        
+        if (bombarded) {
+            String contStr = text("CLICK_CONTINUE");
+            g.setColor(Color.white);
+            g.setFont(narrowFont(20));
+            drawString(g,contStr, x0+s10, y0+h0-s20);
+            // click to continue sprite
+            parent.addNextTurnControl(clickSprite);
+            
+        } else {
+            // calc width needed for yes/no buttons
+            g.setFont(narrowFont(20));
+            String yesStr = text("MAIN_BOMBARD_YES");
+            String noStr = text("MAIN_BOMBARD_NO");
+            int swYes = g.getFontMetrics().stringWidth(yesStr);
+            int swNo = g.getFontMetrics().stringWidth(noStr);
+            int buttonW = s20+Math.max(swYes, swNo);
+            
+            // draw yes/no buttons
+            g.setFont(narrowFont(20));
+            int buttonH = s30;
+            // no button
+            parent.addNextTurnControl(noButton);
+            noButton.parent(this);
+            noButton.setBounds(x0+w0-buttonW-s10, y0+h0-buttonH-s10, buttonW, buttonH);
+            noButton.draw(parent.map(), g);
+            // yes button
+            parent.addNextTurnControl(yesButton);
+            yesButton.parent(this);
+            yesButton.setBounds(x0+s10, y0+h0-buttonH-s10, buttonW, buttonH);
+            yesButton.draw(parent.map(), g);
         }
     }
     @Override
