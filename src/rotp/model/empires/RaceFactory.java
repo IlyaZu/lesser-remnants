@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -296,9 +296,6 @@ public enum RaceFactory implements Base {
 
         // field #3 is diplomatic relations modifier (as %)
         r.diplomacyBonus = parseInt(vals.get(2));
-
-        // field #4 is council vote modifier (as %)
-        r.councilBonus = (float) parseInt(vals.get(3)) / 100;
     }
     private void parseRaceResearchMods(Race r, List<String> vals) {
         // field #1 is computer %

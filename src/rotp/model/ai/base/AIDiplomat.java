@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1334,7 +1334,7 @@ public class AIDiplomat implements Base, Diplomat {
         
         // decide to vote for civ1
         // modnar: don't force vote for civ2 if civ1 get the negative check
-        float pct = cv1.embassy().relations()/100.0f + civ1.councilBonus() + civ1.orionCouncilBonus() + previousVoteBonus(civ1);
+        float pct = cv1.embassy().relations()/100.0f + civ1.orionCouncilBonus() + previousVoteBonus(civ1);
         if (random() <= Math.abs(pct)) {
             if (pct > 0)
                 return castVoteFor(civ1);
@@ -1342,7 +1342,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         // decide to vote for civ2
         // modnar: don't force vote for civ1 if civ2 get the negative check
-        pct = cv2.embassy().relations()/100.0f + civ2.councilBonus() + civ2.orionCouncilBonus() + previousVoteBonus(civ2);
+        pct = cv2.embassy().relations()/100.0f + civ2.orionCouncilBonus() + previousVoteBonus(civ2);
         if (random() <= Math.abs(pct)) {
             if (pct > 0)
                 return castVoteFor(civ2);
