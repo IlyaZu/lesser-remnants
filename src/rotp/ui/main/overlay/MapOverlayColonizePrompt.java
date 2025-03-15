@@ -419,13 +419,13 @@ public class MapOverlayColonizePrompt extends MapOverlay {
                 parent.resetFlagColor();
             else
                 parent.toggleFlagColor(false);
-        };
+        }
         @Override
         public void wheel(GalaxyMapPanel map, int rotation, boolean click) {
             if (rotation < 0)
                 parent.toggleFlagColor(true);
             else
                 parent.toggleFlagColor(false);
-        };
+        }
     }
 }

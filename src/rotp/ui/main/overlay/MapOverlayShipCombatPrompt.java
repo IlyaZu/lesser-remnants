@@ -443,7 +443,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         @Override
         public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
             startCombat(ShipBattleUI.AUTO_RESOLVE);
-        };
+        }
     }
     class RetreatAllBattleSprite extends MapSprite {
         private LinearGradientPaint background;
@@ -520,7 +520,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         @Override
         public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
             startCombat(ShipBattleUI.RETREAT_ALL);
-        };
+        }
     }
     class EnterBattleSprite extends MapSprite {
         private LinearGradientPaint background;
@@ -597,7 +597,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         @Override
         public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
             startCombat(ShipBattleUI.ENTER_COMBAT);
-        };
+        }
     }
     class SystemFlagSprite extends MapSprite {
         private int mapX, mapY, buttonW, buttonH;
@@ -659,13 +659,13 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
                 parent.resetFlagColor();
             else
                 parent.toggleFlagColor(false);
-        };
+        }
         @Override
         public void wheel(GalaxyMapPanel map, int rotation, boolean click) {
             if (rotation < 0)
                 parent.toggleFlagColor(true);
             else
                 parent.toggleFlagColor(false);
-        };
+        }
     }
 }
