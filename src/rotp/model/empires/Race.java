@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,7 +129,6 @@ public class Race implements Base, Serializable {
     public float tradePctBonus = 0;
     public float positiveDPMod = 1;
     public int diplomacyBonus = 0;
-    public float councilBonus = 0;
     public float[] techMod = new float[] { 1, 1, 1, 1, 1, 1 };
     public boolean ignoresPlanetEnvironment = false;
     public boolean ignoresFactoryRefit = false;
@@ -253,7 +252,6 @@ public class Race implements Base, Serializable {
     public float tradePctBonus()              { return tradePctBonus; }
     public float positiveDPMod()              { return positiveDPMod; }
     public int diplomacyBonus()               { return diplomacyBonus; }
-    public float councilBonus()               { return councilBonus; }
     public boolean ignoresPlanetEnvironment() { return ignoresPlanetEnvironment; }
     public boolean ignoresFactoryRefit()      { return ignoresFactoryRefit; }
     public int homeworldKey()                 { return homeworldKey; }
