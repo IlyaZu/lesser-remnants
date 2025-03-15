@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -162,18 +162,19 @@ public class MapOverlaySystemsScouted extends MapOverlay {
 
         int bdrW = s7;
         int boxW = scaled(540);
-        int boxH = scaled(240);
-        int boxH1 = scaled(68);
+        int boxH1 = BasePanel.s68;
+        int boxH2 = scaled(172);
         int buttonPaneH = s40;
+        int boxH = boxH1 + boxH2 + buttonPaneH;
 
         int boxX = -s40+(w/2);
-        int boxY = s40+(h-boxH)/2;
+        int boxY = -s40+(h-boxH)/2;
         
         // dimensions of the shade pane
         int x0 = boxX-bdrW;
         int y0 = boxY-bdrW;
         int w0 = boxW+bdrW+bdrW;
-        int h0 = boxH+bdrW+bdrW+buttonPaneH;
+        int h0 = boxH+bdrW+bdrW;
 
         // draw map mask
         if (mask == null) {
@@ -201,31 +202,26 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         // draw planet image
         if (planetImg == null) {
             if (sys.planet().type().isAsteroids()) {
-                planetImg = newBufferedImage(boxW, boxH-boxH1);
+                planetImg = newBufferedImage(boxW, boxH2);
                 Graphics imgG = planetImg.getGraphics();
                 imgG.setColor(Color.black);
-                imgG.fillRect(0, 0, boxW, boxH-boxH1);
-                drawBackgroundStars(imgG, boxW, boxH-boxH1);
-                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, (boxH-boxH1)/3);
+                imgG.fillRect(0, 0, boxW, boxH2);
+                drawBackgroundStars(imgG, boxW, boxH2);
+                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, boxH2/3);
                 imgG.dispose();
             }
             else 
                 planetImg = sys.planet().type().panoramaImage();
         }
-        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH-boxH1, null);
+        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH2, null);
 
         // draw header info
-        int leftW = boxW * 2/5;
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int x1 = boxX+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x1, boxY+boxH1-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
+        int x1 = boxX+s15;
 
         String scoutStr = text("MAIN_SCOUT_TITLE");
-        int titleFontSize = scaledFont(g, scoutStr, boxW-leftW-s10, 24, 14);
+        int titleFontSize = scaledFont(g, scoutStr, x1-s30, 24, 14);
         g.setFont(narrowFont(titleFontSize));
-        drawShadowedString(g, scoutStr, 4, boxX+leftW, boxY+boxH1-s40, SystemPanel.textShadowC, Color.white);
+        drawShadowedString(g, scoutStr, 4, x1, boxY+boxH1-s40, SystemPanel.textShadowC, Color.white);
 
         String detailStr = "";
         if (scoutSystems.contains(sys))
@@ -238,12 +234,11 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         if (!detailStr.isEmpty()) {
             g.setColor(Color.darkGray);
             g.setFont(narrowFont(16));
-            drawString(g,detailStr, boxX+leftW+s30, boxY+boxH1-s20);
+            drawString(g,detailStr, x1, boxY+boxH1-s20);
         }
 
         // draw planet info, from bottom up
-        int x2 = boxX+s15;
-        int y2 = boxY+boxH-s10;
+        int y1 = boxY+boxH-buttonPaneH-s10;
         int lineH = s20;
         int desiredFont = 18;
 
@@ -252,32 +247,32 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             String s1 = text("MAIN_SCOUT_ULTRA_POOR_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.sv.isPoor(sys.id)) {
             g.setColor(SystemPanel.redText);
             String s1 = text("MAIN_SCOUT_POOR_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.sv.isRich(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_RICH_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.sv.isUltraRich(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_ULTRA_RICH_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
 
         if (pl.sv.isOrionArtifact(sys.id)) {
@@ -285,16 +280,16 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             String s1 = text("MAIN_SCOUT_ANCIENTS_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.sv.isArtifact(sys.id)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_ARTIFACTS_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
 
         if (pl.isEnvironmentHostile(sys)) {
@@ -302,61 +297,61 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             String s1 = text("MAIN_SCOUT_HOSTILE_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.isEnvironmentFertile(sys)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_FERTILE_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else if (pl.isEnvironmentGaia(sys)) {
             g.setColor(SystemPanel.greenText);
             String s1 = text("MAIN_SCOUT_GAIA_DESC");
             int fontSize = scaledFont(g, s1, boxW-s25, desiredFont, 14);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
 
         // classification line
         if (sys.planet().type().isAsteroids()) {
             String s1 = text("MAIN_SCOUT_NO_PLANET");
             g.setFont(narrowFont(desiredFont+3));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
         else {
             String s1 = text("MAIN_SCOUT_TYPE", text(sys.planet().type().key()), (int)sys.planet().maxSize());
             g.setFont(narrowFont(desiredFont+3));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
         }
 
         if (pl.sv.isColonized(sys.id)) {
             g.setFont(narrowFont(24));
             String s1 = pl.sv.descriptiveName(sys.id);
-            int fontSize = scaledFont(g, s1, boxW-x2-s10, 24, 18);
+            int fontSize = scaledFont(g, s1, boxW-x1-s10, 24, 18);
             g.setFont(narrowFont(fontSize));
-            drawBorderedString(g, s1, 1, x2, y2, Color.black, Color.white);
-            y2 -= lineH;
-            y2 -= scaled(5);
+            drawBorderedString(g, s1, 1, x1, y1, Color.black, Color.white);
+            y1 -= lineH;
+            y1 -= scaled(5);
         }
         // planet name
         String sysName = pl.sv.name(sys.id);
-        y2 -= scaled(5);
+        y1 -= scaled(5);
         g.setColor(SystemPanel.orangeText);
         g.setFont(narrowFont(40));
-        drawBorderedString(g, sysName, 1, x2, y2, Color.darkGray, SystemPanel.orangeText);
+        drawBorderedString(g, sysName, 1, x1, y1, Color.darkGray, SystemPanel.orangeText);
         
         // planet flag
         parent.addNextTurnControl(flagButton);
         flagButton.init(this, g);
         flagButton.mapX(boxX+boxW-flagButton.width()+s10);
-        flagButton.mapY(boxY+boxH-flagButton.height()+s10);
+        flagButton.mapY(boxY+boxH-buttonPaneH-flagButton.height()+s10);
         flagButton.draw(parent.map(), g);
 
         // init and draw continue button sprite

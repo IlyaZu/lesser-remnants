@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -130,7 +130,6 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         int s25 = BasePanel.s25;
         int s30 = BasePanel.s30;
         int s40 = BasePanel.s40;
-        int s50 = BasePanel.s50;
         int s60 = BasePanel.s60;
 
         int w = ui.getWidth();
@@ -138,11 +137,19 @@ public class MapOverlayColonizePrompt extends MapOverlay {
 
         int bdrW = s7;
         int boxW = scaled(540);
-        int boxH = scaled(240);
         int boxH1 = BasePanel.s68;
+        int boxH2 = scaled(172);
+        int buttonPaneH = s40;
+        int boxH = boxH1 + boxH2 + buttonPaneH;
 
         int boxX = -s40+(w/2);
-        int boxY = s40+(h-boxH)/2;
+        int boxY = -s40+(h-boxH)/2;
+        
+        // dimensions of the shade pane
+        int x0 = boxX-bdrW;
+        int y0 = boxY-bdrW;
+        int w0 = boxW+bdrW+bdrW;
+        int h0 = boxH+bdrW+bdrW;
 
         // draw map mask
         if (mask == null) {
@@ -161,7 +168,7 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         g.fill(mask);
         // draw border
         g.setColor(MainUI.paneShadeC);
-        g.fillRect(boxX-bdrW, boxY-bdrW, boxW+bdrW+bdrW, boxH+bdrW+bdrW);
+        g.fillRect(x0, y0, w0, h0);
 
         // draw Box
         g.setColor(MainUI.paneBackground);
@@ -170,67 +177,35 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         // draw planet image
         if (planetImg == null) {
             if (sys.planet().type().isAsteroids()) {
-                planetImg = newBufferedImage(boxW, boxH-boxH1);
+                planetImg = newBufferedImage(boxW, boxH2);
                 Graphics imgG = planetImg.getGraphics();
                 imgG.setColor(Color.black);
-                imgG.fillRect(0, 0, boxW, boxH-boxH1);
-                drawBackgroundStars(imgG, boxW, boxH-boxH1);
-                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, (boxH-boxH1)/3);
+                imgG.fillRect(0, 0, boxW, boxH2);
+                drawBackgroundStars(imgG, boxW, boxH2);
+                parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, boxH2/3);
                 imgG.dispose();
             }
             else
                 planetImg = sys.planet().type().panoramaImage();
         }
-        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH-boxH1, null);
+        g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH2, null);
 
         // draw header info
-        int leftW = boxW * 2/5;
-        String yearStr = displayYear();
-        g.setFont(narrowFont(40));
-        int sw = g.getFontMetrics().stringWidth(yearStr);
-        int x0 = boxX+((leftW-sw)/2);
-        drawBorderedString(g, yearStr, 2, x0, boxY+boxH1-s20, SystemPanel.textShadowC, SystemPanel.orangeText);
-
-        String scoutStr = text("MAIN_COLONIZE_TITLE", sysName);
-        g.setColor(Color.black);
-        g.setFont(narrowFont(14));
-        drawString(g,scoutStr, boxX+leftW, boxY+s20);
-
-        // calc width needed for yes/no buttons
-        g.setFont(narrowFont(20));
-        String yesStr = text("MAIN_COLONIZE_YES");
-        String noStr = text("MAIN_COLONIZE_NO");
-        int swYes = g.getFontMetrics().stringWidth(yesStr);
-        int swNo = g.getFontMetrics().stringWidth(noStr);
-        int buttonW = s20+Math.max(swYes, swNo);
-
+        int x1 = boxX+s15;
+        
         // print prompt string
         String promptStr = text("MAIN_COLONIZE_PROMPT");
-        int promptFontSize = scaledFont(g, promptStr, boxW-leftW-buttonW-buttonW-s30, 24, 16);
+        int promptFontSize = scaledFont(g, promptStr, x1-s30, 24, 14);
         g.setFont(narrowFont(promptFontSize));
-        int swPrompt = g.getFontMetrics().stringWidth(promptStr);
-        drawShadowedString(g, promptStr, 4, boxX+leftW, boxY+s50, SystemPanel.textShadowC, Color.white);
-
-        // draw yes/no buttons
-        g.setFont(narrowFont(20));
-        int buttonY = boxY + s30;
-        int buttonH = s30;
-        int x2 = boxX + leftW + swPrompt + s10;
-        int x3 = x2 + buttonW + s10;
-        // yes button
-        parent.addNextTurnControl(yesButton);
-        yesButton.parent(this);
-        yesButton.setBounds(x2, buttonY, buttonW, buttonH);
-        yesButton.draw(parent.map(), g);
-        // no button
-        parent.addNextTurnControl(noButton);
-        noButton.parent(this);
-        noButton.setBounds(x3, buttonY, buttonW, buttonH);
-        noButton.draw(parent.map(), g);
+        drawShadowedString(g, promptStr, 4, x1, boxY+boxH1-s40, SystemPanel.textShadowC, Color.white);
+        
+        String scoutStr = text("MAIN_COLONIZE_TITLE", sysName);
+        g.setColor(Color.darkGray);
+        g.setFont(narrowFont(16));
+        drawString(g,scoutStr, x1, boxY+boxH1-s20);
 
         // draw planet info, from bottom up
-        int x1 = boxX+s15;
-        int y1 = boxY+boxH-s10;
+        int y1 = boxY+boxH-buttonPaneH-s10;
         int lineH = s20;
         int desiredFont = 18;
 
@@ -341,8 +316,30 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         parent.addNextTurnControl(flagButton);
         flagButton.init(this, g);
         flagButton.mapX(boxX+boxW-flagButton.width()+s10);
-        flagButton.mapY(boxY+boxH-flagButton.height()+s10);
+        flagButton.mapY(boxY+boxH-buttonPaneH-flagButton.height()+s10);
         flagButton.draw(parent.map(), g);
+        
+        // calc width needed for yes/no buttons
+        g.setFont(narrowFont(20));
+        String yesStr = text("MAIN_COLONIZE_YES");
+        String noStr = text("MAIN_COLONIZE_NO");
+        int swYes = g.getFontMetrics().stringWidth(yesStr);
+        int swNo = g.getFontMetrics().stringWidth(noStr);
+        int buttonW = s20+Math.max(swYes, swNo);
+        
+        // draw yes/no buttons
+        g.setFont(narrowFont(20));
+        int buttonH = s30;
+        // no button
+        parent.addNextTurnControl(noButton);
+        noButton.parent(this);
+        noButton.setBounds(x0+w0-buttonW-s10, y0+h0-buttonH-s10, buttonW, buttonH);
+        noButton.draw(parent.map(), g);
+        // yes button
+        parent.addNextTurnControl(yesButton);
+        yesButton.parent(this);
+        yesButton.setBounds(x0+s10, y0+h0-buttonH-s10, buttonW, buttonH);
+        yesButton.draw(parent.map(), g);
     }
     @Override
     public boolean handleKeyPress(KeyEvent e) {
