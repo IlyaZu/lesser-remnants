@@ -174,13 +174,11 @@ public class MapOverlayAllocateSystems extends MapOverlay {
         int x2a = x2+s10;
         int y2a = y2+BasePanel.s15;
 
-        //g.setFont(narrowFont(16));
         int textW = w2+x2-x2a-s10;
         g.setFont(narrowFont(15));
         for (String reason: reasons) {
             List<String> lines = this.wrappedLines(g, reason, textW);
             for (String line: lines) {
-                //scaledFont(g, line, textW, 16, 12);
                 drawString(g,line, x2a, y2a);
                 y2a += lineH;
             }
@@ -303,10 +301,8 @@ class PreviousSystemButtonSprite extends MapSprite {
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-        //if (click)
-        //    softClick();
         parent.previousSystem();
-    };
+    }
 }
  class NextSystemButtonSprite extends MapSprite {
     private LinearGradientPaint background;
@@ -373,10 +369,8 @@ class PreviousSystemButtonSprite extends MapSprite {
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-        //if (click)
-        //    softClick();
         parent.nextSystem();
-    };
+    }
 }
 class ContinueButtonSprite extends MapSprite {
     private LinearGradientPaint background;
@@ -452,8 +446,6 @@ class ContinueButtonSprite extends MapSprite {
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-        //if (click)
-        //    softClick();
         parent.advanceMap();
-    };
+    }
 }

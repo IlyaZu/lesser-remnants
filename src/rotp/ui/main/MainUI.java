@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -408,7 +408,7 @@ public class MainUI extends BasePanel implements IMapHandler {
     @Override
     public void clickingNull(int cnt, boolean right) {
         displayPanel.useNullClick(cnt, right);
-    };
+    }
     @Override
     public void clickingOnSprite(Sprite o, int count, boolean rightClick, boolean click) {
         // if not in normal mode, then NextTurnControls are

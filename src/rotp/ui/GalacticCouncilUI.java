@@ -151,7 +151,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
        
         int w0 = w1+bdr+bdr;
         int h0 = bdr+h1a+s5+h1b+h1c+bdr;
-        int x0 = (w-w0)/2; 
+        int x0 = (w-w0)/2;
         int y0 = ((h-h0)/2)-s50;
                 
         int x1 = x0+bdr;
@@ -185,7 +185,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         for (String line: lines2) {
             y2 += lineH;
             drawString(g,line, x2, y2);
-        }        
+        }
         
         g.setFont(narrowFont(20));
         String button1Text = text("COUNCIL_VIEW_SUMMARY");
@@ -215,7 +215,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((buttonW - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
         
         continueBox.setBounds(button2X, buttonY, buttonW, buttonH);
         ptStart = new Point2D.Float(button2X, 0);
@@ -231,7 +231,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button2X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2b = button2X + ((buttonW - sw2) / 2);
-        drawBorderedString(g, button2Text, x2b, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);     
+        drawBorderedString(g, button2Text, x2b, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void paintAIVoteMessage(Graphics2D g) {
         GalacticCouncil c = galaxy().council();
@@ -324,7 +324,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
        
         int w0 = w1+bdr+bdr;
         int h0 = bdr+h1a+s5+h1b+h1c;
-        int x0 = (w-w0)/2; 
+        int x0 = (w-w0)/2;
         int y0 = ((h-h0)/2)-s50;
                 
         int x1 = x0+bdr;
@@ -397,7 +397,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((buttonW - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
         
         candidate2Box.setBounds(button2X, buttonY, buttonW, buttonH);
         ptStart = new Point2D.Float(button2X, 0);
@@ -413,7 +413,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button2X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2b = button2X + ((buttonW - sw2) / 2);
-        drawBorderedString(g, button2Text, x2b, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);    
+        drawBorderedString(g, button2Text, x2b, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
         
         Color[] colors2 = {grayEdgeC, grayMidC, grayEdgeC};
         int button3X = (w-buttonW)/2;
@@ -438,7 +438,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button3X, button3Y, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x4a = button3X + ((buttonW - sw3) / 2);
-        drawBorderedString(g, button3Text, x4a, button3Y + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button3Text, x4a, button3Y + buttonH - s9, SystemPanel.textShadowC, c0);
 
         summaryBox.setBounds(button3X, button4Y, buttonW, buttonH);
         ptStart = new Point2D.Float(button3X, 0);
@@ -454,7 +454,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button3X, button4Y, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x4b = button3X + ((buttonW - sw4) / 2);
-        drawBorderedString(g, button4Text, x4b, button4Y + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button4Text, x4b, button4Y + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void paintNoWinnerMessage(Graphics2D g) {
         int w = getWidth();
@@ -481,7 +481,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
        
         int w0 = w1+bdr+bdr;
         int h0 = bdr+h1a+s5+h1b+h1c+bdr;
-        int x0 = (w-w0)/2; 
+        int x0 = (w-w0)/2;
         int y0 = ((h-h0)/2)-s50;
                 
         int x1 = x0+bdr;
@@ -517,7 +517,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         for (String line: lines1) {
             y2 += lineH;
             drawString(g,line, x2, y2);
-        } 
+        }
         
         g.setFont(narrowFont(20));
         String button1Text = text("COUNCIL_CONTINUE");
@@ -544,7 +544,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((buttonW - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void paintAcceptRulingMessage(Graphics2D g) {
         GalacticCouncil c = galaxy().council();
@@ -567,7 +567,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
        
         int w0 = w1+bdr+bdr;
         int h0 = bdr+h1a+s5+h1b+h1c;
-        int x0 = (w-w0)/2; 
+        int x0 = (w-w0)/2;
         int y0 = ((h-h0)/2)-s50;
                 
         int x1 = x0+bdr;
@@ -626,7 +626,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((buttonW - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);    
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void paintVoterSummary(Graphics2D g) {
         GalacticCouncil c = galaxy().council();
@@ -637,7 +637,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         
         paintVoteTotals(g);
         g.setColor(maskC);
-        g.fillRect(0, 0, w, h);      
+        g.fillRect(0, 0, w, h);
         
         int MAX_ROWS = 4;
         List<Empire> voters = c.voters();
@@ -699,7 +699,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
             Empire voter = voters.get(i);
             int x2a = i%2==0 ? x2 : x2+empireBoxW+s5;
             drawVoterSummaryPane(g, voter, x2a, y2a, empireBoxW, empireBoxH);
-            if (i%2 ==1) 
+            if (i%2 ==1)
                 y2a = y2a+empireBoxH+empireBoxSpace;
             else
                 fullListH = fullListH+empireBoxH+empireBoxSpace;
@@ -770,10 +770,10 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
             g.drawRoundRect(button2X, buttonY, button2W, buttonH, s3, s3);
             g.setStroke(prevStr);
             int x2a = button2X + ((button2W - sw2) / 2);
-            drawBorderedString(g, button2Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);          
+            drawBorderedString(g, button2Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
         }
 
-        int button1X = button2X+button2W+gap;   
+        int button1X = button2X+button2W+gap;
         continueBox.setBounds(button1X, buttonY, button1W, buttonH);
         Point2D ptStart = new Point2D.Float(button1X, 0);
         Point2D ptEnd = new Point2D.Float(button1X + button1W, 0);
@@ -788,7 +788,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, button1W, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((button1W - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);          
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void drawVoterSummaryPane(Graphics2D g, Empire voter, int x, int y, int w, int h) {
         GalacticCouncil c = galaxy().council();
@@ -873,7 +873,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         g.drawRoundRect(button1X, buttonY, buttonW, buttonH, s3, s3);
         g.setStroke(prevStr);
         int x2a = button1X + ((buttonW - sw1) / 2);
-        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);  
+        drawBorderedString(g, button1Text, x2a, buttonY + buttonH - s9, SystemPanel.textShadowC, c0);
     }
     private void drawDiplomatImage(Graphics2D g, Empire emp) {
         if (emp == null)
@@ -1124,7 +1124,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
                     advanceScreen();
                 return;
             case ASK_PLAYER_VOTE:
-                if (hoverTarget == candidate1Box) 
+                if (hoverTarget == candidate1Box)
                     c.castPlayerVote(c.candidate1());
                 else if (hoverTarget == candidate2Box)
                     c.castPlayerVote(c.candidate2());
@@ -1135,7 +1135,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
                 advanceScreen();
                 return;
             case ACCEPT_RULING:
-                if (hoverTarget == acceptBox) 
+                if (hoverTarget == acceptBox)
                     advanceScreen();
                 return;
         }
@@ -1146,12 +1146,12 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         int dY = y-dragY;
         dragY = y;
         if (scrollbar == hoverTarget) {
-            if ((y >= voterListBox.y) || (y <= (voterListBox.y+voterListBox.height))) { 
+            if ((y >= voterListBox.y) || (y <= (voterListBox.y+voterListBox.height))) {
                 int h = (int) voterListBox.getHeight();
                 int dListY = (int)((float)dY*(h+scrollYMax)/h);
                 if (dY < 0)
                     scrollbarY = max(0,scrollbarY+dListY);
-                else 
+                else
                     scrollbarY = min(scrollYMax,scrollbarY+dListY);
             }
             repaint();
@@ -1165,19 +1165,19 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
 
         Shape prevHover = hoverTarget;
         hoverTarget = null;
-        if (continueBox.contains(x,y)) 
+        if (continueBox.contains(x,y))
             hoverTarget = continueBox;
-        else if (skipBox.contains(x,y))  
-            hoverTarget = skipBox;      
-        else if (summaryBox.contains(x,y))  
-            hoverTarget = summaryBox;      
-        else if (candidate1Box.contains(x,y))  
-            hoverTarget = candidate1Box;      
-        else if (candidate2Box.contains(x,y))  
-            hoverTarget = candidate2Box;      
-        else if (abstainBox.contains(x,y))   
-            hoverTarget = abstainBox;      
-        else if (acceptBox.contains(x,y))  
+        else if (skipBox.contains(x,y))
+            hoverTarget = skipBox;
+        else if (summaryBox.contains(x,y))
+            hoverTarget = summaryBox;
+        else if (candidate1Box.contains(x,y))
+            hoverTarget = candidate1Box;
+        else if (candidate2Box.contains(x,y))
+            hoverTarget = candidate2Box;
+        else if (abstainBox.contains(x,y))
+            hoverTarget = abstainBox;
+        else if (acceptBox.contains(x,y))
             hoverTarget = acceptBox;
         else if (scrollbar.contains(x,y))
             hoverTarget = scrollbar;
@@ -1197,7 +1197,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
             int prevY = scrollbarY;
             if (count < 0)
                 scrollbarY = max(0,scrollbarY-s10);
-            else 
+            else
                 scrollbarY = min(scrollYMax,scrollbarY+s10);
             if (scrollbarY != prevY)
                 repaint();

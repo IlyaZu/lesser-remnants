@@ -133,7 +133,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 parent.resumeTurn();
             else
                 parent.resumeOutsideTurn();
-        }        
+        }
     }
     @Override
     public boolean drawSprites()   { return drawSprites; }
@@ -210,7 +210,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 parent.drawStar((Graphics2D) imgG, sys.starType(), s60, boxW*4/5, boxH2/3);
                 imgG.dispose();
             }
-            else 
+            else
                 planetImg = sys.planet().type().panoramaImage();
         }
         g.drawImage(planetImg, boxX, boxY+boxH1, boxW, boxH2, null);
@@ -477,7 +477,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             //if (click)
             //    softClick();
             parent.previousSystem();
-        };
+        }
     }
      class NextSystemButtonSprite extends MapSprite {
         private LinearGradientPaint background;
@@ -547,7 +547,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             //if (click)
             //    softClick();
             parent.nextSystem();
-        };
+        }
     }
     class ContinueButtonSprite extends MapSprite {
         private LinearGradientPaint background;
@@ -626,7 +626,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             //if (click)
             //    softClick();
             parent.advanceMap();
-        };
+        }
     }
     class SystemFlagSprite extends MapSprite {
         private int mapX, mapY, buttonW, buttonH;
@@ -688,14 +688,14 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 parent.resetFlagColor();
             else
                 parent.toggleFlagColor(false);
-        };
+        }
         @Override
         public void wheel(GalaxyMapPanel map, int rotation, boolean click) {
             if (rotation < 0)
                 parent.toggleFlagColor(true);
             else
                 parent.toggleFlagColor(false);
-        };
+        }
     }
 }
     

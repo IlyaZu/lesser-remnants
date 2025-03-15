@@ -458,7 +458,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
             case KeyEvent.VK_ESCAPE:
                 if (bombarded)
                     advanceMap();
-                else 
+                else
                     bombardCancel();
             case KeyEvent.VK_N:
                 bombardCancel();
@@ -535,13 +535,13 @@ public class MapOverlayBombardPrompt extends MapOverlay {
                 parent.resetFlagColor();
             else
                 parent.toggleFlagColor(false);
-        };
+        }
         @Override
         public void wheel(GalaxyMapPanel map, int rotation, boolean click) {
             if (rotation < 0)
                 parent.toggleFlagColor(true);
             else
                 parent.toggleFlagColor(false);
-        };
+        }
     }
 }

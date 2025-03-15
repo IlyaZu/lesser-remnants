@@ -102,7 +102,7 @@ public class MapOverlayEspionageMission extends MapOverlay {
     public boolean handleKeyPress(KeyEvent e) {
         switch(e.getKeyCode()) {
             case KeyEvent.VK_1:
-                if (this.canSelect(0))  
+                if (this.canSelect(0))
                     categorySprites[0].click(parent.map(), 1, false, true);
                 break;
             case KeyEvent.VK_2:
@@ -214,7 +214,6 @@ public class MapOverlayEspionageMission extends MapOverlay {
             imgG.dispose();
         }
 
-
         int y1b = y1+BasePanel.s60;
         int h1b = h1-BasePanel.s60;
         int imgH = h1b;
@@ -222,10 +221,6 @@ public class MapOverlayEspionageMission extends MapOverlay {
         g.setClip(x1+BasePanel.s5,y1b,leftW-BasePanel.s10,h1b-BasePanel.s5);
         g.drawImage(labImg, x1+leftW-imgW, y1b, x1+leftW, y1b+h1b, 0, 0, labImg.getWidth(), labImg.getHeight(), null);
         g.setClip(null);
-        
-//        int imgW = leftW;
-//        int imgH = imgW*Rotp.IMG_H/Rotp.IMG_W;
-//        g.drawImage(labImg, x1, y1+h1-imgH, x1+leftW, y1+h1, 0, 0, labImg.getWidth(), labImg.getHeight(), null);
 
         // draw all 6 category boxes
 
@@ -309,9 +304,9 @@ public class MapOverlayEspionageMission extends MapOverlay {
         g.fillRect(x+bdr, y+bdr, w, h);
 
         String techDesc;
-        if (techList.isEmpty()) 
+        if (techList.isEmpty())
             techDesc = text("NOTICE_ESPIONAGE_NO_TECH");
-        else if (techList.size() > 1) 
+        else if (techList.size() > 1)
             techDesc = text("NOTICE_ESPIONAGE_MANY_TECHS", str(techList.size()));
         else
             techDesc = tech(techList.get(0)).name();
@@ -351,7 +346,7 @@ public class MapOverlayEspionageMission extends MapOverlay {
         
         scaledFont(g, techDesc, w-BasePanel.s10, 16, 12);
         int sw1 = g.getFontMetrics().stringWidth(techDesc);
-        int x1 = x+(w-sw1)/2;      
+        int x1 = x+(w-sw1)/2;
         y1 += lineH;
         drawShadowedString(g, techDesc, 1, x1, y1, MainUI.darkShadowC, c0);
         
@@ -361,6 +356,6 @@ public class MapOverlayEspionageMission extends MapOverlay {
                 y1 += lineH;
                 drawShadowedString(g, t.name(), 1, x+BasePanel.s10, y1, MainUI.darkShadowC, c0);
             }
-        }  
+        }
     }
 }
