@@ -55,54 +55,46 @@ import rotp.ui.sprites.YearDisplaySprite;
 
 public class MainUI extends BasePanel implements IMapHandler {
     private static final long serialVersionUID = 1L;
-    public static Color paneBackground = new Color(123,123,123);
-    public static Color paneBackgroundDk = new Color(100,100,100);
-    public static Color paneShadeC = new Color(123,123,123,128);
-    public static Color paneShadeC2 = new Color(100,100,100,192);
+    public static final Color paneBackground = new Color(123,123,123);
+    public static final Color paneBackgroundDk = new Color(100,100,100);
+    public static final Color paneShadeC = new Color(123,123,123,128);
+    public static final Color paneShadeC2 = new Color(100,100,100,192);
     private static final Color shadeBorderC = new Color(80,80,80);
-    public static Color darkShadowC = new Color(30,30,30);
-    private static final Color namePaneBackgroundHighlight =  new Color(64,64,96);
-    private static final Color paneBackgroundHighlight = new Color(96,96,128);
+    public static final Color darkShadowC = new Color(30,30,30);
 
-    public static Color textBoxShade0 = new Color(150,150,175);
-    public static Color textBoxShade1 = new Color(165,165,202);
-    public static Color textBoxShade2 = new Color(112,110,158);
-    public static Color textBoxTextColor = new Color(208,208,208);
-    public static Color textBoxBackground = new Color(47,46,89);
     public static final Color transC = new Color(0,0,0,0);
 
     public static final Color greenAlertC  = new Color(0,255,0,192);
     public static final Color redAlertC    = new Color(255,0,0,192);
     public static final Color yellowAlertC = new Color(255,255,0,192);
     
-    public static int panelWidth, panelHeight;
-    static LinearGradientPaint alertBack;
-    static Location center = new Location();
+    private static int panelWidth, panelHeight;
+    private static LinearGradientPaint alertBack;
     
-    JLayeredPane layers = new JLayeredPane();
+    private JLayeredPane layers = new JLayeredPane();
 
-    MapOverlayNone overlayNone;
-    MapOverlayMemoryLow overlayMemoryLow;
-    MapOverlayJava32Bit overlayJava32Bit;
-    MapOverlayAutosaveFailed overlayAutosaveFailed;
-    MapOverlaySpies overlaySpies;
-    MapOverlayAllocateSystems overlayAllocateSystems;
-    MapOverlaySystemsScouted overlaySystemsScouted;
-    MapOverlayEspionageMission overlayEspionageMission;
-    MapOverlayColonizePrompt overlayColonizePrompt;
-    MapOverlayBombardPrompt overlayBombardPrompt;
-    MapOverlayBombardedNotice overlayBombardedNotice;
-    MapOverlayShipCombatPrompt overlayShipCombatPrompt;
-    AlertDismissSprite alertDismissSprite;
-    HelpSprite helpSprite;
-    MapOverlay overlay;
+    private MapOverlayNone overlayNone;
+    private MapOverlayMemoryLow overlayMemoryLow;
+    private MapOverlayJava32Bit overlayJava32Bit;
+    private MapOverlayAutosaveFailed overlayAutosaveFailed;
+    private MapOverlaySpies overlaySpies;
+    private MapOverlayAllocateSystems overlayAllocateSystems;
+    private MapOverlaySystemsScouted overlaySystemsScouted;
+    private MapOverlayEspionageMission overlayEspionageMission;
+    private MapOverlayColonizePrompt overlayColonizePrompt;
+    private MapOverlayBombardPrompt overlayBombardPrompt;
+    private MapOverlayBombardedNotice overlayBombardedNotice;
+    private MapOverlayShipCombatPrompt overlayShipCombatPrompt;
+    private AlertDismissSprite alertDismissSprite;
+    private HelpSprite helpSprite;
+    private MapOverlay overlay;
 
     private final List<Sprite> nextTurnControls = new ArrayList<>();
     private final List<Sprite> baseControls = new ArrayList<>();
 
-    protected SpriteDisplayPanel displayPanel;
-    protected GalaxyMapPanel map;
-    protected MainButtonPanel buttonPanel;
+    private SpriteDisplayPanel displayPanel;
+    private GalaxyMapPanel map;
+    private MainButtonPanel buttonPanel;
 
     // pre-post next turn state
     private float saveScale;
@@ -111,11 +103,8 @@ public class MainUI extends BasePanel implements IMapHandler {
     private int helpFrame = 0;
     private int numHelpFrames = 0;
 
-    public Border paneBorder()               { return null;   }
     public static Color shadeBorderC()       { return shadeBorderC; }
     public static Color paneBackground()     { return paneBackground; }
-    public static Color paneHighlight()      { return paneBackgroundHighlight; }
-    public static Color namePaneHighlight()  { return namePaneBackgroundHighlight; }
 
     public SpriteDisplayPanel displayPanel() { return displayPanel; }
     public void hideDisplayPanel()           {
