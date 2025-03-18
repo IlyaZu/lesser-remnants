@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -410,9 +410,6 @@ public interface Base {
     }
     public default Tech tech(String id) {
         return TechLibrary.current().tech(id);
-    }
-    public default String displayYear() {
-        return text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
     }
     public default List<String> substrings(String input, char delim) {
         return substrings(input,delim,0);
