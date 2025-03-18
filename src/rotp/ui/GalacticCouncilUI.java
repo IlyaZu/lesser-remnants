@@ -505,7 +505,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         
         // draw year/turn info
         int x1b = x1+w1-s10;
-        String yearStr = displayYear();
+        String yearStr = text("MAIN_YEAR_DISPLAY", galaxy().currentTurn());
         int sw = g.getFontMetrics().stringWidth(yearStr);
         g.setFont(narrowFont(26));
         drawShadowedString(g, yearStr, 3, x1b-sw, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
