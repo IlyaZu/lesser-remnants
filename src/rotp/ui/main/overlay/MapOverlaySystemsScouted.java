@@ -43,27 +43,28 @@ import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlaySystemsScouted extends MapOverlay {
-    Color maskC  = new Color(40,40,40,160);
-    Area mask;
-    BufferedImage planetImg;
-    MainUI parent;
-    float origMapScale;
-    List<StarSystem> scoutSystems = new ArrayList<>();
-    List<StarSystem> allySystems = new ArrayList<>();
-    List<StarSystem> astronomerSystems = new ArrayList<>();
-    List<StarSystem> orderedSystems = new ArrayList<>();
-    int systemIndex = 0;
-    boolean drawSprites = false;
-    PreviousSystemButtonSprite prevSystemButton = new PreviousSystemButtonSprite();
-    NextSystemButtonSprite nextSystemButton = new NextSystemButtonSprite();
-    ContinueButtonSprite continueButton = new ContinueButtonSprite();
-    SystemFlagSprite flagButton = new SystemFlagSprite();
+    private static final Color maskC = new Color(40,40,40,160);
+    
+    private Area mask;
+    private BufferedImage planetImg;
+    private MainUI parent;
+    private List<StarSystem> scoutSystems = new ArrayList<>();
+    private List<StarSystem> allySystems = new ArrayList<>();
+    private List<StarSystem> astronomerSystems = new ArrayList<>();
+    private List<StarSystem> orderedSystems = new ArrayList<>();
+    private int systemIndex = 0;
+    private boolean drawSprites = false;
+    private PreviousSystemButtonSprite prevSystemButton = new PreviousSystemButtonSprite();
+    private NextSystemButtonSprite nextSystemButton = new NextSystemButtonSprite();
+    private ContinueButtonSprite continueButton = new ContinueButtonSprite();
+    private SystemFlagSprite flagButton = new SystemFlagSprite();
+    
     public MapOverlaySystemsScouted(MainUI p) {
         parent = p;
     }
+    
     public void init(HashMap<String, List<StarSystem>> newSystems) {
         parent.hideDisplayPanel();
-        origMapScale = parent.map().scaleY();
         parent.map().setScale(20);
         systemIndex = 0;
         drawSprites = true;
@@ -86,6 +87,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             mapSelectIndex(0);
         }
     }
+    
     private void mapSelectIndex(int i) {
         mask = null;
         planetImg = null;

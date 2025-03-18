@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,18 +32,22 @@ import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayJava32Bit extends MapOverlay {
-    final Color edgeC = new Color(44,59,30);
-    final Color midC = new Color(70,93,48);
-    boolean showSprite = true;
-    MainUI parent;
-    OKButtonSprite okButton = new OKButtonSprite();
+    private static final Color edgeC = new Color(44,59,30);
+    private static final Color midC = new Color(70,93,48);
+    
+    private boolean showSprite = true;
+    private MainUI parent;
+    private OKButtonSprite okButton = new OKButtonSprite();
+    
     public MapOverlayJava32Bit(MainUI p) {
         parent = p;
     }
+    
     public void init() {
         okButton.reset();
         showSprite = true;
     }
+    
     public void ok() {
         showSprite = false;
         parent.clearOverlay();
@@ -183,7 +187,7 @@ public class MapOverlayJava32Bit extends MapOverlay {
                 float[] dist = {0.0f, 0.5f, 1.0f};
                 Point2D start = new Point2D.Float(mapX, 0);
                 Point2D end = new Point2D.Float(mapX+buttonW, 0);
-                Color[] colors = {parent.edgeC, parent.midC, parent.edgeC };
+                Color[] colors = {edgeC, midC, edgeC };
                 background = new LinearGradientPaint(start, end, dist, colors);
             }
             int s3 = BasePanel.s3;

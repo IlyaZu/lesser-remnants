@@ -39,25 +39,28 @@ import rotp.ui.sprites.ClickToContinueSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayBombardPrompt extends MapOverlay {
-    static final Color destroyedTextC = new Color(255,32,32,192);
-    static final Color destroyedMaskC = new Color(0,0,0,160);
-    Color maskC  = new Color(40,40,40,160);
-    Area mask;
-    BufferedImage planetImg;
-    MainUI parent;
-    boolean bombarded = false;
-    int sysId;
-    ShipFleet fleet;
-    int pop, endPop, bases, endBases, fact, endFact, shield, transports;
-    boolean drawSprites = false;
-    ClickToContinueSprite clickSprite;
-    BombardNoSprite noButton = new BombardNoSprite();
-    BombardYesSprite yesButton = new BombardYesSprite();
-    SystemFlagSprite flagButton = new SystemFlagSprite();
+    private static final Color destroyedTextC = new Color(255,32,32,192);
+    private static final Color destroyedMaskC = new Color(0,0,0,160);
+    private static final Color maskC  = new Color(40,40,40,160);
+    
+    private Area mask;
+    private BufferedImage planetImg;
+    private MainUI parent;
+    private boolean bombarded = false;
+    private int sysId;
+    private ShipFleet fleet;
+    private int pop, endPop, bases, endBases, fact, endFact, shield, transports;
+    private boolean drawSprites = false;
+    private ClickToContinueSprite clickSprite;
+    private BombardNoSprite noButton = new BombardNoSprite();
+    private BombardYesSprite yesButton = new BombardYesSprite();
+    private SystemFlagSprite flagButton = new SystemFlagSprite();
+    
     public MapOverlayBombardPrompt(MainUI p) {
         parent = p;
         clickSprite = new ClickToContinueSprite(parent);
     }
+    
     public void init(int systemId, ShipFleet fl) {
         drawSprites = true;
         planetImg = null;
@@ -82,6 +85,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         parent.clickedSprite(sys);
         parent.repaint();
     }
+    
     private StarSystem starSystem() {
         return galaxy().system(sysId);
     }
@@ -475,14 +479,12 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         }
         return true;
     }
-    class SystemFlagSprite extends MapSprite {
+    private class SystemFlagSprite extends MapSprite {
         private int mapX, mapY, buttonW, buttonH;
         private int selectX, selectY, selectW, selectH;
 
         private MapOverlayBombardPrompt parent;
 
-        protected int mapX()      { return mapX; }
-        protected int mapY()      { return mapY; }
         public void mapX(int i)   { selectX = mapX = i; }
         public void mapY(int i)   { selectY = mapY = i; }
 
@@ -496,12 +498,6 @@ public class MapOverlayBombardPrompt extends MapOverlay {
             buttonH = BasePanel.s70;
             selectW = buttonW;
             selectH = buttonH;
-        }
-        public void setSelectionBounds(int x, int y, int w, int h) {
-            selectX = x;
-            selectY = y;
-            selectW = w;
-            selectH = h;
         }
         @Override
         public boolean acceptDoubleClicks()         { return true; }

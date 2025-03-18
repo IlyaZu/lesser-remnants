@@ -38,10 +38,10 @@ import rotp.ui.sprites.ColonizeYesSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayColonizePrompt extends MapOverlay {
-    private final int nameLengthLimit = 24;
-    private final Color dlgBox = new Color(123,123,123,192);
+    private static final int nameLengthLimit = 24;
+    private static final Color dlgBox = new Color(123,123,123,192);
+    private static final Color maskC = new Color(40,40,40,160);
     
-    private Color maskC = new Color(40,40,40,160);
     private Area mask;
     private BufferedImage planetImg;
     private MainUI parent;
