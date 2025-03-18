@@ -19,15 +19,21 @@ package rotp.ui.main.overlay;
 import rotp.model.Sprite;
 import rotp.model.combat.CombatManager;
 import rotp.model.empires.Empire;
-import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
 import rotp.ui.BasePanel;
 import rotp.ui.RotPUI;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
-import rotp.ui.sprites.*;
-import java.awt.*;
+import rotp.ui.sprites.MapSprite;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.LinearGradientPaint;
+import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -36,37 +42,30 @@ import java.awt.image.BufferedImage;
 import rotp.ui.combat.ShipBattleUI;
 
 public class MapOverlayShipCombatPrompt extends MapOverlay {
-    static final Color destroyedTextC = new Color(255,32,32,192);
-    static final Color destroyedMaskC = new Color(0,0,0,160);
-    Color maskC  = new Color(40,40,40,160);
-    Area mask;
-    BufferedImage planetImg;
-    MainUI parent;
-    int sysId;
-    ShipFleet fleet;
-    int pop, bases, fact, shield;
-    boolean drawSprites = false;
-    public CombatManager mgr;
-    AutoResolveBattleSprite resolveButton = new AutoResolveBattleSprite();
-    RetreatAllBattleSprite retreatButton = new RetreatAllBattleSprite();
-    EnterBattleSprite battleButton = new EnterBattleSprite();
-    SystemFlagSprite flagButton = new SystemFlagSprite();
+    private static final Color maskC  = new Color(40,40,40,160);
+    
+    private Area mask;
+    private BufferedImage planetImg;
+    private MainUI parent;
+    private int sysId;
+    private boolean drawSprites = false;
+    private  CombatManager mgr;
+    private AutoResolveBattleSprite resolveButton = new AutoResolveBattleSprite();
+    private RetreatAllBattleSprite retreatButton = new RetreatAllBattleSprite();
+    private EnterBattleSprite battleButton = new EnterBattleSprite();
+    private SystemFlagSprite flagButton = new SystemFlagSprite();
+    
     public MapOverlayShipCombatPrompt(MainUI p) {
         parent = p;
     }
+    
     public void init(CombatManager m) {
         mgr = m;
         sysId = mgr.system().id;
-        Empire pl = player();
         flagButton.reset();
         StarSystem sys = galaxy().system(sysId);
-        fleet = null;
         planetImg = null;
         drawSprites = true;
-        pop = pl.sv.population(sysId);
-        bases = pl.sv.bases(sysId);
-        fact = pl.sv.factories(sysId);
-        shield = pl.sv.shieldLevel(sysId);
         parent.hideDisplayPanel();
         parent.map().setScale(20);
         parent.map().recenterMapOn(sys);
@@ -74,6 +73,7 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         parent.clickedSprite(sys);
         parent.repaint();
     }
+    
     public void startCombat(int combatFlag) {
         drawSprites = false;
         parent.clearOverlay();

@@ -45,22 +45,23 @@ import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlaySpies extends MapOverlay {
-    Color maskC  = new Color(40,40,40,160);
-    MainUI parent;
-    BufferedImage labImg;
+    private static final Color maskC  = new Color(40,40,40,160);
 
     private final List<Empire> empires = new ArrayList<>();
     private final List<EmpireTabSprite> tabs = new ArrayList<>();
+    
+    private MainUI parent;
+    private BufferedImage labImg;
     private Empire selectedEmpire;
-    boolean drawSprites = false;
-    Color darkShadingC = new Color(50,50,50);
-    CloseButton closeButton = new CloseButton();
-    IntelligenceButton intelButton = new IntelligenceButton();
-    ThreatenButton threatenButton = new ThreatenButton();
+    private boolean drawSprites = false;
+    private CloseButton closeButton = new CloseButton();
+    private IntelligenceButton intelButton = new IntelligenceButton();
+    private ThreatenButton threatenButton = new ThreatenButton();
     
     public MapOverlaySpies(MainUI p) {
         parent = p;
     }
+    
     public boolean shouldDisplay() {
         return !empires.isEmpty();
     }

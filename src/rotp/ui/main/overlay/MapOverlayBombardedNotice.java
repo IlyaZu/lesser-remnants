@@ -35,20 +35,23 @@ import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.ClickToContinueSprite;
 
 public class MapOverlayBombardedNotice extends MapOverlay {
-    static final Color destroyedTextC = new Color(255,32,32,192);
-    static final Color destroyedMaskC = new Color(0,0,0,160);
-    Color maskC  = new Color(40,40,40,160);
-    Area mask;
-    BufferedImage planetImg;
-    MainUI parent;
-    int sysId;
-    ShipFleet fleet;
-    int pop, endPop, bases, endBases, fact, endFact, shield;
-    ClickToContinueSprite clickSprite;
+    private static final Color destroyedTextC = new Color(255,32,32,192);
+    private static final Color destroyedMaskC = new Color(0,0,0,160);
+    private static Color maskC  = new Color(40,40,40,160);
+    
+    private Area mask;
+    private BufferedImage planetImg;
+    private MainUI parent;
+    private int sysId;
+    private ShipFleet fleet;
+    private int pop, endPop, bases, endBases, fact, endFact, shield;
+    private ClickToContinueSprite clickSprite;
+    
     public MapOverlayBombardedNotice(MainUI p) {
         parent = p;
         clickSprite = new ClickToContinueSprite(parent);
     }
+    
     public void init(int systemId, ShipFleet fl) {
         mask = null;
         planetImg = null;
@@ -81,6 +84,7 @@ public class MapOverlayBombardedNotice extends MapOverlay {
         parent.clickedSprite(sys);
         parent.repaint();
     }
+    
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override

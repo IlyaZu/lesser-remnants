@@ -43,28 +43,28 @@ import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.TechCategorySprite;
 
 public class MapOverlayEspionageMission extends MapOverlay {
-    Color maskC  = new Color(40,40,40,160);
-    Area mask;
-    MainUI parent;
-    BufferedImage labImg;
+    private static final Color grayEdgeC = new Color(59,59,59);
+    private static final Color grayMidC = new Color(93,93,93);
+    private static final Color greenEdgeC = new Color(44,59,30);
+    private static final Color greenMidC = new Color(70,93,48);
+
+    private Area mask;
+    private MainUI parent;
+    private BufferedImage labImg;
     private LinearGradientPaint grayBack1, grayBack2;
     private LinearGradientPaint greenBack1, greenBack2;
-    private final Color grayEdgeC = new Color(59,59,59);
-    private final Color grayMidC = new Color(93,93,93);
-    private final Color greenEdgeC = new Color(44,59,30);
-    private final Color greenMidC = new Color(70,93,48);
-
     private EspionageMission mission;
     private int empId;
-    TechCategorySprite[] categorySprites = new TechCategorySprite[6];
-    int techCategoryHoverButton = -1;
-    boolean drawSprites = false;
+    private TechCategorySprite[] categorySprites = new TechCategorySprite[6];
+    private int techCategoryHoverButton = -1;
+    private boolean drawSprites = false;
 
     public MapOverlayEspionageMission(MainUI p) {
         parent = p;
         for (int i=0;i<categorySprites.length;i++)
             categorySprites[i] = new TechCategorySprite(this,i);
     }
+    
     public boolean canSelect(int catNum) {
         return (mission.techChoice(TechCategory.id(catNum)) != null);
     }
