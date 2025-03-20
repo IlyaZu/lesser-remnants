@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -258,7 +258,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         parent.drawTitle(g2);
         parent.drawAlerts(g2);
         drawControlSprites(g2);
-        drawNextTurnSprites(g2);
         drawRangeSelect(g2);
         g2.dispose();
     }
@@ -544,12 +543,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
                 sprite.draw(this, g);
         }
         for (Sprite sprite: parent.controlSprites()) {
-            if (parent.shouldDrawSprite(sprite))
-                sprite.draw(this, g);
-        }
-    }
-    public void drawNextTurnSprites(Graphics2D g) {
-        for (Sprite sprite: parent.nextTurnSprites()) {
             if (parent.shouldDrawSprite(sprite))
                 sprite.draw(this, g);
         }
