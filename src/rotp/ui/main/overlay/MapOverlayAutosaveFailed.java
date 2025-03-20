@@ -16,27 +16,21 @@
  */
 package rotp.ui.main.overlay;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.util.List;
 import rotp.model.Sprite;
 import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
-import rotp.ui.sprites.MapSprite;
+import rotp.ui.sprites.TextButtonSprite;
 
 public class MapOverlayAutosaveFailed extends MapOverlay {
-    private static final Color edgeC = new Color(44,59,30);
-    private static final Color midC = new Color(70,93,48);
+    private final TextButtonSprite okButton =
+            new TextButtonSprite("MAIN_AUTOSAVE_FAILED_OK", true, this::ok);
     
     private MainUI parent;
-    private OKButtonSprite okButton = new OKButtonSprite();
     private String errorMsg;
     
     public MapOverlayAutosaveFailed(MainUI p) {
@@ -45,7 +39,6 @@ public class MapOverlayAutosaveFailed extends MapOverlay {
     
     public void init(String err) {
         errorMsg = err == null ? "<null>" : err;
-        okButton.reset();
     }
     
     public void ok() {
@@ -127,9 +120,8 @@ public class MapOverlayAutosaveFailed extends MapOverlay {
 
         // init and draw continue button sprite
         parent.addNextTurnControl(okButton);
-        okButton.init(this,g);
-        okButton.mapX(x0+s10);
-        okButton.mapY(y0+h0-okButton.height()-s10);
+        okButton.refreshSize(g);
+        okButton.setPosition(x0+s10, y0+h0-okButton.getHeight()-s10);
         okButton.draw(parent.map(), g);
     }
     @Override
@@ -144,69 +136,5 @@ public class MapOverlayAutosaveFailed extends MapOverlay {
                 break;
         }
         return true;
-    }
-    private class OKButtonSprite extends MapSprite {
-        private LinearGradientPaint background;
-        private int mapX, mapY, buttonW, buttonH;
-        private MapOverlayAutosaveFailed parent;
-
-        public int mapY()         { return mapY; }
-        public void mapX(int i)   { mapX = i; }
-        public void mapY(int i)   { mapY = i; }
-
-        public int height()       { return buttonH; }
-        private String label()    { return text("MAIN_AUTOSAVE_FAILED_OK"); }
-        private Font font()       { return narrowFont(18); }
-        public void reset()       { background = null; }
-
-        public void init(MapOverlayAutosaveFailed p, Graphics2D g)  {
-            parent = p;
-            buttonW = BasePanel.s20 + g.getFontMetrics(font()).stringWidth(label());
-            buttonH = BasePanel.s30;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
-            hovering = x >= mapX
-                        && x <= mapX+buttonW
-                        && y >= mapY()
-                        && y <= mapY()+buttonH;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D start = new Point2D.Float(mapX, 0);
-                Point2D end = new Point2D.Float(mapX+buttonW, 0);
-                Color[] colors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(start, end, dist, colors);
-            }
-            int s3 = BasePanel.s3;
-            int s5 = BasePanel.s5;
-            int s10 = BasePanel.s10;
-            g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(mapX+s3, mapY+s3, buttonW,buttonH,s10,s10);
-            g.setPaint(background);
-            g.fillRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            Stroke prevStr =g.getStroke();
-            g.setStroke(BasePanel.stroke2);
-            g.drawRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            g.setStroke(prevStr);
-            g.setFont(font());
-
-            String str = label();
-            int sw = g.getFontMetrics().stringWidth(str);
-            int x2a = mapX+((buttonW-sw)/2);
-            drawBorderedString(g, str, x2a, mapY+buttonH-s10, SystemPanel.textShadowC, c0);
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            //if (click)
-            //    softClick();
-            parent.ok();
-        }
     }
 }

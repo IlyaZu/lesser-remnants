@@ -19,10 +19,7 @@ package rotp.ui.main.overlay;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,13 +32,13 @@ import rotp.model.empires.SabotageMission;
 import rotp.model.empires.SpyReport;
 import rotp.model.tech.Tech;
 import rotp.ui.BasePanel;
-import static rotp.ui.BasePanel.stroke2;
 import rotp.ui.RotPUI;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomaticMessage;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
+import rotp.ui.sprites.TextButtonSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlaySpies extends MapOverlay {
@@ -49,14 +46,17 @@ public class MapOverlaySpies extends MapOverlay {
 
     private final List<Empire> empires = new ArrayList<>();
     private final List<EmpireTabSprite> tabs = new ArrayList<>();
+    private final TextButtonSprite closeButton =
+            new TextButtonSprite("NOTICE_SPIES_CLOSE", false, this::advanceMap);
+    private final TextButtonSprite intelButton =
+            new TextButtonSprite("NOTICE_SPIES_MANAGE", false, this::manageSpies);
+    private final TextButtonSprite threatenButton =
+            new TextButtonSprite("NOTICE_SPIES_THREATEN", false, this::threaten);
     
     private MainUI parent;
     private BufferedImage labImg;
     private Empire selectedEmpire;
     private boolean drawSprites = false;
-    private CloseButton closeButton = new CloseButton();
-    private IntelligenceButton intelButton = new IntelligenceButton();
-    private ThreatenButton threatenButton = new ThreatenButton();
     
     public MapOverlaySpies(MainUI p) {
         parent = p;
@@ -69,9 +69,6 @@ public class MapOverlaySpies extends MapOverlay {
         labImg = null;
         empires.clear();
         tabs.clear();
-        closeButton.parent(this);
-        intelButton.parent(this);
-        threatenButton.parent(this);
         drawSprites = true;
         List<Empire> allEmpires = player().contactedEmpires();
         for (Empire emp: allEmpires) {
@@ -181,19 +178,21 @@ public class MapOverlaySpies extends MapOverlay {
         g.setColor(MainUI.paneBackground);
         g.fillRect(x1, y1, w1, h1);
 
-        int buttonH = BasePanel.s25;
-        int buttonY = y1+h1-buttonH-BasePanel.s5;
-        int closeW = closeButton.getWidth(g);
+        closeButton.refreshSize(g);
+        int buttonY = y1+h1-closeButton.getHeight()-BasePanel.s5;
+        int closeW = closeButton.getWidth();
         int closeX = x1+w1-closeW-BasePanel.s5;
-        closeButton.setBounds(closeX,buttonY,closeW,buttonH);
+        closeButton.setPosition(closeX, buttonY);
         
-        int intelW = intelButton.getWidth(g);
+        intelButton.refreshSize(g);
+        int intelW = intelButton.getWidth();
         int intelX = closeX-intelW-BasePanel.s5;
-        intelButton.setBounds(intelX,buttonY,intelW,buttonH);
+        intelButton.setPosition(intelX, buttonY);
         
-        int threatW = threatenButton.getWidth(g);
+        threatenButton.refreshSize(g);
+        int threatW = threatenButton.getWidth();
         int threatX = intelX-threatW-BasePanel.s5;
-        threatenButton.setBounds(threatX,buttonY,threatW,buttonH);
+        threatenButton.setPosition(threatX, buttonY);
 
         // draw title
         String subtitle = text("NOTICE_SPIES_TITLE");
@@ -485,236 +484,6 @@ public class MapOverlaySpies extends MapOverlay {
             //if (click)
             //    softClick();
             parent.selectEmpire(empire);
-        }
-    }
-    public class CloseButton extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(59,59,59);
-        private final Color midC = new Color(93,93,93);
-        private int x, y, w, h;
-        private MapOverlaySpies parent;
-        private String label;
-        Color buttonC = new Color(110,110,110);
-        Color gray190C = new Color(190,190,190);
-
-        public void setBounds(int x0, int y0, int w0, int h0) {
-            x = x0;
-            y = y0;
-            w = w0;
-            h = h0;
-        }
-        public int getWidth(Graphics2D g) {
-            g.setFont(narrowFont(20));
-            return g.getFontMetrics().stringWidth(label)+BasePanel.s20;
-        }
-        protected int mapX()      { return x; }
-        protected int mapY()      { return y; }
-        public void mapX(int i)   { x = i; }
-        public void mapY(int i)   { y = i; }
-        public void reset()       { background = null; }
-
-        public void parent(MapOverlaySpies p)  {
-            parent = p;
-            label = text("NOTICE_SPIES_CLOSE");
-             background = null;
-       }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x0, int y0) {
-            hovering = x0 >= x
-                        && x0 <= x+w
-                        && y0 >= y
-                        && y0 <= y+h;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D yesStart = new Point2D.Float(x, 0);
-                Point2D yesEnd = new Point2D.Float(x+w, 0);
-                Color[] yesColors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(yesStart, yesEnd, dist, yesColors);
-            }
-            g.setColor(buttonC);
-            g.fillRect(x,y, w, h);
-            g.setColor(gray190C);
-            g.drawRect(x,y, w, h);
-
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            g.setFont(narrowFont(20));
-            int sw = g.getFontMetrics().stringWidth(label);
-            drawString(g,label, x+((w-sw)/2),y+BasePanel.s19);
-            if (hovering) {
-                Stroke prevStroke = g.getStroke();
-                g.setStroke(stroke2);
-                g.setColor(SystemPanel.yellowText);
-                g.drawRect(x,y, w, h);
-                g.setStroke(prevStroke);
-            }
-
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            if (click)
-                softClick();
-            parent.advanceMap();
-        }
-    }
-    public class IntelligenceButton extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(59,59,59);
-        private final Color midC = new Color(93,93,93);
-        private int x, y, w, h;
-        private MapOverlaySpies parent;
-        private String label;
-        Color buttonC = new Color(110,110,110);
-        Color gray190C = new Color(190,190,190);
-
-        public void setBounds(int x0, int y0, int w0, int h0) {
-            x = x0;
-            y = y0;
-            w = w0;
-            h = h0;
-        }
-        public int getWidth(Graphics2D g) {
-            g.setFont(narrowFont(20));
-            return g.getFontMetrics().stringWidth(label)+BasePanel.s20;
-        }
-        protected int mapX()      { return x; }
-        protected int mapY()      { return y; }
-        public void mapX(int i)   { x = i; }
-        public void mapY(int i)   { y = i; }
-        public void reset()       { background = null; }
-
-        public void parent(MapOverlaySpies p)  {
-            parent = p;
-            label = text("NOTICE_SPIES_MANAGE");
-            background = null;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x0, int y0) {
-            hovering = x0 >= x
-                        && x0 <= x+w
-                        && y0 >= y
-                        && y0 <= y+h;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D yesStart = new Point2D.Float(x, 0);
-                Point2D yesEnd = new Point2D.Float(x+w, 0);
-                Color[] yesColors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(yesStart, yesEnd, dist, yesColors);
-            }
-            g.setColor(buttonC);
-            g.fillRect(x,y, w, h);
-            g.setColor(gray190C);
-            g.drawRect(x,y, w, h);
-
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            g.setFont(narrowFont(20));
-            int sw = g.getFontMetrics().stringWidth(label);
-            drawString(g,label, x+((w-sw)/2),y+BasePanel.s19);
-            if (hovering) {
-                Stroke prevStroke = g.getStroke();
-                g.setStroke(stroke2);
-                g.setColor(SystemPanel.yellowText);
-                g.drawRect(x,y, w, h);
-                g.setStroke(prevStroke);
-            }
-
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            if (click)
-                softClick();
-            manageSpies();
-        }
-    }
-    public class ThreatenButton extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(59,59,59);
-        private final Color midC = new Color(93,93,93);
-        private int x, y, w, h;
-        private MapOverlaySpies parent;
-        private String label;
-        Color buttonC = new Color(110,110,110);
-        Color gray190C = new Color(190,190,190);
-
-        public void setBounds(int x0, int y0, int w0, int h0) {
-            x = x0;
-            y = y0;
-            w = w0;
-            h = h0;
-        }
-        public int getWidth(Graphics2D g) {
-            g.setFont(narrowFont(20));
-            return g.getFontMetrics().stringWidth(label)+BasePanel.s20;
-        }
-        protected int mapX()      { return x; }
-        protected int mapY()      { return y; }
-        public void mapX(int i)   { x = i; }
-        public void mapY(int i)   { y = i; }
-        public void reset()       { background = null; }
-
-        public void parent(MapOverlaySpies p)  {
-            parent = p;
-            label = text("NOTICE_SPIES_THREATEN");
-            background = null;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x0, int y0) {
-            hovering = x0 >= x
-                        && x0 <= x+w
-                        && y0 >= y
-                        && y0 <= y+h;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D yesStart = new Point2D.Float(x, 0);
-                Point2D yesEnd = new Point2D.Float(x+w, 0);
-                Color[] yesColors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(yesStart, yesEnd, dist, yesColors);
-            }
-            g.setColor(buttonC);
-            g.fillRect(x,y, w, h);
-            g.setColor(gray190C);
-            g.drawRect(x,y, w, h);
-
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            g.setFont(narrowFont(20));
-            int sw = g.getFontMetrics().stringWidth(label);
-            drawString(g,label, x+((w-sw)/2),y+BasePanel.s19);
-            if (hovering) {
-                Stroke prevStroke = g.getStroke();
-                g.setStroke(stroke2);
-                g.setColor(SystemPanel.yellowText);
-                g.drawRect(x,y, w, h);
-                g.setStroke(prevStroke);
-            }
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            if (click)
-                softClick();
-            threaten();
         }
     }
 }

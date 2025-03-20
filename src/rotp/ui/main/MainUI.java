@@ -231,7 +231,6 @@ public class MainUI extends BasePanel implements IMapHandler {
     }
     public void showMemoryLowPrompt() {
         overlay = overlayMemoryLow;
-        overlayMemoryLow.init();
         repaint();
     }
     public void showJava32BitPrompt() {

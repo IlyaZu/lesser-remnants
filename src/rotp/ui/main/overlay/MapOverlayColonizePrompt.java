@@ -33,14 +33,18 @@ import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
-import rotp.ui.sprites.ColonizeNoSprite;
-import rotp.ui.sprites.ColonizeYesSprite;
+import rotp.ui.sprites.TextButtonSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayColonizePrompt extends MapOverlay {
     private static final int nameLengthLimit = 24;
     private static final Color dlgBox = new Color(123,123,123,192);
     private static final Color maskC = new Color(40,40,40,160);
+    
+    private final TextButtonSprite yesButton =
+            new TextButtonSprite("MAIN_COLONIZE_YES", true, this::colonizeYes);
+    private final TextButtonSprite noButton =
+            new TextButtonSprite("MAIN_COLONIZE_NO", false, this::colonizeNo);
     
     private Area mask;
     private BufferedImage planetImg;
@@ -49,8 +53,6 @@ public class MapOverlayColonizePrompt extends MapOverlay {
     private String sysName;
     private ShipFleet fleet;
     private boolean drawSprites = false;
-    private ColonizeNoSprite noButton = new ColonizeNoSprite();
-    private ColonizeYesSprite yesButton = new ColonizeYesSprite();
     private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlayColonizePrompt(MainUI p) {
@@ -62,8 +64,6 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         sysId = systemId;
         sysName = player().sv.name(sysId);
         fleet = fl;
-        noButton.reset();
-        yesButton.reset();
         flagButton.reset();
         drawSprites = true;
         parent.hideDisplayPanel();
@@ -319,26 +319,16 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         flagButton.mapY(boxY+boxH-buttonPaneH-flagButton.height()+s10);
         flagButton.draw(parent.map(), g);
         
-        // calc width needed for yes/no buttons
-        g.setFont(narrowFont(20));
-        String yesStr = text("MAIN_COLONIZE_YES");
-        String noStr = text("MAIN_COLONIZE_NO");
-        int swYes = g.getFontMetrics().stringWidth(yesStr);
-        int swNo = g.getFontMetrics().stringWidth(noStr);
-        int buttonW = s20+Math.max(swYes, swNo);
-        
-        // draw yes/no buttons
-        g.setFont(narrowFont(20));
-        int buttonH = s30;
-        // no button
+        // draw no button
         parent.addNextTurnControl(noButton);
-        noButton.parent(this);
-        noButton.setBounds(x0+w0-buttonW-s10, y0+h0-buttonH-s10, buttonW, buttonH);
+        noButton.refreshSize(g);
+        noButton.setPosition(x0+w0-noButton.getWidth()-s10, y0+h0-noButton.getHeight()-s10);
         noButton.draw(parent.map(), g);
-        // yes button
+        
+        // draw yes button
         parent.addNextTurnControl(yesButton);
-        yesButton.parent(this);
-        yesButton.setBounds(x0+s10, y0+h0-buttonH-s10, buttonW, buttonH);
+        yesButton.refreshSize(g);
+        yesButton.setPosition(x0+s10, y0+h0-yesButton.getHeight()-s10);
         yesButton.draw(parent.map(), g);
     }
     @Override

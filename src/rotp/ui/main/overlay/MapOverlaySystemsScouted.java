@@ -17,17 +17,13 @@
 package rotp.ui.main.overlay;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.LinearGradientPaint;
 import java.awt.Rectangle;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,10 +36,18 @@ import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
+import rotp.ui.sprites.TextButtonSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlaySystemsScouted extends MapOverlay {
     private static final Color maskC = new Color(40,40,40,160);
+    
+    private final TextButtonSprite prevSystemButton =
+            new TextButtonSprite("MAIN_ALLOCATE_PREV_SYSTEM", false, this::previousSystem);
+    private final TextButtonSprite nextSystemButton =
+            new TextButtonSprite("MAIN_ALLOCATE_NEXT_SYSTEM", true, this::nextSystem);
+    private final TextButtonSprite continueButton =
+            new TextButtonSprite("MAIN_ALLOCATE_CLOSE", false, this::advanceMap);
     
     private Area mask;
     private BufferedImage planetImg;
@@ -54,9 +58,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
     private List<StarSystem> orderedSystems = new ArrayList<>();
     private int systemIndex = 0;
     private boolean drawSprites = false;
-    private PreviousSystemButtonSprite prevSystemButton = new PreviousSystemButtonSprite();
-    private NextSystemButtonSprite nextSystemButton = new NextSystemButtonSprite();
-    private ContinueButtonSprite continueButton = new ContinueButtonSprite();
     private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlaySystemsScouted(MainUI p) {
@@ -69,9 +70,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         systemIndex = 0;
         drawSprites = true;
         orderedSystems.clear();
-        continueButton.reset();
-        prevSystemButton.reset();
-        nextSystemButton.reset();
         flagButton.reset();
         if (newSystems.isEmpty())
             advanceMap();
@@ -358,33 +356,32 @@ public class MapOverlaySystemsScouted extends MapOverlay {
 
         // init and draw continue button sprite
         parent.addNextTurnControl(continueButton);
-        continueButton.init(this, g);
-        continueButton.mapX(x0+w0-continueButton.width()-s10);
-        continueButton.mapY(y0+h0-continueButton.height()-s10);
-        if (orderedSystems.size() < 2)
-            continueButton.setSelectionBounds(x0,y0,w0,h0);
+        continueButton.refreshSize(g);
+        int continueX = x0+w0-continueButton.getWidth()-s10;
+        int continueY = y0+h0-continueButton.getHeight()-s10;
+        continueButton.setPosition(continueX, continueY);
         continueButton.draw(parent.map(), g);
 
         if (orderedSystems.size() > 1) {
             parent.addNextTurnControl(prevSystemButton);
-            prevSystemButton.init(this,g);
-            prevSystemButton.mapX(x0+s10);
-            prevSystemButton.mapY(continueButton.mapY());
+            prevSystemButton.refreshSize(g);
+            int prevSystemX = x0+s10;
+            int prevSystemY = y0+h0-prevSystemButton.getHeight()-s10;
+            prevSystemButton.setPosition(prevSystemX, prevSystemY);
             prevSystemButton.draw(parent.map(), g);
 
             // draw notice number
             String notice2Str = text("MAIN_ALLOCATE_BRIEF_NUMBER", str(systemIndex+1), str(orderedSystems.size()));
             g.setFont(narrowFont(16));
             int sw4 = g.getFontMetrics().stringWidth(notice2Str);
-            int x4b = prevSystemButton.mapX()+prevSystemButton.width()+s10;
-            int y4b = prevSystemButton.mapY()+prevSystemButton.height()-s10;
+            int x4b = prevSystemX+prevSystemButton.getWidth()+s10;
+            int y4b = prevSystemY+prevSystemButton.getHeight()-s10;
             g.setColor(SystemPanel.blackText);
             drawString(g,notice2Str, x4b, y4b);
 
             parent.addNextTurnControl(nextSystemButton);
-            nextSystemButton.init(this,g);
-            nextSystemButton.mapX(x4b+sw4+s10);
-            nextSystemButton.mapY(continueButton.mapY());
+            nextSystemButton.refreshSize(g);
+            nextSystemButton.setPosition(x4b+sw4+s10, prevSystemY);
             nextSystemButton.draw(parent.map(), g);
         }
     }
@@ -410,225 +407,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 misClick(); break;
         }
         return true;
-    }
-    class PreviousSystemButtonSprite extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(59,59,59);
-        private final Color midC = new Color(93,93,93);
-        private int mapX, mapY, buttonW, buttonH;
-        private MapOverlaySystemsScouted parent;
-
-        public int mapX()         { return mapX; }
-        public int mapY()         { return mapY; }
-        public void mapX(int i)   { mapX = i; }
-        public void mapY(int i)   { mapY = i; }
-
-        public int width()        { return buttonW; }
-        public int height()       { return buttonH; }
-        private String label()    { return text("MAIN_ALLOCATE_PREV_SYSTEM"); }
-        private Font font()       { return narrowFont(18); }
-        public void reset()       { background = null; }
-
-        public void init(MapOverlaySystemsScouted p, Graphics2D g)  {
-            parent = p;
-            buttonW = BasePanel.s20 + g.getFontMetrics(font()).stringWidth(label());
-            buttonH = BasePanel.s30;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
-            hovering = x >= mapX
-                        && x <= mapX+buttonW
-                        && y >= mapY()
-                        && y <= mapY()+buttonH;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D start = new Point2D.Float(mapX, 0);
-                Point2D end = new Point2D.Float(mapX+buttonW, 0);
-                Color[] colors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(start, end, dist, colors);
-            }
-            int s3 = BasePanel.s3;
-            int s5 = BasePanel.s5;
-            int s10 = BasePanel.s10;
-            g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(mapX+s3, mapY+s3, buttonW,buttonH,s10,s10);
-            g.setPaint(background);
-            g.fillRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            Stroke prevStr =g.getStroke();
-            g.setStroke(BasePanel.stroke2);
-            g.drawRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            g.setStroke(prevStr);
-            g.setFont(font());
-
-            String str = label();
-            int sw = g.getFontMetrics().stringWidth(str);
-            int x2a = mapX+((buttonW-sw)/2);
-            drawBorderedString(g, str, x2a, mapY+buttonH-s10, SystemPanel.textShadowC, c0);
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            //if (click)
-            //    softClick();
-            parent.previousSystem();
-        }
-    }
-     class NextSystemButtonSprite extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(44,59,30);
-        private final Color midC = new Color(70,93,48);
-        private int mapX, mapY, buttonW, buttonH;
-        private MapOverlaySystemsScouted parent;
-
-        public int mapX()         { return mapX; }
-        public int mapY()         { return mapY; }
-        public void mapX(int i)   { mapX = i; }
-        public void mapY(int i)   { mapY = i; }
-
-        public int width()        { return buttonW; }
-        public int height()       { return buttonH; }
-        private String label()    { return text("MAIN_ALLOCATE_NEXT_SYSTEM"); }
-        private Font font()       { return narrowFont(18); }
-        public void reset()       { background = null; }
-
-        public void init(MapOverlaySystemsScouted p, Graphics2D g)  {
-            parent = p;
-            buttonW = BasePanel.s20 + g.getFontMetrics(font()).stringWidth(label());
-            buttonH = BasePanel.s30;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
-            hovering = x >= mapX
-                        && x <= mapX+buttonW
-                        && y >= mapY()
-                        && y <= mapY()+buttonH;
-
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D start = new Point2D.Float(mapX, 0);
-                Point2D end = new Point2D.Float(mapX+buttonW, 0);
-                Color[] colors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(start, end, dist, colors);
-            }
-            int s3 = BasePanel.s3;
-            int s5 = BasePanel.s5;
-            int s10 = BasePanel.s10;
-            g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(mapX+s3, mapY+s3, buttonW,buttonH,s10,s10);
-            g.setPaint(background);
-            g.fillRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            Stroke prevStr =g.getStroke();
-            g.setStroke(BasePanel.stroke2);
-            g.drawRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            g.setStroke(prevStr);
-            g.setFont(font());
-
-            String str = label();
-            int sw = g.getFontMetrics().stringWidth(str);
-            int x2a = mapX+((buttonW-sw)/2);
-            drawBorderedString(g, str, x2a, mapY+buttonH-s10, SystemPanel.textShadowC, c0);
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            //if (click)
-            //    softClick();
-            parent.nextSystem();
-        }
-    }
-    class ContinueButtonSprite extends MapSprite {
-        private LinearGradientPaint background;
-        private final Color edgeC = new Color(59,59,59);
-        private final Color midC = new Color(93,93,93);
-        private int mapX, mapY, buttonW, buttonH;
-        private int selectX, selectY, selectW, selectH;
-
-        private MapOverlaySystemsScouted parent;
-
-        protected int mapX()      { return mapX; }
-        protected int mapY()      { return mapY; }
-        public void mapX(int i)   { selectX = mapX = i; }
-        public void mapY(int i)   { selectY = mapY = i; }
-
-        public int width()        { return buttonW; }
-        public int height()       { return buttonH; }
-        private String label()    { return text("MAIN_ALLOCATE_CLOSE"); }
-        private Font font()       { return narrowFont(18); }
-        public void reset()       { background = null; }
-
-        public void init(MapOverlaySystemsScouted p, Graphics2D g)  {
-            parent = p;
-            buttonW = BasePanel.s60 + g.getFontMetrics(font()).stringWidth(label());
-            buttonH = BasePanel.s30;
-            selectW = buttonW;
-            selectH = buttonH;
-        }
-        public void setSelectionBounds(int x, int y, int w, int h) {
-            selectX = x;
-            selectY = y;
-            selectW = w;
-            selectH = h;
-        }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
-            hovering = x >= selectX
-                        && x <= selectX+selectW
-                        && y >= selectY
-                        && y <= selectY+selectH;
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-            if (background == null) {
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Point2D start = new Point2D.Float(mapX, 0);
-                Point2D end = new Point2D.Float(mapX+buttonW, 0);
-                Color[] colors = {edgeC, midC, edgeC };
-                background = new LinearGradientPaint(start, end, dist, colors);
-            }
-            int s3 = BasePanel.s3;
-            int s5 = BasePanel.s5;
-            int s10 = BasePanel.s10;
-            g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(mapX+s3, mapY+s3, buttonW,buttonH,s10,s10);
-            g.setPaint(background);
-            g.fillRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            Color c0 = hovering ? SystemPanel.yellowText : SystemPanel.whiteText;
-            g.setColor(c0);
-            Stroke prevStr =g.getStroke();
-            g.setStroke(BasePanel.stroke2);
-            g.drawRoundRect(mapX, mapY, buttonW,buttonH,s5,s5);
-            g.setStroke(prevStr);
-            g.setFont(font());
-
-            String str = label();
-            int sw = g.getFontMetrics().stringWidth(str);
-            int x2a = mapX+((buttonW-sw)/2);
-            drawBorderedString(g, str, x2a, mapY+buttonH-s10, SystemPanel.textShadowC, c0);
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            //if (click)
-            //    softClick();
-            parent.advanceMap();
-        }
     }
     class SystemFlagSprite extends MapSprite {
         private int mapX, mapY, buttonW, buttonH;
