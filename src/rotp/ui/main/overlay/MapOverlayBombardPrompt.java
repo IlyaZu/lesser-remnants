@@ -33,15 +33,19 @@ import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
-import rotp.ui.sprites.BombardNoSprite;
-import rotp.ui.sprites.BombardYesSprite;
 import rotp.ui.sprites.ClickToContinueSprite;
+import rotp.ui.sprites.TextButtonSprite;
 import rotp.ui.sprites.MapSprite;
 
 public class MapOverlayBombardPrompt extends MapOverlay {
     private static final Color destroyedTextC = new Color(255,32,32,192);
     private static final Color destroyedMaskC = new Color(0,0,0,160);
     private static final Color maskC  = new Color(40,40,40,160);
+    
+    private final TextButtonSprite yesButton =
+            new TextButtonSprite("MAIN_BOMBARD_YES", true, this::bombardYes);
+    private final TextButtonSprite noButton =
+            new TextButtonSprite("MAIN_BOMBARD_NO", false, this::bombardCancel);
     
     private Area mask;
     private BufferedImage planetImg;
@@ -52,8 +56,6 @@ public class MapOverlayBombardPrompt extends MapOverlay {
     private int pop, endPop, bases, endBases, fact, endFact, shield, transports;
     private boolean drawSprites = false;
     private ClickToContinueSprite clickSprite;
-    private BombardNoSprite noButton = new BombardNoSprite();
-    private BombardYesSprite yesButton = new BombardYesSprite();
     private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlayBombardPrompt(MainUI p) {
@@ -76,8 +78,6 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         fact = endFact = pl.sv.factories(sysId);
         shield = sys.colony().defense().shieldLevel();
         transports = player().transportsInTransit(sys);
-        noButton.reset();
-        yesButton.reset();
         parent.hideDisplayPanel();
         parent.map().setScale(20);
         parent.map().recenterMapOn(sys);
@@ -432,26 +432,16 @@ public class MapOverlayBombardPrompt extends MapOverlay {
             parent.addNextTurnControl(clickSprite);
             
         } else {
-            // calc width needed for yes/no buttons
-            g.setFont(narrowFont(20));
-            String yesStr = text("MAIN_BOMBARD_YES");
-            String noStr = text("MAIN_BOMBARD_NO");
-            int swYes = g.getFontMetrics().stringWidth(yesStr);
-            int swNo = g.getFontMetrics().stringWidth(noStr);
-            int buttonW = s20+Math.max(swYes, swNo);
-            
-            // draw yes/no buttons
-            g.setFont(narrowFont(20));
-            int buttonH = s30;
-            // no button
+            // draw no button
             parent.addNextTurnControl(noButton);
-            noButton.parent(this);
-            noButton.setBounds(x0+w0-buttonW-s10, y0+h0-buttonH-s10, buttonW, buttonH);
+            noButton.refreshSize(g);
+            noButton.setPosition(x0+w0-noButton.getWidth()-s10, y0+h0-noButton.getHeight()-s10);
             noButton.draw(parent.map(), g);
-            // yes button
+            
+            // draw yes button
             parent.addNextTurnControl(yesButton);
-            yesButton.parent(this);
-            yesButton.setBounds(x0+s10, y0+h0-buttonH-s10, buttonW, buttonH);
+            yesButton.refreshSize(g);
+            yesButton.setPosition(x0+s10, y0+h0-yesButton.getHeight()-s10);
             yesButton.draw(parent.map(), g);
         }
     }
