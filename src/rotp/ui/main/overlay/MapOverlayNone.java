@@ -31,7 +31,7 @@ import rotp.ui.sprites.ShipRelocationSprite;
 import rotp.ui.sprites.SystemTransportSprite;
 
 public class MapOverlayNone extends MapOverlay {
-    private MainUI parent;
+    private final MainUI parent;
     
     public MapOverlayNone(MainUI p) {
         parent = p;

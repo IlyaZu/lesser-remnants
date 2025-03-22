@@ -45,15 +45,15 @@ public class MapOverlayColonizePrompt extends MapOverlay {
             new TextButtonSprite("MAIN_COLONIZE_YES", true, this::colonizeYes);
     private final TextButtonSprite noButton =
             new TextButtonSprite("MAIN_COLONIZE_NO", false, this::colonizeNo);
+    private final SystemFlagSprite flagButton = new SystemFlagSprite();
+    private final MainUI parent;
     
     private Area mask;
     private BufferedImage planetImg;
-    private MainUI parent;
     private int sysId;
     private String sysName;
     private ShipFleet fleet;
     private boolean drawSprites = false;
-    private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlayColonizePrompt(MainUI p) {
         parent = p;

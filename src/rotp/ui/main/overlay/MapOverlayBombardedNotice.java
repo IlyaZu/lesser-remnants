@@ -37,15 +37,16 @@ import rotp.ui.sprites.ClickToContinueSprite;
 public class MapOverlayBombardedNotice extends MapOverlay {
     private static final Color destroyedTextC = new Color(255,32,32,192);
     private static final Color destroyedMaskC = new Color(0,0,0,160);
-    private static Color maskC  = new Color(40,40,40,160);
+    private static final Color maskC  = new Color(40,40,40,160);
+    
+    private final MainUI parent;
+    private final ClickToContinueSprite clickSprite;
     
     private Area mask;
     private BufferedImage planetImg;
-    private MainUI parent;
     private int sysId;
     private ShipFleet fleet;
     private int pop, endPop, bases, endBases, fact, endFact, shield;
-    private ClickToContinueSprite clickSprite;
     
     public MapOverlayBombardedNotice(MainUI p) {
         parent = p;

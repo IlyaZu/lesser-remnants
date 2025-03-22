@@ -52,8 +52,8 @@ public class MapOverlaySpies extends MapOverlay {
             new TextButtonSprite("NOTICE_SPIES_MANAGE", false, this::manageSpies);
     private final TextButtonSprite threatenButton =
             new TextButtonSprite("NOTICE_SPIES_THREATEN", false, this::threaten);
+    private final MainUI parent;
     
-    private MainUI parent;
     private BufferedImage labImg;
     private Empire selectedEmpire;
     private boolean drawSprites = false;

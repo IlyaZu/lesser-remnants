@@ -48,8 +48,9 @@ public class MapOverlayEspionageMission extends MapOverlay {
     private static final Color greenEdgeC = new Color(44,59,30);
     private static final Color greenMidC = new Color(70,93,48);
 
+    private final MainUI parent;
+    
     private Area mask;
-    private MainUI parent;
     private BufferedImage labImg;
     private LinearGradientPaint grayBack1, grayBack2;
     private LinearGradientPaint greenBack1, greenBack2;

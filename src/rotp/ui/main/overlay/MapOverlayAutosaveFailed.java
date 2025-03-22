@@ -29,8 +29,8 @@ import rotp.ui.sprites.TextButtonSprite;
 public class MapOverlayAutosaveFailed extends MapOverlay {
     private final TextButtonSprite okButton =
             new TextButtonSprite("MAIN_AUTOSAVE_FAILED_OK", true, this::ok);
+    private final MainUI parent;
     
-    private MainUI parent;
     private String errorMsg;
     
     public MapOverlayAutosaveFailed(MainUI p) {

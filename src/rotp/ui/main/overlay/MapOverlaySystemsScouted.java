@@ -48,17 +48,17 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             new TextButtonSprite("MAIN_ALLOCATE_NEXT_SYSTEM", true, this::nextSystem);
     private final TextButtonSprite continueButton =
             new TextButtonSprite("MAIN_ALLOCATE_CLOSE", false, this::advanceMap);
+    private final SystemFlagSprite flagButton = new SystemFlagSprite();
+    private final MainUI parent;
     
     private Area mask;
     private BufferedImage planetImg;
-    private MainUI parent;
     private List<StarSystem> scoutSystems = new ArrayList<>();
     private List<StarSystem> allySystems = new ArrayList<>();
     private List<StarSystem> astronomerSystems = new ArrayList<>();
     private List<StarSystem> orderedSystems = new ArrayList<>();
     private int systemIndex = 0;
     private boolean drawSprites = false;
-    private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlaySystemsScouted(MainUI p) {
         parent = p;

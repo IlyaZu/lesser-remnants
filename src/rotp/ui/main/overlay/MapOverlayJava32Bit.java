@@ -29,9 +29,9 @@ import rotp.ui.sprites.TextButtonSprite;
 public class MapOverlayJava32Bit extends MapOverlay {
     private final TextButtonSprite okButton =
             new TextButtonSprite("MAIN_AUTOSAVE_FAILED_OK", true, this::ok);
+    private final MainUI parent;
     
     private boolean showSprite = true;
-    private MainUI parent;
     
     public MapOverlayJava32Bit(MainUI p) {
         parent = p;

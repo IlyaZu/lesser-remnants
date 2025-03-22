@@ -40,8 +40,8 @@ public class MapOverlayAllocateSystems extends MapOverlay {
             new TextButtonSprite("MAIN_ALLOCATE_NEXT_SYSTEM", true, this::nextSystem);
     private final TextButtonSprite continueButton =
             new TextButtonSprite("MAIN_ALLOCATE_CLOSE", false, this::advanceMap);
+    private final MainUI parent;
     
-    private MainUI parent;
     private HashMap<StarSystem,List<String>> systemsToAllocate = new HashMap<>();
     private List<StarSystem> orderedSystems = new ArrayList<>();
     private LinearGradientPaint arrowBack;

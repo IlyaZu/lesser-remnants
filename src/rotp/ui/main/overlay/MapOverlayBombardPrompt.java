@@ -46,17 +46,17 @@ public class MapOverlayBombardPrompt extends MapOverlay {
             new TextButtonSprite("MAIN_BOMBARD_YES", true, this::bombardYes);
     private final TextButtonSprite noButton =
             new TextButtonSprite("MAIN_BOMBARD_NO", false, this::bombardCancel);
+    private final SystemFlagSprite flagButton = new SystemFlagSprite();
+    private final ClickToContinueSprite clickSprite;
+    private final MainUI parent;
     
     private Area mask;
     private BufferedImage planetImg;
-    private MainUI parent;
     private boolean bombarded = false;
     private int sysId;
     private ShipFleet fleet;
     private int pop, endPop, bases, endBases, fact, endFact, shield, transports;
     private boolean drawSprites = false;
-    private ClickToContinueSprite clickSprite;
-    private SystemFlagSprite flagButton = new SystemFlagSprite();
     
     public MapOverlayBombardPrompt(MainUI p) {
         parent = p;
