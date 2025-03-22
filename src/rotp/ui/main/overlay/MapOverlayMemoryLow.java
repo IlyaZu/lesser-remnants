@@ -32,8 +32,7 @@ public class MapOverlayMemoryLow extends MapOverlay {
             new TextButtonSprite("MAIN_MEMORY_LOW_RESTART", true, this::restart);
     private final TextButtonSprite skipButton =
             new TextButtonSprite("MAIN_MEMORY_LOW_SKIP", true, this::skip);
-    
-    private MainUI parent;
+    private final MainUI parent;
     
     public MapOverlayMemoryLow(MainUI p) {
         parent = p;

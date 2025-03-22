@@ -47,10 +47,10 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
             new TextButtonSprite("SHIP_COMBAT_RETREAT_ALL", false, () -> startCombat(ShipBattleUI.RETREAT_ALL));
     private final TextButtonSprite battleButton =
             new TextButtonSprite("SHIP_COMBAT_ENTER_BATTLE", true, () -> startCombat(ShipBattleUI.ENTER_COMBAT));
+    private final MainUI parent;
     
     private Area mask;
     private BufferedImage planetImg;
-    private MainUI parent;
     private int sysId;
     private boolean drawSprites = false;
     private  CombatManager mgr;

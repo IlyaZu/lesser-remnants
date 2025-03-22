@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +21,7 @@ import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 
 public class ClickToContinueSprite extends MapSprite {
-    private MainUI parent;
-    public void parent(MainUI p)  { parent = p; }
+    private final MainUI parent;
     public ClickToContinueSprite(MainUI p) {
         parent = p;
     }
