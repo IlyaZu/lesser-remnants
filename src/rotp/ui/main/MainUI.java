@@ -235,7 +235,6 @@ public class MainUI extends BasePanel implements IMapHandler {
     }
     public void showJava32BitPrompt() {
         overlay = overlayJava32Bit;
-        overlayJava32Bit.init();
         repaint();
     }
     public void showAutosaveFailedPrompt(String err) {

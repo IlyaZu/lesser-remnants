@@ -53,7 +53,7 @@ public class MapOverlayColonizePrompt extends MapOverlay {
     private int sysId;
     private String sysName;
     private ShipFleet fleet;
-    private boolean drawSprites = false;
+    private boolean isOpen = false;
     
     public MapOverlayColonizePrompt(MainUI p) {
         parent = p;
@@ -65,7 +65,7 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         sysName = player().sv.name(sysId);
         fleet = fl;
         flagButton.reset();
-        drawSprites = true;
+        isOpen = true;
         parent.hideDisplayPanel();
         parent.map().setScale(20);
         parent.map().recenterMapOn(sys);
@@ -85,11 +85,9 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         player().sv.resetFlagColor(sysId);
         parent.repaint();
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     public void colonizeYes() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             mask = null;
             planetImg = null;
             softClick();
@@ -103,8 +101,8 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         }
     }
     public void colonizeNo() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             mask = null;
             planetImg = null;
             advanceMap();
@@ -391,8 +389,6 @@ public class MapOverlayColonizePrompt extends MapOverlay {
         }
         @Override
         public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
             StarSystem sys = parent.starSystem();
             Image flagImage = parent.parent.flagImage(sys);
             Image flagHaze = parent.parent.flagHaze(sys);

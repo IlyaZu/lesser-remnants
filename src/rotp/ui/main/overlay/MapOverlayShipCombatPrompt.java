@@ -52,7 +52,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
     private Area mask;
     private BufferedImage planetImg;
     private int sysId;
-    private boolean drawSprites = false;
     private  CombatManager mgr;
     private SystemFlagSprite flagButton = new SystemFlagSprite();
     
@@ -66,7 +65,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         flagButton.reset();
         StarSystem sys = galaxy().system(sysId);
         planetImg = null;
-        drawSprites = true;
         parent.hideDisplayPanel();
         parent.map().setScale(20);
         parent.map().recenterMapOn(sys);
@@ -76,7 +74,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
     }
     
     public void startCombat(int combatFlag) {
-        drawSprites = false;
         parent.clearOverlay();
         parent.repaintAllImmediately();
         RotPUI.instance().selectShipBattlePanel(mgr, combatFlag);
@@ -92,8 +89,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         player().sv.resetFlagColor(sysId);
         parent.repaint();
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -410,8 +405,6 @@ public class MapOverlayShipCombatPrompt extends MapOverlay {
         }
         @Override
         public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
             StarSystem sys = parent.starSystem();
             Image flagImage = parent.parent.flagImage(sys);
             Image flagHaze = parent.parent.flagHaze(sys);

@@ -48,14 +48,14 @@ public class MapOverlayAllocateSystems extends MapOverlay {
     private int systemIndex = 0;
     private int x[] = new int[9];
     private int y[] = new int[9];
-    private boolean drawSprites = false;
+    private boolean isOpen = false;
 
     public MapOverlayAllocateSystems(MainUI p) {
         parent = p;
     }
     
     public void init(HashMap<StarSystem,List<String>> newSystems) {
-        drawSprites = true;
+        isOpen = true;
         systemsToAllocate = newSystems;
         orderedSystems.clear();
         systemIndex = 0;
@@ -91,15 +91,13 @@ public class MapOverlayAllocateSystems extends MapOverlay {
         mapSelectIndex(systemIndex);
     }
     @Override
-    public boolean drawSprites()   { return drawSprites; }
-    @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
     public boolean hoveringOverSprite(Sprite o) { return false; }
     @Override
     public void advanceMap() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             if (!systemsToAllocate.isEmpty()) {
                 systemsToAllocate.clear();
                 orderedSystems.clear();

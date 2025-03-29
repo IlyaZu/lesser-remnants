@@ -56,7 +56,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
     private int sysId;
     private ShipFleet fleet;
     private int pop, endPop, bases, endBases, fact, endFact, shield, transports;
-    private boolean drawSprites = false;
+    private boolean isOpen = false;
     
     public MapOverlayBombardPrompt(MainUI p) {
         parent = p;
@@ -64,7 +64,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
     }
     
     public void init(int systemId, ShipFleet fl) {
-        drawSprites = true;
+        isOpen = true;
         planetImg = null;
         Empire pl = player();
         flagButton.reset();
@@ -98,8 +98,8 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         parent.repaint();
     }
     public void bombardYes() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             mask = null;
             softClick();
             bombard();
@@ -107,8 +107,8 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         }
     }
     public void bombardCancel() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             mask = null;
             advanceMap();
         }
@@ -125,8 +125,6 @@ public class MapOverlayBombardPrompt extends MapOverlay {
             endFact = pl.sv.factories(sysId);
         }
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -503,8 +501,6 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         }
         @Override
         public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
             StarSystem sys = parent.starSystem();
             Image flagImage = parent.parent.flagImage(sys);
             Image flagHaze = parent.parent.flagHaze(sys);
