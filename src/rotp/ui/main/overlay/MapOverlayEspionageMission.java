@@ -58,7 +58,7 @@ public class MapOverlayEspionageMission extends MapOverlay {
     private int empId;
     private TechCategorySprite[] categorySprites = new TechCategorySprite[6];
     private int techCategoryHoverButton = -1;
-    private boolean drawSprites = false;
+    private boolean isOpen = false;
 
     public MapOverlayEspionageMission(MainUI p) {
         parent = p;
@@ -70,8 +70,8 @@ public class MapOverlayEspionageMission extends MapOverlay {
         return (mission.techChoice(TechCategory.id(catNum)) != null);
     }
     public void espionageCategorySelected() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             parent.clearOverlay();
             session().enableSpyReport();
             RotPUI.instance().selectStealTechPanel(mission, empId);
@@ -82,10 +82,8 @@ public class MapOverlayEspionageMission extends MapOverlay {
         mission = esp;
         empId = id;
         techCategoryHoverButton = -1;
-        drawSprites = true;
+        isOpen = true;
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -133,9 +131,6 @@ public class MapOverlayEspionageMission extends MapOverlay {
     }
     @Override
     public void paintOverMap(MainUI parent, GalaxyMapPanel ui, Graphics2D g) {
-        if (!drawSprites)
-            return;
-        
         int w = ui.getWidth()-scaled(150);
         int h = ui.getHeight()-BasePanel.s50;
         Galaxy gal = galaxy();

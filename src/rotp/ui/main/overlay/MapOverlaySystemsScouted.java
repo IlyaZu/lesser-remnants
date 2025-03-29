@@ -58,7 +58,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
     private List<StarSystem> astronomerSystems = new ArrayList<>();
     private List<StarSystem> orderedSystems = new ArrayList<>();
     private int systemIndex = 0;
-    private boolean drawSprites = false;
+    private boolean isOpen = false;
     
     public MapOverlaySystemsScouted(MainUI p) {
         parent = p;
@@ -68,7 +68,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         parent.hideDisplayPanel();
         parent.map().setScale(20);
         systemIndex = 0;
-        drawSprites = true;
+        isOpen = true;
         orderedSystems.clear();
         flagButton.reset();
         if (newSystems.isEmpty())
@@ -122,8 +122,8 @@ public class MapOverlaySystemsScouted extends MapOverlay {
     }
     @Override
     public void advanceMap() {
-        if (drawSprites) {
-            drawSprites = false;
+        if (isOpen) {
+            isOpen = false;
             orderedSystems.clear();
             scoutSystems.clear();
             allySystems.clear();
@@ -135,8 +135,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 parent.resumeOutsideTurn();
         }
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -450,8 +448,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         }
         @Override
         public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
             StarSystem sys = parent.starSystem();
             Image flagImage = parent.parent.flagImage(sys);
             Image flagHaze = parent.parent.flagHaze(sys);

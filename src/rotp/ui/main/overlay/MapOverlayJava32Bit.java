@@ -31,18 +31,11 @@ public class MapOverlayJava32Bit extends MapOverlay {
             new TextButtonSprite("MAIN_AUTOSAVE_FAILED_OK", true, this::ok);
     private final MainUI parent;
     
-    private boolean showSprite = true;
-    
     public MapOverlayJava32Bit(MainUI p) {
         parent = p;
     }
     
-    public void init() {
-        showSprite = true;
-    }
-    
     public void ok() {
-        showSprite = false;
         parent.clearOverlay();
     }
     @Override
@@ -53,8 +46,6 @@ public class MapOverlayJava32Bit extends MapOverlay {
     public void advanceMap() { }
     @Override
     public void paintOverMap(MainUI parent, GalaxyMapPanel ui, Graphics2D g) {
-        if (!showSprite)
-            return;
         int s3 = BasePanel.s3;
         int s7 = BasePanel.s7;
         int s10 = BasePanel.s10;

@@ -56,7 +56,6 @@ public class MapOverlaySpies extends MapOverlay {
     
     private BufferedImage labImg;
     private Empire selectedEmpire;
-    private boolean drawSprites = false;
     
     public MapOverlaySpies(MainUI p) {
         parent = p;
@@ -69,7 +68,6 @@ public class MapOverlaySpies extends MapOverlay {
         labImg = null;
         empires.clear();
         tabs.clear();
-        drawSprites = true;
         List<Empire> allEmpires = player().contactedEmpires();
         for (Empire emp: allEmpires) {
             EmpireView v = player().viewForEmpire(emp.id);
@@ -97,8 +95,6 @@ public class MapOverlaySpies extends MapOverlay {
         DiplomaticMessage.show(view, DialogueManager.DIPLOMACY_THREATEN_MENU, true);
         parent.hoveringOverSprite(null);
     }
-    @Override
-    public boolean drawSprites()   { return drawSprites; }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -141,9 +137,6 @@ public class MapOverlaySpies extends MapOverlay {
     }
     @Override
     public void paintOverMap(MainUI parent, GalaxyMapPanel ui, Graphics2D g) {
-        if (!drawSprites)
-            return;
-        
         int h = ui.getHeight()-BasePanel.s30;
         Empire pl = player();
         
@@ -399,7 +392,6 @@ public class MapOverlaySpies extends MapOverlay {
     }
     @Override
     public void advanceMap() {
-        drawSprites = false;
         parent.resumeOutsideTurn();
     }
     class EmpireTabSprite extends MapSprite {
@@ -460,9 +452,6 @@ public class MapOverlaySpies extends MapOverlay {
         }
         @Override
         public void draw(GalaxyMapPanel map, Graphics2D g) {
-            if (!parent.drawSprites())
-                return;
-
             int cnr = scaled(fontSize/2);
             
             g.setFont(narrowFont(fontSize));

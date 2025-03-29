@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,5 +34,4 @@ public abstract class MapOverlay implements Base {
     public boolean masksMouseOver(int x, int y)    { return false; }
     public boolean canChangeMapScale()             { return false; }
     public boolean hideNextTurnNotice()            { return true; }
-    public boolean drawSprites()                   { return true; }
 }
