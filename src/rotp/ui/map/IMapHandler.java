@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ public interface IMapHandler {
 
     public Border mapBorder();
     public float startingScalePct();
-    public default void checkMapInitialized() { };
+    public default void checkMapInitialized() { }
 
     public Location mapFocus();
 
@@ -59,9 +59,9 @@ public interface IMapHandler {
     default public void mouseWheelMoved(MouseWheelEvent e)  { }
     default public boolean dragSelect(int x0, int y0, int x1, int y, boolean shift) { return false; }
 
-    default public void hoveringOverSprite(Sprite o)              { };
-    default public void clickingOnSprite(Sprite o, int cnt, boolean right, boolean click)       { };
-    default public void clickingNull(int cnt, boolean right) {  };
+    default public void hoveringOverSprite(Sprite o)              { }
+    default public void clickingOnSprite(Sprite o, int cnt, boolean right, boolean click)       { }
+    default public void clickingNull(int cnt, boolean right) {  }
     default public boolean masksMouseOver(int x, int y)       { return false; }
 
     default public boolean isClicked(Sprite s)             { return clickedSprite() == s; }
@@ -81,7 +81,7 @@ public interface IMapHandler {
     default public Color systemLabelColor(StarSystem s)    { return Empire.thePlayer().sv.empireColor(s.id); }
     default public List<Sprite> nextTurnSprites()          { return new ArrayList<>(); }
     default public List<Sprite> controlSprites()           { return new ArrayList<>(); }
-    default public void reselectCurrentSystem() { };
+    default public void reselectCurrentSystem() { }
 
     default public boolean showShipRanges()              { return true; }
     default public IMappedObject distanceOrigin()            { return null; }
@@ -97,7 +97,7 @@ public interface IMapHandler {
     default boolean showOwnerReach(StarSystem s)         { return false; }
     default boolean showOwnership(StarSystem s)          { return true; }
     default float ownerReach(StarSystem s)               { return 0; }
-    default boolean drawShield()                         { return true; } 
+    default boolean drawShield()                         { return true; }
     default boolean drawStargate()                       { return true; }
     default boolean drawFlag()                           { return true; }
     default boolean shouldDrawSprite(Sprite s)           { return true; }

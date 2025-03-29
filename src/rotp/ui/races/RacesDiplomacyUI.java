@@ -436,7 +436,6 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         for (int i=0;i<incidents.size();i++) {
             DiplomaticIncident inc = incidents.get(i);
             int incidentH = drawPlayerIncident(g, inc, x0, y2, w0, w1, w2, w3, w4);
-            //box(i).setBounds(x1,y1,w1,incidentH);
             fullListH += incidentH;
             y2 += incidentH;
         }
@@ -885,7 +884,6 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         for (int i=0;i<incidents.size();i++) {
             DiplomaticIncident inc = incidents.get(i);
             int incidentH = drawAIIncident(g, inc, x1, y2, w1, s60, s80);
-            //box(i).setBounds(x1,y1,w1,incidentH);
             fullListH += incidentH;
             y2 += incidentH;
         }
