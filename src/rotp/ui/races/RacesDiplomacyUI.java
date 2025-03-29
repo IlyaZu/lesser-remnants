@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -477,7 +477,8 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         int indent = g.getFontMetrics().stringWidth(title)+s5;
         g.setFont(narrowFont(15));
         List<String> descLines = wrappedLines(g, desc, w3-s15, indent);
-        int h0 = s7+(s22*descLines.size());
+        int linesSize = Math.max(1, descLines.size());
+        int h0 = s16+(s17*linesSize);
 
         // title
         int x1 = x;
@@ -533,7 +534,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         drawString(g,sev, x0, y0);
 
         g.setColor(brownDividerC);
-        g.drawLine(x1, y1+s12, x+w-s20, y1+s12);
+        g.drawLine(x1, y+h0, x+w-s20, y+h0);
         return h0;
     }
     private void drawPlayerDiplomacyBureau(Graphics2D g, Empire emp, int x, int y, int w, int h) {
@@ -927,7 +928,8 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         int indent = g.getFontMetrics().stringWidth(title)+s5;
         g.setFont(narrowFont(15));
         List<String> descLines = wrappedLines(g, desc, w-s20-leftM-rightM, indent);
-        int h0 = s7+(s22*descLines.size());
+        int linesSize = Math.max(1, descLines.size());
+        int h0 = s16+(s17*linesSize);
 
         // title
         int x1 = x+leftM+s10;
@@ -973,7 +975,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         drawString(g,sev, x2a, y0);
 
         g.setColor(brownDividerC);
-        g.drawLine(x, y1+s8, x+w-s20, y1+s8);
+        g.drawLine(x, y+h0, x+w-s20, y+h0);
         return h0;
     }
     private void drawAIDiplomacyBureau(Graphics2D g, Empire emp, int x, int y, int w, int h) {
