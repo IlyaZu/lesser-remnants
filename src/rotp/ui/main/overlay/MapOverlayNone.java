@@ -81,7 +81,7 @@ public class MapOverlayNone extends MapOverlay {
                     RotPUI.instance().selectGamePanel();
                 break;
             case KeyEvent.VK_EQUALS:
-                if (e.isShiftDown())  
+                if (e.isShiftDown())
                     parent.map().adjustZoom(-1);
                 break;
             case KeyEvent.VK_MINUS:
@@ -171,7 +171,7 @@ public class MapOverlayNone extends MapOverlay {
                         StarSystem sys = (StarSystem) parent.clickedSprite();
                         if (player().canSendTransportsFrom(sys)) {
                             softClick();
-                            TransportDeploymentPanel.enableAbandon = false; 
+                            TransportDeploymentPanel.enableAbandon = false;
                             parent.hoveringOverSprite(null);
                             parent.clickedSprite(sys.transportSprite());
                             parent.displayPanel().repaint();
@@ -187,7 +187,7 @@ public class MapOverlayNone extends MapOverlay {
                         StarSystem sys = (StarSystem) parent.clickedSprite();
                         if (player().canSendTransportsFrom(sys)) {
                             softClick();
-                            TransportDeploymentPanel.enableAbandon = true; 
+                            TransportDeploymentPanel.enableAbandon = true;
                             parent.hoveringOverSprite(null);
                             parent.clickedSprite(sys.transportSprite());
                             parent.displayPanel().repaint();
