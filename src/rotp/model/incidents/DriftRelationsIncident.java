@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Ilya Zushinskiy
+ * Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,6 @@ public class DriftRelationsIncident extends DiplomaticIncident {
     
     private DriftRelationsIncident(float severity) {
         super(severity);
-    }
-    
-    @Override
-    public boolean isForgotten(){
-        // Cannot be displayed as there is no text for this incident.
-        return true;
     }
 
     @Override
