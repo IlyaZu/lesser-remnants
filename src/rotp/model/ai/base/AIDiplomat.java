@@ -1305,58 +1305,41 @@ public class AIDiplomat implements Base, Diplomat {
     }
     @Override
     public Empire councilVoteFor(Empire civ1, Empire civ2) {
-        EmpireView cv1 = empire.viewForEmpire(civ1);
-        EmpireView cv2 = empire.viewForEmpire(civ2);
-
         // always vote for yourself
-        if (civ1 == empire)   return castVoteFor(civ1);
-        if (civ2 == empire)   return castVoteFor(civ2);
+        if (civ1 == empire) return castVoteFor(civ1);
+        if (civ2 == empire) return castVoteFor(civ2);
+        
+        float voteWeight = calculateVoteWeight(civ1) - calculateVoteWeight(civ2);
 
-        // if allied with one, vote for that ally
-        if (cv1.embassy().alliance() && !cv2.embassy().alliance())
-            return castVoteFor(civ1);
-        if (cv2.embassy().alliance() && !cv1.embassy().alliance())
-            return castVoteFor(civ2);
-
-        // if at war with one, vote for other (if contacted)
-        if (cv1.embassy().war() && !cv2.embassy().war()) {
-            if (cv2.embassy().contact())
-                return castVoteFor(civ2);
-            else
-                return castVoteFor(null);
-        }
-        if (cv2.embassy().war() && !cv1.embassy().war()) {
-            if (cv1.embassy().contact())
-                return castVoteFor(civ1);
-            else
-                return castVoteFor(null);
+        // Select prime candidate
+        Empire primeCandidate = civ1;
+        if (voteWeight < 0) {
+            primeCandidate = civ2;
+            voteWeight = -voteWeight;
         }
         
-        // decide to vote for civ1
-        // modnar: don't force vote for civ2 if civ1 get the negative check
-        float pct = cv1.embassy().relations()/100.0f + civ1.orionCouncilBonus() + previousVoteBonus(civ1);
-        if (random() <= Math.abs(pct)) {
-            if (pct > 0)
-                return castVoteFor(civ1);
+        // Truncate vote probabilities
+        if (voteWeight < 0.3f) {
+            return castVoteFor(null);
+        } else if (voteWeight > 0.7f) {
+            return castVoteFor(primeCandidate);
+        } else if (random() <= voteWeight) {
+            return castVoteFor(primeCandidate);
+        } else {
+            return castVoteFor(null);
         }
-
-        // decide to vote for civ2
-        // modnar: don't force vote for civ1 if civ2 get the negative check
-        pct = cv2.embassy().relations()/100.0f + civ2.orionCouncilBonus() + previousVoteBonus(civ2);
-        if (random() <= Math.abs(pct)) {
-            if (pct > 0)
-                return castVoteFor(civ2);
-        }
-
-        // return undecided
-        return castVoteFor(null);
     }
-    // ----------------------------------------------------------
-// PRIVATE METHODS
-// ----------------------------------------------------------
-    private float previousVoteBonus(Empire c) {
-        return c.id == empire.lastCouncilVoteEmpId() ? 0.6f : 0;
+    
+    private float calculateVoteWeight(Empire candidate) {
+        EmpireView view = empire.viewForEmpire(candidate);
+        float weight = view.embassy().relations()/100.0f + candidate.orionCouncilBonus();
+        weight += candidate.id == empire.lastCouncilVoteEmpId() ? 0.5f : 0;
+        weight += view.embassy().alliance() ? 1 : 0;
+        weight += view.embassy().pact() ? 0.5f : 0;
+        weight += view.embassy().war() ? -1 : 0;
+        return weight;
     }
+    
     private Empire castVoteFor(Empire c) {
         if (c == null)
             empire.lastCouncilVoteEmpId(Empire.ABSTAIN_ID);
