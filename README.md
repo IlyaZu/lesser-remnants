@@ -12,20 +12,20 @@ No new features are planned.
 
 ## Notable Changes
 
-This is not the complete list of changes (see the git history for that) but a highlight of changes that might not be readily apparent. 
+This is not the complete list of changes (see the git history for that) but a highlight of changes that might not be readily apparent.
 
 ### Simplified Victory Conditions
 
 <strong>Final War has been removed.</strong>
 
-One of great things about Master of Orion is that it realised that cleaning up the map after you had already won is really boring. 
+One of great things about Master of Orion is that it realised that cleaning up the map after you had already won is really boring.
 So the victory condition is outnumbering your opponents 2:1 (either by yourself or as a coalition) - thus removing the later boring third of the game.
 
-Allowing AI players to rebel against the council in Remnants of the Precursors fundamentally undermines this. 
+Allowing AI players to rebel against the council in Remnants of the Precursors fundamentally undermines this.
 This is now removed.
 
-Likewise allowing the Human player to rebel against the council put you back in the same boring degenerate state.
-While I understand that this gives the player an opportunity for "revenge", which help to make the experience of losing more palatable, I think there is value in leaving the sting of defeat un-balmed, which makes it a better teachable moment and a more memorable experience. 
+Likewise allowing the Human player to rebel against the council puts you back in the same boring degenerate state.
+While I understand that this gives the player an opportunity for "revenge", which helps to make the experience of losing more palatable, I think there is value in leaving the sting of defeat un-balmed, which makes it a better teachable moment and a more memorable experience.
 This is also now removed.
 
 <strong>Alliance Victory has been removed.</strong>
@@ -54,13 +54,13 @@ Both of those things are likely to be subjects of future and on going work as it
 ## Stability
 
 While every commit should represent a working, slightly improved, version of the game no attempt is made to make saves backwards compatible.
-In fact, I know I have already broken save compatibility many times. 
+In fact, I know I have already broken save compatibility many times.
 This is a necessary sacrifice to make the kind of changes I want to make.
 If you are playing this game as changes come out consider finishing a session before pulling changes.
 
 ## Binaries
 
-There is currently no built, pre-packaged distribution of this game. 
+There is currently no built, pre-packaged distribution of this game.
 If you want to play it, you will have to pull the code and compile it yourself.
 I have no objections to others building and distributing game.
 In fact, this is your legal right.
