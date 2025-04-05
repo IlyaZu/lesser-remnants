@@ -260,18 +260,6 @@ public class AIDiplomat implements Base, Diplomat {
         if (!view.embassy().contact())
             return false;
 
-        // Automatic exclusion for AI empires:
-        //    1) Have trade established but it is not yet profitable
-        // or 2) Not at full trade && and can't increase current trade level by +50%
-        if (empire.isAIControlled()) {
-            if (view.trade().active()
-            && (view.trade().profit() <= 0))
-                return false;
-            if (!view.trade().atMaxProfit()
-            || (view.trade().level() * 1.5) > view.trade().maxLevel())
-                return false;
-        }
-
         // no trade if no diplomats or at war
         if (!diplomats(id(e)) || empire.atWarWith(id(e)) )
             return false;
@@ -332,6 +320,10 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
         if (v.embassy().alliedWithEnemy())
             return false;
+        if (v.trade().active() && (v.trade().profit() <= 0))
+            return false;
+        if (!v.trade().atMaxProfit())
+            return false;
         
         // if asking player, check that we don't spam him
         if (v.empire().isPlayerControlled()) {
@@ -341,7 +333,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         float currentTrade = v.trade().level();
         float maxTrade = v.trade().maxLevel();
-        if (maxTrade < (currentTrade * 1.1))
+        if (maxTrade < (currentTrade * 1.5))
             return false;
 
         log(v.toString(), ": willing to offer trade. Max:", str(maxTrade), "    current:", str(currentTrade));
