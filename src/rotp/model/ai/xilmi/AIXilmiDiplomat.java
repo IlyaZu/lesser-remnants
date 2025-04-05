@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -202,26 +202,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //  TRADE TREATIES
     //-----------------------------------
 
-    @Override
-    public boolean canOfferTradeTreaty(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if(!e.inEconomicRange(empire.id))
-            return false;
-        EmpireView view = empire.viewForEmpire(id(e));
-
-        if (!view.embassy().contact())
-            return false;
-
-        // no trade if no diplomats or at war
-        if (!diplomats(id(e)) || empire.atWarWith(id(e)) )
-            return false;
-        // no trade offer if can't increase from current lvl
-        if (view.nominalTradeLevels().isEmpty())
-            return false;
-
-        return true;
-    }
     @Override
     public DiplomaticReply receiveOfferTrade(Empire requestor, int level) {
         // if the AI is asking the player, create an OfferTrade notification
