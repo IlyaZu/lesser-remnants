@@ -1635,7 +1635,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         List<Empire> contacts = contactedEmpires();
         contacts.remove(empOther);
         for (Empire emp: contacts) {
-            if (!atWarWith(emp.id) && inEconomicRange(emp.id) && empOther.inEconomicRange(emp.id) && !unityWith(emp.id))
+            if (!atWarWith(emp.id) && inEconomicRange(emp.id) && empOther.inEconomicRange(emp.id))
                 enemies.add(emp);
         }
         return enemies;
@@ -1683,12 +1683,6 @@ public final class Empire implements Base, NamedObject, Serializable {
 
         EmpireView v = viewForEmpire(empId);
         return v == null ? false : v.embassy().alliance();
-    }
-    public boolean unityWith(int empId) {
-        if (empId == id) return true;
-        if (empId == Empire.NULL_ID) return false;
-
-        return false;
     }
     public boolean tradingWith(Empire c) {
         if (c == this) return true;
