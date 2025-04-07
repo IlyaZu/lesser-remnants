@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,7 +137,6 @@ public final class GameSession implements Base, Serializable {
     public void galaxy(Galaxy g)         { galaxy = g; }
 
     public float populationBonus()      { return 1.0f; }
-    public float researchBonus()        { return 1.0f; }
     public void enableSpyReport() {
         spyActivity = true;
     }
