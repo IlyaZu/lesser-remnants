@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +58,7 @@ public class ColonyResearch extends ColonySpendingCategory {
             unallocatedBC -= projectBC;
         }       
     }
-    public float researchBonus() { return  planet().researchAdj() * empire().researchBonusPct() * session().researchBonus(); }
+    public float researchBonus() { return  planet().researchAdj() * empire().researchBonusPct(); }
     @Override
     public boolean warning()      {        
         return (project != null) && (totalBC() < project.remainingResearchBC()); }
