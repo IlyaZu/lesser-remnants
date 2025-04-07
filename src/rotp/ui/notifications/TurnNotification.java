@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,16 +22,12 @@ public interface TurnNotification extends Comparable<TurnNotification> {
     static final String DISCOVER_TECH    = "0020";
     static final String PLUNDER_TECH     = "0021";
     static final String STEAL_TECH       = "0022";
-    static final String STEAL_TECH_MESSAGE = "0023"; // when player steals tech, must occur immediately after steal tech
-    static final String SABOTAGE         = "0030";
-    static final String SYSTEM_SCANNED   = "3000";  // after all tech discovery notifications
     static final String PROMPT_BOMBARD   = "4000";  // must occur before colonize prompt
     static final String PROMPT_COLONIZE  = "4001";  // after system scans & ship combat
     static final String COUNCIL_NOTIFY   = "5000";
     static final String SELECT_NEW_TECH  = "7000";  // after all tech discovery notifications
     static final String GNN_NOTIFY         = "8000";
     static final String DIPLOMATIC_MESSAGE = "8500";
-    static final String ALLOCATE_SYSTEMS = "9000";
 
     @Override
     public default int compareTo(TurnNotification notif) {
