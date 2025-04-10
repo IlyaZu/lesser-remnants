@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -223,7 +223,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public float population()   { return isColonized() ? colony().population() : 0.0f; }
     public Planet planet() {
         if (planet == null)
-            planet = PlanetFactory.createPlanet(this, session().populationBonus());
+            planet = PlanetFactory.createPlanet(this);
         return planet;
     }
     public void planet(Planet p)                { planet = p; }

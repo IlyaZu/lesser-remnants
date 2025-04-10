@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +36,7 @@ public class StarSystemFactory implements Base {
         IGameOptions opts = GameSession.instance().options();
         String type = opts.randomOrionStarType();
         StarSystem sys = StarSystem.create(type, gal);
-        sys.planet(PlanetFactory.createOrion(sys, session().populationBonus()));
+        sys.planet(PlanetFactory.createOrion(sys));
         sys.monster(new OrionGuardianShip());
         sys.name(text("PLANET_ORION"));
         return sys;
@@ -44,14 +45,14 @@ public class StarSystemFactory implements Base {
         IGameOptions opts = GameSession.instance().options();
         String type = opts.randomRaceStarType(r);
         StarSystem sys = StarSystem.create(type, gal);
-        sys.planet(PlanetFactory.createHomeworld(r, sys, session().populationBonus()));
+        sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
     }
     public StarSystem newSystemForPlayer(Race r, Galaxy gal) {
         IGameOptions opts = GameSession.instance().options();
         String type = opts.randomPlayerStarType(r);
         StarSystem sys = StarSystem.create(type, gal);
-        sys.planet(PlanetFactory.createHomeworld(r, sys, session().populationBonus()));
+        sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
     }
 }
