@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,24 +88,24 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private static final Color selectedC = new Color(178,124,87);
     private static final Color unselectedC = new Color(112,85,68);
     private static final Color sliderBoxBlue = new Color(34,140,142);
-    static final Color enabledArrowColor = Color.black;
-    static final Color disabledArrowColor = new Color(65,65,65);
+    private static final Color enabledArrowColor = Color.black;
+    private static final Color disabledArrowColor = new Color(65,65,65);
 
     private static Palette palette;
     private static BaseTextField notesField;
     private static BaseTextField nameField;
-    final static int UP_ACTION = 1;
-    final static int DOWN_ACTION = 2;
-    final static String CANCEL_ACTION = "cancel-input";
+    private final static int UP_ACTION = 1;
+    private final static int DOWN_ACTION = 2;
+    private final static String CANCEL_ACTION = "cancel-input";
 
     private int pad = 10;
     private int helpFrame = 0;
     private List<StarSystem> displayedSystems;
     private final HashMap<Integer, DataView> views = new HashMap<>();
 
-    Rectangle ecologyBox = new Rectangle();
-    Rectangle industryBox = new Rectangle();
-    Rectangle militaryBox = new Rectangle();
+    private final Rectangle ecologyBox = new Rectangle();
+    private final Rectangle industryBox = new Rectangle();
+    private final Rectangle militaryBox = new Rectangle();
 
     private final TransferReserveUI transferReservePane;
     private final PlanetDisplayPanel planetDisplayPane;
@@ -115,7 +115,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private EmpireColonyFoundedPane colonyFoundedPane;
     private MultiColonySpendingPane multiSpendingPane;
 
-    BasePanel rightPlanetPanel;
+    private BasePanel rightPlanetPanel;
     private final CardLayout planetCardLayout = new CardLayout();
 
     private final PlanetsUI instance;
