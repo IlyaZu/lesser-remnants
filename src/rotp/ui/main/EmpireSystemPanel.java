@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,16 +45,9 @@ import rotp.ui.BasePanel;
 
 public class EmpireSystemPanel extends SystemPanel {
     private static final long serialVersionUID = 1L;
-    static final Color sliderButtonColor = new Color(153,0,11);
-    static final Color sliderHighlightColor = new Color(255,255,255);
-    static final Color spendingPaneHighlightColor = new Color(96,96,224);
-    static final Color productionGreenColor = new Color(89, 240, 46);
-    static final Color enabledArrowColor = Color.black;
-    static final Color disabledArrowColor = new Color(65,65,65);
-
-    static final Color darkBrown = new Color(45,14,5);
-    static final Color brown = new Color(64,24,13);
-    static final Color sliderBoxBlue = new Color(34,140,142);
+    private static final Color enabledArrowColor = Color.black;
+    private static final Color disabledArrowColor = new Color(65,65,65);
+    private static final Color sliderBoxBlue = new Color(34,140,142);
 
     private SystemViewInfoPane topPane;
     private EmpireColonySpendingPane spendingPane;
@@ -208,18 +201,17 @@ public class EmpireSystemPanel extends SystemPanel {
         private final int upButtonY[] = new int[3];
         private final int downButtonX[] = new int[3];
         private final int downButtonY[] = new int[3];
-        protected Rectangle limitBox = new Rectangle();
+        private final Rectangle limitBox = new Rectangle();
 
-        Color textColor = new Color(204,204,204);
-        Color gray20C = new Color(20,20,20);
-        Color darkShadingC = new Color(50,50,50);
-        Color buttonC = new Color(110,110,110);
-        Color gray70C = new Color(70,70,70);
-        Color gray90C = new Color(90,90,90);
-        Color gray115C = new Color(115,115,115);
-        Color gray150C = new Color(150,150,150);
-        Color gray175C = new Color(175,175,175);
-        Color gray190C = new Color(190,190,190);
+        private final Color textColor = new Color(204,204,204);
+        private final Color gray20C = new Color(20,20,20);
+        private final Color darkShadingC = new Color(50,50,50);
+        private final Color buttonC = new Color(110,110,110);
+        private final Color gray70C = new Color(70,70,70);
+        private final Color gray90C = new Color(90,90,90);
+        private final Color gray115C = new Color(115,115,115);
+        private final Color gray175C = new Color(175,175,175);
+        private final Color gray190C = new Color(190,190,190);
         EmpireShipPane(EmpireSystemPanel p) {
             parent = p;
             init();

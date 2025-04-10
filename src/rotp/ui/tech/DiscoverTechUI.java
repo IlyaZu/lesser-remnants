@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,25 +46,25 @@ import rotp.ui.main.SystemPanel;
 
 public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseMotionListener, ActionListener {
     private static final long serialVersionUID = 1L;
-    static final int SCIENTIST_VIEW = 0;
-    static final int SPY_VIEW = 1;
-    static final int TROOPER_VIEW = 2;
+    private static final int SCIENTIST_VIEW = 0;
+    private static final int SPY_VIEW = 1;
+    private static final int TROOPER_VIEW = 2;
 
-    static final int MODE_SHOW_TECH = 0;
-    static final int MODE_FRAME_EMPIRE = 1;
-    static final int MODE_REALLOCATE = 2;
-    static final int MODE_COMPLETED = 3;
+    private static final int MODE_SHOW_TECH = 0;
+    private static final int MODE_FRAME_EMPIRE = 1;
+    private static final int MODE_REALLOCATE = 2;
+    private static final int MODE_COMPLETED = 3;
 
-    static final int BACKGROUND_LABORATORY = 0;
-    static final int BACKGROUND_ALIEN_LAB = 1;
-    static final int BACKGROUND_RUINS = 2;
-    static final int BACKGROUND_DERELICT = 3;
+    private static final int BACKGROUND_LABORATORY = 0;
+    private static final int BACKGROUND_ALIEN_LAB = 1;
+    private static final int BACKGROUND_RUINS = 2;
+    private static final int BACKGROUND_DERELICT = 3;
 
     private int view;
     private int mode;
     private int background;
     private boolean researchedTech = false;
-    String title;
+    private String title;
     private Tech tech;
     private StarSystem system;
     private Empire sourceEmpire;
@@ -72,35 +72,30 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
     private Empire frameEmpire2;
     private EspionageMission mission;
 
-    static Color yellowText = new Color(226,173,26);
-    static Color backShadingC = new Color(0,0,0,192);
+    private final static Color yellowText = new Color(226,173,26);
+    private final static Color backShadingC = new Color(0,0,0,192);
 
     private static final Color darkBrown = new Color(64,24,13);
     private static final Color brown = new Color(112,85,68);
     private static final Color darkBrownShade = new Color(112,85,68,128);
-    static Color dimWhite = new Color(225,225,255);
-    static Color gray2 = new Color(123,123,123);
-    static Color grayShade = new Color(123,123,123,160);
-    static Color buttonShadowC = new Color(33,33,33);
-
-    final static Color dialogBackC = new Color(104,104,104);
-    final static Color dialogTextBackC = new Color(19,19,19);
-    static Color dialogTextFore =new Color(233,233,233);
+    private static final Color dimWhite = new Color(225,225,255);
+    private static final Color gray2 = new Color(123,123,123);
+    private static final Color grayShade = new Color(123,123,123,160);
+    private static final Color buttonShadowC = new Color(33,33,33);
 
     private LinearGradientPaint frameBackC1, frameBackC2, allocateBackC;
 
-    Rectangle button1 = new Rectangle();
-    Rectangle button2 = new Rectangle();
-    Rectangle button3 = new Rectangle();
-    Rectangle button4 = new Rectangle();
-    Rectangle frameButton1 = new Rectangle();
-    Rectangle frameButton2 = new Rectangle();
-    Rectangle hoverBox;
+    private final Rectangle button1 = new Rectangle();
+    private final Rectangle button2 = new Rectangle();
+    private final Rectangle button3 = new Rectangle();
+    private final Rectangle button4 = new Rectangle();
+    private final Rectangle frameButton1 = new Rectangle();
+    private final Rectangle frameButton2 = new Rectangle();
+    private Rectangle hoverBox;
 
-    boolean finished = false;
-    float holoPct = 0f;
-    int talkTimeMs = 5000;
-    long startTimeMs;
+    private float holoPct = 0f;
+    private int talkTimeMs = 5000;
+    private long startTimeMs;
 
     private Tech tech()               { return tech; }
 
@@ -136,7 +131,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         String categoryId = TechCategory.id(tech().categoryIndex());
         title = text("TECH_DISCOVERY_TITLE", text(categoryId));
         title = player().replaceTokens(title, "player");
-        finished = false;
         mission = null;
         frameEmpire1 = null;
         frameEmpire2 = null;
@@ -157,7 +151,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         title = text("TECH_TRADED_TITLE");
         title = player().replaceTokens(title, "player");
         title = sourceEmpire.replaceTokens(title, "alien");
-        finished = false;
         mission = null;
         frameEmpire1 = null;
         frameEmpire2 = null;
@@ -180,7 +173,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
             title = text("TECH_SCOUTED_TITLE", player().sv.name(sysId));
         else
             title = text("TECH_PLUNDERED_TITLE", player().sv.name(sysId));
-        finished = false;
         mission = null;
         frameEmpire1 = null;
         frameEmpire2 = null;
@@ -201,7 +193,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         player().race().resetScientist();
         title = empId == -2 ? text("TECH_GUARDIAN_TITLE") :  text("TECH_DERELICT_TITLE");
         title = player().replaceTokens(title, "player");
-        finished = false;
         frameEmpire1 = null;
         frameEmpire2 = null;
     }
@@ -222,7 +213,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         mission = m;
         title = text("TECH_STOLEN_TITLE", text(sourceEmpire.raceName()), player().sv.name(system.id));
         title = sourceEmpire.replaceTokens(title, "alien");
-        finished = false;
         frameEmpire1 = mission.canFrame() ? mission.empiresToFrame().get(0) : null;
         frameEmpire2 = mission.canFrame() ? mission.empiresToFrame().get(1) : null;
     }
@@ -621,7 +611,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
     private void finish() {
         if (tech().reducesEcoSpending())
             player().lowerECOToCleanIfEcoComplete();
-        finished = true;
         repaint();
         
         if (!researchedTech)
