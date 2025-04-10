@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +31,7 @@ public class PlanetFactory implements Base {
 
     static { instance.loadDataFiles(); }
 
-    public static Planet createPlanet(StarSystem sys, float bonus) {
+    public static Planet createPlanet(StarSystem sys) {
         Planet p = instance.options().randomPlanet(sys);
         
         if (p.type().isAsteroids()) {
@@ -53,16 +54,16 @@ public class PlanetFactory implements Base {
         p.baseSize(size);
         return p;
     }
-    public static Planet createOrion(StarSystem sys, float bonus) {
+    public static Planet createOrion(StarSystem sys) {
         Planet p = instance.options().orionPlanet(sys);
         p.setOrionArtifact();
         p.makeEnvironmentFertile();
-        p.baseSize(120*bonus);
+        p.baseSize(120);
         return p;
     }
-    public static Planet createHomeworld(Race r, StarSystem sys, float bonus) {
+    public static Planet createHomeworld(Race r, StarSystem sys) {
         Planet p = instance.options().randomPlayerPlanet(r, sys);
-        p.baseSize(r.homeworldSize*bonus);
+        p.baseSize(r.homeworldSize);
         if (r.homeworldKey() > 0)
             p.terrainSeed(r.homeworldKey());
         return p;

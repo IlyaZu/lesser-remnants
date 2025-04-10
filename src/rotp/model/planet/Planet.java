@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -288,9 +288,9 @@ public class Planet implements Base, IMappedObject, Serializable {
 
     public float baseSize()        { return baseSize; }
     public void baseSize(float d)  { baseSize = d; }
-    // max base size for planet (before general terraforming) is 180
     public void increaseBaseSize(float amt) {
-        float maxSize = 180*session().populationBonus();
+        // max base size for planet (before general terraforming) is 180
+        float maxSize = 180;
         float newSize = Math.min(maxSize, baseSize()+amt);
         baseSize(newSize);
     }
@@ -333,8 +333,7 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (isEnvironmentHostile()) {
             environment = Math.max(environment, ENVIRONMENT_NORMAL);
             planetTypeKey = PlanetType.MINIMAL;
-            int incr = (int) (20*session().populationBonus());
-            increaseBaseSize(incr);
+            increaseBaseSize(20);
             starSystem().addEvent(new SystemTerraformingEvent("SYSEVENT_ATMOSPHERE_TERRAFORMED"));
             colony.empire().sv.refreshFullScan(starSystem().id);
         }

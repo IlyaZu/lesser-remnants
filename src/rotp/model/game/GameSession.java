@@ -136,7 +136,6 @@ public final class GameSession implements Base, Serializable {
     public Galaxy galaxy()               { return galaxy; }
     public void galaxy(Galaxy g)         { galaxy = g; }
 
-    public float populationBonus()      { return 1.0f; }
     public void enableSpyReport() {
         spyActivity = true;
     }
