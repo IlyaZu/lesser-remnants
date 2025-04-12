@@ -487,13 +487,6 @@ public final class Empire implements Base, NamedObject, Serializable {
             
         return true;
     }
-    public boolean canAbandonTo(StarSystem sys) {
-        if (sys == null)
-            return false;
-        if (sys.empId() == id)
-            return true;
-        return false;
-    }
     public boolean canSendTransportsTo(StarSystem sys) {
         if (sys == null)
             return false;
