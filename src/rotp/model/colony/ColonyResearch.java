@@ -28,9 +28,9 @@ public class ColonyResearch extends ColonySpendingCategory {
     public ColonyResearchProject project()         { return project; }
     public boolean hasProject()                    { return project != null; }
     public void project(ColonyResearchProject p)   { project = p; }
-    public void endProject()                       { 
-        completedProject = project; 
-        project = null; 
+    public void endProject()                       {
+        completedProject = project;
+        project = null;
         colony().reallocationRequired = true;
     }
     public boolean hasCompletedProject()           { return completedProject != null; }
@@ -56,11 +56,11 @@ public class ColonyResearch extends ColonySpendingCategory {
             projectBC = min(unallocatedBC, project.remainingResearchBC());
             project.addResearchBC(projectBC);
             unallocatedBC -= projectBC;
-        }       
+        }
     }
     public float researchBonus() { return  planet().researchAdj() * empire().researchBonusPct(); }
     @Override
-    public boolean warning()      {        
+    public boolean warning()      {
         return (project != null) && (totalBC() < project.remainingResearchBC()); }
     @Override
     public String upcomingResult() {
@@ -81,8 +81,8 @@ public class ColonyResearch extends ColonySpendingCategory {
     }
     @Override
     public void assessTurn() { }
-    public void commitTurn() { 
-        if (empire().tech().researchCompleted()) 
+    public void commitTurn() {
+        if (empire().tech().researchCompleted())
             empire().addReserve(unallocatedBC);
            
         unallocatedBC = 0;

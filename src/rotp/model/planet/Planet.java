@@ -157,8 +157,8 @@ public class Planet implements Base, IMappedObject, Serializable {
         artifacts = RUINS_ANTARAN;
         bonusTechs = 1;
     }
-    public void setOrionArtifact()       { 
-        artifacts = RUINS_ORION; 
+    public void setOrionArtifact()       {
+        artifacts = RUINS_ORION;
         bonusTechs = 3;
     }
     public boolean noArtifacts()           { return artifacts == NO_ARTIFACTS; }
@@ -203,7 +203,7 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (systemEmp != null)
             systemEmp.sv.refreshFullScan(starSystem().id);
     }
-    public void degradeToType(String pType) {      
+    public void degradeToType(String pType) {
         PlanetType deadType = PlanetType.keyed(pType);
         if (type().hostility() < deadType.hostility()) {
             initPlanetType(pType);
@@ -397,7 +397,7 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (tempEnv == ENVIRONMENT_HOSTILE)
             return size;
         
-        // check if known soil enrich tech is better than this planet's 
+        // check if known soil enrich tech is better than this planet's
         // current environment. If not, fall out
         TechSoilEnrichment soilTech = emp.tech().topSoilEnrichmentTech();
         if (soilTech == null)
