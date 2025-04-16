@@ -17,15 +17,15 @@
 package rotp.ui.notifications;
 
 public interface TurnNotification extends Comparable<TurnNotification> {
-    static final String SYSTEMS_SCOUTED  = "0001";  // before plunder tech notifications
     static final String RANDOM_EVENT     = "0002";  // before tech notifications
     static final String DISCOVER_TECH    = "0020";
     static final String PLUNDER_TECH     = "0021";
     static final String STEAL_TECH       = "0022";
+    static final String SELECT_NEW_TECH  = "0030";  // after all tech discovery notifications
+    static final String SYSTEMS_SCOUTED  = "0100";
     static final String PROMPT_BOMBARD   = "4000";  // must occur before colonize prompt
     static final String PROMPT_COLONIZE  = "4001";  // after system scans & ship combat
     static final String COUNCIL_NOTIFY   = "5000";
-    static final String SELECT_NEW_TECH  = "7000";  // after all tech discovery notifications
     static final String GNN_NOTIFY         = "8000";
     static final String DIPLOMATIC_MESSAGE = "8500";
 
