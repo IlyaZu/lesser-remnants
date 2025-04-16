@@ -584,16 +584,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                 return MainUI.yellowAlertC;
         }
         
-        // enemy fleets approaching player allied colonies
-        // for player systems, highlight those with no bases or insufficient shields
-        if (sysEmp == null)
-            return null;
-        if (!sysEmp.isPlayer())
-            return null;
-
-        if (!sv.colony().defense().isCompleted())
-            return MainUI.greenAlertC;
-        
         return null;
     }
     public String alertDescription(SystemView sv) {
@@ -741,14 +731,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         
         if ((sysEmp != pl) && (num > 0))
             return troopMsg;
-        
-        // for player systems, highlight those with no bases or insufficient shields
-        if ((sysEmp == null) || !sysEmp.isPlayer())
-            return null;
 
-        if (!sv.colony().defense().isCompleted())
-            return concat(text("SYSTEMS_EXT_NEED_DEFENSE"), troopMsg);
-        
         return null;
     }
     @Override
