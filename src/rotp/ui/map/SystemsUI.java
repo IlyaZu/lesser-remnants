@@ -767,12 +767,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                 return text("SYSTEMS_ENVIRONMENT_TYPE", text(sv.resourceType()), text(sv.ecologyType()));
             case exterminateTab:
                 int bases = sv.bases();
-                int shield = sv.shieldLevel();
-                if ((bases == 0) && (shield == 0))
-                    return "";
-                String str1 = shield == 0 ? "" : text("SYSTEMS_SHIELD", str(shield));
-                String str2 = bases == 0 ? "" : text("SYSTEMS_BASES", str(bases));
-                return shield == 0 ? str2 : str1+" "+str2;
+                return bases == 0 ? "" : text("SYSTEMS_BASES", str(bases));
         }
         return "";
     }
