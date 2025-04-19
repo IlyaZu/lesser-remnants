@@ -89,7 +89,6 @@ public interface IMapHandler {
 
     default Empire empireBoundaries()                    { return Empire.thePlayer(); }
     default public boolean showYear()                    { return true; }
-    default Color flagColor(StarSystem s)                { return Empire.thePlayer().sv.flagColor(s.id); }
     default Image flagImage(StarSystem s)                { return Empire.thePlayer().sv.flagImage(s.id); }
     default Image mapFlagImage(StarSystem s)             { return Empire.thePlayer().sv.mapFlagImage(s.id); }
     default Image flagHover(StarSystem s)                { return ImageManager.current().image("Flag_Hover"); }

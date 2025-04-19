@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ public class SystemInfo implements Serializable, Base {
     public boolean canSabotageFactories(int i) { return missing(i) ? false : view(i).canSabotageFactories(); }
     public boolean canInciteRebellion(int i)   { return missing(i) ? false : view(i).canInciteRebellion(); }
     public int flagColorId(int i)              { return missing(i) ? -1  : view(i).flagColorId(); }
-    public Color flagColor(int i)              { return missing(i) ? null  : view(i).flagColor(); }
     public Image flagImage(int i)              { return missing(i) ? null  : view(i).flagImage(); }
     public Image mapFlagImage(int i)           { return missing(i) ? null  : view(i).mapFlagImage(); }
     public Image flagHover(int i)              { return ImageManager.current().image("Flag_Hover"); }

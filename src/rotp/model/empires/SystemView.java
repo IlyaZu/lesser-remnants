@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 package rotp.model.empires;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
@@ -136,16 +135,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
         clearHostility();
     }
     public int flagColorId()  { return flagColor; }
-    public Color flagColor() {
-        switch(flagColor) {
-            case FLAG_RED:    return Color.red;
-            case FLAG_WHITE:  return Color.white;
-            case FLAG_BLUE:   return Color.blue;
-            case FLAG_GREEN:  return Color.green;
-            case FLAG_YELLOW: return Color.yellow;
-        }
-        return null;
-    }
     public Image flagImage() {
         switch(flagColor) {
             case FLAG_NONE:   return image("Flag_None");
