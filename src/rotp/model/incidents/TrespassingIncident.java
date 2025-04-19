@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public class TrespassingIncident extends DiplomaticIncident {
     private final int empYou;
     
     public static void create(EmpireView view) {
-        if (view.empire().alliedWith(view.owner().id))
+        if (view.embassy().alliance() || view.embassy().war())
             return;
         for (StarSystem sys: view.owner().allColonizedSystems()) {
             List<ShipFleet> fleets = sys.orbitingFleets();
@@ -49,15 +49,12 @@ public class TrespassingIncident extends DiplomaticIncident {
         empMe = ev.owner().id;
         empYou = ev.empire().id;
 
-        // if it is player's ships in orbit, notify player only if not at war
-        if (ev.empire().isPlayerControlled() && !ev.embassy().war())
+        if (ev.empire().isPlayerControlled())
             TrespassingAlert.create(empMe, sysId);
     }
 
     private static float calculateSeverity(StarSystem sys, ShipFleet fl) {
         float multiplier = -1.0f;
-        if (sys.empire().atWarWith(fl.empId()))
-            multiplier *= 3;
         if (sys.empire().leader().isXenophobic())
             multiplier *= 2;
         
