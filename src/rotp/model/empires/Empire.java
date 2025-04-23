@@ -139,7 +139,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     private transient Color nameColor;
     private transient Color ownershipColor;
     private transient Color selectionColor;
-    private transient Color reachColor;
     private transient Color shipBorderColor;
     private transient Color scoutBorderColor;
     private transient float totalEmpireProduction;
@@ -252,7 +251,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         nameColor = null;
         ownershipColor = null;
         selectionColor = null;
-        reachColor = null;
         shipBorderColor = null;
         scoutBorderColor = null;
         shipImage = null;
@@ -339,13 +337,6 @@ public final class Empire implements Base, NamedObject, Serializable {
             scoutBorderColor = new Color(cR*4/8,cG*4/8,cB*4/8);
         }
         return scoutBorderColor;
-    }
-    public Color reachColor() {
-        if (reachColor == null) {
-            Color c = color();
-            reachColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), 48);
-        }
-        return reachColor;
     }
     public Empire(Galaxy g, int empId, String rk, StarSystem s, Integer cId, String name) {
         log("creating empire for ",  rk);
