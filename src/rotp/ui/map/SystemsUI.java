@@ -578,12 +578,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
             }
         }
         
-        if (sysEmp != pl) {
-            int num = pl.transportsInTransit(sv.system());
-            if (num > 0)
-                return MainUI.yellowAlertC;
-        }
-        
         return null;
     }
     public String alertDescription(SystemView sv) {
@@ -678,22 +672,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         Empire pl = player();
         if (sv.distance() > pl.scoutRange())
             return null;
-
         Empire sysEmp = sv.empire();
-        int num = pl.transportsInTransit(sv.system());
-        String troopMsg;
-        if (num == 0)
-            troopMsg = "";
-        else if (sysEmp == pl)
-            troopMsg = " "+text("SYSTEMS_EXPLOIT_TRANSPORTS",str(num));
-        else {
-            troopMsg = " "+text("SYSTEMS_EXT_INC_TRANSPORTS",str(num));
-            troopMsg = pl.replaceTokens(troopMsg, "player");
-        }
-        
-        if (pl.atWarWith(sv.empId())) {
-            return troopMsg;
-        }
             
         // deal with enemy fleets orbiting systems around us
         List<ShipFleet> fleets = sv.orbitingFleets();
@@ -709,7 +688,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                         fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET_ALLY");
                     else
                         fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET");
-                    return concat(fleetMsg, troopMsg);
+                    return fleetMsg;
                 }
             }
         }
@@ -724,13 +703,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
                         fleetMsg = text("SYSTEMS_EXT_INC_FLEET_PLAYER");
                     else
                         fleetMsg = text("SYSTEMS_EXT_INC_FLEET_ALLY");
-                    return concat(fleetMsg, troopMsg);
+                    return fleetMsg;
                 }
             }
         }
-        
-        if ((sysEmp != pl) && (num > 0))
-            return troopMsg;
 
         return null;
     }
