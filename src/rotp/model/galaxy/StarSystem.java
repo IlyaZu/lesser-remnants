@@ -490,11 +490,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         int r0 = drawRadius(map);
         twinkleOffset++;
 
-        Empire emp = map.parent().knownEmpire(id, pl);
-        // draw ownership radius?
-        if ((emp != null) && map.parent().showOwnerReach(this))
-            drawOwnerReach(g2, map, emp, x0, y0);
-
         if (!session().performingTurn()) {
             SystemView sv = pl.sv.view(id);
             Color c0 = map.parent().alertColor(sv);
@@ -503,6 +498,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         }
         drawStar(map, g2, x0, y0);
         
+        Empire emp = map.parent().knownEmpire(id, pl);
         if (map.parent().isClicked(this)
         || map.parent().isClicked(transportSprite()))
             drawSelection(g2, map, emp, x0, y0);
@@ -626,15 +622,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     }
     private int drawRadius(GalaxyMapPanel map) {
         return (int) max(BasePanel.s1, (drawRadius() * 60 / map.scaleX()));
-    }
-    private void drawOwnerReach(Graphics2D g, GalaxyMapPanel map, Empire emp, int x, int y) {
-        if (emp == null)
-            return;
-
-        float reach = map.parent().ownerReach(this);
-        int r  = map.scale(reach);
-        g.setColor(emp.reachColor());
-        g.fillOval(x-r, y-r, r+r, r+r);
     }
     private void drawAlert(GalaxyMapPanel map, Graphics2D g2, Color alertC, int x, int y) {
         int r = map.scale(0.75f);

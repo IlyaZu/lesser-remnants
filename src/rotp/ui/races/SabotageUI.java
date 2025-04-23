@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -846,18 +846,7 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         @Override
         public List<Sprite> controlSprites()      { return controls; }
         @Override
-        public float ownerReach(StarSystem sys) {
-            if (sys.isColonized())
-                return sys.empire().tech().topEngineWarpTech().warp();
-            else
-                return 0;
-        }
-        @Override
         public Empire empireBoundaries()    { return mission.target(); }
-        @Override
-        public boolean showOwnerReach(StarSystem spr) {
-            return false;
-        }
         @Override
         public boolean showOwnership(StarSystem sys) {
             return player().sv.empire(sys.id) == mission.target();
