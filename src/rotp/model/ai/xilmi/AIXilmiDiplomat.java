@@ -203,37 +203,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
 
     @Override
-    public DiplomaticReply receiveOfferTrade(Empire requestor, int level) {
-        // if the AI is asking the player, create an OfferTrade notification
-        log(empire.name(), " receiving offer trade from: ", requestor.name(), "  for:", str(level), " BC");
-        if (empire.isPlayerControlled()) {
-            DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_TRADE);
-            return null;
-        }
-        EmpireView v = empire.viewForEmpire(requestor);
-        if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-                v.embassy().withdrawAmbassador();
-                return v.refuse(DialogueManager.DECLINE_ANNOYED);
-            }
-        }
-
-        v.embassy().noteRequest();
-        if (!v.embassy().readyForTrade(level))
-            return v.refuse(DialogueManager.DECLINE_OFFER);
-
-        v.embassy().resetTradeTimer(level);
-
-        if(empire.enemies().contains(v.empire()))
-        {
-            return refuseOfferTrade(requestor, level);
-        }
-
-        v.otherView().embassy().tradeAccepted();
-        v.otherView().embassy().establishTradeTreaty(level);
-        return DiplomaticReplies.acceptTrade(v.otherView(), level);
-    }
-    @Override
     public DiplomaticReply immediateRefusalToTrade(Empire requestor) {
         return null;
     }
