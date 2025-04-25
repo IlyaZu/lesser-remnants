@@ -23,7 +23,7 @@ import rotp.model.planet.PlanetFactory;
 import rotp.util.Base;
 
 public class StarSystemFactory implements Base {
-    static StarSystemFactory instance = new StarSystemFactory();
+    private static final StarSystemFactory instance = new StarSystemFactory();
     public static StarSystemFactory current()   { return instance; }
 
     public StarSystem newSystem(Galaxy gal) {

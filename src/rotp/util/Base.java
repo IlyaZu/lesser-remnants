@@ -349,13 +349,6 @@ public interface Base {
         return min;
     }
     public default float avg(float v1, float v2)            { return (v1+v2)/2; }
-    public default float avg(float v1, float v2, float v3) { return (v1+v2+v3)/3; }
-    public default float avg(float... n) {
-        float sum = n[0];
-        for (int i=1;i<n.length;i++)
-            sum = n[i];
-        return sum/n.length;
-    }
     public default String fmt(float d, int n) {
         if (n == 0)
             return str((int)d);

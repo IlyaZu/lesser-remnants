@@ -45,11 +45,11 @@ import rotp.ui.sprites.SystemTransportSprite;
 
 public class TransportDeploymentPanel extends SystemPanel {
     private static final long serialVersionUID = 1L;
-    protected BasePanel topPane;
-    protected BasePanel detailPane;
-    protected BasePanel bottomPane;
-    static final Color sliderBoxEnabled = new Color(34,140,142);
-    static final Color sliderBackEnabled = Color.black;
+    private BasePanel topPane;
+    private BasePanel detailPane;
+    private BasePanel bottomPane;
+    private static final Color sliderBoxEnabled = new Color(34,140,142);
+    private static final Color sliderBackEnabled = Color.black;
     //session vars
     public TransportDeploymentPanel(SpriteDisplayPanel p) {
         parentSpritePanel = p;
