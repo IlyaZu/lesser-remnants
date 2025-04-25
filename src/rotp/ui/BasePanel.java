@@ -310,13 +310,13 @@ public class BasePanel extends JPanel implements Base {
         if (galaxy() == null)
             return "IntroAmbience";
         if (player().atWar())
-            return "WarAmbience"; 
+            return "WarAmbience";
         else if (player().hasAnyContact())
             return "ContactAmbience";
         else
-            return "ExploreAmbience";        
+            return "ExploreAmbience";
     }
-    public String ambienceSoundKey() { 
+    public String ambienceSoundKey() {
         return defaultAmbience();
     }
 }

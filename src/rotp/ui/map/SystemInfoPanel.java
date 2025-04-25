@@ -89,8 +89,8 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
     @Override
     public StarSystem systemViewToDisplay() { return selectedSystem(); }
     @Override
-    public void animate() { 
-        graphicPane.animate(); 
+    public void animate() {
+        graphicPane.animate();
         detailPane.animate();
     }
     @Override
@@ -246,7 +246,7 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
         @Override
         public void mouseEntered(MouseEvent e) { }
         @Override
-        public void mouseExited(MouseEvent e) { 
+        public void mouseExited(MouseEvent e) {
             if (hoverBox != null) {
                 hoverBox = null;
                 repaint();
@@ -294,7 +294,7 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
             StarSystem prevSys = sys;
             sys = systemViewToDisplay();
             
-            // if we are displaying a different system, updating 
+            // if we are displaying a different system, updating
             // the notes in the comments field
             if (sys != prevSys) {
                 if (sys == null)
