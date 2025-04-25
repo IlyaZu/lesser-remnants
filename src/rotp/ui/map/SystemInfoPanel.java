@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,10 +50,10 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
     private static final Color selectedC = new Color(178,124,87);
     private static final Color unselectedC = new Color(112,85,68);
     private static Palette palette;
-    EmpireInfoGraphicPane graphicPane;
-    SystemsUI parent;
-    SystemSummaryPane summaryPane;
-    SystemFlagsPane systemFlagsPane;
+    private EmpireInfoGraphicPane graphicPane;
+    private SystemsUI parent;
+    private SystemSummaryPane summaryPane;
+    private SystemFlagsPane systemFlagsPane;
     public SystemInfoPanel(SystemsUI p) {
         parent = p;
         init0();

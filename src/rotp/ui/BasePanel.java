@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,29 +44,26 @@ import rotp.util.ThickBevelBorder;
 public class BasePanel extends JPanel implements Base {
     private static final long serialVersionUID = 1L;
 
-    protected static GraphicsConfiguration gc;
+    private static GraphicsConfiguration gc;
     public static final Color hoverC = Color.yellow;
     public static final Color depressedC = new Color(208,160,0);
 
-    public static Color buttonLighter = new Color(192,192,192);
-    public static Color buttonLight = new Color(156,156,156);
-    public static Color buttonColor = new Color(123,123,123);
-    public static Color buttonDark = new Color(83,83,83);
-    public static Color buttonDarker = new Color(63,63,63);
+    private static final Color buttonLighter = new Color(192,192,192);
+    private static final Color buttonLight = new Color(156,156,156);
+    private static final Color buttonDark = new Color(83,83,83);
+    private static final Color buttonDarker = new Color(63,63,63);
     private static Border buttonBevelBorder;
-    static final Color greenText = Color.green;
-    static final Color greenBackground = new Color(0, 128, 0, 128);
 
-    static Color borderLight0 = new Color(169,127,99);
-    static Color borderLight1 = new Color(151,112,90);
-    static Color borderShade0 = new Color(85,64,47);
-    static Color borderShade1 = new Color(61,48,28);
-    static Color backShade = new Color(0,0,0,128);
-    static Border shadedBorder;
+    private static final Color borderLight0 = new Color(169,127,99);
+    private static final Color borderLight1 = new Color(151,112,90);
+    private static final Color borderShade0 = new Color(85,64,47);
+    private static final Color borderShade1 = new Color(61,48,28);
+    private static final Color backShade = new Color(0,0,0,128);
+    private static Border shadedBorder;
 
     protected BufferedImage starBackground;
     protected int starScrollX = 0;
-    protected Image screenBuffer;
+    private Image screenBuffer;
 
     public static GraphicsConfiguration gc() {
         if (gc == null)

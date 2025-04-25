@@ -58,51 +58,31 @@ import rotp.ui.sprites.ZoomOutWidgetSprite;
 public final class HistoryUI extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
 
-    static HistoryUI instance;
-    static Color uiBackground = new Color(132,98,77);
-    static Color dataBackground = new Color(94,71,53);
-    static Color titleColor = new Color(114,155,201);
-    static final Color dataBorders = new Color(160,160,160);
+    private static final Color sliderBackC = Color.black;
+    private static final Color sliderBorderC = Color.lightGray;
 
-    static final Color paneBorderDarker = new Color(61,41,28);
-    static final Color paneBorderDark = new Color(76,57,41);
-    static final Color paneBorderLighter = new Color(169,127,99);
-    static final Color paneBorderLight = new Color(151,112,90);
-    static final Color borderLight0 = new Color(169,127,99);
-    static final Color borderLight1 = new Color(151,112,90);
-    static final Color borderShade0 = new Color(85,64,47);
-    static final Color borderShade1 = new Color(62,60,108);
-    static final Color sliderBoxC = new Color(34,140,142);
-    static final Color sliderBackC = Color.black;
-    static final Color sliderBorderC = Color.lightGray;
-
-    LinearGradientPaint backGradient ;
     private GalaxyMapPane mapPane;
     private GalaxyMapPanel map;
-    HistoryButtonsPanel buttonsPanel;
-    JLayeredPane layers = new JLayeredPane();
+    private HistoryButtonsPanel buttonsPanel;
+    private JLayeredPane layers = new JLayeredPane();
     private final List<Sprite> controls = new ArrayList<>();
-    int animationIndex = 0;
 
-    Empire empire;
-    boolean showAll = false;
-    boolean exited = false;
-    boolean paused = true;
-    int turn = 0;
-    int maxTurn = 0;
-    int numSystems = 1;
-    int numEmps = 1;
-    byte[] sysData;
-    int[] sysCount;
-    float[] xMin;
-    float[] xMax;
-    float[] xSum;
-    float[] ySum;
-    List<Empire> sortedEmpires = new ArrayList<>();
+    private Empire empire;
+    private boolean showAll = false;
+    private boolean paused = true;
+    private int turn = 0;
+    private int maxTurn = 0;
+    private int numSystems = 1;
+    private int numEmps = 1;
+    private byte[] sysData;
+    private int[] sysCount;
+    private float[] xMin;
+    private float[] xMax;
+    private float[] xSum;
+    private float[] ySum;
+    private List<Empire> sortedEmpires = new ArrayList<>();
 
     public void init(int empId, boolean all) {
-        exited = false;
-        backGradient = null;
         // reset map everytime we open
         removeSessionVar("SABOTAGEUI_MAP_INITIALIZED");
         RotPUI.instance().mainUI().saveMapState();
@@ -113,7 +93,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         mapPane.selectTargetSystem(galaxy().system(homeSysId));
         map.centerX(homeSys.x());
         map.centerY(homeSys.y());
-        animationIndex = 0;
         turn = 0;
         numSystems = galaxy().numStarSystems();
         numEmps = galaxy().numEmpires();
@@ -203,7 +182,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         }
     }
     public HistoryUI() {
-        instance = this;
         setBackground(Color.black);
         setOpaque(true);
         controls.add(new ZoomOutWidgetSprite(10,60,30,30));
