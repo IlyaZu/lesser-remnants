@@ -108,7 +108,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         sortEmpireList();
     }
     public void sortEmpireList() {
-        for (Empire emp: sortedEmpires) 
+        for (Empire emp: sortedEmpires)
             emp.numColoniesHistory = sysCount(emp.id, turn);
         
         Collections.sort(sortedEmpires, Empire.HISTORICAL_SIZE);
@@ -147,7 +147,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         Arrays.fill(ySum, 0);
         
         if (showAll) {
-            for (int sysId=0;sysId<numSystems;sysId++) 
+            for (int sysId=0;sysId<numSystems;sysId++)
                 loadOwnershipData(sysId);
         }
         else {
@@ -156,7 +156,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
                 if (!sv.name(sysId).isEmpty())
                     loadOwnershipData(sysId);
             }
-        }        
+        }
     }
     private void loadOwnershipData(int sysId) {
         StarSystem sys = galaxy().system(sysId);
@@ -169,7 +169,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             if (event.changesOwnership()) {
                 int eventTurn=event.turn();
                 if (prevOwner != nullOwner) {
-                    for (int t=prevTurn;t<eventTurn;t++) 
+                    for (int t=prevTurn;t<eventTurn;t++)
                         setData(sys,t,prevOwner);
                 }
                 prevOwner = (byte) event.owner();
@@ -211,7 +211,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
     }
     public void reset() {
         softClick();
-        setTurn(0);      
+        setTurn(0);
     }
     public void exit() {
         softClick();
@@ -249,7 +249,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         int k = e.getKeyCode();
         switch(k) {
             case KeyEvent.VK_EQUALS:
-                if (e.isShiftDown())  
+                if (e.isShiftDown())
                     map.adjustZoom(-1);
                 break;
             case KeyEvent.VK_MINUS:
@@ -310,12 +310,12 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            int w = getWidth();            
+            int w = getWidth();
             g.setColor(SystemPanel.orangeText);
             String title;
             if (showAll)
                 title = text("HISTORY_TITLE_ALL");
-            else 
+            else
                 title = text("HISTORY_TITLE", empire.name());
                 
             g.setFont(narrowFont(40));
@@ -368,9 +368,9 @@ public final class HistoryUI extends BasePanel implements MouseListener {
                 Point2D ptStart = new Point2D.Float(buttonX, 0);
                 Point2D ptEnd = new Point2D.Float(buttonX + buttonW, 0);
                 Color[] greenColors = {greenEdgeC, greenMidC, greenEdgeC};
-                greenBackground = new LinearGradientPaint(ptStart, ptEnd, dist, greenColors);      
+                greenBackground = new LinearGradientPaint(ptStart, ptEnd, dist, greenColors);
                 Color[] grayColors = {grayEdgeC, grayMidC, grayEdgeC};
-                grayBackground = new LinearGradientPaint(ptStart, ptEnd, dist, grayColors);                
+                grayBackground = new LinearGradientPaint(ptStart, ptEnd, dist, grayColors);
             }
             
             // draw next turn
@@ -379,7 +379,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             String label = text("HISTORY_FORWARD");
             int sw = g.getFontMetrics().stringWidth(label);
             g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);           
+            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);
             boolean hovering = hoverTarget == nextTurnBox;
             boolean enabled = canNextTurn();
             if (enabled)
@@ -395,7 +395,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             }
             else {
                 c0 = SystemPanel.whiteText;
-                g.setStroke(BasePanel.stroke1);              
+                g.setStroke(BasePanel.stroke1);
             }
             g.setColor(c0);
             g.drawRoundRect(buttonX, buttonY, buttonW, buttonH, s8, s8);
@@ -410,7 +410,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             label = text("HISTORY_BACK");
             sw = g.getFontMetrics().stringWidth(label);
             g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);           
+            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);
             hovering = hoverTarget == prevTurnBox;
             enabled = canPreviousTurn();
             if (enabled)
@@ -425,7 +425,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             }
             else {
                 c0 = SystemPanel.whiteText;
-                g.setStroke(BasePanel.stroke1);              
+                g.setStroke(BasePanel.stroke1);
             }
             g.setColor(c0);
             g.drawRoundRect(buttonX, buttonY, buttonW, buttonH, s8, s8);
@@ -445,7 +445,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
                 label = text("HISTORY_PAUSE");
             sw = g.getFontMetrics().stringWidth(label);
             g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);           
+            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);
             hovering = hoverTarget == playBox;
             enabled = true;
             if (enabled)
@@ -460,7 +460,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             }
             else {
                 c0 = SystemPanel.whiteText;
-                g.setStroke(BasePanel.stroke1);              
+                g.setStroke(BasePanel.stroke1);
             }
             g.setColor(c0);
             g.drawRoundRect(buttonX, buttonY, buttonW, buttonH, s8, s8);
@@ -476,7 +476,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             label = text("HISTORY_EXIT");
             sw = g.getFontMetrics().stringWidth(label);
             g.setColor(SystemPanel.blackText);
-            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);           
+            g.fillRoundRect(buttonX+s3, buttonY+s3, buttonW, buttonH, s8, s8);
             hovering = hoverTarget == exitBox;
             enabled = true;
             if (enabled)
@@ -491,13 +491,13 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             }
             else {
                 c0 = SystemPanel.whiteText;
-                g.setStroke(BasePanel.stroke1);              
+                g.setStroke(BasePanel.stroke1);
             }
             g.setColor(c0);
             g.drawRoundRect(buttonX, buttonY, buttonW, buttonH, s8, s8);
             g.setStroke(prevStr);
             x2a = buttonX + ((buttonW - sw) / 2);
-            drawShadowedString(g, label, x2a, buttonY + buttonH - s8, Color.black, c0);           
+            drawShadowedString(g, label, x2a, buttonY + buttonH - s8, Color.black, c0);
             
             // draw slider bar
             int sliderH = s10;
@@ -513,7 +513,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             if (sliderW0 > 0) {
                 g.setColor(greenMidC);
                 g.fillRect(sliderX, sliderY, sliderW0, sliderH);
-            }       
+            }
             if (hoverTarget == sliderBox) {
                 prevStr = g.getStroke();
                 g.setColor(Color.yellow);
@@ -534,17 +534,17 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public void mouseReleased(MouseEvent e) {
             if ((hoverTarget == nextTurnBox) && canNextTurn()) {
-                softClick(); 
+                softClick();
                 nextTurn();
                 return;
             }
             else if ((hoverTarget == prevTurnBox) && canPreviousTurn()) {
-                softClick(); 
+                softClick();
                 previousTurn();
                 return;
             }
             else if ((hoverTarget == playBox)) {
-                softClick(); 
+                softClick();
                 if (canReset())
                     reset();
                 else
@@ -552,7 +552,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
                 return;
             }
             else if ((hoverTarget == exitBox)) {
-                softClick(); 
+                softClick();
                 exit();
                 return;
             }
@@ -592,7 +592,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             else if (sliderBox.contains(x,y))
                 hoverTarget = sliderBox;
 
-            if (prevHover != hoverTarget) 
+            if (prevHover != hoverTarget)
                repaint();
         }
     }
@@ -634,20 +634,20 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public GalaxyMapPanel map()         { return map; }
         @Override
-        public void drawTitle(Graphics2D g) { 
+        public void drawTitle(Graphics2D g) {
             int w = getWidth();
             g.setFont(narrowFont(30));
             String title;
             if (showAll)
                 title = text("HISTORY_TITLE_ALL");
-            else 
+            else
                 title = text("HISTORY_TITLE");
             int sw = g.getFontMetrics().stringWidth(title);
             g.setColor(SystemPanel.whiteText);
             drawString(g,title, (w-sw)/2, s24);
         }
         @Override
-        public void drawYear(Graphics2D g) { 
+        public void drawYear(Graphics2D g) {
             int w = getWidth();
             int h = getHeight();
             g.setFont(narrowFont(30));
@@ -677,7 +677,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public boolean drawBackgroundStars()           { return false; }
         @Override
-        public Color systemLabelColor(StarSystem s)    { 
+        public Color systemLabelColor(StarSystem s)    {
             int i = sysData(s.id, turn);
             if (i == Empire.NULL_ID)
                 return Color.gray;
@@ -689,7 +689,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public boolean showShipRanges()                { return false; }
         @Override
-        public Empire knownEmpire(int sysId, Empire emp)    { 
+        public Empire knownEmpire(int sysId, Empire emp)    {
             int id = sysData(sysId, turn);
             return id == Empire.NULL_ID ? null : galaxy().empire(id);
         }
@@ -753,8 +753,8 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         public boolean isHovering(Sprite s)            { return false; }
         @Override
         public Sprite hoveringSprite()           { return (Sprite) sessionVar("HISTORYUI_HOVERING_SPRITE"); }
-        public void hoveringSprite(Sprite s)     { 
-            sessionVar("HISTORYUI_HOVERING_SPRITE", s); 
+        public void hoveringSprite(Sprite s)     {
+            sessionVar("HISTORYUI_HOVERING_SPRITE", s);
         }
         public Sprite lastHoveringSprite()       { return (Sprite) sessionVar("HISTORYUI_LAST_HOVERING_SPRITE"); }
         public void lastHoveringSprite(Sprite s) { sessionVar("HISTORYUI_LAST_HOVERING_SPRITE", s); }
@@ -789,7 +789,7 @@ public final class HistoryUI extends BasePanel implements MouseListener {
             g.fillRect(0,h/2,w, h/2);
         }
         @Override
-        public void paintOverMap(GalaxyMapPanel ui, Graphics2D g) { 
+        public void paintOverMap(GalaxyMapPanel ui, Graphics2D g) {
             // empire list
             int lineH = s22;
             int y1 = s40;
