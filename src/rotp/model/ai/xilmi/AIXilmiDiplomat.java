@@ -192,10 +192,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //  TRADE TREATIES
     //-----------------------------------
 
-    @Override
-    public DiplomaticReply immediateRefusalToTrade(Empire requestor) {
-        return null;
-    }
     private boolean willingToOfferTrade(EmpireView v, int level) {
         if (!canOfferTradeTreaty(v.empire()))
             return false;
