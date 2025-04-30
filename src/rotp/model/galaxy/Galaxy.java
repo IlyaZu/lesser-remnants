@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ import rotp.util.Base;
 
 public class Galaxy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
+    private static final String[] letter = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N" };
+    
     public static Galaxy current()   { return GameSession.instance().galaxy(); }
 
     private int currentTurn = 0;
@@ -457,7 +459,7 @@ public class Galaxy implements Base, Serializable {
         String nextName = remainingNames.remove(0);
         int seq = raceSystemCtr().get(rId);
         if (seq > 1)
-            nextName = nextName + " " + Base.letter[seq];
+            nextName = nextName + " " + letter[seq];
 
         return nextName;
     }
