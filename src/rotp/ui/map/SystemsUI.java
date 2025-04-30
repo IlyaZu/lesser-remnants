@@ -553,14 +553,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         for (ShipFleet fl: fleets) {
             if (fl.isPotentiallyArmed(pl)) {
                 if (pl.atWarWith(fl.empId())) {
-                    if (sysEmp == null)
-                        return MainUI.yellowAlertC; // enemy fleets around empty systems
                     if (sysEmp.isPlayer())
                         return MainUI.redAlertC;    // enemy fleets around player colonies
                     else if (pl.alliedWith(sysEmpId))
                         return MainUI.yellowAlertC; // enemy fleets around ally systems
-                    else
-                        return MainUI.yellowAlertC; // enemy fleets around other systems
                 }
             }
         }
@@ -679,16 +675,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         for (ShipFleet fl: fleets) {
             if (fl.isPotentiallyArmed(pl)) {
                 if (pl.atWarWith(fl.empId())) {
-                    String fleetMsg;
-                    if (sysEmp == null)
-                        fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET");
-                    else if (sysEmp.isPlayer())
-                        fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET_PLAYER");
+                    if (sysEmp.isPlayer())
+                        return text("SYSTEMS_EXT_ENEMY_FLEET_PLAYER");
                     else if (pl.alliedWith(sv.empId()))
-                        fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET_ALLY");
-                    else
-                        fleetMsg = text("SYSTEMS_EXT_ENEMY_FLEET");
-                    return fleetMsg;
+                        return text("SYSTEMS_EXT_ENEMY_FLEET_ALLY");
                 }
             }
         }
@@ -698,12 +688,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         if (pl.knowShipETA() && pl.alliedWith(sv.empId())) {
             for (Ship sh: pl.visibleShips()) {
                 if ((sh.destSysId() == sv.sysId) && pl.atWarWith(sh.empId()) && sh.isPotentiallyArmed(pl)) {
-                    String fleetMsg;
                     if (sysEmp.isPlayer())
-                        fleetMsg = text("SYSTEMS_EXT_INC_FLEET_PLAYER");
+                        return text("SYSTEMS_EXT_INC_FLEET_PLAYER");
                     else
-                        fleetMsg = text("SYSTEMS_EXT_INC_FLEET_ALLY");
-                    return fleetMsg;
+                        return text("SYSTEMS_EXT_INC_FLEET_ALLY");
                 }
             }
         }
