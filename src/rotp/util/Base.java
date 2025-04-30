@@ -62,7 +62,6 @@ import rotp.ui.UserPreferences;
 import rotp.util.sound.SoundClip;
 
 public interface Base {
-    public static String[] letter = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N" };
     public static Random random = new Random();
     public static DecimalFormat df1 = new DecimalFormat("0.0");
     public static DecimalFormat df2 = new DecimalFormat("0.00");
