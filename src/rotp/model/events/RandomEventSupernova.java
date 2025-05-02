@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -162,7 +162,6 @@ public class RandomEventSupernova implements Base, Serializable, RandomEvent, Co
         targetSystem.clearEvent();
         targetSystem.planet().baseSize(roll(11,20)); // reset size first... irradiate will reset pop
         targetSystem.planet().irradiateEnvironment();
-        targetSystem.abandoned(false);
         targetSystem.addEvent(new SystemRandomEvent("SYSEVENT_SUPERNOVA"));
 
         Colony col = targetSystem.colony();

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -276,14 +276,10 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     }
     public void land() {
         if (!dest.isColonized()) {
-            if (dest.abandoned() && !dest.unnamed() && empire.canColonize(dest))
-                empire().takeAbandonedSystem(dest, this);
-            else {
-                log(concat(str(size), " ", empire.name(), " transports perished at ", dest.name()));
-                if (empire.isPlayerControlled())
-                    TransportsPerishedAlert.create(dest);
-                size = 0;
-            }
+            log(concat(str(size), " ", empire.name(), " transports perished at ", dest.name()));
+            if (empire.isPlayerControlled())
+                TransportsPerishedAlert.create(dest);
+            size = 0;
         }
         else if (dest.empire() != empire) {
             if (surrenderOnArrival()) {
