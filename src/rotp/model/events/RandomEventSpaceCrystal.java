@@ -111,7 +111,7 @@ public class RandomEventSpaceCrystal implements Base, Serializable, RandomEvent 
     private void degradePlanet(StarSystem targetSystem) {
         Empire emp = targetSystem.empire();
         // colony may have already been destroyed in combat
-        if (targetSystem.isColonized() || targetSystem.abandoned())
+        if (targetSystem.isColonized())
             monster.degradePlanet(targetSystem);
         
         if (emp == null)
