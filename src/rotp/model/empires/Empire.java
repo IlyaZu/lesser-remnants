@@ -470,11 +470,6 @@ public final class Empire implements Base, NamedObject, Serializable {
             return false;
         if (sys.colony().quarantined())
             return false;
-        
-        for (StarSystem abSys: galaxy().abandonedSystems()) {
-            if (sv.inShipRange(abSys.id) && canColonize(abSys))
-                return true;
-        }
             
         return true;
     }
@@ -483,7 +478,7 @@ public final class Empire implements Base, NamedObject, Serializable {
             return false;
         if (!sv.isScouted(sys.id))
             return false;
-        if (!sv.isColonized(sys.id) && !sv.isAbandoned(sys.id))
+        if (!sv.isColonized(sys.id))
             return false;
         if (!sv.inShipRange(sys.id))
             return false;
@@ -608,14 +603,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         
         if (colonizedSystems.isEmpty())
             goExtinct();
-    }
-    public void takeAbandonedSystem(StarSystem sys, Transport tr) {
-        sys.addEvent(new SystemColonizedEvent(id));
-        newSystems.add(sys);
-        addColonizedSystem(sys);
-        sys.becomeColonized(sys.name(), this);
-        sys.colony().population(min(sys.planet().currentSize(),tr.size()));
-        tr.size(0);
     }
     public Colony colonize(String sysName, StarSystem sys) {
         sys.addEvent(new SystemColonizedEvent(id));

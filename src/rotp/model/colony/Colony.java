@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU GeneraFl Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import static rotp.model.colony.ColonySpendingCategory.MAX_TICKS;
 import rotp.model.empires.DiplomaticTreaty;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.events.SystemAbandonedEvent;
 import rotp.model.events.SystemCapturedEvent;
 import rotp.model.events.SystemDestroyedEvent;
 import rotp.model.events.SystemRandomEvent;
@@ -932,10 +931,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public void launchTransports() {
         if (transport().isActive()) {
             transport().launch();
-            if (transport().size() >= (int)population()) {
-                abandon();
-                return;
-            }
             population(population() - transport().size());
             transport = new Transport(starSystem());
             if (empire.isPlayerControlled())
@@ -1265,36 +1260,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         if (population() <= 0)
             destroy();
-    }
-    public void abandon() {
-        if (isCapital())
-            empire.chooseNewCapital();
-        
-        StarSystem sys = starSystem();
-        sys.addEvent(new SystemAbandonedEvent(empire.id));
-        sys.abandoned(true);
-
-        population(0);
-        rebels = 0;
-        captives = 0;
-        rebellion = false;
-        planet.addAlienFactories(empire.id, (int) industry().factories());
-
-        transport = null;
-        clearReserveIncome();
-        empire.removeColonizedSystem(sys);
-        empire.stopRalliesWithSystem(sys);
-        planet.setColony(null);
-        // update system views of civs that would notice
-        empire.sv.refreshFullScan(sys.id);
-        List<ShipFleet> fleets = sys.orbitingFleets();
-        for (ShipFleet fl : fleets)
-            fl.empire().sv.refreshFullScan(sys.id);
-        
-        for (Empire emp: galaxy().empires()) {
-            if (emp.knowsOf(empire) && !emp.sv.name(sys.id).isEmpty())
-                emp.sv.view(sys.id).setEmpire();
-        }
     }
     public void destroy() {
         if (isCapital())

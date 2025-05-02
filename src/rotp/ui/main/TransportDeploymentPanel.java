@@ -581,7 +581,7 @@ public class TransportDeploymentPanel extends SystemPanel {
             int id = sys.id;
             Empire pl = player();
             // uncolonized destination selected
-            if (!pl.sv.isColonized(id) && !pl.sv.isAbandoned(id)) {
+            if (!pl.sv.isColonized(id)) {
                 String name = pl.sv.descriptiveName(id);
                 drawShadowedString(g, name, 2, leftM, s22, MainUI.shadeBorderC(), SystemPanel.whiteLabelText);
                 g.setFont(narrowFont(18));
