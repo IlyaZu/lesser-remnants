@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,9 +86,9 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
         targetSystem.clearEvent();
         Colony col = targetSystem.colony();
         if (!targetSystem.orbitingFleets().isEmpty())
-            startCombat();
+            galaxy().shipCombat().battle(targetSystem, monster);
         else if ((col != null) && col.defense().isArmed())
-            startCombat();
+            galaxy().shipCombat().battle(targetSystem, monster);
         
         if (monster.alive()) {
             degradePlanet(targetSystem);
@@ -96,10 +96,6 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
         }
         else
             amoebaDestroyed();
-    }
-    private void startCombat() {
-        StarSystem targetSystem = galaxy().system(sysId);
-        galaxy().shipCombat().battle(targetSystem, monster);
     }
     private void approachSystem() {
         StarSystem targetSystem = galaxy().system(sysId);
