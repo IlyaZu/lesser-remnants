@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ public class GalacticCouncil implements Base, Serializable {
             voters = new ArrayList<>(empires());
         return voters;
     }
-    public List<Empire> empires() {
+    private List<Empire> empires() {
         if (empires == null)
             initEmpires();
         return empires;
@@ -134,7 +134,6 @@ public class GalacticCouncil implements Base, Serializable {
     public Empire candidate2() { return candidate2; }
     public Empire lastVoter()  { return lastVoter; }
     public Empire lastVoted()  { return lastVoted; }
-    public int totalVotes()    { return totalVotes; }
     public int votesToElect()  { return (int) Math.ceil(totalVotes * 2 / 3.0); }
     public int votes1()        { return votes1; }
     public int votes2()        { return votes2; }
@@ -153,13 +152,6 @@ public class GalacticCouncil implements Base, Serializable {
     public void continueNonPlayerVoting() {
         while (votingInProgress() && !nextVoter().isPlayerControlled())
             castNextVote();
-    }
-    public boolean nextVoteWouldElect(Empire emp) {
-        if ((emp != candidate1())
-        && (emp != candidate2()))
-            return false;
-        int votesAlreadyCast = emp == candidate1() ? votes1() : votes2();
-        return (nextVotes() + votesAlreadyCast) >= votesToElect();
     }
     private void castNextVote(Empire chosen) {
         lastVoter = empires.get(voteIndex);
