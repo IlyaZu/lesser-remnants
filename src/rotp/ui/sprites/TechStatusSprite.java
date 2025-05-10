@@ -1,6 +1,6 @@
-
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.SystemPanel;
 
 public class TechStatusSprite extends MapControlSprite {
-    private static  final Color blueBucketC = new Color(100,100,255);
+    private static final Color blueBucketC = new Color(100,100,255);
     private static final Color blueBucketBackC = new Color(50,50,128);
     private final int category;
     public TechStatusSprite(int catNum, int xOff, int yOff, int w, int h) {
@@ -66,26 +66,25 @@ public class TechStatusSprite extends MapControlSprite {
             else if (cat.researchCompleted())
                 label = text("MAIN_TECH_COMPLETED");
             else {
-                label = tech.name(); 
+                label = tech.name();
                 int costRP = (int) Math.ceil(cat.costForTech(tech) - cat.totalBC());
                 if (costRP > 0)
-                    label2 = text("MAIN_TECH_RP_REMAINING",costRP); 
-                else 
+                    label2 = text("MAIN_TECH_RP_REMAINING",costRP);
+                else
                     label2 = text("MAIN_TECH_RP_DISCOVERY");
             }
             g2.setFont(narrowFont(fontSize1));
             labelW1 = g2.getFontMetrics().stringWidth(label);
             g2.setFont(narrowFont(fontSize2));
-            labelW2 = g2.getFontMetrics().stringWidth(label2);            
+            labelW2 = g2.getFontMetrics().stringWidth(label2);
             w = width+BasePanel.s15+max(labelW1, labelW2);
         }
         drawBackground(map,g2,w);
 
-        int cnr = BasePanel.s12;        
+        int cnr = BasePanel.s12;
         g2.setColor(background);
         g2.fillRoundRect(startX, startY, width, height, cnr, cnr);
 
-        
         if (tech != null)
             RotPUI.instance().techUI().drawResearchBubble(g2, cat, true, Color.lightGray, blueBucketC, blueBucketBackC, startX+BasePanel.s1+(width/2), startY+BasePanel.s7+(height/2));
 
