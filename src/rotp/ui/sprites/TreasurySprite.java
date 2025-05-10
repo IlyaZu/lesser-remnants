@@ -1,7 +1,6 @@
-
-
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +24,6 @@ import rotp.ui.BasePanel;
 import rotp.ui.RotPUI;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.SystemPanel;
-
 
 public class TreasurySprite extends MapControlSprite {
     public TreasurySprite(int xOff, int yOff, int w, int h) {
@@ -60,7 +58,7 @@ public class TreasurySprite extends MapControlSprite {
                 detail = text("MAIN_TECH_RESERVE_TAX_NONE");
             else if (player().empireTaxOnlyDeveloped())
                 detail = text("MAIN_TECH_RESERVE_TAX",str(tax));
-            else 
+            else
                 detail = text("MAIN_TECH_RESERVE_TAX_ALL",str(tax));
 
             g2.setFont(narrowFont(fontSize));
@@ -75,7 +73,7 @@ public class TreasurySprite extends MapControlSprite {
         }
         drawBackground(map,g2,w);
 
-        int cnr = BasePanel.s12;        
+        int cnr = BasePanel.s12;
         g2.setColor(background);
         g2.fillRoundRect(startX, startY, width, height, cnr, cnr);
 
@@ -132,7 +130,6 @@ public class TreasurySprite extends MapControlSprite {
         g2.setStroke(BasePanel.stroke1);
         g2.setColor(map.parent().backC());
         g2.drawRoundRect(startX, startY, width, height, cnr, cnr);
-        
         
         if (hovering) {
             g2.setStroke(BasePanel.stroke2);

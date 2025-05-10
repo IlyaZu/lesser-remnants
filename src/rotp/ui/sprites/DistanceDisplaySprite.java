@@ -36,7 +36,7 @@ public class DistanceDisplaySprite extends MapControlSprite  {
     public void draw(GalaxyMapPanel map, Graphics2D g2) {
         drawBackground(map,g2);
 
-        int cnr = BasePanel.s12;        
+        int cnr = BasePanel.s12;
         g2.setColor(background);
         g2.fillRoundRect(startX, startY, width, height, cnr, cnr);
 

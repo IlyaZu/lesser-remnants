@@ -1,5 +1,3 @@
-
-
 /*
  * Copyright 2015-2020 Ray Fowler
  * Modifications Copyright 2025 Ilya Zushinskiy
@@ -28,7 +26,6 @@ import rotp.ui.BasePanel;
 import rotp.ui.RotPUI;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.SystemPanel;
-
 
 public class SpyReportSprite extends MapControlSprite {
     private static LinearGradientPaint alertBack;
@@ -79,7 +76,6 @@ public class SpyReportSprite extends MapControlSprite {
         g2.setStroke(BasePanel.stroke1);
         g2.setColor(Color.black);
         g2.drawRoundRect(startX, startY, width, height, cnr, cnr);
-        
         
         if (hovering) {
             g2.setStroke(BasePanel.stroke2);
