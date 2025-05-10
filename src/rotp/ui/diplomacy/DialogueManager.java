@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,13 +48,6 @@ public class DialogueManager implements Base {
     public static final String DECLINE_ANNOYED          = "DeclineAnnoyed";
     public static final String DECLINE_OFFER            = "DeclineOffer";
     public static final String DECLINE_TECH_TRADE       = "DeclineTechTrade";
-    public static final String DECLINE_OATHBREAKER      = "DeclineOathbreaker";
-    public static final String DECLINE_ESPIONAGE        = "DeclineEspionage";
-    public static final String DECLINE_SABOTAGE         = "DeclineSabotage";
-    public static final String DECLINE_BUILDUP          = "DeclineBuildup";
-    public static final String DECLINE_SKIRMISH         = "DeclineSkirmish";
-    public static final String DECLINE_ATTACK           = "DeclineAttack";
-    public static final String DECLINE_INVASION         = "DeclineInvasion";
     public static final String DECLINE_ENEMY_ALLY       = "DeclineEnemyAlly";
     public static final String DECLINE_NO_WAR_ON_ALLY   = "DeclineNoWarOnAlly";
     public static final String DECLINE_PEACE_TREATY     = "DeclinePeaceTreaty";
@@ -180,13 +173,6 @@ public class DialogueManager implements Base {
         addMessage(new SimpleMessage(DECLINE_ANNOYED));
         addMessage(new SimpleMessage(DECLINE_OFFER));
         addMessage(new SimpleMessage(DECLINE_TECH_TRADE));
-        addMessage(new SimpleMessage(DECLINE_OATHBREAKER));
-        addMessage(new SimpleMessage(DECLINE_ESPIONAGE));
-        addMessage(new SimpleMessage(DECLINE_SABOTAGE));
-        addMessage(new SimpleMessage(DECLINE_BUILDUP));
-        addMessage(new SimpleMessage(DECLINE_SKIRMISH));
-        addMessage(new SimpleMessage(DECLINE_ATTACK));
-        addMessage(new SimpleMessage(DECLINE_INVASION));
         addMessage(new SimpleMessage(DECLINE_ENEMY_ALLY));
         addMessage(new SimpleMessage(DECLINE_NO_WAR_ON_ALLY));
         addMessage(new SimpleMessage(DECLINE_PEACE_TREATY));

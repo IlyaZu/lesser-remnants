@@ -17,7 +17,6 @@
 package rotp.model.ai.base;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import rotp.model.ai.interfaces.Diplomat;
@@ -28,19 +27,9 @@ import rotp.model.empires.EmpireView;
 import rotp.model.empires.SpyNetwork.Mission;
 import rotp.model.empires.SpyReport;
 import rotp.model.empires.TreatyWar;
-import rotp.model.incidents.ColonyAttackedIncident;
-import rotp.model.incidents.ColonyCapturedIncident;
-import rotp.model.incidents.ColonyDestroyedIncident;
-import rotp.model.incidents.ColonyInvadedIncident;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.EspionageTechIncident;
 import rotp.model.incidents.ExpansionIncident;
-import rotp.model.incidents.MilitaryBuildupIncident;
-import rotp.model.incidents.OathBreakerIncident;
-import rotp.model.incidents.SabotageBasesIncident;
-import rotp.model.incidents.SabotageFactoriesIncident;
 import rotp.model.incidents.SimpleIncident;
-import rotp.model.incidents.SkirmishIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
@@ -348,37 +337,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
     private String declineReasonText(EmpireView v) {
         DialogueManager dlg = DialogueManager.current();
-        DiplomaticIncident inc = worstWarnableIncident(v.embassy().allIncidents());
-
-        // no reason or insignificant, so give generic error
-        if ((inc == null) || (inc.severity() > -5))
-            return v.decode(dlg.randomMessage(DialogueManager.DECLINE_OFFER, v.owner()));
-
-        if (inc instanceof OathBreakerIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_OATHBREAKER, v.owner())));
-
-        if (inc instanceof MilitaryBuildupIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_BUILDUP, v.owner())));
-
-        if (inc instanceof SkirmishIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_SKIRMISH, v.owner())));
-
-        if (inc instanceof ColonyAttackedIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_ATTACK, v.owner())));
-
-        if ((inc instanceof ColonyCapturedIncident)
-        || (inc instanceof ColonyDestroyedIncident)
-        || (inc instanceof ColonyInvadedIncident))
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_INVASION, v.owner())));
-
-        if (inc instanceof EspionageTechIncident)
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_ESPIONAGE, v.owner())));
-
-        if ((inc instanceof SabotageBasesIncident)
-        || (inc instanceof SabotageFactoriesIncident))
-            return v.decode(inc.decode(dlg.randomMessage(DialogueManager.DECLINE_SABOTAGE, v.owner())));
-
-        // unknown reason, return generic error
         return v.decode(dlg.randomMessage(DialogueManager.DECLINE_OFFER, v.owner()));
     }
     //-----------------------------------
@@ -1265,16 +1223,6 @@ public class AIDiplomat implements Base, Diplomat {
         float warThreshold = baseThreshold * techMod * enemyMod * treatyMod * v.owner().leader().exploitWeakerEmpiresRatio();
         
         return (myPower/otherPower) > warThreshold;
-    }
-    private DiplomaticIncident worstWarnableIncident(Collection<DiplomaticIncident> incidents) {
-        DiplomaticIncident worstIncident = null;
-        float worstNewSeverity = 0;
-        for (DiplomaticIncident ev: incidents) {
-            float sev = ev.severity();
-            if (ev.triggersWarning() && (sev < worstNewSeverity))
-                worstIncident = ev;
-        }
-        return worstIncident;
     }
     private void beginIncidentWar(EmpireView view, DiplomaticIncident inc) {
         log(view.toString(), " - Declaring war based on incident: ", inc.toString(), " id:", inc.declareWarId());
