@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,17 @@
  */
 package rotp.ui.sprites;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 
 public class DistanceDisplaySprite extends MapControlSprite  {
-    Color extColor, normColor;
-
     public DistanceDisplaySprite(int xOff, int yOff, int w, int h) {
         xOffset = scaled(xOff);
         yOffset = scaled(yOff);
         width = scaled(w);
         height = scaled(h);
-        extColor =  new Color(0,0,192,64);
-        normColor = new Color(32,32,192,128);
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
