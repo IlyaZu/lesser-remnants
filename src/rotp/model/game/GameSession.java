@@ -255,7 +255,7 @@ public final class GameSession implements Base, Serializable {
                 log("Autosaving pre-turn");
                 instance.saveRecentSession(false);
                 
-                long startMs = timeMs();
+                long startMs = System.currentTimeMillis();
                 systemsToAllocate().clear();
                 clearScoutedSystems();
                 spyActivity = false;
@@ -325,7 +325,7 @@ public final class GameSession implements Base, Serializable {
                 validate();
                 gal.refreshAllEmpireViews();
                 log("Autosaving post-turn");
-                log("NEXT TURN PROCESSING TIME: ", str(timeMs()-startMs));
+                log("NEXT TURN PROCESSING TIME: ", str(System.currentTimeMillis()-startMs));
                 NoticeMessage.resetSubstatus(text("TURN_SAVING"));
                 instance.saveRecentSession(true);
 
@@ -334,7 +334,7 @@ public final class GameSession implements Base, Serializable {
                 RotPUI.instance().selectMainPanel();
                 notifications().clear();
                 // ensure Next Turn takes at least a minimum time
-                long spentMs = timeMs() - startMs;
+                long spentMs = System.currentTimeMillis() - startMs;
                 if (spentMs < MINIMUM_NEXT_TURN_TIME) {
                     try { Thread.sleep(MINIMUM_NEXT_TURN_TIME - spentMs);
                     } catch (InterruptedException e) { }

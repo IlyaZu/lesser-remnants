@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -225,7 +225,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
 
     private Timer timer;
     private int animationCount = 0;
-    private long animationMs = 0;
     public MainUI mainUI() {
         if (mainUI == null)
             mainUI = new MainUI();
@@ -236,8 +235,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     public RacesUI racesUI()          { return racesUI; }
     @Override
     public int animationCount()     { return animationCount; }
-    @Override
-    public long animationMs()       { return animationMs; }
 
     public RotPUI() {
         timer = new Timer(ANIMATION_TIMER, this);
@@ -680,8 +677,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        long newTime  = timeMs();
-        animationMs = newTime;
         animationCount++;
         animate();
     }
