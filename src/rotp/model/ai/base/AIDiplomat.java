@@ -289,14 +289,6 @@ public class AIDiplomat implements Base, Diplomat {
         return DiplomaticReplies.acceptTrade(v.otherView(), level);
     }
     @Override
-    public DiplomaticReply immediateRefusalToTrade(Empire requestor) {
-        EmpireView v = empire.viewForEmpire(requestor);
-        if (baseChanceForTrade(v) < 0) {
-            return new DiplomaticReply(false, declineReasonText(v));
-        }
-        return null;
-    }
-    @Override
     public DiplomaticReply refuseOfferTrade(Empire requestor, int level) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetTradeTimer(level);
