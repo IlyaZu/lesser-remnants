@@ -105,7 +105,6 @@ public interface Base {
     public default void softClick()   { playAudioClip("SoftClick"); }
     public default void misClick()    { playAudioClip("MisClick"); }
 
-    public default long timeMs()  { return System.currentTimeMillis() - Rotp.startMs; }
     public default boolean playAnimations()   { return AnimationManager.current().playAnimations(); }
     public default void stopAmbience() {
         SoundManager.current().stopAmbience();
@@ -216,7 +215,6 @@ public interface Base {
     public default Image image(String s)               { return ImageManager.current().image(s); }
     public default Image scaledImageW(String s, int w) { return ImageManager.current().scaledImageW(s, w); }
     public default int animationCount()                { return RotPUI.instance().animationCount(); }
-    public default long animationMs()                  { return RotPUI.instance().animationMs(); }
     public default void allFrames(String key, int cnt, int imgIndex, List<Image> frames, List<Integer> refs)  {
         AnimationManager.current().allFrames(key, cnt, imgIndex, frames, refs);
     }

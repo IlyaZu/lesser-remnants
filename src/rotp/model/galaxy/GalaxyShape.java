@@ -191,9 +191,6 @@ public abstract class GalaxyShape implements Base, Serializable {
         }
         return GALAXY_EDGE_BUFFER;
     }
-    protected void addColonizedSystems() {
-
-    }
     protected Point.Float addOrion() {
         Point.Float pt = new Point.Float();
         findAnyValidLocation(pt);
