@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -184,20 +184,10 @@ public abstract class GalaxyShape implements Base, Serializable {
         switch(opts.selectedGalaxySize()) {
             case IGameOptions.SIZE_TINY:      return 1;
             case IGameOptions.SIZE_SMALL:     return 1;
-            case IGameOptions.SIZE_SMALL2:    return 1;
-            case IGameOptions.SIZE_MEDIUM:    return 2;
-            case IGameOptions.SIZE_MEDIUM2:   return 2;
+            case IGameOptions.SIZE_MEDIUM:    return 1;
             case IGameOptions.SIZE_LARGE:     return 2;
-            case IGameOptions.SIZE_LARGE2:    return 2;
-            case IGameOptions.SIZE_HUGE:      return 3;
-            case IGameOptions.SIZE_HUGE2:     return 3;
-            case IGameOptions.SIZE_MASSIVE:   return 3;
-            case IGameOptions.SIZE_MASSIVE2:  return 3;
-            case IGameOptions.SIZE_MASSIVE3:  return 3;
-            case IGameOptions.SIZE_MASSIVE4:  return 4;
-            case IGameOptions.SIZE_MASSIVE5:  return 4;
-            case IGameOptions.SIZE_INSANE:    return 5;
-            case IGameOptions.SIZE_LUDICROUS: return 8;
+            case IGameOptions.SIZE_HUGE:      return 2;
+            case IGameOptions.SIZE_MASSIVE:   return 2;
         }
         return GALAXY_EDGE_BUFFER;
     }

@@ -207,16 +207,12 @@ public interface Base {
         }
         catch(Exception e) { }
     }
-    public default int maximumSystems()                { return (int) (240*(Rotp.maxHeapMemory-250)); }
     public default boolean veryLowMemory() {
-        return (Rotp.maxHeapMemory < 500)
-            || (galaxy() != null) && (galaxy().numStarSystems() > (maximumSystems()*3/4));
+        return Rotp.maxHeapMemory < 500;
     }
     public default boolean lowMemory() {
-        return (Rotp.maxHeapMemory < 800)
-            || ((galaxy() != null) && (galaxy().numStarSystems() > (maximumSystems()/2)));
+        return Rotp.maxHeapMemory < 800;
     }
-    public default boolean midMemory()                 { return (galaxy() != null) && (galaxy().numStarSystems() > (maximumSystems()/3)); }
     public default Image image(String s)               { return ImageManager.current().image(s); }
     public default Image scaledImageW(String s, int w) { return ImageManager.current().scaledImageW(s, w); }
     public default int animationCount()                { return RotPUI.instance().animationCount(); }

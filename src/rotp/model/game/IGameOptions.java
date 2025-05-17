@@ -32,21 +32,10 @@ public interface IGameOptions {
     public static final int MAX_OPPONENT_TYPE = 5;
     public static final String SIZE_TINY = "SETUP_GALAXY_SIZE_TINY";
     public static final String SIZE_SMALL = "SETUP_GALAXY_SIZE_SMALL";
-    public static final String SIZE_SMALL2 = "SETUP_GALAXY_SIZE_SMALL2";
     public static final String SIZE_MEDIUM = "SETUP_GALAXY_SIZE_AVERAGE";
-    public static final String SIZE_MEDIUM2 = "SETUP_GALAXY_SIZE_AVERAGE2";
     public static final String SIZE_LARGE = "SETUP_GALAXY_SIZE_LARGE";
-    public static final String SIZE_LARGE2 = "SETUP_GALAXY_SIZE_LARGE2";
     public static final String SIZE_HUGE = "SETUP_GALAXY_SIZE_HUGE";
-    public static final String SIZE_HUGE2 = "SETUP_GALAXY_SIZE_HUGE2";
     public static final String SIZE_MASSIVE = "SETUP_GALAXY_SIZE_MASSIVE";
-    public static final String SIZE_MASSIVE2 = "SETUP_GALAXY_SIZE_MASSIVE2";
-    public static final String SIZE_MASSIVE3 = "SETUP_GALAXY_SIZE_MASSIVE3";
-    public static final String SIZE_MASSIVE4 = "SETUP_GALAXY_SIZE_MASSIVE4";
-    public static final String SIZE_MASSIVE5 = "SETUP_GALAXY_SIZE_MASSIVE5";
-    public static final String SIZE_INSANE = "SETUP_GALAXY_SIZE_INSANE";
-    public static final String SIZE_LUDICROUS = "SETUP_GALAXY_SIZE_LUDICROUS";
-    public static final String SIZE_MAXIMUM = "SETUP_GALAXY_SIZE_MAXIMUM";
 
     public static final String SHAPE_RECTANGLE = "SETUP_GALAXY_SHAPE_RECTANGLE";
     public static final String SHAPE_ELLIPTICAL = "SETUP_GALAXY_SHAPE_ELLIPSE";
