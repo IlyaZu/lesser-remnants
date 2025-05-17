@@ -81,16 +81,20 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
     }
     private void enterSystem() {
         monster.visitSystem(sysId);
-        monster.initCombat(galaxy().shipCombat());
         StarSystem targetSystem = galaxy().system(sysId);
         targetSystem.clearEvent();
         Colony col = targetSystem.colony();
+        boolean isUnopposed = false;
         if (!targetSystem.orbitingFleets().isEmpty())
             galaxy().shipCombat().battle(targetSystem, monster);
         else if ((col != null) && col.defense().isArmed())
             galaxy().shipCombat().battle(targetSystem, monster);
+        else
+            // In this case the monster combat stacks are not initialised and
+            // therefore monster.alive() may not return the correct output.
+            isUnopposed = true;
         
-        if (monster.alive()) {
+        if (isUnopposed || monster.alive()) {
             degradePlanet(targetSystem);
             moveToNextSystem();
         }
