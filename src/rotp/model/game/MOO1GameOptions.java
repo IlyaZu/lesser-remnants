@@ -229,21 +229,10 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         switch (selectedGalaxySize()) {
             case SIZE_TINY:       return 33;
             case SIZE_SMALL:      return 50;
-            case SIZE_SMALL2:     return 70;
-            case SIZE_MEDIUM:     return 100;
-            case SIZE_MEDIUM2:    return 150;
-            case SIZE_LARGE:      return 225;
-            case SIZE_LARGE2:     return 333;
-            case SIZE_HUGE:       return 500;
-            case SIZE_HUGE2:      return 700;
-            case SIZE_MASSIVE:    return 1000;
-            case SIZE_MASSIVE2:   return 1500;
-            case SIZE_MASSIVE3:   return 2250;
-            case SIZE_MASSIVE4:   return 3333;
-            case SIZE_MASSIVE5:   return 5000;
-            case SIZE_INSANE:     return 10000;
-            case SIZE_LUDICROUS:  return 100000;
-            case SIZE_MAXIMUM:    return maximumSystems();
+            case SIZE_MEDIUM:     return 70;
+            case SIZE_LARGE:      return 100;
+            case SIZE_HUGE:       return 150;
+            case SIZE_MASSIVE:    return 225;
         }
         return 8*(selectedNumberOpponents()+1);
     }
@@ -417,40 +406,13 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public List<String> galaxySizeOptions() {
-        int max = maximumSystems();
         List<String> list = new ArrayList<>();
         list.add(SIZE_TINY);
-        if (max > 50)
-            list.add(SIZE_SMALL);
-        if (max > 70)
-            list.add(SIZE_SMALL2);
-        if (max > 100)
-            list.add(SIZE_MEDIUM);
-        if (max > 150)
-            list.add(SIZE_MEDIUM2);
-        if (max > 225)
-            list.add(SIZE_LARGE);
-        if (max > 333)
-            list.add(SIZE_LARGE2);
-        if (max > 500)
-            list.add(SIZE_HUGE);
-        if (max > 700)
-            list.add(SIZE_HUGE2);
-        if (max > 1000)
-            list.add(SIZE_MASSIVE);
-        if (max > 1500)
-            list.add(SIZE_MASSIVE2);
-        if (max > 2250)
-            list.add(SIZE_MASSIVE3);
-        if (max > 3333)
-            list.add(SIZE_MASSIVE4);
-        if (max > 5000)
-            list.add(SIZE_MASSIVE5);
-        if (max > 10000)
-            list.add(SIZE_INSANE);
-        if (max > 100000)
-            list.add(SIZE_LUDICROUS);
-        list.add(SIZE_MAXIMUM);
+        list.add(SIZE_SMALL);
+        list.add(SIZE_MEDIUM);
+        list.add(SIZE_LARGE);
+        list.add(SIZE_HUGE);
+        list.add(SIZE_MASSIVE);
         return list;
     }
     @Override
