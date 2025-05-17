@@ -63,11 +63,11 @@ public class Rotp {
             logging = false;
         }
         else {
-            if (args[0].toLowerCase().endsWith(".rotp")) 
+            if (args[0].toLowerCase().endsWith(".rotp"))
                 loadSaveFile = args[0];
         }
         
-        reloadRecentSave = containsArg(args, "reload");  
+        reloadRecentSave = containsArg(args, "reload");
         logging = containsArg(args, "log");
         stopIfInsufficientMemory(frame, (int)maxHeapMemory);
         Thread.setDefaultUncaughtExceptionHandler(new SwingExceptionHandler());
@@ -92,7 +92,7 @@ public class Rotp {
             resizeAmt();
         }
         else if (UserPreferences.borderless()) {
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setUndecorated(true);
             resizeAmt();
         }
@@ -108,8 +108,8 @@ public class Rotp {
             RotPUI.instance().mainUI().showJava32BitPrompt();
         else if (reloadRecentSave)
             GameSession.instance().loadRecentSession(false);
-        else if (!loadSaveFile.isEmpty()) 
-            GameSession.instance().loadSession("", loadSaveFile, false);        
+        else if (!loadSaveFile.isEmpty())
+            GameSession.instance().loadSession("", loadSaveFile, false);
 
         becomeVisible();
     }
@@ -194,7 +194,7 @@ public class Rotp {
         } catch (IOException ex) {
             System.err.println("Error attempting restart: ");
             ex.printStackTrace();
-        }            
+        }
     }
     public static void restartFromLowMemory() {
         restartWithMoreMemory(frame, true);

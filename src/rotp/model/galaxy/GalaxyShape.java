@@ -147,9 +147,9 @@ public abstract class GalaxyShape implements Base, Serializable {
         float minOrionBuffer = 4*sysBuffer;
         
         // the stars/empires ratio for the most "densely" populated galaxy is about 8:1
-        // we want to set the minimum distance between empires to half that in ly, with a minimum 
+        // we want to set the minimum distance between empires to half that in ly, with a minimum
         // of 6 ly... this means that it will not increase until there is at least a 12:1
-        // ratio. However, the minimum buffer will never exceed the "MAX_MIN", to ensure that 
+        // ratio. However, the minimum buffer will never exceed the "MAX_MIN", to ensure that
         // massive maps don't always GUARANTEE hundreds of light-years of space to expand uncontested
         empireBuffer = min(maxMinEmpireBuffer, max(minEmpireBuffer, (maxStars/(numOpps*2))));
         // Orion buffer is 50% greater with minimum of 8 ly.
@@ -214,7 +214,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     }
     public Point.Float findAnyValidLocation(Point.Float p) {
         setRandom(p);
-        while (!valid(p)) 
+        while (!valid(p))
             setRandom(p);
         
         return p;
