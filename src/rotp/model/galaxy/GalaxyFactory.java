@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,13 +140,10 @@ public class GalaxyFactory implements Base {
         List<String> allRaceOptions = new ArrayList<>();
         List<String> options = options().startingRaceOptions();
         int maxRaces = options().selectedNumberOpponents();
-        int mult = IGameOptions.MAX_OPPONENT_TYPE;
 
         // first, build randomized list of opponent races
-        for (int i=0;i<mult;i++) {
-            Collections.shuffle(options);
-            allRaceOptions.addAll(options);
-        }
+        Collections.shuffle(options);
+        allRaceOptions.addAll(options);
 
         // next, remove from that list the player and any selected opponents
         String[] selectedOpponents = options().selectedOpponentRaces();
@@ -226,13 +223,9 @@ public class GalaxyFactory implements Base {
 
         int empId = startId;
         
-        // since we may have more races than colors we will need to reset the
-        // color list each time we run out.
         for (int h=0;h<maxRaces;h++) {
             Race r = Race.keyed(alienRaces.get(h));
             EmpireSystem empSystem = empSystems.get(h);
-            if (raceColors.isEmpty())
-                raceColors = opts.possibleColors();
             Integer colorId = raceColors.remove(0);
             StarSystem sys = StarSystemFactory.current().newSystemForRace(r,g);
             sys.setXY(empSystem.colonyX(), empSystem.colonyY());

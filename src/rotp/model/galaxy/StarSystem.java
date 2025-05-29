@@ -22,7 +22,6 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Polygon;
 import java.awt.Stroke;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -651,36 +650,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             g.setColor(emp.color());
         
         int r0 = map.scale(clickRadius);
-        int r1 = map.scale(0.8f);
-
-        int shape = emp == null ? Empire.SHAPE_CIRCLE : emp.shape();
-        switch(shape) {
-            case Empire.SHAPE_SQUARE:
-                g.drawRect(x-r1, y-r1, r1+r1, r1+r1); break;
-            case Empire.SHAPE_DIAMOND:
-                Polygon p = new Polygon();
-                p.addPoint(x, y-r0);
-                p.addPoint(x-r0, y);
-                p.addPoint(x, y+r0);
-                p.addPoint(x+r0, y);
-                g.draw(p); break;
-            case Empire.SHAPE_TRIANGLE1:
-                Polygon p1 = new Polygon();
-                p1.addPoint(x, y-r0);
-                p1.addPoint(x-r0, y+r1);
-                p1.addPoint(x+r0, y+r1);
-                g.draw(p1); break;
-            case Empire.SHAPE_TRIANGLE2:
-                Polygon p2 = new Polygon();
-                p2.addPoint(x, y+r0);
-                p2.addPoint(x-r0, y-r1);
-                p2.addPoint(x+r0, y-r1);
-                g.draw(p2);
-                break;
-            case Empire.SHAPE_CIRCLE:
-            default:
-                g.drawOval(x-r0, y-r0, r0+r0, r0+r0); break;
-        }
+        g.drawOval(x-r0, y-r0, r0+r0, r0+r0);
         g.setStroke(prev);
     }
     private void drawHovering(Graphics2D g, GalaxyMapPanel map, int x, int y) {
