@@ -57,9 +57,7 @@ public interface IGameOptions {
     public boolean isAutoPlay();
     public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
     public default boolean usingExtendedRaces()  { return (selectedNumberOpponents()+1) > startingRaceOptions().size(); }
-    public default int maxOpponents()            { return MAX_OPPONENTS; }
     public default int selectedAI(Empire e)       { return AI.BASE; }
-    public String name();
     public void setToDefault();
 
     public int numberStarSystems();

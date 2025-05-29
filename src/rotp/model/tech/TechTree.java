@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -423,46 +423,6 @@ public final class TechTree implements Base, Serializable {
         if (t.isFuelRangeTech()) {
             TechFuelRange t0 = (TechFuelRange) t;
             range = max(range, t0.range());
-        }
-        return range;
-    }
-    public float learnableShipRange() {
-        float range = ((TechFuelRange) tech(topFuelRangeTech)).range();
-
-        for (String id: propulsion().techIdsAvailableForResearch(true)) {
-            Tech t = tech(id);
-            if (t.isFuelRangeTech()) {
-                TechFuelRange t0 = (TechFuelRange) t;
-                range = max(range, t0.range());
-            }
-        }
-        return range;
-    }
-    public float researchingScoutRange() {
-        float rsv = topReserveFuelRangeTech().range();
-        float range = ((TechFuelRange) tech(topFuelRangeTech)).range()+rsv;
-
-        String id = propulsion().currentTech();
-        if (id == null)
-            return range;
-        
-        Tech t = tech(id);
-        if (t.isFuelRangeTech()) {
-            TechFuelRange t0 = (TechFuelRange) t;
-            range = max(range, t0.range()+rsv);
-        }
-        return range;
-    }
-    public float learnableScoutRange() {
-        float rsv = topReserveFuelRangeTech().range();
-        float range = ((TechFuelRange) tech(topFuelRangeTech)).range()+rsv;
-
-        for (String id: propulsion().techIdsAvailableForResearch(true)) {
-            Tech t = tech(id);
-            if (t.isFuelRangeTech()) {
-                TechFuelRange t0 = (TechFuelRange) t;
-                range = max(range, t0.range()+rsv);
-            }
         }
         return range;
     }
