@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -168,12 +168,12 @@ public abstract class SystemPanel extends BasePanel implements SystemViewer, Map
         bottomPane = bottomPane();
 
         setLayout(new BorderLayout(0,gap));
-        if (overviewPane != null) 
+        if (overviewPane != null)
             add(overviewPane, BorderLayout.NORTH);
         
         add(detailPane, BorderLayout.CENTER);
-        if (bottomPane != null) 
-            add(bottomPane, BorderLayout.SOUTH); 
+        if (bottomPane != null)
+            add(bottomPane, BorderLayout.SOUTH);
         setPreferredSize(new Dimension(getWidth(), scaled(300)));
     }
     protected abstract BasePanel topPane();
@@ -193,9 +193,9 @@ public abstract class SystemPanel extends BasePanel implements SystemViewer, Map
         List<StarSystem> systems = emp.orderedColonies();
         
         int index = systems.indexOf(sys);
-        if (forward) 
+        if (forward)
             index = (index == (systems.size()-1)) ? 0 : index + 1;
-        else 
+        else
             index = (index == 0) ? systems.size()-1 : index -1;
 
         if (spritePanel() == null)
@@ -406,7 +406,7 @@ public abstract class SystemPanel extends BasePanel implements SystemViewer, Map
             int planetSize = 0;
             if (planet.empire() != pl)
                 planetSize = pl.sv.currentSize(id);
-            else 
+            else
                 planetSize = ignoreWaste ? (int) planet.currentSize() : (int) planet.sizeAfterWaste();
             if (ignoreWaste || (planet.waste() == 0))
                 g2.setColor(greenText);
