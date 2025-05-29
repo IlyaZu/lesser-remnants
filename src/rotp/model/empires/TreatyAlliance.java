@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,23 +34,23 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
     public TreatyAlliance(Empire e1, Empire e2) {
         super(e1,e2,"RACES_ALLY");
         initStandings();
-    }    
+    }
     @Override
     public boolean isAlliance()               { return true; }
     @Override
     public int listOrder()                    { return 3; }
     @Override
-    public boolean wantToBreak(Empire emp)    { 
+    public boolean wantToBreak(Empire emp)    {
         int index = emp.id == empire1 ? 0 : 1;
         return wantToBreak[index];
     }
-    public int standing(Empire e)            { 
+    public int standing(Empire e)            {
         initStandings(); // backwards-save compatibility
         int index = e.id == empire1 ? 1 : 0;
         return standings[index];
     }
     @Override
-    public void nextTurn(Empire emp)      { 
+    public void nextTurn(Empire emp)      {
         initStandings();  // backwards-save compatibility
         int index = emp.id == empire1 ? 0 : 1;
         int prevStanding = standings[index];
@@ -68,23 +68,23 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
 
         int jointEnemies = 0;
         for (Empire e: enemies1) {
-            if (enemies2.contains(e)) 
+            if (enemies2.contains(e))
                 jointEnemies++;
         }
         
         // now additionally degrade based on war responsibilities
         switch(jointEnemies) {
-            case 0 : 
+            case 0 :
                 int v = standings[index];
                 if (v > 50) {
                     // if > 50, standing decays 10% towards 50 each turn
                     standings[index] = v - max(1, (100-v)/10);
-                };
+                }
                 break;
             case 1 : standings[index] -= 2; break;
             case 2 : standings[index] -= 4; break;
             default: standings[index] -= 5; break;
-        }    
+        }
         
         //normalize so that max stnading is at least 50
         //this ensures that alliances break up only when there
@@ -114,17 +114,17 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
         wantToBreak[index] = random() < chance;
     }
     @Override
-    public void noticeIncident(DiplomaticIncident inc) { 
+    public void noticeIncident(DiplomaticIncident inc) {
         initStandings();
-        if (inc instanceof TechnologyAidIncident) 
+        if (inc instanceof TechnologyAidIncident)
             handleTechnologyAid((TechnologyAidIncident) inc);
-        else if (inc instanceof FinancialAidIncident) 
+        else if (inc instanceof FinancialAidIncident)
             handleFinancialAid((FinancialAidIncident) inc);
-        else if (inc instanceof EnemyAidIncident) 
+        else if (inc instanceof EnemyAidIncident)
             handleEnemyAid((EnemyAidIncident) inc);
-        else if (inc instanceof AttackedEnemyIncident) 
+        else if (inc instanceof AttackedEnemyIncident)
             handleAttackedEnemy((AttackedEnemyIncident) inc);
-        else if (inc instanceof AttackedAllyIncident) 
+        else if (inc instanceof AttackedAllyIncident)
             handleAttackedAlly((AttackedAllyIncident) inc);
     }
     private void handleTechnologyAid(TechnologyAidIncident inc) {
@@ -186,7 +186,7 @@ public class TreatyAlliance extends DiplomaticTreaty implements Base {
         }
     }
     private float chanceBreak(int i) {
-        // won't check for break until at least 5% chance 
+        // won't check for break until at least 5% chance
         if (standings[i] >= -5)
             return 0f;
         return -standings[i]/100f;
