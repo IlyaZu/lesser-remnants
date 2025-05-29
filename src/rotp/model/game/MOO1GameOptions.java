@@ -32,7 +32,6 @@ import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.StarType;
 import rotp.model.planet.Planet;
 import rotp.model.planet.PlanetType;
-import rotp.ui.game.SetupGalaxyUI;
 import rotp.util.Base;
 
 public class MOO1GameOptions implements Base, IGameOptions, Serializable {
@@ -148,15 +147,11 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public int maximumOpponentsOptions() {
-        int maxEmpires = min(numberStarSystems()/8, colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
-        int maxOpponents = min(SetupGalaxyUI.MAX_DISPLAY_OPPS);
-        return min(maxOpponents, maxEmpires-1);
+        return min(MAX_OPPONENTS, (numberStarSystems()/8)-1);
     }
     @Override
     public int defaultOpponentsOptions() {
-        int maxEmpires = min((int)Math.ceil(numberStarSystems()/16f), colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
-        int maxOpponents = min(SetupGalaxyUI.MAX_DISPLAY_OPPS);
-        return min(maxOpponents, maxEmpires-1);
+        return min(MAX_OPPONENTS, (int)Math.ceil(numberStarSystems()/16f)-1);
     }
     @Override
     public String name()                 { return "SETUP_RULESET_ORION"; }
@@ -531,26 +526,11 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         list1a.add(7);
         list1a.add(8);
         list1a.add(9);
-
-        // start repeating the 10-color list for copies of races (up to 5 per race)
-        List<Integer> list2 = new ArrayList<>(list1);
-        list2.addAll(list1a);
-        List<Integer> list3 = new ArrayList<>(list2);
-        List<Integer> list4 = new ArrayList<>(list2);
-        List<Integer> list5 = new ArrayList<>(list2);
             
         Collections.shuffle(list1);
         Collections.shuffle(list1a);
-        Collections.shuffle(list2);
-        Collections.shuffle(list3);
-        Collections.shuffle(list4);
-        Collections.shuffle(list5);
         colors.addAll(list1);
         colors.addAll(list1a);
-        colors.addAll(list2);
-        colors.addAll(list3);
-        colors.addAll(list4);
-        colors.addAll(list5);
     }
     private void checkForHostileEnvironment(Planet p, StarSystem s) {
         // these planet types and no chance for poor resources -- skip

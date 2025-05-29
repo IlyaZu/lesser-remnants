@@ -25,11 +25,9 @@ import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.Planet;
-import rotp.ui.game.SetupGalaxyUI;
 
 public interface IGameOptions {
-    public static final int MAX_OPPONENTS = SetupGalaxyUI.MAX_DISPLAY_OPPS;
-    public static final int MAX_OPPONENT_TYPE = 5;
+    public static final int MAX_OPPONENTS = 9;
     public static final String SIZE_TINY = "SETUP_GALAXY_SIZE_TINY";
     public static final String SIZE_SMALL = "SETUP_GALAXY_SIZE_SMALL";
     public static final String SIZE_MEDIUM = "SETUP_GALAXY_SIZE_AVERAGE";
@@ -244,12 +242,11 @@ public interface IGameOptions {
             nextIndex = -1;
         while (true) {
             String nextOpp = nextIndex < 0 ? null : allOpps.get(nextIndex);
-            int count = (nextOpp != null) && nextOpp.equals(player) ? 1 : 0;
+            boolean isValidSelect = !player.equals(nextOpp);
             for (String opp: selectedOpps) {
-                if ((nextOpp != null) && nextOpp.equals(opp))
-                    count++;
+                isValidSelect &= nextOpp == null || !nextOpp.equals(opp);
             }
-            if (count < MAX_OPPONENT_TYPE) {
+            if (isValidSelect) {
                 selectedOpponentRace(i, nextOpp);
                 return;
             }
@@ -268,12 +265,11 @@ public interface IGameOptions {
         int prevIndex = currOpp == null ? lastIndex : allOpps.indexOf(currOpp)-1;
         while (true) {
             String nextOpp = prevIndex < 0 ? null : allOpps.get(prevIndex);
-            int count = (nextOpp != null) && nextOpp.equals(player) ? 1 : 0;
+            boolean isValidSelect = !player.equals(nextOpp);
             for (String opp: selectedOpps) {
-                if ((nextOpp != null) && nextOpp.equals(opp))
-                    count++;
+                isValidSelect &= nextOpp == null || !nextOpp.equals(opp);
             }
-            if (count < MAX_OPPONENT_TYPE) {
+            if (isValidSelect) {
                 selectedOpponentRace(i, nextOpp);
                 return;
             }

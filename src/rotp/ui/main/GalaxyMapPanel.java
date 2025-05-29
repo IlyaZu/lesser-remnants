@@ -22,7 +22,6 @@ import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Polygon;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -357,7 +356,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     }
     private void drawOwnershipDisplay(Graphics2D g) {
         int r0 = scale(0.9f);
-        int r1 = scale(0.8f);
 
         Galaxy gal = galaxy();
         Empire pl = player();
@@ -365,37 +363,10 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
             Empire emp = parent.knownEmpire(id, pl);
             StarSystem sys = gal.system(id);
             if ((emp != null) && parent.showOwnership(sys)) {
-                int shape = emp.shape();
                 g.setColor(emp.ownershipColor());
                 int x = mapX(sys.x());
                 int y = mapY(sys.y());
-                switch(shape) {
-                    case Empire.SHAPE_SQUARE:
-                        g.fillRect(x-r1, y-r1, r1+r1, r1+r1); break;
-                    case Empire.SHAPE_DIAMOND:
-                        Polygon p = new Polygon();
-                        p.addPoint(x, y-r0);
-                        p.addPoint(x-r0, y);
-                        p.addPoint(x, y+r0);
-                        p.addPoint(x+r0, y);
-                        g.fill(p); break;
-                    case Empire.SHAPE_TRIANGLE1:
-                        Polygon p1 = new Polygon();
-                        p1.addPoint(x, y-r0);
-                        p1.addPoint(x-r0, y+r1);
-                        p1.addPoint(x+r0, y+r1);
-                        g.fill(p1); break;
-                    case Empire.SHAPE_TRIANGLE2:
-                        Polygon p2 = new Polygon();
-                        p2.addPoint(x, y+r0);
-                        p2.addPoint(x-r0, y-r1);
-                        p2.addPoint(x+r0, y-r1);
-                        g.fill(p2);
-                        break;
-                    case Empire.SHAPE_CIRCLE:
-                    default:
-                        g.fillOval(x-r0, y-r0, r0+r0, r0+r0); break;
-                }
+                g.fillOval(x-r0, y-r0, r0+r0, r0+r0);
             }
         }
     }

@@ -178,9 +178,9 @@ public class Galaxy implements Base, Serializable {
         }
         return null;
     }
-    public Empire empireMatching(int color, int shape) {
+    public Empire empireMatching(int color) {
         for (Empire e: empires) {
-            if ((e.colorId() == color) && (e.shape() == shape))
+            if (e.colorId() == color)
                 return e;
         }
         return null;

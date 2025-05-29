@@ -18,10 +18,8 @@ package rotp.model.empires;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -79,12 +77,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     public static final int PLAYER_ID = 0;
     public static final int NULL_ID = -1;
     public static final int ABSTAIN_ID = -2;
-    
-    public static final int SHAPE_CIRCLE = 0;
-    public static final int SHAPE_SQUARE = 1;
-    public static final int SHAPE_DIAMOND = 2;
-    public static final int SHAPE_TRIANGLE1 = 3;
-    public static final int SHAPE_TRIANGLE2 = 4;
 
     public static Empire thePlayer() { return Galaxy.current().player(); }
     
@@ -226,7 +218,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     public void priorityOrders(Colony.Orders o)   { priorityOrders = o; }
     public int colorId()                          { return bannerColor; }
     public void colorId(int i)                    { bannerColor = i; resetColors(); }
-    public int shape()                            { return id / options().numColors(); }
     public float minX()                           { return minX; }
     public float maxX()                           { return maxX; }
     public float minY()                           { return minY; }
@@ -237,7 +228,7 @@ public final class Empire implements Base, NamedObject, Serializable {
     public void changeColorId(int newColor) {
         int oldColor = colorId();
         
-        Empire emp = galaxy().empireMatching(newColor, shape());
+        Empire emp = galaxy().empireMatching(newColor);
         if (emp != null)
             emp.colorId(oldColor);
         
@@ -2429,40 +2420,9 @@ public final class Empire implements Base, NamedObject, Serializable {
     }
     public Shape drawShape(Graphics2D g, int x, int y, int w, int h, Color c) {
         g.setColor(c);
-        int m = w/10;
-        switch(shape()) {
-            case Empire.SHAPE_SQUARE:
-                Rectangle2D rect = new Rectangle2D.Float(x+m,y+m,w-m-m,h-m-m);
-                g.fill(rect);
-                return rect;
-            case Empire.SHAPE_DIAMOND:
-                Polygon p = new Polygon();
-                p.addPoint(x, y+h/2);
-                p.addPoint(x+w/2, y);
-                p.addPoint(x+w, y+h/2);
-                p.addPoint(x+w/2, y+h);
-                g.fill(p);
-                return p;
-            case Empire.SHAPE_TRIANGLE1:
-                Polygon p1 = new Polygon();
-                p1.addPoint(x+w/2, y);
-                p1.addPoint(x, y+h);
-                p1.addPoint(x+w,y+h);
-                g.fill(p1);
-                return p1;
-            case Empire.SHAPE_TRIANGLE2:
-                Polygon p2 = new Polygon();
-                p2.addPoint(x+w/2, y+h);
-                p2.addPoint(x, y);
-                p2.addPoint(x+w,y);
-                g.fill(p2);
-                return p2;
-            case Empire.SHAPE_CIRCLE:
-            default:
-                Ellipse2D ell = new Ellipse2D.Float(x,y,w,h);
-                g.fill(ell);
-                return ell;
-        }
+        Ellipse2D ell = new Ellipse2D.Float(x,y,w,h);
+        g.fill(ell);
+        return ell;
     }
     public void encounterFleet(ShipFleet fl) {
         if (fl == null)

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -34,12 +33,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import javax.swing.SwingUtilities;
 import rotp.model.empires.Race;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.game.GameSession;
+import rotp.model.game.IGameOptions;
 import rotp.ui.BasePanel;
 import rotp.ui.NoticeMessage;
 import rotp.ui.RotPUI;
@@ -48,9 +47,7 @@ import rotp.ui.main.SystemPanel;
 
 public final class SetupGalaxyUI  extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
     private static final long serialVersionUID = 1L;
-    public static int MAX_DISPLAY_OPPS = 49;
     private BufferedImage backImg, playerRaceImg;
-    private BufferedImage smBackImg;
     private Rectangle backBox = new Rectangle();
     private Rectangle startBox = new Rectangle();
     private Rectangle settingsBox = new Rectangle();
@@ -76,8 +73,8 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private Polygon aiBoxL = new Polygon();
     private Polygon aiBoxR = new Polygon();
 
-    private Rectangle[] oppSet = new Rectangle[MAX_DISPLAY_OPPS];
-    private Rectangle[] oppAI = new Rectangle[MAX_DISPLAY_OPPS];
+    private Rectangle[] oppSet = new Rectangle[IGameOptions.MAX_OPPONENTS];
+    private Rectangle[] oppAI = new Rectangle[IGameOptions.MAX_OPPONENTS];
 
     private Shape hoverBox;
     private boolean starting = false;
@@ -114,11 +111,9 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.drawImage(backImg(), 0, 0, w, h, this);
 
         // draw number of opponents
-        int maxOpp = newGameOptions().maximumOpponentsOptions();
         int numOpp = newGameOptions().selectedNumberOpponents();
         
-        boolean smallImages = maxOpp > 25;
-        BufferedImage mugBack = smallImages ? smallRaceBackImg() : SetupRaceUI.raceBackImg();
+        BufferedImage mugBack = SetupRaceUI.raceBackImg();
         int mugW = mugBack.getWidth();
         int mugH = mugBack.getHeight();
 
@@ -132,18 +127,16 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
 
         String randomOppLbl = text("SETUP_OPPONENT_RANDOM");
         int randSW = g.getFontMetrics().stringWidth(randomOppLbl);
-        int numRows = smallImages ? 7 : 5;
-        int numCols = smallImages ? 7 : 5;
+        int numCols = 5;
         int spaceW = mugW+(((boxW-s60)-(numCols*mugW))/(numCols-1));
-        int spaceH = smallImages ? mugH+s10 : mugH+s15;
+        int spaceH = mugH+s15;
         // draw opponent boxes
         Composite raceComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER , 0.5f);
         Composite prevComp = g.getComposite();
         Stroke prevStroke = g.getStroke();
         Color borderC = GameUI.setupFrame();
         boolean selectableAI = newGameOptions().selectableAI();
-        int maxDraw = min((numRows*numCols), numOpp, MAX_DISPLAY_OPPS);
-        for (int i=0;i<maxDraw;i++) {
+        for (int i=0;i<numOpp;i++) {
             int row = i/numCols;
             int col = i%numCols;
             int y2 = y0+s50+(row*spaceH);
@@ -154,7 +147,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             String selOpp = newGameOptions().selectedOpponentRace(i);
             if (selOpp == null) {
                 int x2b = x2+((mugW-randSW)/2);
-                int y2b = smallImages ? y2+mugH-s20 : y2+mugH-s31;
+                int y2b = y2+mugH-s31;
                 g.setColor(Color.black);
                 g.setFont(narrowFont(30));
                 drawString(g,randomOppLbl, x2b, y2b);
@@ -755,26 +748,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.setPaint(GameUI.buttonRightBackground());
         g.fillRoundRect(startBox.x, startBox.y, buttonW, buttonH, cnr, cnr);
 
-        g.dispose();
-    }
-    private BufferedImage smallRaceBackImg() {
-        if (smBackImg == null)
-            initSmallBackImg();
-        return smBackImg;
-    }
-    private void initSmallBackImg() {
-        int w = s54;
-        int h = s58;
-        smBackImg = gc().createCompatibleImage(w, h);
-
-        Point2D center = new Point2D.Float(w/2, h/2);
-        float radius = s56;
-        float[] dist = {0.0f, 0.1f, 0.5f, 1.0f};
-        Color[] colors = {GameUI.raceCenterColor(), GameUI.raceCenterColor(), GameUI.raceEdgeColor(), GameUI.raceEdgeColor()};
-        RadialGradientPaint p = new RadialGradientPaint(center, radius, dist, colors);
-        Graphics2D g = (Graphics2D) smBackImg.getGraphics();
-        g.setPaint(p);
-        g.fillRect(0, 0, w, h);
         g.dispose();
     }
     @Override
