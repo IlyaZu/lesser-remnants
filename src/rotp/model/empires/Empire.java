@@ -2117,7 +2117,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         float sum = 0;
         for (EmpireView v : empireViews()) {
             if (v != null)
-                sum += v.trade().profit();
+                sum += v.trade().currentProfit();
         }
         return sum;
     }
@@ -2125,7 +2125,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         float sum = 0;
         for (EmpireView v : empireViews()) {
             if (v != null)
-                sum += v.trade().maxProfit();
+                sum += v.trade().profitLimit();
         }
         return sum;
     }

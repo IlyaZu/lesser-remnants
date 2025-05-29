@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1011,7 +1011,7 @@ public class RacesUI extends BasePanel {
                     }
                     // trade
                     y1 += s16;
-                    int profit = (int) view.trade().maxProfit();
+                    int profit = (int) view.trade().profitLimit();
                     String tradeStr = view.trade().active() ? text("RACES_TRADE_LEVEL", profit) : text("RACES_TRADE_NONE");
                     scaledFont(g, tradeStr, scaled(130), 16, 12);
                     drawString(g,tradeStr, x1, y1);

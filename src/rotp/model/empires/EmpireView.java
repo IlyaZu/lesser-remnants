@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,7 @@ public final class EmpireView implements Base, Serializable {
     }
     public List<Integer> nominalTradeLevels() {
         float prod = min(empire.totalPlanetaryProduction(), owner.totalPlanetaryProduction());
-        float currTrade = trade.level();
+        float currTrade = trade.profitLimit();
 
         List<Integer> values = new ArrayList<>();
         int maxOptions = 4;

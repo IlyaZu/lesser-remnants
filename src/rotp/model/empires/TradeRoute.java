@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ public class TradeRoute implements Base, Serializable {
     private static final int UNIT = 25;
 
     private final EmpireView view;
-    private int level = 0;
-    private float profit = 0;
+    private int profitLimit = 0;
+    private float currentProfit = 0;
     private float ownerProd = 0;
     private float civProd = 0;
 
@@ -35,29 +35,26 @@ public class TradeRoute implements Base, Serializable {
         this.view = view;
     }
 
-    public float profit() {
-        return profit;
+    public float currentProfit() {
+        return currentProfit;
     }
 
-    public boolean atMaxProfit() {
-        return profit >= maxProfit();
+    public boolean atProfitLimit() {
+        return currentProfit >= profitLimit;
     }
 
-    public float maxProfit() {
-        return level * (1 + view.owner().tradePctBonus());
+    public float profitLimit() {
+        return profitLimit;
     }
 
-    public int level() {
-        return level;
-    }
-
-    public int maxLevel() {
-        float maxLevel = min(civProd,ownerProd) / 4;
-        return maxLevel < UNIT ? 0 : ((int)(maxLevel / UNIT) * UNIT);
+    public int maxProfitLimit() {
+        float tradeBonus = 1 + Math.max(view.owner().tradePctBonus(), view.empire().tradePctBonus());
+        float maxProfitLimit = tradeBonus * Math.min(civProd, ownerProd) / 4;
+        return maxProfitLimit < UNIT ? 0 : ((int)(maxProfitLimit / UNIT) * UNIT);
     }
 
     public boolean active() {
-        return level > 0;
+        return profitLimit > 0;
     }
 
     public void assessTurn() {
@@ -66,22 +63,22 @@ public class TradeRoute implements Base, Serializable {
             return;
         }
         
-        // anticipate maxLevel() potentially dropping as empires shrink
+        // anticipate maxProfitLimit() potentially dropping as empires shrink
         civProd = view.empire().totalPlanetaryProduction();
         ownerProd = view.owner().totalPlanetaryProduction();
-        if (level > maxLevel())
-            level = maxLevel();
+        if (profitLimit > maxProfitLimit())
+            profitLimit = maxProfitLimit();
         
-        float prevProfit = profit;
+        float prevProfit = currentProfit;
         
         float pct = (roll(1,200) + view.embassy().relations() + 25) / 6000.0f;
-        profit = min(maxProfit(), profit + (pct * level) );
-        if (atMaxProfit() && profit > prevProfit) {
+        currentProfit = min(profitLimit, currentProfit + (pct * profitLimit) );
+        if (atProfitLimit() && currentProfit > prevProfit) {
             if (view.owner().isPlayer())
-               TradeTreatyMaturedAlert.create(view.empId(), level);
+               TradeTreatyMaturedAlert.create(view.empId(), profitLimit);
         }
         if (active())
-            TradeIncomeIncident.create(view, profit, profit/ownerProd);
+            TradeIncomeIncident.create(view, currentProfit, currentProfit/ownerProd);
     }
 
     public void setContact() {
@@ -89,21 +86,21 @@ public class TradeRoute implements Base, Serializable {
         ownerProd = view.owner().totalPlanetaryProduction();
     }
 
-    public void startRoute(int newLevel) {
-        float newTrade = newLevel - level;
-        if (newTrade <= 0)
+    public void startRoute(int newProfitLimit) {
+        float profitLimitDelta = newProfitLimit - profitLimit;
+        if (profitLimitDelta <= 0)
             return;
         
-        float newPct = ((profit/newTrade) + startPct()) * (newTrade/newLevel);
+        float newPct = ((currentProfit/profitLimitDelta) + startPct()) * (profitLimitDelta/newProfitLimit);
 
-        profit = newPct * newLevel;
-        level = newLevel;
+        currentProfit = newPct * newProfitLimit;
+        profitLimit = newProfitLimit;
         view.owner().flagColoniesToRecalcSpending();
 
         //if not done yet, increase the route on the "other" side of the relationship
         EmpireView otherView = view.otherView();
-        if (otherView.trade().level() != newLevel)
-            otherView.trade().startRoute(newLevel);
+        if (otherView.trade().profitLimit() != newProfitLimit)
+            otherView.trade().startRoute(newProfitLimit);
     }
 
     private float startPct() {
@@ -111,8 +108,8 @@ public class TradeRoute implements Base, Serializable {
     }
 
     public void stopRoute() {
-        level = 0;
-        profit = 0;
+        profitLimit = 0;
+        currentProfit = 0;
         view.owner().flagColoniesToRecalcSpending();
         
         EmpireView otherView = view.otherView();

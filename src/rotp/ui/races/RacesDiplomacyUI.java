@@ -1050,7 +1050,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         int y2 = lines.size() <= 5 ? y0+h-s65 : y0+h-s55;
         drawString(g,spies, x+s20, y2);
         
-        int maxProfit = (int) view.trade().maxProfit();
+        int maxProfit = (int) view.trade().profitLimit();
         g.setFont(narrowFont(16));
         String s2 = text("RACES_DIPLOMACY_TRADE_AMT", maxProfit);
         int sw2 = g.getFontMetrics().stringWidth(s2);
@@ -1061,7 +1061,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         String spending = text("RACES_DIPLOMACY_CURRENT_TRADE");
         drawString(g,spending, x+s20, y2);
         
-        int profit = (int) view.trade().profit();
+        int profit = (int) view.trade().currentProfit();
         g.setFont(narrowFont(16));
         s2 = text("RACES_DIPLOMACY_TRADE_AMT", str(profit));
         sw2 = g.getFontMetrics().stringWidth(s2);
