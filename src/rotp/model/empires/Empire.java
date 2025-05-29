@@ -667,17 +667,9 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         return range;
     }
-    public float researchingShipRange()   { return tech().researchingShipRange(); }
-    public float researchingScoutRange()  { return tech().researchingScoutRange(); }
-    public float learnableShipRange()     { return tech().learnableShipRange(); }
-    public float learnableScoutRange()    { return tech().learnableScoutRange(); }
-    public float shipReach(int turns)   { return min(shipRange(), turns*tech().topSpeed()); }
+    
     public float scoutReach(int turns)  { return min(scoutRange(), turns*tech().topSpeed()); }
     
-    public String rangeTechNeededToScout(int sysId) {
-        float dist = sv.distance(sysId);
-        return tech().rangeTechNeededToScoutDistance(dist);
-    }
     public String rangeTechNeededToReach(int sysId) {
         float dist = sv.distance(sysId);
         return tech().rangeTechNeededToReachDistance(dist);

@@ -154,8 +154,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return min(MAX_OPPONENTS, (int)Math.ceil(numberStarSystems()/16f)-1);
     }
     @Override
-    public String name()                 { return "SETUP_RULESET_ORION"; }
-    @Override
     public void copyOptions(IGameOptions o) {
         if (!(o instanceof MOO1GameOptions))
             return;
