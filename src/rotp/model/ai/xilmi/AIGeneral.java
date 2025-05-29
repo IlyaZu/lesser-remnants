@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -606,7 +606,7 @@ public class AIGeneral implements Base, General {
             currentScore *= empire.tech().topSpeed() / empire.viewForEmpire(emp).spies().tech().topSpeed();
             float tradeMod = 1;
             if(empire.viewForEmpire(emp).trade() != null && empire.totalPlanetaryIncome() > 0)
-                tradeMod += empire.viewForEmpire(emp).trade().profit() / empire.totalPlanetaryIncome();
+                tradeMod += empire.viewForEmpire(emp).trade().currentProfit() / empire.totalPlanetaryIncome();
             else
                 tradeMod = 0.9f;
             currentScore /= tradeMod;

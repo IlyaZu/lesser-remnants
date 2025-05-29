@@ -199,9 +199,9 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return false;
         
         if (v.trade().active()
-            && (v.trade().profit() <= 0))
+            && (v.trade().currentProfit() <= 0))
             return false;
-        if (!v.trade().atMaxProfit())
+        if (!v.trade().atProfitLimit())
             return false;
         
         // if asking player, check that we don't spam him
@@ -210,8 +210,8 @@ public class AIXilmiDiplomat extends AIDiplomat {
                 return false;
         }
 
-        float currentTrade = v.trade().level();
-        float maxTrade = v.trade().maxLevel();
+        float currentTrade = v.trade().profitLimit();
+        float maxTrade = v.trade().maxProfitLimit();
         if (maxTrade < (currentTrade * 1.5))
             return false;
 
@@ -598,8 +598,8 @@ public class AIXilmiDiplomat extends AIDiplomat {
             }
         }
         
-        if (willingToOfferTrade(v, v.trade().maxLevel())) {
-            v.empire().diplomatAI().receiveOfferTrade(v.owner(), v.trade().maxLevel());
+        if (willingToOfferTrade(v, v.trade().maxProfitLimit())) {
+            v.empire().diplomatAI().receiveOfferTrade(v.owner(), v.trade().maxProfitLimit());
         }
         
         decidedToExchangeTech(v);
