@@ -29,7 +29,6 @@ import javax.swing.BorderFactory;
 import rotp.model.empires.DiplomaticTreaty;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.empires.TreatyAlliance;
 import rotp.ui.*;
 import rotp.ui.game.HelpUI;
 import rotp.ui.main.SystemPanel;
@@ -556,41 +555,6 @@ public class RacesUI extends BasePanel {
         g.setColor(Color.white);
         g.fillPolygon(ptX, ptY, 3);
     }
-    public void drawAllianceStars(Graphics2D g, int x, int y, int val, int imgW) {
-        int[] stars = new int[5];
-        Image[] img = new Image[3];
-        img[0] = image("Star_Empty");
-        img[1] = image("Star_Half");
-        img[2] = image("Star_Full");
-
-        // 90+ = 2 2 2 2 2
-        // 80+ = 2 2 2 2 1
-        // 70+ = 2 2 2 2 0
-        // 60+ = 2 2 2 1 0
-        // 50+ = 2 2 2 0 0
-        // 40+ = 2 2 1 0 0
-        // 30+ = 2 2 0 0 0
-        // 20+ = 2 1 0 0 0
-        // 10+ = 2 0 0 0 0
-        // 0+  = 1 0 0 0 0
-        // <0  = 0 0 0 0 0
-
-        if (val >= 0)  stars[0]=1;
-        if (val >= 10) stars[0]=2;
-        if (val >= 20) stars[1]=1;
-        if (val >= 30) stars[1]=2;
-        if (val >= 40) stars[2]=1;
-        if (val >= 50) stars[2]=2;
-        if (val >= 60) stars[3]=1;
-        if (val >= 70) stars[3]=2;
-        if (val >= 80) stars[4]=1;
-        if (val >= 90) stars[4]=2;
-
-        for (int i=0;i<stars.length;i++) {
-            g.drawImage(img[stars[i]], x, y-imgW, imgW, imgW, this);
-            x = x+imgW;
-        }
-    }
     @Override
     public void keyPressed(KeyEvent e) {
         if (frame().getGlassPane().isVisible()) {
@@ -999,16 +963,9 @@ public class RacesUI extends BasePanel {
                     // treaty status
                     y1 += s20;
                     DiplomaticTreaty treaty = view.embassy().treaty();
-                    boolean isAlly = treaty.isAlliance();
-                    int starW = s8;
                     String s = treaty.status(player());
-                    int sw = g.getFontMetrics().stringWidth(s);
                     scaledFont(g, s, scaled(130), 16, 12);
                     drawString(g,s, x1, y1);
-                    if (isAlly) {
-                        TreatyAlliance alliance = (TreatyAlliance) treaty;
-                        drawAllianceStars(g,x1+sw+s5,y1-s3,alliance.standing(player()),starW);
-                    }
                     // trade
                     y1 += s16;
                     int profit = (int) view.trade().profitLimit();
