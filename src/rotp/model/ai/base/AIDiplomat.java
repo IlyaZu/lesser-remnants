@@ -323,9 +323,8 @@ public class AIDiplomat implements Base, Diplomat {
         float adjustedRelations = v.embassy().relations()+50;
         float diplonacyBonus = v.empire().diplomacyBonus();
         float leaderMod = empire.leader().acceptTradeMod();
-        float raceBonusMod = v.empire().tradePctBonus();
         float allianceMod = v.embassy().alliedWithEnemy() ? -50 : 0;
-        return adjustedRelations+diplonacyBonus+leaderMod+raceBonusMod+allianceMod;
+        return adjustedRelations+diplonacyBonus+leaderMod+allianceMod;
     }
     private String declineReasonText(EmpireView v) {
         DialogueManager dlg = DialogueManager.current();
