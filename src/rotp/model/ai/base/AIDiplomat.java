@@ -882,9 +882,6 @@ public class AIDiplomat implements Base, Diplomat {
     private boolean wantToBreakAlliance(EmpireView v) {
         if (!v.embassy().alliance())
             return false;
-
-        if (v.embassy().treaty().wantToBreak(v.empire()))
-            return true;
         
         if (wantToDeclareWarOfOpportunity(v))
             return true;

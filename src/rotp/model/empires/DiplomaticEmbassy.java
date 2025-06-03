@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -564,7 +564,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         log(view.toString(), ": Adding incident- ", str(inc.severity()), ":", inc.toString());
         incidents.add(inc);
         updateRelations(inc.severity());
-        treaty.noticeIncident(inc);
     }
     
     private void updateRelations(float severity) {
