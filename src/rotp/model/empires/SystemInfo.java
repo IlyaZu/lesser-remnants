@@ -36,7 +36,7 @@ public class SystemInfo implements Serializable, Base {
     private static final long serialVersionUID = 1L;
     private final int empireId;
     private final SystemView[] views;
-    public float[] distances;
+    private final float[] distances;
     private transient Empire empire;
     private transient BufferedImage starBackground;
     public void addView(SystemView sv)      { views[sv.system().id] = sv; }

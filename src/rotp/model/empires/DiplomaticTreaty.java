@@ -21,9 +21,9 @@ import rotp.util.Base;
 
 public class DiplomaticTreaty implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    int empire1;
-    int empire2;
-    String statusKey;
+    final int empire1;
+    final int empire2;
+    final String statusKey;
     public DiplomaticTreaty(Empire e1, Empire e2, String key) {
         empire1 = e1.id;
         empire2 = e2.id;
