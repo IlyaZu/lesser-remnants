@@ -549,8 +549,12 @@ public final class TechTree implements Base, Serializable {
                 adjustTechAllocation(cat.index(), 0-cat.allocation(), true);
         }
     }
-    public Tech randomUnknownTech(int minLevel, int levelDiff) {
-        return random(category).randomUnknownTech(minLevel, levelDiff);
+    public List<Tech> unknownTechs(int minLevel, int levelDiff) {
+        List<Tech> techList = new ArrayList<>();
+        for (TechCategory cat : category) {
+            techList.addAll(cat.unknownTechs(minLevel, levelDiff));
+        }
+        return techList;
     }
     public boolean knows(Tech t) {
         return t == null ? true : category[t.categoryIndex()].knownTechs().contains(t.id());

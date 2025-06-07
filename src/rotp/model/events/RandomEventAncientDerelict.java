@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package rotp.model.events;
 
 import rotp.model.empires.Empire;
+import rotp.model.tech.Tech;
 import rotp.model.tech.TechTree;
 import rotp.ui.notifications.GNNNotification;
 import rotp.util.Base;
@@ -40,44 +41,28 @@ public class RandomEventAncientDerelict implements Base, Serializable, RandomEve
     }
     @Override
     public void trigger(Empire emp) {
-        List<String> availableTechs = new ArrayList<>();
-
         TechTree empTech = emp.tech();
-        int maxCompLevel = (int) empTech.forceField().techLevel()+10;
-        List<String> unkComputerTechs =  empTech.forceField().allTechs();
-        unkComputerTechs.removeAll(empTech.forceField().knownTechs());
-        for (String techId: unkComputerTechs) {
-            if (tech(techId).level() <= maxCompLevel)
-                availableTechs.add(techId);
+        
+        List<Tech> availableTechs = new ArrayList<>();
+        availableTechs.addAll(empTech.forceField().unknownTechs(0, 10));
+        availableTechs.addAll(empTech.weapon().unknownTechs(0, 10));
+
+        if (availableTechs.isEmpty()) {
+            return;
         }
 
-        int maxWpnLevel = (int) empTech.weapon().techLevel()+10;
-        List<String> unkWeaponTechs =  empTech.weapon().allTechs();
-        unkWeaponTechs.removeAll(empTech.weapon().knownTechs());
-        for (String techId: unkWeaponTechs) {
-            if (tech(techId).level() <= maxWpnLevel)
-                availableTechs.add(techId);
-        }
-
-        if (availableTechs.isEmpty())
-                return;
-
-        List<String> discoveredTechs = new ArrayList<>();
-        if (availableTechs.size() <= MAX_TECHS_DISCOVERED)
-            discoveredTechs.addAll(availableTechs);
-        else {
-            while (discoveredTechs.size() < MAX_TECHS_DISCOVERED) {
-                String techId = random(availableTechs);
-                availableTechs.remove(techId);
-                discoveredTechs.add(techId);
-            }
+        List<Tech> discoveredTechs = new ArrayList<>();
+        for (int i = 0; i < MAX_TECHS_DISCOVERED && !availableTechs.isEmpty(); i++) {
+            int techIndex = random.nextInt(availableTechs.size());
+            Tech tech = availableTechs.remove(techIndex);
+            discoveredTechs.add(tech);
         }
 
         empId = emp.id;
         if (emp.isPlayerControlled() || player().hasContact(emp))
             GNNNotification.notifyRandomEvent(notificationText(), "GNN_Event_Derelict");
-
-        for (String techId: discoveredTechs)
-            emp.plunderShipTech(tech(techId), -1);
+        
+        for (Tech tech : discoveredTechs)
+            emp.plunderShipTech(tech, -1);
     }
 }
