@@ -36,9 +36,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
 import rotp.Rotp;
@@ -52,7 +50,6 @@ import rotp.model.galaxy.Ship;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
-import rotp.model.tech.Tech;
 import rotp.ui.BasePanel;
 import rotp.ui.ExitButton;
 import rotp.ui.RotPUI;
@@ -84,13 +81,9 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private SystemInfoPanel displayPanel;
     private ExitSystemsButton exitButton;
     private final List<Sprite> controls = new ArrayList<>();
-    private final Map<Integer,Integer> expandEnRouteSystems = new HashMap<>();
-    private final Map<Integer,Integer> expandGuardedSystems = new HashMap<>();
     private Rectangle expandBox = new Rectangle();
     private Rectangle exploitBox = new Rectangle();
     private Rectangle exterminateBox = new Rectangle();
-
-    private float colonyShipRange;
 
     private JLayeredPane layers = new JLayeredPane();
     public boolean animate = true;
@@ -147,44 +140,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         // reset map everytime we open
         map.init();
         displayPanel.init();
-        
-        colonyShipRange = player().colonyShipRange();
-        
-        // on opening, build list of systems that we have colony ships
-        // in transport to. This is too expensive to do real-time
-        expandEnRouteSystems.clear();
-        List<ShipFleet> allFleets = player().allFleets();
-        for (ShipFleet fl: allFleets) {
-            StarSystem sys = fl.destination();
-            if (fl.canColonizeSystem(sys)) {
-                int fleetTurns = fl.travelTurns(sys);
-                if (expandEnRouteSystems.containsKey(sys.id)) {
-                    int prevTurns = expandEnRouteSystems.get(sys.id);
-                    if (fleetTurns < prevTurns)
-                        expandEnRouteSystems.put(sys.id, fleetTurns);
-                }
-                else
-                    expandEnRouteSystems.put(sys.id, fleetTurns);
-            }
-        }
-        // on opening, build list of systems that we have colony ships
-        // in transport to. This is too expensive to do real-time
-        expandGuardedSystems.clear();
-        Empire pl = player();
-        for (Ship sh: pl.visibleShips()) {
-            if (sh instanceof ShipFleet) {
-                ShipFleet fl = (ShipFleet) sh;
-                if (fl.inOrbit()) {
-                    StarSystem sys = fl.system();
-                    if (pl.sv.inShipRange(fl.sysId()) && !sys.isColonized() && pl.canColonize(fl.sysId())) {
-                        if (fl.empire().aggressiveWith(pl, sys)) {
-                            expandGuardedSystems.put(sys.id, fl.empId);
-                        }
-                    }
-                }
-            }
-        }
-        
     }
     public void clickSystem(StarSystem v, int count) {
 
@@ -296,7 +251,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     @Override
     public Color alertColor(SystemView sv) {
         switch(selectedTab) {
-            case expandTab:      return expandAlertColor(sv);
+            case expandTab:      return null;
             case exploitTab:     return exploitAlertColor(sv);
             case exterminateTab: return exterminateAlertColor(sv);
         }
@@ -479,41 +434,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         }
         return "";
     }
-    private Color expandAlertColor(SystemView sv) {
-        if (!sv.scouted())
-            return null;
-                
-        String eventMessage = randomEventStatus(sv);
-        if (!eventMessage.isEmpty()) {
-            if (sv.empire() == player())
-                return MainUI.redAlertC;
-        }
-
-        if (sv.isColonized())
-            return null;
-        
-        float sysDistance = sv.distance();
-        Empire pl = player();
-                 
-        if ((sysDistance <= colonyShipRange) && pl.canColonize(sv.sysId)) {
-            if (this.expandGuardedSystems.containsKey(sv.sysId))
-                return MainUI.redAlertC;
-            else if (expandEnRouteSystems.containsKey(sv.sysId))
-                return null;
-            else
-                return MainUI.greenAlertC;
-        }
-        
-        String rangeTech = pl.rangeTechNeededToReach(sv.sysId);
-        String envTech = pl.environmentTechNeededToColonize(sv.sysId);
-        if ((rangeTech != null) && (envTech != null))
-            return MainUI.yellowAlertC;
-        if ((envTech != null) && (sysDistance <= colonyShipRange))
-            return MainUI.yellowAlertC;
-        if ((rangeTech != null) && pl.canColonize(sv.sysId))
-            return MainUI.yellowAlertC;
-        return null;
-    }
     private Color exploitAlertColor(SystemView sv) {
         if (sv.empire() != player())
             return null;
@@ -578,57 +498,11 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     }
     public String alertDescription(SystemView sv) {
         switch(selectedTab) {
-            case expandTab:      return expandAlertDescription(sv);
+            case expandTab:      return null;
             case exploitTab:     return exploitAlertDescription(sv);
             case exterminateTab: return exterminateAlertDescription(sv);
         }
         return null;
-    }
-    private String expandAlertDescription(SystemView sv) {
-        if (!sv.scouted())
-            return null;
-        String eventMessage = randomEventStatus(sv);
-        if (!eventMessage.isEmpty()) {
-             if (sv.empire() == player())
-                 return eventMessage;
-        }
-
-        if (sv.isColonized())
-            return null;
-        
-        float sysDistance = sv.distance();
-        Empire pl = player();
-        if ((sysDistance <= colonyShipRange) && pl.canColonize(sv.sysId)) {
-            if (expandGuardedSystems.containsKey(sv.sysId)) {
-                Empire enemyEmp = galaxy().empire(expandGuardedSystems.get(sv.sysId));
-                String s = text("SYSTEMS_CAN_COLONIZE_ENEMY");
-                s = enemyEmp.replaceTokens(s, "alien");
-                return s;
-            }
-            if (expandEnRouteSystems.containsKey(sv.sysId)) {
-                int turns = expandEnRouteSystems.get(sv.sysId);
-                return text("SYSTEMS_CAN_COLONIZE_EN_ROUTE", turns);
-            }
-            return text("SYSTEMS_CAN_COLONIZE");
-        }
-        
-        String rangeTech = pl.rangeTechNeededToReach(sv.sysId);
-        String envTech = pl.environmentTechNeededToColonize(sv.sysId);
-        
-        if ((rangeTech != null) && (envTech != null)) {
-            Tech t1 = tech(envTech);
-            Tech t2 = tech(rangeTech);
-            return text("SYSTEMS_UNCOLONIZED_NEED_TECHS", t1.name(), t2.name());
-        }
-        if ((envTech != null) && (sysDistance <= colonyShipRange)){
-            Tech t1 = tech(envTech);
-            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());
-        }
-        if ((rangeTech != null) && pl.canColonize(sv.sysId)) {
-            Tech t1 = tech(rangeTech);
-            return text("SYSTEMS_UNCOLONIZED_NEED_TECH", t1.name());
-        }
-        return text("SYSTEMS_UNCOLONIZEABLE");
     }
     private String exploitAlertDescription(SystemView sv) {
         Empire sysEmp = sv.empire();
