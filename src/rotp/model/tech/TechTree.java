@@ -426,37 +426,6 @@ public final class TechTree implements Base, Serializable {
         }
         return range;
     }
-    public String environmentTechNeededToColonize(int hostility) {
-        // returns the id of the currently unknown ecology tech we need
-        // to research in order to colonize planets of a certain hostitily level
-        // if no tech is needed or it is impossible, return null
-        int hostilityAllowed = topHostilityAllowed();
-
-        if (hostilityAllowed >= hostility)
-            return null;
-        
-        // check current research tech first
-        String currentId = planetology().currentTech();
-        if (currentId == null)
-            return null;
-                    
-        Tech t = tech(currentId);
-        if (t.isControlEnvironmentTech()) {
-            TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if (t0.hostilityAllowed() >= hostility)
-                    return currentId;
-        }
-        
-        for (String id: planetology().techIdsAvailableForResearch(true)) {
-            t = tech(id);
-            if (t.isControlEnvironmentTech()) {
-                TechControlEnvironment t0 = (TechControlEnvironment) t;
-                if (t0.hostilityAllowed() >= hostility)
-                    return id;
-            }
-        }
-        return null;
-    }
     public String rangeTechNeededToScoutDistance(float dist) {
         // returns the id of the currently unknown propulsion tech we need
         // to research in order for scout ships to reach range dist
@@ -483,36 +452,6 @@ public final class TechTree implements Base, Serializable {
             if (t.isFuelRangeTech()) {
                 TechFuelRange t0 = (TechFuelRange) t;
                 if (t0.range()+rsv >= dist)
-                    return id;
-            }
-        }
-        return null;
-    }
-    public String rangeTechNeededToReachDistance(float dist) {
-        // returns the id of the currently unknown propulsion tech we need
-        // to research in order for normal ships to reach range dist
-        // if no tech is needed or it is impossible, return null
-        float range = ((TechFuelRange) tech(topFuelRangeTech)).range();
-        if (range >= dist)
-            return null;
-        
-        // check current research tech first
-        String currentId = propulsion().currentTech();
-        if (currentId == null)
-            return null;
-        
-        Tech t = tech(currentId);
-        if (t.isFuelRangeTech()) {
-            TechFuelRange t0 = (TechFuelRange) t;
-            if (t0.range() >= dist)
-                return currentId;
-        }
-        
-        for (String id: propulsion().techIdsAvailableForResearch(true)) {
-            t = tech(id);
-            if (t.isFuelRangeTech()) {
-                TechFuelRange t0 = (TechFuelRange) t;
-                if (t0.range() >= dist)
                     return id;
             }
         }

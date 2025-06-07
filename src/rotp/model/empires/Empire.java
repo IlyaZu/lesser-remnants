@@ -656,30 +656,8 @@ public final class Empire implements Base, NamedObject, Serializable {
     }
     public float shipRange()              { return tech().shipRange(); }
     public float scoutRange()             { return tech().scoutRange(); }
-    
-    public float colonyShipRange() {
-        // return max range of design with colony special
-        float range = shipRange();
-        for (int slot=0;slot<ShipDesignLab.MAX_DESIGNS;slot++) {
-            ShipDesign d = shipLab().design(slot);
-            if(d.active() && d.hasColonySpecial() && (d.range() > range))
-                range = d.range();
-        }
-        return range;
-    }
-    
     public float scoutReach(int turns)  { return min(scoutRange(), turns*tech().topSpeed()); }
     
-    public String rangeTechNeededToReach(int sysId) {
-        float dist = sv.distance(sysId);
-        return tech().rangeTechNeededToReachDistance(dist);
-    }
-    public String environmentTechNeededToColonize(int sysId) {
-        if (canColonize(sysId))
-            return null;
-        int hostility = sv.planetType(sysId).hostility();
-        return tech().environmentTechNeededToColonize(hostility);
-    }
     public boolean canColonize(int sysId) {
         StarSystem sys = galaxy().system(sysId);
         return canColonize(sys.planet().type());
