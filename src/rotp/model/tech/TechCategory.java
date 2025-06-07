@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,7 @@ public final class TechCategory implements Base, Serializable {
         //can't see new techs
         knownTechs().removeAll(tree.newTechs());
     }
-    public Tech randomUnknownTech(int minLevel, int levelDiff) {
+    public List<Tech> unknownTechs(int minLevel, int levelDiff) {
         // find level of highest known tech
         int highestLevel = 0;
         for (String id: knownTechs()) {
@@ -153,7 +153,7 @@ public final class TechCategory implements Base, Serializable {
             if (!knownTechs().contains(id) && !t.restricted && (t.level() >= minLevel) && (t.level() <= maxLevel))
                 techList.add(t);
         }
-        return random(techList);
+        return techList;
     }
 
     public List<String> possibleTechs()  { return possibleTechs; }

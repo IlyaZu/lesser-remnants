@@ -2000,14 +2000,14 @@ public final class Empire implements Base, NamedObject, Serializable {
         int minLevel = isOrion ? 20: 1;
         s.planet().plunderBonusTech();
         
-        for (int i=0;i<numTechs;i++) {
-            Tech t = tech().randomUnknownTech(minLevel, levelDiff);
-            if (t == null) // if none found, then break out of loop
-                break;
-            boolean newTech = tech().learnTech(t.id);
+        List<Tech> unknownTechs = tech().unknownTechs(minLevel, levelDiff);
+        for (int i=0;i<numTechs && !unknownTechs.isEmpty();i++) {
+            int techIndex = random.nextInt(unknownTechs.size());
+            Tech tech = unknownTechs.remove(techIndex);
+            boolean newTech = tech().learnTech(tech.id);
             if (newTech && isPlayerControlled()) {
-                log("Tech: ", t.name(), " discovered on: ", s.name());
-                PlunderTechNotification.create(t.id, s.id, -1);
+                log("Tech: ", tech.name(), " discovered on: ", s.name());
+                PlunderTechNotification.create(tech.id, s.id, -1);
             }
         }
     }
