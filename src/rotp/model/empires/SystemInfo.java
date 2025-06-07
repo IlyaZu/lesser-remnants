@@ -34,11 +34,16 @@ import rotp.util.ImageManager;
 
 public class SystemInfo implements Serializable, Base {
     private static final long serialVersionUID = 1L;
+    private static final Color CAN_COLONIZE_COLOR = new Color(255, 255, 255);
+    private static final Color LEARNING_TO_COLONIZE_COLOR = new Color(192,192,128);
+    private static final Color CAN_NOT_COLONIZE_COLOR = new Color(128, 128, 128);
+    
     private final int empireId;
     private final SystemView[] views;
     private final float[] distances;
     private transient Empire empire;
     private transient BufferedImage starBackground;
+    
     public void addView(SystemView sv)      { views[sv.system().id] = sv; }
     public int count()                      { return views.length; }
     public boolean missing(int i)          { return (i < 0) || views[i] == null; }
@@ -180,12 +185,16 @@ public class SystemInfo implements Serializable, Base {
             view(i).clearFleetPlan();
     }
     public Color empireColor(int id) {
+        StarSystem sys = galaxy().system(id);
+        PlanetType planetType = sys.planet().type();
         if (isColonized(id))
             return options().color(empire(id).shipColorId());
         else if (isScouted(id) && empire().canColonize(id))
-            return Color.white;
+            return CAN_COLONIZE_COLOR;
+        else if (isScouted(id) && empire().isLearningToColonize(planetType))
+            return LEARNING_TO_COLONIZE_COLOR;
         else
-            return Color.gray;
+            return CAN_NOT_COLONIZE_COLOR;
     }
     public BufferedImage starBackground(JPanel obs) {
         if (starBackground == null) {
