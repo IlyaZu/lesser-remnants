@@ -281,37 +281,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return false;
         return true;
     }
-    @Override
-    public DiplomaticReply receiveOfferPact(Empire requestor) {
-        log(empire.name(), " receiving offer of Pact from: ", requestor.name());
-        EmpireView v = empire.viewForEmpire(requestor);
-        if (empire.isPlayerControlled()) {
-            DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_PACT);
-            return null;
-        }
-
-        if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-                v.embassy().withdrawAmbassador();
-                return v.refuse(DialogueManager.DECLINE_ANNOYED);
-            }
-        }
-
-        v.embassy().noteRequest();
-
-        if (!v.embassy().readyForPact())
-            return v.refuse(DialogueManager.DECLINE_OFFER);
-
-        v.embassy().resetPactTimer();
-        
-        //ail: just use the same logic we'd use for offering
-        if(willingToOfferPact(empire.viewForEmpire(requestor))) {
-            v.embassy().signPact();
-            return DiplomaticReplies.acceptPact(v.otherView());
-        }
-        else
-            return v.refuse(DialogueManager.DECLINE_OFFER);
-    }
     //ail: pacts just restrict us unnecessarily
     private boolean willingToOfferPact(EmpireView v) {
         return false;
