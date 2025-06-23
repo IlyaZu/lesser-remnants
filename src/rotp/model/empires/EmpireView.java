@@ -118,8 +118,6 @@ public final class EmpireView implements Base, Serializable {
                     setContact();
             }
         }
-        if (!embassy.contact())
-            return;
     }
     public boolean inEconomicRange() { return owner().inEconomicRange(empId()); }
     public void breakAllTreaties() {

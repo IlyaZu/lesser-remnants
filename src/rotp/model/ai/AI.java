@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ import rotp.model.ai.interfaces.SpyMaster;
 import rotp.model.ai.interfaces.Treasurer;
 import rotp.model.colony.Colony;
 import rotp.model.empires.Empire;
-import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.IMappedObject;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
@@ -86,10 +85,6 @@ public class AI implements Base {
                 break;
         }
     }
-
-    // MISC INTERFACE
-    public boolean isAI()     {  return empire.isAI(); }
-    public boolean isPlayer() {  return empire.isPlayer(); }
     
     // direct
     public ShipCaptain shipCaptain()                   { return captain; }
@@ -102,13 +97,6 @@ public class AI implements Base {
     public ShipDesigner shipDesigner()                 { return shipDesigner; }
     public SpyMaster spyMaster()                       { return spyMaster; }
 
-    // uncategorized
-    public List<StarSystem> bestSystemsForInvasion(EmpireView v) {
-        // invoked when going to war
-        List<StarSystem> systems = empire.systemsInShipRange(v.empire());
-        Collections.sort(systems,StarSystem.INVASION_PRIORITY);
-        return systems;
-    }
     private int popNeeded(int sysId, float pct) {
         if (empire.sv.missing(sysId))
             return 0;

@@ -79,8 +79,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     public static final int ABSTAIN_ID = -2;
 
     public static Empire thePlayer() { return Galaxy.current().player(); }
-    
-    public static long[] times = new long[6];
 
     public final int id;
     private Leader leader;
@@ -1672,20 +1670,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         for (Empire ally: allies()) {
             ally.sv.refreshAllySharingScan(v.sysId);
         }
-    }
-    public List<StarSystem> systemsInShipRange(Empire c) {
-        // returns list of systems in ship range
-        // if c provided, restricts list to that owner
-        Galaxy gal = galaxy();
-        List<StarSystem> systems = new ArrayList<>();
-        for (int n=0;n<sv.count();n++) {
-            StarSystem sys = gal.system(n);
-            if (sv.inShipRange(sys.id)) {
-                if ((c == null) || (sv.empire(sys.id) == c))
-                    systems.add(sys);
-            }
-        }
-        return systems;
     }
     public List<StarSystem> allColonizedSystems() {
         return colonizedSystems;
