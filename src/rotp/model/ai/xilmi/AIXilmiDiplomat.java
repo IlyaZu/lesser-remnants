@@ -34,7 +34,6 @@ import rotp.model.incidents.SpyConfessionIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomaticReplies;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
 
@@ -298,36 +297,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         if (empire.alliedWith(id(e)))
             return false;
         return true;
-    }
-    @Override
-    public DiplomaticReply receiveOfferAlliance(Empire requestor) {
-        log(empire.name(), " receiving offer of Alliance from: ", requestor.name());
-        if (empire.isPlayerControlled()) {
-            DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_ALLIANCE);
-            return null;
-        }
-
-        EmpireView v = empire.viewForEmpire(requestor);
-        if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-                v.embassy().withdrawAmbassador();
-                return v.refuse(DialogueManager.DECLINE_ANNOYED);
-            }
-        }
-        v.embassy().noteRequest();
-
-        List<Empire> myEnemies = v.owner().warEnemies();
-        List<Empire> hisAllies = v.empire().allies();
-        for (Empire enemy: myEnemies) {
-            if (hisAllies.contains(enemy))
-                return v.refuse(DialogueManager.DECLINE_ENEMY_ALLY, enemy);
-        }
-        if(willingToOfferAlliance(requestor)) {
-            v.embassy().signAlliance();
-            return DiplomaticReplies.acceptAlliance(v);
-        }
-        else
-            return refuseOfferAlliance(requestor);
     }
     private boolean willingToOfferAlliance(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
