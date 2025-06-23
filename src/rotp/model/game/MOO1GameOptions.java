@@ -60,7 +60,16 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
     public MOO1GameOptions() {
         randomizeColors();
-        setDefaultOptionValues();
+        selectedGalaxySize = SIZE_SMALL;
+        selectedGalaxyShape = galaxyShapeOptions().get(0);
+        selectedNumberOpponents = defaultOpponentsOptions();
+        selectedPlayerRace(random(startingRaceOptions()));
+        selectedGameDifficulty = DIFFICULTY_EASY;
+        selectedOpponentAIOption = OPPONENT_AI_BASE;
+        for (int i=0;i<specificOpponentAIOption.length;i++)
+            specificOpponentAIOption[i] = OPPONENT_AI_BASE;
+        setToDefault();
+        generateGalaxy();
     }
     private void resetSelectedOpponentRaces() {
         for (int i=0;i<opponentRaces.length;i++)
@@ -473,18 +482,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public List<Integer> possibleColors() {
         return new ArrayList<>(colors);
-    }
-    protected void setDefaultOptionValues() {
-        selectedGalaxySize = SIZE_SMALL;
-        selectedGalaxyShape = galaxyShapeOptions().get(0);
-        selectedNumberOpponents = defaultOpponentsOptions();
-        selectedPlayerRace(random(startingRaceOptions()));
-        selectedGameDifficulty = DIFFICULTY_EASY;
-        selectedOpponentAIOption = OPPONENT_AI_BASE;
-        for (int i=0;i<specificOpponentAIOption.length;i++)
-            specificOpponentAIOption[i] = OPPONENT_AI_BASE;
-        setToDefault();
-        generateGalaxy();
     }
     @Override
     public void setToDefault() {

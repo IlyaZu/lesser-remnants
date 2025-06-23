@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 package rotp.model.galaxy;
 
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
 import rotp.model.ai.MonsterCaptain;
 import rotp.model.combat.CombatManager;
 import rotp.model.combat.CombatMonster;
@@ -28,10 +26,8 @@ import rotp.model.incidents.KillGuardianIncident;
 
 public class OrionGuardianShip extends SpaceMonster {
     private static final long serialVersionUID = 1L;
-    private final List<String> techs = new ArrayList<>();
     public OrionGuardianShip() {
         super("ORION_GUARDIAN");
-        techs.add("ShipWeapon:16");  // death ray
     }
     @Override
     public void initCombat(CombatManager manager) {
@@ -45,8 +41,7 @@ public class OrionGuardianShip extends SpaceMonster {
         super.plunder();
         notifyGalaxy();
         Empire emp = this.lastAttacker();
-        for (String techId: techs)
-            emp.plunderShipTech(tech(techId), -2);
+        emp.plunderShipTech(tech("ShipWeapon:16"), -2); // death ray
         
         // find the system with this monster and remove it
         int sysId = StarSystem.NULL_ID;
