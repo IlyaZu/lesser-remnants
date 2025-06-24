@@ -16,9 +16,9 @@
  */
 package rotp.model.galaxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import rotp.model.empires.Race;
-import rotp.model.game.GameSession;
-import rotp.model.game.IGameOptions;
 import rotp.model.planet.PlanetFactory;
 import rotp.util.Base;
 
@@ -27,14 +27,12 @@ public class StarSystemFactory implements Base {
     public static StarSystemFactory current()   { return instance; }
 
     public StarSystem newSystem(Galaxy gal) {
-        IGameOptions opts = GameSession.instance().options();
-        String type = opts.randomStarType();
+        String type = randomStarType();
         StarSystem sys = StarSystem.create(type, gal);
         return sys;
     }
     public StarSystem newOrionSystem(Galaxy gal) {
-        IGameOptions opts = GameSession.instance().options();
-        String type = opts.randomOrionStarType();
+        String type = randomOrionStarType();
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createOrion(sys));
         sys.monster(new OrionGuardianShip());
@@ -42,17 +40,62 @@ public class StarSystemFactory implements Base {
         return sys;
     }
     public StarSystem newSystemForRace(Race r, Galaxy gal) {
-        IGameOptions opts = GameSession.instance().options();
-        String type = opts.randomRaceStarType(r);
+        String type = randomRaceStarType(r);
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
     }
     public StarSystem newSystemForPlayer(Race r, Galaxy gal) {
-        IGameOptions opts = GameSession.instance().options();
-        String type = opts.randomPlayerStarType(r);
+        String type = randomPlayerStarType(r);
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
+    }
+    
+    private String randomStarType() {
+        // pcts represents star type distribution per MOO1 Official Strategy Guide
+        //                RED, ORANG, YELL, BLUE,WHITE, PURP
+        float[] pcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
+        
+        int typeIndex = 0;
+        float r = random();
+        for (int i=0;i<pcts.length;i++) {
+            if (r <= pcts[i]) {
+                typeIndex = i;
+                break;
+            }
+        }
+
+        switch(typeIndex) {
+            case 0:  return StarType.RED;
+            case 1:  return StarType.ORANGE;
+            case 2:  return StarType.YELLOW;
+            case 3:  return StarType.BLUE;
+            case 4:  return StarType.WHITE;
+            case 5:  return StarType.PURPLE;
+            default: return StarType.RED;
+        }
+    }
+    
+    private String randomOrionStarType() {
+        List<String> types = new ArrayList<>();
+        types.add(StarType.RED);
+        types.add(StarType.ORANGE);
+        types.add(StarType.YELLOW);
+
+        return random(types);
+    }
+    
+    private String randomRaceStarType(Race r) {
+        List<String> types = new ArrayList<>();
+        types.add(StarType.RED);
+        types.add(StarType.ORANGE);
+        types.add(StarType.YELLOW);
+
+        return random(types);
+    }
+    
+    private String randomPlayerStarType(Race r) {
+        return StarType.YELLOW;
     }
 }

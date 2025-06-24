@@ -64,10 +64,6 @@ public interface IGameOptions {
     public int numberNebula();
     public List<Integer> possibleColors();
     public boolean allowRandomEvent(RandomEvent ev);
-    public String randomStarType();
-    public String randomPlayerStarType(Race r);
-    public String randomRaceStarType(Race r);
-    public String randomOrionStarType();
     public Planet randomPlanet(StarSystem s);
     public Planet randomPlayerPlanet(Race r, StarSystem s);
     public Planet orionPlanet(StarSystem s);
