@@ -64,19 +64,19 @@ public class Leader implements Base, Serializable {
     public String objective()   { return text(objective.label); }
     public String personality() { return text(personality.label); }
 
-    public boolean isErratic()     { return (personality == Personality.ERRATIC); }
-    public boolean isPacifist()    { return (personality == Personality.PACIFIST); }
-    public boolean isHonorable()   { return (personality == Personality.HONORABLE); }
-    public boolean isAggressive()  { return (personality == Personality.AGGRESSIVE); }
-    public boolean isRuthless()    { return (personality == Personality.RUTHLESS); }
-    public boolean isXenophobic()  { return (personality == Personality.XENOPHOBIC); }
+    public boolean isErratic()     { return personality == Personality.ERRATIC; }
+    public boolean isPacifist()    { return personality == Personality.PACIFIST; }
+    public boolean isHonorable()   { return personality == Personality.HONORABLE; }
+    public boolean isAggressive()  { return personality == Personality.AGGRESSIVE; }
+    public boolean isRuthless()    { return personality == Personality.RUTHLESS; }
+    public boolean isXenophobic()  { return personality == Personality.XENOPHOBIC; }
 
-    public boolean isDiplomat()     { return (objective == Objective.DIPLOMAT); }
-    public boolean isMilitarist()   { return (objective == Objective.MILITARIST); }
-    public boolean isEcologist()    { return (objective == Objective.ECOLOGIST); }
-    public boolean isIndustrialist(){ return (objective == Objective.INDUSTRIALIST); }
-    public boolean isExpansionist() { return (objective == Objective.EXPANSIONIST); }
-    public boolean isTechnologist() { return (objective == Objective.TECHNOLOGIST); }
+    public boolean isDiplomat()     { return objective == Objective.DIPLOMAT; }
+    public boolean isMilitarist()   { return objective == Objective.MILITARIST; }
+    public boolean isEcologist()    { return objective == Objective.ECOLOGIST; }
+    public boolean isIndustrialist(){ return objective == Objective.INDUSTRIALIST; }
+    public boolean isExpansionist() { return objective == Objective.EXPANSIONIST; }
+    public boolean isTechnologist() { return objective == Objective.TECHNOLOGIST; }
 
     public String dialogueContactType() {
         switch(personality) {
