@@ -240,7 +240,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public int numberNebula() {
-        float freq = 1.0f;
         // MOO Strategy Guide, Table 3-3, p.51
         /*
         switch (selectedGalaxySize()) {
@@ -252,19 +251,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         default: return roll(1,2);
         }
         */
-        int nStars = numberStarSystems();
-        float sizeMult = nebulaSizeMult();
-        int nNeb = (int) nStars/20;
-        
-        return (int) (freq*nNeb/sizeMult/sizeMult);
-    }
-    @Override
-    public float nebulaSizeMult() {
-        int nStars = numberStarSystems();
-        if (nStars < 200)
-            return 1;
-        else
-            return min(10,sqrt(nStars/200f));
+        return numberStarSystems()/20;
     }
     @Override
     public boolean isAutoPlay() {

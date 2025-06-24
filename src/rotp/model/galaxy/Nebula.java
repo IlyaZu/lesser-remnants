@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,17 +33,14 @@ public class Nebula extends MapSprite implements Base, IMappedObject, Serializab
     private Rectangle.Float innerShape;
     private int sysId = -1;
     private int numStars = 0;
-    private float size, width, height;
+    private float width, height;
     private float x, y;
     private transient BufferedImage image;
 
-    public float width()                  { return width; }
-    public float height()                 { return height; }
     public Rectangle.Float shape()        { return shape; }
 
     public Nebula copy() {
         Nebula neb = new Nebula();
-        neb.size = size;
         neb.width = width;
         neb.height = height;
         neb.image = image;
@@ -55,25 +52,24 @@ public class Nebula extends MapSprite implements Base, IMappedObject, Serializab
     @Override
     public float y()                      { return y; }
     
-    public float adjWidth()                { return size == 0 ? width : size*width; }
-    public float adjHeight()                { return size == 0 ? height : size*height; }
+    public float width()                { return width; }
+    public float height()                { return height; }
     
-    public float centerX()                { return x+(adjWidth()/2); }
-    public float centerY()                { return y+(adjHeight()/2); }
+    public float centerX()                { return x+(width()/2); }
+    public float centerY()                { return y+(height()/2); }
     
     public boolean noStars()              { return numStars == 0; }
     
     public void setXY(float x1, float y1) {
         x = x1;
         y = y1;
-        shape = new Rectangle.Float(x, y, adjWidth(), adjHeight());
-        innerShape = new Rectangle.Float(x+1, y+1, adjWidth()-2, adjHeight()-2);
+        shape = new Rectangle.Float(x, y, width(), height());
+        innerShape = new Rectangle.Float(x+1, y+1, width()-2, height()-2);
     }
     public Nebula() {
         
     }
-    public Nebula(boolean buildImage, float sizeMult) {
-        size = max(1, sizeMult);
+    public Nebula(boolean buildImage) {
         width = random(8,14);
         height = random(8,14);
         if (buildImage)
@@ -122,8 +118,8 @@ public class Nebula extends MapSprite implements Base, IMappedObject, Serializab
         return image;
     }
     private BufferedImage buildImage() {
-        int w = (int) width()*19;
-        int h = (int) height()*12;
+        int w = (int) width*19;
+        int h = (int) height*12;
 
         int nebR = roll(160,225);
         int nebG = 0;
@@ -167,8 +163,8 @@ public class Nebula extends MapSprite implements Base, IMappedObject, Serializab
     private Rectangle mapShape(GalaxyMapPanel map) {
         int x0 = map.mapX(x);
         int y0 = map.mapY(y);
-        int x1 = map.mapX(x+(int)adjWidth());
-        int y1 = map.mapY(y+(int)adjHeight());
+        int x1 = map.mapX(x+(int)width());
+        int y1 = map.mapY(y+(int)height());
         return new Rectangle(x0,y0, x1-x0, y1-y0);
     }
 }
