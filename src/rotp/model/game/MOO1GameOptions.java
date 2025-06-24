@@ -291,31 +291,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return true;
     }
     @Override
-    public String randomStarType() {
-        // pcts represents star type distribution per MOO1 Official Strategy Guide
-        //                RED, ORANG, YELL, BLUE,WHITE, PURP
-        float[] pcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
-        
-        int typeIndex = 0;
-        float r = random();
-        for (int i=0;i<pcts.length;i++) {
-            if (r <= pcts[i]) {
-                typeIndex = i;
-                break;
-            }
-        }
-
-        switch(typeIndex) {
-            case 0:  return StarType.RED;
-            case 1:  return StarType.ORANGE;
-            case 2:  return StarType.YELLOW;
-            case 3:  return StarType.BLUE;
-            case 4:  return StarType.WHITE;
-            case 5:  return StarType.PURPLE;
-            default: return StarType.RED;
-        }
-    }
-    @Override
     public Planet randomPlanet(StarSystem s) {
         Planet p = new Planet(s);
         String[] planetTypes = { "PLANET_NONE", "PLANET_RADIATED", "PLANET_TOXIC", "PLANET_INFERNO",
@@ -360,26 +335,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         if (p.isResourceNormal())
             checkForArtifacts(p, s);
         return p;
-    }
-    @Override
-    public String randomPlayerStarType(Race r)     { return StarType.YELLOW; }
-    @Override
-    public String randomRaceStarType(Race r)       {
-        List<String> types = new ArrayList<>();
-        types.add(StarType.RED);
-        types.add(StarType.ORANGE);
-        types.add(StarType.YELLOW);
-
-        return random(types);
-    }
-    @Override
-    public String randomOrionStarType()       {
-        List<String> types = new ArrayList<>();
-        types.add(StarType.RED);
-        types.add(StarType.ORANGE);
-        types.add(StarType.YELLOW);
-
-        return random(types);
     }
     @Override
     public Planet orionPlanet(StarSystem s) {
