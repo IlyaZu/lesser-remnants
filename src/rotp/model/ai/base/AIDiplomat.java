@@ -1141,8 +1141,9 @@ public class AIDiplomat implements Base, Diplomat {
         if (v.embassy().atPeace())
             return false;
         
-        // from -70 to -90
-        float warThreshold = v.empire().leader().hateWarThreshold();
+        float warThreshold = -80;
+        warThreshold += v.empire().leader().isPacifist() ? -10 : 0;
+        warThreshold += v.empire().leader().isAggressive() ? 10 : 0;
         
         // modnar: change war threshold by number of our wars vs. number of their wars
         // try not to get into too many wars, and pile on if target is in many wars
