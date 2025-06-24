@@ -62,7 +62,6 @@ public interface IGameOptions {
 
     public int numberStarSystems();
     public int numberNebula();
-    public default float nebulaSizeMult()                { return 1.0f; }
     public List<Integer> possibleColors();
     public boolean allowRandomEvent(RandomEvent ev);
     public String randomStarType();

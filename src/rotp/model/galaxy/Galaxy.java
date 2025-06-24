@@ -110,7 +110,7 @@ public class Galaxy implements Base, Serializable {
         empires = new Empire[options().selectedNumberOpponents()+1];
     }
     public void advanceTime() { currentTurn++; }
-    public boolean addNebula(GalaxyShape shape, float nebSize) {
+    public boolean addNebula(GalaxyShape shape) {
         // each nebula creates a buffered image for display
         // after we have created 5 nebulas, start cloning
         // existing nebulas (add their images) when making
@@ -125,15 +125,15 @@ public class Galaxy implements Base, Serializable {
         
         Nebula neb;
         if (nebulas.size() < MAX_UNIQUE_NEBULAS)
-            neb = new Nebula(true, nebSize);
+            neb = new Nebula(true);
         else
             neb = random(nebulas).copy();
         neb.setXY(pt.x, pt.y);
         
         float x = pt.x;
         float y = pt.y;
-        float w = neb.adjWidth();
-        float h = neb.adjHeight();
+        float w = neb.width();
+        float h = neb.height();
         
         if (!shape.valid(x+w,y))
             return false;
