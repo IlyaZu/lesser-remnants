@@ -279,7 +279,7 @@ public class AIDiplomat implements Base, Diplomat {
             return v.refuse(DialogueManager.DECLINE_OFFER);
 
         v.embassy().resetTradeTimer(level);
-        if (baseChanceForTrade(v) < 0) {
+        if (calculateTradeChance(v) < 0) {
             v.otherView().embassy().tradeRefused();
             return refuseOfferTrade(requestor, level);
         }
@@ -316,15 +316,15 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
 
         log(v.toString(), ": willing to offer trade. Max:", str(maxTrade), "    current:", str(currentTrade));
-        return baseChanceForTrade(v) > 0;
+        return calculateTradeChance(v) > 0;
     }
-    private float baseChanceForTrade(EmpireView v) {
+    private float calculateTradeChance(EmpireView v) {
         // -50 relations is minimum allowed to accept trade
-        float adjustedRelations = v.embassy().relations()+50;
-        float diplonacyBonus = v.empire().diplomacyBonus();
-        float leaderMod = empire.leader().acceptTradeMod();
-        float allianceMod = v.embassy().alliedWithEnemy() ? -50 : 0;
-        return adjustedRelations+diplonacyBonus+leaderMod+allianceMod;
+        float chance = v.embassy().relations()+50;
+        chance += v.empire().diplomacyBonus();
+        chance += empire.leader().acceptTradeMod();
+        chance += v.embassy().alliedWithEnemy() ? -50 : 0;
+        return chance;
     }
     private String declineReasonText(EmpireView v) {
         DialogueManager dlg = DialogueManager.current();
@@ -920,7 +920,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
         
         float treatyMod = empire.leader().preserveTreatyMod();
-        return baseChanceForTrade(v) + treatyMod < -40;
+        return calculateTradeChance(v) + treatyMod < -40;
     }
     //----------------
 //
