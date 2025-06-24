@@ -24,6 +24,7 @@ import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import static rotp.model.empires.EmpireStatus.FLEET;
 import rotp.model.empires.EmpireView;
+import rotp.model.empires.Leader;
 import rotp.model.empires.SpyNetwork.Mission;
 import rotp.model.empires.SpyReport;
 import rotp.model.empires.TreatyWar;
@@ -1209,9 +1210,25 @@ public class AIDiplomat implements Base, Diplomat {
         // modnar: scale war threshold by number of our wars vs. number of their wars
         // try not to get into too many wars, and pile on if target is in many wars
         float enemyMod = (float)(empire.numEnemies() + 1) / (v.empire().numEnemies() + 1);
-        float warThreshold = baseThreshold * techMod * enemyMod * treatyMod * v.owner().leader().exploitWeakerEmpiresRatio();
+        float warThreshold = baseThreshold * techMod * enemyMod * treatyMod * exploitWeakerEmpiresRatio(v.owner().leader());
         
         return (myPower/otherPower) > warThreshold;
+    }
+    private float exploitWeakerEmpiresRatio(Leader leader) {
+        float ratio = 1.0f;
+        if (leader.isAggressive())
+            ratio /= 2;
+        if (leader.isMilitarist())
+            ratio /= 1.5;
+        if (leader.isHonorable())
+            ratio *= 2;
+        if (leader.isPacifist())
+            ratio *= 2;
+        if (leader.isXenophobic())
+            ratio *= 1.5;
+        if (leader.isExpansionist())
+            ratio /= 2;
+        return ratio;
     }
     private void beginIncidentWar(EmpireView view, DiplomaticIncident inc) {
         log(view.toString(), " - Declaring war based on incident: ", inc.toString(), " id:", inc.declareWarId());

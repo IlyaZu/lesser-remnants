@@ -89,22 +89,6 @@ public class Leader implements Base, Serializable {
             default:         return DialogueManager.CONTACT_ERRATIC;
         }
     }
-    public float exploitWeakerEmpiresRatio() {
-        float ratio = 1.0f;
-        if (isAggressive())
-            ratio /= 2;
-        if (isMilitarist())
-            ratio /= 1.5;
-        if (isHonorable())
-            ratio *= 2;
-        if (isPacifist())
-            ratio *= 2;
-        if (isXenophobic())
-            ratio *= 1.5;
-        if (isExpansionist())
-            ratio /= 2;
-        return ratio;
-    }
     public float retreatRatio(Empire c) {
         float baseRatio = 1.5f;
 
