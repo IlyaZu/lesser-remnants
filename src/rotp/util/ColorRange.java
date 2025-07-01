@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package rotp.util;
 import java.awt.Color;
 
 public class ColorRange implements Base {
-    Color color1, color2;
+    private Color color1, color2;
     public ColorRange(Color c1, Color c2) {
         color1 = c1;
         color2 = c2;

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColorMap implements Base {
-    List<Color> colors = new ArrayList<>();
-    List<ColorMark> marks = new ArrayList<>();
+    private List<Color> colors = new ArrayList<>();
+    private List<ColorMark> marks = new ArrayList<>();
     public void addColorMark(float pct, int r0, int g0, int b0) {
         marks.add(new ColorMark(pct, r0, g0, b0));
     }
@@ -67,7 +67,7 @@ public class ColorMap implements Base {
         int b = bounds(0,cm1.b+(int)(amt*(cm2.r-cm1.r)),255);
         return new Color(r,g,b);
     }
-    class ColorMark {
+    private class ColorMark {
         float p;
         int r;
         int g;

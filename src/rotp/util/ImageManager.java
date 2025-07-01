@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +28,11 @@ import java.util.List;
 public enum ImageManager implements Base {
     INSTANCE;
     public static ImageManager current() { return INSTANCE; }
-    static final String baseListFile = "data/images.txt";
-    static final String gnnListFile = "images/gnn/images.txt";
-    static final String planetListFile = "images/planets/images.txt";
-    static final String missileListFile = "images/missiles/images.txt";
-    static final String flagListFile = "images/flags/images.txt";
+    private static final String baseListFile = "data/images.txt";
+    private static final String gnnListFile = "images/gnn/images.txt";
+    private static final String planetListFile = "images/planets/images.txt";
+    private static final String missileListFile = "images/missiles/images.txt";
+    private static final String flagListFile = "images/flags/images.txt";
 
     private final HashMap<String, List<String>> imageFiles = new HashMap<>();
 

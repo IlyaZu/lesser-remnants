@@ -38,10 +38,10 @@ import rotp.util.FontManager;
 
 public class Rotp {
     private static final int MB = 1048576;
+    private static final String jarFileName = "Remnants.jar";
+    private static final String exeFileName = "Remnants.exe";
     public static int IMG_W = 1229;
     public static int IMG_H = 768;
-    public static String jarFileName = "Remnants.jar";
-    public static String exeFileName = "Remnants.exe";
     public static boolean countWords = false;
     private static String startupDir = System.getProperty("startupdir");
     private static JFrame frame;
@@ -50,10 +50,10 @@ public class Rotp {
     public static long maxUsedMemory;
     public static boolean logging = false;
     private static float resizeAmt =  -1.0f;
-    public static int actualAlloc = -1;
-    public static boolean reloadRecentSave = false;
+    private static int actualAlloc = -1;
+    private static boolean reloadRecentSave = false;
     
-    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    private static final GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public static void main(String[] args) {
         frame = new JFrame("Remnants of the Precursors");
         String loadSaveFile = "";

@@ -186,8 +186,6 @@ public class GalaxyFactory implements Base {
         Empire emp = new Empire(g, id, raceKey, sys, color, leaderName);
         g.addEmpire(emp);
 
-        //log("Adding star system: ", sys.name(), " - ", playerRace.id, " : ", fmt(sys.x(),2), "@", fmt(sys.y(),2));
-
         // add other systems in this EmpireSystem
         // ensure 1st nearby system is colonizable
         boolean needHabitable = true;

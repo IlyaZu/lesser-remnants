@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,19 +23,19 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public final class ImageColorizer implements Base {
-    BufferedImage baseImage;
-    int avgGrayLevel = 0;
-    int minGrayLevel = 0;
-    int maxGrayLevel = 0;
-    boolean onlyWhite = false;
-    boolean onlyBlack = false;
-    boolean onlyYellow = false;
-    boolean onlyRed = false;
-    boolean onlyGreen = false;
-    boolean onlyBlue = false;
-    Color specificColor;
-    Rectangle scope = null;
-    HashMap<Integer,Integer> transforms = new HashMap<>();
+    private BufferedImage baseImage;
+    private int avgGrayLevel = 0;
+    private int minGrayLevel = 0;
+    private int maxGrayLevel = 0;
+    private boolean onlyWhite = false;
+    private boolean onlyBlack = false;
+    private boolean onlyYellow = false;
+    private boolean onlyRed = false;
+    private boolean onlyGreen = false;
+    private boolean onlyBlue = false;
+    private Color specificColor;
+    private Rectangle scope = null;
+    private HashMap<Integer,Integer> transforms = new HashMap<>();
 
     private static final Color COLOR_AQUA = new Color(37,239,210);
     private static final Color COLOR_PURPLE = new Color(255,128,255);

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -168,7 +169,7 @@ public enum SoundManager implements Base {
         Sound s = music.get(key);
         return (s == null) ? null : s.playContinuously(s.gain);
     }
-    public List<String> loadSoundFiles(String dir) {
+    private List<String> loadSoundFiles(String dir) {
         log("Loading Sounds: ", dir);
         List<String> soundKeysAdded = new ArrayList<>();
         BufferedReader in = reader(dir+soundsFileName);
@@ -189,7 +190,7 @@ public enum SoundManager implements Base {
         }
         return soundKeysAdded;
     }
-    public List<String> loadMusicFiles(String dir) {
+    private List<String> loadMusicFiles(String dir) {
         log("Loading Music: ", dir);
         List<String> soundKeysAdded = new ArrayList<>();
         BufferedReader in = reader(dir+musicFileName);

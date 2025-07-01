@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,24 +40,24 @@ import rotp.ui.RotPUI;
 
 public final class SetupRaceUI extends BasePanel implements MouseListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
-    static final int MAX_RACES = 10;
-    int MAX_COLORS = 10;
-    int FIELD_W;
-    int FIELD_H;
-    BufferedImage backImg;
-    public static BufferedImage raceBackImg;
-    BufferedImage raceImg;
-    Rectangle hoverBox;
-    Rectangle cancelBox = new Rectangle();
-    Rectangle nextBox = new Rectangle();
-    Rectangle leaderBox = new Rectangle();
-    Rectangle homeWorldBox = new Rectangle();
-    Rectangle[] raceBox = new Rectangle[MAX_RACES];
-    Rectangle[] colorBox = new Rectangle[MAX_COLORS];
+    private static final int MAX_RACES = 10;
+    private static final int MAX_COLORS = 10;
+    private final int FIELD_W;
+    private final int FIELD_H;
+    private BufferedImage backImg;
+    private static BufferedImage raceBackImg;
+    private BufferedImage raceImg;
+    private Rectangle hoverBox;
+    private final Rectangle cancelBox = new Rectangle();
+    private final Rectangle nextBox = new Rectangle();
+    private final Rectangle leaderBox = new Rectangle();
+    private final Rectangle homeWorldBox = new Rectangle();
+    private final Rectangle[] raceBox = new Rectangle[MAX_RACES];
+    private final Rectangle[] colorBox = new Rectangle[MAX_COLORS];
 
-    public static BufferedImage[] racemugs = new BufferedImage[MAX_RACES];
-    JTextField leaderName = new JTextField("");
-    JTextField homeWorld = new JTextField("");
+    private static final BufferedImage[] racemugs = new BufferedImage[MAX_RACES];
+    private final JTextField leaderName = new JTextField("");
+    private final JTextField homeWorld = new JTextField("");
 
     public SetupRaceUI() {
         init0();
@@ -270,19 +270,19 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
         g.drawRoundRect(nextBox.x, nextBox.y, nextBox.width, nextBox.height, cnr, cnr);
         g.setStroke(prev);
     }
-    public void goToMainMenu() {
+    private void goToMainMenu() {
         buttonClick();
         RotPUI.instance().selectGamePanel();
         backImg = null;
         raceImg = null;
     }
-    public void goToGalaxySetup() {
+    private void goToGalaxySetup() {
         buttonClick();
         RotPUI.instance().selectSetupGalaxyPanel();
         backImg = null;
         raceImg = null;
     }
-    public void selectRace(int i) {
+    private void selectRace(int i) {
         String selRace = newGameOptions().selectedPlayerRace();
         List<String> races = newGameOptions().startingRaceOptions();
         if (i <= races.size()) {
@@ -293,7 +293,7 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
             }
         }
     }
-    public void raceChanged() {
+    private void raceChanged() {
         Race r =  Race.keyed(newGameOptions().selectedPlayerRace());
         r.resetMugshot();
         r.resetSetupImage();
@@ -303,7 +303,7 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
         newGameOptions().selectedHomeWorldName(homeWorld.getText());
         raceImg = null;
     }
-    public void selectColor(int i) {
+    private void selectColor(int i) {
         int selColor = newGameOptions().selectedPlayerColor();
         if (selColor != i) {
             newGameOptions().selectedPlayerColor(i);
