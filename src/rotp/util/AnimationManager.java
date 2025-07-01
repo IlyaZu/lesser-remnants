@@ -48,12 +48,8 @@ public enum AnimationManager implements Base {
         loadAnimationList(animationListFile);
         loadExplosions();
     }
-    public boolean animationsDisabled()  { return lowMemory(); }
     @Override
-    public boolean playAnimations()   { return UserPreferences.playAnimations() && !animationsDisabled(); }
-    public void addAnimation(String key, Animation anim) {
-        animations.put(key, anim);
-    }
+    public boolean playAnimations()   { return UserPreferences.playAnimations() && !lowMemory(); }
     public void reset(String animationSpecifier) {
         List<String> specs = this.substrings(animationSpecifier, ',');
         String key = specs.get(0);
@@ -187,7 +183,7 @@ public enum AnimationManager implements Base {
             err("Not enough fields for image line: ", line);
             return;
         }
-        addAnimation(vals.get(0), new Animation(vals.get(1)));
+        animations.put(vals.get(0), new Animation(vals.get(1)));
     }
     private void loadExplosions() {
         log("Loading Explosions...");
