@@ -50,7 +50,7 @@ public enum SoundManager implements Base {
     }
 
     private void init() {
-        sounds.clear();        
+        sounds.clear();
         long st = System.currentTimeMillis();
         try {
             loadSoundFiles(soundListDir);
