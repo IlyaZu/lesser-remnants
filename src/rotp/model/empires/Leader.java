@@ -46,10 +46,10 @@ public class Leader implements Base, Serializable {
         @Override
         public String toString() { return label; }
     }
-    private String name;
-    public Personality personality = Personality.ERRATIC;
-    public Objective objective = Objective.MILITARIST;
-    private Empire empire;
+    private final String name;
+    public final Personality personality;
+    public final Objective objective;
+    private final Empire empire;
 
     public String name()      { return name; }
     public Leader(Empire c) {
