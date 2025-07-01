@@ -35,7 +35,7 @@ public class ColorMap implements Base {
         return colors.get(bounds(0,index,colors.size()-1));
     }
     private void genColors() {
-        for (int i=-100; i<=100; i++) 
+        for (int i=-100; i<=100; i++)
             colors.add(genColorAt((float)i/100));
     }
     private Color genColorAt(float pct) {
@@ -58,7 +58,7 @@ public class ColorMap implements Base {
         if (cm2 == null)
             cm2 = cm1;
 
-        if (cm1.p == cm2.p) 
+        if (cm1.p == cm2.p)
             return new Color(cm1.r, cm1.g, cm1.b);
 
         float amt = (pct - cm1.p) / (cm2.p - cm1.p);
