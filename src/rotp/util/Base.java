@@ -115,9 +115,6 @@ public interface Base {
     public default SoundClip playAudioClip(String key) {
         return SoundManager.current().playAudioClip(key);
     }
-    public default SoundClip alwaysPlayAudioClip(String key) {
-        return SoundManager.current().alwaysPlay(key);
-    }
     public default int id(Empire e)       { return e == null ? Empire.NULL_ID : e.id; }
     public default int id(StarSystem s)   { return s == null ? StarSystem.NULL_ID : s.id; }
     public default String text(String key) {

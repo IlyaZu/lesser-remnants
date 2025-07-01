@@ -840,8 +840,6 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         @Override
         public Color backC()                           { return Color.gray; }
         @Override
-        public Color lightC()                          { return Color.lightGray; }
-        @Override
         public boolean canChangeMapScales()          { return true; }
         @Override
         public List<Sprite> controlSprites()      { return controls; }

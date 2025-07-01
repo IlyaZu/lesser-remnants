@@ -159,12 +159,6 @@ public enum SoundManager implements Base {
         }
         return null;
     }
-    public SoundClip alwaysPlay(String key) {
-        Sound s = sounds.get(key);
-        if (s != null)
-            return s.play(s.gain);
-        return null;
-    }
     private SoundClip playContinuously(String key) {
         Sound s = music.get(key);
         return (s == null) ? null : s.playContinuously(s.gain);

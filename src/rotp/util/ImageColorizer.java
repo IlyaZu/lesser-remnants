@@ -63,7 +63,6 @@ public final class ImageColorizer implements Base {
     public static final int ANY_COLOR = 13;
 
     public ImageColorizer() { }
-    public ImageColorizer(Image img) { image(img); }
 
     public static Color color(int id) {
         switch(id) {

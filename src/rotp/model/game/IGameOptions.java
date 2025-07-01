@@ -56,7 +56,6 @@ public interface IGameOptions {
     
     public boolean isAutoPlay();
     public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
-    public default boolean usingExtendedRaces()  { return (selectedNumberOpponents()+1) > startingRaceOptions().size(); }
     public default int selectedAI(Empire e)       { return AI.BASE; }
     public void setToDefault();
 

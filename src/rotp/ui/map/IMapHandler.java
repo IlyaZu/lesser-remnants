@@ -48,7 +48,6 @@ public interface IMapHandler {
 
     public Color shadeC();
     public Color backC();
-    public Color lightC();
     default public void mapFocus(IMappedObject obj) { mapFocus().setXY(obj.x(), obj.y()); }
     default public void drawYear(Graphics2D g) { }
     default public void drawTitle(Graphics2D g) { }
