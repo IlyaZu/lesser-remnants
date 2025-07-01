@@ -360,8 +360,6 @@ public class MainUI extends BasePanel implements IMapHandler {
     @Override
     public Color backC()                           { return Color.gray; }
     @Override
-    public Color lightC()                          { return Color.lightGray; }
-    @Override
     public boolean hoverOverFleets()               { return displayPanel.hoverOverFleets(); }
     @Override
     public boolean hoverOverSystems()              { return displayPanel.hoverOverSystems(); }

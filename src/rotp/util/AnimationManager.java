@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -269,18 +269,6 @@ public enum AnimationManager implements Base {
             for (AnimationImage img: images)
                 img.reset();
         }
-        public BufferedImage frame(int index) {
-            BufferedImage resultImg = null;
-            for (AnimationImage image : images)
-                resultImg = image.drawFrame(resultImg, index);
-            return resultImg;
-        }
-        public BufferedImage currentFrame() {
-            BufferedImage resultImg = null;
-            for (AnimationImage image: images)
-                resultImg = image.drawCurrentFrame(resultImg, null);
-            return resultImg;
-        }
         public BufferedImage currentFrame(List<String> exclusionKeys) {
             BufferedImage resultImg = null;
             for (AnimationImage image: images)
@@ -338,10 +326,8 @@ public enum AnimationManager implements Base {
         List<AnimationImageFrame> frames = new ArrayList<>();
         int framesToSkip = 0;
         int maxDuration = 0;
-        int minDuration = 0;
         int frameIndex = -1;
         int frameRemainingCount = 0;
-        long prevAnimationCount = 0;
         int skipsRemaining = 0;
         public AnimationImage(String s, int skip, Rectangle rect, List<String> frameSpecs) {
             key = s;
@@ -353,7 +339,6 @@ public enum AnimationManager implements Base {
                 //log("AnimationImage: "+key+"  frame:"+frameSpec+"   area:"+area);
                 AnimationImageFrame frame = new AnimationImageFrame(frameSpec);
                 frames.add(frame);
-                minDuration += frame.msLo;
                 maxDuration += frame.msHi;
             }
             goToNextFrame();
@@ -361,7 +346,6 @@ public enum AnimationManager implements Base {
         public void reset() {
             frameIndex = -1;
             frameRemainingCount = 0;
-            prevAnimationCount = 0;
             skipsRemaining = framesToSkip;
         }
         public BufferedImage drawCurrentFrame(BufferedImage resultImg, List<String> exclusionKeys) {

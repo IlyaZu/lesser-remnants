@@ -663,8 +663,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         @Override
         public Color backC()                           { return Color.gray; }
         @Override
-        public Color lightC()                          { return Color.lightGray; }
-        @Override
         public boolean canChangeMapScales()            { return true; }
         @Override
         public boolean drawFlag()                      { return false; }

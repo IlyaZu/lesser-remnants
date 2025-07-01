@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -564,8 +564,6 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
     public Color shadeC()                          { return rallyBackLoC; }
     @Override
     public Color backC()                           { return rallyBackHiC; }
-    @Override
-    public Color lightC()                          { return rallyBorderC; }
     @Override
     public GalaxyMapPanel map()         { return map; }
     private void initModel() {

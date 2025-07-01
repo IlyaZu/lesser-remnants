@@ -65,7 +65,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     private static final long serialVersionUID = 1L;
     private static final Color rallyBackHiC = new Color(192,139,105);
     private static final Color rallyBackLoC = new Color(77,55,34);
-    private static final Color rallyBorderC = new Color(208,172,148);
     private static final Color unselectedTabC = new Color(112,85,68);
     private static final Color selectedTabC = new Color(178,124,87);
 
@@ -238,8 +237,6 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
     public Color shadeC()                          { return rallyBackLoC; }
     @Override
     public Color backC()                           { return rallyBackHiC; }
-    @Override
-    public Color lightC()                          { return rallyBorderC; }
     @Override
     public GalaxyMapPanel map()         { return map; }
     @Override
