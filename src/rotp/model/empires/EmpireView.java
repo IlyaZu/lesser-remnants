@@ -86,19 +86,6 @@ public final class EmpireView implements Base, Serializable {
         else
             return owner().race().dialogNorm();
     }
-    public float scaleOfContempt() {
-        // returns 0 if equal power
-        // returns 1, 2, 3 if we are 2x,3x,4x more powerful
-        // reutrns -1,-2,-3 if we are 1/2x, 1/3x, 1/4x as powerful
-        float ourPower = empireWeakness();
-        if (ourPower == 1)
-            return 0;
-        else if (ourPower > 1)
-            return ourPower-1;
-        else
-            return -(1/ourPower)+1;
-    }
-    public float empireWeakness() { return 1 / empirePower(); }
     public float empirePower() {
         // This returns the estimated strength of the view.civ vs. the view.owner
         // > 1 means empire is STRONGER than view.owner
