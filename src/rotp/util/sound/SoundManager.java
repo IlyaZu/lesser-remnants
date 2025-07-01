@@ -67,9 +67,8 @@ public enum SoundManager implements Base {
     public boolean disabled()     { return soundsDisabled; }
     public boolean playSounds()   { return !soundsDisabled && UserPreferences.playSounds(); }
     public boolean playMusic()    { return !soundsDisabled && UserPreferences.playMusic(); }
-    public void disableSounds()   { soundsDisabled = true; }
     private void disableOnError(String s) {
-        disableSounds();
+        soundsDisabled = true;
         errorString = s;
     }
 

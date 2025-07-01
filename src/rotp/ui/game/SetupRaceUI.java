@@ -60,9 +60,6 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
     private final JTextField homeWorld = new JTextField("");
 
     public SetupRaceUI() {
-        init0();
-    }
-    private void init0() {
         addMouseListener(this);
         addMouseMotionListener(this);
         for (int i=0;i<raceBox.length;i++)
