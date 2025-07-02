@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public class ShipWeapon extends ShipComponent {
     public int maxDamage()            { return 0; }
     public int shots()                { return 1; }
     public int turnsToFire()          { return 1; }
-    public float computerLevel()      { return 0; }
+    public int computerLevel()        { return 0; }
     public boolean canAttackPlanets() { return (!noWeapon() && (maxDamage() > 0)); }
     public float firepower()          { return firepower(0); }
     public float firepower(float shield) {
@@ -73,7 +73,7 @@ public class ShipWeapon extends ShipComponent {
         float shieldMod = source.targetShieldMod(this);
         float shieldLevel = shieldMod * target.shieldLevel();
         float beamMod = 1;
-        float pct = (5 + source.attackLevel() - target.bombDefense()) / 10;
+        float pct = (5 + source.attackLevel() - target.bombDefense()) / 10f;
         pct = max(.05f, pct);
         if(isBeamWeapon())
         {
@@ -97,7 +97,7 @@ public class ShipWeapon extends ShipComponent {
         }
         float shieldLevel = shieldMod * target.shieldLevel();
         float beamMod = 1;
-        float pct = (5 + des.attackLevel() - target.bombDefense()) / 10;
+        float pct = (5 + des.attackLevel() - target.bombDefense()) / 10f;
         pct = max(.05f, pct);
         if(isBeamWeapon())
         {

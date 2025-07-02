@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public final class ShipWeaponBeam extends ShipWeapon {
     @Override
     public TechShipWeapon tech()       { return (TechShipWeapon) super.tech(); }
     @Override
-    public float computerLevel()       { return tech().computer; }
+    public int computerLevel()         { return tech().computer; }
     @Override
     public boolean isBeamWeapon()      { return true; }
     @Override
@@ -79,8 +79,8 @@ public final class ShipWeaponBeam extends ShipWeapon {
         int maxDamage = maxDamage();
         int range = source.movePointsTo(target.x, target.y);
         float defense = target.beamDefense() + range - 1;
-        float attack = source.attackLevel() + tech().computer;
-        float hitPct = (5 + attack - defense) / 10;
+        int attack = source.attackLevel() + tech().computer;
+        float hitPct = (5 + attack - defense) / 10f;
         hitPct = max(.05f, hitPct);
 
         boolean successfullyHit = false;

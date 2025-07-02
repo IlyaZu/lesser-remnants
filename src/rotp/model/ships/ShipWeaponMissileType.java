@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,8 +69,8 @@ public class ShipWeaponMissileType extends ShipWeapon {
         int minDamage = minDamage();
         int maxDamage = maxDamage();
         float defense = target.missileDefense();
-        float attack = source.attackLevel() + computerLevel();
-        float hitPct = (5 + attack - defense) / 10;
+        int attack = source.attackLevel() + computerLevel();
+        float hitPct = (5 + attack - defense) / 10f;
         hitPct = max(.05f, hitPct);
 
         float totalDamage = 0;

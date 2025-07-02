@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -452,9 +452,9 @@ public class CombatShip extends CombatEntity {
                 //ail: take attack and defense into account
                 float hitPct = 1.0f;
                 if(comp.isBeamWeapon())
-                    hitPct = (5 + attackLevel - target.beamDefense()) / 10;
+                    hitPct = (5 + attackLevel - target.beamDefense()) / 10f;
                 if(comp.isMissileWeapon())
-                    hitPct = (5 + attackLevel - target.missileDefense()) / 10;
+                    hitPct = (5 + attackLevel - target.missileDefense()) / 10f;
                 hitPct = max(.05f, hitPct);
                 hitPct = min(hitPct, 1.0f);
                 //ail: we totally have to consider the weapon-count too!
@@ -705,7 +705,7 @@ public class CombatShip extends CombatEntity {
                 g.fillOval(x4a, y4b, iconW, iconW);
                 if (view.attackLevelKnown()) {
                     g.setColor(Color.white);
-                    String valStr = str((int)Math.ceil(attackLevel()));
+                    String valStr = str(attackLevel());
                     g.setFont(narrowFont(16));
                     int shldW = g.getFontMetrics().stringWidth(valStr);
                     g.drawString(valStr, x4a+((iconW-shldW)/2), y4b+BasePanel.s14);
