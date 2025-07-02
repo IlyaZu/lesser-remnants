@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public abstract class CombatEntity implements Base {
     public int y = 0;
     public float scale = 1.0f;
     public float brighten = 0.0f;
-    public float attackLevel = 0;
+    public int attackLevel = 0;
     public float maneuverability = 0;
     public float missileDefense = 0;
     public float beamDefense = 0;
@@ -131,7 +131,7 @@ public abstract class CombatEntity implements Base {
     public float maneuverablity()     { return maneuverability; }
     public float missileDefense()     { return cloaked ? missileDefense +5 : missileDefense; }
     public float beamDefense()        { return cloaked ? beamDefense + 5 : beamDefense; }
-    public float attackLevel()      { return attackLevel; }
+    public int attackLevel()        { return attackLevel; }
     public float bombDefense()      { return 0; }
     public float bioweaponDefense() { return 0; }
     public boolean canEat(CombatEntity st)       { return false; }

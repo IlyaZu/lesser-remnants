@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -733,7 +733,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                 if (miss.target == currStack && st.isEmpireShip())
                 {
                     float hitPct;
-                    hitPct = (5 + miss.attackLevel - miss.target.missileDefense()) / 10;
+                    hitPct = (5 + miss.attackLevel - miss.target.missileDefense()) / 10f;
                     hitPct = max(.05f, hitPct);
                     hitPct = min(hitPct, 1.0f);
                     killPct += ((miss.maxDamage()-miss.target.shieldLevel())*miss.num*hitPct)/(miss.target.maxHits*miss.target.num);
@@ -1118,7 +1118,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         else
             popLost = bombDamage / 400;
         popLost += expectedBioweaponDamage(ship, colony);
-        float pct = (5 + ship.attackLevel() - colony.bombDefense()) / 10;
+        float pct = (5 + ship.attackLevel() - colony.bombDefense()) / 10f;
         pct = max(.05f, pct);
         return popLost * pct;
     }
@@ -1146,7 +1146,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
                 if (miss.target == currStack)
                 {
                     float hitPct;
-                    hitPct = (5 + miss.attackLevel - miss.target.missileDefense()) / 10;
+                    hitPct = (5 + miss.attackLevel - miss.target.missileDefense()) / 10f;
                     hitPct = max(.05f, hitPct);
                     hitPct = min(hitPct, 1.0f);
                     float killPct = ((miss.maxDamage()-miss.target.shieldLevel())*miss.num*hitPct)/(miss.target.maxHits*miss.target.num);

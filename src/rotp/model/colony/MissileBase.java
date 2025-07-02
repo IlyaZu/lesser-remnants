@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +46,7 @@ public class MissileBase implements Base, Serializable {
 
     public float maxHits()        { return BASE_HP * armor.tech().hitsAdj; }
     public float ecmLevel()       { return ecm == null ? 0 : ecm.level(); }
-    public float computerLevel()  { return computer.level() + 1; }  // attack level is computer + 1 for scanner
+    public int computerLevel()    { return computer.level() + 1; }  // attack level is computer + 1 for scanner
     public float missileDefense() { return computer.level() + ecmLevel(); }
     public float beamDefense()    { return computer.level(); }
     public float bombDefense()    { return 1 + ecmLevel(); }

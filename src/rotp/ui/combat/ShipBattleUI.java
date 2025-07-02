@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -736,7 +736,7 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
         drawString(g,lbl1, x1a, y2 + s12);
         drawString(g,lbl2, x1b, y2 + s12);
         val1 = str((int) Math.ceil(target.colony.industry().factories()));
-        val2 = str((int) target.attackLevel());
+        val2 = str(target.attackLevel());
         sw1 = g.getFontMetrics().stringWidth(val1);
         sw2 = g.getFontMetrics().stringWidth(val2);
         g.setColor(textColor);
