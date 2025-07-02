@@ -724,7 +724,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         Column nameCol = listingUI.newSystemNameColumn(nameField, "PLANETS_LIST_NAME", "NAME", 170, palette.black, StarSystem.NAME, LEFT);
         Column populationCol = listingUI.newSystemDeltaDataColumn("PLANETS_LIST_POPULATION", "POPULATION", 90, palette.black, StarSystem.POPULATION, RIGHT);
         Column sizeCol = listingUI.newSystemDataColumn("PLANETS_LIST_SIZE", "SIZE", 60, palette.black, StarSystem.CURRENT_SIZE, RIGHT);
-        Column pTypeCol = listingUI.newPlanetTypeColumn("PLANETS_LIST_TYPE", "PLANET_TYPE", 90, StarSystem.PLANET_TYPE);
         Column wasteCol = listingUI.newSystemDataColumn("PLANETS_LIST_WASTE", "WASTE", 75, palette.black, StarSystem.WASTE, RIGHT);
         Column notesCol = listingUI.newSystemNotesColumn(notesField, "PLANETS_LIST_NOTES", "NOTES", 999, palette.black);
         Column factoriesCol = listingUI.newSystemDeltaDataColumn("PLANETS_LIST_FACTORIES", "FACTORIES", 90, palette.black, StarSystem.FACTORIES, RIGHT);
@@ -741,7 +740,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         ecoView.addColumn(flagCol);
         ecoView.addColumn(nameCol);
         ecoView.addColumn(populationCol);
-        ecoView.addColumn(pTypeCol);
         ecoView.addColumn(sizeCol);
         ecoView.addColumn(resourceCol);
         ecoView.addColumn(wasteCol);
