@@ -357,7 +357,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                     return concat(str(currSize),"+");
             case "PLANET_TYPE":      return planet().type().name();
             case "NOTES":            return notes();
-            case "FACTORIES":        return str(empire().sv.factories(id));
             case "DELTA_FACTORIES":  return str(empire().sv.deltaFactories(id));
             case "INCOME":           return str((int)colony().totalIncome());
             case "CAPACITY":         return concat(str((int)(colony().currentProductionCapacity()*100)),"%");
@@ -377,7 +376,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public static Comparator<StarSystem> SHIPYARD           = (StarSystem sys1, StarSystem sys2) -> sys1.colony().shipyardProject().compareTo(sys2.colony().shipyardProject());
     public static Comparator<StarSystem> RESOURCES          = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.planet().resourcesSort(),sys2.planet().resourcesSort());
     public static Comparator<StarSystem> INDUSTRY_RESERVE   = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().reserveIncome(),sys2.colony().reserveIncome());
-    public static Comparator<StarSystem> FACTORIES          = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().industry().factories(),sys2.colony().industry().factories());
     public static Comparator<StarSystem> BASE_PRODUCTION    = (StarSystem o1,   StarSystem o2)   -> Base.compare(o1.colony().production(),o2.colony().production());
     public static Comparator<StarSystem> INCOME             = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().totalIncome(),sys2.colony().totalIncome());
     public static Comparator<StarSystem> CAPACITY           = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().currentProductionCapacity(),sys2.colony().currentProductionCapacity());
