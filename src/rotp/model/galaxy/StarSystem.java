@@ -360,10 +360,8 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
             case "DELTA_FACTORIES":  return str(empire().sv.deltaFactories(id));
             case "CAPACITY":         return concat(str((int)(colony().currentProductionCapacity()*100)),"%");
             case "RESERVE":          return str((int)colony().reserveIncome());
-            case "BASES":            return str(empire().sv.bases(id));
             case "SHIPYARD":         return colony().shipyardProject();
             case "DELTA_BASES":      return str(empire().sv.deltaBases(id));
-            case "SHIELD":           return str(colony().defense().shieldLevel());
             case "TRANSPORT_TURNS":  return str((int)Math.ceil(transportTimeTo(TARGET_SYSTEM)));
             case "RESOURCES":        return text(empire().sv.view(id).resourceType());
         }
@@ -377,8 +375,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public static Comparator<StarSystem> INDUSTRY_RESERVE   = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().reserveIncome(),sys2.colony().reserveIncome());
     public static Comparator<StarSystem> BASE_PRODUCTION    = (StarSystem o1,   StarSystem o2)   -> Base.compare(o1.colony().production(),o2.colony().production());
     public static Comparator<StarSystem> CAPACITY           = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().currentProductionCapacity(),sys2.colony().currentProductionCapacity());
-    public static Comparator<StarSystem> BASES              = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().defense().bases(),sys2.colony().defense().bases());
-    public static Comparator<StarSystem> SHIELD             = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().defense().shieldLevel(),sys2.colony().defense().shieldLevel());
     public static Comparator<StarSystem> VFLAG = (StarSystem sys1, StarSystem sys2) -> {
         Empire pl = Empire.thePlayer();
         return Base.compare(pl.sv.flagColorId(sys1.id),pl.sv.flagColorId(sys2.id));

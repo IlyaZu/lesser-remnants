@@ -727,8 +727,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         Column notesCol = listingUI.newSystemNotesColumn(notesField, "PLANETS_LIST_NOTES", "NOTES", 999, palette.black);
         Column capacityCol = listingUI.newSystemDataColumn("PLANETS_LIST_CAPACITY", "CAPACITY", 60, palette.black, StarSystem.CAPACITY, RIGHT);
         Column indRsvCol = listingUI.newSystemDataColumn("PLANETS_LIST_RESERVE", "RESERVE", 60, palette.black, StarSystem.INDUSTRY_RESERVE, RIGHT);
-        Column basesCol = listingUI.newSystemDeltaDataColumn("PLANETS_LIST_BASES", "BASES", 60, palette.black, StarSystem.BASES, RIGHT);
-        Column shieldCol = listingUI.newSystemDataColumn("PLANETS_LIST_SHIELD", "SHIELD", 60, palette.black, StarSystem.SHIELD, RIGHT);
         Column shipCol = listingUI.newSystemDataColumn("PLANETS_LIST_SHIPYARD", "SHIPYARD", 140, palette.black, StarSystem.SHIPYARD, LEFT);
         Column resourceCol = listingUI.newSystemDataColumn("PLANETS_LIST_RESOURCES", "RESOURCES", 90, palette.black, StarSystem.RESOURCES, LEFT);
 
@@ -760,8 +758,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         milView.addColumn(populationCol);
         milView.addColumn(resourceCol);
         milView.addColumn(capacityCol);
-        milView.addColumn(shieldCol);
-        milView.addColumn(basesCol);
         milView.addColumn(shipCol);
         milView.addColumn(notesCol);
         views.put(MILITARY_MODE, milView);
