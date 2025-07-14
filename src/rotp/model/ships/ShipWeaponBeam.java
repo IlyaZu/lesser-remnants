@@ -78,7 +78,7 @@ public final class ShipWeaponBeam extends ShipWeapon {
         int minDamage = minDamage();
         int maxDamage = maxDamage();
         int range = source.movePointsTo(target.x, target.y);
-        float defense = target.beamDefense() + range - 1;
+        int defense = target.beamDefense() + range - 1;
         int attack = source.attackLevel() + tech().computer;
         float hitPct = (5 + attack - defense) / 10f;
         hitPct = max(.05f, hitPct);

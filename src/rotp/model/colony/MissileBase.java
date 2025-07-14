@@ -48,7 +48,7 @@ public class MissileBase implements Base, Serializable {
     public int ecmLevel()         { return ecm == null ? 0 : ecm.level(); }
     public int computerLevel()    { return computer.level() + 1; }  // attack level is computer + 1 for scanner
     public int missileDefense()   { return computer.level() + ecmLevel(); }
-    public float beamDefense()    { return computer.level(); }
+    public int beamDefense()      { return computer.level(); }
     public int bombDefense()      { return 1 + ecmLevel(); }
     public float missileInterceptPct(ShipWeaponMissileType missile) {
         return missileShield == null ? 0 : missileShield.interceptPct(missile);
