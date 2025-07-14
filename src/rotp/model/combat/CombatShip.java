@@ -727,7 +727,7 @@ public class CombatShip extends CombatEntity {
                 g.fillOval(x4a, y4d, iconW, iconW);
                 if (view.missileDefenseKnown()) {
                     g.setColor(Color.white);
-                    String valStr = str((int)Math.ceil(missileDefense()));
+                    String valStr = str(missileDefense());
                     g.setFont(narrowFont(16));
                     int shldW = g.getFontMetrics().stringWidth(valStr);
                     g.drawString(valStr, x4a+((iconW-shldW)/2), y4d+BasePanel.s14);
