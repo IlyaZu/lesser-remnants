@@ -55,7 +55,7 @@ public abstract class CombatEntity implements Base {
     public float brighten = 0.0f;
     public int attackLevel = 0;
     public float maneuverability = 0;
-    public float missileDefense = 0;
+    public int missileDefense = 0;
     public float beamDefense = 0;
     public float offsetX = 0;
     public float offsetY = 0;
@@ -129,11 +129,11 @@ public abstract class CombatEntity implements Base {
     public boolean interceptsMissile(ShipWeaponMissileType wpn)  { return random() < missileInterceptPct(wpn);}
     public float missileInterceptPct(ShipWeaponMissileType wpn)  { return 0; }
     public float maneuverablity()     { return maneuverability; }
-    public float missileDefense()     { return cloaked ? missileDefense +5 : missileDefense; }
+    public int missileDefense()     { return cloaked ? missileDefense +5 : missileDefense; }
     public float beamDefense()        { return cloaked ? beamDefense + 5 : beamDefense; }
     public int attackLevel()        { return attackLevel; }
-    public float bombDefense()      { return 0; }
-    public float bioweaponDefense() { return 0; }
+    public int bombDefense()        { return 0; }
+    public int bioweaponDefense()   { return 0; }
     public boolean canEat(CombatEntity st)       { return false; }
     public boolean hostileTo(CombatEntity st, StarSystem sys)                  { return empire != st.empire; }
     public boolean selectBestWeapon(CombatEntity target)       { return false; }

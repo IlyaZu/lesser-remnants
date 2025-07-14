@@ -52,7 +52,7 @@ public final class ShipWeaponBomb extends ShipWeapon {
     }
     @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count) {
-        float defense = target.bombDefense();
+        int defense = target.bombDefense();
         int attack = source.attackLevel();
         float pct = (5 + attack - defense) / 10f;
         pct = max(.05f, pct);

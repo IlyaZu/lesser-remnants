@@ -68,7 +68,7 @@ public class ShipWeaponMissileType extends ShipWeapon {
         boolean isColony = target.isColony();
         int minDamage = minDamage();
         int maxDamage = maxDamage();
-        float defense = target.missileDefense();
+        int defense = target.missileDefense();
         int attack = source.attackLevel() + computerLevel();
         float hitPct = (5 + attack - defense) / 10f;
         hitPct = max(.05f, hitPct);
