@@ -103,7 +103,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             messageRemark = concat("Message type not defined: ", notif.type());
         else if (notif.otherEmpire() == null)
             messageRemark = diplomatEmpire.decode(message.remark(notif.otherEmpire()), player());
-        else 
+        else
             messageRemark = diplomatEmpire.decode(message.remark(notif.otherEmpire()), player());
             
         commonInit();
@@ -155,7 +155,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         drawOverlay(g);
     }
     public Image paintToImage() {
-        if (message == null) 
+        if (message == null)
             err(messageRemark);
         
         clearSelections();
@@ -240,7 +240,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             empY += s20;
             g.setFont(narrowFont(18));
             s = text("LEADER_PERSONALITY_FORMAT", diplomatEmpire.leader().personality(), diplomatEmpire.leader().objective());
-            sw = g.getFontMetrics().stringWidth(s); 
+            sw = g.getFontMetrics().stringWidth(s);
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
 //            drawString(g,s, fX+(fW-sw)/2, empY);
             empY += s20;
@@ -313,7 +313,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         // need to calculate correct font size to fit full text (remark & detail) onto allowed # of lines
         int dispFontSize = scaledDialogueFontSize(g, displayText, w1, maxLinesForText, 26, 16);
         g.setFont(dlgFont(dispFontSize));
-        // now split just the remark text 
+        // now split just the remark text
         List<String> remarkLines = wrappedLines(g, messageRemark, w1);
         int lineH = scaled(dispFontSize-2);
         int lastLineW = 0;
@@ -379,7 +379,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
                     y1 += (lineH+s2);
                     x2 = x1+margin1;
                 }
-                else 
+                else
                     x2 = x1+margin2;
                 String reply = message.dataLine(i);
                 g.fillOval(x1, y1-s9, s3, s3);
@@ -403,7 +403,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
                 g.setColor(c1);
                 g.fillRoundRect(x,y1-lineH+s5, w, lineH, lineH, lineH);
             }
-            else 
+            else
                 c0 = optionC;
             g.setColor(c0);
             drawString(g,""+(i+1), x1-s15, y1);

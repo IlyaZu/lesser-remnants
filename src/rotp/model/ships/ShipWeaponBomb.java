@@ -61,7 +61,7 @@ public final class ShipWeaponBomb extends ShipWeapon {
         float shieldMod = source.targetShieldMod(this)*shieldMod();
         boolean successfullyHit = false;
         for (int i=0;i<count;i++) {
-            if (random() < pct) { 
+            if (random() < pct) {
                 successfullyHit = true;
                 if (!target.destroyed()) {
                     float damage = roll(minDamage(), maxDamage());

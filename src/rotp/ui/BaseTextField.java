@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public class BaseTextField extends JTextField {
         @Override
         public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
             if (str == null) return;
-            if ((getLength() + str.length()) <= limit) 
+            if ((getLength() + str.length()) <= limit)
                     super.insertString(offset, str, attr);
         }
     }

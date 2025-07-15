@@ -33,13 +33,13 @@ public class DiplomacyRequestReply extends DiplomaticMessage {
     public void escape()                         { select(0); }
     @Override
     public void select(int i) {
-        if (reply.resumeTurn()) 
+        if (reply.resumeTurn())
             session().resumeNextTurnProcessing();
         else if (reply.returnToMap())
             RotPUI.instance().selectMainPanel();
         else if (reply.returnMenu() == null)
             RotPUI.instance().selectRacesPanel();
         else
-            DiplomaticMessage.show(view(), reply.returnMenu()); 
+            DiplomaticMessage.show(view(), reply.returnMenu());
     }
 }

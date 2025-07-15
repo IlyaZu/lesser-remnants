@@ -105,8 +105,8 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
             String button2B = text("RACES_MANAGE_RECALL_DIPLOMAT");
             g.setFont(narrowFont(20));
             maxNameW = s60;
-            for (EmpireView view: player().contacts()) 
-                maxNameW = max(maxNameW, s30+g.getFontMetrics().stringWidth(view.empire().raceName()));       
+            for (EmpireView view: player().contacts())
+                maxNameW = max(maxNameW, s30+g.getFontMetrics().stringWidth(view.empire().raceName()));
             g.setFont(narrowFont(18));
             button1W = max(s80, s30+g.getFontMetrics().stringWidth(button1A));
             button2W = max(s80, s30+g.getFontMetrics().stringWidth(button2A), s20+g.getFontMetrics().stringWidth(button2B));
@@ -161,7 +161,7 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
         int h2 = numRows*rowH;
         g.setColor(RacesUI.darkBrown);
         
-        g.fillRect(x2, y2, w2, h2); 
+        g.fillRect(x2, y2, w2, h2);
 
         int rowx1 = x2;
         int rowx2 = rowx1+maxNameW+s20;
@@ -205,7 +205,7 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
         g.drawLine(rowx2, y2, rowx2, y2+h2);
         g.drawLine(rowx3, y2, rowx3, y2+h2);
         if (empireViews.size() > maxDisplayRows)
-            g.drawLine(rowx4, y2, rowx4, y2+h2);     
+            g.drawLine(rowx4, y2, rowx4, y2+h2);
         
         // OK button vars
         int buttonM = s30;  // L/R margin
@@ -375,7 +375,7 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
             repaint();
         }
         else {
-            DiplomaticMessage.show(view.empire().viewForEmpire(player()), DialogueManager.DIPLOMACY_MAIN_MENU);   
+            DiplomaticMessage.show(view.empire().viewForEmpire(player()), DialogueManager.DIPLOMACY_MAIN_MENU);
             parent.repaint();
         }
     }
@@ -417,13 +417,13 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
                 exit();
                 openEmbassy(empireViews.get(i));
                 return;
-            }         
+            }
         }
         for (int i=0;i<diploBoxes.size();i++) {
             if (hoverButton == diploBoxes.get(i)) {
                 recallReinstateDiplomat(empireViews.get(i));
                 return;
-            }         
+            }
         }
     }
     @Override
@@ -444,9 +444,9 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
             int prevY = listY;
             if (count < 0)
                 listY = max(0,listY-s10);
-            else 
+            else
                 listY = min(listYMax,listY+s10);
-            if (listY != prevY) 
+            if (listY != prevY)
                 repaint(listBox);
             return;
         }
@@ -458,24 +458,24 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
         int dY = y-dragY;
         dragY = y;
         if (listScroller == hoverBox) {
-            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) { 
+            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)((float)dY*(h+listYMax)/h);
                 if (dY < 0)
                     listY = max(0,listY+dListY);
-                else 
+                else
                     listY = min(listYMax,listY+dListY);
             }
             repaint(listBox);
             return;
         }
         else if (listBox == hoverBox) {
-            if (listBox.contains(x,y)) { 
+            if (listBox.contains(x,y)) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+listYMax)/h);
                 if (dListY < 0)
                     listY = max(0,listY+dListY);
-                else 
+                else
                     listY = min(listYMax,listY+dListY);
             }
             repaint(listBox);
@@ -510,7 +510,7 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
         else if (listBox.contains(x,y))
             hoverBox = listBox;
         
-        if ((prevHoverBox != hoverBox) 
+        if ((prevHoverBox != hoverBox)
         || (prevHoverButton != hoverButton))
             repaint();
     }

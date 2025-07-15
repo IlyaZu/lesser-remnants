@@ -89,8 +89,8 @@ public class BaseText implements Base {
     public void setBounds(int x, int y, int w, int h) {
         bounds.setBounds(x,y,w,h);
     }
-    public void reset() { 
-        bounds.setBounds(0,0,0,0); 
+    public void reset() {
+        bounds.setBounds(0,0,0,0);
     }
     public void rescale() {
         x = scaled(xOrig);
@@ -177,7 +177,7 @@ public class BaseText implements Base {
         setBounds(x1,y1-fontH,sw+scaled(5),fontH+(fontH/5));
         if (bordered)
             drawBorderedString(g,displayText(), x1, y1, Color.black,textColor());
-        else 
+        else
             drawString(g,displayText(), x1,y1);
         return x1+sw;
     }
