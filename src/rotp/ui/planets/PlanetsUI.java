@@ -123,7 +123,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         viewSelectionPane = new PlanetViewSelectionPanel(this);
         transferReservePane = new TransferReserveUI();
         planetDisplayPane = new PlanetDisplayPanel(this);
-        multiPlanetDisplayPane = new MultiPlanetDisplayPanel(this);
+        multiPlanetDisplayPane = new MultiPlanetDisplayPanel();
         planetListing = new PlanetListingUI(this);
 
         initModel();
@@ -734,9 +734,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     class MultiPlanetDisplayPanel extends SystemPanel {
         private static final long serialVersionUID = 1L;
         EmpireInfoGraphicPane graphicPane;
-        PlanetsUI parent;
-        public MultiPlanetDisplayPanel(PlanetsUI p) {
-            parent = p;
+        public MultiPlanetDisplayPanel() {
             init();
         }
         private void init() {
@@ -801,7 +799,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         SystemPanel parent;
         Ellipse2D starCircle = new Ellipse2D.Float();
         Ellipse2D planetCircle = new Ellipse2D.Float();
-        int currentHover = 0;
         EmpireInfoGraphicPane(SystemPanel p) {
             parent = p;
             init();
@@ -1659,7 +1656,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     }
     class ReserveUI extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
         private static final long serialVersionUID = 1L;
-        final Color sliderHighlightColor = new Color(255,255,255);
         final Color sliderBoxEnabled = new Color(34,140,142);
         final Color sliderBackEnabled = Color.black;
         private final Polygon leftArrow = new Polygon();

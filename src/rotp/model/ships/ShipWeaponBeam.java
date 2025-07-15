@@ -16,20 +16,12 @@
  */
 package rotp.model.ships;
 
-import java.awt.BasicStroke;
 import rotp.model.combat.CombatEntity;
 import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechShipWeapon;
 
 public final class ShipWeaponBeam extends ShipWeapon {
     private static final long serialVersionUID = 1L;
-    final static float dash1[] = {1.0f, 4.0f};
-    final static BasicStroke dashed0 = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-    final static BasicStroke dashed1 = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 1.0f);
-    final static BasicStroke dashed2 = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 2.0f);
-    final static BasicStroke dashed3 = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 3.0f);
-    final static BasicStroke dashed4 = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 4.0f);
-    final static BasicStroke[] pellets = { dashed4, dashed3, dashed2, dashed1, dashed0 };
 
     private final boolean heavy;
 

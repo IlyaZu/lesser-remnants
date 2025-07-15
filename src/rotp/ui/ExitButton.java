@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
-import java.awt.geom.RoundRectangle2D;
 import rotp.ui.main.SystemPanel;
 
 public class ExitButton extends BasePanel implements MouseListener, MouseMotionListener {
@@ -41,7 +39,6 @@ public class ExitButton extends BasePanel implements MouseListener, MouseMotionL
     Rectangle buttonBox = new Rectangle();
     int hPad = 0;
     int vPad = 0;
-    Shape textureClip;
 
     public ExitButton(int w, int h, int vMargin, int hMargin) {
         hPad = hMargin;
@@ -84,8 +81,6 @@ public class ExitButton extends BasePanel implements MouseListener, MouseMotionL
         g.setColor(c0);
         g.drawRoundRect(hp, vp, w-hp-hp, h-vp-vp,arc,arc);
         g.setStroke(prev);
-
-        textureClip = new RoundRectangle2D.Float(hp, vp, w-hp-hp, h-vp-vp,arc,arc);
 
         g.setFont(narrowFont(unscaled((h-vp-vp)*2/3)));
         String s = label();

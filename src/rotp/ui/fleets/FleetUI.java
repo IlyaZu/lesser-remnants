@@ -73,8 +73,6 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
     public static final Color rallyBackLoC = new Color(77,55,34);
     public static final Color rallyBorderC = new Color(208,172,148);
     public static final Color darkShadingC = new Color(50,50,50);
-    public static final Color darkBrown = new Color(45,14,5);
-    public static final Color brown = new Color(64,24,13);
     public static final Color sliderBoxBlue = new Color(34,140,142);
     public static final Color mapMask = new Color(0,0,0,192);
     public static final Color unselectedTabC = new Color(112,85,68);

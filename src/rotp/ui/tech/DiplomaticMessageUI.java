@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +37,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import javax.swing.border.Border;
 import rotp.model.empires.DiplomaticTreaty;
 import rotp.model.empires.Empire;
 import rotp.model.empires.Race;
@@ -46,23 +46,14 @@ import rotp.ui.diplomacy.DiplomacyRequestReply;
 import rotp.ui.diplomacy.DiplomaticMessage;
 import rotp.ui.main.SystemPanel;
 import rotp.ui.notifications.DiplomaticNotification;
-import rotp.util.ThickBevelBorder;
 
 public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, MouseMotionListener, ActionListener {
     private static final long serialVersionUID = 1L;
-    static Color innerTextBackC = new Color(73,163,163);
-    static Color outerTextAreaC = new Color(92,208,208);
-    static Color textBorderLo1 = new Color(73,163,163);
-    static Color textBorderLo2 = new Color(52,126,126);
-    static Color textBorderHi1  = new Color(110,240,240);
-    static Color textBorderHi2  = new Color(115,252,252);
     static Color textC = Color.white;
     static Color textBgC = Color.darkGray;
     static Color optionC = Color.white;
     static Color hoverOptionC = Color.yellow;
     static Color disabledOptionC = Color.gray;
-
-    static Border outerTextAreaBorder, innerTextAreaBorder;
 
     private Image flagPole;
 
@@ -79,12 +70,8 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
     float holoPct = 0f;
     boolean hasSpoken = false;
     boolean mouseSet = false;
-    boolean exited = false;
 
     public DiplomaticMessageUI() {
-        outerTextAreaBorder = new ThickBevelBorder(8, textBorderHi2, textBorderHi1, textBorderHi2, textBorderHi1, textBorderLo2, textBorderLo1, textBorderLo2, textBorderLo1);
-        innerTextAreaBorder = new ThickBevelBorder(8, textBorderLo1, textBorderLo2, textBorderLo1, textBorderLo2, textBorderHi1, textBorderHi2, textBorderHi1, textBorderHi2);
-
         for (int i=0;i<selectBoxes.length;i++)
             selectBoxes[i] = new Rectangle();
         initModel();
@@ -137,7 +124,6 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         commonInit();
     }
     private void commonInit() {
-        exited = false;
         if (message == null) {
             err(messageRemark);
             return;
@@ -439,7 +425,6 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             return;
         if (stillFading() || waitingOnMessage())
             return;
-        exited = true;
         softClick();
         message.select(opt);
     }
@@ -487,7 +472,6 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             case KeyEvent.VK_6: selectHover = 5; selectOption(5); return;
 
             case KeyEvent.VK_ESCAPE:
-                exited = true;
                 message.escape();
         }
     }

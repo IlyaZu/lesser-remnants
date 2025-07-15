@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,6 @@ import rotp.util.Base;
 import rotp.util.LanguageManager;
 
 public class BaseText implements Base {
-    static int ST_NORMAL = 0;
-    static int ST_LOCKED = 1;
-    static int ST_HOVER = 1;
-    static int ST_PRESSED = 1;
-
-
     private final BasePanel panel;
     private final Color enabledC, disabledC, hoverC, depressedC, shadeC;
     private final int topLBdr, btmRBdr;
@@ -85,10 +79,7 @@ public class BaseText implements Base {
     public void displayText(String s) { text = s; }
     public void hoverText(String s)   { hoverText = s; }
     public int x()                    { return bounds.x; }
-    public int y()                    { return bounds.y; }
     public int w()                    { return bounds.width; }
-    public int h()                    { return bounds.height; }
-    public int bottomY()              { return bounds.y + bounds.height; }
     public Rectangle bounds()         { return bounds; }
     public void disabled(boolean b)   { disabled = b; }
     public void visible(boolean b)    { visible = b; }

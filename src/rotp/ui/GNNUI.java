@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,24 +28,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import javax.swing.border.Border;
 import rotp.model.empires.Empire;
 import rotp.ui.main.SystemPanel;
 import rotp.util.Base;
-import rotp.util.ThickBevelBorder;
 
 public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
-    static final Color innerTextBackC = new Color(73,163,163);
-    static final Color outerTextAreaC = new Color(92,208,208);
-    static final Color textBorderLo1 = new Color(73,163,163);
-    static final Color textBorderLo2 = new Color(52,126,126);
-    static final Color textBorderHi1  = new Color(110,240,240);
-    static final Color textBorderHi2  = new Color(115,252,252);
-    static final Color textC = new Color(114,155,201);
-
-    static Border outerTextAreaBorder, innerTextAreaBorder;
-
     private final static int EVENT_FADE_IN_FRAME = 30;
     private final static int NUM_EVENT_FADE_FRAMES = 5;
     private String messageText;
@@ -55,8 +43,6 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
     private List<Empire> empires;
 
     public GNNUI() {
-        outerTextAreaBorder = new ThickBevelBorder(8, textBorderHi2, textBorderHi1, textBorderHi2, textBorderHi1, textBorderLo2, textBorderLo1, textBorderLo2, textBorderLo1);
-        innerTextAreaBorder = new ThickBevelBorder(8, textBorderLo1, textBorderLo2, textBorderLo1, textBorderLo2, textBorderHi1, textBorderHi2, textBorderHi1, textBorderHi2);
         init();
     }
     private void init() {

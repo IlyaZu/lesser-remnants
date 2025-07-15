@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,16 +42,6 @@ public class NoticeMessage {
         return (int) ((System.currentTimeMillis() - startTime) / 1000);
     }
     public static boolean redisplay() { return dataChanged || ((System.currentTimeMillis()-retrievedTime) > 1000); }
-    public static void setStatus(String s1, String s2, int curr, int max) {
-        dataChanged = !s1.equals(title) || !s2.equals(step) || (curr != currentStep) || (max != maxSteps);
-        title = s1;
-        step = s2;
-        currentStep = curr;
-        maxSteps = max;
-        if (dataChanged)
-            startTime = System.currentTimeMillis();
-        repaint();
-    }
     public static void setStatus(String s1 ) {
         dataChanged = !s1.equals(title);
         title = s1;
@@ -92,13 +83,6 @@ public class NoticeMessage {
         step = s1;
         currentStep = curr;
         maxSteps = max;
-        if (dataChanged)
-            startTime = System.currentTimeMillis();
-        repaint();
-    }
-    public static void setStep(int curr) {
-        dataChanged = (curr != currentStep);
-        currentStep = curr;
         if (dataChanged)
             startTime = System.currentTimeMillis();
         repaint();

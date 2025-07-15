@@ -83,7 +83,6 @@ import rotp.util.sound.SoundManager;
 
 public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 1L;
-    private static int FPS = 10;
     public static int ANIMATION_TIMER = 100;
     private boolean drawNextTurnNotice = true;
     private static Throwable startupException;
@@ -153,16 +152,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
 
     private static PrintWriter debugFile = null;
 
-    public static void fps(int fps) {
-        // bound arg between 10 & 60
-        int actualFPS = Math.min(60, Math.max(10,fps));
-        if (FPS == actualFPS)
-            return;
-
-        FPS = actualFPS;
-        ANIMATION_TIMER = 1000/FPS;
-        instance.resetTimer();
-    }
     public static int scaledSize(int i) {
         if (i < 1)
             return (int) Math.ceil(Rotp.resizeAmt()*i);
@@ -230,7 +219,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             mainUI = new MainUI();
         return mainUI;
     }
-    public RaceIntroUI raceIntroUI()  { return raceIntroUI; }
     public AllocateTechUI techUI()    { return allocateTechUI; }
     public RacesUI racesUI()          { return racesUI; }
     @Override
@@ -251,13 +239,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         } finally {
             drawNextTurnNotice = true;
         }
-    }
-
-    private void resetTimer() {
-        if (timer != null)
-            timer.stop();
-        timer = new Timer(ANIMATION_TIMER, this);
-        timer.start();
     }
     private void init() {
         initModel();

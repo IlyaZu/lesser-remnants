@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,6 @@
 package rotp.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -48,10 +48,6 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
 
     private static Border buttonBevelBorder, buttonDepressedBorder;
 
-    public static Color grayColor()  { return grButtonColor; }
-    public static Border grayBevelBorder(int w) {
-        return new ThickBevelBorder(w, 1, grButtonLighter, grButtonLight, grButtonDarker, grButtonDark, grButtonDark, grButtonDarker, grButtonLight, grButtonLighter);
-    }
     public static Border grayBevelBorder() {
         if (grButtonBevelBorder == null)
             grButtonBevelBorder =   new ThickBevelBorder(4, 1, grButtonLighter, grButtonLight, grButtonDarker, grButtonDark, grButtonDark, grButtonDarker, grButtonLight, grButtonLighter);
@@ -65,7 +61,6 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     protected Shape boundingShape;
     protected boolean hovering = false;
     protected boolean depressed = false;
-    @Override
     public Border buttonBevelBorder() {
         if (usingGrayTheme())
             return grayBevelBorder();
@@ -98,11 +93,6 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     abstract public void buttonClicked(int cnt);
     public boolean usingGrayTheme()   { return false; }
 
-    public ButtonPanel(int w, int h) {
-        this();
-        setBackground(new Color(0,0,0,0));
-        setPreferredSize(new Dimension(w,h));
-    }
     public ButtonPanel() {
         setBackground(new Color(0,0,0,0));
         addMouseListener(this);
@@ -160,7 +150,6 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     public Color hoveringTextColor()    { return Color.white; }
     public Color enabledTextColor()     { return Color.black; }
     public Color disabledTextColor()    { return Color.darkGray; }
-    public void makeClickSound()   { buttonClick(); }
     @Override
     public void mouseClicked(MouseEvent e) {}
     @Override
