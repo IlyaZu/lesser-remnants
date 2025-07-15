@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,34 +53,7 @@ public class NewShipTemplate implements Base {
     enum DesignType { FIGHTER, BOMBER, DESTROYER }
 
     // indices for race shipDesignMods
-    public static final int COST_MULT_S = 0;
-    public static final int COST_MULT_M = 1;
-    public static final int COST_MULT_L = 2;
-    public static final int COST_MULT_H = 3;
     public static final int MODULE_SPACE = 4;
-    public static final int SHIELD_WEIGHT_FB = 5;
-    public static final int SHIELD_WEIGHT_D = 6;
-    public static final int ECM_WEIGHT_FD = 7;
-    public static final int ECM_WEIGHT_B = 8;
-    public static final int MANEUVER_WEIGHT_BD = 9;
-    public static final int MANEUVER_WEIGHT_F = 10;
-    public static final int ARMOR_WEIGHT_FB = 11;
-    public static final int ARMOR_WEIGHT_D = 12;
-    public static final int SPECIALS_WEIGHT = 13;
-    public static final int SPEED_MATCHING = 14;
-    public static final int REINFORCED_ARMOR = 15;
-    public static final int BIO_WEAPONS = 16;
-    public static final int PREF_PULSARS = 17;
-    public static final int PREF_CLOAK = 18;
-    public static final int PREF_REPAIR = 19;
-    public static final int PREF_INERTIAL = 20;
-    public static final int PREF_MISS_SHIELD = 21;
-    public static final int PREF_REPULSOR = 22;
-    public static final int PREF_STASIS = 23;
-    public static final int PREF_STREAM_PROJECTOR = 24;
-    public static final int PREF_WARP_DISSIPATOR = 25;
-    public static final int PREF_TECH_NULLIFIER = 26;
-    public static final int PREF_BEAM_FOCUS = 27;
     
     public static void nameShipDesign(ShipDesigner ai, ShipDesign d) {
         instance.nameDesign(ai, d);

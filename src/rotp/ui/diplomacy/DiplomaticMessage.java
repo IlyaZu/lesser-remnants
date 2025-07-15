@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +30,6 @@ public abstract class DiplomaticMessage implements Base {
     protected static final int PROPOSE_PACT = 2;
     protected static final int PROPOSE_ALLIANCE = 3;
     protected static final int PROPOSE_JOINT_WAR = 4;
-    protected static final int PROPOSE_BREAK_ALLIANCE = 5;
     protected static final int BREAK_TRADE = 6;
     protected static final int BREAK_PACT = 7;
     protected static final int BREAK_ALLIANCE = 8;
@@ -74,18 +74,12 @@ public abstract class DiplomaticMessage implements Base {
     public Empire diplomat()                     { return diplomat; }
     public void target(Empire v)                 { }
     public void incident(DiplomaticIncident v)   { incident = v; }
-    public DiplomaticIncident incident()         { return incident; }
     public EmpireView view()                     { return diplomat.viewForEmpire(player()); }
 
     public boolean showTalking()                 { return true; }
     public DialogueManager manager()             { return DialogueManager.current(); }
     public void returnToMap(boolean b)           { returnToMap = b; }
     public boolean returnToMap()                 { return returnToMap; }
-    public String remark() { 
-        if (remark == null) 
-            remark = decode(manager().randomMessage(messageType, diplomat()));
-        return remark;
-    }
     public String remark(Empire target) { 
         if (remark == null) {
             if (target == null)
@@ -95,7 +89,6 @@ public abstract class DiplomaticMessage implements Base {
         }
         return remark;
     }
-    public void remark(String s)                 { remark = s; }
 
     public static DiplomaticNotification show(EmpireView v, String type) {
         return show(v,type,false);

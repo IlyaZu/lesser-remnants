@@ -48,12 +48,6 @@ public class BasePanel extends JPanel implements Base {
     public static final Color hoverC = Color.yellow;
     public static final Color depressedC = new Color(208,160,0);
 
-    private static final Color buttonLighter = new Color(192,192,192);
-    private static final Color buttonLight = new Color(156,156,156);
-    private static final Color buttonDark = new Color(83,83,83);
-    private static final Color buttonDarker = new Color(63,63,63);
-    private static Border buttonBevelBorder;
-
     private static final Color borderLight0 = new Color(169,127,99);
     private static final Color borderLight1 = new Color(151,112,90);
     private static final Color borderShade0 = new Color(85,64,47);
@@ -75,17 +69,11 @@ public class BasePanel extends JPanel implements Base {
     public void advanceHelp()              { }
     
     public boolean hasStarBackground()     { return false; }
-    public boolean isAlpha()               { return false; }
     public int minStarDist()               { return 50; }
     public int varStarDist()               { return 100; }
 
     public boolean canEscape()             { return false; }
     public Color starBackgroundC()         { return Color.black; }
-    public Border buttonBevelBorder() {
-        if (buttonBevelBorder == null)
-            buttonBevelBorder =  new ThickBevelBorder(4, 1, buttonLighter, buttonLight, buttonDarker, buttonDark, buttonDark, buttonDarker, buttonLight, buttonLighter);
-        return buttonBevelBorder;
-    }
     public Border shadedBorder() {
         if (shadedBorder == null)
             shadedBorder = new ThickBevelBorder(5, borderShade0, borderShade1, borderShade0, borderShade1, borderLight0, borderLight1, borderLight0, borderLight1);
@@ -145,12 +133,6 @@ public class BasePanel extends JPanel implements Base {
 
         if (hasStarBackground())
             drawStars(g);
-    }
-    protected void setFPS(int fps) {
-        RotPUI.fps(fps);
-    }
-    protected void resetFPS() {
-        setFPS(10);
     }
     protected void drawStars(Graphics g) {
         drawStars(g, getWidth(), getHeight());

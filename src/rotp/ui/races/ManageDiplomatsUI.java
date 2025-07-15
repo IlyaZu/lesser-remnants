@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,6 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
     int listY, listYMax;
     int button1W, button2W, maxNameW;
     private LinearGradientPaint smallGreenBackC, largeGreenBackC;
-    Shape textureClip;
     List<Rectangle> audienceBoxes = new ArrayList<>();
     List<Rectangle> diploBoxes = new ArrayList<>();
     List<EmpireView> empireViews = new ArrayList<>();
@@ -148,8 +147,6 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
         g.fillRect(x0, y0, boxWidth, boxHeight);
         g.setColor(RacesUI.lightBrown);
         g.fillRect(x0+s15, y0+s15, boxWidth-s30, boxHeight-s30);
-
-        textureClip = new Rectangle(x0+s15, y0+s15, boxWidth-s30, boxHeight-s30);
 
         // draw title
         int y1 = y0+s45;
