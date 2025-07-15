@@ -89,22 +89,6 @@ public class Leader implements Base, Serializable {
             default:         return DialogueManager.CONTACT_ERRATIC;
         }
     }
-    public float retreatRatio(Empire c) {
-        float baseRatio = 1.5f;
-
-        if (empire.alliedWith(id(c))) {
-            if (isHonorable())
-                baseRatio *= 4;
-            else if (!isRuthless())
-                baseRatio *= 2;
-        }
-        if (isAggressive())
-            baseRatio *= 2;
-        else if (isPacifist())
-            baseRatio /= 2;
-
-        return baseRatio;
-    }
     public float diplomacyAnnoyanceMod(EmpireView v) {
         // # of requests past the initial
         int addl = max(0, v.embassy().requestCount()-1);
