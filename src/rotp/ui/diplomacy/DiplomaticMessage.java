@@ -80,7 +80,7 @@ public abstract class DiplomaticMessage implements Base {
     public DialogueManager manager()             { return DialogueManager.current(); }
     public void returnToMap(boolean b)           { returnToMap = b; }
     public boolean returnToMap()                 { return returnToMap; }
-    public String remark(Empire target) { 
+    public String remark(Empire target) {
         if (remark == null) {
             if (target == null)
                remark = decode(manager().randomMessage(messageType, diplomat()));
@@ -106,15 +106,15 @@ public abstract class DiplomaticMessage implements Base {
     public static void replyModal(DiplomacyRequestReply reply) {
         RotPUI.instance().selectDiplomaticReplyModalPanel(reply);
     }
-    public String decode(String encodedMessage) { 
-        String s1 = diplomat.decode(encodedMessage, player()); 
+    public String decode(String encodedMessage) {
+        String s1 = diplomat.decode(encodedMessage, player());
         if (incident != null)
             s1 = incident.decode(s1);
 
         return s1;
     }
-    public String decode(String encodedMessage, Empire target) { 
-        String s1 = diplomat.decode(encodedMessage, player(), target); 
+    public String decode(String encodedMessage, Empire target) {
+        String s1 = diplomat.decode(encodedMessage, player(), target);
         if (incident != null)
             s1 = incident.decode(s1);
 
