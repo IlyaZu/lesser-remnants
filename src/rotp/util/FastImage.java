@@ -60,23 +60,6 @@ public class FastImage {
     public static FastImage sized(int w, int h) {
         return new FastImage(w,h);
     }
-    public boolean equals(FastImage img) {
-        if (img == this)
-            return true;
-        if (img == null)
-            return false;
-        if (getHeight() != img.getHeight())
-            return false;
-        if (getWidth() != img.getWidth())
-            return false;
-        for (int x=0;x<getWidth();x++) {
-            for (int y=0;y<getHeight();y++) {
-                if (getRGB(x, y) != img.getRGB(x,y))
-                    return false;
-            }
-        }
-        return true;
-    }
     public static FastImage fromHeightMap(PlanetHeightMap map) {
         int w = map.width();
         int h = map.height();
