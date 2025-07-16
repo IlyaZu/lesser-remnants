@@ -560,7 +560,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         buttonClick();
         RotPUI.instance().selectMainPanel(disableNextTurn);
     }
-    class PlanetListingUI extends BasePanel {
+    private class PlanetListingUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public PlanetListingUI(PlanetsUI p) {
             init(p);
@@ -584,7 +584,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             planetDisplayPane.animate();
         }
     }
-    class PlanetViewSelectionPanel extends BasePanel implements MouseMotionListener, MouseListener {
+    private class PlanetViewSelectionPanel extends BasePanel implements MouseMotionListener, MouseListener {
         private static final long serialVersionUID = 1L;
         PlanetsUI parent;
         Rectangle hoverBox;
@@ -669,7 +669,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 repaint();
         }
     }
-    class PlanetDisplayPanel extends SystemPanel {
+    private class PlanetDisplayPanel extends SystemPanel {
         private static final long serialVersionUID = 1L;
         EmpireInfoGraphicPane graphicPane;
         PlanetsUI parent;
@@ -731,7 +731,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             return empireDetailPane;
         }
     }
-    class MultiPlanetDisplayPanel extends SystemPanel {
+    private class MultiPlanetDisplayPanel extends SystemPanel {
         private static final long serialVersionUID = 1L;
         EmpireInfoGraphicPane graphicPane;
         public MultiPlanetDisplayPanel() {
@@ -794,7 +794,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             return empireDetailPane;
         }
     }
-    class EmpireInfoGraphicPane extends BasePanel implements ActionListener {
+    private class EmpireInfoGraphicPane extends BasePanel implements ActionListener {
         private static final long serialVersionUID = 1L;
         SystemPanel parent;
         Ellipse2D starCircle = new Ellipse2D.Float();
@@ -863,7 +863,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             }
         }
     }
-    class ColonyShipPane extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+    private class ColonyShipPane extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
         private static final long serialVersionUID = 1L;
         SystemPanel parent;
         public Design currDesign;
@@ -1306,7 +1306,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             }
         }
     }
-    class ColonyTransferFunds extends BasePanel implements MouseListener, MouseMotionListener {
+    private class ColonyTransferFunds extends BasePanel implements MouseListener, MouseMotionListener {
         private static final long serialVersionUID = 1L;
         SystemPanel parent;
         private final Rectangle transferBox = new Rectangle();
@@ -1433,7 +1433,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 repaint();
         }
     }
-    final class PlanetDataListingUI extends SystemListingUI {
+    private final class PlanetDataListingUI extends SystemListingUI {
         private static final long serialVersionUID = 1L;
         PlanetDataListingUI(BasePanel p) {
             super(p);
@@ -1469,7 +1469,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             add(notesField);
         }
     }
-    class EmpireRevenueUI extends BasePanel {
+    private class EmpireRevenueUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public EmpireRevenueUI() {
             initModel();
@@ -1483,7 +1483,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             add(new TotalIncomeUI(), BorderLayout.WEST);
         }
     }
-    class SpendingCostsUI extends BasePanel {
+    private class SpendingCostsUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public SpendingCostsUI() {
             init();
@@ -1587,7 +1587,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             drawString(g,val, x2+w2-sw, y1);
         }
     }
-    class TotalIncomeUI extends BasePanel {
+    private class TotalIncomeUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public TotalIncomeUI() {
             initModel();
@@ -1654,7 +1654,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             drawString(g,val, amtP-sw, y1);
         }
     }
-    class ReserveUI extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+    private class ReserveUI extends BasePanel implements MouseListener, MouseMotionListener, MouseWheelListener {
         private static final long serialVersionUID = 1L;
         final Color sliderBoxEnabled = new Color(34,140,142);
         final Color sliderBackEnabled = Color.black;
@@ -1963,7 +1963,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             }
         }
     }
-    class ExitPlanetsButton extends ExitButton {
+    private class ExitPlanetsButton extends ExitButton {
         private static final long serialVersionUID = 1L;
         public ExitPlanetsButton(int w, int h, int vMargin, int hMargin) {
             super(w, h, vMargin, hMargin);
@@ -1974,7 +1974,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             finish(true);
         }
     }
-    class UpAction extends AbstractAction {
+    private class UpAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         @Override
         public void actionPerformed(ActionEvent ev) {
@@ -1982,7 +1982,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 instance.repaint();
         }
     }
-    class DownAction extends AbstractAction {
+    private class DownAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         @Override
         public void actionPerformed(ActionEvent ev) {
@@ -1990,7 +1990,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 instance.repaint();
         }
     }
-    class CancelAction extends AbstractAction {
+    private class CancelAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         @Override
         public void actionPerformed(ActionEvent ev) {

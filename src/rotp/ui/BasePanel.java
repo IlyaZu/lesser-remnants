@@ -56,7 +56,7 @@ public class BasePanel extends JPanel implements Base {
     private static Border shadedBorder;
 
     protected BufferedImage starBackground;
-    protected int starScrollX = 0;
+    private int starScrollX = 0;
     private Image screenBuffer;
 
     public static GraphicsConfiguration gc() {
@@ -69,8 +69,8 @@ public class BasePanel extends JPanel implements Base {
     public void advanceHelp()              { }
     
     public boolean hasStarBackground()     { return false; }
-    public int minStarDist()               { return 50; }
-    public int varStarDist()               { return 100; }
+    private int minStarDist()               { return 50; }
+    private int varStarDist()               { return 100; }
 
     public boolean canEscape()             { return false; }
     public Color starBackgroundC()         { return Color.black; }
@@ -148,14 +148,14 @@ public class BasePanel extends JPanel implements Base {
             g.drawImage(stars, w-scroll, 0, w, h, 0, 0, scroll, h, null);
         }
     }
-    protected BufferedImage newStarBackground() {
+    private BufferedImage newStarBackground() {
         initializeStarBackgroundImage(this,getWidth(),getHeight());
         return starBackground;
     }
     protected BufferedImage starBackground() {
         return starBackground == null ? newStarBackground() : starBackground;
     }
-    protected BufferedImage starBackground(int w, int h) {
+    private BufferedImage starBackground(int w, int h) {
         if (starBackground == null)
             initializeStarBackgroundImage(this,w,h);
         return starBackground;
@@ -172,7 +172,7 @@ public class BasePanel extends JPanel implements Base {
         g2.drawImage(img,x0-r,y0-r,x0+r,y0+r,0,0,w,w,null);
         g2.setComposite(prev);
     }
-    public void initializeStarBackgroundImage(JPanel obs, int w, int h) {
+    private void initializeStarBackgroundImage(JPanel obs, int w, int h) {
         starBackground =  new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         drawBackgroundStars(starBackground, obs, minStarDist(), varStarDist());
     }
@@ -185,7 +185,7 @@ public class BasePanel extends JPanel implements Base {
         int y0 = getHeight()-s8;
         drawSkipText(g, y0, clickContinue);
     }
-    public void drawSkipText(Graphics g, int y0, boolean clickContinue) {
+    private void drawSkipText(Graphics g, int y0, boolean clickContinue) {
         String skipText = clickContinue ? text("CLICK_CONTINUE") : text("CLICK_SKIP");
         g.setFont(narrowFont(20));
         int sw = g.getFontMetrics().stringWidth(skipText);

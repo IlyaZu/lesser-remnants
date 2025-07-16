@@ -17,13 +17,13 @@
 package rotp.ui;
 
 public class NoticeMessage {
-    public static String title = "";
-    public static String step = "";
-    public static int currentStep = 1;
-    public static int maxSteps = 1;
-    public static boolean dataChanged = false;
-    public static long startTime = 0;
-    public static long retrievedTime = 0;
+    private static String title = "";
+    private static String step = "";
+    private static int currentStep = 1;
+    private static int maxSteps = 1;
+    private static boolean dataChanged = false;
+    private static long startTime = 0;
+    private static long retrievedTime = 0;
 
     public static String title()  { return title; }
     public static String step() {

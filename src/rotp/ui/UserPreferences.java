@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -309,7 +309,7 @@ public class UserPreferences {
         setScreenSizePct(screenSizePct+5);
         return oldSize != screenSizePct;
     }
-    public static String displayModeToSettingName(String s) {
+    private static String displayModeToSettingName(String s) {
         switch(s) {
             case WINDOW_MODE:     return "Windowed";
             case BORDERLESS_MODE: return "Borderless";
@@ -317,7 +317,7 @@ public class UserPreferences {
         }
         return "Windowed";
     }
-    public static String displayModeFromSettingName(String s) {
+    private static String displayModeFromSettingName(String s) {
         switch(s) {
             case "Windowed":   return WINDOW_MODE;
             case "Borderless": return BORDERLESS_MODE;
@@ -325,7 +325,7 @@ public class UserPreferences {
         }
         return WINDOW_MODE;
     }
-    public static String graphicsModeToSettingName(String s) {
+    private static String graphicsModeToSettingName(String s) {
         switch(s) {
             case GRAPHICS_LOW:    return "Low";
             case GRAPHICS_MEDIUM: return "Medium";
@@ -333,7 +333,7 @@ public class UserPreferences {
         }
         return "High";
     }
-    public static String graphicsModeFromSettingName(String s) {
+    private static String graphicsModeFromSettingName(String s) {
         switch(s) {
             case "Low":    return GRAPHICS_LOW;
             case "Medium": return GRAPHICS_MEDIUM;
@@ -341,7 +341,7 @@ public class UserPreferences {
         }
         return GRAPHICS_HIGH;
     }
-    public static String autoBombardToSettingName(String s) {
+    private static String autoBombardToSettingName(String s) {
         switch(s) {
             case AUTOBOMBARD_NO:     return "No";
             case AUTOBOMBARD_NEVER:  return "Never";
@@ -351,7 +351,7 @@ public class UserPreferences {
         }
         return "No";
     }
-    public static String autoBombardFromSettingName(String s) {
+    private static String autoBombardFromSettingName(String s) {
         switch(s) {
             case "No":     return AUTOBOMBARD_NO;
             case "Never":  return AUTOBOMBARD_NEVER;
@@ -361,7 +361,7 @@ public class UserPreferences {
         }
         return AUTOBOMBARD_NO;
     }
-    public static String sensitivityToSettingName(String s) {
+    private static String sensitivityToSettingName(String s) {
         switch(s) {
             case SENSITIVITY_HIGH:   return "High";
             case SENSITIVITY_MEDIUM: return "Medium";
@@ -369,7 +369,7 @@ public class UserPreferences {
         }
         return "Medium";
     }
-    public static String sensitivityFromSettingName(String s) {
+    private static String sensitivityFromSettingName(String s) {
         switch(s) {
             case "High":   return SENSITIVITY_HIGH;
             case "Medium": return SENSITIVITY_MEDIUM;

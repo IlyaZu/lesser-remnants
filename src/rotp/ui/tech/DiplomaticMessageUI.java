@@ -49,27 +49,27 @@ import rotp.ui.notifications.DiplomaticNotification;
 
 public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, MouseMotionListener, ActionListener {
     private static final long serialVersionUID = 1L;
-    static Color textC = Color.white;
-    static Color textBgC = Color.darkGray;
-    static Color optionC = Color.white;
-    static Color hoverOptionC = Color.yellow;
-    static Color disabledOptionC = Color.gray;
+    private static final Color textC = Color.white;
+    private static final Color textBgC = Color.darkGray;
+    private static final Color optionC = Color.white;
+    private static final Color hoverOptionC = Color.yellow;
+    private static final Color disabledOptionC = Color.gray;
 
     private Image flagPole;
 
     private final Rectangle[] selectBoxes = new Rectangle[DiplomaticMessage.MAX_SELECTIONS];
     private int selectHover = -1;
 
-    Empire diplomatEmpire;
-    Image flag, dialogBox;
-    DiplomaticMessage message;
-    String messageRemark, messageRemarkDetail;
+    private Empire diplomatEmpire;
+    private Image flag, dialogBox;
+    private DiplomaticMessage message;
+    private String messageRemark, messageRemarkDetail;
 
-    int talkTimeMs = 5000;
-    long startTimeMs;
-    float holoPct = 0f;
-    boolean hasSpoken = false;
-    boolean mouseSet = false;
+    private int talkTimeMs = 5000;
+    private long startTimeMs;
+    private float holoPct = 0f;
+    private boolean hasSpoken = false;
+    private boolean mouseSet = false;
 
     public DiplomaticMessageUI() {
         for (int i=0;i<selectBoxes.length;i++)

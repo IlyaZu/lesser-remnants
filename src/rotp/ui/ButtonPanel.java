@@ -30,21 +30,21 @@ import rotp.util.ThickBevelBorder;
 public abstract class ButtonPanel extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
     // GRAY THEME
-    public static Color grButtonLighter = new Color(192,192,192);
-    public static Color grButtonLight = new Color(156,156,156);
-    public static Color grButtonColor = new Color(123,123,123);
-    public static Color grButtonDepressed = new Color(96,96,96);
-    public static Color grButtonDark = new Color(83,83,83);
-    public static Color grButtonDarker = new Color(63,63,63);
+    private static Color grButtonLighter = new Color(192,192,192);
+    private static Color grButtonLight = new Color(156,156,156);
+    private static Color grButtonColor = new Color(123,123,123);
+    private static Color grButtonDepressed = new Color(96,96,96);
+    private static Color grButtonDark = new Color(83,83,83);
+    private static Color grButtonDarker = new Color(63,63,63);
     private static Border grButtonBevelBorder, grButtonDepressedBorder;
 
     // BLUE THEME
-    public static Color buttonLighter = new Color(163,162,204);
-    public static Color buttonLight = new Color(143,142,184);
-    public static Color buttonColor = new Color(100,98,145);
-    public static Color buttonDepressed = new Color(96,96,96);
-    public static Color buttonDark = new Color(81,79,126);
-    public static Color buttonDarker = new Color(63,63,63);
+    private static Color buttonLighter = new Color(163,162,204);
+    private static Color buttonLight = new Color(143,142,184);
+    private static Color buttonColor = new Color(100,98,145);
+    private static Color buttonDepressed = new Color(96,96,96);
+    private static Color buttonDark = new Color(81,79,126);
+    private static Color buttonDarker = new Color(63,63,63);
 
     private static Border buttonBevelBorder, buttonDepressedBorder;
 
@@ -61,7 +61,7 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     protected Shape boundingShape;
     protected boolean hovering = false;
     protected boolean depressed = false;
-    public Border buttonBevelBorder() {
+    private Border buttonBevelBorder() {
         if (usingGrayTheme())
             return grayBevelBorder();
         else {
@@ -70,7 +70,7 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
             return buttonBevelBorder;
         }
     }
-    public Border buttonDepressedBorder() {
+    private Border buttonDepressedBorder() {
         if (usingGrayTheme())
             return grayDepressedBorder();
         else {
@@ -80,8 +80,8 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
         }
     }
     public boolean isDepressed() { return depressed; }
-    public boolean isHovering()  { return hovering; }
-    public void depressed(boolean b) {
+    private boolean isHovering()  { return hovering; }
+    private void depressed(boolean b) {
         if (depressed != b) {
             depressed = b;
             repaint();
@@ -128,7 +128,7 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
         int y0 = getHeight() - bottomMargin(sh);
         drawString(g,text, x0, y0);
     }
-    public int bottomMargin(int fontHeight) {
+    private int bottomMargin(int fontHeight) {
         return s4+(getHeight()-(fontHeight*9/10))/2;
     }
     public Color backgroundColor() {
@@ -147,9 +147,9 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
         else
             return disabledTextColor();
     }
-    public Color hoveringTextColor()    { return Color.white; }
+    private Color hoveringTextColor()    { return Color.white; }
     public Color enabledTextColor()     { return Color.black; }
-    public Color disabledTextColor()    { return Color.darkGray; }
+    private Color disabledTextColor()    { return Color.darkGray; }
     @Override
     public void mouseClicked(MouseEvent e) {}
     @Override

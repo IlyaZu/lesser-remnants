@@ -25,7 +25,7 @@ import javax.swing.text.PlainDocument;
 
 public class BaseTextField extends JTextField {
     private static final long serialVersionUID = 1L;
-    BasePanel tabNotifier;
+    private BasePanel tabNotifier;
     private int limit = 30;
     public BaseTextField(BasePanel c) {
         super("");

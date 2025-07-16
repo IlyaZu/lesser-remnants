@@ -46,15 +46,15 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
     private enum Display { ANNOUNCE, SHOW_VOTE_RESULT, ASK_PLAYER_VOTE, NO_WINNER, ACCEPT_RULING }
     private Display displayMode;
 
-    public static BufferedImage iconBackImg, raceBackImg, wideBackImg;
-    static final Color raceEdgeColor = new Color(44,48,47);
-    static final Color raceCenterColor = new Color(110,118,117);
-    static final Color maskC  = new Color(40,40,40,160);
-    static final Color greenEdgeC = new Color(44,59,30);
-    static final Color greenMidC = new Color(70,93,48);
-    static final Color grayEdgeC = new Color(59,59,59);
-    static final Color grayMidC = new Color(93,93,93);
-    static final Color scrollBarC = new Color(177,177,177);
+    private static BufferedImage iconBackImg, raceBackImg, wideBackImg;
+    private static final Color raceEdgeColor = new Color(44,48,47);
+    private static final Color raceCenterColor = new Color(110,118,117);
+    private static final Color maskC  = new Color(40,40,40,160);
+    private static final Color greenEdgeC = new Color(44,59,30);
+    private static final Color greenMidC = new Color(70,93,48);
+    private static final Color grayEdgeC = new Color(59,59,59);
+    private static final Color grayMidC = new Color(93,93,93);
+    private static final Color scrollBarC = new Color(177,177,177);
     
     private final Rectangle summaryBox = new Rectangle();
     private final Rectangle continueBox = new Rectangle();
@@ -67,7 +67,7 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
     private final Rectangle voterListBox = new Rectangle();
     private Shape hoverTarget;
 
-    int dragY;
+    private int dragY;
     private int scrollbarY, scrollYMax = 0;
     private boolean showVoterSummary = false;
     private RadialGradientPaint diploGradient;
