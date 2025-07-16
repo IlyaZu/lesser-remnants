@@ -74,7 +74,7 @@ public class CombatShip extends CombatEntity {
         this.captain = captian;
         this.origNum = this.num = count;
         this.startingMaxHits = this.maxHits = this.hits = hits;
-        this.maxShield = this.shield = manager.system().inNebula() ? 0 : shield;
+        this.shield = manager.system().inNebula() ? 0 : shield;
         this.attackLevel = attack;
         this.beamDefense = beamDefense;
         this.missileDefense = missileDefense;

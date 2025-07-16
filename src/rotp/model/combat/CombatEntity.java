@@ -63,7 +63,6 @@ public abstract class CombatEntity implements Base {
     public float maxHits = 1;
     public float maxMove = 0;
     public float move = 0;
-    public float maxShield = 0;
     public float shield = 0;
     public float hits = 0;
     public float repairPct = 0;
@@ -428,7 +427,6 @@ public abstract class CombatEntity implements Base {
     public void loseShip() {
         int lost = maxHits > 0 ? 1 : num;
         hits = maxHits;
-        shield = maxShield;
         num = max(0, num - lost);
         if (destroyed() && (mgr != null))
             mgr.destroyStack(this);
