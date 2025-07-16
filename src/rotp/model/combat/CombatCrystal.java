@@ -30,7 +30,7 @@ public class CombatCrystal extends CombatEntity {
         canTeleport = true;
         beamDefense = 1;
         missileDefense = 1;
-        maxShield = shield = 5.0f;
+        shield = 5.0f;
         captain = new CrystalShipCaptain();
         image = image("SPACE_CRYSTAL");
     }

@@ -51,7 +51,7 @@ public class CombatColony extends CombatEntity {
         origNum = num = (int) colony.defense().bases();
         missile = mBase.missile().warhead();
         scatterPack = mBase.scatterPack() == null ?  null : mBase.scatterPack().warhead();
-        maxShield = colony.defense().missileShieldLevel();
+        shield = colony.defense().missileShieldLevel();
         startingMaxHits = maxHits = mBase.maxHits();
         attackLevel = mBase.computerLevel();
         missileDefense = mBase.missileDefense();
@@ -60,7 +60,6 @@ public class CombatColony extends CombatEntity {
         startingFactories = colony.industry().factories();
         planetaryShieldLevel = colony.defense().shieldLevel();
         hits = maxHits;
-        shield = maxShield;
     }
     @Override
     public boolean usingAI()          { return usingAI; }
