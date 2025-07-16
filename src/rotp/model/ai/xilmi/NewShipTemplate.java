@@ -162,7 +162,7 @@ public class NewShipTemplate implements Base {
 
             score *= specialsMod;
             float weaponSizeMod = 1.0f;
-            if(role == role.BOMBER && biggestBombSize > 0)
+            if(role == DesignType.BOMBER && biggestBombSize > 0)
                 weaponSizeMod *= bombWpnSize / biggestBombSize;
             else if(biggestShipWeaponSize > 0)
                 weaponSizeMod *= spaceWpnSize / biggestShipWeaponSize;
@@ -175,7 +175,7 @@ public class NewShipTemplate implements Base {
             //System.out.print("\n"+ai.empire().name()+" "+design.name()+" Role: "+role+" size: "+design.size()+" score: "+score+" dmgPerCostLimit: "+dmgPerCostLimit+" tonnageScore: "+design.spaceUsed() / design.cost()+" defscore: "+defScore+" wpnScore: "+weaponSizeMod+" costlimit: "+costLimit+" spaceWpnSize: "+spaceWpnSize+" bomb-adpt: "+ai.bombingAdapted(design)+" specialsMod: "+specialsMod+" absorbPct: "+absorbPct+ " hitPct: "+hitPct);
             designSorter.put(score, design);
             //For bombers we want the smallest that has the best bomb because it's easiest to "dose"
-            if(role == role.BOMBER && weaponSizeMod == 1)
+            if(role == DesignType.BOMBER && weaponSizeMod == 1)
                 break;
         }
         // lastKey is design with greatest damage
@@ -206,7 +206,7 @@ public class NewShipTemplate implements Base {
         ai.lab().nameDesign(d);
         setFastestEngine(ai, d);
         // battle computers are always the priority in MOO1 mechanics
-        if(role != role.DESTROYER)
+        if(role != DesignType.DESTROYER)
             setBestBattleComputer(ai, d);
         
         float totalSpace = d.availableSpace();
@@ -425,7 +425,7 @@ public class NewShipTemplate implements Base {
                 break;
         }
         //Since destroyer is always tiny and we want to make sure we have a weapon, the computer is added afterwards
-        if(role == role.DESTROYER)
+        if(role == DesignType.DESTROYER)
             setBestBattleComputer(ai, d);
         ai.lab().iconifyDesign(d);
         for (int i = 0; i <= 2; ++i) {
