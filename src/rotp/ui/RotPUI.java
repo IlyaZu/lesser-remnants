@@ -83,7 +83,7 @@ import rotp.util.sound.SoundManager;
 
 public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 1L;
-    public static int ANIMATION_TIMER = 100;
+    private static int ANIMATION_TIMER = 100;
     private boolean drawNextTurnNotice = true;
     private static Throwable startupException;
     static {
@@ -121,7 +121,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
 
     public static boolean useDebugFile = false;
-    public static IGameOptions newGameOptions;
+    private static IGameOptions newGameOptions;
 
     private static final String SETUP_RACE_PANEL = "SetupRace";
     private static final String SETUP_GALAXY_PANEL = "SetupGalaxy";

@@ -35,10 +35,10 @@ public class ExitButton extends BasePanel implements MouseListener, MouseMotionL
     private final Color buttonEdgeC = new Color(41,25,12);
     private final Color buttonMidC = new Color(187,122,80);
     private final Color buttonBorderC = new Color(194,181,155);
-    Rectangle hoverBox;
-    Rectangle buttonBox = new Rectangle();
-    int hPad = 0;
-    int vPad = 0;
+    private Rectangle hoverBox;
+    private Rectangle buttonBox = new Rectangle();
+    private int hPad = 0;
+    private int vPad = 0;
 
     public ExitButton(int w, int h, int vMargin, int hMargin) {
         hPad = hMargin;

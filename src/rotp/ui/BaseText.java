@@ -42,7 +42,7 @@ public class BaseText implements Base {
     private int fontSize = 10;
     private int xOrig;
     private int yOrig;
-    BaseText preceder;
+    private BaseText preceder;
 
     public BaseText(BasePanel p, boolean logo, int fSize, int x1, int y1, Color c1, Color c2, Color c3, Color c4, Color c5, int i2, int i3) {
         panel = p;

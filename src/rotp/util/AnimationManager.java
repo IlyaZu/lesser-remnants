@@ -254,7 +254,7 @@ public enum AnimationManager implements Base {
         }
         return new Rectangle(x,y,w,h);
     }
-    class Animation implements Base {
+    private class Animation implements Base {
         String filename;
         int stepRate = 1;
         List<AnimationImage> images = new ArrayList<>();
@@ -316,7 +316,7 @@ public enum AnimationManager implements Base {
             images.add(img);
         }
     }
-    class AnimationImage implements Base {
+    private class AnimationImage implements Base {
         String key;
         Rectangle area;
         List<AnimationImageFrame> frames = new ArrayList<>();
@@ -406,7 +406,7 @@ public enum AnimationManager implements Base {
             frameRemainingCount = currentFrame(frameIndex).displayCount();
         }
     }
-    class AnimationImageFrame implements Base {
+    private class AnimationImageFrame implements Base {
         String imageKey;
         int msLo;
         int msHi;

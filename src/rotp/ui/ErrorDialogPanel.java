@@ -10,6 +10,7 @@ import rotp.ui.main.SystemPanel;
 
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@ import rotp.ui.main.SystemPanel;
 public class ErrorDialogPanel extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
     private static final Color backgroundHaze = new Color(0,0,0,160);
-    String error = "";
+    private String error = "";
     public ErrorDialogPanel(String msg) {
         error = msg;
         initModel();

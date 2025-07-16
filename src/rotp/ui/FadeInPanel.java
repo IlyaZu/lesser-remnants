@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import java.awt.image.BufferedImage;
 
 public class FadeInPanel extends BasePanel {
     private static final long serialVersionUID = 1L;
-    long msRemaining = 0;
-    long targetTime = 0;
+    private long msRemaining = 0;
+    private long targetTime = 0;
 
     public int fadeInMs()        { return 1000; }
     public boolean stillFading()  { return playAnimations() && (msRemaining > 0); }
