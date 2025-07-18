@@ -132,7 +132,6 @@ public abstract class CombatEntity implements Base {
     public int beamDefense()        { return cloaked ? beamDefense + 5 : beamDefense; }
     public int attackLevel()        { return attackLevel; }
     public int bombDefense()        { return 0; }
-    public int bioweaponDefense()   { return 0; }
     public boolean canEat(CombatEntity st)       { return false; }
     public boolean hostileTo(CombatEntity st, StarSystem sys)                  { return empire != st.empire; }
     public boolean selectBestWeapon(CombatEntity target)       { return false; }

@@ -120,10 +120,6 @@ public class CombatColony extends CombatEntity {
         return (missileBase() == null || !isArmed())? 0 : missileBase().missileDefense();
     }
     @Override
-    public int bioweaponDefense() {
-        return (missileBase() == null || !isArmed())? 0 : missileBase().bombDefense();
-    }
-    @Override
     public int bombDefense() {
         return (missileBase() == null || !isArmed())? 0 : missileBase().bombDefense();
     }
