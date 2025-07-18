@@ -226,7 +226,15 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
 
     public RotPUI() {
         timer = new Timer(ANIMATION_TIMER, this);
-        init();
+        initModel();
+        addKeyListener(this);
+        if (startupException != null)
+            selectErrorPanel(startupException);
+        else
+            selectCurrentPanel();
+
+        timer.start();
+        repaint();
     }
     public void processNotifications(List<TurnNotification> notifications) {
         for (TurnNotification tn: notifications)
@@ -240,18 +248,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             drawNextTurnNotice = true;
         }
     }
-    private void init() {
-        initModel();
-        addKeyListener(this);
-        if (startupException != null)
-            selectErrorPanel(startupException);
-        else
-            selectCurrentPanel();
-
-        timer.start();
-        //toggleAnimations();
-        repaint();
-    }
+    
     public static IGameOptions newOptions() {
         if (newGameOptions == null)
             createNewOptions();

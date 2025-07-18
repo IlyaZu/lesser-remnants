@@ -76,9 +76,6 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
     private BufferedImage diplomatImg;
      
     public GalacticCouncilUI() {
-        init0();
-    }
-    private void init0() {
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);

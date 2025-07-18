@@ -43,9 +43,6 @@ public class ExitButton extends BasePanel implements MouseListener, MouseMotionL
     public ExitButton(int w, int h, int vMargin, int hMargin) {
         hPad = hMargin;
         vPad = vMargin;
-        init(w,h);
-    }
-    private void init(int w, int h) {
         setPreferredSize(new Dimension(w, h));
         setOpaque(false);
         addMouseListener(this);
