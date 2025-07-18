@@ -30,9 +30,6 @@ public class ErrorDialogPanel extends BasePanel implements MouseListener {
     private String error = "";
     public ErrorDialogPanel(String msg) {
         error = msg;
-        initModel();
-    }
-    private void initModel() {
         setOpaque(false);
         addMouseListener(this);
     }

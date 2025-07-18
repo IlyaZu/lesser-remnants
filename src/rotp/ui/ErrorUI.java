@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,6 @@ public class ErrorUI extends BasePanel implements MouseListener, MouseMotionList
     private static final long serialVersionUID = 1L;
     private Throwable exception;
     public ErrorUI() {
-        init();
-    }
-    private void init() {
         setBackground(Color.black);
         addMouseListener(this);
         addMouseMotionListener(this);

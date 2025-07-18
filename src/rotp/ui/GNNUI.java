@@ -43,9 +43,6 @@ public class GNNUI extends FadeInPanel implements Base, MouseListener, MouseMoti
     private List<Empire> empires;
 
     public GNNUI() {
-        init();
-    }
-    private void init() {
         addMouseListener(this);
         addMouseMotionListener(this);
         setBackground(Color.red);
