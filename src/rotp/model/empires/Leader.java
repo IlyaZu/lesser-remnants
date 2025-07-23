@@ -102,8 +102,8 @@ public class Leader implements Base, Serializable {
             default:         return -10*addl;
         }
     }
-    public float acceptPactMod(Empire other) {
-        int a, b, c;
+    public float acceptPactMod() {
+        int a, b;
         switch(personality) {
             case PACIFIST:      a = 20; break;
             case HONORABLE:     a = 0; break;
@@ -122,11 +122,10 @@ public class Leader implements Base, Serializable {
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
         }
-        c = 10*affinityMod(personality, other.leader().personality);
-        return a+b+c;
+        return a+b;
     }
-    public float acceptAllianceMod(Empire other) {
-        int a, b, c;
+    public float acceptAllianceMod() {
+        int a, b;
         switch(personality) {
             case PACIFIST:      a = 0; break;
             case HONORABLE:     a = 0; break;
@@ -145,8 +144,7 @@ public class Leader implements Base, Serializable {
             case TECHNOLOGIST:  b = 0; break;
             default:            b = 0; break;
         }
-        c = 10*affinityMod(personality, other.leader().personality);
-        return a+b+c;
+        return a+b;
     }
     public float acceptTradeMod() {
         int a, b;
@@ -191,61 +189,5 @@ public class Leader implements Base, Serializable {
             default:            b = 0; break;
         }
         return a+b;
-    }
-    private int affinityMod(Personality p1, Personality p2) {
-        int love = 2;
-        int like = 1;
-        int neutral = 0;
-        int dislike = -1;
-                
-        switch(p1) {
-            case PACIFIST:
-                switch(p2) {
-                    case PACIFIST:      return love;
-                    case HONORABLE:     return like;
-                    case XENOPHOBIC:    return like;
-                    case RUTHLESS:      return dislike;
-                    case AGGRESSIVE:    return dislike;
-                    default:            return neutral;
-                }
-            case HONORABLE:
-                switch(p2) {
-                    case PACIFIST:      return like;
-                    case HONORABLE:     return love;
-                    case XENOPHOBIC:    return dislike;
-                    case RUTHLESS:      return dislike;
-                    case AGGRESSIVE:    return like;
-                    default:            return neutral;
-                }
-            case XENOPHOBIC:
-                switch(p2) {
-                    case PACIFIST:      return like;
-                    case HONORABLE:     return dislike;
-                    case XENOPHOBIC:    return love;
-                    case RUTHLESS:      return like;
-                    case AGGRESSIVE:    return dislike;
-                    default:            return neutral;
-                }
-            case RUTHLESS:
-                switch(p2) {
-                    case PACIFIST:      return dislike;
-                    case HONORABLE:     return dislike;
-                    case XENOPHOBIC:    return like;
-                    case RUTHLESS:      return love;
-                    case AGGRESSIVE:    return like;
-                    default:            return neutral;
-                }
-            case AGGRESSIVE:
-                switch(p2) {
-                    case PACIFIST:      return dislike;
-                    case HONORABLE:     return like;
-                    case XENOPHOBIC:    return dislike;
-                    case RUTHLESS:      return like;
-                    case AGGRESSIVE:    return love;
-                    default:            return neutral;
-                }
-            default:
-                return neutral;
-        }
     }
 }
