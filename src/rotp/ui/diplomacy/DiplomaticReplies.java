@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Copyright 2024 Ilya Zushinskiy
+ * Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,6 +67,11 @@ public class DiplomaticReplies {
         StringBuilder remark = baseRemark(DialogueManager.ACCEPT_TECHNOLOGY_AID, view);
         replaceToken(remark, "[tech]", tech.name());
         return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply declineOffer(EmpireView view) {
+        StringBuilder remark = baseRemark(DialogueManager.DECLINE_OFFER, view);
+        return new DiplomaticReply(false, remark.toString());
     }
     
     private static StringBuilder baseRemark(String type, EmpireView view) {

@@ -201,7 +201,7 @@ public final class EmpireView implements Base, Serializable {
         if (owner.isAIControlled())
             owner.diplomatAI().makeDiplomaticOffers(this);
     }
-    public String decode(String s) {
+    private String decode(String s) {
         String s1 = owner.replaceTokens(s, "my");
         s1 = empire.replaceTokens(s1, "your");
         return s1;
