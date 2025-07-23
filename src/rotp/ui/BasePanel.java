@@ -143,7 +143,6 @@ public class BasePanel extends JPanel implements Base {
         if (scroll == 0)
             g.drawImage(stars, 0, 0, w, h, 0, 0, w, h, null);
         else {
-            //g.drawImage(stars, 0, 0, w, h, 0, 0, w, h, null);
             g.drawImage(stars, 0, 0, w-scroll, h, scroll, 0, w, h, null);
             g.drawImage(stars, w-scroll, 0, w, h, 0, 0, scroll, h, null);
         }
@@ -168,7 +167,6 @@ public class BasePanel extends JPanel implements Base {
         g2.setComposite(AlphaComposite.SrcOver);
         BufferedImage img = sType.image(r,0);
         int w = img.getWidth();
-        //g2.drawImage(img,x0-(w/2),y0-(w/2),null);
         g2.drawImage(img,x0-r,y0-r,x0+r,y0+r,0,0,w,w,null);
         g2.setComposite(prev);
     }

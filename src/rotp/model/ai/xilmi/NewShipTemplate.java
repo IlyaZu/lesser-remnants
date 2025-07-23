@@ -79,7 +79,6 @@ public class NewShipTemplate implements Base {
         
         SortedMap<Float, ShipDesign> designSorter = new TreeMap<>();
         float costLimit = ai.empire().totalPlanetaryProduction() * max(0.125f, ai.empire().shipMaintCostPerBC()) * 50 / ai.empire().allColonizedSystems().size();
-        //System.out.print("\n"+galaxy().currentTurn()+" "+ai.empire().name()+" costlimit: "+costLimit+" reachables: "+ReachableSystems+" totalCost at limit: "+(costLimit*ai.empire().systemsInShipRange(ai.empire()).size() / 50));
         float biggestShipWeaponSize = 0;
         float biggestBombSize = 0;
         float highestAttackLevel = 0;
@@ -115,7 +114,6 @@ public class NewShipTemplate implements Base {
         if(biggestWeaponDesign != null)
             dmgPerCostLimit = biggestWeaponDesign.firepowerAntiShip(highestShield) * costLimit / biggestWeaponDesign.cost();
         
-        //System.out.print("\n"+galaxy().currentTurn()+" "+ai.empire().name()+" costlimit: "+costLimit+" biggestShipWeaponSize: "+biggestShipWeaponSize+" dmgPerCostLimit: "+dmgPerCostLimit);
         for (int i = 0; i<4; i++) {
             ShipDesign design = shipDesigns[i];
             float score = design.spaceUsed() / design.cost();
@@ -131,7 +129,6 @@ public class NewShipTemplate implements Base {
                 mitigation = (1 / hitPct) * (1 / absorbPct);
             defScore *= mitigation;
             score *= defScore;
-            //System.out.print("\n"+ai.empire().name()+" "+design.name()+" Role: "+role+" size: "+design.size()+" score wo. costlimit: "+score+" costlimit-dividor: "+design.cost() / costLimit+" dmgPerCostLimit: "+dmgPerCostLimit+" HP: "+design.hits());
             if(design.cost() > costLimit)
                 score /= design.cost() / costLimit;
             if(dmgPerCostLimit < design.hits())
@@ -172,7 +169,6 @@ public class NewShipTemplate implements Base {
                 else
                     weaponSizeMod *= ai.empire().generalAI().defenseRatio();
             score *= weaponSizeMod;
-            //System.out.print("\n"+ai.empire().name()+" "+design.name()+" Role: "+role+" size: "+design.size()+" score: "+score+" dmgPerCostLimit: "+dmgPerCostLimit+" tonnageScore: "+design.spaceUsed() / design.cost()+" defscore: "+defScore+" wpnScore: "+weaponSizeMod+" costlimit: "+costLimit+" spaceWpnSize: "+spaceWpnSize+" bomb-adpt: "+ai.bombingAdapted(design)+" specialsMod: "+specialsMod+" absorbPct: "+absorbPct+ " hitPct: "+hitPct);
             designSorter.put(score, design);
             //For bombers we want the smallest that has the best bomb because it's easiest to "dose"
             if(role == DesignType.BOMBER && weaponSizeMod == 1)
@@ -334,7 +330,6 @@ public class NewShipTemplate implements Base {
         // specials will be skipped for smaller hulls in the early game, bringing a bit more allowance to the second fitting
         //ArrayList<ShipSpecial> specials;
         SortedMap<Float, ShipSpecial> specials;
-        //System.out.print("\n"+ai.empire().name()+" "+d.name()+" avgSHD: "+avgSHD+" avgECM: "+avgECM);
         
         switch (role) {
             case BOMBER:
@@ -405,7 +400,6 @@ public class NewShipTemplate implements Base {
         {
             hybridBombRatio = 1 - ai.empire().generalAI().defenseRatio();
         }
-        //System.out.print("\n"+galaxy().currentTurn()+" "+ai.empire().name()+" hybridBombRatio: "+hybridBombRatio);
         // what's left will be used on non-bombs for bombers, second best weapon for destroyers
         // repeat calls of setOptimalShipCombatWeapon() will result in a weapon from another category (beam, missile, streaming) than already installed
         // fighters will have a single best weapon over all four slots
@@ -513,7 +507,6 @@ public class NewShipTemplate implements Base {
         List<ShipShield> shields = ai.lab().shields();
         for (int i=shields.size()-1; (i >= 0) && (!foundIt); i--) {
             d.shield(shields.get(i));
-            //System.out.print("\n"+ai.empire().name()+" "+d.name()+" "+d.name()+" shieldspace: "+spaceAllowed+" "+shields.get(i).name()+" "+shields.get(i).space(d));
             if ((initialSpace - d.availableSpace()) <= spaceAllowed)
                 foundIt = true;
         }
@@ -696,7 +689,6 @@ public class NewShipTemplate implements Base {
             //if we put stuff with 0 score, we end up with tinies and auto-repair
             if(currentScore > 0)
                 specials.put(currentScore, spec);
-            //System.out.print("\n"+ai.empire().name()+" "+d.name()+" "+spec.name()+" score "+currentScore+" space: "+spec.space(d)+"/"+d.totalSpace());
         }
         return specials;
     }
@@ -726,7 +718,6 @@ public class NewShipTemplate implements Base {
                 remainingSpace -= spec.space(d);
                 if(spec.isInertial())
                     alreadyInertial = true;
-                //System.out.print("\n"+ai.empire().name()+" "+d.name()+" added "+spec.name()+" with "+spec.space(d)+" remaining: "+remainingSpace);
                 if(nextSlot > 2)
                     break;
             }
@@ -769,12 +760,10 @@ public class NewShipTemplate implements Base {
         if(!mustTargetShips)
             shield = ai.empire().bestEnemyPlanetaryShieldLevel() + ai.empire().bestEnemyShieldLevel();
         float startingShield = shield;
-        //System.out.print("\n"+ai.empire().name()+" "+d.name()+" air: "+mustTargetShips+" ranged: "+mustBeRanged+" beams: "+prohibitMissiles);
         while(bestWeapon == null)
         {
             for (ShipWeapon wpn: allWeapons) {
                 if (wpn.canAttackShips() && mustTargetShips || !mustTargetShips) {
-                    //System.out.print("\n"+ai.empire().name()+" "+d.name()+" wpn: "+wpn.name()+" air: "+mustTargetShips+" shd: "+shield+" spc: "+wpn.space(d)+"/"+spaceAllowed);
                     //We don't want missiles: Can be outrun, can run out and strong counters exist
                     if(wpn.space(d) > spaceAllowed && downSize)
                         continue;
@@ -788,7 +777,6 @@ public class NewShipTemplate implements Base {
                     if(wpn.isMissileWeapon())
                     {
                         ShipWeaponMissileType swm = (ShipWeaponMissileType)wpn;
-                        //System.out.print("\n"+ai.empire().name()+" "+d.name()+" wpn: "+wpn.name()+" speed: "+swm.speed());
                         if(swm.speed() <= missileSpeedMinimum)
                             continue;
                         avgECM -= swm.computerLevel();
@@ -804,7 +792,6 @@ public class NewShipTemplate implements Base {
                         
                     if(wpn.isBioWeapon())
                         currentScore = bioWeaponScoreMod(ai) * TechBiologicalWeapon.avgDamage(wpn.maxDamage(), (int)antiDote) * 200 / wpn.space(d);
-                    //System.out.print("\n"+ai.empire().name()+" "+d.name()+" wpn: "+wpn.name()+" score: "+currentScore+" overKillMod: "+overKillMod+" avgHP: "+avgHP+" expectedDamagePerShot: "+expectedDamagePerShot+"  bioWeaponScoreMod(ai): "+ bioWeaponScoreMod(ai));
                     if(currentScore > bestScore)
                     {
                         bestWeapon = wpn;
@@ -855,7 +842,6 @@ public class NewShipTemplate implements Base {
             float maxBombsNeeded = maxDamageNeeded / (bestWeapon.firepower(ai.empire().bestEnemyPlanetaryShieldLevel()-ai.empire().bestEnemyShieldLevel()) * 10);
             num = (int) Math.ceil(min(num, maxBombsNeeded));
         }
-        //System.out.print("\n"+ai.empire().name()+" "+d.name()+" add: "+num+" "+bestWeapon.name());
         int maxSlots = weaponSlotsOccupied + numSlotsToUse;
         if (maxSlots > ShipDesign.maxWeapons)
             maxSlots = ShipDesign.maxWeapons;

@@ -236,26 +236,20 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             String s = diplomatEmpire.name();
             int sw = g.getFontMetrics().stringWidth(s);
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
-            //drawString(g,s, fX+(fW-sw)/2, empY);
             empY += s20;
             g.setFont(narrowFont(18));
             s = text("LEADER_PERSONALITY_FORMAT", diplomatEmpire.leader().personality(), diplomatEmpire.leader().objective());
             sw = g.getFontMetrics().stringWidth(s);
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
-//            drawString(g,s, fX+(fW-sw)/2, empY);
             empY += s20;
             DiplomaticTreaty treaty = player().treatyWithEmpire(diplomatEmpire.id);
             s = treaty.status(player());
             sw = g.getFontMetrics().stringWidth(s);
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
-//            drawString(g,s, fX+(fW-sw)/2, empY);
         }
 
         // draw diplomat
         g.drawImage(raceImg, w, 0, 0, h, 0, 0, raceImg.getWidth(null), raceImg.getHeight(null), null);
-
-        // draw game image to screen, flipped horizontally
-        //g.drawImage(dataImg, w, 0, 0, h, 0, 0, w, h, null);
 
         // draw dialog image to screen
         int dlgW = dialogBox.getWidth(null);
@@ -364,7 +358,6 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         int fontSize = unscaled(optionLineH) - 2;
 
         if (fontSize < 10) {
-            //err("Font too small. size:", str(fontSize), "  for messageText:  ", displayText);
             fontSize = 10;
         }
 
