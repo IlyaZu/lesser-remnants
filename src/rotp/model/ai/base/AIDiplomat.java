@@ -293,7 +293,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferTrade(Empire requestor, int level) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetTradeTimer(level);
-        return new DiplomaticReply(false, declineReasonText(v));
+        return DiplomaticReplies.declineOffer(v);
     }
     private boolean willingToOfferTrade(EmpireView v, int level) {
         if (!canOfferTradeTreaty(v.empire()))
@@ -326,10 +326,6 @@ public class AIDiplomat implements Base, Diplomat {
         chance += empire.leader().acceptTradeMod();
         chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
-    }
-    private String declineReasonText(EmpireView v) {
-        DialogueManager dlg = DialogueManager.current();
-        return v.decode(dlg.randomMessage(DialogueManager.DECLINE_OFFER, v.owner()));
     }
     //-----------------------------------
     //  PEACE
@@ -374,7 +370,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferPeace(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetPeaceTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
+        return DiplomaticReplies.declineOffer(v);
     }
     private boolean willingToOfferPeace(EmpireView v) {
         if (!v.embassy().war())
@@ -441,7 +437,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferPact(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetPactTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
+        return DiplomaticReplies.declineOffer(v);
     }
     private boolean willingToOfferPact(EmpireView v) {
         // if asking player, check that we don't spam him
@@ -521,7 +517,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply refuseOfferAlliance(Empire requestor) {
         EmpireView v = empire.viewForEmpire(requestor);
         v.embassy().resetAllianceTimer();
-        return new DiplomaticReply(false, declineReasonText(v));
+        return DiplomaticReplies.declineOffer(v);
     }
     private boolean willingToOfferAlliance(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
