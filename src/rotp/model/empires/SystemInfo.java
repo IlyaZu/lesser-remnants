@@ -69,10 +69,8 @@ public class SystemInfo implements Serializable, Base {
     public int population(int i)         { return missing(i) ? 0  : view(i).population(); }
     public int deltaPopulation(int i)    { return missing(i) ? 0  : view(i).deltaPopulation(); }
     public int factories(int i)          { return missing(i) ? 0  : view(i).factories(); }
-    public int deltaFactories(int i)     { return missing(i) ? 0  : view(i).deltaFactories(); }
     public int shieldLevel(int i)        { return missing(i) ? 0  : view(i).shieldLevel(); }
     public int bases(int i)              { return missing(i) ? 0  : view(i).bases(); }
-    public int deltaBases(int i)         { return missing(i) ? 0  : view(i).deltaBases(); }
     public int currentSize(int i)        { return missing(i) ? 0  : view(i).currentSize(); }
     public int desiredMissileBases(int i)  { return missing(i) ? 0  : view(i).desiredMissileBases(); }
     public float defenderCombatAdj(int i)  { return missing(i) ? 0  : view(i).defenderCombatAdj(); }

@@ -357,11 +357,9 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                     return concat(str(currSize),"+");
             case "PLANET_TYPE":      return planet().type().name();
             case "NOTES":            return notes();
-            case "DELTA_FACTORIES":  return str(empire().sv.deltaFactories(id));
             case "CAPACITY":         return concat(str((int)(colony().currentProductionCapacity()*100)),"%");
             case "RESERVE":          return str((int)colony().reserveIncome());
             case "SHIPYARD":         return colony().shipyardProject();
-            case "DELTA_BASES":      return str(empire().sv.deltaBases(id));
             case "TRANSPORT_TURNS":  return str((int)Math.ceil(transportTimeTo(TARGET_SYSTEM)));
             case "RESOURCES":        return text(empire().sv.view(id).resourceType());
         }

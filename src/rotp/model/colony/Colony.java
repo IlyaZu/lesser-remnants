@@ -378,7 +378,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         population(50);
         previousPopulation = population();
         industry().factories(30);
-        industry().previousFactories(30);
 
         Empire emp = empire();
         ShipDesignLab lab = emp.shipLab();
