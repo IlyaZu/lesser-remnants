@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import rotp.model.tech.TechRoboticControls;
 public class ColonyIndustry extends ColonySpendingCategory {
     private static final long serialVersionUID = 1L;
     private float factories = 0;
-    private float previousFactories = 0;
     private int robotControls = 2;
     private float industryReserveBC = 0;
     private float unallocatedBC = 0;
@@ -42,8 +41,6 @@ public class ColonyIndustry extends ColonySpendingCategory {
     public int categoryType()               { return Colony.INDUSTRY; }
     public float factories()               { return factories; }
     public void factories(float d)         { factories = max(0,d); }
-    public void previousFactories(float d) { previousFactories = d; }
-    public int deltaFactories()             { return (int)factories - (int)previousFactories; }
     public int robotControls()              { return robotControls; }
     public float newFactoryCost()          { return tech().newFactoryCost(robotControls()); }
     public int effectiveRobotControls()     { return robotControls() + empire().robotControlsAdj(); }
@@ -75,7 +72,6 @@ public class ColonyIndustry extends ColonySpendingCategory {
         p.removeAlienFactories(newCiv.id);
         unallocatedBC = 0;
         newFactories = 0;
-        previousFactories = 0;
     }
     @Override
     public void nextTurn(float totalProd, float totalReserve) {
@@ -86,7 +82,6 @@ public class ColonyIndustry extends ColonySpendingCategory {
         // captured colony had higher controlss
         robotControls = min(robotControls, tech().baseRobotControls());
         
-        previousFactories = factories;
         // prod gets planetary bonus, but not reserve
         float prodBC = pct()* totalProd * planet().productionAdj();
         float rsvBC = pct() * totalReserve;

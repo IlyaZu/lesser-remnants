@@ -311,8 +311,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     public boolean hasRallyPoint()           { return rallySystem() != null; }
     public Colony colony()                   { return system() == null ? null : system().colony(); }
     public Integer deltaPopulation()         { return isColonized() ? colony().deltaPopulation() : 0; }
-    public Integer deltaFactories()          { return isColonized() ? colony().industry().deltaFactories() : 0; }
-    public Integer deltaBases()              { return isColonized() ? colony().defense().deltaBases() : 0; }
     public BufferedImage planetTerrain()     { return planetType() == null ? null : planetType().terrainImage(); }
 
     public boolean resourceUltraRich()       { return (planet() != null) && planet().isResourceUltraRich(); }
