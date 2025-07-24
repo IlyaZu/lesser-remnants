@@ -25,23 +25,23 @@ import rotp.util.Base;
 
 public abstract class GalaxyShape implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    static final int GALAXY_EDGE_BUFFER = 12;
-    static float orionBuffer = 8;
-    static float empireBuffer = 6;
-    float[] x;
-    float[] y;
-    ShapeRegion[][] regions;
-    int regionScale = 16;
+    private static final int GALAXY_EDGE_BUFFER = 12;
+    private static float orionBuffer = 8;
+    private static float empireBuffer = 6;
+    private float[] x;
+    private float[] y;
+    private ShapeRegion[][] regions;
+    private int regionScale = 16;
     int width = 0;
     int height = 0;
     int maxStars = 0;
-    int num = 0;
-    int homeStars = 0;
-    int genAttempt = 0;
-    boolean usingRegions = false;
-    boolean fullyInit = false;
-    List<EmpireSystem> empSystems = new ArrayList<>();
-    public Point.Float orionXY;
+    private int num = 0;
+    private int homeStars = 0;
+    private int genAttempt = 0;
+    private boolean usingRegions = false;
+    private boolean fullyInit = false;
+    private List<EmpireSystem> empSystems = new ArrayList<>();
+    private Point.Float orionXY;
     IGameOptions opts;
 
     public int width()          { return width; }
