@@ -42,6 +42,8 @@ import rotp.model.ai.interfaces.SpyMaster;
 import rotp.model.colony.Colony;
 import rotp.model.colony.ColonyShipyard;
 import rotp.model.colony.MissileBase;
+import rotp.model.empires.Leader.Objective;
+import rotp.model.empires.Leader.Personality;
 import rotp.model.empires.SpyNetwork.FleetView;
 import rotp.model.events.SystemColonizedEvent;
 import rotp.model.events.SystemHomeworldEvent;
@@ -346,7 +348,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         String raceName = r.nextAvailableName();
         raceNameIndex = r.nameIndex(raceName);
         String leaderName = name == null ? r.nextAvailableLeader() : name;
-        leader = new Leader(this, leaderName);
+        leader = makeLeader(leaderName);
         shipLab = new ShipDesignLab();
     }
     public void setBounds(float x1, float x2, float y1, float y2) {
@@ -997,7 +999,7 @@ public final class Empire implements Base, NamedObject, Serializable {
             return;
         }
 
-        leader = new Leader(this);
+        leader = makeLeader(race().randomLeaderName());
         for (EmpireView view: empireViews()) {
             if (view != null)
                 view.breakAllTreaties();
@@ -1013,6 +1015,11 @@ public final class Empire implements Base, NamedObject, Serializable {
             message = replaceTokens(message, "alien");
             GNNNotification.notifyRebellion(message);
         }
+    }
+    private Leader makeLeader(String name) {
+        return new Leader(name,
+                Personality.values()[race().randomLeaderAttitude()],
+                Objective.values()[race().randomLeaderObjective()]);
     }
     public boolean inEconomicRange(int empId) {
         Empire e = galaxy().empire(empId);

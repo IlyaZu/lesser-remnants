@@ -49,18 +49,14 @@ public class Leader implements Base, Serializable {
     private final String name;
     public final Personality personality;
     public final Objective objective;
-    private final Empire empire;
-
-    public String name()      { return name; }
-    public Leader(Empire c) {
-        this(c, c.race().randomLeaderName());
+    
+    public Leader(String name, Personality personality, Objective objective) {
+        this.name = name;
+        this.personality = personality;
+        this.objective = objective;
     }
-    public Leader(Empire c, String s) {
-        empire = c;
-        name = s;
-        personality = Personality.values()[empire.race().randomLeaderAttitude()];
-        objective = Objective.values()[empire.race().randomLeaderObjective()];
-    }
+    
+    public String name()        { return name; }
     public String objective()   { return text(objective.label); }
     public String personality() { return text(personality.label); }
 
