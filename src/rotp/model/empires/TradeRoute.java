@@ -24,6 +24,7 @@ import rotp.util.Base;
 public class TradeRoute implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     private static final int UNIT = 25;
+    private static final float INITIAL_PROFIT_FACTOR = -.3f;
 
     private final EmpireView view;
     private int profitLimit = 0;
@@ -91,7 +92,7 @@ public class TradeRoute implements Base, Serializable {
         if (profitLimitDelta <= 0)
             return;
         
-        float newPct = ((currentProfit/profitLimitDelta) + startPct()) * (profitLimitDelta/newProfitLimit);
+        float newPct = ((currentProfit/profitLimitDelta) + INITIAL_PROFIT_FACTOR) * (profitLimitDelta/newProfitLimit);
 
         currentProfit = newPct * newProfitLimit;
         profitLimit = newProfitLimit;
@@ -101,10 +102,6 @@ public class TradeRoute implements Base, Serializable {
         EmpireView otherView = view.otherView();
         if (otherView.trade().profitLimit() != newProfitLimit)
             otherView.trade().startRoute(newProfitLimit);
-    }
-
-    private float startPct() {
-        return -.3f + view.owner().tradePctBonus();
     }
 
     public void stopRoute() {
