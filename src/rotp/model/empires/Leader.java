@@ -168,26 +168,4 @@ public class Leader implements Base, Serializable {
         }
         return a+b;
     }
-    public float preserveTreatyMod() {
-        int a, b;
-        switch(personality) {
-            case PACIFIST:      a = 0; break;
-            case HONORABLE:     a = 40; break;
-            case XENOPHOBIC:    a = 0; break;
-            case RUTHLESS:      a = 0; break;
-            case AGGRESSIVE:    a = 0; break;
-            case ERRATIC:       a = 0; break;
-            default:            a = 0; break;
-        }
-        switch(objective) {
-            case DIPLOMAT:      b = 20; break;
-            case MILITARIST:    b = 0; break;
-            case ECOLOGIST:     b = 0; break;
-            case INDUSTRIALIST: b = 0; break;
-            case EXPANSIONIST:  b = 0; break;
-            case TECHNOLOGIST:  b = 0; break;
-            default:            b = 0; break;
-        }
-        return a+b;
-    }
 }
