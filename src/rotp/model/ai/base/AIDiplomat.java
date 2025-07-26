@@ -384,6 +384,88 @@ public class AIDiplomat implements Base, Diplomat {
 
         return warWeary(v);
     }
+    private boolean warWeary(EmpireView v) {
+        if(!empire.inShipRange(v.empId()))
+            return true;
+        // modnar: scale warWeary by number of our wars vs. number of their wars
+        // more weary (willing to take less losses) if we are in more wars than they are
+        // willing to take at least 15% losses
+        float enemyMod = (float) ((empire.numEnemies() + 10) / (v.empire().numEnemies() + 10));
+        
+        Empire emp = v.owner();
+        TreatyWar treaty = (TreatyWar) v.embassy().treaty();
+        if (treaty.colonyChange(emp) < (int)Math.min(0.85, enemyMod*warColonyLossLimit(v)))
+            return true;
+        if (treaty.populationChange(emp) < (int)Math.min(0.85, enemyMod*warPopulationLossLimit(v)))
+            return true;
+        if (treaty.factoryChange(emp) < (int)Math.min(0.85, enemyMod*warFactoryLossLimit(v)))
+            return true;
+        if (treaty.fleetSizeChange(emp) < (int)Math.min(0.85, enemyMod*warFleetSizeLossLimit(v)))
+            return true;
+
+        // for pop, factories and ships, calculate the pct lost vs the
+        // pct we were willing to lose (1-limit). If any of those are >1
+        // or if they total up to > 2, then we are tired.
+        
+        // Example: Pacifist will quit at 20% pop loss,
+        float popPct = treaty.populationLostPct(emp) / (1-warPopulationLossLimit(v));
+        if (popPct >= 1)
+            return true;
+        
+        float factPct = treaty.factoryLostPct(emp) / (1-warFactoryLossLimit(v));
+        if (factPct >= 1)
+            return true;
+        
+        float fleetPct = treaty.fleetSizeLostPct(emp) / (1-warFleetSizeLossLimit(v));
+        if (fleetPct >= 1)
+            return true;
+        
+        return (popPct + factPct + fleetPct) > 2;
+    }
+    private float warColonyLossLimit(EmpireView v) {
+        switch(v.owner().leader().objective) {
+            case MILITARIST:    return 0.6f;
+            case ECOLOGIST:     return 0.8f;
+            case DIPLOMAT:      return 0.6f;
+            case INDUSTRIALIST: return 0.6f;
+            case EXPANSIONIST:  return 0.8f;
+            case TECHNOLOGIST:  return 0.6f;
+            default:            return 0.6f;
+        }
+    }
+    private float warPopulationLossLimit(EmpireView v) {
+        switch(v.owner().leader().personality) {
+            case PACIFIST:   return 0.8f;
+            case HONORABLE:  return 0.6f;
+            case XENOPHOBIC: return 0.6f;
+            case RUTHLESS:   return 0.4f;
+            case AGGRESSIVE: return 0.6f;
+            case ERRATIC:    return 0.6f;
+            default:         return 0.6f;
+        }
+    }
+    private float warFactoryLossLimit(EmpireView v) {
+        switch(v.owner().leader().objective) {
+            case MILITARIST:    return 0.6f;
+            case ECOLOGIST:     return 0.4f;
+            case DIPLOMAT:      return 0.6f;
+            case INDUSTRIALIST: return 0.8f;
+            case EXPANSIONIST:  return 0.6f;
+            case TECHNOLOGIST:  return 0.6f;
+            default:            return 0.6f;
+        }
+    }
+    private float warFleetSizeLossLimit(EmpireView v) {
+        switch(v.owner().leader().objective) {
+            case MILITARIST:    return 0.5f;
+            case ECOLOGIST:     return 0.3f;
+            case DIPLOMAT:      return 0.3f;
+            case INDUSTRIALIST: return 0.3f;
+            case EXPANSIONIST:  return 0.3f;
+            case TECHNOLOGIST:  return 0.3f;
+            default:            return 0.3f;
+        }
+    }
     //-----------------------------------
     //  PACT
     //-----------------------------------
@@ -1308,87 +1390,5 @@ public class AIDiplomat implements Base, Diplomat {
 
         if (inc.triggersWar())
             beginIncidentWar(view, inc);
-    }
-   private boolean warWeary(EmpireView v) {
-        if(!empire.inShipRange(v.empId()))
-            return true;
-        // modnar: scale warWeary by number of our wars vs. number of their wars
-        // more weary (willing to take less losses) if we are in more wars than they are
-        // willing to take at least 15% losses
-        float enemyMod = (float) ((empire.numEnemies() + 10) / (v.empire().numEnemies() + 10));
-        
-        Empire emp = v.owner();
-        TreatyWar treaty = (TreatyWar) v.embassy().treaty();
-        if (treaty.colonyChange(emp) < (int)Math.min(0.85, enemyMod*warColonyLossLimit(v)))
-            return true;
-        if (treaty.populationChange(emp) < (int)Math.min(0.85, enemyMod*warPopulationLossLimit(v)))
-            return true;
-        if (treaty.factoryChange(emp) < (int)Math.min(0.85, enemyMod*warFactoryLossLimit(v)))
-            return true;
-        if (treaty.fleetSizeChange(emp) < (int)Math.min(0.85, enemyMod*warFleetSizeLossLimit(v)))
-            return true;
-
-        // for pop, factories and ships, calculate the pct lost vs the
-        // pct we were willing to lose (1-limit). If any of those are >1
-        // or if they total up to > 2, then we are tired.
-        
-        // Example: Pacifist will quit at 20% pop loss,
-        float popPct = treaty.populationLostPct(emp) / (1-warPopulationLossLimit(v));
-        if (popPct >= 1)
-            return true;
-        
-        float factPct = treaty.factoryLostPct(emp) / (1-warFactoryLossLimit(v));
-        if (factPct >= 1)
-            return true;
-        
-        float fleetPct = treaty.fleetSizeLostPct(emp) / (1-warFleetSizeLossLimit(v));
-        if (fleetPct >= 1)
-            return true;
-        
-        return (popPct + factPct + fleetPct) > 2;
-    }
-    private float warColonyLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
-            case MILITARIST:    return 0.6f;
-            case ECOLOGIST:     return 0.8f;
-            case DIPLOMAT:      return 0.6f;
-            case INDUSTRIALIST: return 0.6f;
-            case EXPANSIONIST:  return 0.8f;
-            case TECHNOLOGIST:  return 0.6f;
-            default:            return 0.6f;
-        }
-    }
-    private float warPopulationLossLimit(EmpireView v) {
-        switch(v.owner().leader().personality) {
-            case PACIFIST:   return 0.8f;
-            case HONORABLE:  return 0.6f;
-            case XENOPHOBIC: return 0.6f;
-            case RUTHLESS:   return 0.4f;
-            case AGGRESSIVE: return 0.6f;
-            case ERRATIC:    return 0.6f;
-            default:         return 0.6f;
-        }
-    }
-    private float warFactoryLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
-            case MILITARIST:    return 0.6f;
-            case ECOLOGIST:     return 0.4f;
-            case DIPLOMAT:      return 0.6f;
-            case INDUSTRIALIST: return 0.8f;
-            case EXPANSIONIST:  return 0.6f;
-            case TECHNOLOGIST:  return 0.6f;
-            default:            return 0.6f;
-        }
-    }
-    private float warFleetSizeLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
-            case MILITARIST:    return 0.5f;
-            case ECOLOGIST:     return 0.3f;
-            case DIPLOMAT:      return 0.3f;
-            case INDUSTRIALIST: return 0.3f;
-            case EXPANSIONIST:  return 0.3f;
-            case TECHNOLOGIST:  return 0.3f;
-            default:            return 0.3f;
-        }
     }
 }
