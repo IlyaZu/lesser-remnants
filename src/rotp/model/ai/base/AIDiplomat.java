@@ -965,7 +965,7 @@ public class AIDiplomat implements Base, Diplomat {
             return true;
         
         float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().preserveTreatyMod();
+        adjustedRelations += preserveTreatyMod(empire.leader());
         return adjustedRelations < 20;
     }
     private boolean decidedToBreakPact(EmpireView view) {
@@ -982,7 +982,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
 
         float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().preserveTreatyMod();
+        adjustedRelations += preserveTreatyMod(empire.leader());
         return adjustedRelations < -20;
     }
     private boolean decidedToBreakTrade(EmpireView view) {
@@ -998,8 +998,13 @@ public class AIDiplomat implements Base, Diplomat {
         if (!v.trade().active())
             return false;
         
-        float treatyMod = empire.leader().preserveTreatyMod();
+        float treatyMod = preserveTreatyMod(empire.leader());
         return calculateTradeChance(v) + treatyMod < -40;
+    }
+    private float preserveTreatyMod(Leader leader) {
+        float modifier = leader.isHonorable() ? 40 : 0;
+        modifier += leader.isDiplomat() ? 20 : 0;
+        return modifier;
     }
     //----------------
 //
