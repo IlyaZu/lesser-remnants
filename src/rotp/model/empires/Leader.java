@@ -31,8 +31,6 @@ public class Leader implements Base, Serializable {
         XENOPHOBIC("LEADER_XENOPHOBIC");
         private final String label;
         Personality(String s) { label = s; }
-        @Override
-        public String toString() { return label; }
     }
     public enum Objective {
         MILITARIST("LEADER_MILITARIST"),
@@ -43,8 +41,6 @@ public class Leader implements Base, Serializable {
         TECHNOLOGIST("LEADER_TECHNOLOGIST");
         private final String label;
         Objective(String s) { label = s; }
-        @Override
-        public String toString() { return label; }
     }
     private final String name;
     public final Personality personality;
