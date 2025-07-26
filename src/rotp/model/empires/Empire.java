@@ -376,17 +376,9 @@ public final class Empire implements Base, NamedObject, Serializable {
         return empireName;
     }
     public DiplomaticReply respond(String reason, Empire listener) {
-        return respond(reason,listener,null);
-    }
-    public DiplomaticReply respond(String reason, Empire listener, Empire other) {
-        return respond(reason,listener,other,"other");
-    }
-    public DiplomaticReply respond(String reason, Empire listener, Empire other, String otherName) {
         String message = DialogueManager.current().randomMessage(reason, this);
         message = replaceTokens(message, "my");
         message = listener.replaceTokens(message, "your");
-        if (other != null)
-            message = other.replaceTokens(message, otherName);
         return new DiplomaticReply(true, message);
     }
     public DiplomaticReply respond(String reason, DiplomaticIncident inc, Empire listener) {
