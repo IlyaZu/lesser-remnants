@@ -72,7 +72,7 @@ public class TradeRoute implements Base, Serializable {
         
         float prevProfit = currentProfit;
         
-        float pct = (roll(1,200) + view.embassy().relations() + 25) / 6000.0f;
+        float pct = random(1, 9) / 240;
         currentProfit = min(profitLimit, currentProfit + (pct * profitLimit) );
         if (atProfitLimit() && currentProfit > prevProfit) {
             if (view.owner().isPlayer())
