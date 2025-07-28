@@ -430,7 +430,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedRandomEventOption = RANDOM_EVENTS_ON;
     }
     private void generateGalaxy() {
-        galaxyShape().quickGenerate();
+        galaxyShape().generate();
     }
     @Override
     public Color color(int i)  { return empireColors.get(i); }

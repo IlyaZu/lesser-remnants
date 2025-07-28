@@ -44,9 +44,7 @@ public class GalaxyFactory implements Base {
         opts.randomizeColors();
         GalaxyShape shape = opts.galaxyShape();
 
-        // for extremely large maps, shape is not fully generated on Setup UI
-        if (!shape.fullyInit())
-            shape.fullGenerate();
+        shape.generate();
 
         Galaxy g = new Galaxy(shape);
         GameSession.instance().galaxy(g);

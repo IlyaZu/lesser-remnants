@@ -378,14 +378,14 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private void nextGalaxyShape(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShape(newGameOptions().nextGalaxyShape());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         backImg = null;
         repaint();
     }
     private void prevGalaxyShape(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShape(newGameOptions().prevGalaxyShape());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         backImg = null;
         repaint();
     }
@@ -393,25 +393,25 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private void nextMapOption1(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShapeOption1(newGameOptions().nextGalaxyShapeOption1());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         repaint();
     }
     private void prevMapOption1(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShapeOption1(newGameOptions().prevGalaxyShapeOption1());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         repaint();
     }
     private void nextMapOption2(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShapeOption2(newGameOptions().nextGalaxyShapeOption2());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         repaint();
     }
     private void prevMapOption2(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShapeOption2(newGameOptions().prevGalaxyShapeOption2());
-        newGameOptions().galaxyShape().quickGenerate();
+        newGameOptions().galaxyShape().generate();
         repaint();
     }
     private void nextGameDifficulty(boolean click) {
