@@ -39,14 +39,13 @@ public abstract class GalaxyShape implements Base, Serializable {
     private int homeStars = 0;
     private int genAttempt = 0;
     private boolean usingRegions = false;
-    private boolean fullyInit = false;
     private List<EmpireSystem> empSystems = new ArrayList<>();
     private Point.Float orionXY;
     IGameOptions opts;
 
     public int width()          { return width; }
     public int height()         { return height; }
-    public boolean fullyInit()  { return fullyInit; }
+    
     protected abstract int galaxyWidthLY();
     protected abstract int galaxyHeightLY();
     public abstract void setRandom(Point.Float p);
@@ -93,14 +92,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     public float systemBuffer() {
         return 1.9f;
     }
-    public void fullInit() {
-        fullyInit = true;
-        init(opts.numberStarSystems());
-    }
-    public void quickInit() {
-        fullyInit = false;
-        init(min(5000,opts.numberStarSystems()));
-    }
     public void init(int numStars) {
         num = 0;
         homeStars = 0;
@@ -127,13 +118,7 @@ public abstract class GalaxyShape implements Base, Serializable {
         width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
         height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
     }
-    public void fullGenerate() {
-        generate(true);
-    }
-    public void quickGenerate() {
-        generate(false);
-    }
-    public void generate(boolean full) {
+    public void generate() {
         int numOpps = opts.selectedNumberOpponents()+1;
         log("Galaxy shape: "+maxStars+ " stars"+ "  regionScale: "+regionScale+"   emps:"+numOpps);
         long tm0 = System.currentTimeMillis();
@@ -157,10 +142,7 @@ public abstract class GalaxyShape implements Base, Serializable {
 
         // add systems needed for empires
         while (empSystems.size() < numOpps) {
-            if (full)
-                fullInit();
-            else
-                quickInit();
+            init(opts.numberStarSystems());
             genAttempt++;
             empSystems.clear();
             homeStars = 0;
