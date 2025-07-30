@@ -64,7 +64,6 @@ public abstract class GalaxyShape implements Base, Serializable {
                     else {
                         pt.x = regions[a][b].x[i];
                         pt.y = regions[a][b].y[i];
-                        //log("system: "+n+"  is a:"+a+" b:"+b+"  i:"+i);
                         return;
                     }
                 }
