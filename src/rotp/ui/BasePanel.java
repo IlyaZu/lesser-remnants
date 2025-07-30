@@ -112,9 +112,6 @@ public class BasePanel extends JPanel implements Base {
         setFontHints(g);
         super.paintComponent(g);
     }
-    protected void jPanelPaint(Graphics g) {
-        super.paint(g);
-    }
     public BasePanel glassPane() {
         if (frame() != null) {
             Component pane = frame().getGlassPane();
@@ -228,9 +225,6 @@ public class BasePanel extends JPanel implements Base {
             g.setFont(narrowFont(fontSize2));
             drawShadowedString(g, step, 2, x+((noticeW-sw2)/2), y2, SystemPanel.textShadowC, SystemPanel.whiteText);
         }
-    }
-    public void redrawMemory() {
-        repaint(getWidth()-s100,getHeight()-s50,s100,s50);
     }
 
     public static int  s1,  s2,  s3,  s4,  s5,  s6,  s7,  s8,  s9, s10;
