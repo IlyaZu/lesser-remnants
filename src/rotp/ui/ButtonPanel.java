@@ -29,14 +29,6 @@ import rotp.util.ThickBevelBorder;
 
 public abstract class ButtonPanel extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
-    // GRAY THEME
-    private static Color grButtonLighter = new Color(192,192,192);
-    private static Color grButtonLight = new Color(156,156,156);
-    private static Color grButtonColor = new Color(123,123,123);
-    private static Color grButtonDepressed = new Color(96,96,96);
-    private static Color grButtonDark = new Color(83,83,83);
-    private static Color grButtonDarker = new Color(63,63,63);
-    private static Border grButtonBevelBorder, grButtonDepressedBorder;
 
     // BLUE THEME
     private static Color buttonLighter = new Color(163,162,204);
@@ -48,36 +40,18 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
 
     private static Border buttonBevelBorder, buttonDepressedBorder;
 
-    public static Border grayBevelBorder() {
-        if (grButtonBevelBorder == null)
-            grButtonBevelBorder =   new ThickBevelBorder(4, 1, grButtonLighter, grButtonLight, grButtonDarker, grButtonDark, grButtonDark, grButtonDarker, grButtonLight, grButtonLighter);
-        return grButtonBevelBorder;
-    }
-    public static Border grayDepressedBorder() {
-        if (grButtonDepressedBorder == null)
-            grButtonDepressedBorder =   new ThickBevelBorder(4, 1, grButtonDarker, grButtonDark, grButtonLighter, grButtonLight, grButtonLight, grButtonLighter, grButtonDark, grButtonDarker);
-        return grButtonDepressedBorder;
-    }
     protected Shape boundingShape;
     protected boolean hovering = false;
     protected boolean depressed = false;
     private Border buttonBevelBorder() {
-        if (usingGrayTheme())
-            return grayBevelBorder();
-        else {
-            if (buttonBevelBorder == null)
-                buttonBevelBorder =  new ThickBevelBorder(4, 1, buttonLighter, buttonLight, buttonDarker, buttonDark, buttonDark, buttonDarker, buttonLight, buttonLighter);
-            return buttonBevelBorder;
-        }
+        if (buttonBevelBorder == null)
+            buttonBevelBorder =  new ThickBevelBorder(4, 1, buttonLighter, buttonLight, buttonDarker, buttonDark, buttonDark, buttonDarker, buttonLight, buttonLighter);
+        return buttonBevelBorder;
     }
     private Border buttonDepressedBorder() {
-        if (usingGrayTheme())
-            return grayDepressedBorder();
-        else {
-            if (buttonDepressedBorder == null)
-                buttonDepressedBorder = new ThickBevelBorder(4, 1, buttonDarker, buttonDark, buttonLighter, buttonLight, buttonLight, buttonLighter, buttonDark, buttonDarker);
-            return buttonDepressedBorder;
-        }
+        if (buttonDepressedBorder == null)
+            buttonDepressedBorder = new ThickBevelBorder(4, 1, buttonDarker, buttonDark, buttonLighter, buttonLight, buttonLight, buttonLighter, buttonDark, buttonDarker);
+        return buttonDepressedBorder;
     }
     public boolean isDepressed() { return depressed; }
     private boolean isHovering()  { return hovering; }
@@ -91,7 +65,6 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     abstract public String buttonLabel();
     abstract public Font textFont();
     abstract public void buttonClicked(int cnt);
-    public boolean usingGrayTheme()   { return false; }
 
     public ButtonPanel() {
         setBackground(new Color(0,0,0,0));
@@ -133,9 +106,9 @@ public abstract class ButtonPanel extends BasePanel implements MouseListener {
     }
     public Color backgroundColor() {
         if (depressed)
-            return usingGrayTheme() ? grButtonDepressed : buttonDepressed;
+            return buttonDepressed;
         else
-            return usingGrayTheme() ? grButtonColor : buttonColor;
+            return buttonColor;
     }
     public Color textColor() {
         if (isButtonEnabled()) {
