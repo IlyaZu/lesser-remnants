@@ -90,11 +90,6 @@ public enum ImageManager implements Base {
             err("Not enough fields for image line: ", line);
             return;
         }
-        // validation takes too long at startup
-        //if (icon(vals.get(1)) == null) {
-        //  err("No image found at: ", vals.get(1));
-        //  return;
-        //}
         String imageKey = vals.get(0);
         if (!imageFiles.containsKey(imageKey))
             imageFiles.put(imageKey, new ArrayList<>());

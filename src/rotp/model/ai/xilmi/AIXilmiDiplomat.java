@@ -136,7 +136,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         // until one is found that we can make counter-offers for... use that one
         while (!availableTechs.isEmpty()) {
             Tech wantedTech = empire.ai().scientist().mostDesirableTech(availableTechs);
-            //System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" wants from "+v.empire().name()+" the tech "+wantedTech.name() + " value: "+empire.ai().scientist().researchValue(wantedTech));
             availableTechs.remove(wantedTech);
             if (empire.ai().scientist().researchValue(wantedTech) > 1) {
                 List<Tech> counterTechs = v.empire().diplomatAI().techsRequestedForCounter(empire, wantedTech);
@@ -150,13 +149,11 @@ public class AIXilmiDiplomat extends AIDiplomat {
                             willingToTradeCounterTechs.add(t);
                     }
                 }
-                //System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" wants from "+v.empire().name()+" the tech "+wantedTech.name() +" countertechs: "+willingToTradeCounterTechs.size());
                 if (!willingToTradeCounterTechs.isEmpty()) {
                     List<Tech> previouslyOffered;
                     previouslyOffered = v.embassy().alreadyOfferedTechs(wantedTech);
                     // simplified logic so that if we have ever asked for wantedTech before, don't ask again
                     if (previouslyOffered == null || !previouslyOffered.containsAll(willingToTradeCounterTechs)) {
-                        //System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" ask "+v.empire().name()+" for "+wantedTech.name());
                         v.embassy().logTechExchangeRequest(wantedTech, willingToTradeCounterTechs);
                         //only now send the request
                         DiplomaticReply reply = v.empire().diplomatAI().receiveRequestTech(empire, wantedTech);
@@ -530,7 +527,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         // build a priority list for Joint War offers:
         for (Empire target: empire.enemies()) {
             if (willingToOfferJointWar(v.empire(), target)) {
-                //System.out.println(empire.galaxy().currentTurn()+" "+ empire.name()+" asks "+v.empire().name()+" to declare war on "+target.name());
                 v.empire().diplomatAI().receiveOfferJointWar(v.owner(), target);
             }
         }
@@ -658,7 +654,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
             if (warIncident != null) {
                 if(!warIncident.isSpying())
                 {
-                    //System.out.println(empire.galaxy().currentTurn()+" "+ empire.name()+" starts Incident-War ("+warIncident.toString()+") vs. "+view.empire().name());
                     beginIncidentWar(view, warIncident);
                     return true;
                 }
@@ -667,7 +662,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         
         if (wantToDeclareWarOfOpportunity(view)) {
             //ail: even if the real reason is because of geopolitics, we can still blame it on an incident, if there ever was one, so the player thinks it is their own fault
-            //System.out.println(empire.galaxy().currentTurn()+" "+empire.name()+" starts Opportunity-War vs. "+view.empire().name());
             beginOpportunityWar(view);
             return true;
         }
@@ -934,4 +928,3 @@ public class AIXilmiDiplomat extends AIDiplomat {
         return false;
     }
 }
-
