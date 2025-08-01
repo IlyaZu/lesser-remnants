@@ -32,8 +32,8 @@ public abstract class GalaxyShape implements Base, Serializable {
     private float[] y;
     private ShapeRegion[][] regions;
     private int regionScale = 16;
-    int width = 0;
-    int height = 0;
+    private int width = 0;
+    private int height = 0;
     int maxStars = 0;
     private int num = 0;
     private int homeStars = 0;

@@ -109,8 +109,8 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     }
     @Override
     public void setRandom(Point.Float pt) {
-        pt.x = randomLocation(width, galaxyEdgeBuffer());
-        pt.y = randomLocation(height, galaxyEdgeBuffer());
+        pt.x = randomLocation(width(), galaxyEdgeBuffer());
+        pt.y = randomLocation(height(), galaxyEdgeBuffer());
     }
     @Override
     public boolean valid(float x, float y) {
