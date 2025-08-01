@@ -26,8 +26,9 @@ import rotp.util.Base;
 public abstract class GalaxyShape implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     private static final int GALAXY_EDGE_BUFFER = 12;
-    private static float orionBuffer = 8;
-    private static float empireBuffer = 6;
+    
+    private float orionBuffer = 8;
+    private float empireBuffer = 6;
     private float[] x;
     private float[] y;
     private ShapeRegion[][] regions;
