@@ -44,7 +44,6 @@ import rotp.util.Base;
 public class AIDiplomat implements Base, Diplomat {
     private static final float ERRATIC_WAR_PCT = .02f;
     private final Empire empire;
-    private float cumulativeSeverity = 0;
 
     public AIDiplomat (Empire c) {
         empire = c;
@@ -1099,7 +1098,7 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxIncident == null)
             return false;
 
-        log("cum.sev: ", str(cumulativeSeverity), "   maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.severity()));
+        log("maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.severity()));
 
         // don't issue praise unless new incidents are high enough
         if (maxIncident.severity() < view.embassy().minimumPraiseLevel())
@@ -1132,11 +1131,8 @@ public class AIDiplomat implements Base, Diplomat {
         float threshold = 0 - warningThreshold(view);
         log(view+": checkIssueWarning. Threshold: "+ threshold);
         DiplomaticIncident maxIncident = null;
-        cumulativeSeverity = 0;
         for (DiplomaticIncident ev: emb.newIncidents()) {
             log(view.toString(), "new incident:", ev.toString());
-            float sev = ev.severity();
-            cumulativeSeverity += sev;
             if (ev.triggersWarning() && ev.moreSevere(maxIncident))
                 maxIncident = ev;
         }
@@ -1147,7 +1143,6 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxIncident.severity() > threshold)
             return false;
 
-        log("cumulative severity: "+cumulativeSeverity);
         view.embassy().logWarning(maxIncident);
         
         // if we are warning player, send a notification
