@@ -25,7 +25,6 @@ import rotp.util.Base;
 
 public abstract class GalaxyShape implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    private static final int GALAXY_EDGE_BUFFER = 12;
     
     private float orionBuffer = 8;
     private float empireBuffer = 6;
@@ -171,7 +170,7 @@ public abstract class GalaxyShape implements Base, Serializable {
             case IGameOptions.SIZE_HUGE:      return 2;
             case IGameOptions.SIZE_MASSIVE:   return 2;
         }
-        return GALAXY_EDGE_BUFFER;
+        return 12;
     }
     protected Point.Float addOrion() {
         Point.Float pt = new Point.Float();
