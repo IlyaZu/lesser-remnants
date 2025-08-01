@@ -216,7 +216,7 @@ public class AIDiplomat implements Base, Diplomat {
             return false;
 
         float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().acceptTradeMod();
+        adjustedRelations += acceptTradeMod(empire.leader());
         adjustedRelations += v.embassy().alliedWithEnemy() ? -100 : 0;
         return adjustedRelations > 20;
     }
@@ -322,9 +322,14 @@ public class AIDiplomat implements Base, Diplomat {
         // -50 relations is minimum allowed to accept trade
         float chance = v.embassy().relations()+50;
         chance += v.empire().diplomacyBonus();
-        chance += empire.leader().acceptTradeMod();
+        chance += acceptTradeMod(empire.leader());
         chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
+    }
+    private float acceptTradeMod(Leader leader) {
+        float mod = leader.isXenophobic() ? -20 : 0;
+        mod += leader.isIndustrialist() ? 10 : 0;
+        return mod;
     }
     //-----------------------------------
     //  PEACE
