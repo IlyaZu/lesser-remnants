@@ -233,9 +233,6 @@ public interface Base {
     public default void resetAnimation(String key) {
         AnimationManager.current().reset(key);
     }
-    public default List<BufferedImage> allExplosionFrames(String key) {
-        return AnimationManager.current().allExplosionFrames(key);
-    }
     public default float distance(float x0, float y0, float x1, float y1) {
         return (float) Math.sqrt( ((x1-x0)*(x1-x0)) + ((y1-y0)*(y1-y0)) );
     }

@@ -16,7 +16,6 @@
  */
 package rotp.util;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -33,20 +32,15 @@ public enum AnimationManager implements Base {
     INSTANCE;
     public static AnimationManager current()  { return INSTANCE; }
 
-    private static final String explosionBaseDir = "images/explosions/";
-    private static final String explosionListFile = "images/explosions/listing.txt";
     private static final String animationListFile = "data/animations.txt";
 
     private static final HashMap<Integer,List<BufferedImage>> cachedImages = new HashMap<>();
     private static final HashMap<Integer,List<BufferedImage>> activeImages = new HashMap<>();
 
-
     private final HashMap<String, Animation> animations = new HashMap<>();
-    private final HashMap<String, List<String>> explosions = new HashMap<>();
 
     private AnimationManager() {
         loadAnimationList(animationListFile);
-        loadExplosions();
     }
     @Override
     public boolean playAnimations()   { return UserPreferences.playAnimations() && !lowMemory(); }
@@ -135,29 +129,6 @@ public enum AnimationManager implements Base {
 
         return result;
     }
-    @Override
-    public List<BufferedImage> allExplosionFrames(String name) {
-        if (!explosions.containsKey(name))
-            return null;
-
-        List<String> fileNames = explosions.get(name);
-        if (fileNames.isEmpty())
-            return null;
-
-        List<BufferedImage> result = new ArrayList<>();
-        for (String fileName: fileNames) {
-            Image baseImg = icon(fileName).getImage();
-            BufferedImage targetImg = newFullScreenImage(1200,1200);
-            int w = targetImg.getWidth();
-            int h = targetImg.getHeight();
-            Graphics g = targetImg.getGraphics();
-            setFontHints(g);
-            g.drawImage(baseImg,0,0,w,h,null);
-            g.dispose();
-            result.add(targetImg);
-        }
-        return result;
-    }
     public void loadAnimationList(String filename) {
         log("Loading Animations: ", filename);
         BufferedReader in = reader(filename);
@@ -185,43 +156,6 @@ public enum AnimationManager implements Base {
         }
         animations.put(vals.get(0), new Animation(vals.get(1)));
     }
-    private void loadExplosions() {
-        log("Loading Explosions...");
-        BufferedReader in = reader(explosionListFile);
-        if (in == null)
-            return;
-        try {
-            String input;
-            while ((input = in.readLine()) != null) {
-                if (!isComment(input))
-                    loadExplosionImageDirectory(input.trim());
-            }
-            in.close();
-        }
-        catch (IOException e) {
-            err("AnimationManager.loadExplosions -- IOException: ", e.toString());
-        }
-    }
-    private void loadExplosionImageDirectory(String dirName) {
-        String dirPath = explosionBaseDir+dirName+"/";
-        BufferedReader in = reader(dirPath+"listing.txt");
-        List<String> fileNames = new ArrayList<>();
-        if (in == null)
-            return;
-        try {
-            String input;
-            while ((input = in.readLine()) != null) {
-                if (!isComment(input))
-                    fileNames.add(dirPath+input.trim());
-            }
-            in.close();
-        }
-        catch (IOException e) {
-            err("AnimationManager.loadExplosionImageDirectory -- IOException: ", e.toString());
-        }
-        explosions.put(dirName, fileNames);
-    }
-
     private Rectangle parseArea(String s) throws Exception {
         if (s.isEmpty() || s.contains("ALL"))
             return null;
