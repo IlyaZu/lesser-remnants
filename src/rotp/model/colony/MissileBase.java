@@ -45,11 +45,11 @@ public class MissileBase implements Base, Serializable {
     public void missileShield(MissileBaseMissileShield m)  { missileShield = m; }
 
     public float maxHits()        { return BASE_HP * armor.tech().hitsAdj; }
-    public int ecmLevel()         { return ecm == null ? 0 : ecm.level(); }
     public int computerLevel()    { return computer.level() + 1; }  // attack level is computer + 1 for scanner
-    public int missileDefense()   { return computer.level() + ecmLevel(); }
-    public int beamDefense()      { return computer.level(); }
-    public int bombDefense()      { return 1 + ecmLevel(); }
+    public int beamDefense()      { return 1; }
+    private int ecmLevel()        { return ecm == null ? 0 : ecm.level(); }
+    public int missileDefense()   { return beamDefense() + ecmLevel(); }
+    public int bombDefense()      { return beamDefense() + ecmLevel(); }
     public float missileInterceptPct(ShipWeaponMissileType missile) {
         return missileShield == null ? 0 : missileShield.interceptPct(missile);
     }
