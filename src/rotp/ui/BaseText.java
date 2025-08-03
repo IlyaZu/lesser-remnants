@@ -77,9 +77,6 @@ public class BaseText implements Base {
     @Override
     public String toString()  { return concat("Text:", text, "  at:", bounds.toString()); }
     public void displayText(String s) { text = s; }
-    public void hoverText(String s)   { hoverText = s; }
-    public int x()                    { return bounds.x; }
-    public int w()                    { return bounds.width; }
     public Rectangle bounds()         { return bounds; }
     public void disabled(boolean b)   { disabled = b; }
     public void visible(boolean b)    { visible = b; }
@@ -112,7 +109,7 @@ public class BaseText implements Base {
         Graphics g = panel.getGraphics();
         int oldW = stringWidth(g);
         displayText(s1);
-        hoverText(s2);
+        hoverText = s2;
         int newW = stringWidth(g);
         g.dispose();
         bounds.width = max(oldW, newW)+scaled(5);
@@ -168,7 +165,7 @@ public class BaseText implements Base {
         int y1 = y >= 0 ? y : panel.getHeight()+y;
         
         if ((preceder != null) && (x>= 0)) {
-            x1 = preceder.x() + preceder.w() + x;
+            x1 = preceder.bounds.x + preceder.bounds.width + x;
         }
         g.setFont(font());
         g.setColor(textColor());
