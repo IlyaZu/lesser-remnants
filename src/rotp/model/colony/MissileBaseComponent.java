@@ -34,6 +34,6 @@ public class MissileBaseComponent implements Base, Serializable {
     public void baseCost(int d)       { baseCost = d; }
 
     public float cost(Empire emp) {
-        return techId == null ? 0 : tech().costMiniaturization(emp) * baseCost;
+        return tech().costMiniaturization(emp) * baseCost;
     }
 }
