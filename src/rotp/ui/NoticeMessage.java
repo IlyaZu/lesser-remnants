@@ -31,17 +31,13 @@ public class NoticeMessage {
         if (maxSteps == 1)
             return step;
         else {
-            int secs = seconds();
+            long secs = (System.currentTimeMillis() - startTime) / 1000;
             if (secs > 0)
-                return Integer.toString(currentStep)+ " of "+ maxSteps + " "+step+ " - "+Integer.toString(secs)+"s";
+                return Integer.toString(currentStep)+ " of "+ maxSteps + " "+step+ " - "+Long.toString(secs)+"s";
             else
                 return Integer.toString(currentStep)+ " of "+ maxSteps + " "+step;
         }
     }
-    public static int seconds() {
-        return (int) ((System.currentTimeMillis() - startTime) / 1000);
-    }
-    public static boolean redisplay() { return dataChanged || ((System.currentTimeMillis()-retrievedTime) > 1000); }
     public static void setStatus(String s1 ) {
         dataChanged = !s1.equals(title);
         title = s1;
@@ -88,7 +84,7 @@ public class NoticeMessage {
         repaint();
     }
     public static void repaint() {
-        if (redisplay()) 
+        if (dataChanged || (System.currentTimeMillis()-retrievedTime) > 1000)
             RotPUI.instance().repaint();
     }
 }
