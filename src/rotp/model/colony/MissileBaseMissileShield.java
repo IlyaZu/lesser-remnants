@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +28,6 @@ public final class MissileBaseMissileShield extends MissileBaseComponent {
         return Math.max(0,pct);
     }
     public MissileBaseMissileShield(TechMissileShield t) {
-        tech(t);
+        super(t);
     }
 }

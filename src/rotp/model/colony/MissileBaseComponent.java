@@ -23,11 +23,14 @@ import rotp.util.Base;
 
 public class MissileBaseComponent implements Base, Serializable { 
     private static final long serialVersionUID = 1L;
-    private String techId;
+    private final String techId;
     private int baseCost = 0;
+    
+    public MissileBaseComponent(Tech tech) {
+        this.techId = tech.id;
+    }
 
     public Tech tech()                { return tech(techId); }
-    public void tech(Tech t)          { techId = t.id(); }
     public void baseCost(int d)       { baseCost = d; }
 
     public float cost(Empire emp) {

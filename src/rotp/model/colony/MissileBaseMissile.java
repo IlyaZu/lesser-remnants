@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +30,8 @@ public final class MissileBaseMissile extends MissileBaseComponent {
     @Override
     public TechMissileWeapon tech()       { return warhead.tech(); }
     public MissileBaseMissile(TechMissileWeapon t, int cost) {
+        super(t);
         warhead = new ShipWeaponMissile(t, false, 3, t.range*2, t.speed+1);
-        tech(t);
         baseCost(cost);
     }
 }
