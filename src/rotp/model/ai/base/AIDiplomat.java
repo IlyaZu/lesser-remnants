@@ -172,6 +172,14 @@ public class AIDiplomat implements Base, Diplomat {
         Collections.sort(topFiveTechs, Tech.RESEARCH_VALUE);
         return topFiveTechs;
     }
+    private float techDealValue(EmpireView v) {
+        if (v.embassy().alliance())
+            return 1.0f;
+        else if (v.embassy().pact())
+            return 0.9f;
+        else
+            return 0.8f;
+    }
     private boolean decidedToExchangeTech(EmpireView v) {
         if (!willingToOfferTechExchange(v))
             return false;
@@ -219,14 +227,6 @@ public class AIDiplomat implements Base, Diplomat {
         adjustedRelations += acceptTradeMod(empire.leader());
         adjustedRelations += v.embassy().alliedWithEnemy() ? -100 : 0;
         return adjustedRelations > 20;
-    }
-    private float techDealValue(EmpireView v) {
-        if (v.embassy().alliance())
-            return 1.0f;
-        else if (v.embassy().pact())
-            return 0.9f;
-        else
-            return 0.8f;
     }
     //-----------------------------------
     //  TRADE TREATIES
