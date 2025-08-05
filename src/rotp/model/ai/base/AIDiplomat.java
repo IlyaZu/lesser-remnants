@@ -589,12 +589,7 @@ public class AIDiplomat implements Base, Diplomat {
         int erraticLeaderPenalty = requestor.leader().isErratic() ? -40 : 0;
  
         // if we don't like the requestor well enough, refuse now
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().acceptAllianceMod();
-        adjustedRelations += requestor.diplomacyBonus();
-        adjustedRelations += joinWarBonus;
-        adjustedRelations += erraticLeaderPenalty;
-        if (adjustedRelations < 60)
+        if (calculateAllianceChance(v) + erraticLeaderPenalty + joinWarBonus < 60)
             return refuseOfferAlliance(requestor);
         
         v.embassy().signAlliance();
@@ -621,9 +616,13 @@ public class AIDiplomat implements Base, Diplomat {
         if (v.embassy().alliedWithEnemy())
             return false;
         // do we like the other to want to join an alliance
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().acceptAllianceMod();
-        return adjustedRelations > 70;
+        return calculateAllianceChance(v) > 70;
+    }
+    private float calculateAllianceChance(EmpireView v) {
+        float chance = v.embassy().relations();
+        chance += v.empire().diplomacyBonus();
+        chance += empire.leader().acceptAllianceMod();
+        return chance;
     }
 //-----------------------------------
 //  JOINT WARS
@@ -969,9 +968,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (wantToDeclareWarOfOpportunity(v))
             return true;
         
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += preserveTreatyMod(empire.leader());
-        return adjustedRelations < 20;
+        float treatyMod = preserveTreatyMod(empire.leader());
+        return calculateAllianceChance(v) + treatyMod < 20;
     }
     private boolean decidedToBreakPact(EmpireView view) {
         if (!wantToBreakPact(view))
