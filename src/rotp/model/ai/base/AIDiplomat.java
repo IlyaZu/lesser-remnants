@@ -510,10 +510,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         v.embassy().resetPactTimer();
         
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().acceptPactMod();
-        adjustedRelations += requestor.diplomacyBonus();
-        if (adjustedRelations < 20)
+        if (calculatePactChance(v) < 20)
             return refuseOfferPact(requestor);
 
         v.embassy().signPact();
@@ -534,10 +531,14 @@ public class AIDiplomat implements Base, Diplomat {
         if (!canOfferPact(v.empire()))
             return false;
         // how do we feel about them
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += empire.leader().acceptPactMod();
-        adjustedRelations += v.embassy().alliedWithEnemy() ? -50 : 0;
-        return adjustedRelations > 30;
+        return calculatePactChance(v) > 30;
+    }
+    private float calculatePactChance(EmpireView v) {
+        float chance = v.embassy().relations();
+        chance += v.empire().diplomacyBonus();
+        chance += empire.leader().acceptPactMod();
+        chance += v.embassy().alliedWithEnemy() ? -50 : 0;
+        return chance;
     }
     //-----------------------------------
     //  ALLIANCE
@@ -985,9 +986,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (!v.embassy().pact())
             return false;
 
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += preserveTreatyMod(empire.leader());
-        return adjustedRelations < -20;
+        float treatyMod = preserveTreatyMod(empire.leader());
+        return calculatePactChance(v) + treatyMod < -20;
     }
     private boolean decidedToBreakTrade(EmpireView view) {
         if (!wantToBreakTrade(view))
