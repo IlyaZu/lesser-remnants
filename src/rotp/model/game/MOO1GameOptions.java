@@ -337,12 +337,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return p;
     }
     @Override
-    public Planet orionPlanet(StarSystem s) {
-        Planet p = new Planet(s);
-        p.initPlanetType("PLANET_TERRAN");
-        return p;
-    }
-    @Override
     public Planet randomPlayerPlanet(Race r, StarSystem s) {
         Planet p = new Planet(s);
         p.initPlanetType(r.homeworldPlanetType);
