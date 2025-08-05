@@ -253,12 +253,12 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         int x5a =shapeBox.x+((shapeBox.width-shapeSW)/2);
         drawString(g,shapeLbl, x5a, y5);
         
-        if (newGameOptions().numGalaxyShapeOption1() > 0) {
+        if (!newGameOptions().galaxyShapeOptions1().isEmpty()) {
             String label1 = text(newGameOptions().selectedGalaxyShapeOption1());
             int sw1 = g.getFontMetrics().stringWidth(label1);
             int x5d =mapOption1Box.x+((mapOption1Box.width-sw1)/2);
             drawString(g,label1, x5d, y5+s20);
-            if (newGameOptions().numGalaxyShapeOption2() > 0) {
+            if (!newGameOptions().galaxyShapeOptions2().isEmpty()) {
                 String label2 = text(newGameOptions().selectedGalaxyShapeOption2());
                 int sw2 = g.getFontMetrics().stringWidth(label2);
                 int x5e =mapOption2Box.x+((mapOption2Box.width-sw2)/2);
@@ -670,7 +670,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         mapOption1BoxL.reset();
         mapOption1BoxR.reset();
         mapOption1Box.setBounds(0,0,0,0);
-        if (newGameOptions().numGalaxyShapeOption1() > 0) {
+        if (!newGameOptions().galaxyShapeOptions1().isEmpty()) {
             mapOption1BoxL.addPoint(sliderX-s4,sliderY+s1+s20);
             mapOption1BoxL.addPoint(sliderX-s4,sliderY+sliderH-s2+s20);
             mapOption1BoxL.addPoint(sliderX-s13,sliderY+(sliderH/2)+s20);
@@ -686,7 +686,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         mapOption2BoxL.reset();
         mapOption2BoxR.reset();
         mapOption2Box.setBounds(0,0,0,0);
-        if (newGameOptions().numGalaxyShapeOption2() > 0) {
+        if (!newGameOptions().galaxyShapeOptions2().isEmpty()) {
             mapOption2BoxL.addPoint(sliderX-s4,sliderY+s1+s40);
             mapOption2BoxL.addPoint(sliderX-s4,sliderY+sliderH-s2+s40);
             mapOption2BoxL.addPoint(sliderX-s13,sliderY+(sliderH/2)+s40);

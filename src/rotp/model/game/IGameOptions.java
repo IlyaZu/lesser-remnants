@@ -100,9 +100,6 @@ public interface IGameOptions {
     public void selectedGalaxyShapeOption1(String s);
     public String selectedGalaxyShapeOption2();
     public void selectedGalaxyShapeOption2(String s);
-
-    public int numGalaxyShapeOption1();
-    public int numGalaxyShapeOption2();
     
     public String selectedGameDifficulty();
     public void selectedGameDifficulty(String s);
