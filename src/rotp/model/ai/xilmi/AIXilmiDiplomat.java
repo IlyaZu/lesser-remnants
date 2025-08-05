@@ -27,10 +27,7 @@ import rotp.model.empires.TreatyWar;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.EspionageTechIncident;
-import rotp.model.incidents.ExpansionIncident;
 import rotp.model.incidents.SimpleIncident;
-import rotp.model.incidents.SpyConfessionIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
@@ -43,10 +40,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     public AIXilmiDiplomat (Empire c) {
         super(c);
         empire = c;
-    }
-
-    private boolean diplomats(int empId) {
-        return empire.viewForEmpire(empId).diplomats();
     }
 
     //-----------------------------------
@@ -122,105 +115,9 @@ public class AIXilmiDiplomat extends AIDiplomat {
         Collections.sort(topFiveTechs, tech.OBJECT_TRADE_PRIORITY);
         return topFiveTechs;
     }
-
-    private boolean decidedToExchangeTech(EmpireView v) {
-        if (!willingToOfferTechExchange(v))
-            return false;
-
-        DiplomaticEmbassy otherEmbassy = v.otherView().embassy();
-        List<Tech> availableTechs = otherEmbassy.offerableTechnologies();
-        if (availableTechs.isEmpty())
-            return false;
-
-        // iterate over each of available techs, starting with the most desired
-        // until one is found that we can make counter-offers for... use that one
-        while (!availableTechs.isEmpty()) {
-            Tech wantedTech = empire.ai().scientist().mostDesirableTech(availableTechs);
-            availableTechs.remove(wantedTech);
-            if (empire.ai().scientist().researchValue(wantedTech) > 1) {
-                List<Tech> counterTechs = v.empire().diplomatAI().techsRequestedForCounter(empire, wantedTech);
-                List<Tech> willingToTradeCounterTechs = new ArrayList<>(counterTechs.size());
-                for (Tech t: counterTechs) {
-                    if (willingToTradeTech(t, v.empire()))
-                    {
-                        //now check if I would give them something for their counter
-                        List<Tech> countersToCounter = techsRequestedForCounter(v.empire(), t);
-                        if(countersToCounter.contains(wantedTech))
-                            willingToTradeCounterTechs.add(t);
-                    }
-                }
-                if (!willingToTradeCounterTechs.isEmpty()) {
-                    List<Tech> previouslyOffered;
-                    previouslyOffered = v.embassy().alreadyOfferedTechs(wantedTech);
-                    // simplified logic so that if we have ever asked for wantedTech before, don't ask again
-                    if (previouslyOffered == null || !previouslyOffered.containsAll(willingToTradeCounterTechs)) {
-                        v.embassy().logTechExchangeRequest(wantedTech, willingToTradeCounterTechs);
-                        //only now send the request
-                        DiplomaticReply reply = v.empire().diplomatAI().receiveRequestTech(empire, wantedTech);
-                        if ((reply != null) && reply.accepted()) {
-                            // techs the AI is willing to consider in exchange for wantedTech
-                            // find the tech with the lowest trade value
-                            Collections.sort(willingToTradeCounterTechs, Tech.TRADE_PRIORITY);
-                            Collections.reverse(willingToTradeCounterTechs);
-                            Tech cheapestCounter = willingToTradeCounterTechs.get(0);
-                            // if the lowest trade value tech is not the requested tech, then make the deal
-                            if (cheapestCounter != wantedTech)
-                                v.empire().diplomatAI().receiveCounterOfferTech(empire, cheapestCounter, wantedTech);
-                        }
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    private boolean willingToOfferTechExchange(EmpireView v) {
-        if (!canExchangeTechnology(v.empire()))
-            return false;
-        if(empire.enemies().contains(v.empire()))
-        {
-            return false;
-        }
-        return true;
-    }
-    //-----------------------------------
-    //  TRADE TREATIES
-    //-----------------------------------
-
-    private boolean willingToOfferTrade(EmpireView v, int level) {
-        if (!canOfferTradeTreaty(v.empire()))
-            return false;
-        if (v.embassy().alliedWithEnemy())
-            return false;
-        
-        if (v.trade().active()
-            && (v.trade().currentProfit() <= 0))
-            return false;
-        if (!v.trade().atProfitLimit())
-            return false;
-        
-        // if asking player, check that we don't spam him
-        if (v.empire().isPlayerControlled()) {
-             if (!v.otherView().embassy().readyForTrade(level))
-                return false;
-        }
-
-        float currentTrade = v.trade().profitLimit();
-        float maxTrade = v.trade().maxProfitLimit();
-        if (maxTrade < (currentTrade * 1.5))
-            return false;
-
-        log(v.toString(), ": willing to offer trade. Max:", str(maxTrade), "    current:", str(currentTrade));
-        if(empire.enemies().contains(v.empire()))
-        {
-            return false;
-        }
-        return true;
-    }
     //-----------------------------------
     //  PEACE
     //-----------------------------------
-    private boolean canOfferPeaceTreaty(Empire e)           { return diplomats(id(e)) && empire.atWarWith(id(e)); }
     @Override
     public DiplomaticReply receiveOfferPeace(Empire requestor) {
         log(empire.name(), " receiving offer of Peace from: ", requestor.name());
@@ -249,98 +146,9 @@ public class AIXilmiDiplomat extends AIDiplomat {
         DiplomaticIncident inc = v.embassy().signPeace();
         return v.otherView().accept(DialogueManager.ACCEPT_PEACE, inc);
     }
-    private boolean willingToOfferPeace(EmpireView v) {
-        if (!v.embassy().war())
-            return false;
-        if (!v.embassy().onWarFooting() && !canOfferPeaceTreaty(v.empire()))
-            return false;
-        if (v.embassy().contactAge() < 1)
-            return false;
-        if (!v.otherView().embassy().readyForPeace())
-            return false;
-        return warWeary(v);
-    }
-    //-----------------------------------
-    //  PACT
-    //-----------------------------------
-    private boolean canOfferPact(Empire e){
-        if (!diplomats(id(e)))
-            return false;
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (empire.atWarWith(id(e)))
-            return false;
-        if (!empire.hasTradeWith(e))
-            return false;
-        if (empire.pactWith(id(e)) || empire.alliedWith(id(e)))
-            return false;
-        return true;
-    }
-    //ail: pacts just restrict us unnecessarily
-    private boolean willingToOfferPact(EmpireView v) {
-        return false;
-    }
-    //-----------------------------------
-    //  ALLIANCE
-    //-----------------------------------
-    private boolean canOfferAlliance(Empire e) {
-        if (!diplomats(id(e)))
-            return false;
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (!empire.pactWith(id(e)))
-            return false;
-        if (empire.alliedWith(id(e)))
-            return false;
-        return true;
-    }
-    private boolean willingToOfferAlliance(Empire e) {
-        EmpireView v = empire.viewForEmpire(e);
-        // if we are asking the player, respect the alliance-countdown
-        // timer to avoid spamming player with requests
-        if (e.isPlayerControlled()) {
-            //return true;
-            if (!v.otherView().embassy().readyForAlliance())
-                return false;
-        }
-        // is asking for an alliance even allowed per game rules
-        if (!canOfferAlliance(e))
-            return false;
-        if (v.embassy().alliedWithEnemy())
-            return false;
-        return false;
-    }
 //-----------------------------------
 //  JOINT WARS
 //-----------------------------------
-    private boolean willingToOfferJointWar(Empire friend, Empire target) {
-        // this method is called only for targets that we are at war with
-        // or targets we are preparing for war with
-        // only ask people who we are in real contact with
-        //xilmi: It is possible to be in range but not have contact
-        if(!friend.hasContact(target))
-            return false;
-        if (!empire.inEconomicRange(friend.id))
-            return false;
-        if (friend.isPlayerControlled() && !friend.alliedWith(empire.id)) {
-            EmpireView v = empire.viewForEmpire(friend);
-            if (!v.otherView().embassy().readyForJointWar())
-                return false;
-        }
-        // if he's already at war, don't bother
-        if (friend.atWarWith(target.id))
-            return false;
-        // if he's allied with the target, don't bother
-        if (friend.alliedWith(target.id))
-            return false;
-        // if he's not in ship range, don't bother
-        if (!friend.inShipRange(target.id))
-            return false;
-        EmpireView v = friend.viewForEmpire(target);
-        if(v.embassy().atPeace())
-            return false;
-        return true;
-    }
     @Override
     public DiplomaticReply receiveOfferJointWar(Empire requestor, Empire target) {
         log(empire.name(), " receiving offer of Joint War from: ", requestor.name());
@@ -399,7 +207,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
     //  BREAK TREATIES
     //-----------------------------------
-    private boolean canBreakAlliance(Empire e)              { return empire.alliedWith(id(e)); }
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
     @Override
@@ -442,231 +249,9 @@ public class AIXilmiDiplomat extends AIDiplomat {
         v.embassy().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
     }
-    private boolean decidedToBreakAlliance(EmpireView view) {
-        if (!wantToBreakAlliance(view))
-            return false;
-        view.embassy().breakAlliance();
-        if (view.empire().isPlayerControlled())
-            DiplomaticNotification.create(view, DialogueManager.BREAK_ALLIANCE);
-        return true;
-    }
-    //ail: no good reason to ever break an alliance
-    private boolean wantToBreakAlliance(EmpireView v) {
-        if(!canBreakAlliance(v.empire()))
-            return false;
-        return false;
-    }
-    private boolean decidedToBreakPact(EmpireView view) {
-        if (!wantToBreakPact(view))
-            return false;
-
-        view.embassy().breakPact();
-        if (view.empire().isPlayerControlled())
-            DiplomaticNotification.create(view, DialogueManager.BREAK_PACT);
-        return true;
-    }
-    private boolean wantToBreakPact(EmpireView v) {
-        if (!v.embassy().pact())
-            return false;
-        if(empire.generalAI().bestVictim() == v.empire())
-            return true;
-        return false;
-    }
-    private boolean decidedToBreakTrade(EmpireView view) {
-        if (!wantToBreakTrade(view))
-            return false;
-
-        view.embassy().breakTrade();
-        if (view.empire().isPlayerControlled())
-            DiplomaticNotification.create(view, DialogueManager.BREAK_TRADE);
-        return true;
-    }
-    private boolean wantToBreakTrade(EmpireView v) {
-        //ail: no need to break trade. War declaration will do it for us, otherwise it just warns our opponent
-        return false;
-    }
     //----------------
 //
 //----------------
-    @Override
-    public void makeDiplomaticOffers(EmpireView v) {
-        //updatePersonality(); this is too telling but I'll leave the code in
-        if(empire.enemies().contains(v.empire()) && !empire.warEnemies().contains(v.empire()))
-        {
-            if(!empire.inShipRange(v.empId()))
-                v.embassy().endWarPreparations();
-        }
-        if(v.embassy().diplomatGone()) {
-            v.embassy().openEmbassy();
-        }
-
-        // check diplomat offers from worst to best
-        if (decidedToDeclareWar(v))
-            return;
-        decidedToBreakAlliance(v);
-        decidedToBreakPact(v);
-        //It should be possible to declare war or break an alliance with the diplomat gone
-        if (v.embassy().diplomatGone() || v.otherView().embassy().diplomatGone())
-            return;
-        decidedToBreakTrade(v);
-        decidedToIssueWarning(v);
-
-        if (willingToOfferPeace(v)) {
-            if (v.embassy().war())
-                v.empire().diplomatAI().receiveOfferPeace(empire);
-            else
-                v.embassy().endWarPreparations();
-        }
-        
-        // if this empire is at war with us or we are preparing
-        // for war, then stop now. No more Mr. Nice Guy.
-        List<Empire> enemies = empire.enemies();
-        if (enemies.contains(v.empire()))
-            return;
-        
-        // build a priority list for Joint War offers:
-        for (Empire target: empire.enemies()) {
-            if (willingToOfferJointWar(v.empire(), target)) {
-                v.empire().diplomatAI().receiveOfferJointWar(v.owner(), target);
-            }
-        }
-        
-        if (willingToOfferTrade(v, v.trade().maxProfitLimit())) {
-            v.empire().diplomatAI().receiveOfferTrade(v.owner(), v.trade().maxProfitLimit());
-        }
-        
-        decidedToExchangeTech(v);
-
-        if (canOfferPact(v.empire()) && willingToOfferPact(v)) {
-            v.empire().diplomatAI().receiveOfferPact(empire);
-        }
-        if (canOfferAlliance(v.empire()) && willingToOfferAlliance(v.empire())) {
-            v.empire().diplomatAI().receiveOfferAlliance(v.owner());
-        }
-        decidedToIssuePraise(v);
-    }
-    private boolean decidedToIssuePraise(EmpireView view) {
-        if (!view.inEconomicRange())
-            return false;
-
-        log(view+": checkIssuePraise");
-        DiplomaticIncident maxIncident = null;
-        for (DiplomaticIncident ev: view.embassy().newIncidents()) {
-            if (ev.triggersPraise() && ev.moreSevere(maxIncident))
-                maxIncident = ev;
-        }
-
-        if (maxIncident == null)
-            return false;
-
-        log("maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.severity()));
-
-        // don't issue praise unless new incidents are high enough
-        if (maxIncident.severity() < view.embassy().minimumPraiseLevel())
-            return false;
-
-        maxIncident.notifyOfPraise();
-        view.embassy().praiseSent();
-        if (view.empire().isPlayerControlled())
-            DiplomaticNotification.create(view, maxIncident, maxIncident.praiseMessageId());
-
-        return true;
-    }
-    private int warningThreshold(EmpireView view) {
-        DiplomaticEmbassy emb = view.embassy();
-        int warnLevel = emb.minimumWarnLevel();
-        if (emb.alliance())
-            return warnLevel / 4;
-        else if (emb.pact())
-            return warnLevel /2;
-        else
-            return warnLevel;
-    }
-    private boolean decidedToIssueWarning(EmpireView view) {
-        if (!view.inEconomicRange())
-            return false;
-        // no warnings if at war
-        DiplomaticEmbassy emb = view.embassy();
-        if (emb.war())
-            return false;
-        float threshold = 0 - warningThreshold(view);
-        log(view+": checkIssueWarning. Threshold: "+ threshold);
-        DiplomaticIncident maxIncident = null;
-        for (DiplomaticIncident ev: emb.newIncidents()) {
-            log(view.toString(), "new incident:", ev.toString());
-            if (ev.triggersWarning() && ev.moreSevere(maxIncident))
-                maxIncident = ev;
-        }
-        
-        if (maxIncident == null)
-            return false;
-        
-        if (maxIncident.severity() > threshold)
-            return false;
-
-        view.embassy().logWarning(maxIncident);
-        
-        // if we are warning player, send a notification
-        if (view.empire().isPlayerControlled()) {
-            // we will only give one expansion warning
-            if (maxIncident instanceof ExpansionIncident) {
-                if (view.embassy().gaveExpansionWarning())
-                    return true;
-                view.embassy().giveExpansionWarning();
-            }
-            //ail: don't nag about spy-confession-incidents
-            if(!(maxIncident instanceof SpyConfessionIncident
-                    || maxIncident instanceof EspionageTechIncident))
-                DiplomaticNotification.create(view, maxIncident, maxIncident.warningMessageId());
-        }
-        return true;
-    }
-    private boolean decidedToDeclareWar(EmpireView view) {
-        if (empire.isPlayerControlled())
-            return false;
-        if (view.embassy().war())
-            return false;
-        if (!view.inEconomicRange())
-            return false;
-        if(empire.enemies().contains(view.empire()))
-            return false;
-        
-        // look at new incidents. If any trigger war, pick
-        // the one with the greatest severity
-        DiplomaticIncident warIncident = null;
-        float worstNewSeverity = 0;
-        
-        // check for a war incident if we are not at peace, or the start
-        // date of our peace treaty precedes the current time
-        if (!view.embassy().atPeace()
-        || (view.embassy().treatyTurn() < galaxy().currentTurn())) {
-            for (DiplomaticIncident ev: view.embassy().newIncidents()) {
-                if (!ev.declareWarId().isEmpty()) {
-                    if (ev.triggersWar()) {
-                        float sev = ev.severity();
-                        if (ev.triggersWarning() && (sev < worstNewSeverity))
-                            warIncident = ev;
-                    }
-                    else if (view.embassy().timerIsActive(ev.timerKey()))
-                        warIncident = ev;
-                }
-            }
-            if (warIncident != null) {
-                if(!warIncident.isSpying())
-                {
-                    beginIncidentWar(view, warIncident);
-                    return true;
-                }
-            }
-        }
-        
-        if (wantToDeclareWarOfOpportunity(view)) {
-            //ail: even if the real reason is because of geopolitics, we can still blame it on an incident, if there ever was one, so the player thinks it is their own fault
-            beginOpportunityWar(view);
-            return true;
-        }
-        return false;
-    }
     @Override
     public boolean wantToDeclareWarOfOpportunity(EmpireView v) {
         return wantToDeclareWar(v);
@@ -714,10 +299,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         view.embassy().beginWarPreparations(inc.declareWarId(), inc);
         if (inc.triggersImmediateWar())
             view.embassy().declareWar();
-    }
-    private void beginOpportunityWar(EmpireView view) {
-        log(view+" - Declaring war based on opportunity");
-        view.embassy().beginWarPreparations(DialogueManager.DECLARE_OPPORTUNITY_WAR, null);
     }
     //-----------------------------------
     // INCIDENTS
