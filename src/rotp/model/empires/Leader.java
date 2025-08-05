@@ -22,6 +22,7 @@ import rotp.util.Base;
 
 public class Leader implements Base, Serializable {
     private static final long serialVersionUID = 1L;
+    
     public enum Personality  {
         ERRATIC("LEADER_ERRATIC"),
         PACIFIST("LEADER_PACIFIST"),
@@ -29,9 +30,13 @@ public class Leader implements Base, Serializable {
         RUTHLESS("LEADER_RUTHLESS"),
         AGGRESSIVE("LEADER_AGGRESSIVE"),
         XENOPHOBIC("LEADER_XENOPHOBIC");
+        
         private final String label;
-        Personality(String s) { label = s; }
+        Personality(String s) {
+            label = s;
+        }
     }
+    
     public enum Objective {
         MILITARIST("LEADER_MILITARIST"),
         ECOLOGIST("LEADER_ECOLOGIST"),
@@ -39,9 +44,13 @@ public class Leader implements Base, Serializable {
         INDUSTRIALIST("LEADER_INDUSTRIALIST"),
         EXPANSIONIST("LEADER_EXPANSIONIST"),
         TECHNOLOGIST("LEADER_TECHNOLOGIST");
+        
         private final String label;
-        Objective(String s) { label = s; }
+        Objective(String s) {
+            label = s;
+        }
     }
+    
     private final String name;
     public final Personality personality;
     public final Objective objective;
@@ -52,23 +61,53 @@ public class Leader implements Base, Serializable {
         this.objective = objective;
     }
     
-    public String name()        { return name; }
-    public String objective()   { return text(objective.label); }
-    public String personality() { return text(personality.label); }
+    public String name() {
+        return name;
+    }
+    public String objective() {
+        return text(objective.label);
+    }
+    public String personality() {
+        return text(personality.label);
+    }
 
-    public boolean isErratic()     { return personality == Personality.ERRATIC; }
-    public boolean isPacifist()    { return personality == Personality.PACIFIST; }
-    public boolean isHonorable()   { return personality == Personality.HONORABLE; }
-    public boolean isAggressive()  { return personality == Personality.AGGRESSIVE; }
-    public boolean isRuthless()    { return personality == Personality.RUTHLESS; }
-    public boolean isXenophobic()  { return personality == Personality.XENOPHOBIC; }
+    public boolean isErratic() {
+        return personality == Personality.ERRATIC;
+    }
+    public boolean isPacifist() {
+        return personality == Personality.PACIFIST;
+    }
+    public boolean isHonorable() {
+        return personality == Personality.HONORABLE;
+    }
+    public boolean isAggressive() {
+        return personality == Personality.AGGRESSIVE;
+    }
+    public boolean isRuthless() {
+        return personality == Personality.RUTHLESS;
+    }
+    public boolean isXenophobic() {
+        return personality == Personality.XENOPHOBIC;
+    }
 
-    public boolean isDiplomat()     { return objective == Objective.DIPLOMAT; }
-    public boolean isMilitarist()   { return objective == Objective.MILITARIST; }
-    public boolean isEcologist()    { return objective == Objective.ECOLOGIST; }
-    public boolean isIndustrialist(){ return objective == Objective.INDUSTRIALIST; }
-    public boolean isExpansionist() { return objective == Objective.EXPANSIONIST; }
-    public boolean isTechnologist() { return objective == Objective.TECHNOLOGIST; }
+    public boolean isDiplomat() {
+        return objective == Objective.DIPLOMAT;
+    }
+    public boolean isMilitarist() {
+        return objective == Objective.MILITARIST;
+    }
+    public boolean isEcologist() {
+        return objective == Objective.ECOLOGIST;
+    }
+    public boolean isIndustrialist() {
+        return objective == Objective.INDUSTRIALIST;
+    }
+    public boolean isExpansionist() {
+        return objective == Objective.EXPANSIONIST;
+    }
+    public boolean isTechnologist() {
+        return objective == Objective.TECHNOLOGIST;
+    }
 
     public String dialogueContactType() {
         switch(personality) {
