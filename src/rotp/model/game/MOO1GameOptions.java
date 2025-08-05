@@ -213,10 +213,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedGalaxyShapeOption2 = galaxyShape.defaultOption2();
     }
     @Override
-    public int numGalaxyShapeOption1() {  return galaxyShape.numOptions1(); }
-    @Override
-    public int numGalaxyShapeOption2() {  return galaxyShape.numOptions2(); }
-    @Override
     public int numberStarSystems() {
             // MOO Strategy Guide, Table 3-2, p.50
         /*
