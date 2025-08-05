@@ -55,7 +55,8 @@ public class PlanetFactory implements Base {
         return p;
     }
     public static Planet createOrion(StarSystem sys) {
-        Planet p = instance.options().orionPlanet(sys);
+        Planet p = new Planet(sys);
+        p.initPlanetType("PLANET_TERRAN");
         p.setOrionArtifact();
         p.makeEnvironmentFertile();
         p.baseSize(120);

@@ -65,7 +65,6 @@ public interface IGameOptions {
     public boolean allowRandomEvent(RandomEvent ev);
     public Planet randomPlanet(StarSystem s);
     public Planet randomPlayerPlanet(Race r, StarSystem s);
-    public Planet orionPlanet(StarSystem s);
     public void randomizeColors();
     public GalaxyShape galaxyShape();
    
