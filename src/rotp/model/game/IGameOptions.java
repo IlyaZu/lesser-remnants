@@ -18,7 +18,6 @@ package rotp.model.game;
 
 import java.awt.Color;
 import java.util.List;
-import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
 import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyShape;
@@ -55,7 +54,7 @@ public interface IGameOptions {
     
     public boolean isAutoPlay();
     public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
-    public default int selectedAI(Empire e)       { return AI.BASE; }
+    public int selectedAI(Empire e);
     public void setToDefault();
 
     public int numberStarSystems();
@@ -117,7 +116,7 @@ public interface IGameOptions {
     public String selectedOpponentRace(int i);
     public void selectedOpponentRace(int i, String s);
 
-    default void copyOptions(IGameOptions opt) { }
+    public void copyOptions(IGameOptions opt);
     default String nextGalaxySize(boolean bounded) {
         List<String> opts = galaxySizeOptions();
         int index = opts.indexOf(selectedGalaxySize())+1;
