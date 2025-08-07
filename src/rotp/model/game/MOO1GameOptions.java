@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
-import rotp.model.empires.Race;
 import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyEllipticalShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
@@ -330,12 +329,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             checkForRichResources(p, s);
         if (p.isResourceNormal())
             checkForArtifacts(p, s);
-        return p;
-    }
-    @Override
-    public Planet randomPlayerPlanet(Race r, StarSystem s) {
-        Planet p = new Planet(s);
-        p.initPlanetType(r.homeworldPlanetType);
         return p;
     }
     @Override
