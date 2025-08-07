@@ -976,27 +976,4 @@ public interface Base {
                 g.fillRect(x1,y1,s1,s1);
         }
     }
-    public default List<String> readSystemNames(String filePath) {
-        BufferedReader reader = reader(filePath);
-        if (reader == null)
-            return null;
-
-        List<String> names = new ArrayList<>();
-        try {
-            List<String> lineValues;
-            while ((lineValues = (parsedValues(reader.readLine(), ','))) != null) {
-                if (!lineValues.isEmpty())
-                    names.add(lineValues.get(0));
-            }
-        }
-        catch (IOException e) {
-            err("Base.readFileLines: ", filePath, " -- IOException: ", e.toString());
-        }
-        finally {
-            try {
-                reader.close();
-            } catch (IOException e) {}
-        }
-        return names;
-    }
 }

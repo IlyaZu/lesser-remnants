@@ -18,6 +18,7 @@ package rotp.model.empires;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import rotp.Rotp;
 import rotp.util.AnimationManager;
@@ -111,6 +112,29 @@ public enum RaceFactory implements Base {
         
         if (Rotp.countWords)
             log("WORDS - "+filename+": "+wc);
+    }
+    private List<String> readSystemNames(String filePath) {
+        BufferedReader reader = reader(filePath);
+        if (reader == null)
+            return null;
+
+        List<String> names = new ArrayList<>();
+        try {
+            List<String> lineValues;
+            while ((lineValues = (parsedValues(reader.readLine(), ','))) != null) {
+                if (!lineValues.isEmpty())
+                    names.add(lineValues.get(0));
+            }
+        }
+        catch (IOException e) {
+            err("Base.readFileLines: ", filePath, " -- IOException: ", e.toString());
+        }
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e) {}
+        }
+        return names;
     }
     private void loadRaceDataLine(Race r, String input) {
         if (isComment(input))
