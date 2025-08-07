@@ -16,9 +16,7 @@
  */
 package rotp.util;
 
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,21 +47,6 @@ public enum ImageManager implements Base {
     @Override
     public Image image(String key) {
         return key.equalsIgnoreCase("NULL") || key.isEmpty() ? null : icon(random(imageFiles.get(key))).getImage();
-    }
-    @Override
-    public Image scaledImageW(String key, int newW) {
-        Image img = image(key);
-
-        int newH = img.getHeight(null)*newW/img.getWidth(null);
-
-        if ((newW <=0) || (newH <=0) || (newW > 2000))
-            return img;
-
-        BufferedImage newImg = newBufferedImage(newW, newH);
-        Graphics g = newImg.getGraphics();
-        g.drawImage(img, 0,0, newW, newH, null);
-        g.dispose();
-        return newImg;
     }
     public void loadImageList(String filename) {
         log("Loading Images: ", filename);

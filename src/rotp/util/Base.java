@@ -210,7 +210,6 @@ public interface Base {
         return Rotp.maxHeapMemory < 800;
     }
     public default Image image(String s)               { return ImageManager.current().image(s); }
-    public default Image scaledImageW(String s, int w) { return ImageManager.current().scaledImageW(s, w); }
     public default int animationCount()                { return RotPUI.instance().animationCount(); }
     public default void allFrames(String key, int cnt, int imgIndex, List<Image> frames, List<Integer> refs)  {
         AnimationManager.current().allFrames(key, cnt, imgIndex, frames, refs);
