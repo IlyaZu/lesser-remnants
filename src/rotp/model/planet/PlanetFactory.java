@@ -63,7 +63,8 @@ public class PlanetFactory implements Base {
         return p;
     }
     public static Planet createHomeworld(Race r, StarSystem sys) {
-        Planet p = instance.options().randomPlayerPlanet(r, sys);
+        Planet p = new Planet(sys);
+        p.initPlanetType(r.homeworldPlanetType);
         p.baseSize(r.homeworldSize);
         if (r.homeworldKey() > 0)
             p.terrainSeed(r.homeworldKey());

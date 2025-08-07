@@ -20,7 +20,6 @@ import java.awt.Color;
 import java.util.List;
 import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
-import rotp.model.empires.Race;
 import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.galaxy.StarSystem;
@@ -64,7 +63,6 @@ public interface IGameOptions {
     public List<Integer> possibleColors();
     public boolean allowRandomEvent(RandomEvent ev);
     public Planet randomPlanet(StarSystem s);
-    public Planet randomPlayerPlanet(Race r, StarSystem s);
     public void randomizeColors();
     public GalaxyShape galaxyShape();
    
