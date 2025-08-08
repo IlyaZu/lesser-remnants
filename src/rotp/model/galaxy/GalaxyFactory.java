@@ -188,10 +188,10 @@ public class GalaxyFactory implements Base {
         // ensure 1st nearby system is colonizable
         boolean needHabitable = true;
         for (int i=1;i<empSystem.numSystems();i++) {
-            StarSystem sys0 = StarSystemFactory.current().newSystem(g);
+            StarSystem sys0 = StarSystemFactory.current().newNeutralSystem(g);
             if (needHabitable) {
                 while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                    sys0 = StarSystemFactory.current().newSystem(g);
+                    sys0 = StarSystemFactory.current().newNeutralSystem(g);
                 needHabitable = false;
             }
             sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -233,10 +233,10 @@ public class GalaxyFactory implements Base {
             // create two nearby system within 3 light-years (required to be at least 1 habitable)
             boolean needHabitable = true;
             for (int i=1;i<empSystem.numSystems();i++) {
-                StarSystem sys0 = StarSystemFactory.current().newSystem(g);
+                StarSystem sys0 = StarSystemFactory.current().newNeutralSystem(g);
                 if (needHabitable) {
                     while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                        sys0 = StarSystemFactory.current().newSystem(g);
+                        sys0 = StarSystemFactory.current().newNeutralSystem(g);
                     needHabitable = false;
                 }
                 sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -255,7 +255,7 @@ public class GalaxyFactory implements Base {
         
         // add all other systems, starting at index 1
         for (int i=1;i<sh.numberStarSystems();i++) {
-            StarSystem sys = StarSystemFactory.current().newSystem(g);
+            StarSystem sys = StarSystemFactory.current().newNeutralSystem(g);
             sh.coords(i, pt);
             sys.setXY(pt.x, pt.y);
             g.addStarSystem(sys);
