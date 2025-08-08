@@ -175,7 +175,7 @@ public class GalaxyFactory implements Base {
         Integer color = options().selectedPlayerColor();
 
         // create home system for player
-        StarSystem sys = StarSystemFactory.current().newSystemForPlayer(playerRace, g);
+        StarSystem sys = StarSystemFactory.current().newHomeworldSystem(playerRace, g);
         sys.setXY(empSystem.colonyX(), empSystem.colonyY());
         sys.name(systemName);
         g.addStarSystem(sys);
@@ -223,7 +223,7 @@ public class GalaxyFactory implements Base {
             Race r = Race.keyed(alienRaces.get(h));
             EmpireSystem empSystem = empSystems.get(h);
             Integer colorId = raceColors.remove(0);
-            StarSystem sys = StarSystemFactory.current().newSystemForRace(r,g);
+            StarSystem sys = StarSystemFactory.current().newHomeworldSystem(r,g);
             sys.setXY(empSystem.colonyX(), empSystem.colonyY());
             sys.name(r.nextAvailableHomeworld());
             g.addStarSystem(sys);
