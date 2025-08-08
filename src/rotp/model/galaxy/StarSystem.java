@@ -137,13 +137,9 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         for (int i=0;i<size;i++)
             nearbySystems[i] = nearSystems.get(i).id;
     }
-    public static StarSystem create(String key, Galaxy gal) {
-        StarSystem s = new StarSystem(key, gal.systemCount);
-        return s;
-    }
-    private StarSystem(String key, int num) {
-        starTypeKey = key;
-        id = num;
+    public StarSystem(String starTypeKey, int id) {
+        this.starTypeKey = starTypeKey;
+        this.id = id;
     }
     @Override
     public int displayPriority()           { return 6; }
