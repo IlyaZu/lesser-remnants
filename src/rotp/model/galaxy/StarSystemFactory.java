@@ -16,8 +16,6 @@
  */
 package rotp.model.galaxy;
 
-import java.util.ArrayList;
-import java.util.List;
 import rotp.model.empires.Race;
 import rotp.model.planet.PlanetFactory;
 import rotp.util.Base;
@@ -31,22 +29,18 @@ public class StarSystemFactory implements Base {
         StarSystem sys = StarSystem.create(type, gal);
         return sys;
     }
+    
     public StarSystem newOrionSystem(Galaxy gal) {
-        String type = randomOrionStarType();
+        String type = homeworldStarType();
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createOrion(sys));
         sys.monster(new OrionGuardianShip());
         sys.name(text("PLANET_ORION"));
         return sys;
     }
-    public StarSystem newSystemForRace(Race r, Galaxy gal) {
-        String type = randomRaceStarType(r);
-        StarSystem sys = StarSystem.create(type, gal);
-        sys.planet(PlanetFactory.createHomeworld(r, sys));
-        return sys;
-    }
-    public StarSystem newSystemForPlayer(Race r, Galaxy gal) {
-        String type = randomPlayerStarType(r);
+    
+    public StarSystem newHomeworldSystem(Race r, Galaxy gal) {
+        String type = homeworldStarType();
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
@@ -77,25 +71,7 @@ public class StarSystemFactory implements Base {
         }
     }
     
-    private String randomOrionStarType() {
-        List<String> types = new ArrayList<>();
-        types.add(StarType.RED);
-        types.add(StarType.ORANGE);
-        types.add(StarType.YELLOW);
-
-        return random(types);
-    }
-    
-    private String randomRaceStarType(Race r) {
-        List<String> types = new ArrayList<>();
-        types.add(StarType.RED);
-        types.add(StarType.ORANGE);
-        types.add(StarType.YELLOW);
-
-        return random(types);
-    }
-    
-    private String randomPlayerStarType(Race r) {
+    private String homeworldStarType() {
         return StarType.YELLOW;
     }
 }
