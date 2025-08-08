@@ -24,8 +24,8 @@ public class StarSystemFactory implements Base {
     private static final StarSystemFactory instance = new StarSystemFactory();
     public static StarSystemFactory current()   { return instance; }
 
-    public StarSystem newSystem(Galaxy gal) {
-        String type = randomStarType();
+    public StarSystem newNeutralSystem(Galaxy gal) {
+        String type = neutralStarType();
         StarSystem sys = StarSystem.create(type, gal);
         return sys;
     }
@@ -46,7 +46,7 @@ public class StarSystemFactory implements Base {
         return sys;
     }
     
-    private String randomStarType() {
+    private String neutralStarType() {
         // pcts represents star type distribution per MOO1 Official Strategy Guide
         //                RED, ORANG, YELL, BLUE,WHITE, PURP
         float[] pcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
