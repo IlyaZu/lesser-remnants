@@ -30,6 +30,23 @@ public class StarSystemFactory implements Base {
         return sys;
     }
     
+    private String neutralStarType() {
+        float starTypeRoll = random();
+        if (starTypeRoll <= .30) {
+            return StarType.RED;
+        } else if (starTypeRoll <= .55) {
+            return StarType.ORANGE;
+        } else if (starTypeRoll <= .70) {
+            return StarType.YELLOW;
+        } else if (starTypeRoll <= .85) {
+            return StarType.BLUE;
+        } else if (starTypeRoll <= .95) {
+            return StarType.WHITE;
+        } else {
+            return StarType.PURPLE;
+        }
+    }
+    
     public StarSystem newOrionSystem(Galaxy gal) {
         String type = homeworldStarType();
         StarSystem sys = StarSystem.create(type, gal);
@@ -44,31 +61,6 @@ public class StarSystemFactory implements Base {
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
-    }
-    
-    private String neutralStarType() {
-        // pcts represents star type distribution per MOO1 Official Strategy Guide
-        //                RED, ORANG, YELL, BLUE,WHITE, PURP
-        float[] pcts = { .30f, .55f, .70f, .85f, .95f, 1.0f };
-        
-        int typeIndex = 0;
-        float r = random();
-        for (int i=0;i<pcts.length;i++) {
-            if (r <= pcts[i]) {
-                typeIndex = i;
-                break;
-            }
-        }
-
-        switch(typeIndex) {
-            case 0:  return StarType.RED;
-            case 1:  return StarType.ORANGE;
-            case 2:  return StarType.YELLOW;
-            case 3:  return StarType.BLUE;
-            case 4:  return StarType.WHITE;
-            case 5:  return StarType.PURPLE;
-            default: return StarType.RED;
-        }
     }
     
     private String homeworldStarType() {
