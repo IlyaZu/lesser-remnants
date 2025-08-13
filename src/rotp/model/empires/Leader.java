@@ -18,9 +18,8 @@ package rotp.model.empires;
 
 import java.io.Serializable;
 import rotp.ui.diplomacy.DialogueManager;
-import rotp.util.Base;
 
-public class Leader implements Base, Serializable {
+public class Leader implements Serializable {
     private static final long serialVersionUID = 1L;
     
     public enum Personality  {
@@ -128,7 +127,7 @@ public class Leader implements Base, Serializable {
     }
     public float diplomacyAnnoyanceMod(EmpireView v) {
         // # of requests past the initial
-        int addl = max(0, v.embassy().requestCount()-1);
+        int addl = Math.max(0, v.embassy().requestCount()-1);
         switch(personality) {
             case XENOPHOBIC: return -20*addl;
             case ERRATIC:    return -10*addl;
