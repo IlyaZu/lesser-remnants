@@ -427,7 +427,7 @@ public class AIDiplomat implements Base, Diplomat {
         return (popPct + factPct + fleetPct) > 2;
     }
     private float warColonyLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
+        switch(v.owner().leader().objective()) {
             case MILITARIST:    return 0.6f;
             case ECOLOGIST:     return 0.8f;
             case DIPLOMAT:      return 0.6f;
@@ -438,7 +438,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
     }
     private float warPopulationLossLimit(EmpireView v) {
-        switch(v.owner().leader().personality) {
+        switch(v.owner().leader().personality()) {
             case PACIFIST:   return 0.8f;
             case HONORABLE:  return 0.6f;
             case XENOPHOBIC: return 0.6f;
@@ -449,7 +449,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
     }
     private float warFactoryLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
+        switch(v.owner().leader().objective()) {
             case MILITARIST:    return 0.6f;
             case ECOLOGIST:     return 0.4f;
             case DIPLOMAT:      return 0.6f;
@@ -460,7 +460,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
     }
     private float warFleetSizeLossLimit(EmpireView v) {
-        switch(v.owner().leader().objective) {
+        switch(v.owner().leader().objective()) {
             case MILITARIST:    return 0.5f;
             case ECOLOGIST:     return 0.3f;
             case DIPLOMAT:      return 0.3f;
