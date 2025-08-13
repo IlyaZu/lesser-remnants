@@ -549,7 +549,17 @@ public class DiplomaticEmbassy implements Base, Serializable {
         log("First Contact: ", owner().name(), " & ", empire().name());
         makeContact();
         if (empire().isPlayerControlled())
-            DiplomaticNotification.create(view, owner().leader().dialogueContactType());
+            DiplomaticNotification.create(view, dialogueContactType(owner().leader()));
+    }
+    private String dialogueContactType(Leader leader) {
+        return switch(leader.personality()) {
+            case PACIFIST -> DialogueManager.CONTACT_PACIFIST;
+            case HONORABLE -> DialogueManager.CONTACT_HONORABLE;
+            case RUTHLESS -> DialogueManager.CONTACT_RUTHLESS;
+            case AGGRESSIVE -> DialogueManager.CONTACT_AGGRESSIVE;
+            case XENOPHOBIC -> DialogueManager.CONTACT_XENOPHOBIC;
+            case ERRATIC -> DialogueManager.CONTACT_ERRATIC;
+        };
     }
     public void removeContact() {
         contact = false;

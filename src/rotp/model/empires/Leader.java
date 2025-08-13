@@ -17,7 +17,6 @@
 package rotp.model.empires;
 
 import java.io.Serializable;
-import rotp.ui.diplomacy.DialogueManager;
 
 public class Leader implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -114,17 +113,6 @@ public class Leader implements Serializable {
         return objective == Objective.TECHNOLOGIST;
     }
 
-    public String dialogueContactType() {
-        switch(personality) {
-            case PACIFIST:   return DialogueManager.CONTACT_PACIFIST;
-            case HONORABLE:  return DialogueManager.CONTACT_HONORABLE;
-            case RUTHLESS:   return DialogueManager.CONTACT_RUTHLESS;
-            case AGGRESSIVE: return DialogueManager.CONTACT_AGGRESSIVE;
-            case XENOPHOBIC: return DialogueManager.CONTACT_XENOPHOBIC;
-            case ERRATIC:    return DialogueManager.CONTACT_ERRATIC;
-            default:         return DialogueManager.CONTACT_ERRATIC;
-        }
-    }
     public float diplomacyAnnoyanceMod(EmpireView v) {
         // # of requests past the initial
         int addl = Math.max(0, v.embassy().requestCount()-1);
