@@ -35,6 +35,9 @@ public class Leader implements Base, Serializable {
         Personality(String s) {
             label = s;
         }
+        public String label() {
+            return label;
+        }
     }
     
     public enum Objective {
@@ -49,11 +52,14 @@ public class Leader implements Base, Serializable {
         Objective(String s) {
             label = s;
         }
+        public String label() {
+            return label;
+        }
     }
     
     private final String name;
-    public final Personality personality;
-    public final Objective objective;
+    private final Personality personality;
+    private final Objective objective;
     
     public Leader(String name, Personality personality, Objective objective) {
         this.name = name;
@@ -64,11 +70,11 @@ public class Leader implements Base, Serializable {
     public String name() {
         return name;
     }
-    public String objective() {
-        return text(objective.label);
+    public Objective objective() {
+        return objective;
     }
-    public String personality() {
-        return text(personality.label);
+    public Personality personality() {
+        return personality;
     }
 
     public boolean isErratic() {

@@ -238,7 +238,9 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
             empY += s20;
             g.setFont(narrowFont(18));
-            s = text("LEADER_PERSONALITY_FORMAT", diplomatEmpire.leader().personality(), diplomatEmpire.leader().objective());
+            String personalityLabel = text(diplomatEmpire.leader().personality().label());
+            String objectiveLabel = text(diplomatEmpire.leader().objective().label());
+            s = text("LEADER_PERSONALITY_FORMAT", personalityLabel, objectiveLabel);
             sw = g.getFontMetrics().stringWidth(s);
             drawBorderedString(g, s, fX+(fW-sw)/2, empY, Color.black, Color.white);
             empY += s20;

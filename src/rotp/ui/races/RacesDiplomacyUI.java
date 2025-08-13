@@ -298,7 +298,9 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-s20-sw, y2);
 
-        s =  text("LEADER_PERSONALITY_FORMAT", emp.leader().personality(),emp.leader().objective());
+        String personalityLabel = text(emp.leader().personality().label());
+        String objectiveLabel = text(emp.leader().objective().label());
+        s =  text("LEADER_PERSONALITY_FORMAT", personalityLabel, objectiveLabel);
         sw = g.getFontMetrics().stringWidth(s);
         drawString(g,s, x+w-s20-sw, y3);
 
