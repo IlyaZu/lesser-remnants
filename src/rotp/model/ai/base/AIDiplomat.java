@@ -357,8 +357,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         v.embassy().resetPeaceTimer();
         
-        float autoAccept = bonus/200.0f;  //30% chance for humans
-        if ((random() > autoAccept) && !warWeary(v))
+        if (!warWeary(v))
             return refuseOfferPeace(requestor);
 
         DiplomaticIncident inc = v.embassy().signPeace();
