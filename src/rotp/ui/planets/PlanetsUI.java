@@ -93,6 +93,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private final static int DOWN_ACTION = 2;
     private final static String CANCEL_ACTION = "cancel-input";
     
+    private static final List<StarSystem> SELECTED_SYSTEMS = new ArrayList<>();
     private static StarSystem ANCHOR_SYSTEM;
 
     private int pad = 10;
@@ -430,24 +431,15 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     }
     @Override
     public StarSystem systemViewToDisplay()  { return lastSelectedSystem(); }
-
-    private List<StarSystem> selectedSystems(){
-        List<StarSystem> systems = (List<StarSystem>)sessionVar("COLONYUI_SELECTED_SYSTEMS");
-        if (systems == null) {
-            systems = new ArrayList<>();
-            sessionVar("COLONYUI_SELECTED_SYSTEMS", systems);
-        }
-        return systems;
-    }
+    
     private void selectAllSystems() {
-        List<StarSystem> selectedSystems = selectedSystems();
-        selectedSystems.clear();
-        selectedSystems.addAll(allSystems());
+        SELECTED_SYSTEMS.clear();
+        SELECTED_SYSTEMS.addAll(allSystems());
         
-        if (selectedSystems.size() > 1)
+        if (SELECTED_SYSTEMS.size() > 1)
             showMultiPlanetPanel();
         repaint();
-        setAnchorSystem(selectedSystems().get(0), true);
+        setAnchorSystem(SELECTED_SYSTEMS.get(0), true);
     }
     private void shiftSelectedSystem(StarSystem sys, boolean updateFieldValues) {
         StarSystem anchor = anchorSystem();
@@ -456,11 +448,10 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         int prevAnchorIndex = allSystems.indexOf(anchor);
         int newAnchorIndex = allSystems.indexOf(sys);
         
-        List<StarSystem> selectedSystems = selectedSystems();
-        selectedSystems.clear();
+        SELECTED_SYSTEMS.clear();
         
         if (prevAnchorIndex == newAnchorIndex) {
-            selectedSystems.add(sys);
+            SELECTED_SYSTEMS.add(sys);
             showSinglePlanetPanel();
             return;
         }
@@ -470,29 +461,27 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         
         for (int i=start;i<=end;i++) {
             StarSystem sys1 = allSystems.get(i);
-            selectedSystems.add(sys1);
+            SELECTED_SYSTEMS.add(sys1);
         }
         showMultiPlanetPanel();
         
         setAnchorSystem(sys, updateFieldValues);
     }
     private boolean controlSelectedSystem(StarSystem sys, boolean updateFieldValues) {
-        List<StarSystem> systems = selectedSystems();
-
         boolean toggled = true;
-        if (systems.contains(sys)) {
-            if (systems.size() == 1)
+        if (SELECTED_SYSTEMS.contains(sys)) {
+            if (SELECTED_SYSTEMS.size() == 1)
                 toggled = false;
             else
-                systems.remove(sys);
+                SELECTED_SYSTEMS.remove(sys);
         }
         else
-            systems.add(sys);
+            SELECTED_SYSTEMS.add(sys);
         
         if (toggled)
             setAnchorSystem(sys, updateFieldValues);
         
-        if (systems.size() == 1)
+        if (SELECTED_SYSTEMS.size() == 1)
             showSinglePlanetPanel();
         else
             showMultiPlanetPanel();
@@ -503,9 +492,8 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         sessionVar("MAINUI_SELECTED_SYSTEM", sys);
         sessionVar("MAINUI_CLICKED_SPRITE", sys);
         
-        List<StarSystem> systems = selectedSystems();
-        systems.clear();
-        systems.add(sys);
+        SELECTED_SYSTEMS.clear();
+        SELECTED_SYSTEMS.add(sys);
         
         setAnchorSystem(sys, updateFieldValues);
         showSinglePlanetPanel();
@@ -752,7 +740,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             add(detailPane(), BorderLayout.CENTER);
         }
         @Override
-        public List<StarSystem> systemsToDisplay() { return instance.selectedSystems(); }
+        public List<StarSystem> systemsToDisplay() { return SELECTED_SYSTEMS; }
         @Override
         public StarSystem systemViewToDisplay() { return lastSelectedSystem(); }
         @Override
@@ -1457,7 +1445,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         }
         @Override
         protected boolean isSelected(StarSystem sys) {
-            return instance.selectedSystems().contains(sys);
+            return SELECTED_SYSTEMS.contains(sys);
         }
         @Override
         protected void postInit() {
