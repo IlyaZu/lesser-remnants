@@ -92,6 +92,8 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private final static int UP_ACTION = 1;
     private final static int DOWN_ACTION = 2;
     private final static String CANCEL_ACTION = "cancel-input";
+    
+    private static StarSystem ANCHOR_SYSTEM;
 
     private int pad = 10;
     private List<StarSystem> displayedSystems;
@@ -409,13 +411,10 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         return displayedSystems;
     }
     private StarSystem anchorSystem() {
-        StarSystem sys = (StarSystem) sessionVar("COLONYUI_ANCHOR_SYSTEM");
-
-        if (sys == null) {
-            sys = (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM");
-            sessionVar("COLONYUI_ANCHOR_SYSTEM", sys);
+        if (ANCHOR_SYSTEM == null) {
+            ANCHOR_SYSTEM = (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM");
         }
-        return sys;
+        return ANCHOR_SYSTEM;
     }
     private void setAnchorSystem(StarSystem sys, boolean updateFieldValues) {
         notesField.setVisible(false);
@@ -423,7 +422,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         RotPUI.instance().requestFocusInWindow();
         if (updateFieldValues)
             setFieldValues(lastSelectedSystem());
-        sessionVar("COLONYUI_ANCHOR_SYSTEM", sys);
+        ANCHOR_SYSTEM = sys;
         notesField.setText(sys.notes());
         notesField.setCaretPosition(notesField.getText().length());
         nameField.setText(player().sv.name(sys.id));
@@ -556,7 +555,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     }
     private void finish(boolean disableNextTurn) {
         displayedSystems = null;
-        sessionVar("COLONYUI_ANCHOR_SYSTEM", null);
+        ANCHOR_SYSTEM = null;
         buttonClick();
         RotPUI.instance().selectMainPanel(disableNextTurn);
     }
