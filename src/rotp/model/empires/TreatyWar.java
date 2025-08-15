@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,14 +41,6 @@ public class TreatyWar extends DiplomaticTreaty implements Base {
     public boolean isWar()                      { return true; }
     @Override
     public int listOrder()                      { return 2; }
-    public int coloniesStart(Empire e)          { return coloniesStart[index(e)]; }
-    public float populationStart(Empire e)      { return populationStart[index(e)]; }
-    public float productionStart(Empire e)      { return factoriesStart[index(e)]; }
-    public float fleetSizeStart(Empire e)       { return fleetSizeStart[index(e)]; }
-    public int coloniesNow(Empire e)            { return coloniesNow[index(e)]; }
-    public float populationNow(Empire e)        { return populationNow[index(e)]; }
-    public float factoriesNow(Empire e)         { return factoriesNow[index(e)]; }
-    public float fleetSizeNow(Empire e)         { return fleetSizeNow[index(e)]; }
     
     public float colonyChange(Empire e)         { return (float) coloniesNow[index(e)]/coloniesStart[index(e)]; }
     public float populationChange(Empire e)     { return populationNow[index(e)]/populationStart[index(e)]; }
