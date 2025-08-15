@@ -20,18 +20,18 @@ import rotp.util.Base;
 
 public class TreatyWar extends DiplomaticTreaty implements Base {
     private static final long serialVersionUID = 1L;
-    int[] coloniesStart = new int[2];
-    float[] populationStart = new float[2];
-    float[] factoriesStart = new float[2];
-    float[] fleetSizeStart = new float[2];
-    int[] coloniesNow = new int[2];
-    float[] populationNow = new float[2];
-    float[] factoriesNow = new float[2];
-    float[] fleetSizeNow = new float[2];
+    private int[] coloniesStart = new int[2];
+    private float[] populationStart = new float[2];
+    private float[] factoriesStart = new float[2];
+    private float[] fleetSizeStart = new float[2];
+    private int[] coloniesNow = new int[2];
+    private float[] populationNow = new float[2];
+    private float[] factoriesNow = new float[2];
+    private float[] fleetSizeNow = new float[2];
     
-    float[] populationLost = new float[2];
-    float[] factoriesLost = new float[2];
-    float[] fleetSizeLost = new float[2];
+    private float[] populationLost = new float[2];
+    private float[] factoriesLost = new float[2];
+    private float[] fleetSizeLost = new float[2];
     
     public TreatyWar(Empire e1, Empire e2) {
         super(e1,e2,"RACES_AT_WAR");
