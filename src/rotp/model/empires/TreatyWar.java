@@ -71,9 +71,9 @@ public class TreatyWar extends DiplomaticTreaty implements Base {
         // this will be called separately for each empire from their diplomatic
         // embassy for the other empire
         coloniesNow[index(emp)] = emp.numColonizedSystems();
-        populationNow[index(emp)] = emp.totalPlanetaryPopulation();     
+        populationNow[index(emp)] = emp.totalPlanetaryPopulation();
         factoriesNow[index(emp)] = emp.totalPlanetaryFactories();
-        fleetSizeNow[index(emp)] = emp.totalFleetSize();     
+        fleetSizeNow[index(emp)] = emp.totalFleetSize();
     }
     @Override
     public void losePopulation(Empire e, float amt) { populationLost[index(e)] += amt; }
@@ -82,5 +82,5 @@ public class TreatyWar extends DiplomaticTreaty implements Base {
     @Override
     public void loseFleet(Empire e, float amt)    { fleetSizeLost[index(e)] += amt; }
     
-    private int index(Empire e)  { return e.id == empire1 ? 0 : 1; }    
+    private int index(Empire e)  { return e.id == empire1 ? 0 : 1; }
 }
