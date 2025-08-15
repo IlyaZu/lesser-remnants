@@ -386,7 +386,7 @@ public class UserPreferences {
         musicVolume = Math.max(0, musicVolume-1);
         SoundManager.current().resetMusicVolumes();
         save();
-    };
+    }
     public static void increaseSoundLevel() {
         soundVolume = Math.min(10, soundVolume+1);
         SoundManager.current().resetSoundVolumes();
