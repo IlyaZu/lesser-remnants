@@ -35,8 +35,24 @@ public class TreatyWar extends DiplomaticTreaty implements Base {
     
     public TreatyWar(Empire e1, Empire e2) {
         super(e1,e2,"RACES_AT_WAR");
-        initValues(e1, e2);
-    }    
+
+        coloniesStart[0] = coloniesNow[0] = e1.numColonizedSystems();
+        coloniesStart[1] = coloniesNow[1] = e2.numColonizedSystems();
+        
+        populationStart[0] = populationNow[0] = e1.totalPlanetaryPopulation();
+        populationStart[1] = populationNow[1] = e2.totalPlanetaryPopulation();
+         
+        factoriesStart[0] = factoriesNow[0] = e1.totalPlanetaryFactories();
+        factoriesStart[1] = factoriesNow[1] = e2.totalPlanetaryFactories();
+       
+        // minimum 1 to avoid potential /0 when going to war with no ships
+        fleetSizeStart[0] = fleetSizeNow[0] = max(1, e1.totalFleetSize());
+        fleetSizeStart[1] = fleetSizeNow[1] = max(1, e2.totalFleetSize());
+        
+        populationLost[0] = populationLost[1] = 0;
+        factoriesLost[0] = factoriesLost[1] = 0;
+        fleetSizeLost[0] = fleetSizeLost[1] = 0;
+    }
     @Override
     public boolean isWar()                      { return true; }
     @Override
@@ -67,23 +83,4 @@ public class TreatyWar extends DiplomaticTreaty implements Base {
     public void loseFleet(Empire e, float amt)    { fleetSizeLost[index(e)] += amt; }
     
     private int index(Empire e)  { return e.id == empire1 ? 0 : 1; }    
-    private void initValues(Empire e1, Empire e2) {
-        coloniesStart[0] = coloniesNow[0] = e1.numColonizedSystems();
-        coloniesStart[1] = coloniesNow[1] = e2.numColonizedSystems();
-        
-        populationStart[0] = populationNow[0] = e1.totalPlanetaryPopulation();
-        populationStart[1] = populationNow[1] = e2.totalPlanetaryPopulation();     
-         
-        factoriesStart[0] = factoriesNow[0] = e1.totalPlanetaryFactories();
-        factoriesStart[1] = factoriesNow[1] = e2.totalPlanetaryFactories();
-       
-        // minimum 1 to avoid potential /0 when going to war with no ships
-        fleetSizeStart[0] = fleetSizeNow[0] = max(1, e1.totalFleetSize());
-        fleetSizeStart[1] = fleetSizeNow[1] = max(1, e2.totalFleetSize());  
-        
-        populationLost[0] = populationLost[1] = 0;
-        factoriesLost[0] = factoriesLost[1] = 0;
-        fleetSizeLost[0] = fleetSizeLost[1] = 0;
-    }    
-  
 }
