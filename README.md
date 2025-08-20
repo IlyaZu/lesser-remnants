@@ -58,6 +58,11 @@ In fact, I know I have already broken save compatibility many times.
 This is a necessary sacrifice to make the kind of changes I want to make.
 If you are playing this game as changes come out consider finishing a session before pulling changes.
 
+## Requirements
+
+The project is developed using the latest JDK (not necessarily the latest LTS JDK!).
+This may lag somewhat, from time to time, but if something doesn't compile the first port of call should be to check for JDK updates.
+
 ## Binaries
 
 There is currently no built, pre-packaged distribution of this game.
