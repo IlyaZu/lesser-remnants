@@ -26,15 +26,13 @@ import rotp.model.planet.Planet;
 
 public interface IGameOptions {
     public static final int MAX_OPPONENTS = 9;
+    
     public static final String SIZE_TINY = "SETUP_GALAXY_SIZE_TINY";
     public static final String SIZE_SMALL = "SETUP_GALAXY_SIZE_SMALL";
     public static final String SIZE_MEDIUM = "SETUP_GALAXY_SIZE_AVERAGE";
     public static final String SIZE_LARGE = "SETUP_GALAXY_SIZE_LARGE";
     public static final String SIZE_HUGE = "SETUP_GALAXY_SIZE_HUGE";
     public static final String SIZE_MASSIVE = "SETUP_GALAXY_SIZE_MASSIVE";
-
-    public static final String SHAPE_RECTANGLE = "SETUP_GALAXY_SHAPE_RECTANGLE";
-    public static final String SHAPE_ELLIPTICAL = "SETUP_GALAXY_SHAPE_ELLIPSE";
 
     public static final String DIFFICULTY_EASIEST = "SETUP_DIFFICULTY_EASIEST";
     public static final String DIFFICULTY_EASIER  = "SETUP_DIFFICULTY_EASIER";

@@ -36,6 +36,9 @@ import rotp.util.Base;
 public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private static final long serialVersionUID = 1L;
     
+    private static final String SHAPE_RECTANGLE = "SETUP_GALAXY_SHAPE_RECTANGLE";
+    private static final String SHAPE_ELLIPTICAL = "SETUP_GALAXY_SHAPE_ELLIPSE";
+    
     /** Set to a constant from AI class to enable the AI to play as the player */
     private final Integer autoPlayAIType = null;
     
