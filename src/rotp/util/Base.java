@@ -78,7 +78,6 @@ public interface Base {
     public default Galaxy galaxy()         { return session().galaxy(); }
     public default IGameOptions options()  { return session().options(); }
     public default Empire player()         { return galaxy().player(); }
-    public default boolean isPlayer(Empire e) { return galaxy().isPlayer(e); }
     public default LabelManager labels()   { return LabelManager.current(); }
     public default IGameOptions newGameOptions()        { return RotPUI.newOptions(); }
     public default void createNewGameOptions()          { RotPUI.createNewOptions(); }

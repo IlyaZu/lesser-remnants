@@ -84,7 +84,6 @@ public class Galaxy implements Base, Serializable {
     public void player(Empire d)             { playerEmpire = d; }
     @Override
     public Empire player()                   { return playerEmpire; }
-    @Override
     public boolean isPlayer(Empire d)        { return playerEmpire == d; }
     public void initNebulas(int size)        { nebulas = new ArrayList<>(size); }
     public CombatManager shipCombat() {
