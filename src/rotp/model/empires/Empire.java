@@ -95,7 +95,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     private final List<StarSystem> colonizedSystems = new ArrayList<>();
     private boolean extinct = false;
     private int lastCouncilVoteEmpId = Empire.NULL_ID;
-    private Colony.Orders priorityOrders = Colony.Orders.NONE;
     private int bannerColor;
     private final List<StarSystem> newSystems = new ArrayList<>();
     private final EmpireStatus status;
@@ -211,8 +210,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         return true;
     }
 
-    public Colony.Orders priorityOrders()         { return priorityOrders; }
-    public void priorityOrders(Colony.Orders o)   { priorityOrders = o; }
     public int colorId()                          { return bannerColor; }
     public void colorId(int i)                    { bannerColor = i; resetColors(); }
     public float minX()                           { return minX; }

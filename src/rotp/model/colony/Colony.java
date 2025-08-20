@@ -282,7 +282,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     }
 
     public float orderAmount(Colony.Orders order) {
-        Colony.Orders priorityOrder = empire.priorityOrders();
+        Colony.Orders priorityOrder = Colony.Orders.NONE;
         // amount for this order
         float amt = orders.containsKey(order) ? orders.get(order) : 0;
         // if empire has a priority and this is not it, return 0
