@@ -32,7 +32,6 @@ public interface Diplomat {
     boolean canThreaten(Empire e);
     boolean canEvictSpies(Empire e);
     boolean canThreatenSpying(Empire e);
-    boolean canThreatenAttacking(Empire e);
     
     void noticeIncident(DiplomaticIncident inc, Empire e);
     void makeDiplomaticOffers(EmpireView ev);
@@ -40,7 +39,6 @@ public interface Diplomat {
     
     DiplomaticReply receiveThreatEvictSpies(Empire e);
     DiplomaticReply receiveThreatStopSpying(Empire e);
-    DiplomaticReply receiveThreatStopAttacking(Empire e);
     DiplomaticReply receiveDeclareWar(Empire e);
     DiplomaticReply receiveOfferPeace(Empire e);
     DiplomaticReply receiveOfferTrade(Empire e, int level);

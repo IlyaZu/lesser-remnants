@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.StarSystem;
@@ -49,13 +48,9 @@ public class ColonyInvadedIncident extends DiplomaticIncident {
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_COLONY_INVADED; }
     @Override
-    public boolean isAttacking()        { return true; }
-    @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ATTACKED_WAR; }
     @Override
     public boolean triggersWar()     { return popLost >= 30; }
-    @Override
-    public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

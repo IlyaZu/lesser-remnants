@@ -18,7 +18,6 @@ package rotp.model.incidents;
 
 import java.util.List;
 
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
@@ -71,8 +70,6 @@ public class TrespassingIncident extends DiplomaticIncident {
     public String description()         { return decode(text("INC_TRESPASSING_DESC")); }
     @Override
     public String warningMessageId()    { return DialogueManager.WARNING_TRESPASSING; }
-    @Override
-    public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

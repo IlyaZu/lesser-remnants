@@ -774,7 +774,7 @@ public class AIDiplomat implements Base, Diplomat {
     public boolean canThreaten(Empire e) {
         if (!diplomats(id(e)))
             return false;
-        return canEvictSpies(e) || canThreatenSpying(e) || canThreatenAttacking(e);
+        return canEvictSpies(e) || canThreatenSpying(e);
     }
     @Override
     public boolean canThreatenSpying(Empire e) {
@@ -798,18 +798,6 @@ public class AIDiplomat implements Base, Diplomat {
        
         SpyReport rpt = e.viewForEmpire(empire).spies().report();
         return rpt.spiesLost() > 0;
-    }
-    @Override
-    public boolean canThreatenAttacking(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (empire.atWarWith(id(e)))
-            return false;
-        
-        EmpireView v = e.viewForEmpire(empire);
-        if (v.embassy().hasCurrentAttackIncident())
-            return true;
-        return false;
     }
     @Override
     public DiplomaticReply receiveBreakPact(Empire e) {
@@ -910,37 +898,6 @@ public class AIDiplomat implements Base, Diplomat {
         empire.shutdownSpyNetworksAgainst(dip.id);
         v.spies().heedEviction();
         return empire.respond(DialogueManager.RESPOND_STOP_SPYING, dip);
-    }
-    @Override
-    public DiplomaticReply receiveThreatStopAttacking(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-        
-        if (empire.atWarWith(dip.id) || v.embassy().onWarFooting()) {
-            v.embassy().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-
-        if (empire.leader().isPacifist()) {
-            empire.retreatShipsFrom(dip.id);
-            v.embassy().heedThreat();
-            return empire.respond(DialogueManager.RESPOND_STOP_ATTACKING, dip);
-        }
-                   
-        float otherPower = empire.militaryPowerLevel(dip);
-        float myPower = empire.militaryPowerLevel();
-        float powerRatio = myPower/otherPower;
-
-        if (powerRatio > 2) {
-            v.embassy().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-            
-        empire.retreatShipsFrom(dip.id);
-        v.embassy().heedThreat();
-        return empire.respond(DialogueManager.RESPOND_STOP_ATTACKING, dip);
     }
     @Override
     public DiplomaticReply receiveDeclareWar(Empire e) {
