@@ -78,7 +78,6 @@ public class DialogueManager implements Base {
     public static final String RESPOND_BREAK_ALLIANCE   = "RespondBreakAlliance";
     public static final String RESPOND_IGNORE_THREAT    = "RespondIgnoreThreat";
     public static final String RESPOND_STOP_SPYING      = "RespondStopSpying";
-    public static final String RESPOND_STOP_ATTACKING   = "RespondStopAttacking";
     
     public static final String PRAISE_COUNCIL_VOTE      = "Praise-CouncilVote";
     public static final String PRAISE_ATTACKED_ENEMY    = "Praise-AttackedEnemy";

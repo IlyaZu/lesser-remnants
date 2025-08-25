@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,6 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
             options.add(EVICT_SPIES);
         if (plAI.canThreatenSpying(dip))
             options.add(STOP_SPYING);
-        if (plAI.canThreatenAttacking(dip))
-            options.add(STOP_ATTACKING);
         if (plAI.canDeclareWar(dip))
             options.add(WAR_MENU);
         
@@ -60,7 +58,6 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
         switch(choice) {
             case EVICT_SPIES      : return text("DIPLOMACY_MENU_EVICT_SPIES");
             case STOP_SPYING      : return text("DIPLOMACY_MENU_STOP_SPYING");
-            case STOP_ATTACKING   : return text("DIPLOMACY_MENU_STOP_ATTACKING");
             case WAR_MENU         : return text("DIPLOMACY_MENU_DECLARE_WAR");
             case EXIT             : return text("DIPLOMACY_MENU_FORGET_IT");
         }
@@ -80,7 +77,6 @@ public class DiplomacyThreatenMenu extends DiplomaticMessage {
         switch(choice) {
             case EVICT_SPIES     : reply = diplomat().diplomatAI().receiveThreatEvictSpies(player());    break;
             case STOP_SPYING     : reply = diplomat().diplomatAI().receiveThreatStopSpying(player());    break;
-            case STOP_ATTACKING  : reply = diplomat().diplomatAI().receiveThreatStopAttacking(player());     break;
             case WAR_MENU        : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_DECLARE_WAR_MENU, returnToMap()); return;
             case EXIT            : escape(); return;
             default              : escape(); return;

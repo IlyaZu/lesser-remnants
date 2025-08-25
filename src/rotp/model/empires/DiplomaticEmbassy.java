@@ -54,7 +54,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final int TIMER_SPY_WARNING = 0;
-    public static final int TIMER_ATTACK_WARNING = 1;
 
     private static final int TECH_DELAY = 1;
     private static final int TRADE_DELAY = 10;
@@ -92,7 +91,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int requestCount = 0;
     private int minimumPraiseLevel = 0;
     private int minimumWarnLevel = 0;
-    private boolean threatened = false;
     private boolean givenAidThisTurn = false;
 
     public Empire empire()                               { return view.empire(); }
@@ -115,7 +113,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         warCauseId = cb;
         warCauseIncident = inc;
         view.spies().ignoreThreat();
-        ignoreThreat();
     }
     public void endWarPreparations() {
         warFooting = false;
@@ -175,13 +172,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean hasCurrentSpyIncident() {
         for (DiplomaticIncident inc: allIncidents()) {
             if (inc.isSpying() && (inc.turnOccurred() == galaxy().currentTurn()))
-                return true;
-        }
-        return false;
-    }
-    public boolean hasCurrentAttackIncident() {
-        for (DiplomaticIncident inc: allIncidents()) {
-            if (inc.isAttacking() && (inc.turnOccurred() == galaxy().currentTurn()))
                 return true;
         }
         return false;
@@ -256,9 +246,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void noteRequest() {
         requestCount++;
     }
-    public void heedThreat()          { threatened = true; }
-    public void ignoreThreat()        { threatened = false; }
-    public boolean threatened()       { return threatened; }
     
     public float otherRelations()          { return otherEmbassy().relations(); }
     public int contactAge()                 { return (galaxy().currentTurn() - contactTurn); }
@@ -330,8 +317,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
             timers[i] = max(0, timers[i]-1);
         
         // check if any threat timers have aged out
-        if (!timerIsActive(TIMER_ATTACK_WARNING))
-            ignoreThreat();
         if (!timerIsActive(TIMER_SPY_WARNING))
             view.spies().ignoreThreat();
         
@@ -431,7 +416,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
 
         resetTimer(TIMER_SPY_WARNING);
-        resetTimer(TIMER_ATTACK_WARNING);
         resetPeaceTimer(3);
         withdrawAmbassador();
         otherEmbassy().withdrawAmbassador();

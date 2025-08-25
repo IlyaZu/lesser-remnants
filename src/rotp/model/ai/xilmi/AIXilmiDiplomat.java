@@ -239,16 +239,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         v.spies().ignoreThreat();
         return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
     }
-    @Override
-    public DiplomaticReply receiveThreatStopAttacking(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-        
-        v.embassy().ignoreThreat();
-        return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-    }
     //----------------
 //
 //----------------

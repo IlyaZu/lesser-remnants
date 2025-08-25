@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package rotp.model.incidents;
 
 import rotp.model.combat.CombatResults;
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.ui.diplomacy.DialogueManager;
 
 public class ColonyDestroyedIncident extends DiplomaticIncident {
@@ -47,11 +46,7 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
     @Override
     public String description()   { return  decode(text("INC_DESTROYED_COLONY_DESC")); }
     @Override
-    public boolean isAttacking()        { return true; }
-    @Override
     public String declareWarId()  { return DialogueManager.DECLARE_ATTACKED_WAR; }
-    @Override
-    public int timerKey()               { return DiplomaticEmbassy.TIMER_ATTACK_WARNING; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);
