@@ -165,22 +165,22 @@ public final class TechCategory implements Base, Serializable {
         Empire emp = tree.empire();
         possibleTechs.clear();
 
-        Object[] techsByQuintile =new Object[MAX_QUINTILES];
+        List<List<String>> techsByQuintile = new ArrayList<>(MAX_QUINTILES);
         for (int i=0;i<MAX_QUINTILES;i++)
-            techsByQuintile[i] = new ArrayList<String>();
+            techsByQuintile.add(new ArrayList<>());
 
         for (int i=0;i<baseCat.possibleTechs.size();i++) {
             String id = baseCat.possibleTechs.get(i);
             Tech t = tech(id);
             if (!t.restricted && emp.canResearch(t) && !t.free ) {
-                List<String> techs = (List<String>) techsByQuintile[t.quintile()-1];
+                List<String> techs = techsByQuintile.get(t.quintile()-1);
                 techs.add(id);
             }
         }
 
         for (int i=0;i<MAX_QUINTILES;i++) {
             boolean found = false;
-            List<String> techs = (List<String>) techsByQuintile[i];
+            List<String> techs = techsByQuintile.get(i);
             for (String id: techs) {
                 if (random() <= discoveryPct()) {
                     addPossibleTech(id);
