@@ -61,7 +61,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
     public void buildLimit(int i)             { buildLimit = max(0,i); }
     public String buildLimitStr() { return buildLimit == 0 ? text("MAIN_COLONY_SHIPYARD_LIMIT_NONE") : str(buildLimit); }
     public boolean incrementBuildLimit(int amt)  { buildLimit += amt;  return true; }
-    public boolean decrementBuildLimit(int amt)  { 
+    public boolean decrementBuildLimit(int amt)  {
         if (buildLimit == 0)
             return false;
         
@@ -102,7 +102,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
     @Override
     public void lowerMaintenance()       { hasStargate = false; }
     @Override
-    public void assessTurn()             { 
+    public void assessTurn()             {
         if (rallyCount ==0)
             return;
         
@@ -191,7 +191,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
             }
             prevDesign = design;
             return;
-        } 
+        }
         
         else {
             float shipRsvBC = min(prodBC, shipReserveBC);
@@ -296,7 +296,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         float cost = design.cost();
 
         // add BC fromshipyard reserve if buildlign s(ship rsv is capped by prod)
-        if (!buildingStargate) 
+        if (!buildingStargate)
             totalBC = totalBC+min(tmpShipReserveBC,prodBC);
 
         if (totalBC < cost)
@@ -304,7 +304,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         
         if (buildingStargate)
             return 1;
-        if (buildLimit == 0) 
+        if (buildLimit == 0)
             return (int) (totalBC / cost);
 
         return min(buildLimit, (int) (totalBC / cost));
@@ -319,7 +319,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         
         float prodBC = pct()* colony().totalProductionIncome() * planet().productionAdj();
         float rsvBC = pct() * colony().maxReserveIncome();
-        float totalBC = prodBC+rsvBC;   
+        float totalBC = prodBC+rsvBC;
         
         // if building ships with no build limit, then no possible overflow
         if (!buildingStargate && (buildLimit == 0))
@@ -327,7 +327,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         
         int numBuild = buildLimit;
         if (buildingStargate) {
-            totalBC += stargateBC;   
+            totalBC += stargateBC;
             numBuild = 1;
         }
         else
@@ -364,7 +364,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         float cost = design.cost();
 
         // add BC from shipyard reserve if buildling ship (ship rsv is capped by prod)
-        if (!buildingStargate) 
+        if (!buildingStargate)
             totalBC = totalBC+min(tmpShipReserveBC,prodBC);
 
         if (totalBC == 0)
@@ -373,7 +373,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         if (buildingObsoleteDesign())
             return overflowText();
 
-        // returns how many years if we are not spending enough to finish even 1 
+        // returns how many years if we are not spending enough to finish even 1
         if (totalBC < cost) {
             if (newBC == 0)
                 return text(noneText);
@@ -398,7 +398,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
             if (ships == 1)
                 return text(yearText, "1");
             else
-                return text(perYearText, ships);            
+                return text(perYearText, ships);
         }
         
         float totalCost = buildLimit * cost;
