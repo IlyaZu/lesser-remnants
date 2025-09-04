@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,12 +35,6 @@ public class SimpleIncident extends DiplomaticIncident {
     public static SimpleIncident createPactIncident(EmpireView view) {
         return new SimpleIncident(1.5f,
                 "INC_SIGNED_PACT_TITLE", "INC_SIGNED_PACT_DESC",
-                view.ownerId(), view.empId());
-    }
-    
-    public static SimpleIncident createEvictedSpiesIncident(EmpireView view) {
-        return new SimpleIncident(-10,
-                "INC_EVICTED_SPIES_TITLE", "INC_EVICTED_SPIES_DESC",
                 view.ownerId(), view.empId());
     }
     

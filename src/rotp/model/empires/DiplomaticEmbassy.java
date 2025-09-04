@@ -112,7 +112,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         warFooting = true;
         warCauseId = cb;
         warCauseIncident = inc;
-        view.spies().ignoreThreat();
     }
     public void endWarPreparations() {
         warFooting = false;

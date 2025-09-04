@@ -25,12 +25,9 @@ import rotp.model.empires.Empire;
 import static rotp.model.empires.EmpireStatus.FLEET;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.Leader;
-import rotp.model.empires.SpyNetwork.Mission;
-import rotp.model.empires.SpyReport;
 import rotp.model.empires.TreatyWar;
 import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.ExpansionIncident;
-import rotp.model.incidents.SimpleIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
@@ -771,35 +768,6 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inEconomicRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
     @Override
-    public boolean canThreaten(Empire e) {
-        if (!diplomats(id(e)))
-            return false;
-        return canEvictSpies(e) || canThreatenSpying(e);
-    }
-    @Override
-    public boolean canThreatenSpying(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (empire.atWarWith(id(e)))
-            return false;
-        
-        SpyReport rpt = e.viewForEmpire(empire).spies().report();
-        Mission miss = rpt.confessedMission();
-        return ((rpt.spiesLost() > 0)
-            && ((miss == Mission.ESPIONAGE) || (miss == Mission.SABOTAGE)));
-            
-    }
-    @Override
-    public boolean canEvictSpies(Empire e) {
-        if (!empire.inEconomicRange(id(e)))
-            return false;
-        if (empire.atWarWith(id(e)))
-            return false;
-       
-        SpyReport rpt = e.viewForEmpire(empire).spies().report();
-        return rpt.spiesLost() > 0;
-    }
-    @Override
     public DiplomaticReply receiveBreakPact(Empire e) {
         EmpireView v = empire.viewForEmpire(e);
         v.embassy().noteRequest();
@@ -822,82 +790,6 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident inc = v.otherView().embassy().breakTrade();
         v.embassy().withdrawAmbassador();
         return v.otherView().accept(DialogueManager.RESPOND_BREAK_TRADE, inc);
-    }
-    @Override
-    public DiplomaticReply receiveThreatStopSpying(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-        
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-        
-        if (empire.atWarWith(dip.id) || v.embassy().onWarFooting()) {
-            v.spies().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-
-        if (empire.leader().isPacifist() || empire.leader().isHonorable()) {
-            if (dip.leader().isXenophobic()) {
-                empire.shutdownSpyNetworksAgainst(dip.id);
-                v.spies().heedEviction();
-            }
-            else {
-                empire.hideSpiesAgainst(dip.id);
-                v.spies().heedThreat();
-            }
-            return empire.respond(DialogueManager.RESPOND_STOP_SPYING, dip);
-        }
-                   
-        float otherPower = empire.militaryPowerLevel(dip);
-        float myPower = empire.militaryPowerLevel();
-        float powerRatio = myPower/otherPower;
-
-        if (powerRatio > 2) {
-            v.spies().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-            
-        if (dip.leader().isXenophobic()) {
-            empire.shutdownSpyNetworksAgainst(dip.id);
-            v.spies().heedEviction();
-        }
-        else {
-            empire.hideSpiesAgainst(dip.id);
-            v.spies().heedThreat();
-        }
-        return empire.respond(DialogueManager.RESPOND_STOP_SPYING, dip);
-    }
-    @Override
-    public DiplomaticReply receiveThreatEvictSpies(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-        
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-
-        v.embassy().addIncident(SimpleIncident.createEvictedSpiesIncident(v));
-        
-        if (empire.atWarWith(dip.id) || v.embassy().onWarFooting()) {
-            v.spies().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-
-        if (empire.leader().isPacifist() || empire.leader().isHonorable()) {
-            empire.shutdownSpyNetworksAgainst(dip.id);
-            v.spies().heedEviction();
-            return empire.respond(DialogueManager.RESPOND_STOP_SPYING, dip);
-        }
-                   
-        float otherPower = empire.militaryPowerLevel(dip);
-        float myPower = empire.militaryPowerLevel();
-        float powerRatio = myPower/otherPower;
-
-        if (powerRatio > 2) {
-            v.spies().ignoreThreat();
-            return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-        }
-            
-        empire.shutdownSpyNetworksAgainst(dip.id);
-        v.spies().heedEviction();
-        return empire.respond(DialogueManager.RESPOND_STOP_SPYING, dip);
     }
     @Override
     public DiplomaticReply receiveDeclareWar(Empire e) {

@@ -27,7 +27,6 @@ import rotp.model.empires.TreatyWar;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.SimpleIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
@@ -209,36 +208,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
-    @Override
-    public boolean canThreatenSpying(Empire e) {
-        return false;
-    }
-    @Override
-    public boolean canEvictSpies(Empire e) {
-        return false;
-    }
-    @Override
-    public DiplomaticReply receiveThreatStopSpying(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-        
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-        
-        v.spies().ignoreThreat();
-        return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-    }
-    @Override
-    public DiplomaticReply receiveThreatEvictSpies(Empire dip) {
-        EmpireView v = empire.viewForEmpire(dip);
-        
-        v.embassy().noteRequest();
-        v.embassy().withdrawAmbassador();
-
-        v.embassy().addIncident(SimpleIncident.createEvictedSpiesIncident(v));
-        
-        v.spies().ignoreThreat();
-        return empire.respond(DialogueManager.RESPOND_IGNORE_THREAT, dip);
-    }
     //----------------
 //
 //----------------

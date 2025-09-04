@@ -33,8 +33,6 @@ import rotp.model.empires.SpyReport;
 import rotp.model.tech.Tech;
 import rotp.ui.BasePanel;
 import rotp.ui.RotPUI;
-import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomaticMessage;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
@@ -50,8 +48,6 @@ public class MapOverlaySpies extends MapOverlay {
             new TextButtonSprite("NOTICE_SPIES_CLOSE", false, this::advanceMap);
     private final TextButtonSprite intelButton =
             new TextButtonSprite("NOTICE_SPIES_MANAGE", false, this::manageSpies);
-    private final TextButtonSprite threatenButton =
-            new TextButtonSprite("NOTICE_SPIES_THREATEN", false, this::threaten);
     private final MainUI parent;
     
     private BufferedImage labImg;
@@ -90,11 +86,6 @@ public class MapOverlaySpies extends MapOverlay {
         RotPUI.instance().racesUI().selectedEmpire(selectedEmpire);
         parent.hoveringOverSprite(null);
     }
-    public void threaten() {
-        EmpireView view = selectedEmpire.viewForEmpire(player());
-        DiplomaticMessage.show(view, DialogueManager.DIPLOMACY_THREATEN_MENU, true);
-        parent.hoveringOverSprite(null);
-    }
     @Override
     public boolean masksMouseOver(int x, int y)   { return true; }
     @Override
@@ -109,10 +100,6 @@ public class MapOverlaySpies extends MapOverlay {
             case KeyEvent.VK_M:
                 if (selectedEmpire != null)
                     manageSpies();
-                break;
-            case KeyEvent.VK_T:
-                if (selectedEmpire != null)
-                    threaten();
                 break;
             case KeyEvent.VK_TAB:
                 if (empires.size()> 1) {
@@ -181,11 +168,6 @@ public class MapOverlaySpies extends MapOverlay {
         int intelW = intelButton.getWidth();
         int intelX = closeX-intelW-BasePanel.s5;
         intelButton.setPosition(intelX, buttonY);
-        
-        threatenButton.refreshSize(g);
-        int threatW = threatenButton.getWidth();
-        int threatX = intelX-threatW-BasePanel.s5;
-        threatenButton.setPosition(threatX, buttonY);
 
         // draw title
         String subtitle = text("NOTICE_SPIES_TITLE");
@@ -233,11 +215,6 @@ public class MapOverlaySpies extends MapOverlay {
         
         intelButton.draw(ui, g);
         parent.addNextTurnControl(intelButton);
-        
-        if (pl.diplomatAI().canThreaten(selectedEmpire)) {
-            threatenButton.draw(ui, g);
-            parent.addNextTurnControl(threatenButton);
-        }
 
         EmpireView v = pl.viewForEmpire(selectedEmpire.id);
         

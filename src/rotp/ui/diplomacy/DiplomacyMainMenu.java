@@ -46,10 +46,7 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
             options.add(TECHNOLOGY_MENU);
         if (embassy.canOfferAid())
             options.add(AID_MENU);
-        // only add war menu if threaten not available
-        if (plAI.canThreaten(dip))
-            options.add(THREATEN_MENU);
-        else if (plAI.canDeclareWar(dip))
+        if (plAI.canDeclareWar(dip))
             options.add(WAR_MENU);
         
         options.add(EXIT);
@@ -71,7 +68,6 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
             case TRADE_MENU       : return text("DIPLOMACY_MENU_TRADE");
             case TECHNOLOGY_MENU  : return text("DIPLOMACY_MENU_TECHNOLOGY");
             case AID_MENU         : return text("DIPLOMACY_MENU_OFFER_AID");
-            case THREATEN_MENU    : return text("DIPLOMACY_MENU_THREATEN");
             case WAR_MENU         : return text("DIPLOMACY_MENU_DECLARE_WAR");
             case EXIT             : return text("DIPLOMACY_MENU_GOODBYE");
         }
@@ -101,7 +97,6 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
                      DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_TECH_REQ_MENU);
                 break;
             case AID_MENU        : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_OFFER_AID_MENU); break;
-            case THREATEN_MENU   : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_THREATEN_MENU); break;
             case WAR_MENU        : DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_DECLARE_WAR_MENU); break;
             case EXIT            :
             default              : escape(); break;
