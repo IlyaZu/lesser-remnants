@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,28 +63,28 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
     private static final int SORT_SZ_DN = 6;
     
     private static final SimpleDateFormat fileDateFmt = new SimpleDateFormat("MMM dd, HH:mm");
-    static LoadGameUI current;
+    private static LoadGameUI current;
 
-    LoadListingPanel listingPanel;
-    List<String> saveFiles = new ArrayList<>();
-    List<Long> saveSizes = new ArrayList<>();
-    List<String> saveDates = new ArrayList<>();
-    String selectedFile = "";
-    Shape hoverBox;
-    Shape selectBox;
-    int selectIndex;
-    int start = 0;
-    int end = 0;
+    private LoadListingPanel listingPanel;
+    private List<String> saveFiles = new ArrayList<>();
+    private List<Long> saveSizes = new ArrayList<>();
+    private List<String> saveDates = new ArrayList<>();
+    private String selectedFile = "";
+    private Shape hoverBox;
+    private Shape selectBox;
+    private int selectIndex;
+    private int start = 0;
+    private int end = 0;
     
-    int sortOrder = SORT_DT_UP;
-    int buttonW, button1X, button2X;
+    private int sortOrder = SORT_DT_UP;
+    private int buttonW, button1X, button2X;
 
-    boolean hasAutosave = false;
-    boolean loading = false;
-    boolean hasBackupDir = false;
-    boolean showingBackups = false;
-    String backupDirInfo = "";
-    String saveDirInfo = "";
+    private boolean hasAutosave = false;
+    private boolean loading = false;
+    private boolean hasBackupDir = false;
+    private boolean showingBackups = false;
+    private String backupDirInfo = "";
+    private String saveDirInfo = "";
     private final Rectangle cancelBox = new Rectangle();
     private final Rectangle loadBox = new Rectangle();
     private final Rectangle fileNameBox = new Rectangle();
