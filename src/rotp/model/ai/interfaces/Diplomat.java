@@ -29,16 +29,11 @@ public interface Diplomat {
     boolean canOfferTradeTreaty(Empire e);
     boolean canExchangeTechnology(Empire e);
     boolean canDeclareWar(Empire e);
-    boolean canThreaten(Empire e);
-    boolean canEvictSpies(Empire e);
-    boolean canThreatenSpying(Empire e);
     
     void noticeIncident(DiplomaticIncident inc, Empire e);
     void makeDiplomaticOffers(EmpireView ev);
     Empire councilVoteFor(Empire emp1, Empire emp2);
     
-    DiplomaticReply receiveThreatEvictSpies(Empire e);
-    DiplomaticReply receiveThreatStopSpying(Empire e);
     DiplomaticReply receiveDeclareWar(Empire e);
     DiplomaticReply receiveOfferPeace(Empire e);
     DiplomaticReply receiveOfferTrade(Empire e, int level);

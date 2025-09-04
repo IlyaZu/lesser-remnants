@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,10 +40,6 @@ public final class SpyNetwork implements Base, Serializable {
     private static final float MAX_SPENDING_PCT = 0.10f;
     private static final int MIN_SPIES_FOR_FLEET_VIEW = 1;
     
-    private static final int THREAT_NONE = 0;
-    private static final int THREAT_HIDE = 1;
-    private static final int THREAT_EVICT = 2;
-    
     public enum Sabotage {
         FACTORIES, MISSILES, REBELS;
     }
@@ -66,7 +62,6 @@ public final class SpyNetwork implements Base, Serializable {
 
     private final FleetView fleetView  = new FleetView();
     private List<String> possibleTechs = new ArrayList<>();
-    private int threatened = 0;
     private SpyReport report = new SpyReport();
     private transient List<StarSystem> baseTargets;
     private transient List<StarSystem> factoryTargets;
@@ -118,11 +113,6 @@ public final class SpyNetwork implements Base, Serializable {
         view().owner().flagColoniesToRecalcSpending();
     }
     
-    public void heedEviction()        { threatened = THREAT_EVICT; }
-    public void heedThreat()          { threatened = THREAT_HIDE; }
-    public void ignoreThreat()        { threatened = THREAT_NONE; }
-    public boolean threatened()       { return threatened != THREAT_NONE; }
-    public boolean evicted()          { return threatened == THREAT_EVICT; }
     public SpyReport report() {
         if (report == null)
             report = new SpyReport();
