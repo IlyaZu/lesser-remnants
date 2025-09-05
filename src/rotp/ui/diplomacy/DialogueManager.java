@@ -206,6 +206,7 @@ public class DialogueManager implements Base {
         addMessage(new ThreatForAttack(WARNING_COLONY_ATTACKED));
         addMessage(new TurnNotificationMessage(WARNING_GENOCIDE));
         addMessage(new TurnNotificationMessage(DECLARE_ERRATIC_WAR));
+        addMessage(new TurnNotificationMessage(DECLARE_ALLIANCE_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_HATE_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_OPPORTUNITY_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_SPYING_WAR));
