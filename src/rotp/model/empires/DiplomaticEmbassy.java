@@ -121,13 +121,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
         return max(-50,sev);
     }
-    public boolean hasCurrentSpyIncident() {
-        for (DiplomaticIncident inc: allIncidents()) {
-            if (inc.isSpying() && (inc.turnOccurred() == galaxy().currentTurn()))
-                return true;
-        }
-        return false;
-    }
     public void nextTurn(float prod) {
         treaty.nextTurn(empire());
     }

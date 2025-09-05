@@ -933,22 +933,6 @@ public class AIGeneral implements Base, General {
         }
         return false;
     }
-    private boolean isInvader()
-    {
-        if(empire.race().groundAttackBonus() > 0 || empire.race().growthRateMod() > 1)
-            return true;
-        return false;
-    }
-    @Override
-    public boolean isRusher()
-    {
-        if(empire.race().shipAttackBonus() > 0
-                || empire.race().shipDefenseBonus() > 0
-                || isInvader()
-                || empire.race().spyInfiltrationAdj() > 0)
-            return true;
-        return false;
-    }
     @Override
     public int minTransportSize()
     {
