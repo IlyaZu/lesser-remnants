@@ -68,9 +68,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private boolean contact = false;
     private int contactTurn = 0;
     private int treatyTurn = -1;
-    private boolean warFooting = false;
-    private String warCauseId;
-    private DiplomaticIncident warCauseIncident;
     private DiplomaticTreaty treaty;
 
     private float relations;
@@ -98,46 +95,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public int requestCount()                            { return requestCount; }
     public float relations()                             { return relations; }
     public boolean contact()                             { return contact; }
-    public boolean onWarFooting()                        { return warFooting; }
-    public void beginWarPreparations(String cb, DiplomaticIncident inc) {
-        // dont replace an existing casus belli unless the new one is worse
-        if (warCauseIncident != null) {
-            if (warCauseIncident.moreSevere(inc))
-                return;
-        }
-        warFooting = true;
-        warCauseId = cb;
-        warCauseIncident = inc;
-    }
-    public void endWarPreparations() {
-        warFooting = false;
-        warCauseId = null;
-        warCauseIncident = null;
-    }
-    private void evaluateWarPreparations() {
-        // we are assessing turn and about to enter diplomacy. Are our reasons
-        // for going to war still relevant? If not, fuhgeddaboudit
-        if (warCauseIncident != null) {
-            if (!warCauseIncident.triggersWar())
-                endWarPreparations();
-            return;
-        }
-        
-        if (warCauseId != null) {
-            // re-evaluate hate and opportunity
-            switch(warCauseId) {
-                case DialogueManager.DECLARE_HATE_WAR:
-                    if (!view.owner().diplomatAI().wantToDeclareWarOfHate(view))
-                        endWarPreparations();
-                    break;
-                case DialogueManager.DECLARE_OPPORTUNITY_WAR:
-                    if (!view.owner().diplomatAI().wantToDeclareWarOfOpportunity(view))
-                        endWarPreparations();
-                    break;
-            }
-            return;
-        }
-    }
     public List<DiplomaticIncident> newIncidents() {
         if (newIncidents == null)
             newIncidents = new ArrayList<>();
@@ -273,7 +230,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void assessTurn() {
         log(view+" Embassy: assess turn");
-        evaluateWarPreparations();
         resetIncidents();
 
         // player refusals are remembered for the
@@ -337,7 +293,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.otherView().setSuggestedAllocations();
     }
     public boolean isFriend()    { return pact() || alliance(); }
-    public boolean isEnemy()     { return war() || onWarFooting(); }
+    public boolean isEnemy()     { return war(); }
     public boolean atPeace()     { return peaceTreatyInEffect(); }
 
     public DiplomaticIncident exchangeTechnology(Tech offeredTech, Tech requestedTech) {
@@ -359,17 +315,21 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public DiplomaticIncident declareJointWar(Empire requestor) {
         // when we are declaring a war as a result of a joint war request, ignore
-        // any existing casus belli. This ensures that a DeclareWarIncident is returned
-        // instead of some existing casus belli incident. This ensures that [other...]
+        // any existing war cause. This ensures that a DeclareWarIncident is returned
+        // instead of some existing war case incident. This ensures that [other...]
         // tags are replaced properly in the war announcement to the player
-        warCauseId = null;
-        warCauseIncident = null;
-        return declareWar(requestor);
+        return declareWar(requestor, null, null);
     }
     public DiplomaticIncident declareWar() {
-        return declareWar(null);
+        return declareWar(null, null, null);
     }
-    public DiplomaticIncident declareWar(Empire requestor) {
+    public DiplomaticIncident declareWar(String warCauseId) {
+        return declareWar(null, warCauseId, null);
+    }
+    public DiplomaticIncident declareWar(DiplomaticIncident warCauseIncident) {
+        return declareWar(null, warCauseIncident.declareWarId(), warCauseIncident);
+    }
+    private DiplomaticIncident declareWar(Empire requestor, String warCauseId, DiplomaticIncident warCauseIncident) {
         endTreaty();
         int oathBreakType = 0;
         if (alliance())
@@ -443,8 +403,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public DiplomaticIncident signPeace() {
         beginTreaty();
         int duration = roll(10,15);
-        endWarPreparations();
-        otherEmbassy().endWarPreparations();
         beginPeace(duration);
         otherEmbassy().beginPeace(duration);
         owner().hideSpiesAgainst(empire().id);
@@ -456,7 +414,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void signPact() {
         beginTreaty();
-        endWarPreparations();
         owner().hideSpiesAgainst(empire().id);
         empire().hideSpiesAgainst(owner().id);
         setTreaty(new TreatyPact(view.owner(), view.empire()));
@@ -478,7 +435,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void signAlliance() {
         beginTreaty();
-        endWarPreparations();
         setTreaty(new TreatyAlliance(view.owner(), view.empire()));
         owner().setRecalcDistances();
         empire().setRecalcDistances();

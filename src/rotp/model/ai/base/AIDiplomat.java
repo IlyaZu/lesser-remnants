@@ -374,7 +374,7 @@ public class AIDiplomat implements Base, Diplomat {
     private boolean willingToOfferPeace(EmpireView v) {
         if (!v.embassy().war())
             return false;
-        if (!v.embassy().onWarFooting() && !canOfferPeaceTreaty(v.empire()))
+        if (!canOfferPeaceTreaty(v.empire()))
             return false;
         if (v.embassy().contactAge() < 1)
             return false;
@@ -1015,14 +1015,14 @@ public class AIDiplomat implements Base, Diplomat {
                 }
             }
             if (warIncident != null) {
-                beginIncidentWar(view, warIncident);
+                view.embassy().declareWar(warIncident);
                 return true;
             }
         }
         
         // 2% chance of war if erratic leader (these guys are crazy)
         if (empire.leader().isErratic() && (random() <= ERRATIC_WAR_PCT)) {
-            beginErraticWar(view);
+            view.embassy().declareWar(DialogueManager.DECLARE_ERRATIC_WAR);
             return true;
         }
         // modnar: less likely war when already in some wars
@@ -1032,20 +1032,19 @@ public class AIDiplomat implements Base, Diplomat {
         // automatic war of hate if relations less < -90
         // and not currently in a timed peace treaty
         if (wantToDeclareWarOfHate(view)){
-            beginHateWar(view);
+            view.embassy().declareWar(DialogueManager.DECLARE_HATE_WAR);
             return true;
         }
         
         // must break alliance before declaring war
         if (wantToDeclareWarOfOpportunity(view)) {
-            beginOpportunityWar(view);
+            view.embassy().declareWar(DialogueManager.DECLARE_OPPORTUNITY_WAR);
             return true;
         }
 
         return false;
     }
-    @Override
-    public boolean wantToDeclareWarOfHate(EmpireView v) {
+    private boolean wantToDeclareWarOfHate(EmpireView v) {
         if (v.embassy().atPeace())
             return false;
         
@@ -1079,8 +1078,7 @@ public class AIDiplomat implements Base, Diplomat {
             return (1/powerRatio)-1;
         }
     }
-    @Override
-    public boolean wantToDeclareWarOfOpportunity(EmpireView v) {
+    private boolean wantToDeclareWarOfOpportunity(EmpireView v) {
         if (v.embassy().atPeace())
             return false;
         if (v.embassy().alliance())
@@ -1146,24 +1144,6 @@ public class AIDiplomat implements Base, Diplomat {
             ratio /= 2;
         return ratio;
     }
-    private void beginIncidentWar(EmpireView view, DiplomaticIncident inc) {
-        log(view.toString(), " - Declaring war based on incident: ", inc.toString(), " id:", inc.declareWarId());
-        view.embassy().beginWarPreparations(inc.declareWarId(), inc);
-        if (inc.triggersImmediateWar())
-            view.embassy().declareWar();
-    }
-    private void beginOpportunityWar(EmpireView view) {
-        log(view+" - Declaring war based on opportunity");
-        view.embassy().beginWarPreparations(DialogueManager.DECLARE_OPPORTUNITY_WAR, null);
-    }
-    private void beginHateWar(EmpireView view) {
-        log(view+" - Declaring war based on hate");
-        view.embassy().beginWarPreparations(DialogueManager.DECLARE_HATE_WAR, null);
-    }
-    private void beginErraticWar(EmpireView view) {
-        log(view+" - Declaring war based on erratic");
-        view.embassy().beginWarPreparations(DialogueManager.DECLARE_ERRATIC_WAR, null);
-    }
     @Override
     public Empire councilVoteFor(Empire civ1, Empire civ2) {
         // always vote for yourself
@@ -1218,6 +1198,6 @@ public class AIDiplomat implements Base, Diplomat {
         view.embassy().addIncident(inc);
 
         if (inc.triggersWar())
-            beginIncidentWar(view, inc);
+            view.embassy().declareWar(inc);
     }
 }

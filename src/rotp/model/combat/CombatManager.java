@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.DiplomaticTreaty;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.ShipFleet;
@@ -204,9 +203,6 @@ public class CombatManager implements Base {
         setupBattle(emp1, emp2);
 
         if (!combatIsFinished()) {
-            checkDeclareWar(emp1, emp2);
-            checkDeclareWar(emp2, emp1);
-
             if (playerInBattle())
                 RotPUI.instance().promptForShipCombat(this);
             else {
@@ -330,7 +326,6 @@ public class CombatManager implements Base {
     public void setupBombardment(StarSystem sys, ShipFleet fleet) {
         ui = null;
         system = sys;
-        checkDeclareWar(fleet.empire(), system.empire());
 
         beginInSystem(system, fleet.empire(), null);
 
@@ -341,24 +336,6 @@ public class CombatManager implements Base {
         scanShips();
         addEmpiresToCombat();
         results().defender = system.empire();
-    }
-    private void checkDeclareWar(Empire emp1, Empire emp2) {
-        // decide if we should declare war
-        if (emp1.isPlayerControlled())
-            return;  // player can declare his own wars
-        
-        // dont automaticall trigger war over uncolonized systems
-        if (!system.isColonized())
-            return;
-        
-        // don't automatially trigger when emp2 stumbled into our system
-        if (system.empire() == emp1)
-            return;
-        DiplomaticEmbassy emb1 = emp1.viewForEmpire(emp2).embassy();
-        if (!emb1.war()) {
-            if (emb1.onWarFooting())
-                emb1.declareWar();
-        }
     }
     private void setupBattle(Empire emp1, Empire emp2) {
         raiseHostilityLevels();
