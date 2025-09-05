@@ -1032,8 +1032,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
             // don't cause war if planet now occupied by another race
             if (!ev.embassy().war() && (empire != tr.targetCiv()))
                 return;
-            if (!ev.embassy().war())
-                ev.embassy().declareWar();
         }
 
         resistTransportWithFleet(tr);

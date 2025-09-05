@@ -61,8 +61,6 @@ public class AssassinationIncident extends DiplomaticIncident {
     @Override
     public boolean triggersWar()     { return severity() < 0; } // only trigger war for the negative version of this incident
     @Override
-    public boolean triggersImmediateWar() { return true; }
-    @Override
     public boolean triggersPraise()   { return severity() > 0; }
     @Override
     public String praiseMessageId()   { return DialogueManager.PRAISE_ATTACKED_ENEMY; }

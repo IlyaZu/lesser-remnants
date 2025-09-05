@@ -208,57 +208,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
-    //----------------
-//
-//----------------
-    @Override
-    public boolean wantToDeclareWarOfOpportunity(EmpireView v) {
-        return wantToDeclareWar(v);
-    }
-    private boolean readyForWar() {
-        boolean warAllowed = true;
-        if(empire.generalAI().additionalColonizersToBuild(false) > 0)
-            warAllowed = false;
-        if(!techIsAdequateForWar())
-            warAllowed = false;
-        float enemyPower = empire.powerLevel(empire);
-        Empire victim = empire.generalAI().bestVictim();
-        if(victim != null)
-        {
-            for(Empire enemy : victim.warEnemies())
-            {
-                enemyPower += enemy.powerLevel(enemy);
-            }
-            if(victim.powerLevel(victim) > enemyPower && empire.diplomatAI().facCapRank() > 1)
-                warAllowed = false;
-        }
-        //Ail: If there's only two empires left, there's no time for preparation. We cannot allow them the first-strike-advantage!
-        if(galaxy().numActiveEmpires() < 3)
-            warAllowed = true;
-        return warAllowed;
-    }
-    private boolean wantToDeclareWar(EmpireView v) {
-        if (v.embassy().atPeace())
-        {
-            return false;
-        }
-        if(!empire.inShipRange(v.empId()))
-            return false;
-        if (!empire.enemies().isEmpty())
-            return false;
-        if(readyForWar())
-            if(v.empire() == empire.generalAI().bestVictim())
-            {
-                return true;
-            }
-        return false;
-    }
-    private void beginIncidentWar(EmpireView view, DiplomaticIncident inc) {
-        log(view.toString(), " - Declaring war based on incident: ", inc.toString(), " id:", inc.declareWarId());
-        view.embassy().beginWarPreparations(inc.declareWarId(), inc);
-        if (inc.triggersImmediateWar())
-            view.embassy().declareWar();
-    }
     //-----------------------------------
     // INCIDENTS
     //-----------------------------------
@@ -269,7 +218,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         view.embassy().addIncident(inc);
 
         if (inc.triggersWar() && !view.embassy().war())
-            beginIncidentWar(view, inc);
+            view.embassy().declareWar(inc);
     }
    private boolean warWeary(EmpireView v) {
         if (galaxy().activeEmpires().size() < 3)
