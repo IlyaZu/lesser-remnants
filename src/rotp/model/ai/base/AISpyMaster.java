@@ -1,6 +1,6 @@
  /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,18 +78,15 @@ public class AISpyMaster implements Base, SpyMaster {
             return;
         }
 
-        // if we are not in war preparations and we've received threats
-        // about spying, then no spending
-        boolean shouldHide = false;
-        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
-        && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
-            if (!v.spies().isHide()
-            || (v.empire().leader().isXenophobic())) {
-                shouldHide = true;
+        // if we are not in war and we've received threats about spying, then no spending
+        boolean shouldDeallocate = false;
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0) && v.embassy().onLastWarning()) {
+            if (!v.spies().isHide() || (v.empire().leader().isXenophobic())) {
+                shouldDeallocate = true;
             }
         }
         
-        if (!emb.isEnemy() && shouldHide) {
+        if (!emb.isEnemy() && shouldDeallocate) {
             spies.allocation(0);
             return;
         }
@@ -133,12 +130,10 @@ public class AISpyMaster implements Base, SpyMaster {
             return;
         }
 
-        // we've been warned and they are not our enemy (i.e. no war preparations)
+        // we've been warned and they are not our enemy
         boolean shouldHide = false;
-        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
-        && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
-            if (!v.spies().isHide()
-            || (v.empire().leader().isXenophobic())) {
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0) && v.embassy().onLastWarning()) {
+            if (!v.spies().isHide() || (v.empire().leader().isXenophobic())) {
                 shouldHide = true;
             }
         }

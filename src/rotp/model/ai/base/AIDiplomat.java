@@ -27,7 +27,6 @@ import rotp.model.empires.EmpireView;
 import rotp.model.empires.Leader;
 import rotp.model.empires.TreatyWar;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.ExpansionIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyTechOfferMenu;
@@ -962,16 +961,6 @@ public class AIDiplomat implements Base, Diplomat {
 
         return true;
     }
-    private int warningThreshold(EmpireView view) {
-        DiplomaticEmbassy emb = view.embassy();
-        int warnLevel = emb.minimumWarnLevel();
-        if (emb.alliance())
-            return warnLevel / 4;
-        else if (emb.pact())
-            return warnLevel /2;
-        else
-            return warnLevel;
-    }
     private boolean decidedToIssueWarning(EmpireView view) {
         if (!view.inEconomicRange())
             return false;
@@ -979,8 +968,8 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticEmbassy emb = view.embassy();
         if (emb.war())
             return false;
-        float threshold = 0 - warningThreshold(view);
-        log(view+": checkIssueWarning. Threshold: "+ threshold);
+        float warnThreshold = -10;
+        log(view+": checkIssueWarning. Threshold: "+ warnThreshold);
         DiplomaticIncident maxIncident = null;
         for (DiplomaticIncident ev: emb.newIncidents()) {
             log(view.toString(), "new incident:", ev.toString());
@@ -991,19 +980,13 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxIncident == null)
             return false;
         
-        if (maxIncident.severity() > threshold)
+        if (maxIncident.severity() > warnThreshold)
             return false;
 
-        view.embassy().logWarning(maxIncident);
+        view.embassy().logWarning();
         
         // if we are warning player, send a notification
         if (view.empire().isPlayerControlled()) {
-            // we will only give one expansion warning
-            if (maxIncident instanceof ExpansionIncident) {
-                if (view.embassy().gaveExpansionWarning())
-                    return true;
-                view.embassy().giveExpansionWarning();
-            }
             DiplomaticNotification.create(view, maxIncident, maxIncident.warningMessageId());
         }
         return true;
@@ -1019,21 +1002,19 @@ public class AIDiplomat implements Base, Diplomat {
         // look at new incidents. If any trigger war, pick
         // the one with the greatest severity
         DiplomaticIncident warIncident = null;
-        float worstNewSeverity = 0;
+        float warIncidentSeverity = 0;
         
         // check for a war incident if we are not at peace, or the start
         // date of our peace treaty precedes the current time
-        if (!view.embassy().atPeace()
-        || (view.embassy().treatyTurn() < galaxy().currentTurn())) {
+        if (!view.embassy().atPeace() || (view.embassy().treatyTurn() < galaxy().currentTurn())) {
             for (DiplomaticIncident ev: view.embassy().newIncidents()) {
-                if (!ev.declareWarId().isEmpty()) {
-                    if (ev.triggersWar()) {
-                        float sev = ev.severity();
-                        if (ev.triggersWarning() && (sev < worstNewSeverity))
-                            warIncident = ev;
-                    }
-                    else if (view.embassy().timerIsActive(ev.timerKey()))
-                        warIncident = ev;
+                boolean isWarIncident = !ev.declareWarId().isEmpty();
+                boolean isTriggerIncident = ev.triggersWar() || ev.triggersWarning() && view.embassy().onLastWarning();
+                boolean isWorseIncident = ev.severity() < warIncidentSeverity;
+                
+                if (isWarIncident && isTriggerIncident && isWorseIncident) {
+                    warIncident = ev;
+                    warIncidentSeverity = ev.severity();
                 }
             }
             if (warIncident != null) {

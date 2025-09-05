@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.SabotageMission;
 import rotp.ui.diplomacy.DialogueManager;
@@ -53,8 +52,6 @@ public class SabotageRebellionIncident extends DiplomaticIncident {
     private String systemName()      { return player().sv.name(sysId); }
     @Override
     public boolean isSpying()        { return true; }
-    @Override
-    public int timerKey()          { return DiplomaticEmbassy.TIMER_SPY_WARNING; }
     @Override
     public String title()            { return text("INC_INCITED_REBELLION_TITLE"); }
     @Override
