@@ -53,8 +53,6 @@ import rotp.util.Base;
 public class DiplomaticEmbassy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final int TIMER_SPY_WARNING = 0;
-
     private static final int TECH_DELAY = 1;
     private static final int TRADE_DELAY = 10;
     private static final int PEACE_DELAY = 10;
@@ -75,7 +73,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private DiplomaticIncident warCauseIncident;
     private DiplomaticTreaty treaty;
 
-    private final int[] timers = new int[20];
     private float relations;
     private int tradeTimer = 0;
     private int lastRequestedTradeLevel = 0;
@@ -86,12 +83,11 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int allianceTimer = 0;
     private int jointWarTimer = 0;
     private int diplomatGoneTimer = 0;
-    private int warningLevel = 0;
     private boolean tradePraised = false;
     private int requestCount = 0;
     private int minimumPraiseLevel = 0;
-    private int minimumWarnLevel = 0;
     private boolean givenAidThisTurn = false;
+    private boolean onLastWarning = false;
 
     public Empire empire()                               { return view.empire(); }
     public Empire owner()                                { return view.owner(); }
@@ -222,26 +218,16 @@ public class DiplomaticEmbassy implements Base, Serializable {
         else
             return max(10, minimumPraiseLevel);
     }
-    public int minimumWarnLevel()           { return max(10, minimumWarnLevel); }
-    public void praiseSent()                { minimumPraiseLevel = minimumPraiseLevel()+10;  }
-    public void logWarning(DiplomaticIncident inc) {
-        minimumWarnLevel = minimumWarnLevel()+5;
-        int timerKey = inc.timerKey();
-        if (timerKey >= 0) {
-            int duration = inc.duration();
-            timers[timerKey] += duration;
-        }
+    public void praiseSent() {
+        minimumPraiseLevel = minimumPraiseLevel()+10;
+        onLastWarning = false;
     }
-    public boolean timerIsActive(int timerKey) {
-        return (timerKey >= 0) && (timers[timerKey] > 0);
+    public void logWarning() {
+        onLastWarning = true;
     }
-    public void resetTimer(int index) {
-        if ((index <0) || (index >= timers.length))
-            return;
-        timers[index] = 0;
+    public boolean onLastWarning() {
+        return onLastWarning;
     }
-    public void giveExpansionWarning()      { warningLevel = 1; }
-    public boolean gaveExpansionWarning()   { return warningLevel > 0; }
     public void noteRequest() {
         requestCount++;
     }
@@ -311,20 +297,10 @@ public class DiplomaticEmbassy implements Base, Serializable {
 
         }
         
-        // decrement all generic timers down to 0
-        for (int i=0;i<timers.length;i++)
-            timers[i] = max(0, timers[i]-1);
-        
-        // check if any threat timers have aged out
-        if (!timerIsActive(TIMER_SPY_WARNING))
-            view.spies().ignoreThreat();
-        
         diplomatGoneTimer--;
         requestCount = 0;
         minimumPraiseLevel = min(20,minimumPraiseLevel);
-        minimumWarnLevel = min(20, minimumWarnLevel);
         minimumPraiseLevel = minimumPraiseLevel() - 1;
-        minimumWarnLevel = minimumWarnLevel() - 1;
         givenAidThisTurn = false;
     }
     public void recallAmbassador()     { diplomatGoneTimer = Integer.MAX_VALUE; }
@@ -414,7 +390,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
             }
         }
 
-        resetTimer(TIMER_SPY_WARNING);
         resetPeaceTimer(3);
         withdrawAmbassador();
         otherEmbassy().withdrawAmbassador();
@@ -637,6 +612,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private void beginPeace(int duration) {
         treaty = new TreatyPeace(view.empire(), view.owner(), duration);
         view.setSuggestedAllocations();
+        onLastWarning = false;
     }
     
     public void receiveFinancialAid(int amt) {

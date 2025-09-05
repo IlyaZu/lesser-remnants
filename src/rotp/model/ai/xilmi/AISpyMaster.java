@@ -127,13 +127,10 @@ public class AISpyMaster implements Base, SpyMaster {
             return;
         }
 
-        // we've been warned and they are not our enemy (i.e. no war preparations)
+        // we've been warned and they are not our enemy
         boolean shouldHide = false;
-        if (!v.embassy().war() && (v.spies().maxSpies() > 0)
-        && v.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
-            //System.out.println(empire.galaxy().currentTurn()+" "+ empire.name()+" we have been recently warned to stop spying by "+v.embassy().empire()+" "+v.otherView().embassy().timers[DiplomaticEmbassy.TIMER_SPY_WARNING]);
-            if (!v.spies().isHide()
-            || (v.empire().leader().isXenophobic())) {
+        if (!v.embassy().war() && (v.spies().maxSpies() > 0) && v.embassy().onLastWarning()) {
+            if (!v.spies().isHide() || (v.empire().leader().isXenophobic())) {
                 shouldHide = true;
             }
         }

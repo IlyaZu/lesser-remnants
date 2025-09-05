@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
@@ -654,10 +653,8 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
                 treatyBreak = true;
         }
         
-        if (!view.embassy().war() && (view.spies().maxSpies() > 0)
-        && view.otherView().embassy().timerIsActive(DiplomaticEmbassy.TIMER_SPY_WARNING)) {
-            if (!view.spies().isHide()
-            || (view.empire().leader().isXenophobic())) {
+        if (!view.embassy().war() && (view.spies().maxSpies() > 0) && view.embassy().onLastWarning()) {
+            if (!view.spies().isHide() || (view.empire().leader().isXenophobic())) {
                 triggerWar = true;
             }
         }
