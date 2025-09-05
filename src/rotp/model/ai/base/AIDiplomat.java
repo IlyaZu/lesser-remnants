@@ -879,10 +879,7 @@ public class AIDiplomat implements Base, Diplomat {
             return;
 
         if (willingToOfferPeace(v)) {
-            if (v.embassy().war())
-                v.empire().diplomatAI().receiveOfferPeace(empire);
-            else
-                v.embassy().endWarPreparations();
+            v.empire().diplomatAI().receiveOfferPeace(empire);
             return;
         }
         
