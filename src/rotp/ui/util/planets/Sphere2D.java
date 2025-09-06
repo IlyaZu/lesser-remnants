@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,7 @@ public class Sphere2D implements Base {
             int prevx0 = -1;
             for (int x1=x1Min;x1<x1Max;x1++) {
                 float x1Pct = (float)x1/x1Max;
-                float x0Radians = asin(x1Pct);
+                float x0Radians = (float)Math.asin(x1Pct);
                 float x0Pct = (pi-(2*x0Radians))/pi;
                 int x0 = x0Max-(int)(x0Pct*x0Max);
                 int numpx = (prevx0 < 0) ? 1 : x0-prevx0;

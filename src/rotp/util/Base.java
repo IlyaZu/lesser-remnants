@@ -48,7 +48,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import rotp.Rotp;
-import rotp.apachemath.FastMath;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.Galaxy;
 import rotp.model.galaxy.StarSystem;
@@ -243,7 +242,6 @@ public interface Base {
     public default <T> T random(List<T> list) {
         return (list == null || list.isEmpty()) ? null : list.get(random.nextInt(list.size()));
     }
-    public default float asin(float d)  { return (float) FastMath.asin(d); }
     public default int bounds(int low, int val, int hi) {
         return Math.min(Math.max(low, val), hi);
     }

@@ -103,7 +103,7 @@ public final class PlanetHeightMap implements Base {
             }
             else {
                 float zz = (float)Math.sqrt(1-y1*y1);
-                float y = 2/pi*(y1*zz+asin(y1));
+                float y = 2/pi*(y1*zz+(float)Math.asin(y1));
                 float cos2 = (float)Math.sqrt(1-y*y);
                 if (cos2 > 0) {
                     float scale1 = (float)width/height/cos2/pi;
