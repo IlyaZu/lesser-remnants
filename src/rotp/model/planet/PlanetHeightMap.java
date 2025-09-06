@@ -41,17 +41,11 @@ public final class PlanetHeightMap implements Base {
     private final byte[][] col;          // height array  -128 to 127
     private final int[] counts  = new int[256];
     private int totalCounts = 0;
-    private long generateTime = -1;
 
-    public void width(int w)       { width = w; }
-    public void seaPct(float d)   { seaPct = bounds(0,d,1); }
     public int width()             { return width; }
     public int height()            { return height; }
-    public byte[][] col()          { return col; }
-    public byte[] col(int i)       { return col[i]; }
     public byte col(int x, int y)  { return col[x][y]; }
     public byte seaLevel()         { return seaLevel; }
-    public long time()             { return generateTime; }
 
     public PlanetHeightMap(float seed, int radius, float sea) {
         seaPct = sea;
@@ -78,10 +72,8 @@ public final class PlanetHeightMap implements Base {
         r3 = rand2(r1,r2);
         r4 = rand2(r2,r3);
 
-        long start = System.currentTimeMillis();
         mollweide();
         seaLevel = calculateSeaLevel();
-        generateTime = System.currentTimeMillis() - start;
     }
     private byte calculateSeaLevel() {
         int numNeeded = (int) (seaPct*totalCounts);
