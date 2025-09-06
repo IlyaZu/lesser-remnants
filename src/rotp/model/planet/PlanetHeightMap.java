@@ -13,9 +13,7 @@
  */
 package rotp.model.planet;
 
-import rotp.util.Base;
-
-public final class PlanetHeightMap implements Base {
+public final class PlanetHeightMap {
     private static final float ROOT3 = (float)Math.sqrt(3.0);
     private static final float dd1 = 0.45f;      // weight for altitude difference
     private static final float dd2 = 0.035f;     // weight for distance

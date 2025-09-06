@@ -19,10 +19,9 @@ package rotp.ui.util.planets;
 import java.util.HashMap;
 import java.util.Map;
 import rotp.model.planet.Planet;
-import rotp.util.Base;
 import rotp.util.FastImage;
 
-public class Sphere2D implements Base {
+public class Sphere2D {
     private final int radius;
     private final FastImage mapImage;
     public static final int FAST_PLANET_R = 50;
