@@ -758,8 +758,7 @@ public class AIGeneral implements Base, General {
         }
         return false;
     }
-    @Override
-    public int additionalColonizersToBuild(boolean returnPotentialUncolonizedInstead)
+    private int additionalColonizersToBuild(boolean returnPotentialUncolonizedInstead)
     {
         if(additionalColonizersToBuild >= 0 && !returnPotentialUncolonizedInstead)
             return additionalColonizersToBuild;

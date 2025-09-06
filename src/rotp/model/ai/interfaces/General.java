@@ -33,7 +33,6 @@ public interface General {
     default Empire biggestThreat() { return null; }
     default float defenseRatio()              { return 0.5f; }
     default float totalEmpirePopulationCapacity(Empire emp) { return 0; }
-    default int additionalColonizersToBuild(boolean returnPotentialUncolonizedInstead) { return 0; }
     default boolean allowedToBomb(StarSystem sys) { return true; }
     default boolean strongEnoughToAttack() { return true; }
     default int minTransportSize() { return 5; }
