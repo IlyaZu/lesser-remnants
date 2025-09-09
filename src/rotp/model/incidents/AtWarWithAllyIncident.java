@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package rotp.model.incidents;
 
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.galaxy.Galaxy;
-import rotp.ui.diplomacy.DialogueManager;
 
 public class AtWarWithAllyIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
@@ -46,13 +44,6 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     public String description()      { return  decode(text("INC_AT_WAR_WITH_ALLY_DESC")); }
     @Override
     public boolean triggeredByAction()   { return false; }
-    @Override
-    public String declareWarId()     { return DialogueManager.DECLARE_ALLIANCE_WAR; }
-    @Override
-    public boolean triggersWar()     {
-        Galaxy g = galaxy();
-        return !g.empire(empMe).alliedWith(empYou);
-    }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);
