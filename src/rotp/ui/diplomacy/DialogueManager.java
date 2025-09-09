@@ -97,7 +97,6 @@ public class DialogueManager implements Base {
     public static final String DECLARE_OPPORTUNITY_WAR  = "DeclareWar-Opportunity";
     public static final String DECLARE_SPYING_WAR       = "DeclareWar-Spying";
     public static final String DECLARE_ERRATIC_WAR      = "DeclareWar-Erratic";
-    public static final String DECLARE_ALLIANCE_WAR     = "DeclareWar-Alliance";
 
     public HashMap<String, DiplomaticMessage> messages = new HashMap<>();
     public List<DialogString> strings = new ArrayList<>();
@@ -206,7 +205,6 @@ public class DialogueManager implements Base {
         addMessage(new ThreatForAttack(WARNING_COLONY_ATTACKED));
         addMessage(new TurnNotificationMessage(WARNING_GENOCIDE));
         addMessage(new TurnNotificationMessage(DECLARE_ERRATIC_WAR));
-        addMessage(new TurnNotificationMessage(DECLARE_ALLIANCE_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_HATE_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_OPPORTUNITY_WAR));
         addMessage(new TurnNotificationMessage(DECLARE_SPYING_WAR));
