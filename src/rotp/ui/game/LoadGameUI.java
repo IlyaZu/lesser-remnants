@@ -128,7 +128,7 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         File backupDir = new File(backupDirPath);
         hasBackupDir = backupDir.exists() && backupDir.isDirectory();
         
-        FilenameFilter filter = (File dir, String name1) -> name1.toLowerCase().endsWith(ext);
+        FilenameFilter filter = (_, name) -> name.toLowerCase().endsWith(ext);
         File[] fileList = saveDir.listFiles(filter);
         
           // fileList = null if prefs pointing to an invalid folder...default to jarPath

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         DiplomaticEmbassy embassy = view().otherView().embassy();
         amounts = embassy.offerAidAmounts();
         techs = embassy.offerableTechnologies();
-        for (int amt: amounts)
+        for (var _ : amounts)
             options.add(OFFER_MONEY);
         
         maxOffers -= options.size();
@@ -48,7 +48,7 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
             options.add(OFFER_TECH);
         }
         else {
-            for (Tech t: techs)
+            for (var _ : techs)
                 options.add(OFFER_TECH);
         }
         options.add(EXIT);
