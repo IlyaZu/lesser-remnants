@@ -631,10 +631,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
         // sort unknown techs by our research value
         Tech.comparatorCiv = owner();
         Collections.sort(techs, Tech.RESEARCH_VALUE);
-        if (techs.size() > maxTechs) {
-            for (int i = techs.size()-1; i >= maxTechs; i--) {
-                techs.remove(i);
-            }
+        for (int i = techs.size()-1; i >= maxTechs; i--) {
+            techs.remove(i);
         }
         return techs;
     }
