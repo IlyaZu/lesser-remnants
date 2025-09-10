@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -624,16 +625,16 @@ public class DiplomaticEmbassy implements Base, Serializable {
         allMyTechIds.removeAll(theirTradedTechIds);
          
         List<Tech> techs = new ArrayList<>();
-        for (String id: allMyTechIds)
+        for (String id: allMyTechIds) {
             techs.add(tech(id));
-        
-        int maxTechs = 5;
-        // sort unknown techs by our research value
-        Tech.comparatorCiv = owner();
-        Collections.sort(techs, Tech.RESEARCH_VALUE);
-        for (int i = techs.size()-1; i >= maxTechs; i--) {
-            techs.remove(i);
         }
+        
+        // sort unknown techs by research value to the empire receiving
+        var techTree = empire().tech();
+        Comparator<Tech> researchComparator =
+                (a, b) -> techTree.researchCost(b) - techTree.researchCost(a);
+        Collections.sort(techs, researchComparator);
+
         return techs;
     }
 }

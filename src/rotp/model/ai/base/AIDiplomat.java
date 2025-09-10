@@ -107,26 +107,17 @@ public class AIDiplomat implements Base, Diplomat {
     }
     @Override
     public List<Tech> techsAvailableForRequest(Empire diplomat) {
-        EmpireView view = empire.viewForEmpire(diplomat);
-        List<Tech> allUnknownTechs = view.spies().unknownTechs();
+        DiplomaticEmbassy embassy = diplomat.viewForEmpire(empire).embassy();
+        List<Tech> allUnknownTechs = embassy.offerableTechnologies();
 
-        List<Tech> allTechs = new ArrayList<>();
-        for (int i=0; i<allUnknownTechs.size();i++) {
+        int maxTechs = 5;
+        List<Tech> allTechs = new ArrayList<>(maxTechs);
+        for (int i=0; i < allUnknownTechs.size() && allTechs.size() < maxTechs; i++) {
             Tech tech = allUnknownTechs.get(i);
             if (!diplomat.diplomatAI().techsRequestedForCounter(empire, tech).isEmpty())
                 allTechs.add(allUnknownTechs.get(i));
         }
-
-        int maxTechs = 5;
-        // sort unknown techs by our research value
-        Tech.comparatorCiv = empire;
-        Collections.sort(allTechs, Tech.RESEARCH_VALUE);
-        if (allTechs.size() <= maxTechs)
-            return allTechs;
-        List<Tech> techs = new ArrayList<>(maxTechs);
-        for (int i=0; i<maxTechs;i++)
-            techs.add(allTechs.get(i));
-        return techs;
+        return allTechs;
     }
     @Override
     public List<Tech> techsRequestedForCounter(Empire requestor, Tech tech) {
@@ -139,12 +130,15 @@ public class AIDiplomat implements Base, Diplomat {
         float maxTechValue = techDealValue(view) * max(tech.level(), tech.baseValue(requestor));
 
         // what are all of the unknown techs that we could ask for
-        List<Tech> allTechs = view.spies().unknownTechs();
-
+        DiplomaticEmbassy embassy = requestor.viewForEmpire(empire).embassy();
+        List<Tech> allUnknownTechs = embassy.offerableTechnologies();
+        
         // include only those techs which have a research value >= the trade value
         // of the requestedTech we would be trading away
-        List<Tech> worthyTechs = new ArrayList<>(allTechs.size());
-        for (Tech t: allTechs) {
+        int maxTechs = 3;
+        List<Tech> worthyTechs = new ArrayList<>(maxTechs);
+        for (int i=0; i < allUnknownTechs.size() && worthyTechs.size() < maxTechs; i++) {
+            Tech t = allUnknownTechs.get(i);
             if (t.quintile() == tech.quintile()) {
                 if (t.baseValue(empire) > maxTechValue) {
                     if (!t.isObsolete(empire))
@@ -152,21 +146,7 @@ public class AIDiplomat implements Base, Diplomat {
                 }
             }
         }
-
-        // sort techs by the diplomat's research priority (hi to low)
-        Tech.comparatorCiv = empire;
-        Collections.sort(worthyTechs, Tech.BASE_VALUE);
-        
-        // limit return to top 5 techs
-        Tech.comparatorCiv = requestor;
-        int maxTechs = 3;
-        if (worthyTechs.size() <= maxTechs)
-            return worthyTechs;
-        List<Tech> topFiveTechs = new ArrayList<>(maxTechs);
-        for (int i=0; i<maxTechs;i++)
-            topFiveTechs.add(worthyTechs.get(i));
-        Collections.sort(topFiveTechs, Tech.RESEARCH_VALUE);
-        return topFiveTechs;
+        return worthyTechs;
     }
     private float techDealValue(EmpireView v) {
         if (v.embassy().alliance())
@@ -180,7 +160,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (!willingToOfferTechExchange(v))
             return false;
 
-        List<Tech> availableTechs = v.spies().unknownTechs();
+        DiplomaticEmbassy otherEmbassy = v.otherView().embassy();
+        List<Tech> availableTechs = otherEmbassy.offerableTechnologies();
         if (availableTechs.isEmpty())
             return false;
 
@@ -694,7 +675,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (empire.leader().isPacifist())
             bribeValue *= 2;
         
-        List<Tech> allTechs = v.spies().unknownTechs();
+        DiplomaticEmbassy otherEmbassy = v.otherView().embassy();
+        List<Tech> allTechs = otherEmbassy.offerableTechnologies();
         if (allTechs.isEmpty())
             return v.refuse(DialogueManager.DECLINE_OFFER, target);
 

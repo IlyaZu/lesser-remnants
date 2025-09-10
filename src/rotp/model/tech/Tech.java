@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -224,17 +224,6 @@ public class Tech implements Base {
                 return Base.compare(o2.level, o1.level);
         }
     };
-    public static Comparator<Tech> BASE_VALUE = new Comparator<Tech>() {
-        @Override
-        public int compare(Tech o1, Tech o2) {
-            float pr1 = o1.baseValue(comparatorCiv);
-            float pr2 = o2.baseValue(comparatorCiv);
-            if (pr1 != pr2)
-                return Base.compare(pr2, pr1);
-            else
-                return Base.compare(o2.level, o1.level);
-        }
-    };
     public static Comparator<Tech> WAR_TRADE_VALUE = new Comparator<Tech>() {
         @Override
         public int compare(Tech o1, Tech o2) {
@@ -242,15 +231,6 @@ public class Tech implements Base {
             float pr2 = comparatorCiv.ai().scientist().warTradeValue(o2);
             return Base.compare(pr2, pr1);
         }
-    };
-    public Comparator<Tech> OBJECT_TRADE_PRIORITY = (Tech o1, Tech o2) -> {
-        float pr1 = this.level() - o1.level();
-        if(pr1 < 0)
-            pr1 = o1.level() - this.level();
-        float pr2 = this.level() - o2.level();
-        if(pr2 < 0)
-            pr2 = o2.level() - this.level();
-        return Base.compare(pr2, pr1);
     };
     public static Comparator<Tech> TRADE_PRIORITY = (Tech o1, Tech o2) -> {
         return Base.compare(o2.level, o1.level);
