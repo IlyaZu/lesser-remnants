@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,8 +61,6 @@ public class ExpansionIncident extends DiplomaticIncident {
         if (numberSystems > maxSystemsWithoutPenalty)
             view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
     }
-    @Override
-    public boolean triggeredByAction()   { return false; }
     private ExpansionIncident(EmpireView ev, int num, float max) {
         super(calculateSeverity(ev, num, max));
         numSystems = num;
