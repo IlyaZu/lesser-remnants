@@ -17,7 +17,6 @@
 package rotp.model.ai.xilmi;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import rotp.model.ai.base.AIDiplomat;
 import rotp.model.empires.DiplomaticEmbassy;
@@ -46,29 +45,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
 
     @Override
-    public List<Tech> techsAvailableForRequest(Empire diplomat) {
-        DiplomaticEmbassy embassy = diplomat.viewForEmpire(empire).embassy();
-        List<Tech> allUnknownTechs = embassy.offerableTechnologies();
-
-        List<Tech> allTechs = new ArrayList<>();
-        for (int i=0; i<allUnknownTechs.size();i++) {
-            Tech tech = allUnknownTechs.get(i);
-            if (!diplomat.diplomatAI().techsRequestedForCounter(empire, tech).isEmpty())
-                allTechs.add(allUnknownTechs.get(i));
-        }
-
-        int maxTechs = 5;
-        // sort unknown techs by our research value
-        Tech.comparatorCiv = empire;
-        Collections.sort(allTechs, Tech.RESEARCH_VALUE);
-        if (allTechs.size() <= maxTechs)
-            return allTechs;
-        List<Tech> techs = new ArrayList<>(maxTechs);
-        for (int i=0; i<maxTechs;i++)
-            techs.add(allTechs.get(i));
-        return techs;
-    }
-    @Override
     public List<Tech> techsRequestedForCounter(Empire requestor, Tech tech) {
         if (tech.isObsolete(requestor))
             return new ArrayList<>();
@@ -78,13 +54,14 @@ public class AIXilmiDiplomat extends AIDiplomat {
 
         // what are all of the unknown techs that we could ask for
         DiplomaticEmbassy embassy = requestor.viewForEmpire(empire).embassy();
-        List<Tech> allTechs = embassy.offerableTechnologies();
-        Tech.comparatorCiv = empire;
-        Collections.sort(allTechs, tech.OBJECT_TRADE_PRIORITY);
+        List<Tech> allUnknownTechs = embassy.offerableTechnologies();
+
         // include only those techs which have a research value >= the trade value
         // of the requestedTech we would be trading away
-        List<Tech> worthyTechs = new ArrayList<>(allTechs.size());
-        for (Tech t: allTechs) {
+        int maxTechs = 3;
+        List<Tech> worthyTechs = new ArrayList<>(maxTechs);
+        for (int i=0; i < allUnknownTechs.size() && worthyTechs.size() < maxTechs; i++) {
+            Tech t = allUnknownTechs.get(i);
             if(!empire.scientistAI().isOptional(tech))
                 if(empire.scientistAI().isOptional(t) && t.level() < tech.level() + 5 )
                     continue;
@@ -99,20 +76,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
             if (!t.isObsolete(empire) && t.baseValue(empire) > 0)
                 worthyTechs.add(t);
         }
-
-        // sort techs by the diplomat's research priority (hi to low)
-        Collections.sort(worthyTechs, tech.OBJECT_TRADE_PRIORITY);
-        
-        // limit return to top 5 techs
-        Tech.comparatorCiv = requestor;
-        int maxTechs = 3;
-        if (worthyTechs.size() <= maxTechs)
-            return worthyTechs;
-        List<Tech> topFiveTechs = new ArrayList<>(maxTechs);
-        for (int i=0; i<maxTechs;i++)
-            topFiveTechs.add(worthyTechs.get(i));
-        Collections.sort(topFiveTechs, tech.OBJECT_TRADE_PRIORITY);
-        return topFiveTechs;
+        return worthyTechs;
     }
     //-----------------------------------
     //  PEACE

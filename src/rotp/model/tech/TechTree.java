@@ -687,4 +687,9 @@ public final class TechTree implements Base, Serializable {
     public float newMissileBaseCost() {
         return newMissileBase().cost(empire);
     }
+    
+    public int researchCost(Tech tech) {
+        var category = category(tech.categoryIndex());
+        return category.costForTech(tech);
+    }
 }

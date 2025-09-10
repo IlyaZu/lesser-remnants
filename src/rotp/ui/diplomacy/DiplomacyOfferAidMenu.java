@@ -39,6 +39,12 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
         DiplomaticEmbassy embassy = view().otherView().embassy();
         amounts = embassy.offerAidAmounts();
         techs = embassy.offerableTechnologies();
+        
+        int maxTechs = 5;
+        while (techs.size() > maxTechs) {
+            techs.removeLast();
+        }
+        
         for (var _ : amounts)
             options.add(OFFER_MONEY);
         
