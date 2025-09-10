@@ -43,8 +43,6 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     @Override
     public String description()      { return  decode(text("INC_AT_WAR_WITH_ALLY_DESC")); }
     @Override
-    public boolean triggeredByAction()   { return false; }
-    @Override
     public String decode(String s) {
         String s1 = super.decode(s);
         s1 = galaxy().empire(empYou).replaceTokens(s1, "your");

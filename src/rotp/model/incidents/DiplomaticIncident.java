@@ -44,7 +44,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     public abstract String title();
     public abstract String description();
-    public boolean triggeredByAction()   { return true; }
     public String praiseMessageId()      { return ""; }
     public String warningMessageId()     { return ""; }
     public String declareWarId()         { return ""; }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,6 @@ public class AlliedWithEnemyIncident extends DiplomaticIncident {
     public String title()            { return text("INC_ALLIED_WITH_ENEMY_TITLE"); }
     @Override
     public String description()      { return  decode(text("INC_ALLIED_WITH_ENEMY_DESC")); }
-    @Override
-    public boolean triggeredByAction()   { return false; }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

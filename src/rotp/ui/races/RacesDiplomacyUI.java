@@ -420,7 +420,7 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         incidentMap.clear();
         for (EmpireView view: player().contacts()) {
             for (DiplomaticIncident inc : view.otherView().embassy().allIncidents()) {
-                if ((inc.severity() != 0) && inc.triggeredByAction()) {
+                if (inc.severity() != 0) {
                     incidents.add(inc);
                     incidentMap.put(inc, view.empire());
                 }
