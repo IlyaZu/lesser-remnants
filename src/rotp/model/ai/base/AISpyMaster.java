@@ -86,7 +86,7 @@ public class AISpyMaster implements Base, SpyMaster {
             }
         }
         
-        if (!emb.isEnemy() && shouldDeallocate) {
+        if (!emb.war() && shouldDeallocate) {
             spies.allocation(0);
             return;
         }
@@ -138,7 +138,7 @@ public class AISpyMaster implements Base, SpyMaster {
             }
         }
         
-        if (!emb.isEnemy() && shouldHide) {
+        if (!emb.war() && shouldHide) {
             spies.beginHide();
             return;
         }

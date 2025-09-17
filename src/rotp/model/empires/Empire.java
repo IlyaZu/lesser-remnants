@@ -1448,7 +1448,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         if (v == null)
             return false;
         
-        if (v.embassy().peaceTreatyInEffect())
+        if (v.embassy().atPeace())
             return false;
         return v.embassy().canAttackWithoutPenalty();
     }

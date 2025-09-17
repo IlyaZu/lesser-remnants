@@ -235,7 +235,7 @@ public class AIGeneral implements Base, General {
         }
 
         // for empires we are at war with.. we always invade or bomb
-        if (ev.embassy().isEnemy()) {
+        if (ev.embassy().war()) {
             if (willingToInvade(ev, sys))
                 orderInvasionFleet(ev, sys, enemyFleetSize);
             else
