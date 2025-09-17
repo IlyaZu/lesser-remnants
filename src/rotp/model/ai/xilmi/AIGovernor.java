@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -366,7 +366,7 @@ public class AIGovernor implements Base, Governor {
         for(Empire emp : empire.contactedEmpires())
         {
             EmpireView v = empire.viewForEmpire(emp);
-            if(v.embassy().isEnemy() && empire.inShipRange(emp.id))
+            if(v.embassy().war() && empire.inShipRange(emp.id))
             {
                 enemy = true;
             }

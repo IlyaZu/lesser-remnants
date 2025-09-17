@@ -139,7 +139,7 @@ public class AISpyMaster implements Base, SpyMaster {
         if(empire.leader().isRuthless() || !v.empire().inShipRange(empire.id))
             shouldHide = false;
         
-        if (!emb.isEnemy() && shouldHide) {
+        if (!emb.war() && shouldHide) {
             if(v.empire().leader().isXenophobic())
             {
                 spies.shutdownSpyNetworks();

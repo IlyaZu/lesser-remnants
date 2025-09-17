@@ -129,6 +129,9 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean noTreaty()               { return treaty.isNoTreaty(); }
     public boolean pact()                   { return treaty.isPact(); }
     public boolean alliance()               { return treaty.isAlliance(); }
+    public boolean isFriend()               { return pact() || alliance(); }
+    public boolean atPeace()                { return treaty.isPeace(); }
+    
     public boolean readyForTrade(int level) {
         // trade cooldown timer must be back to zero -AND-
         // new trade level must exceed last requested level by 25% * each consecutive refusal
@@ -277,18 +280,14 @@ public class DiplomaticEmbassy implements Base, Serializable {
             return (s.hasColonyForEmpire(owner()) || s.hasColonyForEmpire(empire()));
         if (alliance())
             return false;
-        return !peaceTreatyInEffect();
+        return !atPeace();
     }
-    public boolean peaceTreatyInEffect()   { return treaty.isPeace(); }
     private void setTreaty(DiplomaticTreaty tr) {
         treaty = tr;
         otherEmbassy().treaty = tr;
         view.setSuggestedAllocations();
         view.otherView().setSuggestedAllocations();
     }
-    public boolean isFriend()    { return pact() || alliance(); }
-    public boolean isEnemy()     { return war(); }
-    public boolean atPeace()     { return peaceTreatyInEffect(); }
 
     public DiplomaticIncident exchangeTechnology(Tech offeredTech, Tech requestedTech) {
         // civ() is the requestor, and will be learning the requested tech
