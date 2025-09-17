@@ -659,12 +659,12 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         int k = e.getKeyCode();
         switch (k) {
             case KeyEvent.VK_MINUS:
-                if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
-                    shrinkFrame(); 
+                if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)
+                    shrinkFrame();
                 return;
-            case KeyEvent.VK_EQUALS: 
-                if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
-                    expandFrame(); 
+            case KeyEvent.VK_EQUALS:
+                if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)
+                    expandFrame();
                 return;
             case KeyEvent.VK_Z:  hideText = true; repaint(); return;
             case KeyEvent.VK_C:  continueGame(); return;
