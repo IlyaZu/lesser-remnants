@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2953,8 +2953,8 @@ public class DesignUI extends BasePanel {
         public void mousePressed(MouseEvent mouseEvent) { }
         @Override
         public void mouseReleased(MouseEvent e) {
-            boolean shiftPressed = (e.getModifiers() & InputEvent.SHIFT_MASK) != 0;
-            boolean ctrlPressed = (e.getModifiers() & InputEvent.CTRL_MASK) != 0;
+            boolean shiftPressed = (e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0;
+            boolean ctrlPressed = (e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
             
             if (hoverTarget == scrapButtonArea) {
                 softClick(); openScrapDialog(); return;
@@ -3101,8 +3101,8 @@ public class DesignUI extends BasePanel {
             if (shipDesign().active())
                 return;
             
-            boolean shiftPressed = (e.getModifiers() & InputEvent.SHIFT_MASK) != 0;
-            boolean ctrlPressed = (e.getModifiers() & InputEvent.CTRL_MASK) != 0;
+            boolean shiftPressed = (e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0;
+            boolean ctrlPressed = (e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
             
             if (hoverTarget == shipImageArea) {
                 if (count < 0)

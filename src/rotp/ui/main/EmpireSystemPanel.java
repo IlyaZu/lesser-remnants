@@ -575,8 +575,8 @@ public class EmpireSystemPanel extends SystemPanel {
             int x = e.getX();
             int y = e.getY();
             boolean rightClick = SwingUtilities.isRightMouseButton(e);
-            boolean shiftPressed = (e.getModifiers() & InputEvent.SHIFT_MASK) != 0;
-            boolean ctrlPressed = (e.getModifiers() & InputEvent.CTRL_MASK) != 0;
+            boolean shiftPressed = (e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0;
+            boolean ctrlPressed = (e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
             
             int adjAmt = 1;
             if (shiftPressed)
@@ -668,8 +668,8 @@ public class EmpireSystemPanel extends SystemPanel {
             int y = e.getY();
             
             if (limitBox.contains(x,y)) {
-                boolean shiftPressed = (e.getModifiers() & InputEvent.SHIFT_MASK) != 0;
-                boolean ctrlPressed = (e.getModifiers() & InputEvent.CTRL_MASK) != 0;
+                boolean shiftPressed = (e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0;
+                boolean ctrlPressed = (e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
 
                 int adjAmt = 1;
                 if (shiftPressed)

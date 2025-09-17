@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1165,8 +1165,8 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             int stackNum = fl.num(index);
             int currAdj = stackAdjustment[index];
             int newAdj = 1;
-            boolean shiftPressed = (e.getModifiers() & InputEvent.SHIFT_MASK) != 0;
-            boolean ctrlPressed = (e.getModifiers() & InputEvent.CTRL_MASK) != 0;
+            boolean shiftPressed = (e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0;
+            boolean ctrlPressed = (e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
             
             int adjAmt = 1;
             if (shiftPressed)
