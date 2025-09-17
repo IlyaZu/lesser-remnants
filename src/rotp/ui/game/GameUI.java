@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -314,14 +314,14 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         return buttonBorder;
     }
 
-    private static final String[] backImgKeys = { 
-        "LANDSCAPE_RUINS_ORION", "LANDSCAPE_RUINS_ANTARAN", 
+    private static final String[] backImgKeys = {
+        "LANDSCAPE_RUINS_ORION", "LANDSCAPE_RUINS_ANTARAN",
         "AlkCouncil", "AlkWin", "AlkLoss", "AlkSab01", "AlkSab02",
-        "BulCouncil", "BulWin", "BulLoss", "BulSab01", "BulSab02", 
+        "BulCouncil", "BulWin", "BulLoss", "BulSab01", "BulSab02",
         "DarCouncil01", "DarWin", "DarLoss", "DarSab01", "DarSab02",
-        "HumCouncil", "HumWin", "HumLoss",  "HumSab01", "HumSab02", 
+        "HumCouncil", "HumWin", "HumLoss",  "HumSab01", "HumSab02",
         "KlaCouncil", "KlaWin", "KlaLoss", "KlaSab01", "KlaSab02",
-        "MekCouncil", "MekWin", "MekLoss", "MekSab01", "MekSab02", 
+        "MekCouncil", "MekWin", "MekLoss", "MekSab01", "MekSab02",
         "MrrCouncil", "MrrWin", "MrrLoss", "MrrSab01", "MrrSab02",
         "PsiCouncil", "PsiWin", "PsiLoss", "PsiSab01", "PsiSab02",
         "SakCouncil", "SakWin", "SakLoss", "SakSab01", "SakSab02",
@@ -617,7 +617,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private String manualFilePath() {
         return LanguageManager.current().selectedLanguageFullPath()+"/manual.pdf";
     }
-    private boolean manualExists() { 
+    private boolean manualExists() {
         String filename = manualFilePath();
         return readerExists(filename);
     }
@@ -627,7 +627,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private boolean canSaveGame()    { return session().status().inProgress(); }
     private boolean canOpenManual()  { return manualExists(); }
     private boolean canExit()        { return true; }
-    private boolean canRestart()     { return !UserPreferences.displayMode().equals(startingDisplayMode) 
+    private boolean canRestart()     { return !UserPreferences.displayMode().equals(startingDisplayMode)
             || (UserPreferences.screenSizePct() != startingScale); }
 
     private void rescaleMenuOptions() {
@@ -703,7 +703,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
             languagePanel.initBounds();
             UserPreferences.save();
             repaint();
-       }    
+       }
     }
     private void openRedditPage() {
         try {
@@ -720,7 +720,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
             tempOutput.toFile().deleteOnExit();
             Files.copy(manualAsStream, tempOutput, StandardCopyOption.REPLACE_EXISTING);
             File userManual = new File (tempOutput.toFile().getPath());
-            if (userManual.exists()) 
+            if (userManual.exists())
                 Desktop.getDesktop().open(userManual);
         } catch (IOException e) {}
     }
@@ -840,7 +840,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
             return;
 
         BaseText newHover = null;
-        if (languageBox.contains(x,y)) 
+        if (languageBox.contains(x,y))
             languagePanel.setVisible(true);
         else if (discussText.contains(x,y))
             newHover = discussText;
@@ -934,7 +934,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
                 g.setColor(Color.white);
                 int sw = g.getFontMetrics().stringWidth(name);
                 drawString(g,name, w-sw-s5, y0);
-            }    
+            }
             fontsReady = true;
             g.dispose();
             parent.repaint();
@@ -966,7 +966,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         @Override
         public void mouseClicked(MouseEvent e) { }
         @Override
-        public void mousePressed(MouseEvent e) { 
+        public void mousePressed(MouseEvent e) {
             resetSlideshowTimer();
         }
         @Override

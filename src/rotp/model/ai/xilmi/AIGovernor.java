@@ -97,9 +97,9 @@ public class AIGovernor implements Base, Governor {
             else
                 session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_FERTILE_COMPLETE", name));
         }
-        if (col.ecology().terraformCompletedThisTurn()) 
+        if (col.ecology().terraformCompletedThisTurn())
             session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_TERRAFORM_COMPLETE", name));
-        if (col.research().hasCompletedProject()) 
+        if (col.research().hasCompletedProject())
             session().addSystemToAllocate(sys, text("MAIN_ALLOCATE_PROJECT_ENDED", name, col.research().completedProject().projectKey()));
             
         if (col.hasNewOrders() || (col.allocationRemaining() != 0) || session().awaitingAllocation(sys)) {
@@ -142,10 +142,10 @@ public class AIGovernor implements Base, Governor {
             col.setAllocation(DEFENSE,  min(orderedDef, maxDef));
         
         // 3. Unless we have just completed building a stargate or reached a ship
-        // limit, ensure that SHIP spending 
-        // is maintained. Ship spending is never allocated for player colonies by the AI 
+        // limit, ensure that SHIP spending
+        // is maintained. Ship spending is never allocated for player colonies by the AI
         //Governor so any spending here must be treated similarly to a player order
-        if (!col.locked(SHIP) 
+        if (!col.locked(SHIP)
         && !col.shipyard().stargateCompleted()
         && !col.shipyard().shipLimitReached())
             col.setAllocation(SHIP, prevShip);
@@ -186,16 +186,16 @@ public class AIGovernor implements Base, Governor {
         // if research not locked go there
         if (!col.locked(RESEARCH))
             col.addAllocation(RESEARCH, col.allocationRemaining());
-        else if (!col.locked(INDUSTRY)) 
+        else if (!col.locked(INDUSTRY))
             col.addAllocation(INDUSTRY, col.allocationRemaining());
-        else if (!col.locked(ECOLOGY)) 
+        else if (!col.locked(ECOLOGY))
             col.addAllocation(ECOLOGY, col.allocationRemaining());
         else if (!col.locked(DEFENSE))
             col.addAllocation(DEFENSE, col.allocationRemaining());
         else if (!col.locked(SHIP))
             col.addAllocation(SHIP, col.allocationRemaining());
     }
-    private void baseSetColonyAllocations(Colony col) {                
+    private void baseSetColonyAllocations(Colony col) {
         int maxAllocation = ColonySpendingCategory.MAX_TICKS;
 
         if(col.shipyard().canLowerMaintenance())
@@ -374,7 +374,7 @@ public class AIGovernor implements Base, Governor {
         int[] counts = galaxy().ships.shipDesignCounts(empire.id);
         float fighterCost = 0.0f;
         float bomberCost = 0.0f;
-        for (int i=0;i<counts.length;i++) 
+        for (int i=0;i<counts.length;i++)
         {
             if(lab.design(i).hasColonySpecial())
                 continue;
@@ -417,7 +417,7 @@ public class AIGovernor implements Base, Governor {
             if(!techsLeft)
                 maxShipMaintainance = empire.fleetCommanderAI().maxShipMaintainance();
             col.shipyard().design(empire.shipDesignerAI().BestDesignToFight());
-            if(fighterCost / (bomberCost + fighterCost) > fighterPercentage 
+            if(fighterCost / (bomberCost + fighterCost) > fighterPercentage
                 && enemyBombardPower == 0)
             {
                 if(empire.shipDesignerAI().BestDesignToBomb() != null)
@@ -612,7 +612,7 @@ public class AIGovernor implements Base, Governor {
         Score /= sys.planet().researchAdj();
         float avgScore = 0;
         float counted = 0;
-        for (int id=0;id<empire.sv.count();id++) 
+        for (int id=0;id<empire.sv.count();id++)
         {
             StarSystem current = galaxy().system(id);
             if(current.colony() == null)
