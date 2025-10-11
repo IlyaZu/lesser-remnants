@@ -1102,9 +1102,13 @@ public final class Colony implements Base, IMappedObject, Serializable {
             // modnar: use firepowerAntiShip to only count ship weapons that can hit ships
             // to prevent ground bombs from being able to damage transports
         List<ShipFleet> fleets = starSystem().orbitingFleets();
+        // Default to system empire in case size is already zero and there are no hostile fleets
+        Empire defendingEmpire = empire();
         for (ShipFleet fl : fleets) {
-            if (fl.empire().aggressiveWith(tr.empId()))
+            if (fl.empire().aggressiveWith(tr.empId())) {
                 defenderDmg += fl.firepowerAntiShip(0);
+                defendingEmpire = fl.empire();
+            }
         }
 
         // run the gauntlet
@@ -1120,9 +1124,9 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // player notification only.
         if (tr.size() == 0) {
             log(concat(str(tr.launchSize()), " ", tr.empire().raceName(), " transports perished at ", name()));
-            if (tr.empire().isPlayerControlled())
-                TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
-            else if (empire().isPlayerControlled())
+            if (tr.empire().isPlayerControlled()) {
+                TransportsKilledAlert.create(defendingEmpire, starSystem(), tr.launchSize());
+            } else if (empire().isPlayerControlled())
                 InvadersKilledAlert.create(tr.empire(), starSystem(), tr.launchSize());
         }
     }
