@@ -597,8 +597,24 @@ public class AIDiplomat implements Base, Diplomat {
     private float calculateAllianceChance(EmpireView v) {
         float chance = v.embassy().relations();
         chance += v.empire().diplomacyBonus();
-        chance += empire.leader().acceptAllianceMod();
+        chance += acceptAllianceMod(empire.leader());
         return chance;
+    }
+    private float acceptAllianceMod(Leader leader) {
+        int a, b;
+        switch(leader.personality()) {
+            case XENOPHOBIC:    a = -20; break;
+            case RUTHLESS:      a = -10; break;
+            default:            a = 0;
+        }
+        switch(leader.objective()) {
+            case DIPLOMAT:      b = 10; break;
+            case MILITARIST:    b = 10; break;
+            case INDUSTRIALIST: b = 10; break;
+            case EXPANSIONIST:  b = 10; break;
+            default:            b = 0;
+        }
+        return a+b;
     }
 //-----------------------------------
 //  JOINT WARS
