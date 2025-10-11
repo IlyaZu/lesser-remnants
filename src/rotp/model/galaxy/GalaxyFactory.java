@@ -32,6 +32,8 @@ import rotp.util.Base;
 public class GalaxyFactory implements Base {
     static GalaxyFactory instance = new GalaxyFactory();
     public static GalaxyFactory current()   { return instance; }
+    
+    private final StarSystemFactory starFactory = new StarSystemFactory();
 
     public Galaxy newGalaxy() {
         for (Race r: Race.races()) {
@@ -175,7 +177,7 @@ public class GalaxyFactory implements Base {
         Integer color = options().selectedPlayerColor();
 
         // create home system for player
-        StarSystem sys = StarSystemFactory.current().newHomeworldSystem(playerRace, g);
+        StarSystem sys = starFactory.newHomeworldSystem(playerRace, g);
         sys.setXY(empSystem.colonyX(), empSystem.colonyY());
         sys.name(systemName);
         g.addStarSystem(sys);
@@ -188,10 +190,10 @@ public class GalaxyFactory implements Base {
         // ensure 1st nearby system is colonizable
         boolean needHabitable = true;
         for (int i=1;i<empSystem.numSystems();i++) {
-            StarSystem sys0 = StarSystemFactory.current().newNeutralSystem(g);
+            StarSystem sys0 = starFactory.newNeutralSystem(g);
             if (needHabitable) {
                 while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                    sys0 = StarSystemFactory.current().newNeutralSystem(g);
+                    sys0 = starFactory.newNeutralSystem(g);
                 needHabitable = false;
             }
             sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -223,7 +225,7 @@ public class GalaxyFactory implements Base {
             Race r = Race.keyed(alienRaces.get(h));
             EmpireSystem empSystem = empSystems.get(h);
             Integer colorId = raceColors.remove(0);
-            StarSystem sys = StarSystemFactory.current().newHomeworldSystem(r,g);
+            StarSystem sys = starFactory.newHomeworldSystem(r,g);
             sys.setXY(empSystem.colonyX(), empSystem.colonyY());
             sys.name(r.nextAvailableHomeworld());
             g.addStarSystem(sys);
@@ -233,10 +235,10 @@ public class GalaxyFactory implements Base {
             // create two nearby system within 3 light-years (required to be at least 1 habitable)
             boolean needHabitable = true;
             for (int i=1;i<empSystem.numSystems();i++) {
-                StarSystem sys0 = StarSystemFactory.current().newNeutralSystem(g);
+                StarSystem sys0 = starFactory.newNeutralSystem(g);
                 if (needHabitable) {
                     while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                        sys0 = StarSystemFactory.current().newNeutralSystem(g);
+                        sys0 = starFactory.newNeutralSystem(g);
                     needHabitable = false;
                 }
                 sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -247,7 +249,7 @@ public class GalaxyFactory implements Base {
     private void addUnsettledSystemsForGalaxy(Galaxy g, GalaxyShape sh) {
         Point.Float pt = new Point.Float();
         // add Orion, index =0;
-        StarSystem orion = StarSystemFactory.current().newOrionSystem(g);
+        StarSystem orion = starFactory.newOrionSystem(g);
         sh.coords(0, pt);
         orion.setXY(pt.x, pt.y);
         orion.name(text("PLANET_ORION"));
@@ -255,7 +257,7 @@ public class GalaxyFactory implements Base {
         
         // add all other systems, starting at index 1
         for (int i=1;i<sh.numberStarSystems();i++) {
-            StarSystem sys = StarSystemFactory.current().newNeutralSystem(g);
+            StarSystem sys = starFactory.newNeutralSystem(g);
             sh.coords(i, pt);
             sys.setXY(pt.x, pt.y);
             g.addStarSystem(sys);

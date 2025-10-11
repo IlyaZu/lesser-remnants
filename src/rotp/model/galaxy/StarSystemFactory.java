@@ -21,8 +21,6 @@ import rotp.model.planet.PlanetFactory;
 import rotp.util.Base;
 
 public class StarSystemFactory implements Base {
-    private static final StarSystemFactory instance = new StarSystemFactory();
-    public static StarSystemFactory current()   { return instance; }
 
     public StarSystem newNeutralSystem(Galaxy gal) {
         String type = neutralStarType();
