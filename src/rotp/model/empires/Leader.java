@@ -148,26 +148,4 @@ public class Leader implements Serializable {
         }
         return a+b;
     }
-    public float acceptAllianceMod() {
-        int a, b;
-        switch(personality) {
-            case PACIFIST:      a = 0; break;
-            case HONORABLE:     a = 0; break;
-            case XENOPHOBIC:    a = -20; break;
-            case RUTHLESS:      a = -10; break;
-            case AGGRESSIVE:    a = 0; break;
-            case ERRATIC:       a = 0; break;
-            default:            a = 0; break;
-        }
-        switch(objective) {
-            case DIPLOMAT:      b = 10; break;
-            case MILITARIST:    b = 10; break;
-            case ECOLOGIST:     b = 0; break;
-            case INDUSTRIALIST: b = 10; break;
-            case EXPANSIONIST:  b = 10; break;
-            case TECHNOLOGIST:  b = 0; break;
-            default:            b = 0; break;
-        }
-        return a+b;
-    }
 }
