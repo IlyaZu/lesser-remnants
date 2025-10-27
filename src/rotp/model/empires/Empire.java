@@ -1366,15 +1366,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         return n;
     }
-    public List<Empire> warEnemies() {
-        List<Empire> r = new ArrayList<>();
-        for (EmpireView v : empireViews()) {
-            if ((v!= null) && !v.empire().extinct
-            && v.embassy().war())
-                r.add(v.empire());
-        }
-        return r;
-    }
     public List<Empire> enemies() {
         List<Empire> r = new ArrayList<>();
         for (EmpireView v : empireViews()) {

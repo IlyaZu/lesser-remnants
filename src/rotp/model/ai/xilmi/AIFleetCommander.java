@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -310,7 +310,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                 Empire currEmp = empire.sv.system(id).empire();
                 if(!fleet.canReach(current))
                     continue;
-                if(currEmp != null && !currEmp.alliedWith(empire.id) && !empire.warEnemies().contains(currEmp))
+                if(currEmp != null && !currEmp.alliedWith(empire.id) && !empire.enemies().contains(currEmp))
                     continue;
                 if(current.monster() != null)
                     continue;
@@ -329,7 +329,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                     if(currEmp != null && empire.aggressiveWith(currEmp.id))
                         enemyMissileBc += empire.sv.bases(current.id)*currEmp.tech().newMissileBaseCost();
                     //prevent trickling
-                    if((currEmp != null && empire.warEnemies().contains(currEmp)) || enemyFightingBc > 0)
+                    if((currEmp != null && empire.enemies().contains(currEmp)) || enemyFightingBc > 0)
                         enemyFightingBc += systemInfoBuffer.get(id).myTotalBc;
                 }
                 if(currEmp != null)
@@ -496,8 +496,6 @@ public class AIFleetCommander implements Base, FleetCommander {
                     {
                         continue;
                     }
-                    if(!empire.warEnemies().contains(currEmp) && !empire.generalAI().strongEnoughToAttack())
-                        continue;
                 }
             }
             if(bombardDamage > 0 && fleet.system() != current)
@@ -1386,7 +1384,7 @@ public class AIFleetCommander implements Base, FleetCommander {
             Empire currEmp = current.empire();
             if(!fl.canReach(current))
                 continue;
-            if(currEmp != null && !currEmp.alliedWith(empire.id) && !empire.warEnemies().contains(currEmp))
+            if(currEmp != null && !currEmp.alliedWith(empire.id) && !empire.enemies().contains(currEmp))
                 continue;
             if(current.monster() != null)
                 continue;
@@ -1501,7 +1499,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         //count other enemies of them as more targets to split their attention between
         float myPower = empire.generalAI().smartPowerLevel();
         float allTheirEnemiesPower = myPower;
-        for(Empire eno : empire.sv.empire(sys.id).warEnemies())
+        for(Empire eno : empire.sv.empire(sys.id).enemies())
         {
             if(eno != empire)
             allTheirEnemiesPower += eno.militaryPowerLevel();

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
         emb.addIncident(new TechnologyAidIncident(emp, donor, techId));
         
-        for (Empire enemy: emp.warEnemies())
+        for (Empire enemy: emp.enemies())
             EnemyAidIncident.create(enemy, emp, donor, techId);
     }
     private TechnologyAidIncident(Empire emp, Empire donor, String tId) {

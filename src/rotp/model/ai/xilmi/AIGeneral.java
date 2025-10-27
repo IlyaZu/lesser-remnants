@@ -322,7 +322,7 @@ public class AIGeneral implements Base, General {
         return invasionGain;
     }
     public boolean willingToInvade(EmpireView v, StarSystem sys) {
-        if(!empire.warEnemies().contains(sys.empire()) && !empire.generalAI().strongEnoughToAttack())
+        if(!empire.enemies().contains(sys.empire()) && !empire.generalAI().strongEnoughToAttack())
             return false;
         if (!empire.canSendTransportsTo(sys))
             return false;
@@ -592,7 +592,7 @@ public class AIGeneral implements Base, General {
         for(Empire emp : empire.contactedEmpires())
         {
             float enemyPower = smartPowerLevel();
-            for(Empire enemy : emp.warEnemies())
+            for(Empire enemy : emp.enemies())
             {
                 enemyPower += enemy.militaryPowerLevel();
             }
@@ -829,7 +829,7 @@ public class AIGeneral implements Base, General {
         {
             if(!empire.inShipRange(contact.empId()))
                 continue;
-            if(!contact.empire().warEnemies().isEmpty())
+            if(!contact.empire().enemies().isEmpty())
                 knowSomeoneAtWar = true;
         }
         if(knowSomeoneAtWar)
