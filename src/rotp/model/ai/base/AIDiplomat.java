@@ -548,7 +548,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         v.embassy().noteRequest();
 
-        List<Empire> myEnemies = v.owner().warEnemies();
+        List<Empire> myEnemies = v.owner().enemies();
         List<Empire> hisAllies = v.empire().allies();
         for (Empire enemy: myEnemies) {
             if (hisAllies.contains(enemy))
@@ -625,26 +625,6 @@ public class AIDiplomat implements Base, Diplomat {
         
         // if he's already at war, don't bother
         if (friend.atWarWith(target.id))
-            return false;
-        // if he's not in economic range, don't bother
-        if (!friend.inEconomicRange(target.id))
-            return false;
-        return true;
-    }
-    private boolean willingToOfferJointWar(Empire friend, Empire target) {
-        // this method is called only for targets that we are at war with
-        // or targets we are preparing for war with
-        
-        if (friend.isPlayerControlled()) {
-            EmpireView v = empire.viewForEmpire(friend);
-            if (!v.otherView().embassy().readyForJointWar())
-                return false;
-        }
-        // if he's already at war, don't bother
-        if (friend.atWarWith(target.id))
-            return false;
-        // if he's allied with the target, don't bother
-        if (friend.alliedWith(target.id))
             return false;
         // if he's not in economic range, don't bother
         if (!friend.inEconomicRange(target.id))
@@ -906,23 +886,13 @@ public class AIDiplomat implements Base, Diplomat {
             v.empire().diplomatAI().receiveOfferAlliance(v.owner());
             return;
         }
-        // build a priority list for Joint War offers:
-        // 1. see if we can draw our ally into our existing war
-        // 2. if not, what about the empire we are about to war with?
-        List<Empire> warEnemies = empire.warEnemies();
-        List<Empire> comingWarEnemies = empire.enemies();
-        comingWarEnemies.removeAll(warEnemies);
+        // see if we can draw our ally into our existing war
+        List<Empire> warEnemies = empire.enemies();
 
         // ask only allies for now, to avoid spam
         if (v.embassy().alliance()) {
             for (Empire target: warEnemies) {
                 if (willingToRequestAllyToJoinWar(v.empire(), target)) {
-                    v.empire().diplomatAI().receiveOfferJointWar(v.owner(), target);
-                    return;
-                }
-            }
-            for (Empire target: comingWarEnemies) {
-                if (willingToOfferJointWar(v.empire(), target)) {
                     v.empire().diplomatAI().receiveOfferJointWar(v.owner(), target);
                     return;
                 }

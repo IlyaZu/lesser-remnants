@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class AssassinationIncident extends DiplomaticIncident {
         ev.embassy().recallAmbassador(); // technically, he was recalled by the assassin..
         victim.diplomatAI().noticeIncident(inc, assassin);
         
-        for (Empire vicEnemy: victim.warEnemies()) {
+        for (Empire vicEnemy: victim.enemies()) {
             if (vicEnemy != assassin) {
                 AssassinationIncident inc2 = new AssassinationIncident(assassin, victim, vicEnemy);
                 EmpireView ev2 = vicEnemy.viewForEmpire(assassin);

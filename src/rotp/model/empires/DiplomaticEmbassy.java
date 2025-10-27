@@ -262,7 +262,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean wantWar()           { return otherEmbassy().relations() < -50; }
     public boolean isAlly()            { return alliance(); }
     public boolean alliedWithEnemy() {
-        List<Empire> myEnemies = owner().warEnemies();
+        List<Empire> myEnemies = owner().enemies();
         List<Empire> hisAllies = empire().allies();
         for (Empire cv1 : myEnemies) {
             for (Empire cv2 : hisAllies) {

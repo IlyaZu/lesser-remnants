@@ -142,10 +142,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return v.refuse(DialogueManager.DECLINE_PEACE_TREATY, target);
         }
         
-        //ail: if we are preparing a war against them anyways, we can also make it official here
-        if(empire.enemies().contains(target) && !empire.warEnemies().contains(target))
-            return agreeToJointWar(requestor, target);
-        
          // will always declare war if allied with the requestor and he is already at war with the target
         if (requestor.alliedWith(id(empire)) && requestor.atWarWith(target.id))
             return agreeToJointWar(requestor, target);
@@ -210,7 +206,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
             if(v.empire() != empire.generalAI().bestVictim())
                 return true;
             //ail: If I have more than one war, we try to go to peace with everyone of our multiple enemies to increase the likelyness of at least one saying yes
-            if(empire.warEnemies().size() > 1)
+            if(empire.enemies().size() > 1)
                 return true;
             scared = true;
         }
