@@ -52,9 +52,9 @@ import rotp.ui.RotPUI;
 import rotp.ui.UserPreferences;
 import rotp.ui.main.SystemPanel;
 
-public final class LoadGameUI  extends BasePanel implements MouseListener, MouseWheelListener {
+public final class LoadGameUI extends BasePanel implements MouseListener, MouseWheelListener {
     private static final long serialVersionUID = 1L;
-    private static final int  MAX_FILES = 20;
+    private static final int MAX_FILES = 20;
     private static final int SORT_FN_UP = 1;
     private static final int SORT_FN_DN = 2;
     private static final int SORT_DT_UP = 3;

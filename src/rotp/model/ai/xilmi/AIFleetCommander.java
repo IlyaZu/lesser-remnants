@@ -91,7 +91,7 @@ public class AIFleetCommander implements Base, FleetCommander {
     }
     @Override
     public float maxShipMaintainance() {
-        if (maxMaintenance < 0) 
+        if (maxMaintenance < 0)
         {
             boolean techsLeft = false;
             for (int j=0; j<TechTree.NUM_CATEGORIES; j++) {
@@ -355,14 +355,14 @@ public class AIFleetCommander implements Base, FleetCommander {
         Galaxy gal = galaxy();
         StarSystem best = null;
         float bestScore = 0.0f;
-        for (int id=0;id<empire.sv.count();id++) 
+        for (int id=0;id<empire.sv.count();id++)
         {
             StarSystem current = gal.system(id);
             Empire currEmp = empire.sv.system(id).empire();
             if(!fleet.canReach(current))
             {
-                if(onlyColonizerTargets 
-                        && fleet.newestOfType(COLONY) != null 
+                if(onlyColonizerTargets
+                        && fleet.newestOfType(COLONY) != null
                         && fleet.newestOfType(COLONY).range() > empire.shipRange())
                 {
                     if(!empire.sv.inScoutRange(id))
@@ -504,7 +504,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                 if((!fleet.canColonizeSystem(current) && myTransports == 0 && colonizerEnroute == 0) || colonizationBonus == 0)
                     if(empire.sv.system(current.id).colony() != null)
                         score *= Math.min(empire.sv.system(current.id).colony().untargetedHitPoints() / bombardDamage, 1.0f);
-            } 
+            }
             else if(bombardDamage > 0 && fleet.system() == current)
                 score = 0; //score will be 0 and the amount of ships that stay there will be handled via keepBC
             if (bc > 0 && fleet.sysId() != current.id && (currEmp == null || empire.alliedWith(empire.sv.empId(id))))
@@ -564,7 +564,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         // make fleet plans for each unplanned system
         for (int id=0; id<empire.sv.count();id++) {
             reviseFleetPlan(id);
-            if (empire.sv.hasFleetPlan(id) && !empire.sv.fleetPlan(id).isClear()) 
+            if (empire.sv.hasFleetPlan(id) && !empire.sv.fleetPlan(id).isClear())
                 fleetPlans.add(empire.sv.fleetPlan(id));
         }
 
@@ -579,7 +579,7 @@ public class AIFleetCommander implements Base, FleetCommander {
             empire.shipLab().needScouts = false;
         else if (empire.scanPlanets())
             empire.shipLab().needScouts = false;
-        else if (empire.shipLab().colonyDesign().size() <= 2 
+        else if (empire.shipLab().colonyDesign().size() <= 2
                 && empire.shipLab().colonyDesign().range() >= empire.scoutRange())
             empire.shipLab().needScouts = false;
         else if (empire.atWar())
@@ -602,15 +602,15 @@ public class AIFleetCommander implements Base, FleetCommander {
         int numComplete = 0;
 
         log("Fleet Plans to fill:  ", str(numPlans), "  ships: ", str(numShips));
-        //for (FleetPlan fp: fleetPlans) 
-        //    log(fp.fullName());          
+        //for (FleetPlan fp: fleetPlans)
+        //    log(fp.fullName());
         
         List<FleetPlan> retreatPlans = new ArrayList<>();
         for (FleetPlan fPlan: fleetPlans) {
             NoticeMessage.setSubstatus(text("TURN_DEPLOY_FLEET_X", str(numComplete), str(numPlans)));
-            if (fPlan.priority() == FleetPlan.RETREAT) 
+            if (fPlan.priority() == FleetPlan.RETREAT)
                 retreatPlans.add(fPlan);
-            else 
+            else
                 assignShipsToFleetPlans(fPlan, fleetOrders);
             numComplete += 1;
         }
@@ -642,7 +642,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         // if this is a staged plan and is unfilled by fleet at staging point, all future ships go to staging point
         if (fPlan.isStaged() && fPlan.needsShips()) {
             ShipFleet stagingFleet = empire.sv.orbitingFleet(fPlan.stagingPointId);
-            if (fPlan.canBeFilledBy(stagingFleet)) 
+            if (fPlan.canBeFilledBy(stagingFleet))
                 fPlan.subtract(stagingFleet.orders());
             else
                 fPlan.switchToStagingPoint();
@@ -672,23 +672,23 @@ public class AIFleetCommander implements Base, FleetCommander {
             }
         }
     }
-    private void reviseFleetPlan(int sysId) {        
+    private void reviseFleetPlan(int sysId) {
         float scoutRange = empire.scoutRange();
         // if out of scout range, forget it
-        if (!empire.sv.withinRange(sysId, scoutRange)) 
+        if (!empire.sv.withinRange(sysId, scoutRange))
             return;
         // if a fleet plan has already been assigned (by AIGeneral), then skip
-        if (empire.sv.fleetPlan(sysId).needsShips()) 
+        if (empire.sv.fleetPlan(sysId).needsShips())
             return;
         // if guarded, forget it for now
-        if (empire.sv.isGuarded(sysId)) 
+        if (empire.sv.isGuarded(sysId))
             return;
 
         // if not scouted and owner still using scouts, send a scout
-        // if it has no known missile bases or if it is an ally 
+        // if it has no known missile bases or if it is an ally
         if (!empire.sv.isScouted(sysId) && empire.shipLab().needScouts) { //once we no longer use scouts, we do this in another way
             if (empire.alliedWith(empire.sv.empId(sysId))
-            || (empire.sv.bases(sysId) == 0)) 
+            || (empire.sv.bases(sysId) == 0))
                 setScoutFleetPlan(sysId);
         }
     }
@@ -707,7 +707,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                 fleetPlans.add(empire.sv.fleetPlan(sysId));
             }
             //we also want to retreat fleets that are trespassing to avoid prevention-wars
-            if(fl.system().empire()!= null 
+            if(fl.system().empire()!= null
                     && !empire.enemies().contains(fl.system().empire())
                     && !empire.allies().contains(fl.system().empire())
                     && empire != fl.system().empire())
@@ -848,7 +848,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                         float transportsToDealWith = 0;
                         if(fleet.system().empire() == empire || empire.enemies().contains(fleet.system().empire()))
                             transportsToDealWith = systemInfoBuffer.get(fleet.sysId()).enemyIncomingTransports;
-                        if(empire.enemies().contains(fleet.system().empire())) 
+                        if(empire.enemies().contains(fleet.system().empire()))
                             transportsToDealWith = max(transportsToDealWith, systemInfoBuffer.get(fleet.sysId()).myIncomingTransports);
                         if(transportsToDealWith > 0)
                         {
@@ -1075,7 +1075,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                             }
                             else
                             {
-                                if(empire.sv.inScoutRange(target.id) 
+                                if(empire.sv.inScoutRange(target.id)
                                         && fleet.newestOfType(COLONY) != null
                                         && fleet.newestOfType(COLONY).range() > empire.shipRange())
                                 {
@@ -1148,7 +1148,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         
         for (int i=0;i<fl.num.length;i++) {
             int num = fl.num(i);
-            ShipDesign d = lab.design(i); 
+            ShipDesign d = lab.design(i);
             totalVal += num * d.cost();
             if(d.warpSpeed() == empire.tech().topSpeed())
                 topSpeedVal += num * d.cost();
@@ -1188,7 +1188,7 @@ public class AIFleetCommander implements Base, FleetCommander {
             int[] counts = new int[ShipDesignLab.MAX_DESIGNS];
             for (int i=0;i<fl.num.length;i++) {
                 int num = fl.num(i);
-                ShipDesign d = lab.design(i); 
+                ShipDesign d = lab.design(i);
                 if(d.warpSpeed()!=speed && splitBySpeed)
                     continue;
                 if(d.isScout()&& !includeScouts)
@@ -1238,7 +1238,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                         }
                         //System.out.print("\n"+empire.name()+" need to keep after: "+needToKeep);
                     }
-                }   
+                }
                 if(counts[i] > 0)
                 {
                     haveToDeploy = true;
@@ -1493,7 +1493,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                         uniqueTargets++;
                         break;
                     }
-                }   
+                }
             }
         }
         //count other enemies of them as more targets to split their attention between
