@@ -709,8 +709,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (!requestor.atWarWith(targetId))
             requestor.viewForEmpire(targetId).embassy().declareWar();
  
-        DiplomaticIncident inc =  empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return empire.viewForEmpire(requestor).accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
+        empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
+        return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
     }
     private float bribeAmountToJointWar(Empire target) {
         EmpireView v = empire.viewForEmpire(target);
@@ -727,8 +727,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (!requestor.atWarWith(targetId))
             requestor.viewForEmpire(targetId).embassy().declareWar();
  
-        DiplomaticIncident inc = empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return empire.viewForEmpire(requestor).accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
+        empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
+        return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
     }
     @Override
     public DiplomaticReply refuseOfferJointWar(Empire requestor, Empire target) {
@@ -773,9 +773,9 @@ public class AIDiplomat implements Base, Diplomat {
         EmpireView v = empire.viewForEmpire(e);
 
         v.embassy().noteRequest();
-        DiplomaticIncident inc = v.embassy().declareWar();
+        v.embassy().declareWar();
 
-        return empire.respond(DialogueManager.DECLARE_HATE_WAR, inc, e);
+        return DiplomaticReplies.announceHateWar(v);
     }
     private boolean decidedToBreakAlliance(EmpireView view) {
         if (!wantToBreakAlliance(view))

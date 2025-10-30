@@ -29,6 +29,7 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
+import rotp.ui.diplomacy.DiplomaticReplies;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
 
@@ -160,8 +161,8 @@ public class AIXilmiDiplomat extends AIDiplomat {
         if (!requestor.atWarWith(targetId))
             requestor.viewForEmpire(targetId).embassy().declareWar();
  
-        DiplomaticIncident inc =  empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return empire.viewForEmpire(requestor).accept(DialogueManager.ACCEPT_JOINT_WAR, inc);
+        empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
+        return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
     }
     //-----------------------------------
     //  BREAK TREATIES
