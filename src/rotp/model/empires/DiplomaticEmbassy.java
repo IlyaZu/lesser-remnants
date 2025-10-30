@@ -86,6 +86,11 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int minimumPraiseLevel = 0;
     private boolean givenAidThisTurn = false;
     private boolean onLastWarning = false;
+    
+    private boolean triggerWar;
+    private Empire warRequestor;
+    private String warCauseId;
+    private DiplomaticIncident warCauseIncident;
 
     public Empire empire()                               { return view.empire(); }
     public Empire owner()                                { return view.owner(); }
@@ -228,7 +233,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void assessTurn() {
         log(view+" Embassy: assess turn");
         resetIncidents();
-
+        triggerWar();
+        
         // player refusals are remembered for the
         // entire duration to avoid the AI spamming the player
         // AI  refusals are completely reset after each turn
@@ -306,23 +312,30 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.embassy().tradePraised(false);
         view.trade().startRoute(level);
     }
-    public DiplomaticIncident declareJointWar(Empire requestor) {
-        // when we are declaring a war as a result of a joint war request, ignore
-        // any existing war cause. This ensures that a DeclareWarIncident is returned
-        // instead of some existing war case incident. This ensures that [other...]
-        // tags are replaced properly in the war announcement to the player
-        return declareWar(requestor, null, null);
+    public void declareJointWar(Empire requestor) {
+        setWarVariables(requestor, null, null);
     }
-    public DiplomaticIncident declareWar() {
-        return declareWar(null, null, null);
+    public void declareWar() {
+        setWarVariables(null, null, null);
     }
-    public DiplomaticIncident declareWar(String warCauseId) {
-        return declareWar(null, warCauseId, null);
+    public void declareWar(String warCauseId) {
+        setWarVariables(null, warCauseId, null);
     }
-    public DiplomaticIncident declareWar(DiplomaticIncident warCauseIncident) {
-        return declareWar(null, warCauseIncident.declareWarId(), warCauseIncident);
+    public void declareWar(DiplomaticIncident warCauseIncident) {
+        setWarVariables(null, warCauseIncident.declareWarId(), warCauseIncident);
     }
-    private DiplomaticIncident declareWar(Empire requestor, String warCauseId, DiplomaticIncident warCauseIncident) {
+    private void setWarVariables(Empire requestor, String warCauseId, DiplomaticIncident warCauseIncident) {
+        this.triggerWar = true;
+        this.warRequestor = requestor;
+        this.warCauseId = warCauseId;
+        this.warCauseIncident= warCauseIncident;
+    }
+    private void triggerWar() {
+        if (!triggerWar) {
+            return;
+        }
+        triggerWar = false;
+        
         endTreaty();
         int oathBreakType = 0;
         if (alliance())
@@ -370,8 +383,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
         switch(oathBreakType) {
             case 1:
                 GNNAllianceBrokenNotice.create(owner(), empire());
-                OathBreakerIncident.alertBrokenAlliance(owner(),empire(),requestor,false); break;
-            case 2: OathBreakerIncident.alertBrokenPact(owner(),empire(),requestor,false); break;
+                OathBreakerIncident.alertBrokenAlliance(owner(),empire(),warRequestor,false); break;
+            case 2: OathBreakerIncident.alertBrokenPact(owner(),empire(),warRequestor,false); break;
         }
         
         // if the player is one of our allies, let him know
@@ -384,8 +397,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
             if (ally.isPlayerControlled())
                 GNNAllyAtWarNotification.create(empire(), owner());
         }
-
-        return inc;
     }
     public DiplomaticIncident breakTrade() {
         view.trade().stopRoute();

@@ -69,6 +69,18 @@ public class DiplomaticReplies {
         return new DiplomaticReply(true, remark.toString());
     }
     
+    public static DiplomaticReply announceHateWar(EmpireView view) {
+        StringBuilder remark = baseRemark(DialogueManager.DECLARE_HATE_WAR, view);
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
+    public static DiplomaticReply acceptJointWar(EmpireView view, Empire target, int turnOccurred) {
+        StringBuilder remark = baseRemark(DialogueManager.ACCEPT_JOINT_WAR, view);
+        replaceEmpireTokens(remark, "other", target);
+        replaceToken(remark, "[year]", Integer.toString(turnOccurred));
+        return new DiplomaticReply(true, remark.toString());
+    }
+    
     public static DiplomaticReply declineOffer(EmpireView view) {
         StringBuilder remark = baseRemark(DialogueManager.DECLINE_OFFER, view);
         return new DiplomaticReply(false, remark.toString());

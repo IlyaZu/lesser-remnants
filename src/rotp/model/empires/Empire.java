@@ -56,7 +56,6 @@ import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.Ships;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.Transport;
-import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.incidents.GenocideIncident;
 import rotp.model.planet.PlanetType;
 import rotp.model.ships.ShipDesign;
@@ -65,8 +64,6 @@ import rotp.model.ships.ShipLibrary;
 import rotp.model.tech.Tech;
 import rotp.model.tech.TechTree;
 import rotp.ui.NoticeMessage;
-import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.util.Base;
 
 public final class Empire implements Base, NamedObject, Serializable {
@@ -360,13 +357,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         if (empireName == null)
             empireName = replaceTokens("[this_empire]", "this");
         return empireName;
-    }
-    public DiplomaticReply respond(String reason, DiplomaticIncident inc, Empire listener) {
-        String message = DialogueManager.current().randomMessage(reason, this);
-        message = replaceTokens(message, "my");
-        message = listener.replaceTokens(message, "your");
-        message = inc.decode(message);
-        return new DiplomaticReply(true, message);
     }
     public void chooseNewCapital() {
         // make list of every colony that is not the current capital
