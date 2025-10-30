@@ -206,7 +206,7 @@ public final class EmpireView implements Base, Serializable {
         s1 = empire.replaceTokens(s1, "your");
         return s1;
     }
-    public String decode(String s, Empire other) {
+    private String decode(String s, Empire other) {
         String s1 = owner.replaceTokens(s, "my");
         s1 = empire.replaceTokens(s1, "your");
         if (other != null)

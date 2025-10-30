@@ -30,7 +30,7 @@ import rotp.ui.util.planets.PlanetImager;
 import rotp.util.Base;
 
 public class GalaxyFactory implements Base {
-    static GalaxyFactory instance = new GalaxyFactory();
+    private static final GalaxyFactory instance = new GalaxyFactory();
     public static GalaxyFactory current()   { return instance; }
     
     private final StarSystemFactory starFactory = new StarSystemFactory();
