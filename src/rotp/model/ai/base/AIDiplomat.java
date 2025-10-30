@@ -512,9 +512,27 @@ public class AIDiplomat implements Base, Diplomat {
     private float calculatePactChance(EmpireView v) {
         float chance = v.embassy().relations();
         chance += v.empire().diplomacyBonus();
-        chance += empire.leader().acceptPactMod();
+        chance += acceptPactMod(empire.leader());
         chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
+    }
+    private float acceptPactMod(Leader leader) {
+        int a, b;
+        switch(leader.personality()) {
+            case PACIFIST:      a = 20; break;
+            case XENOPHOBIC:    a = 10; break;
+            case RUTHLESS:      a = -10; break;
+            case AGGRESSIVE:    a = -20; break;
+            default:            a = 0; break;
+        }
+        switch(leader.objective()) {
+            case DIPLOMAT:      b = 10; break;
+            case MILITARIST:    b = -10; break;
+            case INDUSTRIALIST: b = 5; break;
+            case EXPANSIONIST:  b = -5; break;
+            default:            b = 0; break;
+        }
+        return a+b;
     }
     //-----------------------------------
     //  ALLIANCE
