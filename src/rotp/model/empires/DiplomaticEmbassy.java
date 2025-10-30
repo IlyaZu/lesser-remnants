@@ -32,7 +32,6 @@ import rotp.model.incidents.BreakAllianceIncident;
 import rotp.model.incidents.BreakPactIncident;
 import rotp.model.incidents.DeclareWarIncident;
 import rotp.model.incidents.DiplomaticIncident;
-import rotp.model.incidents.DriftRelationsIncident;
 import rotp.model.incidents.ErraticWarIncident;
 import rotp.model.incidents.ExchangeTechnologyIncident;
 import rotp.model.incidents.ExpansionIncident;
@@ -520,12 +519,10 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
 
     private void resetIncidents() {
-        // Drift relations first so it can be forgotten immediately as the incident cannot be displayed.
-        addIncident(DriftRelationsIncident.create(view));
-        
         newIncidents().clear();
         clearForgottenIncidents();
         
+        addIncident(SimpleIncident.createDriftRelationsIncident(view));
         if (pact()) {
             addIncident(SimpleIncident.createPactIncident(view));
         }

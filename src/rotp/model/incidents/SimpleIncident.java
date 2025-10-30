@@ -16,6 +16,7 @@
  */
 package rotp.model.incidents;
 
+import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.EmpireView;
 
 public class SimpleIncident extends DiplomaticIncident {
@@ -42,6 +43,15 @@ public class SimpleIncident extends DiplomaticIncident {
         return new SimpleIncident(-5,
                 "INC_BROKE_TRADE_TITLE", "INC_BROKE_TRADE_DESC",
                 view.empId(), view.ownerId());
+    }
+    
+    public static SimpleIncident createDriftRelationsIncident(EmpireView view) {
+        DiplomaticEmbassy embassy = view.embassy();
+        float severity = (embassy.baseRelations() - embassy.relations()) / 50;
+        return new SimpleIncident(severity,
+                // Due to licensing restrictions these keys do not currently map to any values.
+                "INC_DRIFT_RELATIONS_TITLE", "INC_DRIFT_RELATIONS_DESC",
+                view.ownerId(), view.empId());
     }
     
     private SimpleIncident(float severity,
