@@ -29,7 +29,6 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomaticReplies;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
 
@@ -145,7 +144,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
         
          // will always declare war if allied with the requestor and he is already at war with the target
         if (requestor.alliedWith(id(empire)) && requestor.atWarWith(target.id))
-            return agreeToJointWar(requestor, target);
+            return acceptOfferJointWar(requestor, target);
         
         if(!empire.enemies().isEmpty())
             return v.refuse(DialogueManager.DECLINE_OFFER, target);
@@ -155,14 +154,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return v.refuse(DialogueManager.DECLINE_OFFER, target);
         
         return v.refuse(DialogueManager.DECLINE_OFFER, target);
-    }
-    private DiplomaticReply agreeToJointWar(Empire requestor, Empire target) {
-        int targetId = target.id;
-        if (!requestor.atWarWith(targetId))
-            requestor.viewForEmpire(targetId).embassy().declareWar();
- 
-        empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
     }
     //-----------------------------------
     //  BREAK TREATIES

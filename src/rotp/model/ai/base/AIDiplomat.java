@@ -659,7 +659,7 @@ public class AIDiplomat implements Base, Diplomat {
 
          // will always declare war if allied with the requestor and he is already at war with the target
         if (requestor.alliedWith(id(empire)) && requestor.atWarWith(target.id))
-            return agreeToJointWar(requestor, target);
+            return acceptOfferJointWar(requestor, target);
 
         int maxBribe = galaxy().numberTurns()*50;
         float bribeValue = bribeAmountToJointWar(target);
@@ -702,15 +702,7 @@ public class AIDiplomat implements Base, Diplomat {
             empire.addToTreasury(counter.bribe());
             requestor.addToTreasury(0-counter.bribe());
         }
-        return agreeToJointWar(requestor, counter.target());
-    }
-    private DiplomaticReply agreeToJointWar(Empire requestor, Empire target) {
-        int targetId = target.id;
-        if (!requestor.atWarWith(targetId))
-            requestor.viewForEmpire(targetId).embassy().declareWar();
- 
-        empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
-        return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
+        return acceptOfferJointWar(requestor, counter.target());
     }
     private float bribeAmountToJointWar(Empire target) {
         EmpireView v = empire.viewForEmpire(target);
