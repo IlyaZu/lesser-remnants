@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ public class CouncilVoteIncident extends DiplomaticIncident {
     public static void create(Empire candidate, Empire voter, Empire votee, Empire rival) {
         if (candidate == voter)
             return;
-        candidate.diplomatAI().noticeIncident(new CouncilVoteIncident(candidate, voter, votee, rival), voter);
+        DiplomaticIncident inc = new CouncilVoteIncident(candidate, voter, votee, rival);
+        candidate.viewForEmpire(voter).embassy().addIncident(inc);
     }
     private CouncilVoteIncident(Empire candidate, Empire voter, Empire votee, Empire rival) {
         super(calculateSeverity(votee, candidate));

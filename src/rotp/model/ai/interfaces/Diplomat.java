@@ -19,7 +19,6 @@ package rotp.model.ai.interfaces;
 import java.util.List;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.tech.Tech;
 import rotp.ui.diplomacy.DiplomaticCounterReply;
 import rotp.ui.diplomacy.DiplomaticReply;
@@ -30,7 +29,6 @@ public interface Diplomat {
     boolean canExchangeTechnology(Empire e);
     boolean canDeclareWar(Empire e);
     
-    void noticeIncident(DiplomaticIncident inc, Empire e);
     void makeDiplomaticOffers(EmpireView ev);
     Empire councilVoteFor(Empire emp1, Empire emp2);
     
