@@ -1166,16 +1166,4 @@ public class AIDiplomat implements Base, Diplomat {
             empire.lastCouncilVoteEmpId(c.id);
         return c;
     }
-    //-----------------------------------
-    // INCIDENTS
-    //-----------------------------------
-    @Override
-    public void noticeIncident(DiplomaticIncident inc, Empire emp) {
-        EmpireView view = empire.viewForEmpire(emp);
-        
-        view.embassy().addIncident(inc);
-
-        if (inc.triggersWar())
-            view.embassy().declareWar(inc);
-    }
 }

@@ -85,11 +85,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     private int minimumPraiseLevel = 0;
     private boolean givenAidThisTurn = false;
     private boolean onLastWarning = false;
-    
-    private boolean triggerWar;
-    private Empire warRequestor;
-    private String warCauseId;
-    private DiplomaticIncident warCauseIncident;
 
     public Empire empire()                               { return view.empire(); }
     public Empire owner()                                { return view.owner(); }
@@ -232,7 +227,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public void assessTurn() {
         log(view+" Embassy: assess turn");
         resetIncidents();
-        triggerWar();
         
         // player refusals are remembered for the
         // entire duration to avoid the AI spamming the player
@@ -312,29 +306,18 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.trade().startRoute(level);
     }
     public void declareJointWar(Empire requestor) {
-        setWarVariables(requestor, null, null);
+        declareWar(requestor, null, null);
     }
     public void declareWar() {
-        setWarVariables(null, null, null);
+        declareWar(null, null, null);
     }
     public void declareWar(String warCauseId) {
-        setWarVariables(null, warCauseId, null);
+        declareWar(null, warCauseId, null);
     }
     public void declareWar(DiplomaticIncident warCauseIncident) {
-        setWarVariables(null, warCauseIncident.declareWarId(), warCauseIncident);
+        declareWar(null, warCauseIncident.declareWarId(), warCauseIncident);
     }
-    private void setWarVariables(Empire requestor, String warCauseId, DiplomaticIncident warCauseIncident) {
-        this.triggerWar = true;
-        this.warRequestor = requestor;
-        this.warCauseId = warCauseId;
-        this.warCauseIncident= warCauseIncident;
-    }
-    private void triggerWar() {
-        if (!triggerWar) {
-            return;
-        }
-        triggerWar = false;
-        
+    private void declareWar(Empire warRequestor, String warCauseId, DiplomaticIncident warCauseIncident) {
         endTreaty();
         int oathBreakType = 0;
         if (alliance())

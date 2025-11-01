@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     private final float profit;
 
     public static void create(EmpireView ev, float profit, float pct) {
-        ev.owner().diplomatAI().noticeIncident(new TradeIncomeIncident(ev, profit, pct), ev.empire());
+        ev.embassy().addIncident(new TradeIncomeIncident(ev, profit, pct));
     }
     private TradeIncomeIncident(EmpireView ev, float p, float pct) {
         super(Math.max(0, pct*12.5f)); // 0 to 3.125

@@ -28,7 +28,7 @@ public class ColonyAttackedIncident extends DiplomaticIncident {
 
     public static void create(CombatResults r) {
         ColonyAttackedIncident inc = new ColonyAttackedIncident(r);
-        r.defender().diplomatAI().noticeIncident(inc, r.attacker());
+        r.defender().viewForEmpire(r.attacker()).embassy().addIncident(inc);
     }
     private ColonyAttackedIncident(CombatResults r) {
         super(-1.25f + Math.max(-10f, -r.popDestroyed()/4.0f));

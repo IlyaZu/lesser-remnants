@@ -31,7 +31,7 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
             return;
 
         ColonyDestroyedIncident inc = new ColonyDestroyedIncident(r);
-        r.defender().diplomatAI().noticeIncident(inc, r.attacker());
+        r.defender().viewForEmpire(r.attacker()).embassy().addIncident(inc);
     }
     private ColonyDestroyedIncident(CombatResults r) {
         super(-5 + Math.max(-10f, -r.popDestroyed()/4.0f));

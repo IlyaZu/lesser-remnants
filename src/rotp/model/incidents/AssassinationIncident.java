@@ -16,8 +16,8 @@
  */
 package rotp.model.incidents;
 
+import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
-import rotp.model.empires.EmpireView;
 import rotp.model.galaxy.Galaxy;
 import rotp.ui.diplomacy.DialogueManager;
 
@@ -29,16 +29,16 @@ public class AssassinationIncident extends DiplomaticIncident {
     public static void create(Empire assassin, Empire victim) {
         AssassinationIncident inc = new AssassinationIncident(assassin, victim);
 
-        EmpireView ev = victim.viewForEmpire(assassin);
-        ev.embassy().recallAmbassador(); // technically, he was recalled by the assassin..
-        victim.diplomatAI().noticeIncident(inc, assassin);
+        DiplomaticEmbassy embassy = victim.viewForEmpire(assassin).embassy();
+        embassy.recallAmbassador(); // technically, he was recalled by the assassin.
+        embassy.addIncident(inc);
         
         for (Empire vicEnemy: victim.enemies()) {
             if (vicEnemy != assassin) {
                 AssassinationIncident inc2 = new AssassinationIncident(assassin, victim, vicEnemy);
-                EmpireView ev2 = vicEnemy.viewForEmpire(assassin);
-                ev2.embassy().openEmbassy();
-                vicEnemy.diplomatAI().noticeIncident(inc2, assassin);
+                DiplomaticEmbassy enemyEmbassy = vicEnemy.viewForEmpire(assassin).embassy();
+                enemyEmbassy.openEmbassy();
+                enemyEmbassy.addIncident(inc2);
             }
         }
     }

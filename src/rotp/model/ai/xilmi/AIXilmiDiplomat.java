@@ -160,18 +160,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
     //-----------------------------------
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
-    //-----------------------------------
-    // INCIDENTS
-    //-----------------------------------
-    @Override
-    public void noticeIncident(DiplomaticIncident inc, Empire emp) {
-        EmpireView view = empire.viewForEmpire(emp);
-        
-        view.embassy().addIncident(inc);
 
-        if (inc.triggersWar() && !view.embassy().war())
-            view.embassy().declareWar(inc);
-    }
    private boolean warWeary(EmpireView v) {
         if (galaxy().activeEmpires().size() < 3)
             return false;

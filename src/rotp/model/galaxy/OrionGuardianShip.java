@@ -62,7 +62,7 @@ public class OrionGuardianShip extends SpaceMonster {
         for (Empire emp: galaxy().empires()) {
             if ((emp.id != lastAttackerId) && emp.knowsOf(slayerEmp)) {
                 DiplomaticIncident inc = KillGuardianIncident.create(emp.id, lastAttackerId, nameKey);
-                emp.diplomatAI().noticeIncident(inc, slayerEmp);
+                emp.viewForEmpire(slayerEmp).embassy().addIncident(inc);
             }
         }
     }
