@@ -368,11 +368,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
                 switch(warCauseId) {
                     case DialogueManager.DECLARE_ERRATIC_WAR :
                         inc = ErraticWarIncident.create(owner(), empire()); break;
-                    case DialogueManager.DECLARE_HATE_WAR:
                     default:
-                        inc = DeclareWarIncident.create(owner(), empire());
-                        oathBreakType = 0;
-                        break;
+                        inc = DeclareWarIncident.create(owner(), empire()); break;
                 }
             }
         }
