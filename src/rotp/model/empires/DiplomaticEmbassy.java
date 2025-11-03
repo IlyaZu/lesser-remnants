@@ -306,10 +306,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.trade().startRoute(level);
     }
     public void declareJointWar(Empire requestor) {
-        declareWar(requestor, null, null);
-    }
-    public void declareWar() {
-        declareWar(null, null, null);
+        declareWar(requestor, DialogueManager.DECLARE_HATE_WAR, null);
     }
     public void declareWar(String warCauseId) {
         declareWar(null, warCauseId, null);
@@ -331,10 +328,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         if (!war()) {
             setTreaty(new TreatyWar(view.owner(), view.empire()));
             if (view.empire().isPlayerControlled()) {
-                if ((warCauseId == null) || warCauseId.isEmpty())
-                    DiplomaticNotification.createAndNotify(view, DialogueManager.DECLARE_HATE_WAR);
-                else
-                    DiplomaticNotification.createAndNotify(view, warCauseId);
+                DiplomaticNotification.createAndNotify(view, warCauseId);
             }
         }
 
@@ -345,15 +339,11 @@ public class DiplomaticEmbassy implements Base, Serializable {
         // add war-causing incident to embassy
         DiplomaticIncident inc = warCauseIncident;
         if (inc == null) {
-            if (warCauseId == null)
-                inc = DeclareWarIncident.create(owner(), empire());
-            else {
-                switch(warCauseId) {
-                    case DialogueManager.DECLARE_ERRATIC_WAR :
-                        inc = ErraticWarIncident.create(owner(), empire()); break;
-                    default:
-                        inc = DeclareWarIncident.create(owner(), empire()); break;
-                }
+            switch(warCauseId) {
+                case DialogueManager.DECLARE_ERRATIC_WAR :
+                    inc = ErraticWarIncident.create(owner(), empire()); break;
+                default:
+                    inc = DeclareWarIncident.create(owner(), empire()); break;
             }
         }
         otherEmbassy().addIncident(inc);
