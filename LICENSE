@@ -6,7 +6,7 @@ These licenses are all legally enforceable, so please understand them before mod
 ===========
 SOURCE CODE
 ===========
-All *.java files in this game contain a copyright notice. There are THREE different types:
+All *.java files in this game contain a copyright notice. There are TWO different types:
 
 All java files created by Ray Fowler or Ilya Zushinskiy:
  * Licensed under the GNU General Public License, Version 3 (the "License");
@@ -56,7 +56,6 @@ What this essentially means (read the license for full info):
  3. Credits to Petar Penev must be preserved.
 
 
-
 ===========
 SOUND/MUSIC
 ===========
@@ -74,7 +73,6 @@ What this essentially means (read the license for full info):
  1. you can distribute a game with these assets, but you cannot sell the game. 
  2. These assets cannot be altered. 
  3. Credits to Remi Agullo must be preserved.
-
 
 
 =======
