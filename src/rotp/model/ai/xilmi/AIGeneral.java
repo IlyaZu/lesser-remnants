@@ -596,7 +596,7 @@ public class AIGeneral implements Base, General {
             {
                 enemyPower += enemy.militaryPowerLevel();
             }
-            if(emp.militaryPowerLevel() > enemyPower && empire.diplomatAI().facCapRank() > 1)
+            if(emp.militaryPowerLevel() > enemyPower && facCapRank() > 1)
                 continue;
             if(!empire.inShipRange(emp.id))
                 continue;
@@ -628,6 +628,34 @@ public class AIGeneral implements Base, General {
             System.out.println(galaxy().currentTurn()+" "+empire.name()+" => "+archEnemy.name()+" score: "+highestScore);*/
         bestVictim = archEnemy;
         return bestVictim;
+    }
+    private int facCapRank()
+    {
+        int rank = 1;
+        float myFacCap = facCapPct(empire, true);
+        for(Empire emp:empire.contactedEmpires())
+        {
+            if(!empire.inEconomicRange(emp.id))
+                continue;
+            if(facCapPct(emp, true) > myFacCap)
+                rank++;
+        }
+        if(myFacCap >= 1)
+            rank = 1;
+        return rank;
+    }
+    private float facCapPct(Empire emp, boolean ignorePoor)
+    {
+        float factories = 0;
+        float factoryCap = 0;
+        for (StarSystem sys: emp.allColonizedSystems())
+        {
+            if(sys.planet().productionAdj() < 1 && ignorePoor)
+                continue;
+            factories += sys.colony().industry().factories();
+            factoryCap += sys.colony().industry().maxFactories();
+        }
+        return factories / factoryCap;
     }
     @Override
     public float totalEmpirePopulationCapacity(Empire emp)

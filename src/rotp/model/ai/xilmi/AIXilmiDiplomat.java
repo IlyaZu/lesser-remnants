@@ -270,35 +270,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         return rank;
     }
     @Override
-    public int facCapRank()
-    {
-        int rank = 1;
-        float myFacCap = facCapPct(empire, true);
-        for(Empire emp:empire.contactedEmpires())
-        {
-            if(!empire.inEconomicRange(emp.id))
-                continue;
-            if(facCapPct(emp, true) > myFacCap)
-                rank++;
-        }
-        if(myFacCap >= 1)
-            rank = 1;
-        return rank;
-    }
-    private float facCapPct(Empire emp, boolean ignorePoor)
-    {
-        float factories = 0;
-        float factoryCap = 0;
-        for (StarSystem sys: emp.allColonizedSystems())
-        {
-            if(sys.planet().productionAdj() < 1 && ignorePoor)
-                continue;
-            factories += sys.colony().industry().factories();
-            factoryCap += sys.colony().industry().maxFactories();
-        }
-        return factories / factoryCap;
-    }
-    @Override
     public boolean minWarTechsAvailable()
     {
         if(empire.shipLab().fastestEngine().warp() < 2)
