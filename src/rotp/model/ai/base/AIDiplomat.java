@@ -735,7 +735,7 @@ public class AIDiplomat implements Base, Diplomat {
     public DiplomaticReply acceptOfferJointWar(Empire requestor, Empire target) {
         int targetId = target.id;
         if (!requestor.atWarWith(targetId))
-            requestor.viewForEmpire(targetId).embassy().declareWar();
+            requestor.viewForEmpire(targetId).embassy().declareWar(DialogueManager.DECLARE_HATE_WAR);
  
         empire.viewForEmpire(targetId).embassy().declareJointWar(requestor);
         return DiplomaticReplies.acceptJointWar(empire.viewForEmpire(requestor), target, galaxy().currentTurn());
@@ -783,7 +783,7 @@ public class AIDiplomat implements Base, Diplomat {
         EmpireView v = empire.viewForEmpire(e);
 
         v.embassy().noteRequest();
-        v.embassy().declareWar();
+        v.embassy().declareWar(DialogueManager.DECLARE_HATE_WAR);
 
         return DiplomaticReplies.announceHateWar(v);
     }
