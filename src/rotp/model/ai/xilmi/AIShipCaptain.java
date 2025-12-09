@@ -276,7 +276,6 @@ public class AIShipCaptain implements Base, ShipCaptain {
                         FlightPath bestPathToSaveSpot = findSafestPath(stack);
                         if(bestPathToSaveSpot != null)
                             mgr.performMoveStackAlongPath(stack, bestPathToSaveSpot);
-                        //System.out.print("\n"+stack.fullName()+" No target-kite performed: "+(bestPathToSaveSpot != null));
                     }
                 }
             }
@@ -1150,7 +1149,6 @@ public class AIShipCaptain implements Base, ShipCaptain {
                     hitPct = max(.05f, hitPct);
                     hitPct = min(hitPct, 1.0f);
                     float killPct = ((miss.maxDamage()-miss.target.shieldLevel())*miss.num*hitPct)/(miss.target.maxHits*miss.target.num);
-                    //System.out.print("\n"+currStack.fullName()+" will be hit by missiles for approx "+killPct);
                     retVal += killPct;
                 }
         return retVal;
