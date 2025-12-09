@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,12 +125,12 @@ public class AITreasurer implements Base, Treasurer {
         }
         
         // now we need to add to the empire reserve from everyone else, large to small
-        // check for poor first, then normal. If we need reserve then for each planet, 
+        // check for poor first, then normal. If we need reserve then for each planet,
         // modnar: reduce reserve collection to 1/6th of research (previous 1/4)
         // check for rich first
         float totalProd = empire.totalPlanetaryProduction();
         float desiredRsv = totalProd * 0.1f; // modnar: reduce reserve collection, less is more efficient in general
-        int maxAlloc = ColonySpendingCategory.MAX_TICKS; 
+        int maxAlloc = ColonySpendingCategory.MAX_TICKS;
         if (empire.totalReserve() < desiredRsv) {
             systems.addAll(richSystems); // modnar: check for richSystems first to collect reserve
             Collections.reverse(systems);
@@ -143,18 +144,18 @@ public class AITreasurer implements Base, Treasurer {
                             int eco = col.ecology().allocation();
                             int ecoAdj = min(res, maxAlloc - eco); // modnar: collect all we can from rich/ultra-rich
                             col.research().adjustValue(-ecoAdj);
-                            col.ecology().adjustValue(ecoAdj);                            
+                            col.ecology().adjustValue(ecoAdj);
                         }
                     } else if (!pl.isArtifact()) {
                         if (col.industry().factories() >= col.industry().maxFactories()) {
                             int ind = col.industry().allocation();
                             int indAdj = min(res, maxAlloc - ind)/6; // modnar: reduce to 1/6th
                             col.research().adjustValue(-indAdj);
-                            col.industry().adjustValue(indAdj);                            
-                        }                        
+                            col.industry().adjustValue(indAdj);
+                        }
                     }
                 }
             }
-        }    
+        }
     }
 }
