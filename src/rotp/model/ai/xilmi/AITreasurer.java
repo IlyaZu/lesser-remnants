@@ -129,7 +129,7 @@ public class AITreasurer implements Base, Treasurer {
                 empire.toggleColonyExcessToResearch();
             float totalProd = empire.totalPlanetaryProduction();
             float desiredRsv = totalProd * 0.1f; // modnar: reduce reserve collection, less is more efficient in general
-            int maxAlloc = ColonySpendingCategory.MAX_TICKS; 
+            int maxAlloc = ColonySpendingCategory.MAX_TICKS;
             if (empire.totalReserve() < desiredRsv) {
                 systems.addAll(richSystems); // modnar: check for richSystems first to collect reserve
                 Collections.reverse(systems);
@@ -146,15 +146,15 @@ public class AITreasurer implements Base, Treasurer {
                                 int eco = col.ecology().allocation();
                                 int ecoAdj = min(res, maxAlloc - eco); // modnar: collect all we can from rich/ultra-rich
                                 col.research().adjustValue(-ecoAdj);
-                                col.ecology().adjustValue(ecoAdj);                            
+                                col.ecology().adjustValue(ecoAdj);
                             }
                         } else if (!pl.isArtifact()) {
                             if (col.industry().factories() >= col.industry().maxFactories()) {
                                 int ind = col.industry().allocation();
                                 int indAdj = min(res, maxAlloc - ind)/4; // ail: 1/6 wasn't enough to prevent the nova
                                 col.research().adjustValue(-indAdj);
-                                col.industry().adjustValue(indAdj);                            
-                            }                        
+                                col.industry().adjustValue(indAdj);
+                            }
                         }
                     }
                 }

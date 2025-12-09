@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
     public ShipDesign bestDesignToColonize(ShipFleet fl, StarSystem sys) {
         // in case there is more than one colony ship in this fleet,
         // find the best one to use at this planet. And by "best" we
-        // mean the ship that we want to most get rid of by using 
+        // mean the ship that we want to most get rid of by using
         // it to colonize the planet... pick the slowest one first.
         // if that ties, pick the one with the worst colony module.
         ShipDesignLab lab = lab();
@@ -148,8 +148,8 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.scrapDesign(currDesign);
             log("Replacing obsolete colony design");
             lab.setColonyDesign(newDesign, currSlot);
-            return;            
-        }   
+            return;
+        }
 
         if (newDesign.matchesDesign(currDesign))
             return;
@@ -167,7 +167,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.scrapDesign(currDesign);
             log("No more colony ships in transit: updating colony design");
             lab.setColonyDesign(newDesign, currSlot);
-            return;            
+            return;
         }
     }
     public void updateBomberDesign() {
@@ -197,7 +197,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.scrapDesign(currDesign);
             log("Replacing obsolete bomber design");
             lab.setBomberDesign(newDesign, currSlot);
-            return;            
+            return;
         }
 
         if (currDesign.matchesDesign(newDesign))
@@ -236,7 +236,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // check for an available slot for the new design
         int slot = lab.availableDesignSlot();
         
-        // if there was no slot available for the new design, consider 
+        // if there was no slot available for the new design, consider
         // auto-upgrading anyway if we are not at war. We want to avoid
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {
@@ -281,7 +281,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.scrapDesign(currDesign);
             log("Replacing obsolete fighter design");
             lab.setFighterDesign(newDesign, currSlot);
-            return;            
+            return;
         }
         if (currDesign.matchesDesign(newDesign))
             return;
@@ -318,7 +318,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // check for an available slot for the new design
         int slot = lab.availableDesignSlot();
         
-        // if there was no slot available for the new design, consider 
+        // if there was no slot available for the new design, consider
         // auto-upgrading anyway if we are not at war. We want to avoid
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {
@@ -348,7 +348,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             // 25/50/75/100 may be a too straight-line set of values
             if ((currDesign.availableSpace()/(currDesign.totalSpace()) < 0.1f) || (currDesign.availableSpace() < (currDesign.size()+1) * 25)) {
                 // we're fairly certain AI packed the ship before and if the current modules haven't shrinked enough,
-                // that means we don't have enough new tech to make the new design markedly better            
+                // that means we don't have enough new tech to make the new design markedly better
                 currDesign.remainingLife++;
                 return;
             }
@@ -365,10 +365,10 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.scrapDesign(currDesign);
             log("Replacing obsolete destroyer design");
             lab.setDestroyerDesign(newDesign, currSlot);
-            return;            
+            return;
         }
 
-        if (currDesign.matchesDesign(newDesign)) 
+        if (currDesign.matchesDesign(newDesign))
             return;
         
         // if we have very few destroyers actually in use, go ahead and
@@ -402,7 +402,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // check for an available slot for the new design
         int slot = lab.availableDesignSlot();
         
-        // if there was no slot available for the new design, consider 
+        // if there was no slot available for the new design, consider
         // auto-upgrading anyway if we are not at war. We want to avoid
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {

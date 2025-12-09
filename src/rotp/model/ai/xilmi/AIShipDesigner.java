@@ -77,7 +77,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
     public ShipDesign bestDesignToColonize(ShipFleet fl, StarSystem sys) {
         // in case there is more than one colony ship in this fleet,
         // find the best one to use at this planet. And by "best" we
-        // mean the ship that we want to most get rid of by using 
+        // mean the ship that we want to most get rid of by using
         // it to colonize the planet... pick the slowest one first.
         // if that ties, pick the one with the worst colony module.
         ShipDesignLab lab = lab();
@@ -299,7 +299,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         for (int i=0;i<maxSpecials();i++) {
             if(currDesign.special(i).allowsCloaking() == true)
-                oldHasCloaking = true; 
+                oldHasCloaking = true;
             if(newDesign.special(i).allowsCloaking() == true)
                 newHasCloaking = true;
             if(currDesign.special(i).createsBlackHole())
@@ -406,7 +406,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         for (int i=0;i<maxSpecials();i++) {
             if(currDesign.special(i).allowsCloaking() == true)
-                oldHasCloaking = true; 
+                oldHasCloaking = true;
             if(newDesign.special(i).allowsCloaking() == true)
                 newHasCloaking = true;
             if(currDesign.special(i).createsBlackHole())
@@ -492,7 +492,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         float rangeTechLevelThreshold = 9;
             
-        if(empire.uncolonizedPlanetsInRange(empire.shipRange()).isEmpty() 
+        if(empire.uncolonizedPlanetsInRange(empire.shipRange()).isEmpty()
                 && empire.enemies().isEmpty()
                 && !unexploredInRange
                 && !empire.uncolonizedPlanetsInRange(empire.scoutRange()).isEmpty()
@@ -662,7 +662,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         if(empire.generalAI().defenseRatio() == 1.0 || empire.generalAI().defenseRatio() < 0.5)
             return false;
         return true;
-    } 
+    }
     public void ScrapDesign(ShipDesign d)
     {
         if(lab().canScrapADesign())
