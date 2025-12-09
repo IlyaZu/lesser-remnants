@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,8 +77,6 @@ public class AITreasurer implements Base, Treasurer {
         
         //keep 5 times of what our biggest planet could use as reserve to handle events
         reserveGoal *= 5;
-        
-        //System.out.print("\n"+empire.name()+" wanted reserve: "+reserveGoal+" current reserve: "+empire.totalReserve());
         
         // first, help systems that are fighting plague or supernova research events
         if (empire.totalReserve() > 0) {

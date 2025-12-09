@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,7 +106,6 @@ public class AIScientist implements Base, Scientist {
         //ail: first I stop researching where there's no techs left
         int leftOverAlloc = 0;
         for (int j=0; j<TechTree.NUM_CATEGORIES; j++) {
-            //System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" "+empire.tech().category(j).id()+" alloc before adjust: "+empire.tech().category(j).allocation());
             if (empire.tech().category(j).possibleTechs().isEmpty())
             {
                 leftOverAlloc+=empire.tech().category(j).allocation();
@@ -132,7 +131,6 @@ public class AIScientist implements Base, Scientist {
         }
         //second I stop researching techs with too high of a discovery-chance
         for (int j=0; j<TechTree.NUM_CATEGORIES; j++) {
-            //System.out.print("\n"+empire.name()+" "+empire.tech().category(j).id()+" "+discoveryChanceOfCategoryIfAllocationWasZero(j)+" > "+empire.tech().category(j).allocation());
             Tech currentTechResearching = empire.tech().category(j).tech(empire.tech().category(j).currentTech());
             boolean researchingSomethingWeDontReallyWant = false;
             if(currentTechResearching != null)
@@ -140,7 +138,6 @@ public class AIScientist implements Base, Scientist {
                 if(researchPriority(currentTechResearching) == 0)
                 {
                     researchingSomethingWeDontReallyWant = true;
-                    //System.out.print("\n"+empire.name()+" "+empire.tech().category(j).id()+" reduced because "+currentTechResearching.name()+" is either owned by someone else or not something we want.");
                 }
             }
             if (discoveryChanceOfCategoryIfAllocationWasZero(j) > min(empire.tech().category(j).allocation(), 50f/3f) || researchingSomethingWeDontReallyWant)
@@ -239,10 +236,6 @@ public class AIScientist implements Base, Scientist {
                 }
             }
         }
-        /*for (int j=0; j<TechTree.NUM_CATEGORIES; j++) {
-            if(empire.tech().category(j).currentTech() != null)
-                System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" "+empire.tech().category(j).key()+": "+empire.tech().category(j).currentTechName()+": "+empire.tech().category(j).allocation()+" of "+empire.totalPlanetaryResearch()+" "+discoveryChanceOfCategoryIfAllocationWasZero(j)+"%");
-        }*/
     }
     @Override
     public void setDefaultTechTreeAllocations() {
@@ -487,11 +480,6 @@ public class AIScientist implements Base, Scientist {
 
         // return highest priority
         cat.currentTech(techsOnlyBest.get(0));
-        /*for(Tech t : techs)
-        {
-            System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" "+cat.id()+" option: "+t.name()+" "+researchPriority(t));
-        }
-        System.out.print("\n"+galaxy().currentTurn()+" "+empire.name()+" "+cat.id()+" picked: "+cat.currentTechName()+" "+researchPriority(techsOnlyBest.get(0)));*/
     }
     //
     //  RESEARCH VALUES for various types of tech
