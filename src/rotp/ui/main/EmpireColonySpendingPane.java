@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,10 +60,6 @@ public class EmpireColonySpendingPane extends BasePanel {
         backC = c0;
         borderHi = hi;
         borderLo = lo;
-        init();
-    }
-    public void mapListener(GalaxyMapPanel map)  { mapListener = map; }
-    private void init() {
         shipSlider     = new EmpireSliderPane(this, Colony.SHIP);
         defSlider      = new EmpireSliderPane(this, Colony.DEFENSE);
         indSlider      = new EmpireSliderPane(this, Colony.INDUSTRY);
@@ -83,6 +79,7 @@ public class EmpireColonySpendingPane extends BasePanel {
         add(ecoSlider);
         add(researchSlider);
     }
+    public void mapListener(GalaxyMapPanel map)  { mapListener = map; }
     @Override
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
@@ -146,9 +143,6 @@ public class EmpireColonySpendingPane extends BasePanel {
         EmpireSliderPane(EmpireColonySpendingPane ui, int cat) {
             mgmtPane = ui;
             category = cat;
-            init();
-        }
-        private void init() {
             setOpaque(false);
             addMouseListener(this);
             addMouseMotionListener(this);

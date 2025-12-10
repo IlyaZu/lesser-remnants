@@ -550,9 +550,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private class PlanetListingUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public PlanetListingUI(PlanetsUI p) {
-            init(p);
-        }
-        private void init(PlanetsUI p) {
             setOpaque(false);
             setLayout(new BorderLayout());
 
@@ -578,9 +575,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         Rectangle helpBox = new Rectangle();
         public PlanetViewSelectionPanel(PlanetsUI p) {
             parent = p;
-            initModel();
-        }
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s40));
             addMouseListener(this);
@@ -662,9 +656,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         PlanetsUI parent;
         public PlanetDisplayPanel(PlanetsUI p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setOpaque(true);
             setBackground(selectedC);
             setBorder(newEmptyBorder(6,6,6,6));
@@ -722,9 +713,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private static final long serialVersionUID = 1L;
         EmpireInfoGraphicPane graphicPane;
         public MultiPlanetDisplayPanel() {
-            init();
-        }
-        private void init() {
             setOpaque(true);
             setBackground(selectedC);
             setBorder(newEmptyBorder(6,6,6,6));
@@ -787,9 +775,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         Ellipse2D planetCircle = new Ellipse2D.Float();
         EmpireInfoGraphicPane(SystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(palette.black);
         }
         @Override
@@ -877,9 +862,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private final Color textColor = new Color(204,204,204);
         ColonyShipPane(SystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(unselectedC);
             setPreferredSize(new Dimension(getWidth(), scaled(110)));
             addMouseListener(this);
@@ -1301,9 +1283,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private final Color textColor = new Color(204,204,204);
         ColonyTransferFunds(SystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(unselectedC);
             addMouseListener(this);
             addMouseMotionListener(this);
@@ -1458,9 +1437,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private class EmpireRevenueUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public EmpireRevenueUI() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(),scaled(160)));
             setOpaque(false);
             setLayout(new BorderLayout());
@@ -1472,9 +1448,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private class SpendingCostsUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public SpendingCostsUI() {
-            init();
-        }
-        private void init() {
             setOpaque(false);
         }
         @Override
@@ -1576,9 +1549,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private class TotalIncomeUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public TotalIncomeUI() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(scaled(300),getHeight()));
             setOpaque(false);
         }
@@ -1655,9 +1625,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private final int rightButtonX[] = new int[3];
         private final int rightButtonY[] = new int[3];
         public ReserveUI() {
-            initModel();
-        }
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(scaled(300),getHeight()));
             addMouseListener(this);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,9 +53,6 @@ public class MassTransportsDialog extends BasePanel {
     public MassTransportsDialog(FleetUI p) {
         topParent = p;
         palette = Palette.named("Brown");
-        init();
-    }
-    private void init() {
         setOpaque(true);
         initModel();
     }
@@ -161,9 +158,6 @@ public class MassTransportsDialog extends BasePanel {
     class TransportTargetHeaderUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public TransportTargetHeaderUI() {
-            initModel();
-        }
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s40));
         }
@@ -255,9 +249,6 @@ public class MassTransportsDialog extends BasePanel {
     class TransportTargetSideUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         public TransportTargetSideUI() {
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(s10,getHeight()));
             setOpaque(false);
         }

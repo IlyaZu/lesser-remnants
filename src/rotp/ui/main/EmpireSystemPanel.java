@@ -57,9 +57,6 @@ public class EmpireSystemPanel extends SystemPanel {
     
     public EmpireSystemPanel(SpriteDisplayPanel p) {
         parentSpritePanel = p;
-        init();
-    }
-    private void init() {
         initModel();
     }
     @Override
@@ -213,9 +210,6 @@ public class EmpireSystemPanel extends SystemPanel {
         private final Color gray190C = new Color(190,190,190);
         EmpireShipPane(EmpireSystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(MainUI.paneBackground());
             setPreferredSize(new Dimension(getWidth(), scaled(150)));
             addMouseListener(this);

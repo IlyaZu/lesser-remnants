@@ -340,9 +340,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         int sliderX, sliderW;
         
         public HistoryButtonsPanel() {
-            init();
-        }
-        private void init() {
             setBackground(MainUI.paneBackground());
             setOpaque(false);
             addMouseListener(this);
@@ -600,9 +597,6 @@ public final class HistoryUI extends BasePanel implements MouseListener {
         private static final long serialVersionUID = 1L;
         private LinearGradientPaint backGradient;
         public GalaxyMapPane() {
-            init0();
-        }
-        private void init0() {
             int w, h;
             if (!UserPreferences.windowed()) {
                 Dimension size = Toolkit.getDefaultToolkit().getScreenSize();

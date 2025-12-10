@@ -74,9 +74,6 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
     public DiplomaticMessageUI() {
         for (int i=0;i<selectBoxes.length;i++)
             selectBoxes[i] = new Rectangle();
-        initModel();
-    }
-    private void initModel() {
         addMouseListener(this);
         addMouseMotionListener(this);
     }

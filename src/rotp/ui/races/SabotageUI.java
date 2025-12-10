@@ -110,7 +110,25 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         instance = this;
         setBackground(Color.black);
         setOpaque(true);
-        initModel();
+
+        mapPane = new GalaxyMapPane();
+        resultPanel = new SabotageResultPanel();
+        titlePanel = new TitlePanel();
+ 
+        promptPanel = new BasePanel();
+        promptPanel.setLayout(new BorderLayout());
+        promptPanel.add(titlePanel, BorderLayout.NORTH);
+        promptPanel.add(mapPane, BorderLayout.CENTER);
+
+        cardPane = new BasePanel();
+        cardPane.setOpaque(false);
+        cardPane.setLayout(cardLayout);
+        cardPane.add(resultPanel, RESULT_PANEL);
+        cardPane.add(promptPanel, MAP_PANEL);
+
+        setLayout(new BorderLayout());
+        add(cardPane, BorderLayout.CENTER);
+        addMouseListener(this);
     }
     private void destroyFactories() {
         mission.destroyFactories(systemToDisplay());
@@ -165,26 +183,6 @@ public final class SabotageUI extends BasePanel implements MouseListener {
             selectResultPanel();
 
         repaint();
-    }
-    private void initModel() {
-        mapPane = new GalaxyMapPane();
-        resultPanel = new SabotageResultPanel();
-        titlePanel = new TitlePanel();
- 
-        promptPanel = new BasePanel();
-        promptPanel.setLayout(new BorderLayout());
-        promptPanel.add(titlePanel, BorderLayout.NORTH);
-        promptPanel.add(mapPane, BorderLayout.CENTER);
-
-        cardPane = new BasePanel();
-        cardPane.setOpaque(false);
-        cardPane.setLayout(cardLayout);
-        cardPane.add(resultPanel, RESULT_PANEL);
-        cardPane.add(promptPanel, MAP_PANEL);
-
-        setLayout(new BorderLayout());
-        add(cardPane, BorderLayout.CENTER);
-        addMouseListener(this);
     }
     private void selectMapPanel()     { cardLayout.show(cardPane, MAP_PANEL); }
     private void selectResultPanel()  { cardLayout.show(cardPane, RESULT_PANEL); }
@@ -263,9 +261,6 @@ public final class SabotageUI extends BasePanel implements MouseListener {
         final String UNEXPLORED = "Unexplored";
         final String EXPLORED = "Explored";
         public SpySystemPanel() {
-            init();
-        }
-        private void init() {
             setPreferredSize(new  Dimension(getWidth(), scaled(120)));
             setOpaque(true);
 

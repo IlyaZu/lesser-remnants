@@ -53,9 +53,6 @@ public class TransportDeploymentPanel extends SystemPanel {
     //session vars
     public TransportDeploymentPanel(SpriteDisplayPanel p) {
         parentSpritePanel = p;
-        init();
-    }
-    private void init() {
         initModel();
     }
     @Override
@@ -252,9 +249,6 @@ public class TransportDeploymentPanel extends SystemPanel {
         private Shape hoverBox, hoverBox2;
         public TransportDetailPane(SpriteDisplayPanel p) {
             parentSpritePanel = p;
-            init();
-        }
-        private void init() {
             initModel();
         }
         @Override
@@ -309,9 +303,6 @@ public class TransportDeploymentPanel extends SystemPanel {
         private Shape hoverBox;
 
         public FromSystemDetailPane() {
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(),scaled(175)));
             setBackground(Color.green);
             addMouseListener(this);
@@ -543,9 +534,6 @@ public class TransportDeploymentPanel extends SystemPanel {
         Shape hoverBox;
         Rectangle flagBox = new Rectangle();
         public ToSystemDetailPane() {
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(),s80));
             setBackground(MainUI.paneBackground);
             addMouseWheelListener(this);
@@ -748,9 +736,6 @@ public class TransportDeploymentPanel extends SystemPanel {
         private final Rectangle clearBox = new Rectangle();
         public TransportButtonPane(TransportDeploymentPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(),s40));
             addMouseListener(this);
             addMouseMotionListener(this);

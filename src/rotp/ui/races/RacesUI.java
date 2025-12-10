@@ -613,15 +613,11 @@ public class RacesUI extends BasePanel {
         private static final long serialVersionUID = 1L;
         RacesUI parent;
         String titleKey;
+        Rectangle hoverBox;
+        Rectangle helpBox = new Rectangle();
         public MainTitlePanel(RacesUI p, String s) {
             parent = p;
             titleKey = s;
-            initModel();
-        }
-        Rectangle hoverBox;
-        Rectangle helpBox = new Rectangle();
-
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s45));
             addMouseListener(this);
@@ -824,9 +820,6 @@ public class RacesUI extends BasePanel {
 
         public RacePlayerRelationsPane() {
             setBackground(lightBrown);
-            initModel();
-        }
-        private void initModel() {
             addMouseListener(this);
             addMouseMotionListener(this);
             addMouseWheelListener(this);

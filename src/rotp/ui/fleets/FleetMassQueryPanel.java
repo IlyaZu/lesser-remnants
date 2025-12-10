@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,9 +41,6 @@ public class FleetMassQueryPanel extends BasePanel {
         topParent = p;
         fleetActionPane = new FleetAction();
         fleetQueryPane = new FleetQuery(this);
-        initModel();
-    }
-    private void initModel() {
         setOpaque(false);
         setLayout(new BorderLayout());
         add(fleetQueryPane, BorderLayout.CENTER);
@@ -58,9 +55,6 @@ public class FleetMassQueryPanel extends BasePanel {
         Rectangle hoverBox;
         public FleetQuery(FleetMassQueryPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             addMouseMotionListener(this);
             addMouseListener(this);
         }
@@ -243,9 +237,6 @@ public class FleetMassQueryPanel extends BasePanel {
         private final Rectangle deployBox  = new Rectangle();
         private Rectangle hoverBox;
         public FleetAction() {
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(), scaled(110)));
             addMouseMotionListener(this);
             addMouseListener(this);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,9 +42,6 @@ public class RallyPointPanel extends SystemPanel {
     BasePanel topPane;
     public RallyPointPanel(SpriteDisplayPanel p) {
         parentSpritePanel = p;
-        init();
-    }
-    private void init() {
         initModel();
     }
     @Override
@@ -218,9 +215,6 @@ public class RallyPointPanel extends SystemPanel {
         private final Rectangle retreatBox = new Rectangle();
         Shape arrow;
         public FromSystemDetailPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(),scaled(175)));
             setBackground(Color.green);
             addMouseListener(this);
@@ -338,9 +332,6 @@ public class RallyPointPanel extends SystemPanel {
     class ToSystemDetailPane extends BasePanel {
         private static final long serialVersionUID = 1L;
         public ToSystemDetailPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(),s80));
             setBackground(MainUI.paneBackground);
         }
@@ -423,9 +414,6 @@ public class RallyPointPanel extends SystemPanel {
         private final Rectangle stopBox = new Rectangle();
         public RallyPointButtonPane (RallyPointPanel p) {
             parent = p;
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(),s40));
             addMouseListener(this);
             addMouseMotionListener(this);

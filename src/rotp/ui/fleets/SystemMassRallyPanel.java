@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,6 @@ public class SystemMassRallyPanel extends SystemPanel {
 
     public SystemMassRallyPanel(FleetUI p) {
         topParent = p;
-        init();
-    }
-    private void init() {
         initModel(0);
     }
     public void startRallies() {
@@ -82,9 +79,6 @@ public class SystemMassRallyPanel extends SystemPanel {
         int xPts[];
         int yPts[];
         public SystemRallyHeaderPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), scaled(120)));
             setBackground(FleetUI.backHiC);
         }
@@ -135,9 +129,6 @@ public class SystemMassRallyPanel extends SystemPanel {
         private final Rectangle cancelBox = new Rectangle();
         private final Rectangle startBox = new Rectangle();
         public SystemRallyFooterPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s70));
             setBackground(FleetUI.backHiC);
             addMouseListener(this);

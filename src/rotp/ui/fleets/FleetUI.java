@@ -1019,9 +1019,6 @@ public final class FleetUI extends BasePanel implements IMapHandler, ActionListe
         public MainTitlePanel(FleetUI p, String s) {
             parent = p;
             titleKey = s;
-            initModel();
-        }
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s45));
             addMouseListener(this);

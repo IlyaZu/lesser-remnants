@@ -654,15 +654,11 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         private static final long serialVersionUID = 1L;
         SystemsUI parent;
         String titleKey;
+        Rectangle hoverBox;
+        Rectangle helpBox = new Rectangle();
         public MainTitlePanel(SystemsUI p, String s) {
             parent = p;
             titleKey = s;
-            initModel();
-        }
-        Rectangle hoverBox;
-        Rectangle helpBox = new Rectangle();
-
-        private void initModel() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s45));
             addMouseListener(this);

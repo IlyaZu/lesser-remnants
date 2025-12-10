@@ -111,9 +111,6 @@ public class StarType implements Base {
     }
 
     private StarType(String s) {
-        initType(s);
-    }
-    private void initType(String s) {
         key = s;
         switch(key) {
         case RED:

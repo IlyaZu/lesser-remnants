@@ -448,9 +448,6 @@ public abstract class SystemPanel extends BasePanel implements SystemViewer, Map
         SystemPanel parent;
         public SystemRangePane(SystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setOpaque(false);
             setPreferredSize(new Dimension(getWidth(),s40));
         }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,15 +48,6 @@ public class TransportPanel extends BasePanel {
 
     public TransportPanel(SpriteDisplayPanel p) {
         parent = p;
-        initModel();
-    }
-    public Transport transport() { return parent.transportToDisplay(); }
-    @Override
-    public void animate() {
-        topPane.animate();
-        detailPane.animate();
-    }
-    private void initModel() {
         setBackground(MainUI.paneBackground());
 
         topPane = new TransportGraphicPane(this);
@@ -74,6 +65,12 @@ public class TransportPanel extends BasePanel {
             add(bottomPane, BorderLayout.SOUTH);
         }
     }
+    public Transport transport() { return parent.transportToDisplay(); }
+    @Override
+    public void animate() {
+        topPane.animate();
+        detailPane.animate();
+    }
     public class TransportGraphicPane extends BasePanel {
         private static final long serialVersionUID = 1L;
         private final TransportPanel parent;
@@ -81,9 +78,6 @@ public class TransportPanel extends BasePanel {
         private Image shipImg;
         public TransportGraphicPane(TransportPanel p){
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(Color.black);
         }
         @Override
@@ -162,9 +156,6 @@ public class TransportPanel extends BasePanel {
         private final TransportPanel parent;
         public TransportDetailPane(TransportPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             addMouseListener(this);
             addMouseMotionListener(this);
         }
@@ -302,9 +293,6 @@ public class TransportPanel extends BasePanel {
         private final Rectangle destBox = new Rectangle();
         public TransportButtonPane(TransportPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             addMouseListener(this);
             addMouseMotionListener(this);
             setBackground(MainUI.shadeBorderC());

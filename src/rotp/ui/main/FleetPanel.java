@@ -464,9 +464,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         private final FleetPanel parent;
         public FleetGraphicPane(FleetPanel p){
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(Color.black);
             addMouseWheelListener(this);
         }
@@ -628,9 +625,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
 
         public FleetDetailPane(FleetPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) {
                 shipBox[i] = new Rectangle();
                 minBox[i] = new Polygon();
@@ -1216,10 +1210,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         private final Rectangle undeployBox = new Rectangle();
         public FleetButtonPane(FleetPanel p) {
             parent = p;
-            init();
-        }
-
-        private void init() {
             addMouseListener(this);
             addMouseMotionListener(this);
         }

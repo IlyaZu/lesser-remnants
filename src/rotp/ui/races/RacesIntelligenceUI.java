@@ -89,7 +89,16 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
     public RacesIntelligenceUI(RacesUI p) {
         parent = p;
         manageSpiesPane = new ManageSpiesUI(p);
-        initModel();
+        for (int i=0;i<techBoxes.length;i++)
+            techBoxes[i] = new Rectangle();
+        for (int i=0;i<techScrollers.length;i++)
+            techScrollers[i] = new Rectangle();
+        
+        setBackground(RacesUI.darkerBrown);
+        setBorder(newEmptyBorder(5,5,5,5));
+        addMouseMotionListener(this);
+        addMouseListener(this);
+        addMouseWheelListener(this);
     }
     public void init() {
         setValues();
@@ -115,18 +124,6 @@ public final class RacesIntelligenceUI extends BasePanel implements MouseListene
             paintPlayerData(g);
         else
             paintAIData(g);
-    }
-    private void initModel() {
-        for (int i=0;i<techBoxes.length;i++)
-            techBoxes[i] = new Rectangle();
-        for (int i=0;i<techScrollers.length;i++)
-            techScrollers[i] = new Rectangle();
-        
-        setBackground(RacesUI.darkerBrown);
-        setBorder(newEmptyBorder(5,5,5,5));
-        addMouseMotionListener(this);
-        addMouseListener(this);
-        addMouseWheelListener(this);
     }
     private void paintPlayerData(Graphics2D g) {
         // ai data only buttons - clear them
