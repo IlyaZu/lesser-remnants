@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,12 +93,6 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
     
     
     public AllocateTechUI() {
-        initModel();
-    }
-
-    @Override
-    public boolean hasStarBackground()  { return true; }
-    private void initModel() {
         for (int i=0;i<catBox.length;i++)
             catBox[i] = new Rectangle();
         for (int i=0;i<labelBox.length;i++)
@@ -116,6 +110,8 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         addMouseMotionListener(this);
         addMouseWheelListener(this);
     }
+    @Override
+    public boolean hasStarBackground()  { return true; }
     public void init() {
         totalPlanetaryResearch = -1;
         totalPlanetaryResearchSpending = player().totalPlanetaryResearchSpending();

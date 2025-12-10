@@ -381,9 +381,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         private int yOffset = 0;
         private int lineH = s50;
         public LoadListingPanel() {
-            init();
-        }
-        private void init() {
             setOpaque(false);
             for (int i=0;i<gameBox.length;i++)
                 gameBox[i] = new Rectangle();

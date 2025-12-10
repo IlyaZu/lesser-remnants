@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,9 +48,6 @@ public class EmpireColonyFoundedPane extends BasePanel implements MouseMotionLis
     public EmpireColonyFoundedPane(SystemViewer p, IMapHandler top, Color c0) {
         parent = p;
         topParent = top;
-        init(c0);
-    }
-    private void init(Color c0) {
         setOpaque(true);
         setBackground(c0);
         setPreferredSize(new Dimension(getWidth(), s40));

@@ -107,9 +107,6 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
     }
 
     public DiscoverTechUI() {
-        init();
-    }
-    private void init() {
         addMouseListener(this);
         addMouseMotionListener(this);
     }

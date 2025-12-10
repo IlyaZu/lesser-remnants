@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,18 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
     public RacesStatusUI(RacesUI p) {
         parent = p;
         dashedLineStroke = new BasicStroke(s2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{3}, 0);
-        initModel();
+        for (int i=0;i<fullBoxes.length;i++)
+            fullBoxes[i] = new Rectangle();
+        for (int i=0;i<dataBoxes.length;i++)
+            dataBoxes[i] = new Rectangle();
+        for (int i=0;i<dataScrollers.length;i++)
+            dataScrollers[i] = new Rectangle();
+        
+        setBackground(RacesUI.darkerBrown);
+        setBorder(newEmptyBorder(5,5,5,5));
+        addMouseMotionListener(this);
+        addMouseListener(this);
+        addMouseWheelListener(this);
     }
     public void init() {
         for (int i=0; i<dataY.length; i++)
@@ -94,20 +105,6 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
             paintPlayerData(g);
         else
             paintAIData(g);
-    }
-    private void initModel() {
-        for (int i=0;i<fullBoxes.length;i++) 
-            fullBoxes[i] = new Rectangle();
-        for (int i=0;i<dataBoxes.length;i++) 
-            dataBoxes[i] = new Rectangle();
-        for (int i=0;i<dataScrollers.length;i++) 
-            dataScrollers[i] = new Rectangle();
-        
-        setBackground(RacesUI.darkerBrown);
-        setBorder(newEmptyBorder(5,5,5,5));
-        addMouseMotionListener(this);
-        addMouseListener(this);
-        addMouseWheelListener(this);        
     }
     private void paintPlayerData(Graphics2D g) {
         Empire emp = parent.selectedEmpire();

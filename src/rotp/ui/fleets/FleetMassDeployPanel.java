@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,9 +90,6 @@ public class FleetMassDeployPanel extends BasePanel {
         private final Rectangle stopBox = new Rectangle();
 
         public FleetUndeployPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s77));
             setBackground(FleetUI.backHiC);
             addMouseListener(this);
@@ -198,9 +196,6 @@ public class FleetMassDeployPanel extends BasePanel {
     class FleetDeployPane extends SystemPanel {
         private static final long serialVersionUID = 1L;
         public FleetDeployPane() {
-            init();
-        }
-        private void init() {
             initModel(0);
         }
         @Override
@@ -225,9 +220,6 @@ public class FleetMassDeployPanel extends BasePanel {
         int xPts[];
         int yPts[];
         public FleetDeployHeaderPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s65));
             setBackground(FleetUI.backHiC);
         }
@@ -278,9 +270,6 @@ public class FleetMassDeployPanel extends BasePanel {
         private final Rectangle cancelBox = new Rectangle();
         private final Rectangle startBox = new Rectangle();
         public FleetDeployFooterPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s72));
             setBackground(FleetUI.backHiC);
             addMouseListener(this);

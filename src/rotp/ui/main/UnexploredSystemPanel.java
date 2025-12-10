@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +44,6 @@ public class UnexploredSystemPanel extends SystemPanel implements MouseMotionLis
 
     public UnexploredSystemPanel(SpriteDisplayPanel p) {
         parentSpritePanel = p;
-        init();
-    }
-    private void init() {
         initModel();
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -123,9 +121,6 @@ public class UnexploredSystemPanel extends SystemPanel implements MouseMotionLis
         SpriteDisplayPanel parent;
         UnexploredDetailPane(SpriteDisplayPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setOpaque(true);
             setBackground(Color.black);
         }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,9 +82,6 @@ public class SystemMassTransportPanel  extends SystemPanel {
         int xPts[];
         int yPts[];
         public SystemTransportHeaderPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), scaled(120)));
             setBackground(FleetUI.backHiC);
         }
@@ -135,9 +132,6 @@ public class SystemMassTransportPanel  extends SystemPanel {
         private final Rectangle cancelBox = new Rectangle();
         private final Rectangle startBox = new Rectangle();
         public SystemTransportFooterPane() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s70));
             setBackground(FleetUI.backHiC);
             addMouseListener(this);

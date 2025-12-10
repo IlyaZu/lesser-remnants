@@ -98,7 +98,11 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
         manageDiplomatsPane = new ManageDiplomatsUI(p);
         manageSpiesPane = new ManageSpiesUI(p);
 
-        initModel();
+        setBackground(RacesUI.darkerBrown);
+        setBorder(newEmptyBorder(5,5,5,5));
+        addMouseMotionListener(this);
+        addMouseListener(this);
+        addMouseWheelListener(this);
     }
     public void init()              { setValues(); }
     public void changedEmpire()     { setValues(); }
@@ -139,13 +143,6 @@ public final class RacesDiplomacyUI extends BasePanel implements MouseListener, 
             paintPlayerData(g);
         else
             paintAIData(g);
-    }
-    private void initModel() {
-        setBackground(RacesUI.darkerBrown);
-        setBorder(newEmptyBorder(5,5,5,5));
-        addMouseMotionListener(this);
-        addMouseListener(this);
-        addMouseWheelListener(this);
     }
     private void paintPlayerData(Graphics2D g) {
         Empire emp = parent.selectedEmpire();

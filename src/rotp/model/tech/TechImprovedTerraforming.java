@@ -28,9 +28,6 @@ public final class TechImprovedTerraforming extends Tech {
     public TechImprovedTerraforming(String typeId, int lv, int seq, boolean b, TechCategory c) {
         super(c, Tech.IMPROVED_TERRAFORMING, typeId, seq, lv);
         free = b;
-        init();
-    }
-    private void init() {
         switch(typeSeq) {
             case 0:
                 increase = 10;

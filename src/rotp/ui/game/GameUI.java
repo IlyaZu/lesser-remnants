@@ -387,9 +387,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         shrinkText.bordered(true);
         enlargeText.bordered(true);
         setTextValues();
-        initModel();
-    }
-    private void initModel() {
         setOpaque(false);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -893,9 +890,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         GameUI parent;
         public GameLanguagePane(GameUI ui) {
             parent = ui;
-            init();
-        }
-        private void init() {
             codes = LanguageManager.current().languageCodes();
             names = LanguageManager.current().languageNames();
             initBounds();

@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,9 +38,6 @@ public class UnexploredGraphicInfoPane extends BasePanel implements MouseListene
     }
     public UnexploredGraphicInfoPane(SystemPanel p, Border b) {
         parent = p;
-        init();
-    }
-    private void init() {
         setBackground(Color.black);
         addMouseListener(this);
         addMouseWheelListener(this);

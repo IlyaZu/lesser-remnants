@@ -65,9 +65,6 @@ public class ManageDiplomatsUI  extends BasePanel implements MouseListener, Mous
 
     public ManageDiplomatsUI(RacesUI p) {
         parent = p;
-        initModel();
-    }
-    private void initModel() {
         setOpaque(false);
         addMouseListener(this);
         addMouseMotionListener(this);

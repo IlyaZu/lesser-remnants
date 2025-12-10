@@ -175,9 +175,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public Colony(Empire c, Planet p) {
         empire = c;
         planet = p;
-        init();
-    }
-    private void init() {
+        
         buildFortress();
         clearTransport();
 

@@ -33,9 +33,6 @@ public final class TechScanner extends Tech {
     public TechScanner (String typeId, int lv, int seq, boolean b, TechCategory c) {
         super(c, Tech.SCANNER, typeId, seq, lv);
         free = b;
-        init();
-    }
-    private void init() {
         switch(typeSeq) {
             case 0:
                 special=true;

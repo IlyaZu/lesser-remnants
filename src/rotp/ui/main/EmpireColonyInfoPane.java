@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,10 +58,7 @@ public class EmpireColonyInfoPane extends BasePanel {
         darkC = darkTextColor;
         textC = textColor;
         backC = backColor;
-        init(borderColor);
-    }
-    private void init(Color c0) {
-        setBackground(c0);
+        setBackground(backColor);
 
         setOpaque(true);
         JPanel popFactoriesPane = new JPanel();
@@ -101,9 +98,6 @@ public class EmpireColonyInfoPane extends BasePanel {
         protected Shape hoverBox;
         protected Rectangle basesBox = new Rectangle();
         EmpireDataPane() {
-            init();
-        }
-        private void init() {
             setOpaque(true);
             setBackground(backC);
         }
@@ -280,9 +274,6 @@ public class EmpireColonyInfoPane extends BasePanel {
         private int maxBasesValue = 0;
         public EmpireBasesPane() {
             super();
-            init();
-        }
-        private void init() {
             addMouseListener(this);
             addMouseMotionListener(this);
             addMouseWheelListener(this);
@@ -449,9 +440,6 @@ public class EmpireColonyInfoPane extends BasePanel {
     class EmpireProductionPane extends BasePanel {
         private static final long serialVersionUID = 1L;
         EmpireProductionPane() {
-            init();
-        }
-        private void init() {
             setBackground(backC);
             setOpaque(true);
         }

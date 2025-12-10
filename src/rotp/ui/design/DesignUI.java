@@ -678,9 +678,6 @@ public class DesignUI extends BasePanel {
         public DesignTitlePanel(DesignUI p, String s) {
             parent = p;
             titleKey = s;
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(), s45));
             setOpaque(false);
             addMouseListener(this);
@@ -756,9 +753,6 @@ public class DesignUI extends BasePanel {
         Rectangle copyButton= new Rectangle();
         public SlotTitlePanel(String s) {
             titleKey = s;
-            init();
-        }
-        private void init() {
             setPreferredSize(new Dimension(getWidth(), s100));
             setOpaque(false);
             addMouseListener(this);
@@ -877,9 +871,6 @@ public class DesignUI extends BasePanel {
         int designNum = 0;
         public DesignSlotPanel(int i) {
             designNum = i;
-            init();
-        }
-        private void init() {
             setBackground(darkBrown);
             addMouseListener(this);
             addMouseMotionListener(this);
@@ -1105,9 +1096,6 @@ public class DesignUI extends BasePanel {
         int shipH = 0;
         int shipImageIndex = -1;
         public DesignConfigPanel() {
-            init();
-        }
-        private void init() {
             setBackground(darkerBrown);
             setBorder(newEmptyBorder(5,5,5,5));
             addMouseMotionListener(this);

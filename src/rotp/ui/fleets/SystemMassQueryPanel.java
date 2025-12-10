@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,6 @@ public class SystemMassQueryPanel extends BasePanel {
         topParent = p;
         sysActionPane = new SystemAction();
         sysQueryPane = new SystemQuery(this);
-        initModel();
-    }
-    private void initModel() {
         setOpaque(false);
         setLayout(new BorderLayout());
         add(sysQueryPane, BorderLayout.CENTER);
@@ -67,9 +64,6 @@ public class SystemMassQueryPanel extends BasePanel {
         Rectangle hoverBox;
         public SystemQuery(SystemMassQueryPanel p) {
             parent = p;
-            initModel();
-        }
-        private void initModel() {
             addMouseMotionListener(this);
             addMouseListener(this);
         }
@@ -294,9 +288,6 @@ public class SystemMassQueryPanel extends BasePanel {
         private Shape hoverBox;
 
         public SystemAction() {
-            initModel();
-        }
-        private void initModel() {
             setPreferredSize(new Dimension(getWidth(), s100+s35));
             addMouseListener(this);
             addMouseMotionListener(this);

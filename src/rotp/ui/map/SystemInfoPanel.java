@@ -56,15 +56,6 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
     private SystemFlagsPane systemFlagsPane;
     public SystemInfoPanel(SystemsUI p) {
         parent = p;
-        init0();
-    }
-    public void init() {
-        systemFlagsPane.init();
-    }
-    public void exit() {
-        systemFlagsPane.exit();
-    }
-    private void init0() {
         palette = Palette.named("Brown");
         setOpaque(true);
         setBackground(selectedC);
@@ -82,6 +73,12 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
         add(detailPane, BorderLayout.CENTER);
         
         addMouseMotionListener(this);
+    }
+    public void init() {
+        systemFlagsPane.init();
+    }
+    public void exit() {
+        systemFlagsPane.exit();
     }
     public void toggleFlagColor(boolean rightClick) {
         summaryPane.toggleFlagColor(rightClick);
@@ -129,9 +126,6 @@ public class SystemInfoPanel extends SystemPanel implements MouseMotionListener 
         int currentHover = 0;
         EmpireInfoGraphicPane(SystemPanel p) {
             parent = p;
-            init();
-        }
-        private void init() {
             setBackground(palette.black);
         }
         @Override

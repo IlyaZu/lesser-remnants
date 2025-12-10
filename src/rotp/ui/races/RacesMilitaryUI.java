@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,11 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
     public RacesMilitaryUI(RacesUI p) {
         parent = p;
         renameShipUI = new RacesShipRenameUI();
-        initModel();
+        setBackground(RacesUI.darkerBrown);
+        setBorder(newEmptyBorder(5,5,5,5));
+        addMouseMotionListener(this);
+        addMouseListener(this);
+        addMouseWheelListener(this);
     }
     public void changedEmpire()     {
         renameBoxes.clear();
@@ -111,13 +115,6 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         else
             paintAIData(g);
 
-    }
-    private void initModel() {
-        setBackground(RacesUI.darkerBrown);
-        setBorder(newEmptyBorder(5,5,5,5));
-        addMouseMotionListener(this);
-        addMouseListener(this);
-        addMouseWheelListener(this);
     }
     public BufferedImage shipIconBackImg() {
         if (shipIconBackImg == null) {

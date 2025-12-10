@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,9 +56,6 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
     Shape hoverBox;
     int fadeDelay = 0;
     public GameOverUI() {
-        init0();
-    }
-    private void init0() {
         setBackground(Color.black);
         addMouseListener(this);
         addMouseMotionListener(this);

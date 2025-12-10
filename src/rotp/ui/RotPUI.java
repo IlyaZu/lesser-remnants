@@ -701,11 +701,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         private final CardLayout dialogLayout = new CardLayout();
         private final BasePanel dialogHolder = new BasePanel();
         public LargeDialogPane() {
-            initModel();
-        }
-        @Override
-        public boolean hasStarBackground()   { return true; }
-        private void initModel() {
             setOpaque(true);
             setBackground(Color.black);
             dialogHolder.setLayout(dialogLayout);
@@ -752,6 +747,8 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             add(barRight, BorderLayout.EAST);
             add(dialogHolder, BorderLayout.CENTER);
         }
+        @Override
+        public boolean hasStarBackground()   { return true; }
         public void addToLayout(BasePanel panel, String key) {
             dialogHolder.add(panel, key);
         }
