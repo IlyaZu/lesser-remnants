@@ -36,8 +36,6 @@ public final class TechTorpedoWeapon extends Tech {
     public int turnsToFire = 1;
     public int damageLoss = 0;
 
-    public boolean shipOnly = false;
-
     public int shots = 1;
     public int range = 0;
 

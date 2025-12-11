@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,6 @@ public class ShipComponent implements Base, Serializable {
     public int weaponWidth()             { return 0; }
     public int weaponSpread()            { return 0; }
     public boolean pellets()             { return false; }
-    public boolean waves()               { return false; }
     public float planetDamageMod()       { return 1; }
     public void reload()                 { }
     public void becomeDestroyed()        { }
