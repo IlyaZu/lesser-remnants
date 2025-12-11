@@ -80,7 +80,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
             
         if (trans == null) {
             trans = new Composite[20];
-            for (int i=0;i<trans.length;i++) 
+            for (int i=0;i<trans.length;i++)
                 trans[i]  = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)i/trans.length);
         }
         transIndex = -1;
@@ -88,7 +88,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawEndingScene(screenBuffer()); 
+        drawEndingScene(screenBuffer());
         g.drawImage(screenBuffer(),0,0,null);
     }
     private void drawEndingScene(Image img) {
@@ -129,7 +129,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
                 y0 += lineH;
                 //int sw = g.getFontMetrics().stringWidth(line);
                 // only draw text border when fade-in is complete
-                if (transIndex == trans.length-1) 
+                if (transIndex == trans.length-1)
                     drawBorderedString(g, line, x0, y0, Color.black, Color.lightGray);
                 else
                     drawString(g,line, x0, y0);
@@ -174,15 +174,15 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
             Color[] greenColors = {greenEdgeC, greenMidC, greenEdgeC};
             Point2D pt1 = new Point2D.Float(replayBox.x, 0);
             Point2D pt2 = new Point2D.Float(replayBox.x + replayBox.width, 0);
-            back1 = new LinearGradientPaint(pt1, pt2, dist, greenColors);                
+            back1 = new LinearGradientPaint(pt1, pt2, dist, greenColors);
             pt1 = new Point2D.Float(exitBox.x, 0);
             pt2 = new Point2D.Float(exitBox.x + exitBox.width, 0);
-            back2 = new LinearGradientPaint(pt1, pt2, dist, greenColors);                
+            back2 = new LinearGradientPaint(pt1, pt2, dist, greenColors);
         }
         
         // draw replay button
         g.setColor(SystemPanel.blackText);
-        g.fillRoundRect(replayBox.x+s3, replayBox.y+s3, replayBox.width, replayBox.height, s8, s8);           
+        g.fillRoundRect(replayBox.x+s3, replayBox.y+s3, replayBox.width, replayBox.height, s8, s8);
         boolean hovering = hoverBox == replayBox;
         g.setPaint(back1);
         g.fillRoundRect(replayBox.x, replayBox.y, replayBox.width, replayBox.height, s8, s8);
@@ -194,7 +194,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
         }
         else {
             c0 = SystemPanel.whiteText;
-            g.setStroke(BasePanel.stroke1);              
+            g.setStroke(BasePanel.stroke1);
         }
         g.setColor(c0);
         g.drawRoundRect(replayBox.x, replayBox.y, replayBox.width, replayBox.height, s8, s8);
@@ -205,7 +205,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
         
         // draw exit button
         g.setColor(SystemPanel.blackText);
-        g.fillRoundRect(exitBox.x+s3, exitBox.y+s3, exitBox.width, exitBox.height, s8, s8);           
+        g.fillRoundRect(exitBox.x+s3, exitBox.y+s3, exitBox.width, exitBox.height, s8, s8);
         hovering = hoverBox == exitBox;
         g.setPaint(back2);
         g.fillRoundRect(exitBox.x, exitBox.y, exitBox.width, exitBox.height, s8, s8);
@@ -216,7 +216,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
         }
         else {
             c0 = SystemPanel.whiteText;
-            g.setStroke(BasePanel.stroke1);              
+            g.setStroke(BasePanel.stroke1);
         }
         g.setColor(c0);
         g.drawRoundRect(exitBox.x, exitBox.y, exitBox.width, exitBox.height, s8, s8);
@@ -286,7 +286,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
         repaint();
     }
     @Override
-    public String ambienceSoundKey() { 
+    public String ambienceSoundKey() {
         if (session().status().won())
             return "VictoryAmbience";
         else if (session().status().lost())
@@ -309,7 +309,7 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
         else if (replayBox.contains(x,y))
             hoverBox = replayBox;
 
-        if (prevHover != hoverBox) 
+        if (prevHover != hoverBox)
            repaint();
     }
     @Override
@@ -326,18 +326,18 @@ public final class GameOverUI extends FadeInPanel implements MouseListener, Mous
     @Override
     public void mousePressed(MouseEvent arg0) {}
     @Override
-    public void mouseReleased(MouseEvent e) { 
+    public void mouseReleased(MouseEvent e) {
         if (e.getButton() > 3)
             return;
         if (!textFinished())
             return;
         if (hoverBox == exitBox) {
-            softClick(); 
+            softClick();
             advanceMode();
             return;
         }
         else if (hoverBox == replayBox) {
-            softClick(); 
+            softClick();
             RotPUI.instance().selectHistoryPanel(player().id, true);
             return;
         }

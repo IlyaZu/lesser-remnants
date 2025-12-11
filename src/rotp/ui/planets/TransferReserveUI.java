@@ -331,7 +331,7 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
             decrement();
         else if (hoverBox == rightArrow)
             increment();
-        else if (hoverBox == reserveBox) 
+        else if (hoverBox == reserveBox)
             setAmt(MAX_TICKS*(e.getX()-boxAreaL)/boxAreaW);
 
         if (amt != prevAmt) {
@@ -366,8 +366,8 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
                 increment();
             else if (count > 0)
                 decrement();
-            if (amt != prevAmt) 
-                repaint();   
+            if (amt != prevAmt)
+                repaint();
         }
     }
 }

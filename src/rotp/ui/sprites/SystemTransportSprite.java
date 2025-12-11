@@ -122,7 +122,7 @@ public class SystemTransportSprite extends MapSprite {
         if (starSystem() == null)
             return;
         FlightPathSprite path = pathSpriteTo(starSystem());
-        if (path != null) 
+        if (path != null)
             path.draw(map, g2);
     }
 }

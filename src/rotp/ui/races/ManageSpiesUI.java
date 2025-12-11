@@ -112,8 +112,8 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
             Collections.sort(empireViews, EmpireView.BY_RACENAME);
             g.setFont(narrowFont(20));
             col1W = s60;
-            for (EmpireView view: player().contacts()) 
-                col1W = max(col1W, s30+g.getFontMetrics().stringWidth(view.empire().raceName()));       
+            for (EmpireView view: player().contacts())
+                col1W = max(col1W, s30+g.getFontMetrics().stringWidth(view.empire().raceName()));
             col2W = scaled(180);
             col3W = s70;
             col4W = scaled(120);
@@ -167,7 +167,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         int h2 = numRows*rowH;
         g.setColor(RacesUI.darkBrown);
         
-        g.fillRect(x2, y2, w2, h2); 
+        g.fillRect(x2, y2, w2, h2);
 
         int rowx1 = x2;
         int rowx2 = rowx1+col1W+s20;
@@ -213,7 +213,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         g.drawLine(rowx3, y2, rowx3, y2+h2);
         g.drawLine(rowx4, y2, rowx4, y2+h2);
         if (empireViews.size() > maxDisplayRows)
-            g.drawLine(rowx5, y2, rowx5, y2+h2);     
+            g.drawLine(rowx5, y2, rowx5, y2+h2);
         
         // OK button vars
         int buttonM = s30;  // L/R margin
@@ -316,7 +316,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         ptX[0] = leftM; ptX[1] = leftM+buttonW; ptX[2] = leftM+buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         left.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
            left.addPoint(ptX[i], ptY[i]);
         if (hoverButton == left)
             g.setColor(SystemPanel.yellowText);
@@ -328,7 +328,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         ptX[0] = rightM; ptX[1] = rightM-buttonW; ptX[2] = rightM-buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         right.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             right.addPoint(ptX[i], ptY[i]);
         if (hoverButton == right)
             g.setColor(SystemPanel.yellowText);
@@ -364,12 +364,12 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
             g.setStroke(prev);
         }
         
-        // draw string on right for pct 
+        // draw string on right for pct
         g.setColor(SystemPanel.blackText);
         g.setFont(narrowFont(16));
         String newSpies = view.spies().newSpiesExpected();
         drawString(g,newSpies, x+w-labelW+s10, barY+s14);
-    }   
+    }
     private void drawSpiesMissionButton(Graphics2D g, EmpireView view ,int index, int x, int y, int w, int h) {
         if (missionDecr.size() <= index)
             missionDecr.add(new Polygon());
@@ -393,7 +393,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         ptX[0] = leftM; ptX[1] = leftM+buttonW; ptX[2] = leftM+buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         left.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
            left.addPoint(ptX[i], ptY[i]);
         if (hoverButton == left)
             g.setColor(SystemPanel.yellowText);
@@ -405,7 +405,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         ptX[0] = rightM; ptX[1] = rightM-buttonW; ptX[2] = rightM-buttonW;
         ptY[0] = buttonMidY; ptY[1] = buttonTopY; ptY[2] = buttonBotY;
         right.reset();
-        for (int i=0;i<ptX.length;i++) 
+        for (int i=0;i<ptX.length;i++)
             right.addPoint(ptX[i], ptY[i]);
         if (hoverButton == right)
             g.setColor(SystemPanel.yellowText);
@@ -437,7 +437,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
             g.draw(box);
             g.setStroke(prev);
         }
-    }   
+    }
     private boolean increaseSliderValue(int index) {
         EmpireView view = empireViews.get(index);
         int oldValue = view.spies().allocation();
@@ -456,7 +456,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
     }
     private void previousSpyMission(int index) {
         EmpireView view = empireViews.get(index);
-        view.spies().prevMission();        
+        view.spies().prevMission();
     }
     private void exit() {
         hoverBox = null;
@@ -495,7 +495,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
             exit();
             return;
         }
-        for (int i=0;i<spendingBoxes.size();i++) {  
+        for (int i=0;i<spendingBoxes.size();i++) {
             if (hoverButton == spendingDecr.get(i)) {
                 if (decreaseSliderValue(i))
                     repaint();
@@ -510,7 +510,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
                 nextSpyMission(i);
                 repaint();
                 return;
-            }    
+            }
             if (hoverButton == missionIncr.get(i)) {
                 nextSpyMission(i);
                 repaint();
@@ -521,13 +521,13 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
                 repaint();
                 return;
             }
-            if (hoverButton == spendingBoxes.get(i)) {           
+            if (hoverButton == spendingBoxes.get(i)) {
                 Rectangle box = spendingBoxes.get(i);
                 float pct = (float) ((e.getX() - box.getMinX()) / box.getWidth());
                 EmpireView view = empireViews.get(i);
                 int oldAlloc = view.spies().allocation();
                 view.spies().allocationPct(pct);
-                if (oldAlloc != view.spies().allocation()) 
+                if (oldAlloc != view.spies().allocation())
                     repaint();
                 return;
             }
@@ -549,7 +549,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         for (int i=0;i<spendingBoxes.size(); i++) {
             if (hoverButton == spendingBoxes.get(i)) {
                 boolean changed = count < 0 ? increaseSliderValue(i) : decreaseSliderValue(i);
-                if (changed) 
+                if (changed)
                     repaint();
                 return;
             }
@@ -567,9 +567,9 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
             int prevY = listY;
             if (count < 0)
                 listY = max(0,listY-s10);
-            else 
+            else
                 listY = min(listYMax,listY+s10);
-            if (listY != prevY) 
+            if (listY != prevY)
                 repaint(listBox);
             return;
         }
@@ -581,24 +581,24 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         int dY = y-dragY;
         dragY = y;
         if (listScroller == hoverBox) {
-            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) { 
+            if ((y >= listBox.y) || (y <= (listBox.y+listBox.height))) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)((float)dY*(h+listYMax)/h);
                 if (dY < 0)
                     listY = max(0,listY+dListY);
-                else 
+                else
                     listY = min(listYMax,listY+dListY);
             }
             repaint(listBox);
             return;
         }
         else if (listBox == hoverBox) {
-            if (listBox.contains(x,y)) { 
+            if (listBox.contains(x,y)) {
                 int h = (int) listBox.getHeight();
                 int dListY = (int)(-(float)dY*(h+listYMax)/h);
                 if (dListY < 0)
                     listY = max(0,listY+dListY);
-                else 
+                else
                     listY = min(listYMax,listY+dListY);
             }
             repaint(listBox);
@@ -648,7 +648,7 @@ public class ManageSpiesUI extends BasePanel implements MouseListener, MouseWhee
         else if (listBox.contains(x,y))
             hoverBox = listBox;
         
-        if ((prevHoverBox != hoverBox) 
+        if ((prevHoverBox != hoverBox)
         || (prevHoverButton != hoverButton))
             repaint();
     }

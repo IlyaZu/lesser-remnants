@@ -125,7 +125,7 @@ public class ColonyEcology extends ColonySpendingCategory {
 
         // try to convert hostile atmosphere
         atmosphereCompleted = false;
-        if (p.canTerraformAtmosphere(emp))  { 
+        if (p.canTerraformAtmosphere(emp))  {
             float hostileCost = min((atmosphereTerraformCost() - hostileBC), newBC);
             hostileCost = max(hostileCost,0);
             hostileBC += hostileCost;
@@ -253,7 +253,7 @@ public class ColonyEcology extends ColonySpendingCategory {
         
         float prodBC = pct()* colony().totalProductionIncome();
         float rsvBC = pct() * colony().maxReserveIncome();
-        float newBC = prodBC+rsvBC; 
+        float newBC = prodBC+rsvBC;
         
         return (newBC < colony().wasteCleanupCost());
     }
@@ -274,7 +274,7 @@ public class ColonyEcology extends ColonySpendingCategory {
 
         // check for waste cleanup
         cost = c.wasteCleanupCost();
-        if (newBC < cost) 
+        if (newBC < cost)
             return text(wasteText);
         
         if (c.allocation(categoryType()) == 0)
@@ -313,7 +313,7 @@ public class ColonyEcology extends ColonySpendingCategory {
         float roomToGrow = maxPopSize - p.currentSize();
         if (roomToGrow > 0) {
             cost = roomToGrow * tr.topTerraformingTech().costPerMillion;
-            if (newBC < cost) 
+            if (newBC < cost)
                  return text(terraformText);
             newBC -= cost;
         }
@@ -346,7 +346,7 @@ public class ColonyEcology extends ColonySpendingCategory {
         
         float prodBC = pct()* c.totalProductionIncome();
         float rsvBC = pct() * c.maxReserveIncome();
-        float totalBC = prodBC+rsvBC;        
+        float totalBC = prodBC+rsvBC;
         
         // deduct cost to clean industrial waste
         float cleanCost = c.wasteCleanupCost();
@@ -380,14 +380,14 @@ public class ColonyEcology extends ColonySpendingCategory {
                     }
                 }
             }
-        }        
+        }
         
         // deduct cost for size terraforming
         float maxPopSize = c.maxSize();
         float roomToGrow = maxPopSize - p.currentSize();
         if (roomToGrow > 0) {
             float tformCost = roomToGrow * tr.topTerraformingTech().costPerMillion;
-            if (totalBC < tformCost) 
+            if (totalBC < tformCost)
                 return 0;
             totalBC -= tformCost;
         }
@@ -402,7 +402,7 @@ public class ColonyEcology extends ColonySpendingCategory {
             if (totalBC < growthCost)
                 return 0;
             totalBC -= growthCost;
-        } 
+        }
         
         return max(0,totalBC);
     }

@@ -125,7 +125,7 @@ public class RacesSetColorUI extends BasePanel implements MouseListener, MouseMo
                 g.setColor(Color.yellow);
                 g.draw(sh);
                 g.setStroke(prev);
-            }          
+            }
         }
         
         //draw exit string
@@ -160,7 +160,7 @@ public class RacesSetColorUI extends BasePanel implements MouseListener, MouseMo
         if (e.getButton() > 3)
             return;
         
-        if (hoverIndex >= 0) 
+        if (hoverIndex >= 0)
             parent.selectedIconEmpire().changeColorId(hoverIndex);
         exit();
     }
@@ -187,5 +187,5 @@ public class RacesSetColorUI extends BasePanel implements MouseListener, MouseMo
         
         if (hoverIndex != prevHover)
             repaint();
-    }    
+    }
 }

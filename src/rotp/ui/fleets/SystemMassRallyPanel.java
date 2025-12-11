@@ -198,7 +198,7 @@ public class SystemMassRallyPanel extends SystemPanel {
                 topParent.clearMapSelections();
                 topParent.showQueryPanel();
             }
-            else if (startBox.contains(x,y)) 
+            else if (startBox.contains(x,y))
                 startRallies();
         }
     }
