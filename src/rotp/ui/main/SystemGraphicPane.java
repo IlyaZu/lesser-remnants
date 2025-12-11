@@ -98,7 +98,7 @@ public class SystemGraphicPane extends BasePanel implements MouseMotionListener,
             Image img = ShipLibrary.current().stargate.getImage();
             int w2 = img.getWidth(null);
             int h2 = img.getHeight(null);
-            g.drawImage(img, x2, y2, x2+s14, y2+s14, 0, 0, w2, h2, null);  
+            g.drawImage(img, x2, y2, x2+s14, y2+s14, 0, 0, w2, h2, null);
             stargateBox.setBounds(x2,y2,s14,s14);
             if (currentHover == 3) {
                 Stroke prevStroke = g.getStroke();

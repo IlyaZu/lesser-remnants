@@ -90,7 +90,7 @@ public class UnexploredGraphicInfoPane extends BasePanel implements MouseListene
     public void mousePressed(MouseEvent e) { }
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getClickCount() == 2) 
+        if (e.getClickCount() == 2)
             parent.recenterMap();
     }
     @Override

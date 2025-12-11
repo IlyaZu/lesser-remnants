@@ -101,7 +101,7 @@ public class UnexploredSystemPanel extends SystemPanel implements MouseMotionLis
     @Override
     public void mouseEntered(MouseEvent e) { }
     @Override
-    public void mouseExited(MouseEvent e) { 
+    public void mouseExited(MouseEvent e) {
         if (hoverBox != null) {
             hoverBox = null;
             repaint();
@@ -172,10 +172,10 @@ public class UnexploredSystemPanel extends SystemPanel implements MouseMotionLis
             
             Image flagImage = sv.mapFlagImage(sys.id);
             g.drawImage(flagImage, w-sz+s5, 0, sz, sz, null);
-            flagBox.setBounds(w-sz+s5,0,sz-s20,sz-s10);         
+            flagBox.setBounds(w-sz+s5,0,sz-s20,sz-s10);
             
             //g.setColor(Color.red);
-            //g.fillRect(w-sz+s25,15,sz-s20,sz-s10); 
+            //g.fillRect(w-sz+s25,15,sz-s20,sz-s10);
             
             if (sys.inNebula()) {
                 g.setFont(narrowFont(16));
@@ -187,7 +187,7 @@ public class UnexploredSystemPanel extends SystemPanel implements MouseMotionLis
                     drawString(g,line, s8, y0);
                     y0 += ydelta;
                 }
-            } 
+            }
            
 
             g.setFont(narrowFont(16));

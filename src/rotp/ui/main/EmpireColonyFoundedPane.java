@@ -94,7 +94,7 @@ public class EmpireColonyFoundedPane extends BasePanel implements MouseMotionLis
                 systems.add(sys);
         }
         
-        for (StarSystem sys1: systems) 
+        for (StarSystem sys1: systems)
             player().sv.toggleFlagColor(sys1.id, reverse);
 
                 if (repainter != null)
@@ -113,7 +113,7 @@ public class EmpireColonyFoundedPane extends BasePanel implements MouseMotionLis
                 systems.add(sys);
         }
         
-        for (StarSystem sys1: systems) 
+        for (StarSystem sys1: systems)
             player().sv.resetFlagColor(sys1.id);
         
         if (repainter != null)
@@ -155,13 +155,13 @@ public class EmpireColonyFoundedPane extends BasePanel implements MouseMotionLis
         else if (hoverBox == nameBox) {
             RotPUI.instance().selectRacesPanel();
             RotPUI.instance().racesUI().selectDiplomacyTab();
-            RotPUI.instance().racesUI().selectedEmpire(player());              
+            RotPUI.instance().racesUI().selectedEmpire(player());
         }
     }
     @Override
     public void mouseEntered(MouseEvent e) { }
     @Override
-    public void mouseExited(MouseEvent e) { 
+    public void mouseExited(MouseEvent e) {
         if (hoverBox != null) {
             hoverBox = null;
             repaint();

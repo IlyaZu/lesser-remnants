@@ -56,7 +56,7 @@ public class SystemMassTransportPanel  extends SystemPanel {
             return false;
         if (target == null)
             return false;
-        if ((topParent.filteredSystems.size() ==1) 
+        if ((topParent.filteredSystems.size() ==1)
         && topParent.filteredSystems.contains(target))
             return false;
         return player().canSendTransportsTo(target);

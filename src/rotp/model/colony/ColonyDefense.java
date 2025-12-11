@@ -163,11 +163,11 @@ public class ColonyDefense extends ColonySpendingCategory {
             float orderAmt = c.orderAmount(Colony.Orders.SHIELD);
             if (orderAmt > 0) {
                 c.removeColonyOrder(Colony.Orders.SHIELD);
-                if (!missileBasesCompleted()) 
+                if (!missileBasesCompleted())
                     c.addColonyOrder(Colony.Orders.BASES, orderAmt*2/5);
             }
         }
-        if (missileBasesCompleted()) 
+        if (missileBasesCompleted())
             c.removeColonyOrder(Colony.Orders.BASES);
     }
     public void commitTurn() {
@@ -197,7 +197,7 @@ public class ColonyDefense extends ColonySpendingCategory {
         unallocatedBC = 0;
     }
     public float maxShieldLevel()      { return colony().starSystem().inNebula() ? 0 : tech().maxPlanetaryShieldLevel(); }
-    public float missileBaseMaintenanceCost(Map<MissileBase, Float> knownBaseCosts) { 
+    public float missileBaseMaintenanceCost(Map<MissileBase, Float> knownBaseCosts) {
         float baseCost = 0;
         if (knownBaseCosts.containsKey(missileBase))
             baseCost = knownBaseCosts.get(missileBase);
@@ -205,7 +205,7 @@ public class ColonyDefense extends ColonySpendingCategory {
             baseCost = missileBase.cost(player());
             knownBaseCosts.put(missileBase, baseCost);
         }
-        return ((int) bases * baseCost * .02f); 
+        return ((int) bases * baseCost * .02f);
     }
     private float missileUpgradeCost()  { return bases * (tech().bestMissileBase().cost(empire()) - missileBase.cost(empire())); }
     public boolean isArmed()             { return missileBases() >= 1; }
@@ -229,14 +229,14 @@ public class ColonyDefense extends ColonySpendingCategory {
         
         float prodBC = pct()* colony().totalProductionIncome() * planet().productionAdj();
         float rsvBC = pct() * colony().maxReserveIncome();
-        float totalBC = prodBC+rsvBC;        
+        float totalBC = prodBC+rsvBC;
         
         // deduct cost to finish shield
         float shieldCost = (maxShieldLevel() - shield) * 100;
         if (shieldCost >= totalBC)
             return 0;
         
-        totalBC -= shieldCost;      
+        totalBC -= shieldCost;
         if (maxBases == 0)
             return totalBC;
                

@@ -101,7 +101,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
         }
         g.setPaint(backGradient);
         g.fillRect(0,h/2,w, h/2);
-        if (parent.selectedEmpire().isPlayer()) 
+        if (parent.selectedEmpire().isPlayer())
             paintPlayerData(g);
         else
             paintAIData(g);
@@ -125,7 +125,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
         drawRaceIcon(g, emp, s60, s30, s200, s200);
         drawOpponentIcon(g, null, w-s60-s200, s30, s200, s200);
         drawPlayerTitle(g, emp, titleLeftX, s30, s370, s50);
-        drawVS(g, emp, titleLeftX, s90, w-scaled(520), s50); 
+        drawVS(g, emp, titleLeftX, s90, w-scaled(520), s50);
         drawKnownEmpiresTitle(g, emp, w-s60-s200, s30+s200, 0, s50);
     }
     private void paintAIData(Graphics2D g) {
@@ -168,7 +168,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
         }
         
         g.setFont(narrowFont(20));
-        if (button == hoverShape) 
+        if (button == hoverShape)
             g.setColor(Color.yellow);
         else
             g.setColor(SystemPanel.whiteText);
@@ -183,7 +183,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
     private void drawRaceIconBase(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(RacesUI.darkBrown);
         Shape rect = new RoundRectangle2D.Float(x,y,w,h,w/8, h/8);
-        g.fill(rect);  
+        g.fill(rect);
     }
     private void drawRaceIcon(Graphics2D g, Empire emp, int x, int y, int w, int h) {
         g.setColor(Color.black);
@@ -346,7 +346,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
                 g.fillRect(x2, y2, barW, barH);
                 g.setColor(RacesUI.brown);
                 float pct = (float)100*rv.value/sumValues;
-                String val = pct >= 10 ? str(Math.round(pct)) : df1.format(pct); 
+                String val = pct >= 10 ? str(Math.round(pct)) : df1.format(pct);
                 drawString(g,val, x2+barW+s5, y2+barH-yAdj);
             }
             String name = rv.emp.raceName();
@@ -357,7 +357,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
         }
         
         dataYMax[num] = max(0, s21+(barH*rows) - listH);
-        if (dataYMax[num] == 0) 
+        if (dataYMax[num] == 0)
             dataScrollers[num].setBounds(0,0,0,0);
         else {
             g.setColor(RacesUI.scrollBarC);
@@ -375,7 +375,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
                 g.setStroke(prev);
             }
         }
-        g.setClip(null);    
+        g.setClip(null);
     }
     private void getEmpireListing(int cat) {
         vals.clear();
@@ -494,7 +494,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
             g.setColor(RacesUI.darkBrown);
             String s = text("RACES_STATUS_NO_DATA");
             int sw1 = g.getFontMetrics().stringWidth(s);
-            drawString(g,s, x1+(w1-sw1)/2, y1+(h1+s24)/2);            
+            drawString(g,s, x1+(w1-sw1)/2, y1+(h1+s24)/2);
         }
         // DRAW SELECTED EMPIRE AGAIN, with dashed lines
         g.setStroke(dashedLineStroke);
@@ -525,7 +525,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
                 int prevY = dataY[i];
                 if (count < 0)
                     dataY[i] = max(0,dataY[i]-s10);
-                else 
+                else
                     dataY[i] = min(dataYMax[i],dataY[i]+s10);
                 if (dataY[i] != prevY)
                     repaint(fullBoxes[i]);
@@ -534,31 +534,31 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
         }
     }
     @Override
-    public void mouseDragged(MouseEvent e) { 
+    public void mouseDragged(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
         int dY = y-dragY;
         dragY = y;
         for (int i=0;i<dataBoxes.length;i++) {
             if (dataScrollers[i] == hoverShape) {
-                if ((y >= dataBoxes[i].y) || (y <= (dataBoxes[i].y+dataBoxes[i].height))) { 
+                if ((y >= dataBoxes[i].y) || (y <= (dataBoxes[i].y+dataBoxes[i].height))) {
                     int h = (int) dataBoxes[i].getHeight();
                     int dListY = (int)((float)dY*(h+dataYMax[i])/h);
                     if (dY < 0)
                         dataY[i] = max(0,dataY[i]+dListY);
-                    else 
+                    else
                         dataY[i] = min(dataYMax[i],dataY[i]+dListY);
                 }
                 repaint(fullBoxes[i]);
                 return;
             }
             else if (dataBoxes[i] == hoverShape) {
-                if (dataBoxes[i].contains(x,y)) { 
+                if (dataBoxes[i].contains(x,y)) {
                     int h = (int) dataBoxes[i].getHeight();
                     int dListY = (int)(-(float)dY*(h+dataYMax[i])/h);
                     if (dListY < 0)
                         dataY[i] = max(0,dataY[i]+dListY);
-                    else 
+                    else
                         dataY[i] = min(dataYMax[i],dataY[i]+dListY);
                 }
                 repaint(fullBoxes[i]);
@@ -578,19 +578,19 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
             hoverShape = aiHistoryButton;
         else {
             for (int i=0;i<dataBoxes.length;i++) {
-                if (dataScrollers[i].contains(x,y)) 
+                if (dataScrollers[i].contains(x,y))
                     hoverShape = dataScrollers[i];
-                else if (dataBoxes[i].contains(x,y)) 
+                else if (dataBoxes[i].contains(x,y))
                     hoverShape = dataBoxes[i];
             }
         }
-        if (hoverShape != prevHover) 
-            repaint();     
+        if (hoverShape != prevHover)
+            repaint();
     }
     @Override
     public void mouseClicked(MouseEvent mouseEvent) { }
     @Override
-    public void mousePressed(MouseEvent e) { 
+    public void mousePressed(MouseEvent e) {
         dragY = e.getY();
     }
     @Override

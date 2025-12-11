@@ -267,7 +267,7 @@ public class FleetMassQueryPanel extends BasePanel {
             y0 += s5;
             g.setFont(narrowFont(15));
             int maxCount = 0;
-            for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++) 
+            for (int i=0;i<ShipDesignLab.MAX_DESIGNS;i++)
                 maxCount = max(maxCount,shipCount(i));
             int swMax = g.getFontMetrics().stringWidth(str(maxCount));
             g.setColor(SystemPanel.blackText);

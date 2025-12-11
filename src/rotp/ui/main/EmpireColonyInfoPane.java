@@ -114,7 +114,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             }
             
             if (systems.isEmpty())
-                return;           
+                return;
             
             List<Colony> colonies = new ArrayList<>();
             for (StarSystem sys1: systems) {
@@ -135,7 +135,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             int x0 = s5;
             int y0 = getHeight()-s6;
 
-            // calc max width for label and try to get largest font (from 13-16) in it            
+            // calc max width for label and try to get largest font (from 13-16) in it
             int x1 = 0;
             int x2 = 0;
             int sw1 = 0;
@@ -191,17 +191,17 @@ public class EmpireColonyInfoPane extends BasePanel {
         @Override
         protected String titleString()      { return text("MAIN_COLONY_POPULATION"); }
         @Override
-        protected int value(List<Colony> colonies) { 
+        protected int value(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += c.displayPopulation(); 
+                val += c.displayPopulation();
             return val;
         }
         @Override
-        protected int maxValue(List<Colony> colonies) { 
+        protected int maxValue(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += c.maxSize(); 
+                val += c.maxSize();
             return val;
         }
     }
@@ -210,26 +210,26 @@ public class EmpireColonyInfoPane extends BasePanel {
         @Override
         protected String titleString()   { return text("MAIN_COLONY_FACTORIES"); }
         @Override
-        protected int value(List<Colony> colonies) { 
+        protected int value(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += (int) c.industry().factories(); 
+                val += (int) c.industry().factories();
             return val;
         }
         @Override
-        protected int maxValue(List<Colony> colonies) { 
+        protected int maxValue(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += c.industry().maxBuildableFactories(); 
+                val += c.industry().maxBuildableFactories();
             return val;
         }
         @Override
-        protected String maxValueString(List<Colony> c) { 
+        protected String maxValueString(List<Colony> c) {
             if (c.size()> 1)
                 return str(maxValue(c));
             Planet p = c.get(0).planet();
             if (p.currentSize() < p.maxSize())
-                return text("MAIN_COLONY_VALUE+", str(maxValue(c))); 
+                return text("MAIN_COLONY_VALUE+", str(maxValue(c)));
             else
                 return str(maxValue(c));
         }
@@ -239,21 +239,21 @@ public class EmpireColonyInfoPane extends BasePanel {
         @Override
         protected String titleString()   { return text("MAIN_COLONY_SHIELD"); }
         @Override
-        protected int value(List<Colony> colonies) { 
+        protected int value(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += (int) c.defense().shieldLevel(); 
+                val += (int) c.defense().shieldLevel();
             return val;
         }
         @Override
-        protected int maxValue(List<Colony> colonies) { 
+        protected int maxValue(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += c.defense().maxShieldLevel(); 
+                val += c.defense().maxShieldLevel();
             return val;
         }
         @Override
-        protected String dataLabelString(List<Colony> colonies)   { 
+        protected String dataLabelString(List<Colony> colonies)   {
             for (Colony c: colonies) {
                 if (!c.starSystem().inNebula())
                     return null;
@@ -307,17 +307,17 @@ public class EmpireColonyInfoPane extends BasePanel {
         @Override
         protected String titleString()   { return text("MAIN_COLONY_BASES"); }
         @Override
-        protected int value(List<Colony> colonies) { 
+        protected int value(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val += (int) c.defense().bases(); 
+                val += (int) c.defense().bases();
             return val;
         }
         @Override
-        protected int maxValue(List<Colony> colonies) { 
+        protected int maxValue(List<Colony> colonies) {
             int val = 0;
             for (Colony c: colonies)
-                val = max(val,c.defense().maxBases()); 
+                val = max(val,c.defense().maxBases());
             maxBasesValue = val;
             return val;
         }
@@ -331,7 +331,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             if (systems == null) {
                 systems = new ArrayList<>();
                 StarSystem sys = parentUI.systemViewToDisplay();
-                if (sys != null) 
+                if (sys != null)
                     systems.add(sys);
             }
             
@@ -341,7 +341,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             }
             
             if (colonies.isEmpty())
-                return;           
+                return;
             
             allowAdjust = true;
 //            allowAdjust = systems.size() == 1;
@@ -406,7 +406,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             int y = e.getY();
             if (upArrow.contains(x,y))
                 incrementBases();
-            else if (downArrow.contains(x,y)) 
+            else if (downArrow.contains(x,y))
                 decrementBases();
         }
         @Override
@@ -454,7 +454,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             }
             
             if (systems.isEmpty())
-                return;           
+                return;
 
             super.paintComponent(g);
             

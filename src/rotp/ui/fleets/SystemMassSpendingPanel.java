@@ -69,7 +69,7 @@ public class SystemMassSpendingPanel  extends BasePanel implements MouseMotionLi
         y0 += buttonH;
 
         y0 += s15;
-        g.setColor(SystemPanel.blackText);            
+        g.setColor(SystemPanel.blackText);
         String desc = text("FLEETS_ADJUST_SPENDING_DESC2");
         if (!player().ignoresPlanetEnvironment())
             desc = desc + " " + text("FLEETS_ADJUST_SPENDING_DESC3");
@@ -139,17 +139,17 @@ public class SystemMassSpendingPanel  extends BasePanel implements MouseMotionLi
         int x = e.getX();
         int y = e.getY();
 
-        if (cancelBox.contains(x,y)) 
+        if (cancelBox.contains(x,y))
             close();
-        if (spending0Box.contains(x,y)) 
+        if (spending0Box.contains(x,y))
             setShipSpendingLevel(0);
-        else if (spending25Box.contains(x,y)) 
+        else if (spending25Box.contains(x,y))
             setShipSpendingLevel(0.25f);
-        else if (spending50Box.contains(x,y)) 
+        else if (spending50Box.contains(x,y))
             setShipSpendingLevel(0.5f);
-        else if (spending75Box.contains(x,y)) 
+        else if (spending75Box.contains(x,y))
             setShipSpendingLevel(0.75f);
-        else if (spendingMaxBox.contains(x,y)) 
+        else if (spendingMaxBox.contains(x,y))
             setShipSpendingLevel(1);
     }
 }

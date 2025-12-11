@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +73,7 @@ public class RoundGradientContext implements Base, PaintContext {
                         ratio2 = ratio1 = 1.0f;
                     else if (distance <= coreEdge)
                         ratio2 = ratio1 = 0;
-                    else 
+                    else
                         ratio2 = ratio1 = (distance - coreEdge) / (drawRadius -coreEdge);
                 }
                 else {

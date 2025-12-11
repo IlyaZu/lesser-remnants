@@ -322,7 +322,7 @@ public class RallyPointPanel extends SystemPanel {
             Shape prevHover = hoverBox;
             hoverBox = null;
             
-            if (retreatBox.contains(x,y)) 
+            if (retreatBox.contains(x,y))
                 hoverBox = retreatBox;
 
             if (hoverBox != prevHover)
@@ -435,7 +435,7 @@ public class RallyPointPanel extends SystemPanel {
                 drawLargeDeployButton(g);
                 drawSmallCancelButton(g);
             }
-            else 
+            else
                 drawFullCancelButton(g);
         }
         private void clearButtons() {
@@ -553,11 +553,11 @@ public class RallyPointPanel extends SystemPanel {
             int x = e.getX();
             int y = e.getY();
 
-            if (cancelBox.contains(x,y)) 
+            if (cancelBox.contains(x,y))
                 parent.cancelRelocation();
-            else if (startBox.contains(x,y)) 
+            else if (startBox.contains(x,y))
                 parent.createRelocationPath();
-            else if (stopBox.contains(x,y)) 
+            else if (stopBox.contains(x,y))
                 parent.cancelRelocationPath();
         }
     }

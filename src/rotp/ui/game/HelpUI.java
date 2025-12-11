@@ -126,7 +126,7 @@ public class HelpUI extends BasePanel implements MouseListener {
                 g.setStroke(stroke2);
                 g.setColor(spec.lineC);
                 g.drawLine(spec.x1, spec.y1, spec.x2, spec.y2);
-                if (spec.x3 >=0) 
+                if (spec.x3 >=0)
                     g.drawLine(spec.x2, spec.y2, spec.x3, spec.y3);
                 g.setStroke(prev);
             }
@@ -185,6 +185,6 @@ public class HelpUI extends BasePanel implements MouseListener {
             x3 = x3a;
             y3 = y3a;
         }
-    }    
+    }
 }
 

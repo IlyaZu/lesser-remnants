@@ -226,7 +226,7 @@ public class EmpireColonySpendingPane extends BasePanel {
             g.setColor(c2);
             g.fillRect(boxL+boxBorderW(), boxTopY, boxW-(2*boxBorderW()), boxH);
 
-            if (colony.warning(category))  
+            if (colony.warning(category))
                 g.setColor(c1a);
             else
                 g.setColor(c1);
@@ -234,7 +234,7 @@ public class EmpireColonySpendingPane extends BasePanel {
             Rectangle fillRect;
             
             
-            if (pct == 1)           
+            if (pct == 1)
                 fillRect = new Rectangle(boxL+boxBorderW(), boxTopY+s2, boxW-(2*boxBorderW()), boxH-s3);
             else
                 fillRect = new Rectangle(boxL+boxBorderW(), boxTopY+s2, (int) (pct*(boxW-(2*boxBorderW()))), boxH-s3);

@@ -213,13 +213,13 @@ public class AlienSystemPanel extends SystemPanel {
             else if (hoverBox == nameBox) {
                 RotPUI.instance().selectRacesPanel();
                 RotPUI.instance().racesUI().selectDiplomacyTab();
-                RotPUI.instance().racesUI().selectedEmpire(displayEmp);              
+                RotPUI.instance().racesUI().selectedEmpire(displayEmp);
             }
         }
         @Override
         public void mouseEntered(MouseEvent e) { }
         @Override
-        public void mouseExited(MouseEvent e) { 
+        public void mouseExited(MouseEvent e) {
             if (hoverBox != null) {
                 hoverBox = null;
                 repaint();
