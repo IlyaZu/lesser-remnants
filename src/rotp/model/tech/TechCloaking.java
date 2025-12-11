@@ -21,8 +21,6 @@ import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipSpecialCloaking;
 
 public final class TechCloaking extends Tech {
-    public static String baseFlavor = "Cloaking Devices hide ships from enemy detection. Ships must uncloak to attack, and must wait one complete turn before recloaking.";
-
     public static float TRANSPARENCY = .2f;
     public float range = 0;
     public float move = 0;

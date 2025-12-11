@@ -45,8 +45,6 @@ public final class TechMissileWeapon extends Tech {
     public int computer = 0;
     public int attacks = 1;
 
-    public boolean shipOnly = false;
-
     public int shots = 1;
     public int range = 0;
     public int shots2 = 0;

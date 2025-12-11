@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,16 +57,6 @@ public class ColonyDefense extends ColonySpendingCategory {
     }
     public boolean missileBasesCompletedThisTurn() {
         return (deltaBases() > 0) && missileBasesCompleted();
-    }
-    public void init() {
-        missileBase = null;
-        bases = 0;
-        shield = 0;
-        newBases = 0;
-        newShield = 0;
-        baseUpgradeBC = 0;
-        unallocatedBC = 0;
-        newBaseUpgradeCost = 0;
     }
     @Override
     public int categoryType()              { return Colony.DEFENSE; }

@@ -43,7 +43,6 @@ public final class TechShipWeapon extends Tech {
     public int weaponWidth = 1;
     public int weaponSpread = 1;
     public boolean pellets = false;
-    public boolean waves = false;
 
     private int beamStroke, heavyStroke, dashStroke;
     private transient Color beamColor;

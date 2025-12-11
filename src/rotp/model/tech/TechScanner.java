@@ -21,7 +21,6 @@ import rotp.model.ships.ShipSpecialScanner;
 
 public final class TechScanner extends Tech {
     public static int BATTLE_SCANNER_INITIATIVE = 3;
-    public int type;
     public float planetRange = 0;
     public float shipRange = 0;
     public int shipAttackBonus = 0;

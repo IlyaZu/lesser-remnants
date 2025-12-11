@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,17 +49,6 @@ public class ColonyEcology extends ColonySpendingCategory {
     public void resetBiosphere() {
         hostileBC = 0;
         soilEnrichBC = 0;
-    }
-    public void init() {
-        hostileBC = 0;
-        soilEnrichBC = 0;
-        planet().resetWaste();
-        unallocatedBC = 0;
-
-        wasteCleaned = 0;
-        newGrownPopulation = 0;
-        newPurchasedPopulation = 0;
-        newBiosphereIncrease = 0;
     }
     @Override
     public int categoryType()    { return Colony.ECOLOGY; }
