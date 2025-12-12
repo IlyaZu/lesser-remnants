@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,6 @@ import rotp.model.tech.TechEngineWarp;
 
 public final class ShipManeuver extends ShipComponent {
     private static final long serialVersionUID = 1L;
-    public ShipManeuver() {
-        sequence(0);
-    }
     public ShipManeuver(TechEngineWarp t) {
         tech(t);
         sequence(t.level);

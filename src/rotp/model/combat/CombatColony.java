@@ -102,8 +102,6 @@ public class CombatColony extends CombatEntity {
     @Override
     public boolean canFireWeapon()    { return isArmed() && !missileFired; }
     @Override
-    public float torpedoDamageMod()   { return TORPEDO_DAMAGE_MOD; }
-    @Override
     public boolean destroyed()        { return colony.destroyed(); }
     @Override
     public float beamDamageMod()      { return BEAM_DAMAGE_MOD; }

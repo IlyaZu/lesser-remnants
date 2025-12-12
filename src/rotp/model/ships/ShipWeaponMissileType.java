@@ -16,10 +16,7 @@
  */
 package rotp.model.ships;
 
-import java.awt.Component;
-import java.awt.Image;
 import rotp.model.combat.CombatEntity;
-import rotp.model.combat.CombatColony;
 
 public class ShipWeaponMissileType extends ShipWeapon {
     private static final long serialVersionUID = 1L;
@@ -39,17 +36,6 @@ public class ShipWeaponMissileType extends ShipWeapon {
     @Override
     public int shots()                    { return 1; }
     public float speed()                  { return 1; }
-    public Image image(int num)           { return null; }
-    public void dealDamage(CombatEntity target, float damage, float shieldMod) {
-        target.takeMissileDamage(damage, shieldMod);
-    }
-    @Override
-    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
-        // missiles always do max damage on bombardment
-        return super.estimatedBombardDamage(source, target) * bombardAttacks();
-    }
-    @Override
-    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component comp) { }
     @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         if (random() < target.autoMissPct())

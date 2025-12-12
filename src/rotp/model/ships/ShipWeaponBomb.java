@@ -17,7 +17,6 @@
 package rotp.model.ships;
 
 import rotp.model.combat.CombatEntity;
-import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechBombWeapon;
 
 public final class ShipWeaponBomb extends ShipWeapon {
@@ -39,17 +38,9 @@ public final class ShipWeaponBomb extends ShipWeapon {
     @Override
     public int bombardAttacks()        { return 10; }
     @Override
-    public boolean hasAttackEffect()   { return true; }
-    @Override
-    public boolean pellets()           { return true; }
-    @Override
     public int shots()                 { return 10; }
     @Override
     public boolean isLimitedShotWeapon() { return true; }
-    @Override
-    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
-        return super.estimatedBombardDamage(source, target) * target.bombDamageMod();
-    }
     @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         int defense = target.bombDefense();

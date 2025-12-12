@@ -17,27 +17,15 @@
 package rotp.model.tech;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
 import rotp.model.colony.Colony;
 import rotp.model.colony.MissileBaseMissile;
 import rotp.model.combat.CombatEntity;
 import rotp.model.empires.Empire;
-import rotp.model.game.GameSession;
 import rotp.model.ships.ShipWeaponMissile;
-import rotp.ui.RotPUI;
 import rotp.ui.combat.ShipBattleUI;
 
 public final class TechMissileWeapon extends Tech {
-    public static List<String> missileTypes = new ArrayList<>();
-    public static List<List<ImageIcon>> missileIcons = new ArrayList<>();
-
     public MissileBaseMissile baseMissile;
-    public String imageType = "MISSILE";
     public String imageKey = "";
     private int damage = 0;
     public float speed = 1;
@@ -202,19 +190,6 @@ public final class TechMissileWeapon extends Tech {
     public Colony.Orders followup()          { return Colony.Orders.BASES; }
     @Override
     public float baseReallocateAmount()          { return .10f; }
-    public ImageIcon icon(int count) {
-        List<ImageIcon> icons = iconsForType(imageType);
-        int i = (int) Math.sqrt(count);
-        if (i < 1)
-            return icons.get(0);
-        else if (i > icons.size())
-            return icons.get(icons.size()-1);
-        else
-            return icons.get(i-1);
-    }
-    public Image image(int count) {
-            return icon(count).getImage();
-    }
     @Override
     public float baseValue(Empire c) { return c.ai().scientist().baseValue(this); }
     @Override
@@ -245,72 +220,6 @@ public final class TechMissileWeapon extends Tech {
         }
         c.shipLab().addWeapon(new ShipWeaponMissile(this, false, shots, range, speed));
         c.shipLab().addWeapon(new ShipWeaponMissile(this, true, shots2, range2, speed2));
-    }
-    public static List<ImageIcon> iconsForType(String typeName) {
-        int i = missileTypes.indexOf(typeName);
-        if ( (i >=0) && (i < missileIcons.size()))
-            return missileIcons.get(i);
-        else
-            return new ArrayList<>();
-    }
-    public static void startup() {
-        loadMissileImages();
-    }
-    public static void loadMissileImages() {
-        BufferedReader in = RotPUI.instance().reader("images/missiles/missiles.txt");
-        try {
-            String input;
-            while ((input = in.readLine()) != null)
-                addMissileImageType(input);
-            in.close();
-        }
-        catch (IOException e) {
-            System.err.println("MissileWeaponTech.loadMissileImages -- IOException: " + e);
-        }
-    }
-    public static void addMissileImageType(String input) {
-        if (input.trim().isEmpty())
-            return;
-
-        char char0 = input.charAt(0);
-
-        // check for comment strings
-        if ((char0 == '/') || (char0 == '\\') || (char0 == '*'))
-            return;
-
-        int from = 0;
-
-        // get image type name,
-        int mark = input.indexOf(',', from);
-        String typeName = input.substring(from, mark).trim();
-
-        if (typeName.isEmpty())
-            return;
-
-        boolean moreFileNames = true;
-        List<ImageIcon> images = new ArrayList<>();
-
-        while (moreFileNames) {
-            moreFileNames = false;
-            from = mark + 1;
-            mark = input.indexOf(',', from);
-            if (mark > from) {
-                String fileName = input.substring(from, mark).trim();
-                if (!fileName.isEmpty()) {
-                    moreFileNames = true;
-                    ImageIcon icon = GameSession.instance().icon("images/missiles/"+fileName);
-                    if (icon == null)
-                        System.err.println("MissileWeaponTech.addMissileImageType -- null icon from file: " + fileName);
-                    else
-                        images.add(icon);
-                }
-            }
-        }
-
-        if (!images.isEmpty()) {
-            missileTypes.add(typeName);
-            missileIcons.add(images);
-        }
     }
     @Override
     public void drawSuccessfulAttack(CombatEntity nullStack, CombatEntity target, int wpnNum, float dmg) {

@@ -16,10 +16,6 @@
  */
 package rotp.model.ships;
 
-import java.awt.Component;
-import java.awt.Image;
-import rotp.model.combat.CombatEntity;
-import rotp.model.combat.CombatColony;
 import rotp.model.tech.TechMissileWeapon;
 
 public final class ShipWeaponMissile extends ShipWeaponMissileType {
@@ -46,8 +42,6 @@ public final class ShipWeaponMissile extends ShipWeaponMissileType {
     @Override
     public int computerLevel()            { return tech().computer; }
     @Override
-    public Image image(int num)           { return tech().image(num); }
-    @Override
     public float speed()                 { return speed; }
     @Override
     public int minDamage()                { return tech().damage(); }
@@ -71,11 +65,4 @@ public final class ShipWeaponMissile extends ShipWeaponMissileType {
     public float power(ShipDesign n)     { return multi ? 1.5f * super.power(n) : super.power(n); }
     @Override
     public String desc()                  { return multi ? tech().brief2() : tech().brief();  }
-    @Override
-    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
-        // missiles always do max damage on bombardment
-        return (maxDamage()-target.shieldLevel()) * bombardAttacks() * target.missileDamageMod();
-    }
-    @Override
-    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component comp) { }
 }
