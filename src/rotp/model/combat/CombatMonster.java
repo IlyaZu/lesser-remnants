@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Copyright 2024 Ilya Zushinskiy
+ * Copyright 2024-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ public class CombatMonster extends CombatShip {
         return new CombatMonster(
                 1, 10000, 9,
                 10, 9, 9,
-                2, 2, 12,
+                2, 12,
                 weaponGroup, specials,
                 ImageManager.current().image("ORION_GUARDIAN"), LabelManager.current().label("PLANET_ORION_GUARDIAN"),
                 captian, manager);
@@ -62,14 +62,14 @@ public class CombatMonster extends CombatShip {
     
     private CombatMonster(int count, float hits, float shield,
             int attack, int beamDefense, int missileDefense,
-            int maneuverability, int move, int initiative,
+            int move, int initiative,
             List<WeaponGroup> weaponGroups, List<ShipSpecial> specials,
             Image image, String name,
             ShipCaptain captian, CombatManager manager) {
         
         super(count, hits, shield,
                 attack, beamDefense, missileDefense,
-                maneuverability, move, initiative,
+                move, initiative,
                 weaponGroups, specials,
                 image, name,
                 captian, manager);

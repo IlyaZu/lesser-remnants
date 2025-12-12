@@ -718,7 +718,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             return false;
         
         // threatened to be completely disabled by warp-dissipater
-        if(currStack.maneuverablity() <= 2 && currStack.design().maneuverability() > currStack.maneuverablity())
+        if(currStack.maxMove() <= 1 && currStack.design().moveRange() > currStack.maxMove())
             return true;
 
         // don't retreat if we still have missiles in flight
@@ -831,7 +831,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
             if(col != null && col.empire == st1.empire && col.mgr.currentStack() != null)
                 if(col.movePointsTo(st1) == 1)
                     foesBlockPlanet++;
-            if(st1.inStasis || st1.maneuverablity() == 0)
+            if(st1.inStasis || st1.maxMove() == 0)
                 continue;
             boolean previousCloakingState = st1.cloaked;
             st1.cloaked = false; //decloack in our mind for estimates
@@ -874,7 +874,7 @@ public class AIShipCaptain implements Base, ShipCaptain {
         CombatEntity invulnerableFriend = null;
         
         for (CombatEntity st1 : friends) {
-            if(st1.inStasis || st1.maneuverablity() == 0)
+            if(st1.inStasis || st1.maxMove() == 0)
                 continue;
             boolean previousCloakingState = st1.cloaked;
             st1.cloaked = false;

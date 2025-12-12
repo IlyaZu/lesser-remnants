@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class CombatEmpireShip extends CombatShip {
         
         return new CombatEmpireShip(fleet.num(index), design.hits(), design.shieldLevel(),
                 attack, beamDefense, missileDefense,
-                design.maneuverability(), design.moveRange(), initiative,
+                design.moveRange(), initiative,
                 weaponGroups, specials,
                 design.image(), design.name(),
                 design, fleet, empire,
@@ -69,7 +69,7 @@ public class CombatEmpireShip extends CombatShip {
     
     private CombatEmpireShip(int count, float hits, float shield,
             int attack, int beamDefense, int missileDefense,
-            int maneuverability, int move, int initiative,
+            int move, int initiative,
             List<WeaponGroup> weaponGroups, List<ShipSpecial> specials,
             Image image, String name,
             ShipDesign design, ShipFleet fleet, Empire empire,
@@ -78,7 +78,7 @@ public class CombatEmpireShip extends CombatShip {
         
         super(count, hits, shield,
                 attack, beamDefense, missileDefense,
-                maneuverability, move, initiative,
+                move, initiative,
                 weaponGroups, specials,
                 image, name,
                 captian, manager);
@@ -154,7 +154,7 @@ public class CombatEmpireShip extends CombatShip {
     
     @Override
     public boolean canRetreat() {
-        return !atLastColony && (maneuverability > 0);
+        return !atLastColony && (maxMove > 0);
     }
     
     @Override

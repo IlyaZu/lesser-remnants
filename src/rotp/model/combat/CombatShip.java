@@ -65,7 +65,7 @@ public class CombatShip extends CombatEntity {
     
     public CombatShip(int count, float hits, float shield,
             int attack, int beamDefense, int missileDefense,
-            int maneuverability, int move, int initiative,
+            int move, int initiative,
             List<WeaponGroup> weaponGroups, List<ShipSpecial> specials,
             Image image, String name,
             ShipCaptain captian, CombatManager manager) {
@@ -78,7 +78,6 @@ public class CombatShip extends CombatEntity {
         this.attackLevel = attack;
         this.beamDefense = beamDefense;
         this.missileDefense = missileDefense;
-        this.maneuverability = maneuverability;
         this.maxMove = this.move = move;
         this.initiative = initiative;
         this.image = image;
