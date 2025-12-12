@@ -18,7 +18,7 @@ package rotp.model.ships;
 
 import rotp.model.tech.TechBattleComputer;
 
-public final class ShipComputer extends ShipComponent { 
+public final class ShipComputer extends ShipComponent {
     private static final long serialVersionUID = 1L;
     public ShipComputer (TechBattleComputer t) {
         tech(t);

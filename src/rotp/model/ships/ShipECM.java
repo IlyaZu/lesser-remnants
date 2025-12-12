@@ -18,7 +18,7 @@ package rotp.model.ships;
 
 import rotp.model.tech.TechECMJammer;
 
-public final class ShipECM extends ShipComponent { 
+public final class ShipECM extends ShipComponent {
     private static final long serialVersionUID = 1L;
     public ShipECM(TechECMJammer t) {
         tech(t);

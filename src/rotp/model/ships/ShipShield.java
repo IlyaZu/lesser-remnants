@@ -18,7 +18,7 @@ package rotp.model.ships;
 
 import rotp.model.tech.TechDeflectorShield;
  
-public final class ShipShield extends ShipComponent { 
+public final class ShipShield extends ShipComponent {
     private static final long serialVersionUID = 1L;
     public ShipShield(TechDeflectorShield t) {
         tech(t);

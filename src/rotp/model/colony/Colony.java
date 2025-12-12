@@ -99,7 +99,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             new ColonyIndustry(), new ColonyEcology(), new ColonyResearch() };
 
     private boolean underSiege = false;
-    public boolean keepEcoLockedToClean; 
+    public boolean keepEcoLockedToClean;
     private transient boolean hasNewOrders = false;
     private transient int cleanupAllocation = 0;
     private transient boolean recalcSpendingForNewTaxRate;
