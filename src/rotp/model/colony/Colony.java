@@ -106,7 +106,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public transient boolean reallocationRequired = false;
 
     public void toggleRecalcSpending()         { recalcSpendingForNewTaxRate = true; }
-    public boolean underSiege()                { return underSiege; }
     public float reserveIncome()               { return reserveIncomeBC; }
     public void clearReserveIncome()           { reserveIncomeBC = 0; }
     public void adjustReserveIncome(float bc)  { reserveIncomeBC += bc; }
@@ -200,7 +199,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     }
     public boolean isBuildingShip() { return shipyard().design() instanceof ShipDesign; }
     private void buildFortress()    { fortressNum = empire.race().randomFortress(); }
-    public boolean isAutopilot()    { return empire.isAIControlled(); }
     // MappedObject overrides
     @Override
     public float x()               { return starSystem().x(); }
@@ -254,15 +252,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         }
         return totalBC;
     }
-    public String printString() {
-        return empire.sv.name(starSystem().id) + "-- pop:"
-                + (float) Math.round(population() * 100) / 100 + " reb:"
-                + (float) Math.round(rebels * 100) / 100 + " fac:"
-                + (float) Math.round(industry().factories() * 100) / 100 + " was:"
-                + (float) Math.round(ecology().waste() * 100) / 100 + " bas:"
-                + (float) Math.round(defense().bases() * 100) / 100 + " shd:"
-                + (float) Math.round(defense().shield() * 100) / 100;
-    }
 
     public int displayPopulation()          { return population < 1 ? (int) Math.ceil(population) : (int) population; }
     public float population()               { return population; }
@@ -273,7 +262,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public boolean destroyed()               { return population <= 0; }
     public boolean inRebellion()             { return rebellion && (rebels > 0); }
     public float rebellionPct()             { return rebels / population(); }
-    public boolean hasOrders()               { return !orders.isEmpty(); }
     
     public boolean isDeveloped()  {
         return defense().isCompleted() && industry().isCompleted() && ecology().isCompleted();
@@ -424,16 +412,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
             GNNNotification.notifyRebellion(message);
     }
 
-    public float orderAdjustment() {
-        // if orders for different spending categories exceed 100%
-        // we need a modifier to adjust them back down so they don't
-        float totalOrders = 0;
-        for (int i = 0; i < NUM_CATS; i++) {
-            ColonySpendingCategory cat = category(i);
-            totalOrders += cat.orderedValue();
-        }
-        return totalOrders <= 100 ? 1.0f : 100.0f / totalOrders;
-    }
     public void validate() {
         int maxTicks = ColonySpendingCategory.MAX_TICKS;
 
@@ -611,74 +589,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             }
         }
     }
-    public void reallocateSpending(int cat, int ticks) {
-        if (allocation(cat) >= ticks)
-            return;
 
-        int tmp = allocation(cat);
-        int delta = ticks - tmp;
-
-        allocation(cat, ticks);
-
-        // deduct from research 1st
-        if (cat != RESEARCH) {
-            tmp = allocation(RESEARCH);
-            if (tmp >= delta) {
-                allocation(RESEARCH, allocation(RESEARCH) - delta);
-                return;
-            } else {
-                allocation(RESEARCH, 0);
-                delta -= tmp;
-            }
-        }
-
-        // deduct from ships 2nd
-        if (cat != SHIP) {
-            tmp = allocation(SHIP);
-            if (tmp >= delta) {
-                allocation(SHIP, allocation(SHIP) - delta);
-                return;
-            } else {
-                allocation(SHIP, 0);
-                delta -= tmp;
-            }
-        }
-
-        // deduct from defense 3rd
-        if (cat != DEFENSE) {
-            tmp = allocation(DEFENSE);
-            if (tmp >= delta) {
-                allocation(DEFENSE, allocation(DEFENSE) - delta);
-                return;
-            } else {
-                allocation(DEFENSE, 0);
-                delta -= tmp;
-            }
-        }
-
-        // deduct from industry 4th
-        if (cat != INDUSTRY) {
-            tmp = allocation(INDUSTRY);
-            if (tmp >= delta) {
-                allocation(INDUSTRY, allocation(INDUSTRY) - delta);
-                return;
-            } else {
-                allocation(INDUSTRY, 0);
-                delta -= tmp;
-            }
-        }
-
-        // deduct from ecology last
-        if (cat != ECOLOGY) {
-            tmp = allocation(ECOLOGY);
-            if (tmp >= delta)
-                allocation(ECOLOGY, allocation(ECOLOGY) - delta);
-            else {
-                allocation(ECOLOGY, 0);
-                delta -= tmp;
-            }
-        }
-    }
     private void redistributeReducedEcoSpending() {
         int maxAllocation = ColonySpendingCategory.MAX_TICKS;
         // determine how much categories are over/under spent
@@ -755,7 +666,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         return false;
     }
     public boolean hasInterdiction()  { return tech().subspaceInterdiction();  }
-    public boolean isHomeworld()      { return ((empire != null) && (empire.homeSysId() == starSystem().id)); }
     public boolean isCapital()        { return ((empire != null) && (empire.capitalSysId() == starSystem().id)); }
     public float workingPopulation() { return population() - inTransport(); }
     public float usedFactories()     {
@@ -842,13 +752,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     public int calcPopNeeded(float desiredPct) {
         return (int) ((planet.currentSize() * desiredPct) - expectedPopulation());
     }
-    public int calcPopToGive(float retainPct) {
-        if (!canTransport())
-            return 0;
-        int p1 = maxTransportsAllowed();
-        int p2 = (int) (population() - (retainPct * planet().currentSize()));
-        return min(p1,p2);
-    }
     public float newWaste() {
         float mod = empire().isPlayer() ? 1.0f : options().aiWasteModifier();
         return max(0, usedFactories() * tech().factoryWasteMod() * mod);
@@ -886,9 +789,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         newGrownPopulation = min(newGrownPopulation, maxNewPopulation);
 
         return newGrownPopulation;
-    }
-    public ShipFleet homeFleet() {
-        return starSystem().orbitingFleetForEmpire(empire());
     }
     public float defenderCombatAdj() {
         return tech().troopCombatAdj(true);
@@ -971,9 +871,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         population(min(planet.currentSize(), (population() + t.size())));
         log("Accepting ", str(t.size()), " transports at: ", starSystem().name(), ". New pop:", fmt(population(), 2));
         t.size(0);
-    }
-    public float maxTransportsToReceive() {
-        return planet.currentSize() - workingPopulation();
     }
     public void resistTransportWithRebels(Transport tr) {
         log(str(rebels), " ", empire().raceName(), " rebels at ", starSystem().name(), " resisting ",

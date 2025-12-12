@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +33,6 @@ public class RoundGradientPaint  implements Paint {
     private static RoundGradientContext rgc;
     protected int flareLevel;
 
-    public RoundGradientPaint() {  }
-    public RoundGradientPaint(float x, float y, Color c, Point2D r, Color c1, int f) {
-        set(x, y, c, r, c1, f);
-    }
     public void set(float x, float y, Color c, Point2D r, Color c1, int f) {
         if (r.distance(0, 0) <= 0)
             throw new IllegalArgumentException("Radius must be greater than zero.");
