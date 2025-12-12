@@ -61,7 +61,7 @@ public final class RacesStatusUI extends BasePanel implements MouseListener, Mou
     Rectangle[] dataBoxes = new Rectangle[6];
     Rectangle[] dataScrollers = new Rectangle[6];
     Rectangle playerHistoryButton = new Rectangle();
-    Rectangle aiHistoryButton = new Rectangle();;
+    Rectangle aiHistoryButton = new Rectangle();
     
     private LinearGradientPaint backGradient;
     public RacesStatusUI(RacesUI p) {
