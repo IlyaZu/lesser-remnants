@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -468,7 +468,7 @@ public final class ShipDesign extends Design {
             speed += special(i).speedBonus();
         return max(speed,1);
     }
-    public int maneuverability() {
+    private int maneuverability() {
         int speed = baseDefense() + maneuver().level();
         for (int i=0;i<maxSpecials();i++)
             speed += special(i).speedBonus();

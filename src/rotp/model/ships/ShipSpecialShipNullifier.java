@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,6 @@ public final class ShipSpecialShipNullifier extends ShipSpecial {
             st.maxMove = max(0, st.maxMove - tech().speedRed);
             st.missileDefense = max(0, target.missileDefense - ecmRed - tech().manvRed);
             st.beamDefense = max(0, st.beamDefense - tech().manvRed);
-            st.maneuverability = max(0, st.maneuverability - tech().manvRed);
         } else if (target.isColony()) {
             CombatColony st = (CombatColony) target;
             st.attackLevel = max(0, target.attackLevel - compRed);

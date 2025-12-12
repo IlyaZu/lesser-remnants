@@ -54,7 +54,6 @@ public abstract class CombatEntity implements Base {
     public float scale = 1.0f;
     public float brighten = 0.0f;
     public int attackLevel = 0;
-    public float maneuverability = 0;
     public int missileDefense = 0;
     public int beamDefense = 0;
     public float offsetX = 0;
@@ -127,7 +126,6 @@ public abstract class CombatEntity implements Base {
     public float autoMissPct()      { return 0; }
     public boolean interceptsMissile(ShipWeaponMissileType wpn)  { return random() < missileInterceptPct(wpn);}
     public float missileInterceptPct(ShipWeaponMissileType wpn)  { return 0; }
-    public float maneuverablity()     { return maneuverability; }
     public int missileDefense()     { return cloaked ? missileDefense +5 : missileDefense; }
     public int beamDefense()        { return cloaked ? beamDefense + 5 : beamDefense; }
     public int attackLevel()        { return attackLevel; }
