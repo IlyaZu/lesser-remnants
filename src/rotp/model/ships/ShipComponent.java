@@ -16,7 +16,6 @@
  */
 package rotp.model.ships;
 
-import java.awt.Component;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
@@ -56,18 +55,11 @@ public class ShipComponent implements Base, Serializable {
     public int range()                   { return 0; }
     public float shieldMod()             { return 1; }
     public boolean heavy()               { return false; }
-    public void drawAttack    (CombatEntity source, CombatEntity target, Component ui) { }
-    public void drawAttackEffect(CombatEntity source, CombatEntity target, Component ui) { }
     public int bombardAttacks()          { return 0; }
     public float estimatedBioweaponDamage(CombatEntity source, CombatColony stack) { return 0;}
-    public float estimatedBombardDamage(CombatEntity source, CombatColony stack) { return 0;}
     public float estimatedBombardDamage(ShipDesign d, CombatColony stack) { return 0;}
 
     public boolean validTarget(CombatEntity st) { return true; }
-    public boolean hasAttackEffect()     { return false;  }
-    public int weaponWidth()             { return 0; }
-    public int weaponSpread()            { return 0; }
-    public boolean pellets()             { return false; }
     public float planetDamageMod()       { return 1; }
     public void reload()                 { }
     public void becomeDestroyed()        { }

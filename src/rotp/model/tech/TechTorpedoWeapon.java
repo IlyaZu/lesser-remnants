@@ -16,18 +16,10 @@
  */
 package rotp.model.tech;
 
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
 import rotp.model.empires.Empire;
 import rotp.model.ships.ShipWeaponTorpedo;
 
 public final class TechTorpedoWeapon extends Tech {
-    public static List<String> missileTypes = new ArrayList<>();
-    public static List<ImageIcon> missileIcons = new ArrayList<>();
-
-    public String imageType = "MISSILE";
     public String imageKey = "";
     private int damage = 0;
     public float speed = 1;
@@ -95,19 +87,6 @@ public final class TechTorpedoWeapon extends Tech {
         }
     }
     
-    public ImageIcon icon(int count) {
-        List<ImageIcon> icons = iconsForType(imageType);
-        int i = (int) Math.sqrt(count);
-        if (i < 1)
-            return icons.get(0);
-        else if (i > icons.size())
-            return icons.get(icons.size()-1);
-        else
-            return icons.get(i-1);
-    }
-    public Image image(int count) {
-        return icon(count).getImage();
-    }
     @Override
     public float warModeFactor()        { return 2; }
     public float range()   { return 0; }
@@ -122,12 +101,5 @@ public final class TechTorpedoWeapon extends Tech {
         super.provideBenefits(c);
         ShipWeaponTorpedo sh = new ShipWeaponTorpedo(this);
         c.shipLab().addWeapon(sh);
-    }
-    public static List<ImageIcon> iconsForType(String typeName) {
-        int i = TechMissileWeapon.missileTypes.indexOf(typeName);
-        if ( (i >=0) && (i < TechMissileWeapon.missileIcons.size()))
-            return TechMissileWeapon.missileIcons.get(i);
-        else
-            return new ArrayList<>();
     }
 }

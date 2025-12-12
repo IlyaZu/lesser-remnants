@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +23,7 @@ public class ShipSpecial extends ShipComponent {
     public boolean isFuelRange()       { return false;  }
     public boolean isColonySpecial()   { return false;  }
     public boolean allowsCloaking()    { return false;  }
-    public boolean isPulsar()          { return false;  }
     public boolean isInertial()        { return false;  }
-    public boolean isMissileShield()   { return false; }
     public boolean createsBlackHole()  { return false; }
     public boolean allowsTeleporting() { return false;  }
     public boolean allowsScanning()    { return false;  }

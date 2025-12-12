@@ -33,7 +33,6 @@ public class ShipWeapon extends ShipComponent {
     public int turnsToFire()          { return 1; }
     public int computerLevel()        { return 0; }
     public boolean canAttackPlanets() { return (!noWeapon() && (maxDamage() > 0)); }
-    public float firepower()          { return firepower(0); }
     public float firepower(float shield) {
         float min = minDamage();
         float max = maxDamage();
@@ -66,27 +65,6 @@ public class ShipWeapon extends ShipComponent {
             return 0;
         //ail: The only thing that makes sense to return here is our total damage divided by the target's hitpoints
         return dmg/target.maxHits();
-    }
-    @Override
-    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
-        int num = bombardAttacks();
-        float shieldMod = source.targetShieldMod(this);
-        float shieldLevel = shieldMod * target.shieldLevel();
-        float beamMod = 1;
-        float pct = (5 + source.attackLevel() - target.bombDefense()) / 10f;
-        pct = max(.05f, pct);
-        if(isBeamWeapon())
-        {
-            shieldLevel /= planetDamageMod();
-            beamMod = planetDamageMod();
-        }
-        if(isBioWeapon() && target.num == 0)
-        {
-            float targetAntiDote = target.empire.tech().antidoteLevel();
-            float damage = TechBiologicalWeapon.avgDamage(maxDamage(), (int)targetAntiDote) * 200;
-            return damage * num;
-        }
-        return firepower(shieldLevel)* num * beamMod * pct;
     }
     @Override
     public float estimatedBombardDamage(ShipDesign des, CombatColony target) {

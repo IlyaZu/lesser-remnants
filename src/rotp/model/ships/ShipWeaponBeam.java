@@ -54,10 +54,6 @@ public final class ShipWeaponBeam extends ShipWeapon {
     @Override
     public boolean canAttackShips()   { return true; }
     @Override
-    public float estimatedBombardDamage(CombatEntity source, CombatColony target) {
-        return super.estimatedBombardDamage(source, target) * target.beamDamageMod();
-    }
-    @Override
     public void fireUpon(CombatEntity source, CombatEntity target, int count) {
         if (random() < target.autoMissPct()) {
             drawUnsuccessfulAttack(source, target);
@@ -108,10 +104,4 @@ public final class ShipWeaponBeam extends ShipWeapon {
     public float power(ShipDesign n) { return heavy ? 3*super.power(n) : super.power(n); }
     @Override
     public String name()              { return heavy ? tech().item2() : tech().item(); }
-    @Override
-    public int weaponWidth()          { return heavy ? tech().weaponWidth+1 : tech().weaponWidth; }
-    @Override
-    public int weaponSpread()         { return heavy ? tech().weaponSpread+1 : tech().weaponSpread; }
-    @Override
-    public boolean pellets()          { return tech().pellets; }
 }

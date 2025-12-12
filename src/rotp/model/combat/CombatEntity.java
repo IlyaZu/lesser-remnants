@@ -146,7 +146,6 @@ public abstract class CombatEntity implements Base {
     public float shieldLevel()                       { return shield; }
     public float rotateRadians(CombatEntity target)   { return radiansTo(target) + ((float)Math.PI/2); }
 
-    public float torpedoDamageMod()                  { return 1; }
     public float beamDamageMod()                     { return 1; }
     public float bombDamageMod()                     { return 1; }
     public float missileDamageMod()                  { return 1; }
@@ -375,9 +374,6 @@ public abstract class CombatEntity implements Base {
     }
     public float takeMissileDamage(float damage, float shieldAdj) {
         return takeDamage(damage*missileDamageMod(), shieldAdj);
-    }
-    public float takeTorpedoDamage(float damage, float shieldAdj) {
-        return takeDamage(damage*torpedoDamageMod(), shieldAdj);
     }
     public float takeBeamDamage(float damage, float shieldAdj) {
         return takeDamage(damage*beamDamageMod(), shieldAdj);

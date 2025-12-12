@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +20,6 @@ import rotp.model.tech.TechDeflectorShield;
  
 public final class ShipShield extends ShipComponent { 
     private static final long serialVersionUID = 1L;
-    public ShipShield() {
-        sequence(0);
-    }
     public ShipShield(TechDeflectorShield t) {
         tech(t);
         sequence(t.level);

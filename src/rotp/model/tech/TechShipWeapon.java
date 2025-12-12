@@ -39,11 +39,6 @@ public final class TechShipWeapon extends Tech {
     public float enemyShieldMod = 1;
     public boolean streaming = false;
 
-    // graphic effects
-    public int weaponWidth = 1;
-    public int weaponSpread = 1;
-    public boolean pellets = false;
-
     private int beamStroke, heavyStroke, dashStroke;
     private transient Color beamColor;
     private Stroke weaponStroke;
@@ -78,7 +73,6 @@ public final class TechShipWeapon extends Tech {
                 heavyStroke = 2;
                 break;
             case 1: // GATLING LASER
-                pellets = true;
                 damageLow = 1;
                 damageHigh = 4;
                 attacksPerRound = 4;
@@ -90,7 +84,6 @@ public final class TechShipWeapon extends Tech {
                 heavyStroke = 2;
                 break;
             case 2: // NEUTRON PELLET GUN
-                pellets = true;
                 damageLow = 2;
                 damageHigh = 5;
                 enemyShieldMod = .5f;
@@ -116,8 +109,6 @@ public final class TechShipWeapon extends Tech {
                 heavyStroke = 2;
                 break;
             case 4: // MASS DRIVER
-                pellets = true;
-                weaponWidth = 2;
                 damageLow = 5;
                 damageHigh = 8;
                 enemyShieldMod = .5f;
@@ -154,8 +145,6 @@ public final class TechShipWeapon extends Tech {
                 heavyStroke = 3;
                 break;
             case 7: // HARD BEAM
-                weaponWidth = 2;
-                weaponSpread = 2;
                 damageLow = 8;
                 damageHigh = 12;
                 enemyShieldMod = .5f;
@@ -240,7 +229,6 @@ public final class TechShipWeapon extends Tech {
                 dashStroke = 2;
                 break;
             case 14: // PARTICLE BEAM
-                pellets = true;
                 damageLow = 10;
                 damageHigh = 20;
                 enemyShieldMod = .5f;
@@ -265,8 +253,6 @@ public final class TechShipWeapon extends Tech {
                 range = 1;
                 damageLow = 200;
                 damageHigh = 1000;
-                weaponWidth = 10;
-                weaponSpread = 10;
                 restricted = true;
                 cost = 120;
                 size = 2000;
@@ -322,8 +308,6 @@ public final class TechShipWeapon extends Tech {
             case 21: // MAULER DEVICE
                 damageLow = 20;
                 damageHigh = 100;
-                weaponWidth = 6;
-                weaponSpread = 6;
                 cost = 120;
                 size = 150;
                 power = 300;
