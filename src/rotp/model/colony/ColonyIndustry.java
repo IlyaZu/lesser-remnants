@@ -48,11 +48,11 @@ public class ColonyIndustry extends ColonySpendingCategory {
     @Override
     public float totalBC()              { return super.totalBC() * planet().productionAdj(); }
     public float maxFactories()         { return planet().maxSize() * maxRobotControls(); }
-    public float maxFactories(int rc)   { return planet().maxSize() * rc; }
+    private float maxFactories(int rc)   { return planet().maxSize() * rc; }
     public int maxBuildableFactories()   { return (int) (planet().currentSize() * maxRobotControls()); }
-    public int maxBuildableFactories(int rc)   { return (int) (planet().currentSize() * (rc+empire().robotControlsAdj())); }
+    private int maxBuildableFactories(int rc)   { return (int) (planet().currentSize() * (rc+empire().robotControlsAdj())); }
     public int maxUseableFactories()     { return maxUseableFactories(robotControls()); }
-    public int maxUseableFactories(int rc) { return (int) colony().population() * (rc+empire().robotControlsAdj()); }
+    private int maxUseableFactories(int rc) { return (int) colony().population() * (rc+empire().robotControlsAdj()); }
     @Override
     public boolean isCompleted()         { return factories >= maxBuildableFactories(); }
     public boolean isCompletedThisTurn() { return isCompleted() && (newFactories > 0); }

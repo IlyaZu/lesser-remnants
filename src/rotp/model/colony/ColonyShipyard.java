@@ -109,7 +109,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
  
     }
     public boolean building()            { return queuedBC > 0; }
-    public boolean willingToBuild(Design d) {
+    private boolean willingToBuild(Design d) {
         if (design == d)
             return queuedBC < maxAllowedShipBCProd();
         else
@@ -268,7 +268,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
         buildingStargate = d instanceof DesignStargate;
     }
     public boolean canCycleDesign()   { return design.scrapped() || (empire().shipLab().numDesigns() > 1) || canBuildStargate(); }
-    public boolean canBuildStargate() { return tech().canBuildStargate() && !hasStargate; }
+    private boolean canBuildStargate() { return tech().canBuildStargate() && !hasStargate; }
     public int upcomingShipCount() {
         if (buildingObsoleteDesign())
             return 0;

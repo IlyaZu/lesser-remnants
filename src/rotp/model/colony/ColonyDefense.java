@@ -63,7 +63,7 @@ public class ColonyDefense extends ColonySpendingCategory {
     public float totalBC()                { return super.totalBC() * planet().productionAdj(); }
     public int maxBases()                  { return maxBases; }
     public void maxBases(int i)            { maxBases = i; }
-    public int deltaBases()                { return (int) bases - (int) previousBases; }
+    private int deltaBases()                { return (int) bases - (int) previousBases; }
     public String armorDesc()        { return tech().topArmorTech().shortName(); }
     public String battleSuitDesc()   { return tech().topBattleSuitTech().name(); }
     public String weaponDesc()       { return tech().topHandWeaponTech().name(); }

@@ -27,11 +27,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
 
 public class RoundGradientPaint  implements Paint {
-    protected Point2D mPoint;
-    protected Point2D mRadius;
-    protected Color mPointColor, mBackgroundColor;
     private static RoundGradientContext rgc;
-    protected int flareLevel;
+    private Point2D mPoint;
+    private Point2D mRadius;
+    private Color mPointColor, mBackgroundColor;
+    private int flareLevel;
 
     public void set(float x, float y, Color c, Point2D r, Color c1, int f) {
         if (r.distance(0, 0) <= 0)
