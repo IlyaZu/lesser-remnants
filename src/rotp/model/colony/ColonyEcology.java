@@ -338,7 +338,6 @@ public class ColonyEcology extends ColonySpendingCategory {
         else
             return overflowText();
     }
-    @Override
     public float excessSpending() {
         Colony c = colony();
         if (c.allocation(categoryType()) == 0)

@@ -152,7 +152,6 @@ public class ColonyIndustry extends ColonySpendingCategory {
            empire().addReserve(unallocatedBC);
         unallocatedBC = 0;
     }
-    @Override
     public float excessSpending() {
         if (colony().allocation(categoryType()) == 0)
             return 0;

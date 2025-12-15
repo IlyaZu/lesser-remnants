@@ -37,7 +37,6 @@ public class ColonyDefense extends ColonySpendingCategory {
     public MissileBase missileBase()              { return missileBase; }
     public float bases()                         { return bases; }
     public void bases(float d)                   { bases = d; }
-    public float shield()                        { return shield; }
     public boolean shieldCompleted()              { return shieldCompleted && shieldAtMaxLevel(); }
     public boolean missileBasesUpgraded()         { return missileBasesUpgraded && (missileBase == tech().bestMissileBase()); }
 
@@ -65,15 +64,6 @@ public class ColonyDefense extends ColonySpendingCategory {
     public int maxBases()                  { return maxBases; }
     public void maxBases(int i)            { maxBases = i; }
     public int deltaBases()                { return (int) bases - (int) previousBases; }
-    public boolean incrementMaxBases() {
-        maxBases = max(0, maxBases+1);
-        return true;
-    }
-    public boolean decrementMaxBases() {
-        int prev = maxBases;
-        maxBases = max(0, maxBases-1);
-        return prev != maxBases;
-    }
     public String armorDesc()        { return tech().topArmorTech().shortName(); }
     public String battleSuitDesc()   { return tech().topBattleSuitTech().name(); }
     public String weaponDesc()       { return tech().topHandWeaponTech().name(); }
@@ -211,18 +201,11 @@ public class ColonyDefense extends ColonySpendingCategory {
     public boolean isArmed()             { return missileBases() >= 1; }
     public int shieldLevel()             { return (int) (shield / 5) * 5; }
     public int missileBases()            { return (int) bases; }
-    public int defenders()               { return (int) colony().population(); }
-    @Override
     public boolean canLowerMaintenance() { return bases > 0; }
-    @Override
     public void lowerMaintenance()       { bases = Math.max(0, bases-1); }
-    public float firepower(float shield) {
-        return missileBases() * missileBase.firepower(shield);
-    }
     public int missileShieldLevel() {
         return (colony().starSystem().inNebula() || empire() == null) ? 0 : shieldLevel() + (int) tech().maxDeflectorShieldLevel();
     }
-    @Override
     public float excessSpending() {
         if (colony().allocation(categoryType()) == 0)
             return 0;
