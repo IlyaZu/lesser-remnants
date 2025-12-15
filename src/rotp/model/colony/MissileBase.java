@@ -53,9 +53,6 @@ public class MissileBase implements Base, Serializable {
     public float missileInterceptPct(ShipWeaponMissileType missile) {
         return missileShield == null ? 0 : missileShield.interceptPct(missile);
     }
-    public float firepower(float shield) {
-        return max(missile.warhead().firepower(shield),scatterPack.warhead().firepower(shield));
-    }
     public float cost(Empire emp) {
         float cost = MINIMUM_COST;
         if (armor != null)

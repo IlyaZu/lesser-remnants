@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,11 +54,9 @@ public abstract class ColonySpendingCategory implements Base, Serializable {
     public abstract void nextTurn(float prod, float rsv);
     public abstract void assessTurn();
 
-    public ColonySpendingCategory () {  }
     @Override
     public String toString()            { return str(allocation()); }
     public float totalBC()              { return pct() * colony().totalIncome(); }
-    public float totalBCForEmpire()     { return totalBC(); }
     public int allocation()             { return colony.allocation(categoryType()); }
     public float pct()                  { return (float)allocation()/ MAX_TICKS; }
     public boolean warning()            { return false; }
@@ -76,11 +75,8 @@ public abstract class ColonySpendingCategory implements Base, Serializable {
     public Planet planet()            { return colony().planet(); }
     public Empire empire()            { return colony().empire(); }
     public TechTree tech()            { return empire().tech(); }
-    public String name()              { return ""; }
     public float orderedValue()      { return colony.locked(categoryType()) ? pct() : 0; }
     public void removeSpendingOrders() { }
-    public boolean canLowerMaintenance() { return false; }
-    public void lowerMaintenance()       { }
     public int orderedAllocation()      { return (int) Math.ceil(orderedValue() * MAX_TICKS);  }  
     public int adjustValue(int amt) {
         // attempt to adjust current value by amt
@@ -89,5 +85,4 @@ public abstract class ColonySpendingCategory implements Base, Serializable {
         colony.allocation(categoryType(), bounds(0,oldValue+amt,MAX_TICKS));
         return allocation() - oldValue;
     }
-    public float excessSpending()     { return 0; }
 }

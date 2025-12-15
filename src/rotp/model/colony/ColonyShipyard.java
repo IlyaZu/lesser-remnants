@@ -97,9 +97,7 @@ public class ColonyShipyard extends ColonySpendingCategory {
     public float totalBC()              { return super.totalBC() * planet().productionAdj(); }
     @Override
     public boolean isCompleted()         { return false; }
-    @Override
     public boolean canLowerMaintenance() { return stargateMaintenanceCost() > 0; }
-    @Override
     public void lowerMaintenance()       { hasStargate = false; }
     @Override
     public void assessTurn()             {
@@ -309,10 +307,6 @@ public class ColonyShipyard extends ColonySpendingCategory {
 
         return min(buildLimit, (int) (totalBC / cost));
     }
-    public String buildLimitResult() {
-        return text("MAIN_COLONY_SHIPYARD_LIMIT",buildLimit());
-    }
-    @Override
     public float excessSpending() {
         if (colony().allocation(categoryType()) == 0)
             return 0;

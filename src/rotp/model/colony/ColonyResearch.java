@@ -25,7 +25,6 @@ public class ColonyResearch extends ColonySpendingCategory {
     private ColonyResearchProject project;
     private transient ColonyResearchProject completedProject;
 
-    public ColonyResearchProject project()         { return project; }
     public boolean hasProject()                    { return project != null; }
     public void project(ColonyResearchProject p)   { project = p; }
     public void endProject()                       {
@@ -42,8 +41,6 @@ public class ColonyResearch extends ColonySpendingCategory {
     public boolean isCompleted()        { return false; }
     @Override
     public float totalBC()              { return totalSpending() * researchBonus(); }
-    @Override
-    public float totalBCForEmpire()     { return max(0, totalBC() - projectRemainingBC()); }
     public float totalSpending()        { return super.totalBC(); }
     public float projectRemainingBC()   { return project == null ? 0 : project.remainingResearchBC(); }
     @Override
