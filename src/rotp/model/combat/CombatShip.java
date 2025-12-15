@@ -377,7 +377,6 @@ public class CombatShip extends CombatEntity {
             return;
         selectedWeaponIndex = index;
         target = targetStack;
-        target.damageSustained = 0;
         int shotsTaken = allShots ? shotsRemaining[index] : 1;
 
         // only fire if we have shots remaining... this is a missile concern
@@ -403,7 +402,6 @@ public class CombatShip extends CombatEntity {
 
         if (shotsRemaining[index] == 0)
             rotateToUsableWeapon(targetStack);
-        target.damageSustained = 0;
     }
     @Override
     public boolean canAttack(CombatEntity st) {

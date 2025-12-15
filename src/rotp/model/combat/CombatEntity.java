@@ -69,7 +69,6 @@ public abstract class CombatEntity implements Base {
     public boolean cloaked = false;
     public boolean canCloak = false;
     public boolean canTeleport = false;
-    public float damageSustained = 0;
     public boolean attacked = false;
     public CombatEntity target;
     public int distance = 0;
@@ -362,7 +361,6 @@ public abstract class CombatEntity implements Base {
             return damageTaken;
 
         if (num > 0) {
-            damageSustained += min(dmg, hits);
             hits -= dmg;
             if (hits <= 0)
                loseShip();
@@ -394,7 +392,6 @@ public abstract class CombatEntity implements Base {
         while ((damageLeft > 0) && !destroyed()) {
             float dmg = max(0, damageLeft - (shieldLevel() * shieldAdj));
             damageTaken += dmg;
-            damageSustained += min(dmg, hits);
             hits -= dmg;
             if (hits <= 0) {
                 damageLeft = 0 - hits;
