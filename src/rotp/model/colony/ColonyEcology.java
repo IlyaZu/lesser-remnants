@@ -86,12 +86,12 @@ public class ColonyEcology extends ColonySpendingCategory {
         populationGrowthCompleted = false;
         expectedPopGrowth = 0;
     }
-    public float waste()           { return planet().waste(); }
+    private float waste()           { return planet().waste(); }
     public void addWaste(float w)  { planet().addWaste(w); }
-    public float atmosphereTerraformCost() {
+    private float atmosphereTerraformCost() {
         return TechAtmosphereEnrichment.hostileTech.cost;
     }
-    public float enrichSoilCost() {
+    private float enrichSoilCost() {
         if (!tech().enrichSoil())
             return 0;
 
@@ -413,7 +413,7 @@ public class ColonyEcology extends ColonySpendingCategory {
         newPopCost = max(0,newPopCost);
         return tform + newPopCost;
     }
-    public float terraformSpendingNeeded() {
+    private float terraformSpendingNeeded() {
         float cleanCost = colony().minimumCleanupCost();
         Empire emp = empire();
         TechTree tech = emp.tech();

@@ -25,10 +25,10 @@ import java.awt.image.WritableRaster;
 import rotp.util.Base;
 
 public class RoundGradientContext implements Base, PaintContext {
-    protected Point2D mPoint;
-    protected Point2D mRadius;
-    protected Color mC1, mC2;
-    protected int flareLevel;
+    private Point2D mPoint;
+    private Point2D mRadius;
+    private Color mC1, mC2;
+    private int flareLevel;
 
     public RoundGradientContext(Point2D p,  Color c1, Point2D r, Color c2, int f) {
         set(p, c1, r, c2, f);
