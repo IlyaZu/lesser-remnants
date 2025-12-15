@@ -201,9 +201,9 @@ public class Rotp {
     }
     private static boolean restartWithMoreMemory(JFrame frame, boolean reload) {
         long memorySize = ((com.sun.management.OperatingSystemMXBean) ManagementFactory
-                        .getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
+                        .getOperatingSystemMXBean()).getTotalMemorySize();
         long freeMemory = ((com.sun.management.OperatingSystemMXBean) ManagementFactory
-                        .getOperatingSystemMXBean()).getFreePhysicalMemorySize();
+                        .getOperatingSystemMXBean()).getFreeMemorySize();
         int maxMb = (int) (memorySize / MB);
         long allocMb = Runtime.getRuntime().maxMemory() / MB;
         int freeMb = (int) (freeMemory / MB);
