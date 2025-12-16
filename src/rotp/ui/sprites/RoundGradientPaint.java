@@ -26,7 +26,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
 
-public class RoundGradientPaint  implements Paint {
+public class RoundGradientPaint implements Paint {
     private static RoundGradientContext rgc;
     private Point2D mPoint;
     private Point2D mRadius;

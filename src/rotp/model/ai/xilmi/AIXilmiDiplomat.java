@@ -161,7 +161,7 @@ public class AIXilmiDiplomat extends AIDiplomat {
     @Override
     public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
 
-   private boolean warWeary(EmpireView v) {
+    private boolean warWeary(EmpireView v) {
         if (galaxy().activeEmpires().size() < 3)
             return false;
         //ail: when we have incoming transports, we don't want them to perish
