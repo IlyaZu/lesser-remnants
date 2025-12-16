@@ -60,7 +60,7 @@ public abstract class ColonySpendingCategory implements Base, Serializable {
     public int allocation()             { return colony.allocation(categoryType()); }
     public float pct()                  { return (float)allocation()/ MAX_TICKS; }
     public boolean warning()            { return false; }
-    public String overflowText()        { 
+    public String overflowText()        {
         if (!empire().divertColonyExcessToResearch())
             return text(reserveText);
         else if (empire().tech().researchCompleted())
@@ -77,7 +77,7 @@ public abstract class ColonySpendingCategory implements Base, Serializable {
     public TechTree tech()            { return empire().tech(); }
     public float orderedValue()      { return colony.locked(categoryType()) ? pct() : 0; }
     public void removeSpendingOrders() { }
-    public int orderedAllocation()      { return (int) Math.ceil(orderedValue() * MAX_TICKS);  }  
+    public int orderedAllocation()      { return (int) Math.ceil(orderedValue() * MAX_TICKS);  }
     public int adjustValue(int amt) {
         // attempt to adjust current value by amt
         // return the actual amount adjusted
