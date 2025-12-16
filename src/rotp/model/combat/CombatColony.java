@@ -169,8 +169,6 @@ public class CombatColony extends CombatEntity {
     public boolean canMove()               { return false; }
     @Override
     public boolean canMoveTo(int x, int y) { return false; }
-    @Override
-    public boolean canTeleport()           { return false; }
     private boolean currentWeaponCanAttack(CombatEntity target) {
         if (target == null)
             return false;
