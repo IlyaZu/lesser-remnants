@@ -516,12 +516,18 @@ public class DiplomaticEmbassy implements Base, Serializable {
         Iterator<DiplomaticIncident> incidentIterator = incidents.iterator();
         while (incidentIterator.hasNext()) {
             DiplomaticIncident incident = incidentIterator.next();
-            if (incident.isForgotten()) {
+            if (isForgotten(incident)) {
                 log("Forgetting: ", incident.toString());
                 incidentIterator.remove();
             }
         }
     }
+
+    private boolean isForgotten(DiplomaticIncident incident){
+        int incidentAge = galaxy().currentTurn() - incident.turnOccurred();
+        return Math.abs(incident.severity()) <= incidentAge;
+    }
+
     private void beginTreaty() {
         treatyTurn = galaxy().currentTurn();
         otherEmbassy().treatyTurn = galaxy().currentTurn();

@@ -34,10 +34,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
         return turnOccurred;
     }
     
-    public int duration() {
-        return (int) Math.ceil(Math.abs(severity));
-    }
-    
     public float severity() {
         return severity;
     }
@@ -60,7 +56,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
     public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
 
-    public boolean isForgotten()         { return turnOccurred() + duration() <= galaxy().currentTurn(); }
     public boolean isSpying()            { return false; }
 
     public boolean triggersPraise()      { return !praiseMessageId().isEmpty(); }
