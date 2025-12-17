@@ -383,39 +383,6 @@ public class Galaxy implements Base, Serializable {
         }
         return pop;
     }
-    public int enemyPopApproachingSystem(StarSystem sys) {
-        int pop = 0;
-        for (Transport sh: transports) {
-            if ( (sh.destSysId() == sys.id)
-            && (sh.empId() != sys.empire().id))
-                pop += sh.size();
-        }
-        for (int i=0; i<numStarSystems(); i++) {
-            StarSystem system = system(i);
-            if (system.planet().isColonized()) {
-                Colony col = system.planet().colony();
-                if ((col.empire() != sys.empire()) && col.transporting() && (col.transport().destSysId() == sys.id))
-                    pop += col.inTransport();
-            }
-        }
-        return pop;
-    }
-    public int popApproachingSystem(StarSystem sys, Empire emp) {
-        int pop = 0;
-
-        for (Transport tr: transports()) {
-            if ((tr.empire() == emp) && (tr.destSysId() == sys.id))
-               pop += tr.size();
-        }
-        for (StarSystem system : emp.allColonizedSystems()) {
-            Colony col = system.colony();
-            if (col != null) {
-                if (col.transporting() && (col.transport().destSysId() == sys.id))
-                    pop += col.inTransport();
-            }
-        }
-        return pop;
-    }
     public int numEmpires()       { return empires.length; }
     public int numActiveEmpires() {
         int emps = 0;
