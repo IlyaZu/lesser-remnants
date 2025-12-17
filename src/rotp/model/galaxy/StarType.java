@@ -34,15 +34,10 @@ public class StarType implements Base {
     public static final String BLUE = "BLUE";
     public static final String PURPLE = "PURPLE";
     
-    private static RoundGradientPaint rgp;
+    private static final RoundGradientPaint rgp = new RoundGradientPaint();
     private static final HashMap<String, StarType> typeMap = new HashMap<>();
     public static StarType keyed(String s)       { return typeMap.get(s); }
     private static void addStarType(String s)    { typeMap.put(s, new StarType(s)); }
-    private RoundGradientPaint rgp() {
-        if (rgp == null)
-            rgp = new RoundGradientPaint();
-        return rgp;
-    }
 
     static {
             addStarType(RED);
@@ -100,11 +95,11 @@ public class StarType implements Base {
 
         // draw star
         RoundRectangle2D rect = new RoundRectangle2D.Float(x-(w/2), y-(w/2), w, w, 0, 0);
-        rgp().set(x, y, c1, new Point2D.Float(0, r), c0, f);
+        rgp.set(x, y, c1, new Point2D.Float(0, r), c0, f);
 
         BufferedImage img = newBufferedImage(w,w);
         Graphics2D g = (Graphics2D) img.getGraphics();
-        g.setPaint(rgp());
+        g.setPaint(rgp);
         g.fill(rect);
         g.dispose();
         return img;

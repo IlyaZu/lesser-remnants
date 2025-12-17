@@ -27,7 +27,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
 
 public class RoundGradientPaint implements Paint {
-    private static RoundGradientContext rgc;
+    private static final RoundGradientContext rgc = new RoundGradientContext();
+    
     private Point2D mPoint;
     private Point2D mRadius;
     private Color mPointColor, mBackgroundColor;
@@ -46,10 +47,7 @@ public class RoundGradientPaint implements Paint {
     public PaintContext createContext(ColorModel cm, Rectangle deviceBounds, Rectangle2D userBounds,  AffineTransform xform, RenderingHints hints) {
         Point2D transformedPoint = xform.transform(mPoint, null);
         Point2D transformedRadius = xform.deltaTransform(mRadius, null);
-        if (rgc == null)
-            rgc = new RoundGradientContext(transformedPoint, mPointColor, transformedRadius, mBackgroundColor, flareLevel);
-        else
-            rgc.set(transformedPoint, mPointColor, transformedRadius, mBackgroundColor, flareLevel);
+        rgc.set(transformedPoint, mPointColor, transformedRadius, mBackgroundColor, flareLevel);
 
         return rgc;
     }

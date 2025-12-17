@@ -30,9 +30,6 @@ public class RoundGradientContext implements Base, PaintContext {
     private Color mC1, mC2;
     private int flareLevel;
 
-    public RoundGradientContext(Point2D p,  Color c1, Point2D r, Color c2, int f) {
-        set(p, c1, r, c2, f);
-    }
     public void set(Point2D p, Color c1, Point2D r, Color c2, int f) {
         mPoint = p;
         mC1 = c1;
