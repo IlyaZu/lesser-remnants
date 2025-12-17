@@ -55,16 +55,6 @@ public class ExpansionIncident extends DiplomaticIncident {
         else if (view.owner().pactWith(empireId))
             multiplier /= 1.5;
         
-        // if you are bigger than average but the viewer is
-        // even larger, the penalty is lessened by the square
-        // of the proportion... i.e. if you are 1/2 the size
-        // the penalty is 1/4th
-        int ownerNum = view.owner().numColonizedSystems();
-        if (ownerNum > numSystems) {
-            float ratio = (float) numSystems / ownerNum;
-            multiplier = multiplier * ratio * ratio;
-        }
-        
         float n = -5*((numSystems*numSystems/maxSystems/maxSystems) - 1);
 
         return Math.max(-12.5f, multiplier*n);
