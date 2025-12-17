@@ -50,9 +50,9 @@ public class ExpansionIncident extends DiplomaticIncident {
         if (view.owner().leader().isXenophobic())
             multiplier *= 2;
         // allies are more tolerant of growth, NAPS less so
-        if (!view.owner().alliedWith(empireId))
+        if (view.owner().alliedWith(empireId))
             multiplier /= 3;
-        else if (!view.owner().pactWith(empireId))
+        else if (view.owner().pactWith(empireId))
             multiplier /= 1.5;
         
         // if you are bigger than average but the viewer is
