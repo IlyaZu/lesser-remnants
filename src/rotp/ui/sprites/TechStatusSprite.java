@@ -31,11 +31,8 @@ public class TechStatusSprite extends MapControlSprite {
     private static final Color blueBucketBackC = new Color(50,50,128);
     private final int category;
     public TechStatusSprite(int catNum, int xOff, int yOff, int w, int h) {
+        super(xOff, yOff, w, h);
         category = catNum;
-        xOffset = scaled(xOff);
-        yOffset = scaled(yOff);
-        width = scaled(w);
-        height = scaled(h);
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
