@@ -32,7 +32,7 @@ public class ExpansionIncident extends DiplomaticIncident {
 
         Galaxy gal = Galaxy.current();
         int allSystems = gal.numColonizedSystems();
-        int numCivs = gal.numActiveEmpires();
+        int numCivs = gal.numEmpires();
         int maxSystemsWithoutPenalty = Math.max(5, (allSystems/numCivs)+1);
 
         if (numberSystems > maxSystemsWithoutPenalty)
