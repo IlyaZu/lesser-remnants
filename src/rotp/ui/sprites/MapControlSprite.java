@@ -24,7 +24,7 @@ import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.SystemPanel;
 
 public abstract class MapControlSprite extends MapSprite {
-    protected static Color background = new Color(0,0,0);
+    protected static final Color background = new Color(0,0,0);
     protected final int xOffset, yOffset, width, height;
     protected int startX, startY;
     
