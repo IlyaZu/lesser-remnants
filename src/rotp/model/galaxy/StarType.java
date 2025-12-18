@@ -76,12 +76,11 @@ public class StarType implements Base {
     }
     public BufferedImage image(int r, int f) {
         int r0 = min(r,scaled(maxRadius()));
-        int key = hashKey(r0,f);
+        int key = (r*200)+f;
         if (!images().containsKey(key))
             images().put(key, createStarImage(r0,f));
         return images().get(key);
     }
-    private int hashKey(int r, int f)       { return (r*200)+f; }
     private BufferedImage createStarImage(int r, int f) {
         Color c = color();
         Color c0 = new Color(c.getRed(), c.getGreen(), c.getBlue(), 0);
