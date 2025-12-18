@@ -24,10 +24,7 @@ import rotp.ui.main.GalaxyMapPanel;
 
 public class ZoomInWidgetSprite extends MapControlSprite {
     public ZoomInWidgetSprite(int xOff, int yOff, int w, int h) {
-        xOffset = scaled(xOff);
-        yOffset = scaled(yOff);
-        width = scaled(w);
-        height = scaled(h);
+        super(xOff, yOff, w, h);
     }
     @Override
     public boolean acceptDoubleClicks()         { return true; }

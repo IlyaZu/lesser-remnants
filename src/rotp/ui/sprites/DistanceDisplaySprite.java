@@ -23,10 +23,7 @@ import rotp.ui.main.GalaxyMapPanel;
 
 public class DistanceDisplaySprite extends MapControlSprite  {
     public DistanceDisplaySprite(int xOff, int yOff, int w, int h) {
-        xOffset = scaled(xOff);
-        yOffset = scaled(yOff);
-        width = scaled(w);
-        height = scaled(h);
+        super(xOff, yOff, w, h);
     }
     @Override
     public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {

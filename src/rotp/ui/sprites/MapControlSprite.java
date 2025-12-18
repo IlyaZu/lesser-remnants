@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +25,15 @@ import rotp.ui.main.SystemPanel;
 
 public abstract class MapControlSprite extends MapSprite {
     protected static Color background = new Color(0,0,0);
-    protected int xOffset, yOffset, width, height;
+    protected final int xOffset, yOffset, width, height;
     protected int startX, startY;
+    
+    public MapControlSprite(int xOff, int yOff, int w, int h) {
+        xOffset = scaled(xOff);
+        yOffset = scaled(yOff);
+        width = scaled(w);
+        height = scaled(h);
+    }
 
     @Override
     public boolean isSelectableAt(GalaxyMapPanel map, int mapX, int mapY) {
