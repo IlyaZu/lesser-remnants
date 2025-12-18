@@ -155,11 +155,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         
         return v.refuse(DialogueManager.DECLINE_OFFER, target);
     }
-    //-----------------------------------
-    //  BREAK TREATIES
-    //-----------------------------------
-    @Override
-    public boolean canDeclareWar(Empire e)                 { return empire.inShipRange(id(e)) && !empire.atWarWith(id(e)) && !empire.alliedWith(id(e)); }
 
     private boolean warWeary(EmpireView v) {
         if (galaxy().activeEmpires().size() < 3)
