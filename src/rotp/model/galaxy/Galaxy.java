@@ -357,12 +357,6 @@ public class Galaxy implements Base, Serializable {
                 e.nextTurn();
         }
     }
-    public int numColonizedSystems() {
-        int num = 0;
-        for (Empire e: empires)
-            num += e.numColonizedSystems();
-        return num;
-    }
     public int friendlyPopApproachingSystem(StarSystem sys) {
         int pop = 0;
         Galaxy gal = galaxy();
