@@ -27,13 +27,11 @@ public class ExpansionIncident extends DiplomaticIncident {
     
     public static void create(EmpireView view) {
         int numberSystems = view.empire().numSystemsForCiv(view.empire());
-        if (numberSystems < 6)
-            return;
 
         Galaxy gal = Galaxy.current();
         int allSystems = gal.numStarSystems();
         int numCivs = gal.numEmpires();
-        int maxSystemsWithoutPenalty = Math.max(5, allSystems/(numCivs+1));
+        float maxSystemsWithoutPenalty = allSystems/(numCivs+1);
 
         if (numberSystems > maxSystemsWithoutPenalty)
             view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
