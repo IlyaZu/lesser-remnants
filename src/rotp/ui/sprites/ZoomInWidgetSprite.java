@@ -18,7 +18,6 @@ package rotp.ui.sprites;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 
@@ -40,16 +39,12 @@ public class ZoomInWidgetSprite extends MapControlSprite {
         g2.setColor(Color.black);
         g2.fillRoundRect(startX, startY, width, height, cnr, cnr);
         
-        Stroke str0 = g2.getStroke();
-        g2.setStroke(str0);
         g2.setColor(Color.lightGray);
-
         int th = scaled(4);
         int len = width/2;
         g2.fillRect(startX+(width/2)-(th/2), startY+(height-len)/2, th, len);
         g2.fillRect(startX+(width-len)/2, startY+(height/2)-(th/2), len, th);
 
-        g2.setStroke(str0);
         drawBorder(map,g2);
     }
 }
