@@ -202,7 +202,8 @@ public class AIDiplomat implements Base, Diplomat {
     }
     private float calculateTechExchangeChance(EmpireView v) {
         float chance = v.embassy().relations();
-        chance += acceptTradeMod(empire.leader());
+        chance += empire.leader().isXenophobic() ? -20 : 0;
+        chance += empire.leader().isTechnologist() ? 10 : 0;
         chance += v.embassy().alliedWithEnemy() ? -100 : 0;
         return chance;
     }
@@ -300,14 +301,10 @@ public class AIDiplomat implements Base, Diplomat {
         // -50 relations is minimum allowed to accept trade
         float chance = v.embassy().relations()+50;
         chance += v.empire().diplomacyBonus();
-        chance += acceptTradeMod(empire.leader());
+        chance += empire.leader().isXenophobic() ? -20 : 0;
+        chance += empire.leader().isIndustrialist() ? 10 : 0;
         chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
-    }
-    private float acceptTradeMod(Leader leader) {
-        float mod = leader.isXenophobic() ? -20 : 0;
-        mod += leader.isIndustrialist() ? 10 : 0;
-        return mod;
     }
     //-----------------------------------
     //  PEACE
