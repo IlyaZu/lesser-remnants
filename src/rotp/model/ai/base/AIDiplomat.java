@@ -157,8 +157,12 @@ public class AIDiplomat implements Base, Diplomat {
             return 0.8f;
     }
     private boolean decidedToExchangeTech(EmpireView v) {
-        if (!willingToOfferTechExchange(v))
+        if (!canExchangeTechnology(v.empire()))
             return false;
+        
+        if(calculateTechExchangeChance(v) < 20) {
+            return false;
+        }
 
         DiplomaticEmbassy otherEmbassy = v.otherView().embassy();
         List<Tech> availableTechs = otherEmbassy.offerableTechnologies();
@@ -196,14 +200,11 @@ public class AIDiplomat implements Base, Diplomat {
         }
         return false;
     }
-    private boolean willingToOfferTechExchange(EmpireView v) {
-        if (!canExchangeTechnology(v.empire()))
-            return false;
-
-        float adjustedRelations = v.embassy().relations();
-        adjustedRelations += acceptTradeMod(empire.leader());
-        adjustedRelations += v.embassy().alliedWithEnemy() ? -100 : 0;
-        return adjustedRelations > 20;
+    private float calculateTechExchangeChance(EmpireView v) {
+        float chance = v.embassy().relations();
+        chance += acceptTradeMod(empire.leader());
+        chance += v.embassy().alliedWithEnemy() ? -100 : 0;
+        return chance;
     }
     //-----------------------------------
     //  TRADE TREATIES
