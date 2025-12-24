@@ -873,8 +873,7 @@ public class AIDiplomat implements Base, Diplomat {
         if (decidedToIssuePraise(v))
             return;
 
-        // if this empire is at war with us or we are preparing
-        // for war, then stop now. No more Mr. Nice Guy.
+        // if this empire is at war with us then stop now
         List<Empire> enemies = empire.enemies();
         if (enemies.contains(v.empire()))
             return;
@@ -895,11 +894,9 @@ public class AIDiplomat implements Base, Diplomat {
             return;
         }
         // see if we can draw our ally into our existing war
-        List<Empire> warEnemies = empire.enemies();
-
         // ask only allies for now, to avoid spam
         if (v.embassy().alliance()) {
-            for (Empire target: warEnemies) {
+            for (Empire target: enemies) {
                 if (willingToRequestAllyToJoinWar(v.empire(), target)) {
                     v.empire().diplomatAI().receiveOfferJointWar(v.owner(), target);
                     return;
