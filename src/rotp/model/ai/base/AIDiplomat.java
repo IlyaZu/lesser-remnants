@@ -1025,31 +1025,11 @@ public class AIDiplomat implements Base, Diplomat {
         warThreshold += v.empire().leader().isPacifist() ? -10 : 0;
         warThreshold += v.empire().leader().isAggressive() ? 10 : 0;
         
-        // modnar: change war threshold by number of our wars vs. number of their wars
-        // try not to get into too many wars, and pile on if target is in many wars
-        warThreshold += (float) (10 * (v.empire().numEnemies() - empire.numEnemies()));
-        
         // allied with an enemy? not good
         if (v.embassy().alliedWithEnemy())
             warThreshold += 30;
         
-        // higher contempt = more likely to increase war
-        // positive contempt raises the threshold = more likely for war
-        // if relative power is 3, then contempt mod is 30 or -30
-        warThreshold += 10 * scaleOfContempt(v);
-        
         return (v.embassy().relations() <= warThreshold);
-    }
-    private float scaleOfContempt(EmpireView view) {
-        // returns 0 if equal power
-        // returns 1, 2, 3 if we are 2x,3x,4x more powerful
-        // reutrns -1,-2,-3 if we are 1/2x, 1/3x, 1/4x as powerful
-        float powerRatio = view.empirePower();
-        if (powerRatio >= 1) {
-            return -powerRatio+1;
-        } else {
-            return (1/powerRatio)-1;
-        }
     }
     private boolean wantToDeclareWarOfOpportunity(EmpireView v) {
         if (v.embassy().atPeace())
