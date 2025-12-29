@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2025 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,8 +129,4 @@ public interface Scientist {
     float baseValue(TechSubspaceInterdictor t);
     float baseValue(TechTeleporter t);
     float baseValue(TechTorpedoWeapon t);
-    
-    //Xilmi-AI
-    default boolean isImportant(Tech t) { return true; }
-    default boolean isOptional(Tech t) { return false; }
 }

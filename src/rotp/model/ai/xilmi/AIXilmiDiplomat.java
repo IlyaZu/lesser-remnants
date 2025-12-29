@@ -62,17 +62,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
         List<Tech> worthyTechs = new ArrayList<>(maxTechs);
         for (int i=0; i < allUnknownTechs.size() && worthyTechs.size() < maxTechs; i++) {
             Tech t = allUnknownTechs.get(i);
-            if(!empire.scientistAI().isOptional(tech))
-                if(empire.scientistAI().isOptional(t) && t.level() < tech.level() + 5 )
-                    continue;
-            if(empire.scientistAI().isImportant(tech))
-            {
-                if(empire.scientistAI().isOptional(t))
-                    continue;
-                if(t.level() < tech.level() + 5
-                    && !empire.scientistAI().isImportant(t))
-                    continue;
-            }
             if (!t.isObsolete(empire) && t.baseValue(empire) > 0)
                 worthyTechs.add(t);
         }

@@ -504,6 +504,15 @@ public class AIScientist implements Base, Scientist {
         }
         return max(researchValue(t) * ownerFactor, 1);
     }
+    private boolean isImportant(Tech t)
+    {
+        if(t.techType == Tech.ENGINE_WARP
+            || t.techType == Tech.ROBOTIC_CONTROLS
+            || t.techType == Tech.CLOAKING
+            || t.techType == Tech.SOIL_ENRICHMENT)
+            return true;
+        return false;
+    }
     @Override
     public float researchValue(Tech t) {
         //ail: for something that has 0 base-value, we also don't add random
@@ -815,30 +824,6 @@ public class AIScientist implements Base, Scientist {
         float chance = (empire.tech().category(category).upcomingDiscoveryChance() - 1) * 60;
         empire.tech().category(category).allocation(allocationBefore);
         return chance;
-    }
-    @Override
-    public boolean isImportant(Tech t)
-    {
-        if(t.techType == Tech.ENGINE_WARP
-            || t.techType == Tech.ROBOTIC_CONTROLS
-            || t.techType == Tech.CLOAKING
-            || t.techType == Tech.SOIL_ENRICHMENT)
-            return true;
-        return false;
-    }
-    @Override
-    public boolean isOptional(Tech t)
-    {
-        if(t.techType == Tech.BEAM_FOCUS
-            || t.techType == Tech.DISPLACEMENT
-            || t.techType == Tech.ECM_JAMMER
-            || t.techType == Tech.ENERGY_PULSAR
-            || t.techType == Tech.MISSILE_SHIELD
-            || t.techType == Tech.SHIP_NULLIFIER
-            || t.techType == Tech.STARGATE
-            || t.techType == Tech.TORPEDO_WEAPON)
-            return true;
-        return false;
     }
     public int stealableTechs()
     {
