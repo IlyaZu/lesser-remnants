@@ -626,11 +626,11 @@ public class CombatShip extends CombatEntity {
         int iconW = BasePanel.s18;
         int y2 = y+stackH-BasePanel.s5;
         g.setFont(narrowFont(16));
-        int nameMgn = ui.showTacticalInfo() ? iconW + BasePanel.s5 : BasePanel.s5;
-        String name = ui.showTacticalInfo() ? this.name : text("SHIP_COMBAT_COUNT_NAME", str(num), this.name);
+        int nameMgn = iconW + BasePanel.s5;
+        String name = this.name;
         scaledFont(g, name, stackW-nameMgn,16,8);
         int sw2 = g.getFontMetrics().stringWidth(name);
-        int x1mgn = reversed || !ui.showTacticalInfo() ? x1 : x1+iconW;
+        int x1mgn = reversed ? x1 : x1+iconW;
         int x2 = max(x1mgn, x1mgn+((stackW-nameMgn-sw2)/2));
 
         g.setColor(Color.lightGray);
@@ -653,82 +653,80 @@ public class CombatShip extends CombatEntity {
         int y4 = y+mgn;
         int w4 = stackW-mgn-mgn;
         int barH = BasePanel.s10;
-        if (ui.showTacticalInfo()) {
-            // draw health bar & hp
-            g.setColor(healthBarBackC);
-            g.fillRect(x4, y4, w4, barH);
-            int w4a = (int)(w4*hits/maxHits);
-            g.setColor(healthBarC);
-            g.fillRect(x4, y4, w4a, barH);
-            // draw ship count
-            g.setColor(healthBarC);
-            String numStr = str(num);
-            g.setFont(narrowFont(20));
-            int numW = g.getFontMetrics().stringWidth(numStr);
-            int x6 = reversed ? x4: x4+w4-numW-BasePanel.s10;
-            g.fillRect(x6, y4, numW+BasePanel.s10, BasePanel.s22);
-            g.setColor(Color.white);
-            Stroke prevStroke = g.getStroke();
-            g.setStroke(BasePanel.stroke1);
-            g.drawRect(x6, y4, numW+BasePanel.s10, BasePanel.s22);
-            g.setStroke(prevStroke);
-            g.drawString(numStr, x6+BasePanel.s5,y4+BasePanel.s18);
-            // draw hit points
-            g.setColor(Color.white);
-            String hpStr = ""+(int)Math.ceil(hits)+"/"+(int)Math.ceil(maxHits);
-            g.setFont(narrowFont(12));
-            int hpW = g.getFontMetrics().stringWidth(hpStr);
-            int x5 = reversed ? x4+((w4-hpW+numW)/2) : x4+((w4-hpW-numW)/2);
-            g.drawString(hpStr, x5, y4+BasePanel.s9);
-                
+        // draw health bar & hp
+        g.setColor(healthBarBackC);
+        g.fillRect(x4, y4, w4, barH);
+        int w4a = (int)(w4*hits/maxHits);
+        g.setColor(healthBarC);
+        g.fillRect(x4, y4, w4a, barH);
+        // draw ship count
+        g.setColor(healthBarC);
+        String numStr = str(num);
+        g.setFont(narrowFont(20));
+        int numW = g.getFontMetrics().stringWidth(numStr);
+        int x6 = reversed ? x4: x4+w4-numW-BasePanel.s10;
+        g.fillRect(x6, y4, numW+BasePanel.s10, BasePanel.s22);
+        g.setColor(Color.white);
+        Stroke prevStroke = g.getStroke();
+        g.setStroke(BasePanel.stroke1);
+        g.drawRect(x6, y4, numW+BasePanel.s10, BasePanel.s22);
+        g.setStroke(prevStroke);
+        g.drawString(numStr, x6+BasePanel.s5,y4+BasePanel.s18);
+        // draw hit points
+        g.setColor(Color.white);
+        String hpStr = ""+(int)Math.ceil(hits)+"/"+(int)Math.ceil(maxHits);
+        g.setFont(narrowFont(12));
+        int hpW = g.getFontMetrics().stringWidth(hpStr);
+        int x5 = reversed ? x4+((w4-hpW+numW)/2) : x4+((w4-hpW-numW)/2);
+        g.drawString(hpStr, x5, y4+BasePanel.s9);
             
-            ShipView view = player().shipViewFor(design());
-            if (view != null) {
-                // draw shield level
-                g.setColor(shieldColor);
-                int x4a = reversed ? x4+w4-iconW : x4;
-                int y4a =y4+barH+BasePanel.s1;
-                g.fillOval(x4a, y4a, iconW, iconW);
-                if (view.shieldKnown()) {
-                    g.setColor(Color.white);
-                    String valStr = str((int)Math.ceil(shieldLevel()));
-                    g.setFont(narrowFont(16));
-                    int shldW = g.getFontMetrics().stringWidth(valStr);
-                    g.drawString(valStr, x4a+((iconW-shldW)/2), y4a+BasePanel.s14);
-                }
-                //draw attack level
-                g.setColor(attackColor);
-                int y4b =y4a+iconW+BasePanel.s2;
-                g.fillOval(x4a, y4b, iconW, iconW);
-                if (view.attackLevelKnown()) {
-                    g.setColor(Color.white);
-                    String valStr = str(attackLevel());
-                    g.setFont(narrowFont(16));
-                    int shldW = g.getFontMetrics().stringWidth(valStr);
-                    g.drawString(valStr, x4a+((iconW-shldW)/2), y4b+BasePanel.s14);
-                }
-                //draw beam defense level
-                g.setColor(beamDefenseColor);
-                int y4c =y4b+iconW+BasePanel.s1;
-                g.fillOval(x4a, y4c, iconW, iconW);
-                if (view.beamDefenseKnown()) {
-                    g.setColor(Color.white);
-                    String valStr = str(beamDefense());
-                    g.setFont(narrowFont(16));
-                    int shldW = g.getFontMetrics().stringWidth(valStr);
-                    g.drawString(valStr, x4a+((iconW-shldW)/2), y4c+BasePanel.s14);
-                }
-                //draw missie defense level
-                g.setColor(missileDefenseColor);
-                int y4d =y4c+iconW+BasePanel.s1;
-                g.fillOval(x4a, y4d, iconW, iconW);
-                if (view.missileDefenseKnown()) {
-                    g.setColor(Color.white);
-                    String valStr = str(missileDefense());
-                    g.setFont(narrowFont(16));
-                    int shldW = g.getFontMetrics().stringWidth(valStr);
-                    g.drawString(valStr, x4a+((iconW-shldW)/2), y4d+BasePanel.s14);
-                }
+        
+        ShipView view = player().shipViewFor(design());
+        if (view != null) {
+            // draw shield level
+            g.setColor(shieldColor);
+            int x4a = reversed ? x4+w4-iconW : x4;
+            int y4a =y4+barH+BasePanel.s1;
+            g.fillOval(x4a, y4a, iconW, iconW);
+            if (view.shieldKnown()) {
+                g.setColor(Color.white);
+                String valStr = str((int)Math.ceil(shieldLevel()));
+                g.setFont(narrowFont(16));
+                int shldW = g.getFontMetrics().stringWidth(valStr);
+                g.drawString(valStr, x4a+((iconW-shldW)/2), y4a+BasePanel.s14);
+            }
+            //draw attack level
+            g.setColor(attackColor);
+            int y4b =y4a+iconW+BasePanel.s2;
+            g.fillOval(x4a, y4b, iconW, iconW);
+            if (view.attackLevelKnown()) {
+                g.setColor(Color.white);
+                String valStr = str(attackLevel());
+                g.setFont(narrowFont(16));
+                int shldW = g.getFontMetrics().stringWidth(valStr);
+                g.drawString(valStr, x4a+((iconW-shldW)/2), y4b+BasePanel.s14);
+            }
+            //draw beam defense level
+            g.setColor(beamDefenseColor);
+            int y4c =y4b+iconW+BasePanel.s1;
+            g.fillOval(x4a, y4c, iconW, iconW);
+            if (view.beamDefenseKnown()) {
+                g.setColor(Color.white);
+                String valStr = str(beamDefense());
+                g.setFont(narrowFont(16));
+                int shldW = g.getFontMetrics().stringWidth(valStr);
+                g.drawString(valStr, x4a+((iconW-shldW)/2), y4c+BasePanel.s14);
+            }
+            //draw missie defense level
+            g.setColor(missileDefenseColor);
+            int y4d =y4c+iconW+BasePanel.s1;
+            g.fillOval(x4a, y4d, iconW, iconW);
+            if (view.missileDefenseKnown()) {
+                g.setColor(Color.white);
+                String valStr = str(missileDefense());
+                g.setFont(narrowFont(16));
+                int shldW = g.getFontMetrics().stringWidth(valStr);
+                g.drawString(valStr, x4a+((iconW-shldW)/2), y4d+BasePanel.s14);
             }
         }
     }
