@@ -61,7 +61,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     private int deathThisTurn = 0; // index of attacker/defender that died this turn
 
     private Colony colony;
-    Empire defenderEmp, attackerEmp;
+    private Empire defenderEmp, attackerEmp;
     private Transport transport;
     private TechHandWeapon attackerWeapon;
     private TechHandWeapon defenderWeapon;
@@ -71,38 +71,35 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
     private Image landscapeImg;
     private LinearGradientPaint soldierBackG;
-    String subtitle;
+    private String subtitle;
 
     private final List<Image> descendingFrames = new ArrayList<>();
     private final List<Integer> descendingFrameRefs = new ArrayList<>();
     private final List<Image> openingFrames = new ArrayList<>();
     private final List<Integer> openingFrameRefs = new ArrayList<>();
 
-    List<BufferedImage> attackerFrames = new ArrayList<>();
-    List<BufferedImage> defenderFrames = new ArrayList<>();
-    List<BufferedImage> attackerDeathFrames = new ArrayList<>();
-    List<BufferedImage> defenderDeathFrames = new ArrayList<>();
-    List<Integer> remainingAttackers = new ArrayList<>();
-    List<Integer> remainingDefenders = new ArrayList<>();
+    private List<BufferedImage> attackerFrames = new ArrayList<>();
+    private List<BufferedImage> defenderFrames = new ArrayList<>();
+    private List<BufferedImage> attackerDeathFrames = new ArrayList<>();
+    private List<BufferedImage> defenderDeathFrames = new ArrayList<>();
+    private List<Integer> remainingAttackers = new ArrayList<>();
+    private List<Integer> remainingDefenders = new ArrayList<>();
     // which animated frame the soldiers will fire
-    int attackerFiringFrame, defenderFiringFrame;
-    int attackerFinalFrame, defenderFinalFrame;
-    int attackerIconW, attackerIconH, defenderIconW, defenderIconH;
-    int attackerImgW, attackerImgH, defenderImgW, defenderImgH;
-    float attackerScale, defenderScale;
-    int attackerYSpacing, defenderYSpacing, attackerXSpacing, defenderXSpacing;
-    boolean attackerFired, defenderFired;
-    boolean exited = false;
-    int baseIconH;
+    private int attackerFiringFrame, defenderFiringFrame;
+    private int attackerIconW, attackerIconH, defenderIconW, defenderIconH;
+    private int attackerImgW, attackerImgH, defenderImgW, defenderImgH;
+    private float attackerScale, defenderScale;
+    private int attackerYSpacing, defenderYSpacing, attackerXSpacing, defenderXSpacing;
+    private boolean exited = false;
     // x,y coords (within icon img) of gun when firing
-    int attackerGunX = 0;
-    int attackerGunY = 0;
-    int defenderGunX = 0;
-    int defenderGunY = 0;
-    LandingShip[] ships = new LandingShip[MAX_SHIPS];
+    private int attackerGunX = 0;
+    private int attackerGunY = 0;
+    private int defenderGunX = 0;
+    private int defenderGunY = 0;
+    private LandingShip[] ships = new LandingShip[MAX_SHIPS];
     private SoundClip shipLanding;
-    String sysName;
-    String title;
+    private String sysName;
+    private String title;
 
     public GroundBattleUI() {
         setBackground(Color.black);
@@ -111,7 +108,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     public void init(Colony c, Transport tr) {
         colony = c;
         transport = tr;
-        baseIconH = s70;  // standard width of troopers
         landingCount = 0;
         exited = false;
         attackerEmp = transport.empire();
@@ -190,7 +186,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
         // init attacker vars
         totalAttackers = tr.size();
-        attackerFinalFrame = 0;
         attackerFrames.clear();
         for (Image img: attacker.firingFrames())
             attackerFrames.add(asBufferedImage(img));
@@ -217,7 +212,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
         // init defender vars
         totalDefenders = c.defense().troops();
-        defenderFinalFrame = 0;
         defenderFrames.clear();
         for (Image img: defender.firingFrames())
             defenderFrames.add(flip(asBufferedImage(img)));
@@ -365,9 +359,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         int w = getWidth();
         int h = getHeight();
         Color detailLineC = Color.white;
-
-        attackerFired =false;
-        defenderFired = false;
 
         g.drawImage(landscapeImg, 0, 0, w, h, null);
 
@@ -633,7 +624,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         }
     }
     private int fireAtDefender(Graphics2D g, int n) {
-        attackerFired = true;
         int gunX = attackerX[n]+attackerGunX;
         int gunY = attackerY[n]+attackerGunY;
 
@@ -665,7 +655,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         return victim;
     }
     private int fireAtAttacker(Graphics2D g, int n) {
-        defenderFired = true;
         // defender images flipped horizontally, calc GunX from right side
         int gunX = defenderX[n]-defenderGunX;
         int gunY = defenderY[n]+defenderGunY;
