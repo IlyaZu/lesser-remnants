@@ -50,6 +50,7 @@ public class SimpleIncident extends DiplomaticIncident {
         float severity = (embassy.baseRelations() - embassy.relations()) / 50;
         return new SimpleIncident(severity,
                 // Due to licensing restrictions these keys do not currently map to any values.
+                // TODO Add key/values to a new file under a more permissible license.
                 "INC_DRIFT_RELATIONS_TITLE", "INC_DRIFT_RELATIONS_DESC",
                 view.ownerId(), view.empId());
     }
