@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -249,7 +249,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         g.drawImage(c.planet().landscapeImage(), 0, 0, w, h, null);
 
         // draw fortress
-        //BufferedImage fortImg = colony.empire().race().fortress(colony.fortressNum());
         BufferedImage fortImg = defenderEmp.race().fortress(0);
         int fortW = scaled(fortImg.getWidth());
         int fortH = scaled(fortImg.getHeight());
@@ -428,7 +427,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         String defWpnDesc = defense.weaponDesc();
         String defLine = concat(defArmorDesc, defShieldDesc, defWpnDesc);
         scaledFont(g, defLine, w/2-s60, 22, 18);
-        //g.setFont(narrowFont(22));
         y0 += s30;
         x0 = w-s30;
         if (!defWpnDesc.isEmpty()) {
@@ -596,7 +594,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
                     attackerX[count] = x0;
                     attackerY[count] = y0+yAdj;
-                    //log("attacker #"+count+" frame:"+frame+"  x:"+x0+"  y:"+(y0+yAdj)+"  w:"+imgW+"  h:"+imgH);
                     g.drawImage(iconImg, x0, y0+yAdj, imgW, imgH, null);
                     if (frame == attackerFiringFrame)
                         fireAtDefender(g, count);
@@ -650,7 +647,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             victimY = defenderY[victim]+(defenderImgH/2);
         }
 
-        //log("firing at defender#"+victim+"  from:"+gunX+"@"+gunY+"  to:"+victimX+"@"+victimY+"  gun:"+attackerGunX+"@"+attackerGunY);
         attackerWeapon.drawEffect(g, gunX, gunY, victimX, victimY);
         return victim;
     }
@@ -682,7 +678,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             victimY = attackerY[victim]+(attackerImgH/2);
         }
 
-        //log("firing at attacker#"+victim+"  from:"+gunX+"@"+gunY+"  to:"+victimX+"@"+victimY+"  gun:"+defenderGunX+"@"+defenderGunY);
         defenderWeapon.drawEffect(g, gunX, gunY, victimX, victimY);
         return victim;
     }
@@ -725,7 +720,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             dropPerFrame = (int) Math.ceil(1.0*shipEndY/numLandingFrames);
             endTopY = shipEndY-dispH;
             startY = endTopY-(dropPerFrame*(numLandingFrames+countDelay));
-            //log("startY:"+startY+"  endTopY:"+endTopY+"  numFrames:"+numLandingFrames+"  dropPerFrame:"+dropPerFrame);
             countDelay = roll(0,20);
         }
         public void forceLand() {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -266,7 +266,6 @@ public enum AnimationManager implements Base {
             area = rect;
 
             for (String frameSpec: frameSpecs) {
-                //log("AnimationImage: "+key+"  frame:"+frameSpec+"   area:"+area);
                 AnimationImageFrame frame = new AnimationImageFrame(frameSpec);
                 frames.add(frame);
                 maxDuration += frame.msHi;
@@ -300,11 +299,9 @@ public enum AnimationManager implements Base {
             setFontHints(g);
             // draws correct image frame on img
             if (area == null)
-                //resultImg.drawImage(frameImg, 0, 0);
                 // if no area specified, draw full image at 0,0
                 g.drawImage(frameImg, 0, 0, null);
             else if (area.width == 0)
-                //resultImg.drawImage(frameImg, area.x, area.y);
                 // if area has no w/h, draw full image at x,y
                 g.drawImage(frameImg, area.x, area.y, null);
             else
@@ -324,7 +321,6 @@ public enum AnimationManager implements Base {
             if ((frames.size() == 1)
             || (maxDuration == 0)) {
                 frameIndex = 0;
-                //log("frame:"+key+"  ms:"+currentMs+"  frames:"+frames.size()+"  maxDur:"+maxDuration+"   area:"+area);
                 return;
             }
 

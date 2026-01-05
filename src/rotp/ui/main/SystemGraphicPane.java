@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,6 @@ public class SystemGraphicPane extends BasePanel implements MouseMotionListener,
         int x0 = s25;
         drawBorderedString(g0, str, 1, x0, y0, Color.black, SystemPanel.orangeText);
 
-        //log("graphic h:", str(unscaled(h)));
         int x1 = s20;
         int y1 = s70*adjW/w;
         int r = s40;

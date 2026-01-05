@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         if ((adjFleetObj != null) && (adjFleetObj instanceof ShipFleet))
             return (ShipFleet) adjFleetObj;
 
-        //log("creating adjusted fleet");
         ShipFleet adjFleet = newAdjustedFleet();
         adjustedFleet(adjFleet);
         if (adjFleet == null)
@@ -373,7 +372,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
         softClick();
         selectedDest(sys);
         adjustedFleet.use(o, parent.parent);
-        //if (count == 2)
         sendFleet();
         return true;
     }
@@ -421,7 +419,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
                         break;
                 }
                 useClickedSprite(systems.get(index), 1, false);
-                //parent.parent.hoveringOverSprite(systems.get(index).sprite());
                 parent.repaint();
         }
     }
