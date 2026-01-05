@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -587,15 +587,11 @@ public class Planet implements Base, IMappedObject, Serializable {
 
         log("Generate2DSphere()  sphereResolution:" + type().sphereResolution(this)+", radius:" + radius);
         // generate height map and resultant terrain grayscale image
-        //long start = System.currentTimeMillis();
-        //log("Generating height map, raidus: ", str(radius), " for planet ", planet.starSystem().name());
         PlanetHeightMap heightMap =  new PlanetHeightMap(terrainVal(), radius, oceanPct());
-        //log("Time to generate: ", str(System.currentTimeMillis()-start), "ms");
         oceanLevel  = heightMap.seaLevel() - Byte.MIN_VALUE;
         FastImage terrainImg = FastImage.fromHeightMap(heightMap);
 
         // get a random cloud img and overlay onto terrain img
-        //FastImage cloudImg = PlanetImager.current().randomCloudImage(this, terrainImg.getWidth(), terrainImg.getHeight());
         FastImage cloudImg = null;
         Sphere2D newSphere = new Sphere2D(terrainImg, cloudImg, this);
 
