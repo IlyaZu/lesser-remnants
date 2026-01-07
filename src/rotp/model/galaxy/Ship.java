@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,6 @@ public interface Ship extends IMappedObject {
     public boolean displayed();
 
     public boolean isPotentiallyArmed(Empire e);
-    public static Comparator<Ship> ARRIVAL_TIME = (Ship sh1, Ship sh2) -> Base.compare(sh1.arrivalTime(),sh2.arrivalTime());
+    public static Comparator<Ship> ARRIVAL_TIME = (sh1, sh2) -> Float.compare(sh1.arrivalTime(),sh2.arrivalTime());
     public static Comparator<Ship> EMPIRE_ID = (Ship sh1, Ship sh2) -> Base.compare(sh1.empId(), sh2.empId());
 }

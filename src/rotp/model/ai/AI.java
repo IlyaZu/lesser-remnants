@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -274,14 +274,10 @@ public class AI implements Base {
             dest.popNeeded -= trPop;
         }
     }
-    public static Comparator<ColonyTransporter> TRANSPORT_PRIORITY = (ColonyTransporter col1, ColonyTransporter col2) -> Base.compare(col1.transportPriority,col2.transportPriority);
+    public static Comparator<ColonyTransporter> TRANSPORT_PRIORITY =
+            (col1, col2) -> Float.compare(col1.transportPriority,col2.transportPriority);
+
     public static ColonyTransporter TARGET_COLONY;
-    public static Comparator<ColonyTransporter> DISTANCE_TO_TARGET = new Comparator<ColonyTransporter>() {
-        @Override
-        public int compare(ColonyTransporter sys1, ColonyTransporter sys2) {
-            float pr1 = sys1.distanceTo(TARGET_COLONY);
-            float pr2 = sys2.distanceTo(TARGET_COLONY);
-            return Base.compare(pr1, pr2);
-        }
-    };
+    public static Comparator<ColonyTransporter> DISTANCE_TO_TARGET =
+            (sys1, sys2) -> Float.compare(sys1.distanceTo(TARGET_COLONY), sys2.distanceTo(TARGET_COLONY));
 }

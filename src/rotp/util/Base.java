@@ -581,7 +581,6 @@ public interface Base {
         return new BufferedReader(in);
     }
     public static int compare(int a, int b)        { return Integer.compare(a,b); }
-    public static int compare(float a, float b)  { return Float.compare(a, b); }
     public default String str(String s) { return s == null ? "null" : s; }
     public default String str(int i)    { return Integer.toString(i); }
     public default String str(float i)  { return Float.toString(i); }
