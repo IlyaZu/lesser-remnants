@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -205,11 +205,9 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("troopDeath2H"))  { r.troopDeath2H.iconSpec(value); return; }
         if (key.equalsIgnoreCase("troopDeath3H"))  { r.troopDeath3H.iconSpec(value); return; }
         if (key.equalsIgnoreCase("troopDeath4H"))  { r.troopDeath4H.iconSpec(value); return; }
-        if (key.equalsIgnoreCase("landingAudio"))  { r.shipAudioKey = value; return; }
         if (key.equalsIgnoreCase("transport"))     { r.transportKey = value; return; }
         if (key.equalsIgnoreCase("transportDesc")) { r.parseTransportDesc(value); return; }
         if (key.equalsIgnoreCase("transportOpen")) { r.parseTransportOpen(value); return; }
-        if (key.equalsIgnoreCase("transportLandingFrames")) { r.transportLandingFrames = parseInt(value); return; }
         if (key.equalsIgnoreCase("labFlagX"))      { r.labFlagX(parseFloat(value)); return; }
         if (key.equalsIgnoreCase("spyFactories"))  { r.spyFactoryFrames(parseInt(value)); return; }
         if (key.equalsIgnoreCase("spyMissiles"))   { r.spyMissileFrames(parseInt(value)); return; }

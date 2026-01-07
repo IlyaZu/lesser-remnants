@@ -37,7 +37,6 @@ import rotp.model.galaxy.Transport;
 import rotp.model.tech.TechHandWeapon;
 import rotp.ui.BasePanel;
 import rotp.util.Base;
-import rotp.util.sound.SoundClip;
 
 public class GroundBattleUI extends BasePanel implements MouseListener {
     private static final long serialVersionUID = 1L;
@@ -67,14 +66,11 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     private TechHandWeapon defenderWeapon;
     private int totalAttackers  = 0;
     private int totalDefenders = 0;
-    private int landingCount;
 
     private Image landscapeImg;
     private LinearGradientPaint soldierBackG;
     private String subtitle;
 
-    private final List<Image> descendingFrames = new ArrayList<>();
-    private final List<Integer> descendingFrameRefs = new ArrayList<>();
     private final List<Image> openingFrames = new ArrayList<>();
     private final List<Integer> openingFrameRefs = new ArrayList<>();
 
@@ -97,7 +93,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     private int defenderGunX = 0;
     private int defenderGunY = 0;
     private LandingShip[] ships = new LandingShip[MAX_SHIPS];
-    private SoundClip shipLanding;
     private String sysName;
     private String title;
 
@@ -108,7 +103,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     public void init(Colony c, Transport tr) {
         colony = c;
         transport = tr;
-        landingCount = 0;
         exited = false;
         attackerEmp = transport.empire();
         defenderEmp = colony.empire();
@@ -132,11 +126,8 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
 
         subtitle = tr.empire().replaceTokens(subtitle, "attacker");
         
-        descendingFrames.clear();
-        descendingFrameRefs.clear();
         Race race = tr.empire().race();
         
-        allFrames(race.transportDescKey, race.transportDescFrames, 0, descendingFrames, descendingFrameRefs);
         openingFrames.clear();
         openingFrameRefs.clear();
         allFrames(race.transportOpenKey, race.transportOpenFrames, 0, openingFrames, openingFrameRefs);
@@ -235,7 +226,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
                 remainingDefenders.add(i);
         for (int i=0;i<defenderState.length;i++)
                 defenderState[i] = NOT_FIRING;  // -1 is "not firing"  0-N is the firing frame #
-        shipLanding = playAudioClip(attackerEmp.race().shipAudioKey);
     }
     private void initLandscapeImage(Colony c) {
         int w = getWidth();
@@ -376,40 +366,38 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         // avoid bug with more than 500 troops
         drawTroops(g, Math.min(MAX_SOLDIERS,totalDefenders), false, x0, y0-s40);
 
-        if (!landing()) {
-            String attArmorDesc = text("INVASION_TROOP_ARMOR_DESC", transport.armorDesc(), transport.battleSuitDesc());
-            String attShieldDesc = transport.shieldDesc();
-            String attWpnDesc = transport.weaponDesc();
-            String attLine = concat(attArmorDesc, attShieldDesc, attWpnDesc);
-            g.setFont(narrowFont(28));
-            // draw attacker15s
-            x0 = s40;
-            y0 = textY;
-            // modnar: use Math.min(MAX_SOLDIERS,totalAttackers) to draw defenders
-            // avoid bug with more than 500 attackers
-            drawTroops(g, Math.min(MAX_SOLDIERS,totalAttackers), true, x0, y0-s40);
-            // draw attacker info
-            g.setFont(narrowFont(40));
-            String str1 = text("INVASION_ATTACKERS_TITLE", str(transport.size()));
-            str1 = transport.empire().replaceTokens(str1, "attacker");
-            drawBorderedString(g, str1, 2, x0, y0, Color.black, Color.white);
-            scaledFont(g, attLine, w/2-s60, 22, 18);
-            y0 += s30;
-            if (!attArmorDesc.isEmpty()) {
-                int sw = g.getFontMetrics().stringWidth(attArmorDesc)+s10;
-                drawBorderedString(g,attArmorDesc,2,x0,y0,Color.black, detailLineC);
-                x0 += sw;
-            }
-            if (!attShieldDesc.isEmpty()) {
-                int sw = g.getFontMetrics().stringWidth(attShieldDesc)+s10;
-                drawBorderedString(g,attShieldDesc,2,x0,y0,Color.black, detailLineC);
-                x0 += sw;
-            }
-            if (!attWpnDesc.isEmpty()) {
-                drawBorderedString(g,attWpnDesc,2,x0,y0,Color.black, detailLineC);
-            }
+        String attArmorDesc = text("INVASION_TROOP_ARMOR_DESC", transport.armorDesc(), transport.battleSuitDesc());
+        String attShieldDesc = transport.shieldDesc();
+        String attWpnDesc = transport.weaponDesc();
+        String attLine = concat(attArmorDesc, attShieldDesc, attWpnDesc);
+        g.setFont(narrowFont(28));
+        // draw attacker15s
+        x0 = s40;
+        y0 = textY;
+        // modnar: use Math.min(MAX_SOLDIERS,totalAttackers) to draw defenders
+        // avoid bug with more than 500 attackers
+        drawTroops(g, Math.min(MAX_SOLDIERS,totalAttackers), true, x0, y0-s40);
+        // draw attacker info
+        g.setFont(narrowFont(40));
+        String str1 = text("INVASION_ATTACKERS_TITLE", str(transport.size()));
+        str1 = transport.empire().replaceTokens(str1, "attacker");
+        drawBorderedString(g, str1, 2, x0, y0, Color.black, Color.white);
+        scaledFont(g, attLine, w/2-s60, 22, 18);
+        y0 += s30;
+        if (!attArmorDesc.isEmpty()) {
+            int sw = g.getFontMetrics().stringWidth(attArmorDesc)+s10;
+            drawBorderedString(g,attArmorDesc,2,x0,y0,Color.black, detailLineC);
+            x0 += sw;
         }
-
+        if (!attShieldDesc.isEmpty()) {
+            int sw = g.getFontMetrics().stringWidth(attShieldDesc)+s10;
+            drawBorderedString(g,attShieldDesc,2,x0,y0,Color.black, detailLineC);
+            x0 += sw;
+        }
+        if (!attWpnDesc.isEmpty()) {
+            drawBorderedString(g,attWpnDesc,2,x0,y0,Color.black, detailLineC);
+        }
+        
         // draw defender info
         g.setFont(narrowFont(40));
         x0 = w-s40;
@@ -469,22 +457,17 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
     }
     @Override
     public void animate() {
-        if (exited)
+        if (exited || !battleInProgress())
             return;
-        landingCount++;
-        if (!landing()) {
-            if (battleInProgress()) {
-                allStartFiring(Math.min(MAX_SOLDIERS,totalAttackers), Math.min(MAX_SOLDIERS,totalDefenders));
-                if (animationCount() % 3 == 0) {
-                    attackerDead = colony.singleCombatAgainstTransports(transport);
-                    deathThisTurn = assignRandomVictim(attackerDead);
-                    if (!battleInProgress())
-                        allStopFiring();
-                }
-            }
-            else
-                    return;
+
+        allStartFiring(Math.min(MAX_SOLDIERS,totalAttackers), Math.min(MAX_SOLDIERS,totalDefenders));
+        if (animationCount() % 3 == 0) {
+            attackerDead = colony.singleCombatAgainstTransports(transport);
+            deathThisTurn = assignRandomVictim(attackerDead);
+            if (!battleInProgress())
+                allStopFiring();
         }
+        
         repaint();
     }
     private int assignRandomVictim(boolean attacker) {
@@ -511,24 +494,11 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         }
         return deadIndex;
     }
-    private boolean landing() {
-        for (LandingShip ship: ships) {
-            if (ship.landing())
-                return true;
-        }
-        return false;
-    }
     private boolean battleInProgress() {
         return colony.defense().troops() > 0 && transport.size() > 0;
     }
     private void advanceScreen() {
-        if (landing()) {
-            if (shipLanding != null)
-                shipLanding.endPlaying();
-            for (LandingShip ship: ships)
-                ship.forceLand();
-        }
-        else if (battleInProgress()) {
+        if (battleInProgress()) {
             colony.completeDefenseAgainstTransports(transport);
             int defendersKilled = remainingDefenders.size() - colony.defense().troops();
             int attackersKilled = remainingAttackers.size() - transport.size();
@@ -696,55 +666,25 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         advanceScreen();
     }
     private class LandingShip implements Base {
-        int countDelay = 0;
-        Race race;
-        BufferedImage shipClosed;
         int shipX, shipEndY, dispW, dispH;
-        int descIndex = 0;
         int openIndex = 0;
-        int numLandingFrames = 10;
-        int dropPerFrame = 1;
-        int endTopY = 0;
-        int startY = 0;
 
         public LandingShip(int n) {
-            race = transport.empire().race();
-            numLandingFrames = race.transportLandingFrames / 5;
-            shipClosed = newBufferedImage(race.transportDescending());
+            Race race = transport.empire().race();
+            BufferedImage shipClosed = newBufferedImage(race.transportDescending());
 
             shipX = scaled(colony.planet().type().shipX(n+1));
             shipEndY = scaled(colony.planet().type().shipY(n+1));
             dispW = scaled(colony.planet().type().shipW(n+1));
             dispH = shipClosed.getHeight()*dispW/shipClosed.getWidth();
-
-            dropPerFrame = (int) Math.ceil(1.0*shipEndY/numLandingFrames);
-            endTopY = shipEndY-dispH;
-            startY = endTopY-(dropPerFrame*(numLandingFrames+countDelay));
-            countDelay = roll(0,20);
-        }
-        public void forceLand() {
-            landingCount = max(landingCount, (numLandingFrames+countDelay));
-        }
-        public boolean landing() {
-            return landingCount < (numLandingFrames+countDelay);
         }
         public void draw(Graphics g) {
-            int thisY = min(endTopY, startY+(landingCount*dropPerFrame));
             // draw landing ship
-            Image shipImg = thisY == endTopY ? nextOpeningShipImage() : nextDescendingShipImage();
+            Image shipImg = nextOpeningShipImage();
 
             int imgW = shipImg.getWidth(null);
             int imgH = shipImg.getHeight(null);
-            g.drawImage(shipImg, shipX, thisY, shipX+dispW, thisY+dispH, 0, 0, imgW, imgH, null);
-        }
-        private Image nextDescendingShipImage() {
-            int frame = descIndex++;
-            for (int i=0;i<descendingFrameRefs.size();i++) {
-                if (frame < descendingFrameRefs.get(i))
-                    return descendingFrames.get(i);
-                frame -= descendingFrameRefs.get(i);
-            }
-            return descendingFrames.get(descendingFrames.size()-1);
+            g.drawImage(shipImg, shipX, shipEndY-dispH, shipX+dispW, shipEndY, 0, 0, imgW, imgH, null);
         }
         private Image nextOpeningShipImage() {
             int frame = openIndex++;
