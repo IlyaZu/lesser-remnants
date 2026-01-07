@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package rotp.model.combat;
 
 import java.util.ArrayList;
-import rotp.util.Base;
 import java.util.Comparator;
 import java.util.List;
 
@@ -83,10 +82,5 @@ public class FlightPath {
             prevY = y0;
         }
     }
-    public static Comparator<FlightPath> SORT = new Comparator<FlightPath>() {
-        @Override
-        public int compare(FlightPath col1, FlightPath col2) {
-            return Base.compare(col1.sortValue(),col2.sortValue());
-        }
-    };
+    public static Comparator<FlightPath> SORT = (col1, col2) -> Float.compare(col1.sortValue(),col2.sortValue());
 }

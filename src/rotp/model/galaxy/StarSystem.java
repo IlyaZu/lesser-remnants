@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -366,53 +366,43 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public static Comparator<StarSystem> NOTES              = (StarSystem sys1, StarSystem sys2) -> sys1.notes().compareTo(sys2.notes());
     public static Comparator<StarSystem> SHIPYARD           = (StarSystem sys1, StarSystem sys2) -> sys1.colony().shipyardProject().compareTo(sys2.colony().shipyardProject());
     public static Comparator<StarSystem> RESOURCES          = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.planet().resourcesSort(),sys2.planet().resourcesSort());
-    public static Comparator<StarSystem> INDUSTRY_RESERVE   = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().reserveIncome(),sys2.colony().reserveIncome());
-    public static Comparator<StarSystem> BASE_PRODUCTION    = (StarSystem o1,   StarSystem o2)   -> Base.compare(o1.colony().production(),o2.colony().production());
-    public static Comparator<StarSystem> CAPACITY           = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.colony().currentProductionCapacity(),sys2.colony().currentProductionCapacity());
+    public static Comparator<StarSystem> INDUSTRY_RESERVE =
+            (sys1, sys2) -> Float.compare(sys1.colony().reserveIncome(),sys2.colony().reserveIncome());
+
+    public static Comparator<StarSystem> BASE_PRODUCTION =
+            (o1, o2) -> Float.compare(o1.colony().production(),o2.colony().production());
+
+    public static Comparator<StarSystem> CAPACITY =
+            (sys1, sys2) -> Float.compare(sys1.colony().currentProductionCapacity(),sys2.colony().currentProductionCapacity());
+
     public static Comparator<StarSystem> VFLAG = (StarSystem sys1, StarSystem sys2) -> {
         Empire pl = Empire.thePlayer();
         return Base.compare(pl.sv.flagColorId(sys1.id),pl.sv.flagColorId(sys2.id));
     };
     public static Empire VIEWING_EMPIRE;
-    public static Comparator<StarSystem> VDISTANCE = (StarSystem sys1, StarSystem sys2) -> {
-        return Base.compare(VIEWING_EMPIRE.sv.distance(sys1.id),VIEWING_EMPIRE.sv.distance(sys2.id));
-    };
+    public static Comparator<StarSystem> VDISTANCE =
+            (sys1, sys2) ->  Float.compare(VIEWING_EMPIRE.sv.distance(sys1.id),VIEWING_EMPIRE.sv.distance(sys2.id));
+
     public static Comparator<StarSystem> VPOPULATION = (StarSystem sys1, StarSystem sys2) -> {
         return Base.compare(VIEWING_EMPIRE.sv.population(sys1.id),VIEWING_EMPIRE.sv.population(sys2.id));
     };
-    public static Comparator<StarSystem> POPULATION = (StarSystem sys1, StarSystem sys2) -> {
-        return Base.compare(sys1.population(),sys2.population());
-    };
+    public static Comparator<StarSystem> POPULATION =
+            (sys1, sys2) -> Float.compare(sys1.population(),sys2.population());
+
     public static Comparator<StarSystem> CURRENT_SIZE = (StarSystem sys1, StarSystem sys2) -> {
         Empire emp = sys1.empire();
         return Base.compare(emp.sv.currentSize(sys1.id),emp.sv.currentSize(sys2.id));
     };
     public static StarSystem TARGET_SYSTEM;
-    public static Comparator<StarSystem> DISTANCE_TO_TARGET_SYSTEM = new Comparator<StarSystem>() {
-        @Override
-        public int compare(StarSystem sys1, StarSystem sys2) {
-            float pr1 = sys1.distanceTo(TARGET_SYSTEM);
-            float pr2 = sys2.distanceTo(TARGET_SYSTEM);
-            return Base.compare(pr1, pr2);
-        }
-    };
-    public static Comparator<StarSystem> TRANSPORT_TIME_TO_TARGET_SYSTEM = new Comparator<StarSystem>() {
-        @Override
-        public int compare(StarSystem sys1, StarSystem sys2) {
-            float pr1 = sys1.transportTimeTo(TARGET_SYSTEM);
-            float pr2 = sys2.transportTimeTo(TARGET_SYSTEM);
-            return Base.compare(pr1, pr2);
-        }
-    };
+    public static Comparator<StarSystem> DISTANCE_TO_TARGET_SYSTEM =
+            (sys1, sys2) -> Float.compare(sys1.distanceTo(TARGET_SYSTEM), sys2.distanceTo(TARGET_SYSTEM));
+            
+    public static Comparator<StarSystem> TRANSPORT_TIME_TO_TARGET_SYSTEM =
+            (sys1, sys2) -> Float.compare(sys1.transportTimeTo(TARGET_SYSTEM), sys2.transportTimeTo(TARGET_SYSTEM));
+            
     public static Empire TARGET_EMPIRE;
-    public static Comparator<StarSystem> DISTANCE_TO_TARGET_EMPIRE = new Comparator<StarSystem>() {
-        @Override
-        public int compare(StarSystem sys1, StarSystem sys2) {
-            float pr1 = TARGET_EMPIRE.sv.distance(sys1.id);
-            float pr2 = TARGET_EMPIRE.sv.distance(sys2.id);
-            return Base.compare(pr1, pr2);
-        }
-    };
+    public static Comparator<StarSystem> DISTANCE_TO_TARGET_EMPIRE =
+            (sys1, sys2) -> Float.compare(TARGET_EMPIRE.sv.distance(sys1.id), TARGET_EMPIRE.sv.distance(sys2.id));
     //
     // SUPPORTING BEHAVIOR FOR SPRITES
     //

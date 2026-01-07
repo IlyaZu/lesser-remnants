@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -208,7 +208,7 @@ public class Tech implements Base {
             float pr1 = comparatorCiv.ai().scientist().researchPriority(o1);
             float pr2 = comparatorCiv.ai().scientist().researchPriority(o2);
             if (pr1 != pr2)
-                return Base.compare(pr2, pr1);
+                return Float.compare(pr2, pr1);
             else
                 return Base.compare(o1.level, o2.level);
         }
@@ -219,18 +219,15 @@ public class Tech implements Base {
             float pr1 = comparatorCiv.ai().scientist().researchValue(o1);
             float pr2 = comparatorCiv.ai().scientist().researchValue(o2);
             if (pr1 != pr2)
-                return Base.compare(pr2, pr1);
+                return Float.compare(pr2, pr1);
             else
                 return Base.compare(o2.level, o1.level);
         }
     };
-    public static Comparator<Tech> WAR_TRADE_VALUE = new Comparator<Tech>() {
-        @Override
-        public int compare(Tech o1, Tech o2) {
-            float pr1 = comparatorCiv.ai().scientist().warTradeValue(o1);
-            float pr2 = comparatorCiv.ai().scientist().warTradeValue(o2);
-            return Base.compare(pr2, pr1);
-        }
+    public static Comparator<Tech> WAR_TRADE_VALUE = (Tech o1, Tech o2) -> {
+        float pr1 = comparatorCiv.ai().scientist().warTradeValue(o1);
+        float pr2 = comparatorCiv.ai().scientist().warTradeValue(o2);
+        return Float.compare(pr2, pr1);
     };
     public static Comparator<Tech> TRADE_PRIORITY = (Tech o1, Tech o2) -> {
         return Base.compare(o2.level, o1.level);

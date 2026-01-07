@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import rotp.util.Base;
 public class FleetPlan implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     public static final int MAX_TURNS = 9999;
-    public static Comparator<FleetPlan> PRIORITY = (FleetPlan o1, FleetPlan o2) -> Base.compare(o2.priority(),o1.priority());
+    public static Comparator<FleetPlan> PRIORITY = (o1, o2) -> Float.compare(o2.priority(),o1.priority());
     public int destId;
     public int empireId;
     public int stagingPointId = StarSystem.NULL_ID;

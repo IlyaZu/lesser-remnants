@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public class ShipPlan implements Base, Serializable {
     public float bc = 0;
     private ShipDecision decision;
 
-    public static Comparator<ShipPlan> PRIORITY = (ShipPlan pl1, ShipPlan pl2) -> Base.compare(pl1.priority(), pl2.priority());
+    public static Comparator<ShipPlan> PRIORITY = (pl1, pl2) -> Float.compare(pl1.priority(), pl2.priority());
     public ShipPlan(ShipDesign d, FleetPlan p, int n) {
         design = d;
         plan = p;
