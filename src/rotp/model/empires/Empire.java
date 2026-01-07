@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2203,5 +2203,5 @@ public final class Empire implements Base, NamedObject, Serializable {
     public static Comparator<Empire> AVG_TECH_LEVEL   = (Empire o1, Empire o2) -> o2.tech.avgTechLevel().compareTo(o1.tech.avgTechLevel());
     public static Comparator<Empire> TOTAL_FLEET_SIZE = (Empire o1, Empire o2) -> o2.totalFleetSize().compareTo(o1.totalFleetSize());
     public static Comparator<Empire> RACE_NAME        = (Empire o1,   Empire o2)   -> o1.raceName().compareTo(o2.raceName());
-    public static Comparator<Empire> HISTORICAL_SIZE  = (Empire o1, Empire o2) -> Base.compare(o2.numColoniesHistory, o1.numColoniesHistory);
+    public static Comparator<Empire> HISTORICAL_SIZE  = (Empire o1, Empire o2) -> Integer.compare(o2.numColoniesHistory, o1.numColoniesHistory);
 }

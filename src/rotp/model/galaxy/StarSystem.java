@@ -361,11 +361,21 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         }
         return "";
     }
-    public static Comparator<StarSystem> NAME               = (StarSystem o1,   StarSystem o2)   -> o1.name().compareTo(o2.name());
-    public static Comparator<StarSystem> PLANET_TYPE        = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.planet().type().hostility(),sys2.planet().type().hostility());
-    public static Comparator<StarSystem> NOTES              = (StarSystem sys1, StarSystem sys2) -> sys1.notes().compareTo(sys2.notes());
-    public static Comparator<StarSystem> SHIPYARD           = (StarSystem sys1, StarSystem sys2) -> sys1.colony().shipyardProject().compareTo(sys2.colony().shipyardProject());
-    public static Comparator<StarSystem> RESOURCES          = (StarSystem sys1, StarSystem sys2) -> Base.compare(sys1.planet().resourcesSort(),sys2.planet().resourcesSort());
+    public static Comparator<StarSystem> NAME =
+            (o1, o2) -> o1.name().compareTo(o2.name());
+
+    public static Comparator<StarSystem> PLANET_TYPE =
+            (sys1, sys2) -> Integer.compare(sys1.planet().type().hostility(),sys2.planet().type().hostility());
+
+    public static Comparator<StarSystem> NOTES =
+            (sys1, sys2) -> sys1.notes().compareTo(sys2.notes());
+
+    public static Comparator<StarSystem> SHIPYARD =
+            (sys1, sys2) -> sys1.colony().shipyardProject().compareTo(sys2.colony().shipyardProject());
+
+    public static Comparator<StarSystem> RESOURCES =
+            (sys1, sys2) -> Integer.compare(sys1.planet().resourcesSort(),sys2.planet().resourcesSort());
+
     public static Comparator<StarSystem> INDUSTRY_RESERVE =
             (sys1, sys2) -> Float.compare(sys1.colony().reserveIncome(),sys2.colony().reserveIncome());
 
@@ -375,24 +385,23 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public static Comparator<StarSystem> CAPACITY =
             (sys1, sys2) -> Float.compare(sys1.colony().currentProductionCapacity(),sys2.colony().currentProductionCapacity());
 
-    public static Comparator<StarSystem> VFLAG = (StarSystem sys1, StarSystem sys2) -> {
+    public static Comparator<StarSystem> VFLAG = (sys1, sys2) -> {
         Empire pl = Empire.thePlayer();
-        return Base.compare(pl.sv.flagColorId(sys1.id),pl.sv.flagColorId(sys2.id));
+        return Integer.compare(pl.sv.flagColorId(sys1.id),pl.sv.flagColorId(sys2.id));
     };
     public static Empire VIEWING_EMPIRE;
     public static Comparator<StarSystem> VDISTANCE =
             (sys1, sys2) ->  Float.compare(VIEWING_EMPIRE.sv.distance(sys1.id),VIEWING_EMPIRE.sv.distance(sys2.id));
 
-    public static Comparator<StarSystem> VPOPULATION = (StarSystem sys1, StarSystem sys2) -> {
-        return Base.compare(VIEWING_EMPIRE.sv.population(sys1.id),VIEWING_EMPIRE.sv.population(sys2.id));
-    };
+    public static Comparator<StarSystem> VPOPULATION =
+            (sys1, sys2) -> Integer.compare(VIEWING_EMPIRE.sv.population(sys1.id),VIEWING_EMPIRE.sv.population(sys2.id));
+
     public static Comparator<StarSystem> POPULATION =
             (sys1, sys2) -> Float.compare(sys1.population(),sys2.population());
 
-    public static Comparator<StarSystem> CURRENT_SIZE = (StarSystem sys1, StarSystem sys2) -> {
-        Empire emp = sys1.empire();
-        return Base.compare(emp.sv.currentSize(sys1.id),emp.sv.currentSize(sys2.id));
-    };
+    public static Comparator<StarSystem> CURRENT_SIZE =
+            (sys1, sys2) -> Integer.compare(sys1.empire().sv.currentSize(sys1.id),sys1.empire().sv.currentSize(sys2.id));
+
     public static StarSystem TARGET_SYSTEM;
     public static Comparator<StarSystem> DISTANCE_TO_TARGET_SYSTEM =
             (sys1, sys2) -> Float.compare(sys1.distanceTo(TARGET_SYSTEM), sys2.distanceTo(TARGET_SYSTEM));
