@@ -20,7 +20,6 @@ import java.util.Comparator;
 import rotp.model.empires.Empire;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.sprites.FlightPathSprite;
-import rotp.util.Base;
 
 public interface Ship extends IMappedObject {
     static final int NOT_LAUNCHED = -1;
@@ -45,5 +44,5 @@ public interface Ship extends IMappedObject {
 
     public boolean isPotentiallyArmed(Empire e);
     public static Comparator<Ship> ARRIVAL_TIME = (sh1, sh2) -> Float.compare(sh1.arrivalTime(),sh2.arrivalTime());
-    public static Comparator<Ship> EMPIRE_ID = (Ship sh1, Ship sh2) -> Base.compare(sh1.empId(), sh2.empId());
+    public static Comparator<Ship> EMPIRE_ID = (sh1, sh2) -> Integer.compare(sh1.empId(), sh2.empId());
 }

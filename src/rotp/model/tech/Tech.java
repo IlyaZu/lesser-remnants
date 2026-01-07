@@ -210,7 +210,7 @@ public class Tech implements Base {
             if (pr1 != pr2)
                 return Float.compare(pr2, pr1);
             else
-                return Base.compare(o1.level, o2.level);
+                return Integer.compare(o1.level, o2.level);
         }
     };
     public static Comparator<Tech> RESEARCH_VALUE = new Comparator<Tech>() {
@@ -221,7 +221,7 @@ public class Tech implements Base {
             if (pr1 != pr2)
                 return Float.compare(pr2, pr1);
             else
-                return Base.compare(o2.level, o1.level);
+                return Integer.compare(o2.level, o1.level);
         }
     };
     public static Comparator<Tech> WAR_TRADE_VALUE = (Tech o1, Tech o2) -> {
@@ -230,7 +230,7 @@ public class Tech implements Base {
         return Float.compare(pr2, pr1);
     };
     public static Comparator<Tech> TRADE_PRIORITY = (Tech o1, Tech o2) -> {
-        return Base.compare(o2.level, o1.level);
+        return Integer.compare(o2.level, o1.level);
     } // order that we are willing to trade away techs
     // from lowest-level to highest-level
     ;
