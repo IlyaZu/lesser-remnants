@@ -203,9 +203,6 @@ public interface Base {
     }
     public default Image image(String s)               { return ImageManager.current().image(s); }
     public default int animationCount()                { return RotPUI.instance().animationCount(); }
-    public default void allFrames(String key, int cnt, int imgIndex, List<Image> frames, List<Integer> refs)  {
-        AnimationManager.current().allFrames(key, cnt, imgIndex, frames, refs);
-    }
     public default BufferedImage currentFrame(String key)  {
         return AnimationManager.current().currentFrame(key);
     }

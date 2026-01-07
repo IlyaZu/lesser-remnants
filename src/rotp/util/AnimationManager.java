@@ -65,7 +65,6 @@ public enum AnimationManager implements Base {
         }
         return results;
     }
-    @Override
     public void allFrames(String animationSpecifier, int cnt, int imgIndex, List<Image> frames, List<Integer> refs) {
         if ((animationSpecifier == null) || animationSpecifier.isEmpty())
             return;

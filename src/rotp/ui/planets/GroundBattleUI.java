@@ -36,6 +36,7 @@ import rotp.model.empires.RaceCombatAnimation;
 import rotp.model.galaxy.Transport;
 import rotp.model.tech.TechHandWeapon;
 import rotp.ui.BasePanel;
+import rotp.util.AnimationManager;
 import rotp.util.Base;
 
 public class GroundBattleUI extends BasePanel implements MouseListener {
@@ -130,7 +131,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         
         openingFrames.clear();
         openingFrameRefs.clear();
-        allFrames(race.transportOpenKey, race.transportOpenFrames, 0, openingFrames, openingFrameRefs);
+        AnimationManager.current().allFrames(race.transportOpenKey, race.transportOpenFrames, 0, openingFrames, openingFrameRefs);
 
         for (int i=0;i<ships.length;i++)
             ships[i] = new LandingShip(i);
