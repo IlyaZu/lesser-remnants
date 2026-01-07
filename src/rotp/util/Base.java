@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -307,24 +307,8 @@ public interface Base {
     }
     public default int min(int v1, int v2)           { return Math.min(v1,v2); }
     public default int min(int v1, int v2, int v3)   { return min(v1,min(v2,v3)); }
-    public default int min(int... n) {
-        int min = n[0];
-        for (int i=1;i<n.length;i++) {
-            if (n[i] < min)
-                min = n[i];
-        }
-        return min;
-    }
     public default float min(float v1, float v2)            { return Math.min(v1,v2); }
     public default float min(float v1, float v2, float v3) { return min(v1,min(v2,v3)); }
-    public default float min(float... n) {
-        float min = n[0];
-        for (int i=1;i<n.length;i++) {
-            if (n[i] < min)
-                min = n[i];
-        }
-        return min;
-    }
     public default float avg(float v1, float v2)            { return (v1+v2)/2; }
     public default String fmt(float d, int n) {
         if (n == 0)
