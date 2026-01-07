@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,8 +76,7 @@ public class Race implements Base, Serializable {
     public String transportKey;
     public String transportDescKey;
     public String transportOpenKey;
-    public int transportDescFrames, transportOpenFrames;
-    public String shipAudioKey;
+    public int transportOpenFrames;
     public RaceCombatAnimation troopNormal = new RaceCombatAnimation();
     public RaceCombatAnimation troopHostile = new RaceCombatAnimation();
     public RaceCombatAnimation troopDeath1 = new RaceCombatAnimation();
@@ -138,7 +137,6 @@ public class Race implements Base, Serializable {
     private String title;
     private String fullTitle;
     private int homeworldKey;
-    public int transportLandingFrames;
     public int dialogLeftMargin, dialogRightMargin,  dialogTopY;
     public float diploScale, diploOpacity;
     public int diploXOffset, diploYOffset;
@@ -465,7 +463,6 @@ public class Race implements Base, Serializable {
             err("Invalid TransportDesc string: ", s);
 
         transportDescKey  = concat(vals.get(0), ",", vals.get(2));
-        transportDescFrames = parseInt(vals.get(1));
     }
     public void parseTransportOpen(String s) {
         List<String> vals = substrings(s, ',');
