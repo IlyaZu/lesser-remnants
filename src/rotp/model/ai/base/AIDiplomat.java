@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -204,7 +204,6 @@ public class AIDiplomat implements Base, Diplomat {
         float chance = v.embassy().relations();
         chance += empire.leader().isXenophobic() ? -20 : 0;
         chance += empire.leader().isTechnologist() ? 10 : 0;
-        chance += v.embassy().alliedWithEnemy() ? -100 : 0;
         return chance;
     }
     //-----------------------------------
@@ -276,8 +275,6 @@ public class AIDiplomat implements Base, Diplomat {
     private boolean willingToOfferTrade(EmpireView v, int level) {
         if (!canOfferTradeTreaty(v.empire()))
             return false;
-        if (v.embassy().alliedWithEnemy())
-            return false;
         if (v.trade().active() && (v.trade().currentProfit() <= 0))
             return false;
         if (!v.trade().atProfitLimit())
@@ -303,7 +300,6 @@ public class AIDiplomat implements Base, Diplomat {
         chance += v.empire().diplomacyBonus();
         chance += empire.leader().isXenophobic() ? -20 : 0;
         chance += empire.leader().isIndustrialist() ? 10 : 0;
-        chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
     }
     //-----------------------------------
@@ -511,7 +507,6 @@ public class AIDiplomat implements Base, Diplomat {
         float chance = v.embassy().relations();
         chance += v.empire().diplomacyBonus();
         chance += acceptPactMod(empire.leader());
-        chance += v.embassy().alliedWithEnemy() ? -50 : 0;
         return chance;
     }
     private float acceptPactMod(Leader leader) {
@@ -604,8 +599,6 @@ public class AIDiplomat implements Base, Diplomat {
         }
         // is asking for an alliance even allowed per game rules
         if (!canOfferAlliance(e))
-            return false;
-        if (v.embassy().alliedWithEnemy())
             return false;
         // do we like the other to want to join an alliance
         return calculateAllianceChance(v) > 70;
@@ -1024,10 +1017,6 @@ public class AIDiplomat implements Base, Diplomat {
         float warThreshold = -80;
         warThreshold += v.empire().leader().isPacifist() ? -10 : 0;
         warThreshold += v.empire().leader().isAggressive() ? 10 : 0;
-        
-        // allied with an enemy? not good
-        if (v.embassy().alliedWithEnemy())
-            warThreshold += 30;
         
         return (v.embassy().relations() <= warThreshold);
     }

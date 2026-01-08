@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -260,17 +260,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public boolean diplomatGone()      { return diplomatGoneTimer > 0;  }
     public boolean wantWar()           { return otherEmbassy().relations() < -50; }
     public boolean isAlly()            { return alliance(); }
-    public boolean alliedWithEnemy() {
-        List<Empire> myEnemies = owner().enemies();
-        List<Empire> hisAllies = empire().allies();
-        for (Empire cv1 : myEnemies) {
-            for (Empire cv2 : hisAllies) {
-                if (cv1 == cv2)
-                    return true;
-            }
-        }
-        return false;
-    }
     public boolean canAttackWithoutPenalty() { return war() || noTreaty(); }
     public boolean canAttackWithoutPenalty(StarSystem s) {
         if (war() || noTreaty())
