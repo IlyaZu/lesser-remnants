@@ -2200,7 +2200,7 @@ public final class Empire implements Base, NamedObject, Serializable {
    
     public static Comparator<Empire> TOTAL_POPULATION = (Empire o1, Empire o2) -> o2.totalPlanetaryPopulation().compareTo(o1.totalPlanetaryPopulation());
     public static Comparator<Empire> TOTAL_PRODUCTION = (Empire o1, Empire o2) -> o2.totalPlanetaryProduction().compareTo(o1.totalPlanetaryProduction());
-    public static Comparator<Empire> AVG_TECH_LEVEL   = (Empire o1, Empire o2) -> o2.tech.avgTechLevel().compareTo(o1.tech.avgTechLevel());
+    public static Comparator<Empire> AVG_TECH_LEVEL   = (Empire o1, Empire o2) -> Float.compare(o2.tech.avgTechLevel(), o1.tech.avgTechLevel());
     public static Comparator<Empire> TOTAL_FLEET_SIZE = (Empire o1, Empire o2) -> o2.totalFleetSize().compareTo(o1.totalFleetSize());
     public static Comparator<Empire> RACE_NAME        = (Empire o1,   Empire o2)   -> o1.raceName().compareTo(o2.raceName());
     public static Comparator<Empire> HISTORICAL_SIZE  = (Empire o1, Empire o2) -> Integer.compare(o2.numColoniesHistory, o1.numColoniesHistory);
