@@ -124,15 +124,13 @@ public class AIDiplomat implements Base, Diplomat {
         if (tech.isObsolete(requestor))
             return new ArrayList<>();
         
-        EmpireView view = empire.viewForEmpire(requestor);
-
-        // what is this times the value of the request tech?dec
-        float maxTechValue = techDealValue(view) * max(tech.level(), tech.baseValue(requestor));
-
-        // what are all of the unknown techs that we could ask for
         DiplomaticEmbassy embassy = requestor.viewForEmpire(empire).embassy();
+
+        // what is this times the value of the request tech?
+        float valueFactor = embassy.alliance()? 1.0f : embassy.pact()? 0.9f : 0.8f;
+        float maxTechValue = valueFactor * max(tech.level(), tech.baseValue(requestor));
+
         List<Tech> allUnknownTechs = embassy.offerableTechnologies();
-        
         // include only those techs which have a research value >= the trade value
         // of the requestedTech we would be trading away
         int maxTechs = 3;
@@ -147,14 +145,6 @@ public class AIDiplomat implements Base, Diplomat {
             }
         }
         return worthyTechs;
-    }
-    private float techDealValue(EmpireView v) {
-        if (v.embassy().alliance())
-            return 1.0f;
-        else if (v.embassy().pact())
-            return 0.9f;
-        else
-            return 0.8f;
     }
     private boolean decidedToExchangeTech(EmpireView v) {
         if (!canExchangeTechnology(v.empire()))
