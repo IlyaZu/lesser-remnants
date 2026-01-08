@@ -53,7 +53,7 @@ public class ExpansionIncident extends DiplomaticIncident {
         else if (view.owner().pactWith(empireId))
             multiplier /= 1.5;
         
-        float n = -5*((numSystems*numSystems/maxSystems/maxSystems) - 1);
+        float n = -5*((numSystems/maxSystems) - 1);
 
         return Math.max(-12.5f, multiplier*n);
     }
