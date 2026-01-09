@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ public class DiplomaticNotification implements TurnNotification, Base {
     public boolean returnToMap()         { return returnToMap; }
     public void view(EmpireView v)       { view = v; talker = v.owner(); }
     @Override
-    public String displayOrder() { return incident == null ? DIPLOMATIC_MESSAGE : incident.displayOrder(); }
+    public String displayOrder() { return DIPLOMATIC_MESSAGE; }
     @Override
     public void notifyPlayer()   {
         RotPUI.instance().selectDiplomaticMessagePanel(this);
