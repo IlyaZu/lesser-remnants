@@ -17,7 +17,6 @@
 package rotp.model.incidents;
 
 import java.io.Serializable;
-import rotp.ui.notifications.TurnNotification;
 import rotp.util.Base;
 
 public abstract class DiplomaticIncident implements Base, Serializable {
@@ -49,7 +48,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(severity(),1)); }
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
-    public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
 
     public boolean isSpying()            { return false; }
 
