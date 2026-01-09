@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,11 +47,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     @Override
     public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(severity(),1)); }
-    public boolean moreSevere(DiplomaticIncident inc) {
-        if  (inc == null)
-            return true;
-        return Math.abs(severity()) > Math.abs(inc.severity());
-    }
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
     public String displayOrder()         { return TurnNotification.DIPLOMATIC_MESSAGE; }
