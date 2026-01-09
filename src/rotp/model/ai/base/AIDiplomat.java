@@ -894,7 +894,7 @@ public class AIDiplomat implements Base, Diplomat {
         log(view+": checkIssuePraise");
         DiplomaticIncident maxIncident = null;
         for (DiplomaticIncident ev: view.embassy().newIncidents()) {
-            if (ev.triggersPraise() && ev.moreSevere(maxIncident))
+            if (ev.triggersPraise() && moreSevere(ev, maxIncident))
                 maxIncident = ev;
         }
 
@@ -926,7 +926,7 @@ public class AIDiplomat implements Base, Diplomat {
         DiplomaticIncident maxIncident = null;
         for (DiplomaticIncident ev: emb.newIncidents()) {
             log(view.toString(), "new incident:", ev.toString());
-            if (ev.triggersWarning() && ev.moreSevere(maxIncident))
+            if (ev.triggersWarning() && moreSevere(ev, maxIncident))
                 maxIncident = ev;
         }
         
@@ -943,6 +943,11 @@ public class AIDiplomat implements Base, Diplomat {
             DiplomaticNotification.create(view, maxIncident, maxIncident.warningMessageId());
         }
         return true;
+    }
+    private boolean moreSevere(DiplomaticIncident next, DiplomaticIncident previous) {
+        if  (previous == null)
+            return true;
+        return Math.abs(next.severity()) > Math.abs(previous.severity());
     }
     private boolean decidedToDeclareWar(EmpireView view) {
         if (empire.isPlayerControlled())
