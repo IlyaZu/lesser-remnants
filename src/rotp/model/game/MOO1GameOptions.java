@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -307,7 +307,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         int typeIndex = 0;
         switch (s.starType().key()) {
             case StarType.RED:    pcts = redPcts;    break;
-            case StarType.ORANGE:  pcts = greenPcts;  break;
+            case StarType.GREEN:  pcts = greenPcts;  break;
             case StarType.YELLOW: pcts = yellowPcts; break;
             case StarType.BLUE:   pcts = bluePcts;   break;
             case StarType.WHITE:  pcts = whitePcts; break;
@@ -506,7 +506,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             case StarType.RED:
                 r1 = .06f;  r2 = .20f;
                 break;
-            case StarType.ORANGE:
+            case StarType.GREEN:
                 r1 = .135f; r2 = .30f;
                 break;
             case StarType.PURPLE:
@@ -529,7 +529,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             case StarType.RED:
             case StarType.WHITE:
             case StarType.YELLOW:
-            case StarType.ORANGE:
+            case StarType.GREEN:
                 switch(p.type().key()) {
                     case PlanetType.RADIATED:   r1 = .2625f; r2 = .35f; break;
                     case PlanetType.TOXIC:      r1 = .225f;  r2 = .30f; break;

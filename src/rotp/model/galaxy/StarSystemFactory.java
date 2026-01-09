@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class StarSystemFactory implements Base {
         if (starTypeRoll <= .30) {
             return StarType.RED;
         } else if (starTypeRoll <= .55) {
-            return StarType.ORANGE;
+            return StarType.GREEN;
         } else if (starTypeRoll <= .70) {
             return StarType.YELLOW;
         } else if (starTypeRoll <= .85) {

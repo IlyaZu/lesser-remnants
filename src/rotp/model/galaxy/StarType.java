@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import rotp.util.Base;
 public class StarType implements Base {
     public static final String RED = "RED";
     public static final String YELLOW = "YELLOW";
-    public static final String ORANGE = "ORANGE";
     public static final String GREEN = "GREEN";
     public static final String WHITE = "WHITE";
     public static final String BLUE = "BLUE";
@@ -42,7 +41,6 @@ public class StarType implements Base {
     static {
             addStarType(RED);
             addStarType(YELLOW);
-            addStarType(ORANGE);
             addStarType(GREEN);
             addStarType(WHITE);
             addStarType(BLUE);
@@ -115,10 +113,9 @@ public class StarType implements Base {
             description = "YELLOW_STAR_DESCRIPTION";
             color = Color.yellow;
             break;
-        case ORANGE:
         case GREEN:
             description = "ORANGE_STAR_DESCRIPTION";
-            color = new Color(255,128,0);
+            color = new Color(0,255,128);
             break;
         case WHITE:
             description = "WHITE_STAR_DESCRIPTION";
