@@ -1822,14 +1822,14 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         return max(spyPts, visiblePts);
     }
-    public Float totalFleetSize() {
+    public float totalFleetSize() {
         float pts = 0;
         List<ShipFleet> fleets = galaxy().ships.allFleets(id);
         for (ShipFleet fl: fleets)
             pts += fl.hullPoints();
         return pts;
     }
-    public Float totalArmedFleetSize() {
+    public float totalArmedFleetSize() {
         float pts = 0;
         int[] counts = galaxy().ships.shipDesignCounts(id);
         for (int i=0;i<ShipDesignLab.MAX_DESIGNS; i++) {
@@ -1846,7 +1846,7 @@ public final class Empire implements Base, NamedObject, Serializable {
             pts += fl.bcValue();
         return pts;
     }
-    public Float totalEmpirePopulation() {
+    public float totalEmpirePopulation() {
         float totalPop = 0;
         List<StarSystem> systems = new ArrayList<>(allColonizedSystems());
         for (StarSystem sys: systems)
@@ -1857,7 +1857,7 @@ public final class Empire implements Base, NamedObject, Serializable {
                 
         return totalPop;
     }
-    public Float totalPlanetaryPopulation() {
+    public float totalPlanetaryPopulation() {
         float totalPop = 0;
         List<StarSystem> systems = new ArrayList<>(allColonizedSystems());
         for (StarSystem sys: systems)
@@ -1899,7 +1899,7 @@ public final class Empire implements Base, NamedObject, Serializable {
         totalEmpireMissileBaseCost = -999;
         inRange = -1;
     }
-    public Float totalPlanetaryProduction() {
+    public float totalPlanetaryProduction() {
         if (totalEmpireProduction <= 0) {
             float totalProductionBC = 0;
             List<StarSystem> systems = new ArrayList<>(allColonizedSystems());
@@ -1982,7 +1982,7 @@ public final class Empire implements Base, NamedObject, Serializable {
             totalResearchBC += sys.colony().totalPlanetaryResearchSpending();
         return totalResearchBC;
     }
-    public Float totalPlanetaryFactories() {
+    public float totalPlanetaryFactories() {
         float factories = 0;
         List<StarSystem> systems = new ArrayList<>(allColonizedSystems());
         for (StarSystem sys: systems)
@@ -2198,10 +2198,10 @@ public final class Empire implements Base, NamedObject, Serializable {
         return contacts;
     }
    
-    public static Comparator<Empire> TOTAL_POPULATION = (Empire o1, Empire o2) -> o2.totalPlanetaryPopulation().compareTo(o1.totalPlanetaryPopulation());
-    public static Comparator<Empire> TOTAL_PRODUCTION = (Empire o1, Empire o2) -> o2.totalPlanetaryProduction().compareTo(o1.totalPlanetaryProduction());
-    public static Comparator<Empire> AVG_TECH_LEVEL   = (Empire o1, Empire o2) -> Float.compare(o2.tech.avgTechLevel(), o1.tech.avgTechLevel());
-    public static Comparator<Empire> TOTAL_FLEET_SIZE = (Empire o1, Empire o2) -> o2.totalFleetSize().compareTo(o1.totalFleetSize());
-    public static Comparator<Empire> RACE_NAME        = (Empire o1,   Empire o2)   -> o1.raceName().compareTo(o2.raceName());
-    public static Comparator<Empire> HISTORICAL_SIZE  = (Empire o1, Empire o2) -> Integer.compare(o2.numColoniesHistory, o1.numColoniesHistory);
+    public static Comparator<Empire> TOTAL_POPULATION = (o1, o2) -> Float.compare(o2.totalPlanetaryPopulation(), o1.totalPlanetaryPopulation());
+    public static Comparator<Empire> TOTAL_PRODUCTION = (o1, o2) -> Float.compare(o2.totalPlanetaryProduction(), o1.totalPlanetaryProduction());
+    public static Comparator<Empire> AVG_TECH_LEVEL   = (o1, o2) -> Float.compare(o2.tech.avgTechLevel(), o1.tech.avgTechLevel());
+    public static Comparator<Empire> TOTAL_FLEET_SIZE = (o1, o2) -> Float.compare(o2.totalFleetSize(), o1.totalFleetSize());
+    public static Comparator<Empire> RACE_NAME        = (o1, o2) -> o1.raceName().compareTo(o2.raceName());
+    public static Comparator<Empire> HISTORICAL_SIZE  = (o1, o2) -> Integer.compare(o2.numColoniesHistory, o1.numColoniesHistory);
 }
