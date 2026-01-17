@@ -62,7 +62,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     private String name = "";
     private float x, y;
     private Planet planet;
-    private final String starTypeKey;
+    private final StarType starType;
     public final int id;
 
     private boolean piracy = false;
@@ -80,7 +80,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     
     private transient SystemTransportSprite transportSprite;
     private transient ShipRelocationSprite rallySprite;
-    private transient StarType starType;
     private transient boolean hovering;
     private transient int twinkleCycle, twinkleOffset, drawRadius;
     private transient boolean displayed = false;
@@ -137,8 +136,8 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         for (int i=0;i<size;i++)
             nearbySystems[i] = nearSystems.get(i).id;
     }
-    public StarSystem(String starTypeKey, int id) {
-        this.starTypeKey = starTypeKey;
+    public StarSystem(StarType starType, int id) {
+        this.starType = starType;
         this.id = id;
     }
     @Override
@@ -178,9 +177,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         transportAmt = 0;
     }
     
-    public StarType starType()                  {
-        if (starType == null)
-            starType = StarType.keyed(starTypeKey);
+    public StarType starType() {
         return starType;
     }
     public boolean piracy()                     { return piracy; }

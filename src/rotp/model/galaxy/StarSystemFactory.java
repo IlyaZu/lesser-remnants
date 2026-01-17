@@ -23,12 +23,12 @@ import rotp.util.Base;
 public class StarSystemFactory implements Base {
 
     public StarSystem newNeutralSystem(Galaxy gal) {
-        String type = neutralStarType();
+        StarType type = neutralStarType();
         StarSystem sys = new StarSystem(type, gal.systemCount);
         return sys;
     }
     
-    private String neutralStarType() {
+    private StarType neutralStarType() {
         float starTypeRoll = random();
         if (starTypeRoll <= .30) {
             return StarType.RED;
@@ -46,7 +46,7 @@ public class StarSystemFactory implements Base {
     }
     
     public StarSystem newOrionSystem(Galaxy gal) {
-        String type = homeworldStarType();
+        StarType type = homeworldStarType();
         StarSystem sys = new StarSystem(type, gal.systemCount);
         sys.planet(PlanetFactory.createOrion(sys));
         sys.monster(new OrionGuardianShip());
@@ -55,13 +55,13 @@ public class StarSystemFactory implements Base {
     }
     
     public StarSystem newHomeworldSystem(Race r, Galaxy gal) {
-        String type = homeworldStarType();
+        StarType type = homeworldStarType();
         StarSystem sys = new StarSystem(type, gal.systemCount);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
     }
     
-    private String homeworldStarType() {
+    private StarType homeworldStarType() {
         return StarType.YELLOW;
     }
 }

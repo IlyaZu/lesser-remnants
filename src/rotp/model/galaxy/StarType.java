@@ -25,45 +25,33 @@ import java.util.HashMap;
 import rotp.ui.sprites.RoundGradientPaint;
 import rotp.util.Base;
 
-public class StarType implements Base {
-    public static final String RED = "RED";
-    public static final String YELLOW = "YELLOW";
-    public static final String GREEN = "GREEN";
-    public static final String WHITE = "WHITE";
-    public static final String BLUE = "BLUE";
-    public static final String PURPLE = "PURPLE";
+public enum StarType implements Base {
+    RED(Color.red, "RED_STAR_DESCRIPTION"),
+    YELLOW(Color.yellow, "YELLOW_STAR_DESCRIPTION"),
+    GREEN(new Color(0,255,128), "ORANGE_STAR_DESCRIPTION"),
+    WHITE(Color.white, "WHITE_STAR_DESCRIPTION"),
+    BLUE(Color.blue, "BLUE_STAR_DESCRIPTION"),
+    PURPLE(Color.magenta, "PURPLE_STAR_DESCRIPTION");
     
     private static final RoundGradientPaint rgp = new RoundGradientPaint();
-    private static final HashMap<String, StarType> typeMap = new HashMap<>();
-    public static StarType keyed(String s)       { return typeMap.get(s); }
-    private static void addStarType(String s)    { typeMap.put(s, new StarType(s)); }
 
-    static {
-            addStarType(RED);
-            addStarType(YELLOW);
-            addStarType(GREEN);
-            addStarType(WHITE);
-            addStarType(BLUE);
-            addStarType(PURPLE);
+    private final Color color;
+    private final String description;
+    private final HashMap<Integer, BufferedImage> images = new HashMap<>();
+
+    private StarType(Color color, String description) {
+        this.color = color;
+        this.description = description;
     }
 
-    private String key;
-    private Color color;
-    private String description;
-    private transient HashMap<Integer, BufferedImage> images;
-
-    public String key()               { return key; }
-    public Color color()              { return color; }
-    public String description()       { return description; }
-
-    @Override
-    public String toString()   { return concat("StarType: ", key); }
-
-    private HashMap<Integer, BufferedImage> images() {
-        if (images == null)
-            images = new HashMap<>();
-        return images;
+    public Color color() {
+        return color;
     }
+
+    public String description() {
+        return description;
+    }
+
     private int maxRadius() {
         if (veryLowMemory())
             return 30;
@@ -72,13 +60,15 @@ public class StarType implements Base {
         else
             return 80;
     }
+
     public BufferedImage image(int r, int f) {
         int r0 = min(r,scaled(maxRadius()));
         int key = (r*200)+f;
-        if (!images().containsKey(key))
-            images().put(key, createStarImage(r0,f));
-        return images().get(key);
+        if (!images.containsKey(key))
+            images.put(key, createStarImage(r0,f));
+        return images.get(key);
     }
+
     private BufferedImage createStarImage(int r, int f) {
         Color c = color();
         Color c0 = new Color(c.getRed(), c.getGreen(), c.getBlue(), 0);
@@ -100,35 +90,5 @@ public class StarType implements Base {
         g.fill(rect);
         g.dispose();
         return img;
-    }
-
-    private StarType(String s) {
-        key = s;
-        switch(key) {
-        case RED:
-            description = "RED_STAR_DESCRIPTION";
-            color = Color.red;
-            break;
-        case YELLOW:
-            description = "YELLOW_STAR_DESCRIPTION";
-            color = Color.yellow;
-            break;
-        case GREEN:
-            description = "ORANGE_STAR_DESCRIPTION";
-            color = new Color(0,255,128);
-            break;
-        case WHITE:
-            description = "WHITE_STAR_DESCRIPTION";
-            color = Color.white;
-            break;
-        case BLUE:
-            description = "BLUE_STAR_DESCRIPTION";
-            color  = Color.blue;
-            break;
-        case PURPLE:
-            description = "PURPLE_STAR_DESCRIPTION";
-            color = Color.magenta;
-            break;
-        }
     }
 }
