@@ -295,8 +295,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                         "PLANET_DEAD", "PLANET_TUNDRA", "PLANET_BARREN", "PLANET_MINIMAL", "PLANET_DESERT",
                         "PLANET_STEPPE", "PLANET_ARID", "PLANET_OCEAN", "PLANET_JUNGLE", "PLANET_TERRAN" };
 
-        float[] pcts;
-
         float[] redPcts =    { .05f, .10f, .15f, .20f, .25f, .30f, .35f, .40f, .50f, .60f, .75f, .85f, .95f, 1.0f };
         float[] greenPcts =  { .05f, .10f, .15f, .20f, .25f, .30f, .35f, .40f, .45f, .55f, .65f, .75f, .85f, 1.0f };
         float[] yellowPcts = { .00f, .00f, .00f, .05f, .05f, .10f, .15f, .20f, .25f, .30f, .40f, .50f, .60f, 1.0f };
@@ -304,19 +302,17 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         float[] whitePcts =  { .10f, .15f, .25f, .35f, .45f, .55f, .65f, .75f, .85f, .90f, .95f, 1.0f, 1.0f, 1.0f };
         float[] purplePcts = { .20f, .45f, .60f, .75f, .85f, .90f, .95f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 
-        int typeIndex = 0;
-        switch (s.starType().key()) {
-            case StarType.RED:    pcts = redPcts;    break;
-            case StarType.GREEN:  pcts = greenPcts;  break;
-            case StarType.YELLOW: pcts = yellowPcts; break;
-            case StarType.BLUE:   pcts = bluePcts;   break;
-            case StarType.WHITE:  pcts = whitePcts; break;
-            case StarType.PURPLE: pcts = purplePcts; break;
-            default:
-                pcts = redPcts; break;
-        }
+        float[] pcts = switch (s.starType()) {
+            case StarType.RED -> redPcts;
+            case StarType.GREEN -> greenPcts;
+            case StarType.YELLOW -> yellowPcts;
+            case StarType.BLUE -> bluePcts;
+            case StarType.WHITE -> whitePcts;
+            case StarType.PURPLE -> purplePcts;
+        };
 
         float r = random();
+        int typeIndex = 0;
         for (int i=0;i<pcts.length;i++) {
             if (r <= pcts[i]) {
                 typeIndex = i;
@@ -497,7 +493,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
         float r1 = 0;
         float r2 = 0;
-        switch(s.starType().key()) {
+        switch(s.starType()) {
             case StarType.BLUE:
             case StarType.WHITE:
             case StarType.YELLOW:
@@ -513,7 +509,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                 // can never have poor/ultrapoor
                 return;
             default:
-                throw new RuntimeException(concat("Invalid star type for options: ", s.starType().key()));
+                throw new RuntimeException("Invalid star type for options: " + s.starType());
         }
         float r = random();
         if (r <= r1)
@@ -525,7 +521,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         // planet/star ratios per Table 3-9a of Strategy Guide
         float r1 = 0;
         float r2 = 0;
-        switch(s.starType().key()) {
+        switch(s.starType()) {
             case StarType.RED:
             case StarType.WHITE:
             case StarType.YELLOW:
@@ -565,7 +561,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                 }
                 break;
             default:
-                throw new RuntimeException(concat("Invalid star type for options: ", s.starType().key()));
+                throw new RuntimeException("Invalid star type for options: " + s.starType());
         }
 
         float r = random();
