@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,15 +33,11 @@ public class AtWarWithAllyIncident extends DiplomaticIncident {
     }
 
     private AtWarWithAllyIncident(EmpireView ev, Empire other) {
-        super(-2.5f);
+        super(-2.5f, "INC_AT_WAR_WITH_ALLY_TITLE", "INC_AT_WAR_WITH_ALLY_DESC");
         empMe = ev.owner().id;
         empYou = ev.empire().id;
         empOther = other.id;
     }
-    @Override
-    public String title()            { return text("INC_AT_WAR_WITH_ALLY_TITLE"); }
-    @Override
-    public String description()      { return  decode(text("INC_AT_WAR_WITH_ALLY_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import rotp.ui.diplomacy.DialogueManager;
 public class CouncilVoteIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     
-    private final int voteeId; // who was voted for... could be null on abstention
     private final int voterId; // the voter getting the praise/warning
     private final int candidateId; // the candidate giving the praise/warning
     private final int rivalId; // the candidate's rival
@@ -34,22 +33,10 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         candidate.viewForEmpire(voter).embassy().addIncident(inc);
     }
     private CouncilVoteIncident(Empire candidate, Empire voter, Empire votee, Empire rival) {
-        super(calculateSeverity(votee, candidate));
-        voteeId = id(votee);
+        super(calculateSeverity(votee, candidate), "INC_COUNCIL_VOTE_TITLE", getDescriptionKey(votee, candidate));
         voterId = voter.id;
         candidateId = candidate.id;
         rivalId = rival.id;
-    }
-    @Override
-    public String title()               { return text("INC_COUNCIL_VOTE_TITLE"); }
-    @Override
-    public String description() {
-        if (candidateId == voteeId)
-            return decode(text("INC_COUNCIL_VOTE_FOR_DESC"));
-        else if (voteeId == Empire.NULL_ID)
-            return decode(text("INC_COUNCIL_ABSTAIN_DESC"));
-        else
-            return decode(text("INC_COUNCIL_VOTE_AGAINST_DESC"));
     }
     private static float calculateSeverity(Empire votee, Empire candidate) {
         if (votee == null) {
@@ -61,6 +48,15 @@ public class CouncilVoteIncident extends DiplomaticIncident {
         } else {
             // Voted against
             return -20;
+        }
+    }
+    private static String getDescriptionKey(Empire votee, Empire candidate) {
+        if (votee == null) {
+            return "INC_COUNCIL_ABSTAIN_DESC";
+        } else if (votee.id == candidate.id) {
+            return "INC_COUNCIL_VOTE_FOR_DESC";
+        } else {
+            return "INC_COUNCIL_VOTE_AGAINST_DESC";
         }
     }
     @Override

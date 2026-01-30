@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public class GenocideIncident extends DiplomaticIncident {
         }
     }
     private GenocideIncident(Empire obs, Empire att, Empire vic) {
-        super(calculateSeverity(obs, att, vic));
+        super(calculateSeverity(obs, att, vic), "INC_GENOCIDE_TITLE", "INC_GENOCIDE_DESC");
         empAttacker = att.id;
         empVictim = vic.id;
     }
@@ -41,10 +41,6 @@ public class GenocideIncident extends DiplomaticIncident {
             severity /= 2;
         return severity;
     }
-    @Override
-    public String title()            { return text("INC_GENOCIDE_TITLE"); }
-    @Override
-    public String description()      { return decode(text("INC_GENOCIDE_DESC")); }
     @Override
     public String warningMessageId() {  return DialogueManager.WARNING_GENOCIDE; }
     @Override

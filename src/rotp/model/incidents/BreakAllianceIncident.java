@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,15 +29,11 @@ public class BreakAllianceIncident extends DiplomaticIncident {
         return inc;
     }
     private BreakAllianceIncident(Empire e1, Empire e2, boolean spy) {
-        super(-30);
+        super(-30, "INC_BROKE_ALLIANCE_TITLE", "INC_BROKE_ALLIANCE_DESC");
         empBreaker = e1.id;
         empMe = e2.id;
         spying = spy;
     }
-    @Override
-    public String title()            { return text("INC_BROKE_ALLIANCE_TITLE"); }
-    @Override
-    public String description()      { return  decode(text("INC_BROKE_ALLIANCE_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

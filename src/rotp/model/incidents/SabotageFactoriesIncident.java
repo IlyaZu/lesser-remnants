@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
         otherView.embassy().addIncident(new SabotageFactoriesIncident(otherView, m));
     }
     private SabotageFactoriesIncident(EmpireView ev, SabotageMission m) {
-        super(calculateSeverity(ev, m));
+        super(calculateSeverity(ev, m), "INC_DESTROYED_FACTORIES_TITLE", "INC_DESTROYED_FACTORIES_DESC");
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
         sysId = m.starSystem().id;
@@ -72,10 +72,6 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     private String systemName()      { return player().sv.name(sysId); }
     @Override
     public boolean isSpying()        { return true; }
-    @Override
-    public String title()            { return text("INC_DESTROYED_FACTORIES_TITLE"); }
-    @Override
-    public String description()      { return decode(text("INC_DESTROYED_FACTORIES_DESC")); }
     @Override
     public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_SABOTAGE; }
     @Override

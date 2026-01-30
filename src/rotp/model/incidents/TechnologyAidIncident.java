@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public class TechnologyAidIncident extends DiplomaticIncident {
             EnemyAidIncident.create(enemy, emp, donor, techId);
     }
     private TechnologyAidIncident(Empire emp, Empire donor, String tId) {
-        super(calculateSeverity(emp, tId));
+        super(calculateSeverity(emp, tId), "INC_TECHNOLOGY_AID_TITLE", "INC_TECHNOLOGY_AID_DESC");
         empYou = donor.id;
         empMe = emp.id;
         techId = tId;
@@ -45,12 +45,6 @@ public class TechnologyAidIncident extends DiplomaticIncident {
 
         float pct = rpValue / emp.totalPlanetaryProduction();
         return Math.min(15,25*pct);
-    }
-    @Override
-    public String title()        { return text("INC_TECHNOLOGY_AID_TITLE"); }
-    @Override
-    public String description()  {
-        return decode(text("INC_TECHNOLOGY_AID_DESC"));
     }
     @Override
     public String decode(String s) {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ public class TrespassingIncident extends DiplomaticIncident {
     }
 
     private TrespassingIncident(EmpireView ev, StarSystem sys, ShipFleet fl) {
-        super(calculateSeverity(sys, fl));
+        super(calculateSeverity(sys, fl), "INC_TRESPASSING_TITLE", "INC_TRESPASSING_DESC");
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
@@ -64,10 +64,6 @@ public class TrespassingIncident extends DiplomaticIncident {
     }
 
     private String systemName()         { return player().sv.name(sysId); }
-    @Override
-    public String title()               { return text("INC_TRESPASSING_TITLE", systemName()); }
-    @Override
-    public String description()         { return decode(text("INC_TRESPASSING_DESC")); }
     @Override
     public String warningMessageId()    { return DialogueManager.WARNING_TRESPASSING; }
     @Override

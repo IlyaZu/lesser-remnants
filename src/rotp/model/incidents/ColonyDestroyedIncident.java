@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,17 +34,13 @@ public class ColonyDestroyedIncident extends DiplomaticIncident {
         r.defender().viewForEmpire(r.attacker()).embassy().addIncident(inc);
     }
     private ColonyDestroyedIncident(CombatResults r) {
-        super(-5 + Math.max(-10f, -r.popDestroyed()/4.0f));
+        super(-5 + Math.max(-10f, -r.popDestroyed()/4.0f), "INC_DESTROYED_COLONY_TITLE", "INC_DESTROYED_COLONY_DESC");
         sysId = r.system().id;
         empDefender = r.defender().id;
         empAttacker = r.attacker().id;
         popLost = r.popDestroyed();
     }
     private String systemName() { return player().sv.name(sysId); }
-    @Override
-    public String title()         { return text("INC_DESTROYED_COLONY_TITLE", systemName(), str(popLost)); }
-    @Override
-    public String description()   { return  decode(text("INC_DESTROYED_COLONY_DESC")); }
     @Override
     public String declareWarId()  { return DialogueManager.DECLARE_ATTACKED_WAR; }
     @Override

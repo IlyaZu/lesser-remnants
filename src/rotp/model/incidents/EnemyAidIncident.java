@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         return inc;
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, int amt) {
-        super(calculateFinancialAidSeverity(emp, amt));
+        super(calculateFinancialAidSeverity(emp, amt), "INC_ENEMY_AID_TITLE", "INC_ENEMY_AID_MONEY_DESC");
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;
@@ -62,7 +62,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         return -Math.min(5, 5*pct);
     }
     private EnemyAidIncident(Empire emp, Empire enemy, Empire donor, String tId) {
-        super(calculateTechAidSeverity(enemy, tId));
+        super(calculateTechAidSeverity(enemy, tId), "INC_ENEMY_AID_TITLE", "INC_ENEMY_AID_TECH_DESC");
         empMe = emp.id;
         empYou = donor.id;
         empEnemy = enemy.id;
@@ -74,10 +74,6 @@ public class EnemyAidIncident extends DiplomaticIncident {
         float pct = rpValue / enemy.totalPlanetaryProduction();
         return -Math.min(10, 15*pct);
     }
-    @Override
-    public String title()        { return text("INC_ENEMY_AID_TITLE"); }
-    @Override
-    public String description()  { return techId == null ? decode(text("INC_ENEMY_AID_MONEY_DESC")) :  decode(text("INC_ENEMY_AID_TECH_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class ExpansionIncident extends DiplomaticIncident {
             view.embassy().addIncident(new ExpansionIncident(view,numberSystems, maxSystemsWithoutPenalty));
     }
     private ExpansionIncident(EmpireView ev, int num, float max) {
-        super(calculateSeverity(ev, num, max));
+        super(calculateSeverity(ev, num, max), "INC_EXPANSION_TITLE", "INC_EXPANSION_DESC");
         numSystems = num;
         empYou = ev.empire().id;
     }
@@ -57,10 +57,6 @@ public class ExpansionIncident extends DiplomaticIncident {
 
         return Math.max(-12.5f, multiplier*n);
     }
-    @Override
-    public String title()            { return text("INC_EXPANSION_TITLE"); }
-    @Override
-    public String description()      { return decode(text("INC_EXPANSION_DESC")); }
     @Override
     public String warningMessageId() { return  galaxy().empire(empYou).newSystems().isEmpty() ? "" :DialogueManager.WARNING_EXPANSION; }
     @Override

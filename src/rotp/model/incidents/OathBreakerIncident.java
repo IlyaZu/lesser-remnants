@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ public class OathBreakerIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     private static final float ALLIANCE_SEV = -30;
     private static final float PACT_SEV = -20;
-    private final int oathBreakType;
     private final int empBreaker;
     private final int empVictim;
     private final boolean spying;
@@ -62,26 +61,18 @@ public class OathBreakerIncident extends DiplomaticIncident {
         }
     }
     private OathBreakerIncident(Empire brk, Empire vic, Empire obs, int type, float sev, boolean spy) {
-        super(calculateSeverity(obs, sev));
+        super(calculateSeverity(obs, sev), "INC_OATHBREAKER_TITLE", getDescriptionKey(type));
         empBreaker = brk.id;
         empVictim = vic.id;
         spying = spy;
-        oathBreakType = type;
         notify = vic == obs;
     }
     private static float calculateSeverity(Empire obs, float sev) {
         float multiplier = obs.leader().isHonorable() ? 2 : 1;
         return Math.max(-30,sev) * multiplier;
     }
-    @Override
-    public String title()        { return text("INC_OATHBREAKER_TITLE"); }
-    @Override
-    public String description()  {
-        switch (oathBreakType) {
-            case 1: return decode(text("INC_BROKE_ALLIANCE_DESC"));
-            case 2: return decode(text("INC_BROKE_PACT_DESC"));
-        }
-        return "";
+    private static String getDescriptionKey(int type) {
+        return type == 1 ? "INC_BROKE_ALLIANCE_DESC" : "INC_BROKE_PACT_DESC";
     }
     @Override
     public String warningMessageId() { return notify ? DialogueManager.WARNING_OATHBREAKER : ""; }

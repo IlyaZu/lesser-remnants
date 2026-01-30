@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,16 +85,12 @@ public class SkirmishIncident extends DiplomaticIncident {
     }
     
     private SkirmishIncident(EmpireView ev,CombatResults res, float sev) {
-        super(Math.max(-2.5f, sev/4));
+        super(Math.max(-2.5f, sev/4), "INC_SKIRMISH_TITLE", "INC_SKIRMISH_DESC");
         sysId = res.system().id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
     }
     private String systemName() { return player().sv.name(sysId); }
-    @Override
-    public String title()               { return text("INC_SKIRMISH_TITLE"); }
-    @Override
-    public String description()         { return decode(text("INC_SKIRMISH_DESC")); }
     @Override
     public String warningMessageId() {  return DialogueManager.WARNING_SKIRMISH; }
     @Override

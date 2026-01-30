@@ -24,9 +24,15 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     private final int turnOccurred = galaxy().currentTurn();
     private final float severity;
+    private final String titleKey;
+    private final String descriptionKey;
     
-    public DiplomaticIncident(float severity) {
+    public DiplomaticIncident(float severity,
+            String titleKey, String descriptionKey) {
+        
         this.severity = severity;
+        this.titleKey = titleKey;
+        this.descriptionKey = descriptionKey;
     }
     
     public int turnOccurred() {
@@ -37,8 +43,14 @@ public abstract class DiplomaticIncident implements Base, Serializable {
         return severity;
     }
 
-    public abstract String title();
-    public abstract String description();
+    public String title() {
+        return text(titleKey);
+    }
+
+    public String description() {
+        return decode(text(descriptionKey));
+    }
+
     public String praiseMessageId()      { return ""; }
     public String warningMessageId()     { return ""; }
     public String declareWarId()         { return ""; }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,15 +27,11 @@ public class KillGuardianIncident extends DiplomaticIncident {
         return inc;
     }
     private KillGuardianIncident(int e1, int e2, String key) {
-        super(100);
+        super(100, "INC_KILLED_GUARDIAN_TITLE", "INC_KILLED_GUARDIAN_DESC");
         empMe = e1;
         empYou = e2;
         monsterKey = key;
     }
-    @Override
-    public String title()         { return text("INC_KILLED_GUARDIAN_TITLE", text(monsterKey)); }
-    @Override
-    public String description()   { return decode(text("INC_KILLED_GUARDIAN_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);
