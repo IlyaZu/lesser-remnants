@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,15 +29,11 @@ public class SignPeaceIncident extends DiplomaticIncident {
         return inc;
     }
     private SignPeaceIncident(Empire e1, Empire e2, int dur) {
-        super(20);
+        super(20, "INC_SIGNED_PEACE_TITLE", "INC_SIGNED_PEACE_DESC");
         empMe = e1.id;
         empYou = e2.id;
         endTurn = turnOccurred()+dur;
     }
-    @Override
-    public String title()               { return text("INC_SIGNED_PEACE_TITLE"); }
-    @Override
-    public String description()       { return decode(text("INC_SIGNED_PEACE_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

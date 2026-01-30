@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,19 +43,15 @@ public class AssassinationIncident extends DiplomaticIncident {
         }
     }
     public AssassinationIncident(Empire ass, Empire vic) {
-        super(-50);
+        super(-50, "INC_ASSASSINATION_TITLE", "INC_ASSASSINATION_DESC");
         empAssassin = ass.id;
         empVictim = vic.id;
     }
     public AssassinationIncident(Empire ass, Empire vic, Empire vicEnemy) {
-        super(50);
+        super(50, "INC_ASSASSINATION_TITLE", "INC_ASSASSINATION_DESC");
         empAssassin = ass.id;
         empVictim = vic.id;
     }
-    @Override
-    public String title()            { return text("INC_ASSASSINATION_TITLE"); }
-    @Override
-    public String description()      { return  decode(text("INC_ASSASSINATION_DESC")); }
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_ASSASSIN_WAR; }
     @Override

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,17 +39,13 @@ public class ColonyCapturedIncident extends DiplomaticIncident {
             System.err.println("Null embassy for defender:"+defender.raceName()+" attacker:"+attacker.raceName());
     }
     public ColonyCapturedIncident(Empire att, Empire def, StarSystem sys, int p) {
-        super(-5 + Math.max(-7.5f, -p/4.0f));
+        super(-5 + Math.max(-7.5f, -p/4.0f), "INC_CAPTURED_COLONY_TITLE", "INC_CAPTURED_COLONY_DESC");
         empAttacker = att.id;
         empDefender = def.id;
         sysId = sys.id;
         popLost = p;
     }
     private String systemName() { return player().sv.name(sysId); }
-    @Override
-    public String title()         { return text("INC_CAPTURED_COLONY_TITLE", systemName()); }
-    @Override
-    public String description()   { return  decode(text("INC_CAPTURED_COLONY_DESC")); }
     @Override
     public String declareWarId()  { return DialogueManager.DECLARE_ATTACKED_WAR; }
     @Override

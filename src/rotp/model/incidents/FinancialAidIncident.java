@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class FinancialAidIncident extends DiplomaticIncident {
             EnemyAidIncident.create(enemy, emp, donor, amt);
     }
     private FinancialAidIncident(Empire emp, Empire donor, int amt) {
-        super(calculateSeverity(emp, amt));
+        super(calculateSeverity(emp, amt), "INC_FINANCIAL_AID_TITLE", "INC_FINANCIAL_AID_DESC");
         empYou = donor.id;
         empMe = emp.id;
         amount = amt;
@@ -42,10 +42,6 @@ public class FinancialAidIncident extends DiplomaticIncident {
         float pct = (float) amt / emp.totalPlanetaryProduction();
         return Math.min(10,10*pct);
     }
-    @Override
-    public String title()        { return text("INC_FINANCIAL_AID_TITLE"); }
-    @Override
-    public String description()  { return decode(text("INC_FINANCIAL_AID_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

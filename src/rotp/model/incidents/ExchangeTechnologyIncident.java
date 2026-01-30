@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,16 +31,12 @@ public class ExchangeTechnologyIncident extends DiplomaticIncident {
         return inc;
     }
     private ExchangeTechnologyIncident(Empire e1, Empire e2, Tech recv, Tech give) {
-        super(5);
+        super(5, "INC_TECH_EXCHANGE_TITLE", "INC_TECH_EXCHANGE_DESC");
         empMe = e1.id;
         empYou = e2.id;
         received = recv.id();
         given = give.id();
     }
-    @Override
-    public String title()        { return text("INC_TECH_EXCHANGE_TITLE"); }
-    @Override
-    public String description()  { return decode(text("INC_TECH_EXCHANGE_DESC")); }
     @Override
     public String decode(String s) {
         String s1 = super.decode(s);

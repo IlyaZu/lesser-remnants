@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,10 @@ public class EspionageTechIncident extends DiplomaticIncident {
     private String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
-        super(calculateSeverity(ev));
+        // FIXME Framing an empire for espionage currently does not work.
+        // This is because the incident is created and added to an embassy before the empire to frame is selected.
+        // As part of this fix replace PLACEGOLDER descriptioKey.
+        super(calculateSeverity(ev), "INC_TECH_STOLEN_TITLE", "PLACEHOLDER");
         ev.embassy().resetAllianceTimer();
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)
@@ -47,8 +50,6 @@ public class EspionageTechIncident extends DiplomaticIncident {
     }
     @Override
     public boolean isSpying()         { return true; }
-    @Override
-    public String title()             { return text("INC_TECH_STOLEN_TITLE"); }
     @Override
     public String description()       {
         if (empSpy == empThief)

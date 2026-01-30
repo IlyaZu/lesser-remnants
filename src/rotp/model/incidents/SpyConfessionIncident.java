@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     private final int missionType;
     
     public SpyConfessionIncident(EmpireView ev, SpyNetwork spies) {
-        super(calculateSeverity(ev, spies));
+        super(calculateSeverity(ev, spies), "INC_SPY_CONFESSION_TITLE", getDescriptionKey(spies));
         remainingSpies = spies.numActiveSpies();
         empVictim = ev.owner().id;
         empSpy = ev.empire().id;
@@ -45,19 +45,19 @@ public class SpyConfessionIncident extends DiplomaticIncident {
             return Math.max(-20, -10+view.embassy().currentSpyIncidentSeverity());
         }
     }
-    @Override
-    public boolean isSpying()           { return true; }
-    @Override
-    public String title()               { return text("INC_SPY_CONFESSION_TITLE"); }
-    @Override
-    public String description() {
-        switch(missionType) {
-            case 0: return decode(text("INC_SPY_CAPTURED_DESC"));
-            case 1: return decode(text("INC_SPY_CONFESS_ESPIONAGE_DESC"));
-            case 2: return decode(text("INC_SPY_CONFESS_SABOTAGE_DESC"));
-            default: return decode(text("INC_SPY_CAPTURED_DESC"));
+    private static String getDescriptionKey(SpyNetwork spies) {
+        if (spies.isEspionage()) {
+            return "INC_SPY_CONFESS_ESPIONAGE_DESC";
+        }
+        else if (spies.isSabotage()) {
+            return "INC_SPY_CONFESS_SABOTAGE_DESC";
+        }
+        else {
+            return "INC_SPY_CAPTURED_DESC";
         }
     }
+    @Override
+    public boolean isSpying()           { return true; }
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override

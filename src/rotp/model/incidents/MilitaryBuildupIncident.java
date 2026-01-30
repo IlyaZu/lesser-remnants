@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,16 +55,12 @@ public class MilitaryBuildupIncident extends DiplomaticIncident {
     }
     
     private MilitaryBuildupIncident(EmpireView ev, StarSystem sys, float sev) {
-        super(Math.max(-2.5f, sev));
+        super(Math.max(-2.5f, sev), "INC_MILITARY_BUILDUP_TITLE", "INC_MILITARY_BUILDUP_DESC");
         sysId = sys.id;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
     }
     private String systemName() { return player().sv.name(sysId); }
-    @Override
-    public String title()            { return text("INC_MILITARY_BUILDUP_TITLE"); }
-    @Override
-    public String description()   { return decode(text("INC_MILITARY_BUILDUP_DESC")); }
     @Override
     public String warningMessageId() { return DialogueManager.WARNING_BUILDUP; }
     @Override

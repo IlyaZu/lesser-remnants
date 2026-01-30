@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,15 +47,11 @@ public class AttackedEnemyIncident extends DiplomaticIncident {
         }
     }
     private AttackedEnemyIncident(Empire e1, Empire e2, Empire e3, float sev) {
-        super(sev);
+        super(sev, "INC_ATTACKED_ENEMY_TITLE", "INC_ATTACKED_ENEMY_DESC");
         empAttacker = e1.id;
         empEnemy = e2.id;
         empMe = e3.id;
     }
-    @Override
-    public String title()           { return text("INC_ATTACKED_ENEMY_TITLE", galaxy().empire(empEnemy).raceName()); }
-    @Override
-    public String description()      { return  decode(text("INC_ATTACKED_ENEMY_DESC")); }
     @Override
     public String praiseMessageId() { return DialogueManager.PRAISE_ATTACKED_ENEMY; }
     @Override

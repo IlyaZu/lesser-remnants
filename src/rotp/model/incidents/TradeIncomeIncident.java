@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ public class TradeIncomeIncident extends DiplomaticIncident {
         ev.embassy().addIncident(new TradeIncomeIncident(ev, profit, pct));
     }
     private TradeIncomeIncident(EmpireView ev, float p, float pct) {
-        super(Math.max(0, pct*12.5f)); // 0 to 3.125
+        // Severity range from 0 to 3.125
+        super(Math.max(0, pct*12.5f), "INC_TRADE_INCOME_TITLE", "INC_TRADE_INCOME_DESC");
         profit = p;
         empMe = ev.owner().id;
         empYou = ev.empire().id;
@@ -38,10 +39,6 @@ public class TradeIncomeIncident extends DiplomaticIncident {
     private DiplomaticEmbassy embassy() {
         return galaxy().empire(empMe).viewForEmpire(empYou).embassy();
     }
-    @Override
-    public String title()             { return text("INC_TRADE_INCOME_TITLE"); }
-    @Override
-    public String description()       { return decode(text("INC_TRADE_INCOME_DESC")); }
     @Override
     public void notifyOfPraise()      { embassy().tradePraised(true); }
     @Override

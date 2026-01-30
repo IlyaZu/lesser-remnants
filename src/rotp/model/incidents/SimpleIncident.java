@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import rotp.model.empires.EmpireView;
 public class SimpleIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     
-    private final String titleKey;
-    private final String descriptionKey;
     private final int myEmpireId;
     private final int yourEmpireId;
 
@@ -59,21 +57,9 @@ public class SimpleIncident extends DiplomaticIncident {
             String titleKey, String descriptionKey,
             int myEmpireId, int yourEmpireId) {
         
-        super(severity);
-        this.titleKey = titleKey;
-        this.descriptionKey = descriptionKey;
+        super(severity, titleKey, descriptionKey);
         this.myEmpireId = myEmpireId;
         this.yourEmpireId = yourEmpireId;
-    }
-
-    @Override
-    public String title() {
-        return text(titleKey);
-    }
-
-    @Override
-    public String description() {
-        return decode(text(descriptionKey));
     }
     
     @Override
