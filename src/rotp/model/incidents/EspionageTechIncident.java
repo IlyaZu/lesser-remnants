@@ -27,7 +27,7 @@ public class EspionageTechIncident extends DiplomaticIncident {
     private final int empSpy;
     private final int empVictim;
     private int empThief;
-    private String techId;
+    private final String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
         // FIXME Framing an empire for espionage currently does not work.

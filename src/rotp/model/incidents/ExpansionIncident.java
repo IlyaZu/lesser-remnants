@@ -22,7 +22,7 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class ExpansionIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    private int numSystems;
+    private final int numSystems;
     private final int empYou;
     
     public static void create(EmpireView view) {

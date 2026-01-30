@@ -22,8 +22,8 @@ import rotp.model.tech.Tech;
 
 public class TechnologyAidIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empMe;
-    public final int empYou;
+    private final int empMe;
+    private final int empYou;
     private final String techId;
     
     public static void create(Empire emp, Empire donor, String techId) {
