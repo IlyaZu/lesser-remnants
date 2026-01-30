@@ -20,7 +20,7 @@ public class KillGuardianIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     private final int empMe;
     private final int empYou;
-    private String monsterKey;
+    private final String monsterKey;
     
     public static KillGuardianIncident create(int e1, int e2, String key) {
         KillGuardianIncident inc = new KillGuardianIncident(e1, e2, key);

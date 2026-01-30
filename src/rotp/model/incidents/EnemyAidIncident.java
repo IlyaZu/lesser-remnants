@@ -22,11 +22,11 @@ import rotp.model.tech.Tech;
 
 public class EnemyAidIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empMe;
-    public final int empYou;
-    public final int empEnemy;
-    private int amount;
-    private String techId;
+    private final int empMe;
+    private final int empYou;
+    private final int empEnemy;
+    private final int amount;
+    private final String techId;
     
     public static EnemyAidIncident create(Empire emp, Empire enemy, Empire donor, int amt) {
         // it's possible to give aid to someone who is not at war with you but is
@@ -56,6 +56,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         empYou = donor.id;
         empEnemy = enemy.id;
         amount = amt;
+        techId = null;
     }
     private static float calculateFinancialAidSeverity(Empire emp, int amt) {
         float pct = (float) amt / emp.totalPlanetaryProduction();
@@ -67,6 +68,7 @@ public class EnemyAidIncident extends DiplomaticIncident {
         empYou = donor.id;
         empEnemy = enemy.id;
         techId = tId;
+        amount = 0;
     }
     private static float calculateTechAidSeverity(Empire enemy, String tId) {
         Tech tech = enemy.tech(tId);

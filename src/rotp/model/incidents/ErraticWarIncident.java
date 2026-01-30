@@ -21,8 +21,8 @@ import rotp.ui.diplomacy.DialogueManager;
 
 public class ErraticWarIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    final int empAggressor;
-    final int empVictim;
+    private final int empAggressor;
+    private final int empVictim;
     public static ErraticWarIncident create(Empire e1, Empire e2) {
         ErraticWarIncident inc = new ErraticWarIncident(e1, e2);
         return inc;

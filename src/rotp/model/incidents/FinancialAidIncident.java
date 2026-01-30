@@ -21,9 +21,9 @@ import rotp.model.empires.Empire;
 
 public class FinancialAidIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
-    public final int empMe;
-    public final int empYou;
-    private int amount;
+    private final int empMe;
+    private final int empYou;
+    private final int amount;
     
     public static void create(Empire emp, Empire donor, int amt) {
         DiplomaticEmbassy emb = emp.viewForEmpire(donor).embassy();
