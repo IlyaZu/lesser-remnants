@@ -147,23 +147,17 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void tradeRefused()              { tradeRefusalCount++; }
     public void tradeAccepted()             { tradeRefusalCount = 0; }
-    public boolean alreadyOfferedTrade()    { return tradeTimer == TRADE_DELAY; }
     public boolean readyForTech()           { return techTimer <= 0; }
     public void resetTechTimer()            { techTimer = TECH_DELAY; }
-    public boolean alreadyOfferedTech()     { return techTimer == TECH_DELAY; }
     public boolean readyForPeace()          { return peaceTimer <= 0; }
     public void resetPeaceTimer()           { resetPeaceTimer(1); }
     public void resetPeaceTimer(int mult)   { peaceTimer = mult*PEACE_DELAY; }
-    public boolean alreadyOfferedPeace()    { return peaceTimer == PEACE_DELAY; }
     public boolean readyForPact()           { return pactTimer <= 0; }
     public void resetPactTimer()            { pactTimer = PACT_DELAY; }
-    public boolean alreadyOfferedPact()     { return pactTimer == PACT_DELAY; }
     public boolean readyForAlliance()       { return allianceTimer <= 0; }
     public void resetAllianceTimer()        { allianceTimer = ALLIANCE_DELAY; }
-    public boolean alreadyOfferedAlliance() { return allianceTimer == ALLIANCE_DELAY; }
     public boolean readyForJointWar()       { return jointWarTimer <= 0; }
     public void resetJointWarTimer()        { jointWarTimer = empire().isPlayerControlled() ? JOINT_WAR_DELAY : 1; }
-    public boolean alreadyOfferedJointWar() { return jointWarTimer == JOINT_WAR_DELAY; }
     public int minimumPraiseLevel()         {
         // raise threshold for praise when at war
         if (war())
