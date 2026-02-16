@@ -281,7 +281,6 @@ public class AIDiplomat implements Base, Diplomat {
         if (maxTrade < (currentTrade * 1.5))
             return false;
 
-        log(v.toString(), ": willing to offer trade. Max:", str(maxTrade), "    current:", str(currentTrade));
         return calculateTradeChance(v) > 0;
     }
     private float calculateTradeChance(EmpireView v) {
