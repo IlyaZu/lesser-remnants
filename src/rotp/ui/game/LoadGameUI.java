@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
-import rotp.Rotp;
 
 import rotp.model.game.GameSession;
 import rotp.ui.BasePanel;
@@ -131,11 +130,12 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         FilenameFilter filter = (_, name) -> name.toLowerCase().endsWith(ext);
         File[] fileList = saveDir.listFiles(filter);
         
-          // fileList = null if prefs pointing to an invalid folder...default to jarPath
         if (fileList == null) {
-            saveDirPath = Rotp.jarPath();
+            // This indicates preferences point to an invalid folder - attempt to recover
+            UserPreferences.saveDir("");
+            saveDirPath = UserPreferences.saveDirectoryPath();
             saveDir = new File(saveDirPath);
-            backupDirPath = saveDirPath+"/"+GameSession.BACKUP_DIRECTORY;
+            backupDirPath = UserPreferences.backupDirectoryPath();
             backupDir = new File(backupDirPath);
             hasBackupDir = backupDir.exists() && backupDir.isDirectory();
             fileList = saveDir.listFiles(filter);
