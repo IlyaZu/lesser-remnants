@@ -1704,7 +1704,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
     }
     public int preferredShipSize()             { return dataRace().preferredShipSize(); }
-    public int diplomacyBonus()                { return dataRace().diplomacyBonus(); }
     public int robotControlsAdj()              { return dataRace().robotControlsAdj(); }
     public float baseRelations(Empire e)       { return dataRace().baseRelations(e.dataRace()); }
     public float tradePctBonus()               { return dataRace().tradePctBonus(); }

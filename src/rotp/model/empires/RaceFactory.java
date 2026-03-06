@@ -312,9 +312,6 @@ public enum RaceFactory implements Base {
     private void parseRaceDiploMods(Race r, List<String> vals) {
         // field #1 is trade bonus modifier (as %)
         r.tradePctBonus = (float) parseInt(vals.get(0)) / 100;
-
-        // field #3 is diplomatic relations modifier (as %)
-        r.diplomacyBonus = parseInt(vals.get(2));
     }
     private void parseRaceResearchMods(Race r, List<String> vals) {
         // field #1 is computer %
