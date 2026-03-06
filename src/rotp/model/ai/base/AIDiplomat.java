@@ -286,7 +286,6 @@ public class AIDiplomat implements Base, Diplomat {
     private float calculateTradeChance(EmpireView v) {
         // -50 relations is minimum allowed to accept trade
         float chance = v.embassy().relations()+50;
-        chance += v.empire().diplomacyBonus();
         chance += empire.leader().isXenophobic() ? -20 : 0;
         chance += empire.leader().isIndustrialist() ? 10 : 0;
         return chance;
@@ -303,9 +302,8 @@ public class AIDiplomat implements Base, Diplomat {
             return null;
         }
 
-        int bonus = requestor.diplomacyBonus();
         EmpireView v = empire.viewForEmpire(requestor);
-        if ((bonus+random(100)) < empire.leader().diplomacyAnnoyanceMod(v)) {
+        if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
             v.embassy().withdrawAmbassador();
             return v.refuse(DialogueManager.DECLINE_ANNOYED);
         }
@@ -494,7 +492,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
     private float calculatePactChance(EmpireView v) {
         float chance = v.embassy().relations();
-        chance += v.empire().diplomacyBonus();
         chance += acceptPactMod(empire.leader());
         return chance;
     }
@@ -594,7 +591,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
     private float calculateAllianceChance(EmpireView v) {
         float chance = v.embassy().relations();
-        chance += v.empire().diplomacyBonus();
         chance += acceptAllianceMod(empire.leader());
         return chance;
     }
