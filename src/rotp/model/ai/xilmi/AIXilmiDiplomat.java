@@ -22,10 +22,6 @@ import rotp.model.ai.base.AIDiplomat;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.model.empires.TreatyWar;
-import rotp.model.galaxy.StarSystem;
-import rotp.model.galaxy.Transport;
-import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.tech.Tech;
 import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
@@ -66,36 +62,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
                 worthyTechs.add(t);
         }
         return worthyTechs;
-    }
-    //-----------------------------------
-    //  PEACE
-    //-----------------------------------
-    @Override
-    public DiplomaticReply receiveOfferPeace(Empire requestor) {
-        log(empire.name(), " receiving offer of Peace from: ", requestor.name());
-        if (empire.isPlayerControlled()) {
-            DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_PEACE);
-            return null;
-        }
-
-        EmpireView v = empire.viewForEmpire(requestor);
-        if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
-            v.embassy().withdrawAmbassador();
-            return v.refuse(DialogueManager.DECLINE_ANNOYED);
-        }
-
-        v.embassy().noteRequest();
-
-        if (!v.embassy().readyForPeace())
-            return v.refuse(DialogueManager.DECLINE_OFFER);
-
-        v.embassy().resetPeaceTimer();
-        
-        if (!warWeary(v))
-            return refuseOfferPeace(requestor);
-
-        DiplomaticIncident inc = v.embassy().signPeace();
-        return v.otherView().accept(DialogueManager.ACCEPT_PEACE, inc);
     }
 //-----------------------------------
 //  JOINT WARS
@@ -142,61 +108,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return v.refuse(DialogueManager.DECLINE_OFFER, target);
         
         return v.refuse(DialogueManager.DECLINE_OFFER, target);
-    }
-
-    private boolean warWeary(EmpireView v) {
-        if (galaxy().activeEmpires().size() < 3)
-            return false;
-        //ail: when we have incoming transports, we don't want them to perish
-        for(Transport trans:empire.transports())
-        {
-            if(trans.destination().empire() == v.empire())
-                return false;
-        }
-        if(!empire.inShipRange(v.empId()))
-        {
-            return true;
-        }
-        //new: If we are strong enough, we are okay with fighting the wrong target or several enemies at once
-        float enemyPower = 0;
-        for(Empire enemy : empire.enemies())
-        {
-            enemyPower+= enemy.militaryPowerLevel();
-        }
-        boolean scared = false;
-        if(empire.militaryPowerLevel() < enemyPower)
-        {
-            //ail: If we are not fighting our preferred target, we don't really want a war
-            if(v.empire() != empire.generalAI().bestVictim())
-                return true;
-            //ail: If I have more than one war, we try to go to peace with everyone of our multiple enemies to increase the likelyness of at least one saying yes
-            if(empire.enemies().size() > 1)
-                return true;
-            scared = true;
-        }
-        //ail: If I'm outteched by others I also don't really want to stick to a war anymore, except for aggressive leader as that would lead to contradictory behavior
-        if(techLevelRank() > popCapRank(empire, false))
-            return true;
-        boolean everythingUnderSiege = true;
-        for(StarSystem sys : empire.allColonizedSystems())
-        {
-            if(sys.colony() == null)
-                continue;
-            if(!sys.enemyShipsInOrbit(empire) && sys.colony().currentProductionCapacity() > 0.5)
-            {
-                everythingUnderSiege = false;
-                break;
-            }
-        }
-        if(scared && v.embassy().treaty() != null && v.embassy().treaty().isWar())
-        {
-            TreatyWar treaty = (TreatyWar) v.embassy().treaty();
-            if (treaty.colonyChange(empire) < 1.0f)
-                return true;
-        }
-        if(everythingUnderSiege)
-            return true;
-        return false;
     }
     @Override
     public int popCapRank(Empire etc, boolean inAttackRange)
