@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ import rotp.model.galaxy.Location;
 import rotp.model.galaxy.Ship;
 import rotp.model.galaxy.ShipFleet;
 import rotp.model.galaxy.StarSystem;
-import rotp.model.incidents.DiplomaticIncident;
 import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipDesignLab;
 import rotp.model.tech.Tech;
@@ -45,8 +44,6 @@ public class AIGeneral implements Base, General {
     private final List<StarSystem> rushShipSystems;
     private float civTech = 0;
     //better buffer values in private-members instead of recalculating every time
-    private Empire bestVictim = null;
-    private boolean searchedVictimThisTurn = false;
     private float defenseRatio = -1;
     private float totalArmedFleetCost = -1;
     private int additionalColonizersToBuild = -1;
@@ -77,8 +74,6 @@ public class AIGeneral implements Base, General {
         resetTargetedSystems();
         rushDefenseSystems.clear();
         rushShipSystems.clear();
-        bestVictim = null;
-        searchedVictimThisTurn = false;
         defenseRatio = -1;
         additionalColonizersToBuild = -1;
         totalArmedFleetCost = -1;
@@ -559,85 +554,6 @@ public class AIGeneral implements Base, General {
                 }
             }
         }
-    }
-    @Override
-    public Empire bestVictim() {
-        if(searchedVictimThisTurn)
-        {
-            return bestVictim;
-        }
-        searchedVictimThisTurn = true;
-        float highestScore = 0;
-        Empire archEnemy = null;
-        if(empire.contactedEmpires().isEmpty())
-        {
-            bestVictim = archEnemy;
-            return bestVictim;
-        }
-        for(Empire emp : empire.contactedEmpires())
-        {
-            float enemyPower = smartPowerLevel();
-            for(Empire enemy : emp.enemies())
-            {
-                enemyPower += enemy.militaryPowerLevel();
-            }
-            if(emp.militaryPowerLevel() > enemyPower && facCapRank() > 1)
-                continue;
-            if(!empire.inShipRange(emp.id))
-                continue;
-            float currentScore = totalEmpirePopulationCapacity(emp) / (fleetCenter(empire).distanceTo(colonyCenter(emp)) + colonyCenter(empire).distanceTo(colonyCenter(emp)));
-            currentScore *= empire.tech().avgTechLevel() / emp.tech().avgTechLevel();
-            currentScore *= enemyPower;
-            currentScore *= empire.tech().topSpeed() / empire.viewForEmpire(emp).spies().tech().topSpeed();
-            float tradeMod = 1;
-            if(empire.viewForEmpire(emp).trade() != null && empire.totalPlanetaryIncome() > 0)
-                tradeMod += empire.viewForEmpire(emp).trade().currentProfit() / empire.totalPlanetaryIncome();
-            else
-                tradeMod = 0.9f;
-            currentScore /= tradeMod;
-            float spyAnnoyanceMod = 100f;
-            for(DiplomaticIncident inc : empire.viewForEmpire(emp).embassy().allIncidents())
-            {
-                if(inc.isSpying())
-                    spyAnnoyanceMod -= inc.severity();
-            }
-            currentScore *= spyAnnoyanceMod;
-            if(currentScore > highestScore)
-            {
-                highestScore = currentScore;
-                archEnemy = emp;
-            }
-        }
-        bestVictim = archEnemy;
-        return bestVictim;
-    }
-    private int facCapRank()
-    {
-        int rank = 1;
-        float myFacCap = facCapPct(empire, true);
-        for(Empire emp:empire.contactedEmpires())
-        {
-            if(!empire.inEconomicRange(emp.id))
-                continue;
-            if(facCapPct(emp, true) > myFacCap)
-                rank++;
-        }
-        if(myFacCap >= 1)
-            rank = 1;
-        return rank;
-    }
-    private float facCapPct(Empire emp, boolean ignorePoor)
-    {
-        float factories = 0;
-        float factoryCap = 0;
-        for (StarSystem sys: emp.allColonizedSystems())
-        {
-            if(sys.planet().productionAdj() < 1 && ignorePoor)
-                continue;
-            factories += sys.colony().industry().factories();
-            factoryCap += sys.colony().industry().maxFactories();
-        }
-        return factories / factoryCap;
     }
     @Override
     public float totalEmpirePopulationCapacity(Empire emp)
