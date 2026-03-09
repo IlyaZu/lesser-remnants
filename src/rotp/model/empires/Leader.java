@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,17 +113,4 @@ public class Leader implements Serializable {
         return objective == Objective.TECHNOLOGIST;
     }
 
-    public float diplomacyAnnoyanceMod(EmpireView v) {
-        // # of requests past the initial
-        int addl = Math.max(0, v.embassy().requestCount()-1);
-        switch(personality) {
-            case XENOPHOBIC: return -20*addl;
-            case ERRATIC:    return -10*addl;
-            case PACIFIST:   return -10*addl;
-            case HONORABLE:  return -10*addl;
-            case RUTHLESS:   return -10*addl;
-            case AGGRESSIVE: return -10*addl;
-            default:         return -10*addl;
-        }
-    }
 }

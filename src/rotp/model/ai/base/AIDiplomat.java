@@ -236,7 +236,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
+            if (random(100) < diplomacyAnnoyanceMod(v)) {
                 v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -303,7 +303,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
 
         EmpireView v = empire.viewForEmpire(requestor);
-        if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
+        if (random(100) < diplomacyAnnoyanceMod(v)) {
             v.embassy().withdrawAmbassador();
             return v.refuse(DialogueManager.DECLINE_ANNOYED);
         }
@@ -454,7 +454,7 @@ public class AIDiplomat implements Base, Diplomat {
         }
 
         if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
+            if (random(100) < diplomacyAnnoyanceMod(v)) {
                 v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -537,7 +537,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         EmpireView v = empire.viewForEmpire(requestor);
         if (requestor.isPlayerControlled()) {
-            if (random(100) < empire.leader().diplomacyAnnoyanceMod(v)) {
+            if (random(100) < diplomacyAnnoyanceMod(v)) {
                 v.embassy().withdrawAmbassador();
                 return v.refuse(DialogueManager.DECLINE_ANNOYED);
             }
@@ -1119,5 +1119,14 @@ public class AIDiplomat implements Base, Diplomat {
         else
             empire.lastCouncilVoteEmpId(c.id);
         return c;
+    }
+
+    private float diplomacyAnnoyanceMod(EmpireView view) {
+        // # of requests past the initial
+        int addl = Math.max(0, view.embassy().requestCount()-1);
+        switch(view.owner().leader().personality()) {
+            case XENOPHOBIC: return -20*addl;
+            default:         return -10*addl;
+        }
     }
 }
