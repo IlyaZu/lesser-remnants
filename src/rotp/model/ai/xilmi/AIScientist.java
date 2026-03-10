@@ -302,7 +302,7 @@ public class AIScientist implements Base, Scientist {
                 empire.tech().weapon().adjustAllocation(-9);
             }
         }
-        else if((!empire.enemies().isEmpty() || empire.generalAI().sensePotentialAttack()) && !empire.diplomatAI().minWarTechsAvailable())
+        else if((!empire.enemies().isEmpty() || empire.generalAI().sensePotentialAttack()) && !minWarTechsAvailable())
         {
             empire.tech().computer().allocation(0);
             empire.tech().construction().allocation(0);
@@ -845,5 +845,16 @@ public class AIScientist implements Base, Scientist {
             }
         }
         return stealables;
+    }
+    @Override
+    public boolean minWarTechsAvailable()
+    {
+        if(empire.shipLab().fastestEngine().warp() < 2)
+            return false;
+        if(empire.tech().topShipWeaponTech().damageHigh() <= 4)
+            return false;
+        if(empire.tech().topDeflectorShieldTech().level() < 2)
+            return false;
+        return true;
     }
 }

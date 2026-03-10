@@ -39,4 +39,8 @@ public interface General {
     default boolean sensePotentialAttack() { return false; }
     default Location colonyCenter(Empire emp) { return new Location(0, 0); }
     default float smartPowerLevel() { return 0f; }
+    default int popCapRank(Empire etc, boolean inAttackRange) { return 1; }
+    default int techLevelRank() { return 1; }
+    default int militaryRank(Empire etc, boolean inAttackRange) { return 1; }
+    default boolean techIsAdequateForWar() { return true; }
 }
