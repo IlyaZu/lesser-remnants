@@ -214,7 +214,7 @@ public class AIGovernor implements Base, Governor {
         boolean needToMilitarize = false;
         if(empire.atWar() || empire.generalAI().sensePotentialAttack())
         {
-            if(empire.diplomatAI().militaryRank(empire, false) > empire.diplomatAI().popCapRank(empire, false))
+            if(empire.generalAI().militaryRank(empire, false) > empire.generalAI().popCapRank(empire, false))
                 if(col.currentProductionCapacity() > 0.5f)
                     needToMilitarize = true;
         }
@@ -383,7 +383,7 @@ public class AIGovernor implements Base, Governor {
         }
         //ail: No use to build any ships if they won't do damage anyways. Better tech up.
         boolean allInShipProducer = col.planet().productionAdj() >= 1 && col.planet().researchAdj() <= 1;
-        boolean allIn = allInShipProducer && empire.diplomatAI().techIsAdequateForWar();
+        boolean allIn = allInShipProducer && empire.generalAI().techIsAdequateForWar();
         boolean viableForShipProduction = prodScore >= 1 || needToMilitarize || allIn;
         float turnsBeforeColonyDestroyed = Float.MAX_VALUE;
         if(popLoss > 0)

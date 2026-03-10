@@ -107,10 +107,10 @@ public class AIFleetCommander implements Base, FleetCommander {
             {
                 enemyPower += enemy.militaryPowerLevel();
             }
-            if(techsLeft && (enemyPower < empire.generalAI().smartPowerLevel() || empire.diplomatAI().techLevelRank() > 1 || !empire.diplomatAI().minWarTechsAvailable()))
+            if(techsLeft && (enemyPower < empire.generalAI().smartPowerLevel() || empire.generalAI().techLevelRank() > 1 || !empire.scientistAI().minWarTechsAvailable()))
             {
                 maxMaintenance = sqrt(max(10, empire.tech().avgTechLevel())) * threatFactor;
-                if(!empire.diplomatAI().minWarTechsAvailable())
+                if(!empire.scientistAI().minWarTechsAvailable())
                     maxMaintenance = 0.025f;
             }
             else

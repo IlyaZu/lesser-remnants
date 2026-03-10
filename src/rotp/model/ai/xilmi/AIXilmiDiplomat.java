@@ -23,7 +23,6 @@ import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
-import static rotp.model.tech.TechTree.NUM_CATEGORIES;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomaticReply;
 import rotp.ui.notifications.DiplomaticNotification;
@@ -127,99 +126,5 @@ public class AIXilmiDiplomat extends AIDiplomat {
             return v.refuse(DialogueManager.DECLINE_OFFER, target);
         
         return v.refuse(DialogueManager.DECLINE_OFFER, target);
-    }
-    @Override
-    public int popCapRank(Empire etc, boolean inAttackRange)
-    {
-        int rank = 1;
-        float myPopCap = empire.generalAI().totalEmpirePopulationCapacity(empire);
-        float etcPopCap = empire.generalAI().totalEmpirePopulationCapacity(etc);
-        if(empire != etc && myPopCap > etcPopCap)
-            rank++;
-        for(Empire emp:empire.contactedEmpires())
-        {
-            if(!empire.inEconomicRange(emp.id))
-                continue;
-            if(inAttackRange && !empire.inShipRange(emp.id))
-                continue;
-            if(empire.generalAI().totalEmpirePopulationCapacity(emp) > etcPopCap)
-                rank++;
-        }
-        return rank;
-    }
-    @Override
-    public int techLevelRank()
-    {
-        int rank = 1;
-        float myTechLevel = empire.tech().avgTechLevel();
-        for(Empire emp:empire.contactedEmpires())
-        {
-            if(!empire.inEconomicRange(emp.id))
-                continue;
-            if(emp.tech().avgTechLevel() > myTechLevel)
-                rank++;
-        }
-        if(myTechLevel >= 99)
-            rank = 1;
-        return rank;
-    }
-    @Override
-    public int militaryRank(Empire etc, boolean inAttackRange)
-    {
-        int rank = 1;
-        float myMilitaryPower = empire.militaryPowerLevel();
-        float etcMilitaryPower = etc.militaryPowerLevel();
-        if(empire != etc && myMilitaryPower > etcMilitaryPower)
-            rank++;
-        for(Empire emp:empire.contactedEmpires())
-        {
-            if(!empire.inEconomicRange(emp.id))
-                continue;
-            if(inAttackRange && !empire.inShipRange(emp.id))
-                continue;
-            if(emp.militaryPowerLevel() > etcMilitaryPower)
-                rank++;
-        }
-        return rank;
-    }
-    @Override
-    public boolean minWarTechsAvailable()
-    {
-        if(empire.shipLab().fastestEngine().warp() < 2)
-            return false;
-        if(empire.tech().topShipWeaponTech().damageHigh() <= 4)
-            return false;
-        if(empire.tech().topDeflectorShieldTech().level() < 2)
-            return false;
-        return true;
-    }
-    private boolean hasGoodTechRoi()
-    {
-        boolean reseachHasGoodROI = false;
-        for(int i = 0; i < NUM_CATEGORIES; ++i)
-        {
-            int levelToCheck = (int)Math.ceil(empire.tech().category(i).techLevel());
-            float techCost = empire.tech().category(i).baseResearchCost() * levelToCheck * levelToCheck * empire.techMod(i);
-            if(techCost < empire.totalIncome())
-            {
-                reseachHasGoodROI = true;
-                break;
-            }
-        }
-        return reseachHasGoodROI;
-    }
-    @Override
-    public boolean techIsAdequateForWar()
-    {
-        boolean warAllowed = true;
-        int popCapRank = popCapRank(empire, false);
-        boolean reseachHasGoodROI = hasGoodTechRoi();
-        if(reseachHasGoodROI && techLevelRank() > 1)
-            warAllowed = false;
-        if(techLevelRank() > popCapRank)
-        {
-            warAllowed = false;
-        }
-        return warAllowed;
     }
 }
