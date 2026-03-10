@@ -38,11 +38,9 @@ import rotp.util.Base;
 
 public class AIGeneral implements Base, General {
     private final Empire empire;
-    private float civProd = 0;
     private final HashMap<StarSystem, List<Ship>> targetedSystems;
     private final List<StarSystem> rushDefenseSystems;
     private final List<StarSystem> rushShipSystems;
-    private float civTech = 0;
     //better buffer values in private-members instead of recalculating every time
     private float defenseRatio = -1;
     private float totalArmedFleetCost = -1;
@@ -69,8 +67,6 @@ public class AIGeneral implements Base, General {
     public boolean inWarMode()  { return empire.numEnemies() > 0; }
     @Override
     public void nextTurn() {
-        civProd = empire.totalPlanetaryProduction();
-        civTech = empire.tech().avgTechLevel();
         resetTargetedSystems();
         rushDefenseSystems.clear();
         rushShipSystems.clear();
@@ -141,68 +137,6 @@ public class AIGeneral implements Base, General {
             bestCol.shipyard().addDesiredShips(desiredCount);
             additionalColonizersToBuild-=desiredCount;
         }
-    }
-    // modnar: adjustments to invasion valuation
-    // Desire value to invade planet, factor in both planet size and factories
-    // Higher desire value for Rich, Ultra-Rich, Artifacts
-    // Lower desire value for Poor, Ultra-Poor
-    public float takePlanetValue(StarSystem sys) {
-        int sysId = sys.id;
-        if (!empire.sv.inShipRange(sysId))  return 0.0f;
-        if (!empire.sv.isScouted(sysId))    return 0.0f;
-        if (!empire.sv.isColonized(sysId))  return 0.0f;
-        
-        float size = empire.sv.currentSize(sysId); // planet size
-        float fact = empire.sv.factories(sysId); // factory count
-        
-        // increase planet value depending on size and factories (val is normalized below)
-        // (4*pow(SIZE, 0.7) + min(20, sqrt(FACTORIES)))
-        // min(20) is ballpark max invasion tech chances (400 factories)
-        //
-        // Normal,   size-100,    0 factories:  val = 100
-        // Normal,   size-100,  100 factories:  val = 110
-        // Normal,   size-100,  200 factories:  val = 115
-        // Normal,   size-100,  300 factories:  val = 118
-        // Normal,   size-100,  400 factories:  val = 120
-        // Normal,   size-140,  560 factories:  val = 147
-        // Normal,   size-220, 1540 factories:  val = 194
-        // Normal,   size-70,   140 factories:  val =  90
-        // Normal,   size-70,   210 factories:  val =  93
-        // Poor,     size-100,    0 factories:  val =  75
-        // Poor,     size-100,  200 factories:  val =  86
-        // Rich,     size-50,    50 factories:  val = 138
-        // Artifact, size-80,   240 factories:  val = 203
-        float val = (float) (4.0f*Math.pow(size, 0.7f) + Math.min(20.0f, Math.sqrt(fact)));
-
-        // Higher desire value for Rich, Ultra-Rich, Artifacts
-        // Lower desire value for Poor, Ultra-Poor
-        // modnar: increase values for poor/ultra-poor
-        if (empire.sv.isUltraPoor(sysId))
-            val *= 0.6;
-        else if (empire.sv.isPoor(sysId))
-            val *= 0.75;
-        else if (empire.sv.isResourceNormal(sysId))
-            val *= 1;
-        else if (empire.sv.isRich(sysId))
-            val *= 2;
-        else if (empire.sv.isUltraRich(sysId))
-            val *= 3;
-
-        //float for artifacts, triple for super-artifacts
-        if (empire.sv.isArtifact(sysId))
-            val *= 2;
-        else if (empire.sv.isOrionArtifact(sysId))
-            val *= 3;
-        
-        // modnar: killer instinct
-        // higher value for the last few planets of an empire
-        int remainingSystems = galaxy().empire(empire.sv.empId(sysId)).numColonies();
-        if (remainingSystems <=4) {
-            val *= ((remainingSystems + 7)/(remainingSystems + 1));
-        }
-        
-        // modnar: normalized to normal size-100 planet with 200 factories (115)
-        return val/115;
     }
     @Override
     public float invasionPriority(StarSystem sys) {
@@ -435,14 +369,6 @@ public class AIGeneral implements Base, General {
             sys.colony().scheduleTransportsToSystem(target, troops);
         }
     }
-    public float troopsNecessaryToBypassBases(StarSystem sys) {
-        return empire.sv.bases(sys.id) * troopToEnemyBaseRatio(sys);
-    }
-    public float troopToEnemyBaseRatio(StarSystem sys) {
-        int id = sys.id;
-        EmpireView ev = empire.viewForEmpire(empire.sv.empire(id));
-        return ev.spies().tech().weapon().techLevel() / empire.tech().construction().techLevel();
-    }
     public float troopsNecessaryToTakePlanet(EmpireView ev, StarSystem sys) {
         int id = sys.id;
         
@@ -459,83 +385,6 @@ public class AIGeneral implements Base, General {
             float atkAdv = empire.tech().troopCombatAdj(false) - ev.spies().tech().troopCombatAdj(true);
             float killRatio = (float) ((Math.pow(100-atkAdv,2)/2) / (Math.pow(100,2) - Math.pow(100-atkAdv,2)/2));
             return empire.sv.population(id) * killRatio;
-        }
-    }
-    public void orderBombardmentFleet(EmpireView v, StarSystem sys, float fleetSize) {
-        
-        int sysId = sys.id;
-        EmpireView ev = empire.viewForEmpire(empire.sv.empId(sysId));
-        float targetTech = ev.spies().tech().avgTechLevel(); // modnar: target tech level
-        
-        float baseBCPresent = empire.sv.bases(sys.id)*empire.tech().newMissileBaseCost();
-        // set fleet orders for bombardment...
-        float bcMultiplier = 1 + (empire.sv.hostilityLevel(sys.id)/2);
-        
-        // modnar: test fleet sizes, include enemyFleetSize, factoring in relative tech levels
-        float bombBcNeeded = max(baseBCPresent*1.5f*(targetTech+10.0f)/(civTech+10.0f),bcMultiplier*civProd);
-        float fightBcNeeded = 2*fleetSize*(targetTech+10.0f)/(civTech+10.0f);
-        float destroyerBcNeeded = (bombBcNeeded + fightBcNeeded) * 0.2f;
-        
-        // ail: bombers and fighters according to what is needed
-        int destroyersNeeded = (int) Math.ceil(destroyerBcNeeded/empire.shipLab().destroyerDesign().cost());
-        int bombersNeeded = (int) Math.ceil(bombBcNeeded/empire.shipLab().bomberDesign().cost());
-        int fightersNeeded = (int) Math.ceil(fightBcNeeded/empire.shipLab().fighterDesign().cost());
-
-        ShipDesignLab lab = empire.shipLab();
-        // modnar: should use min speed here (?)
-        float speed = min(lab.destroyerDesign().warpSpeed(), lab.bomberDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
-        FleetPlan fp = empire.sv.fleetPlan(sys.id);
-        fp.addShips(empire.shipLab().destroyerDesign(), destroyersNeeded);
-        fp.addShips(empire.shipLab().bomberDesign(), bombersNeeded);
-        fp.addShips(empire.shipLab().fighterDesign(), fightersNeeded);
-        fp.stagingPointId = empire.optimalStagingPoint(sys, speed);
-        fp.priority = FleetPlan.BOMB_ENEMY+ invasionPriority(sys)/100;
-    }
-    
-    public void considerSneakAttackFleet(EmpireView v, StarSystem sys, float fleetSize) {
-        // pacifist/honorable never sneak attack
-        if (empire.leader().isPacifist()
-        || empire.leader().isHonorable())
-            return;
-        
-        // modnar: no sneak attack when number of enemies > 2
-        // same as regular war declaration check, significant factor in extra wars
-        if (empire.numEnemies() > 2)
-            return;
-
-        float baseChance = 0.3f - (empire.numEnemies()*0.3f);
-        if (empire.leader().isAggressive())
-            baseChance += 0.6f;
-        else if (empire.leader().isDiplomat())
-            baseChance -= 0.2f;
-        else if (empire.leader().isRuthless())
-            baseChance += 0.3f;
-
-        // lower sneak attack chance on planet we can't capture
-        if (!empire.canColonize(sys.planet().type()))
-                baseChance -= 0.3f;
-        
-        // modnar: factor in own empire average tech level
-        // suppress sneak attack war in early game when average tech level is below 10
-        float myTechLvl = empire.tech().avgTechLevel(); // minimum average tech level is 1.0
-        float techMod = 1.0f;
-        if (myTechLvl < 10.0f) {
-            techMod = myTechLvl / 20.0f + 0.5f; // linear change with tech level (range from 0.55 to 1.0)
-        }
-        baseChance *= techMod;
-        
-        // modnar: change sneak attack chance by number of our wars vs. number of their wars
-        // try not to get into too many wars, and pile on if target is in many wars
-        float enemyMod = (float) (0.2f * (v.empire().numEnemies() - empire.numEnemies()));
-        baseChance += enemyMod;
-
-        float value = (empire.sv.factories(sys.id) * 10);
-        float cost = fleetSize + (empire.sv.bases(sys.id)*empire.tech().newMissileBaseCost());
-        float bonus = -0.5f + (value / (value+cost));
-
-        if ((baseChance+bonus) > 0.5)  {
-            orderBombardmentFleet(v, sys, fleetSize);
-            empire.sv.fleetPlan(sys.id).priority = FleetPlan.BOMB_UNDEFENDED;
         }
     }
     private void resetTargetedSystems() {
@@ -797,21 +646,6 @@ public class AIGeneral implements Base, General {
         }
         float colProb = myScore / totalScore;
         return colProb;
-    }
-    public int fightersToBuild()
-    {
-        int fighterNeed = 0;
-        if(empire.hasAnyContact())
-        {
-            fighterNeed = empire.allColonizedSystems().size();
-        }
-        int[] counts = galaxy().ships.shipDesignCounts(empire.id);
-        for (int i=0;i<counts.length;i++)
-        {
-            if(empire.shipLab().design(i).isArmedForShipCombat())
-                fighterNeed -= counts[i];
-        }
-        return fighterNeed;
     }
     @Override
     public boolean strongEnoughToAttack()
