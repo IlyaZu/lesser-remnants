@@ -63,6 +63,25 @@ public class AIXilmiDiplomat extends AIDiplomat {
         }
         return worthyTechs;
     }
+    private boolean willingToTradeTech(Tech tech, Empire tradePartner)
+    {
+        //The player can decide for themselves what they want to give away!
+        if(!empire.isAIControlled())
+            return true;
+        if(!tech.isObsolete(empire) && !empire.alliedWith(tradePartner.id))
+            return false;
+        for(Empire emp : empire.contactedEmpires())
+        {
+            EmpireView ev = empire.viewForEmpire(emp);
+            if(!ev.inEconomicRange())
+                continue;
+            if(ev.spies().tech().allKnownTechs().contains(tech.id()))
+                return true;
+            if(emp.viewForEmpire(empire).spies().possibleTechs().contains(tech.id()) && emp.viewForEmpire(empire).spies().isEspionage())
+                return true;
+        }
+        return false;
+    }
 //-----------------------------------
 //  JOINT WARS
 //-----------------------------------
@@ -202,24 +221,5 @@ public class AIXilmiDiplomat extends AIDiplomat {
             warAllowed = false;
         }
         return warAllowed;
-    }
-    private boolean willingToTradeTech(Tech tech, Empire tradePartner)
-    {
-        //The player can decide for themselves what they want to give away!
-        if(!empire.isAIControlled())
-            return true;
-        if(!tech.isObsolete(empire) && !empire.alliedWith(tradePartner.id))
-            return false;
-        for(Empire emp : empire.contactedEmpires())
-        {
-            EmpireView ev = empire.viewForEmpire(emp);
-            if(!ev.inEconomicRange())
-                continue;
-            if(ev.spies().tech().allKnownTechs().contains(tech.id()))
-                return true;
-            if(emp.viewForEmpire(empire).spies().possibleTechs().contains(tech.id()) && emp.viewForEmpire(empire).spies().isEspionage())
-                return true;
-        }
-        return false;
     }
 }
