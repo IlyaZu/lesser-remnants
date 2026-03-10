@@ -82,7 +82,7 @@ public class AIFleetCommander implements Base, FleetCommander {
     }
     @Override
     public String toString()   { return concat("FleetCommander: ", empire.raceName()); }
-    public Location getThreatCenter()
+    private Location getThreatCenter()
     {
         if(threatCenter.distanceTo(0, 0) != 0)
             return threatCenter;
@@ -136,7 +136,7 @@ public class AIFleetCommander implements Base, FleetCommander {
             fillFleetPlans();
         }
     }
-    public void UpdateSystemInfo(int id)
+    private void UpdateSystemInfo(int id)
     {
         StarSystem current = galaxy().system(id);
         if(!systemInfoBuffer.containsKey(id))
@@ -1088,7 +1088,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
     }
     
-    public void attackWithFleet(ShipFleet fl, StarSystem target, float amount, float bombAmount, boolean includeScouts, boolean includeFighters, boolean includeBombers, boolean includeColonizer, float needToKeep, boolean splitBySpeed)
+    private void attackWithFleet(ShipFleet fl, StarSystem target, float amount, float bombAmount, boolean includeScouts, boolean includeFighters, boolean includeBombers, boolean includeColonizer, float needToKeep, boolean splitBySpeed)
     {
         if(fl.system() == target)
             return;
@@ -1248,7 +1248,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
         return bc;
     }
-    public float designBombardDamage(ShipDesign d, StarSystem sys) {
+    private float designBombardDamage(ShipDesign d, StarSystem sys) {
         if (!sys.isColonized())
             return 0;
 
@@ -1262,7 +1262,7 @@ public class AIFleetCommander implements Base, FleetCommander {
             damage += d.special(j).estimatedBombardDamage(d, planetStack);
         return damage;
     }
-    public int transportGauntletRounds(float speed) {
+    private int transportGauntletRounds(float speed) {
         switch((int)speed) {
             case 0: case 1: case 2: case 3: case 4:
                 return 4;
@@ -1274,7 +1274,7 @@ public class AIFleetCommander implements Base, FleetCommander {
                 return 1;
         }
     }
-    public StarSystem RetreatSystem(ShipFleet fl) {
+    private StarSystem RetreatSystem(ShipFleet fl) {
         float shortestDistance = Float.MAX_VALUE;
         StarSystem best = null;
         for(StarSystem sys : empire.allySystems())
@@ -1290,7 +1290,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
         return best;
     }
-    public StarSystem StageSystem(ShipFleet fl, StarSystem target) {
+    private StarSystem StageSystem(ShipFleet fl, StarSystem target) {
         float shortestDistance = Float.MAX_VALUE;
         StarSystem best = null;
         for (int id=0;id<empire.sv.count();id++)
@@ -1316,7 +1316,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
         return best;
     }
-    public float bridgeHeadPower(StarSystem sys)
+    private float bridgeHeadPower(StarSystem sys)
     {
         float biggestFleetPower = 0;
         float enemyBaseBC = 0;

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -456,11 +456,11 @@ public class AIGovernor implements Base, Governor {
         float maxAllowed = max(0, col.totalIncome() - col.wasteCleanupCost());
         return min(maxAllowed, col.totalIncome()*shipPctForColony(col));
     }
-    public void suggestMissileBaseCount(Colony col) {
+    private void suggestMissileBaseCount(Colony col) {
         if (empire.isAIControlled())
             suggestMissileBaseCount(col, col.production());
     }
-    public boolean wantShield(Colony col) {
+    private boolean wantShield(Colony col) {
         StarSystem sys = col.starSystem();
         if(!col.defense().shieldAtMaxLevel()) {
             for(Empire emp : empire.contactedEmpires())
@@ -473,7 +473,7 @@ public class AIGovernor implements Base, Governor {
         }
         return false;
     }
-    public void suggestMissileBaseCount(Colony col, float prod) {
+    private void suggestMissileBaseCount(Colony col, float prod) {
         StarSystem sys = col.starSystem();
         int currBases = col.defense().missileBases();
         if (empire.contacts().isEmpty()
@@ -630,7 +630,7 @@ public class AIGovernor implements Base, Governor {
             return Score/avgScore;
         return 0;
     }
-    public float expectedBombardDamageAsIfBasesWereThere(ShipFleet fl, StarSystem sys) {
+    private float expectedBombardDamageAsIfBasesWereThere(ShipFleet fl, StarSystem sys) {
         if (!sys.isColonized())
             return 0;
 
