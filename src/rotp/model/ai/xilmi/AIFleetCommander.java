@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1261,37 +1261,6 @@ public class AIFleetCommander implements Base, FleetCommander {
         for (int j=0;j<ShipDesign.maxSpecials();j++)
             damage += d.special(j).estimatedBombardDamage(d, planetStack);
         return damage;
-    }
-    public float totalFirePower()
-    {
-        float bombardPower = 0;
-        for(ShipFleet fleet:empire.allFleets())
-        {
-            bombardPower+=fleet.expectedBombardDamage(galaxy().system(empire.homeSysId()));
-        }
-        return bombardPower;
-    }
-    public float firePowerNeededForAttack()
-    {
-        float firePowerNeeded = 0;
-        for(Empire emp:empire.enemies())
-        {
-            firePowerNeeded += empire.generalAI().totalEmpirePopulationCapacity(emp) * 200;
-        }
-        return firePowerNeeded;
-    }
-    public float stationaryDefenseBudget()
-    {
-        float totalDefenseBC = empire.totalFleetCost() * (totalFirePower() - firePowerNeededForAttack()) / totalFirePower();
-        if(firePowerNeededForAttack() == 0)
-            totalDefenseBC = 0;
-        return max(0, totalDefenseBC);
-    }
-    public float defenseBudgetForSystem(StarSystem sys, float totalBudget)
-    {
-        if(sys.empire() != empire)
-            return 0;
-        return totalBudget * sys.population() / empire.totalPlanetaryPopulation();
     }
     public int transportGauntletRounds(float speed) {
         switch((int)speed) {
