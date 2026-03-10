@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -825,7 +825,7 @@ public class AIScientist implements Base, Scientist {
         empire.tech().category(category).allocation(allocationBefore);
         return chance;
     }
-    public int stealableTechs()
+    private int stealableTechs()
     {
         int stealables = 0;
         for(EmpireView ev : empire.contacts())

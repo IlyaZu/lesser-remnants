@@ -174,7 +174,7 @@ public class AIGeneral implements Base, General {
         pr /= Math.sqrt(max(1,empire.sv.bases(sysId)));
         return pr/10;
     }
-    public void reviseFleetPlan(StarSystem sys) {
+    private void reviseFleetPlan(StarSystem sys) {
         int sysId = sys.id;
         
         // if out of ship range, ignore
@@ -214,14 +214,14 @@ public class AIGeneral implements Base, General {
             return;
         }
     }
-    public float invasionCost(EmpireView v, StarSystem sys)
+    private float invasionCost(EmpireView v, StarSystem sys)
     {
         float needed = troopsNecessaryToTakePlanet(v, sys);
         needed += empire.sv.currentSize(sys.id) * 0.25f * (1 - empire.fleetCommanderAI().bridgeHeadConfidence(sys));
         float invasionCost = needed * empire.tech().populationCost() / empire.race().growthRateMod();
         return invasionCost;
     }
-    public float invasionGain(EmpireView v, StarSystem sys)
+    private float invasionGain(EmpireView v, StarSystem sys)
     {
         float facSavings = empire.sv.factories(sys.id) * (empire.tech().baseFactoryCost() - 2) + sys.planet().alienFactories(empire.id) * empire.tech().baseFactoryCost();
         float invasionGain = facSavings;
@@ -240,7 +240,7 @@ public class AIGeneral implements Base, General {
         invasionGain += techCaputureGain;
         return invasionGain;
     }
-    public boolean willingToInvade(EmpireView v, StarSystem sys) {
+    private boolean willingToInvade(EmpireView v, StarSystem sys) {
         if(!empire.enemies().contains(sys.empire()) && !empire.generalAI().strongEnoughToAttack())
             return false;
         if (!empire.canSendTransportsTo(sys))
@@ -250,10 +250,10 @@ public class AIGeneral implements Base, General {
         invasionGain *= empire.fleetCommanderAI().bridgeHeadConfidence(sys);
         return invasionCost(v, sys) <= invasionGain;
     }
-    public void orderRebellionFleet(StarSystem sys) {
+    private void orderRebellionFleet(StarSystem sys) {
         launchRebellionTroops(sys);
     }
-    public void orderInvasionFleet(EmpireView v, StarSystem sys) {
+    private void orderInvasionFleet(EmpireView v, StarSystem sys) {
         float expectedDefenders = 0;
         float attackers = 0;
         float allowableTurns = (float) (1 + Math.min(7, Math.floor(22 / empire.tech().topSpeed())));
@@ -282,7 +282,7 @@ public class AIGeneral implements Base, General {
             launchGroundTroops(v, sys, 1);
     }
     
-    public void launchGroundTroops(EmpireView v, StarSystem target, float mult) {
+    private void launchGroundTroops(EmpireView v, StarSystem target, float mult) {
         //float troops0 = troopsNecessaryToBypassBases(target);
         float troops1 = mult*troopsNecessaryToTakePlanet(v, target);
         int alreadySent = empire.transportsInTransit(target);
@@ -339,7 +339,7 @@ public class AIGeneral implements Base, General {
             sys.colony().scheduleTransportsToSystem(target, troops, maxTravelTime);
         }
     }
-    public void launchRebellionTroops(StarSystem target) {
+    private void launchRebellionTroops(StarSystem target) {
         float troops1 =  target.colony().rebels()*2;
         int alreadySent = empire.transportsInTransit(target);
         float troopsDesired = troops1 - alreadySent;
@@ -369,7 +369,7 @@ public class AIGeneral implements Base, General {
             sys.colony().scheduleTransportsToSystem(target, troops);
         }
     }
-    public float troopsNecessaryToTakePlanet(EmpireView ev, StarSystem sys) {
+    private float troopsNecessaryToTakePlanet(EmpireView ev, StarSystem sys) {
         int id = sys.id;
         
         // modnar: (?) this old estimate gives completely wrong results for ground combat
@@ -423,7 +423,7 @@ public class AIGeneral implements Base, General {
             totalEmpirePopulationCapacity = capacity;
         return capacity;
     }
-    public float visibleEnemyFighterCost()
+    private float visibleEnemyFighterCost()
     {
         if(visibleEnemyFighterCost >= 0)
             return visibleEnemyFighterCost;
@@ -438,7 +438,7 @@ public class AIGeneral implements Base, General {
         visibleEnemyFighterCost = cost;
         return visibleEnemyFighterCost;
     }
-    public float myFighterCost()
+    private float myFighterCost()
     {
         if(myFighterCost >= 0)
             return myFighterCost;
@@ -518,7 +518,7 @@ public class AIGeneral implements Base, General {
         defenseRatio = dr;
         return defenseRatio;
     }
-    public boolean amSieging(StarSystem sys)
+    private boolean amSieging(StarSystem sys)
     {
         for(ShipFleet fl : sys.orbitingFleets())
         {
@@ -622,7 +622,7 @@ public class AIGeneral implements Base, General {
         additionalColonizersToBuild = (int)Math.ceil(additional);
         return additionalColonizersToBuild;
     }
-    public float colonizationProbability(StarSystem sys)
+    private float colonizationProbability(StarSystem sys)
     {
         if(sys.orbitingFleets().size() == 1)
         {
