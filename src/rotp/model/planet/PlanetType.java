@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +19,6 @@ package rotp.model.planet;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,6 @@ public class PlanetType implements Base {
 
     private static final HashMap<String, PlanetType> typeMap = new HashMap<>();
     public static PlanetType keyed(String s)       { return typeMap.get(s); }
-    public static Collection<PlanetType> allTypes(){ return typeMap.values(); }
     public static void addType(PlanetType r)       { typeMap.put(r.key(), r); }
 
     public static final String NONE = "PLANET_NONE";
