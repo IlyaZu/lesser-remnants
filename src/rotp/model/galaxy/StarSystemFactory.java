@@ -22,9 +22,9 @@ import rotp.util.Base;
 
 public class StarSystemFactory implements Base {
 
-    public StarSystem newNeutralSystem(Galaxy gal) {
+    public StarSystem newNeutralSystem(int id) {
         StarType type = neutralStarType();
-        StarSystem sys = new StarSystem(type, gal.systemCount);
+        StarSystem sys = new StarSystem(type, id);
         return sys;
     }
     
@@ -45,18 +45,18 @@ public class StarSystemFactory implements Base {
         }
     }
     
-    public StarSystem newOrionSystem(Galaxy gal) {
+    public StarSystem newOrionSystem(int id) {
         StarType type = homeworldStarType();
-        StarSystem sys = new StarSystem(type, gal.systemCount);
+        StarSystem sys = new StarSystem(type, id);
         sys.planet(PlanetFactory.createOrion(sys));
         sys.monster(new OrionGuardianShip());
         sys.name(text("PLANET_ORION"));
         return sys;
     }
     
-    public StarSystem newHomeworldSystem(Race r, Galaxy gal) {
+    public StarSystem newHomeworldSystem(Race r, int id) {
         StarType type = homeworldStarType();
-        StarSystem sys = new StarSystem(type, gal.systemCount);
+        StarSystem sys = new StarSystem(type, id);
         sys.planet(PlanetFactory.createHomeworld(r, sys));
         return sys;
     }
