@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -177,7 +177,7 @@ public class GalaxyFactory implements Base {
         Integer color = options().selectedPlayerColor();
 
         // create home system for player
-        StarSystem sys = starFactory.newHomeworldSystem(playerRace, g);
+        StarSystem sys = starFactory.newHomeworldSystem(playerRace, g.systemCount);
         sys.setXY(empSystem.colonyX(), empSystem.colonyY());
         sys.name(systemName);
         g.addStarSystem(sys);
@@ -190,10 +190,10 @@ public class GalaxyFactory implements Base {
         // ensure 1st nearby system is colonizable
         boolean needHabitable = true;
         for (int i=1;i<empSystem.numSystems();i++) {
-            StarSystem sys0 = starFactory.newNeutralSystem(g);
+            StarSystem sys0 = starFactory.newNeutralSystem(g.systemCount);
             if (needHabitable) {
                 while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                    sys0 = starFactory.newNeutralSystem(g);
+                    sys0 = starFactory.newNeutralSystem(g.systemCount);
                 needHabitable = false;
             }
             sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -225,7 +225,7 @@ public class GalaxyFactory implements Base {
             Race r = Race.keyed(alienRaces.get(h));
             EmpireSystem empSystem = empSystems.get(h);
             Integer colorId = raceColors.remove(0);
-            StarSystem sys = starFactory.newHomeworldSystem(r,g);
+            StarSystem sys = starFactory.newHomeworldSystem(r,g.systemCount);
             sys.setXY(empSystem.colonyX(), empSystem.colonyY());
             sys.name(r.nextAvailableHomeworld());
             g.addStarSystem(sys);
@@ -235,10 +235,10 @@ public class GalaxyFactory implements Base {
             // create two nearby system within 3 light-years (required to be at least 1 habitable)
             boolean needHabitable = true;
             for (int i=1;i<empSystem.numSystems();i++) {
-                StarSystem sys0 = starFactory.newNeutralSystem(g);
+                StarSystem sys0 = starFactory.newNeutralSystem(g.systemCount);
                 if (needHabitable) {
                     while ((sys0 == null) || !sys0.planet().isEnvironmentFriendly())
-                        sys0 = starFactory.newNeutralSystem(g);
+                        sys0 = starFactory.newNeutralSystem(g.systemCount);
                     needHabitable = false;
                 }
                 sys0.setXY(empSystem.x(i), empSystem.y(i));
@@ -249,7 +249,7 @@ public class GalaxyFactory implements Base {
     private void addUnsettledSystemsForGalaxy(Galaxy g, GalaxyShape sh) {
         Point.Float pt = new Point.Float();
         // add Orion, index =0;
-        StarSystem orion = starFactory.newOrionSystem(g);
+        StarSystem orion = starFactory.newOrionSystem(g.systemCount);
         sh.coords(0, pt);
         orion.setXY(pt.x, pt.y);
         orion.name(text("PLANET_ORION"));
@@ -257,7 +257,7 @@ public class GalaxyFactory implements Base {
         
         // add all other systems, starting at index 1
         for (int i=1;i<sh.numberStarSystems();i++) {
-            StarSystem sys = starFactory.newNeutralSystem(g);
+            StarSystem sys = starFactory.newNeutralSystem(g.systemCount);
             sh.coords(i, pt);
             sys.setXY(pt.x, pt.y);
             g.addStarSystem(sys);
