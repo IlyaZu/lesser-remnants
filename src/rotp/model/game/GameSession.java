@@ -54,7 +54,6 @@ import rotp.util.Base;
 
 public final class GameSession implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String BACKUP_DIRECTORY = "backup";
     public static final String SAVEFILE_EXTENSION = ".rotp";
     public static final String RECENT_SAVEFILE = "recent"+SAVEFILE_EXTENSION;
     private static final Object ONE_GAME_AT_A_TIME = new Object();
@@ -380,10 +379,11 @@ public final class GameSession implements Base, Serializable {
     public void saveSession(String filename, boolean backup) throws Exception {
         log("Saving game as file: ", filename, "  backup: "+backup);
         GameSession currSession = GameSession.instance();
-        File theDir = backup ? new File(backupDir()) : new File(saveDir());
+        String directoryPath = backup ? UserPreferences.backupDirectoryPath() : UserPreferences.saveDirectoryPath();
+        File theDir = new File(directoryPath);
         if (!theDir.exists())
             theDir.mkdirs();
-        File saveFile = backup ? backupFileNamed(filename) : saveFileNamed(filename);
+        File saveFile = new File(directoryPath, filename);
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(saveFile));
         ZipEntry e = new ZipEntry("GameSession.dat");
         out.putNextEntry(e);
@@ -413,18 +413,6 @@ public final class GameSession implements Base, Serializable {
         if (!startUp) {
             RotPUI.instance().selectMainPanelLoadGame();
         }
-    }
-    public String saveDir() {
-        return UserPreferences.saveDirectoryPath();
-    }
-    public String backupDir() {
-        return concat(saveDir(),"/",GameSession.BACKUP_DIRECTORY);
-    }
-    private File saveFileNamed(String fileName) {
-        return new File(saveDir(), fileName);
-    }
-    private File backupFileNamed(String fileName) {
-        return new File(backupDir(), fileName);
     }
     private String backupFileName(int num) {
         Empire pl = player();
@@ -478,7 +466,7 @@ public final class GameSession implements Base, Serializable {
         return true;
     }
     public void loadRecentSession(boolean startUp) {
-        loadSession(saveDir(), RECENT_SAVEFILE, startUp);
+        loadSession(UserPreferences.saveDirectoryPath(), RECENT_SAVEFILE, startUp);
     }
     public void loadSession(String dir, String filename, boolean startUp) {
         try {

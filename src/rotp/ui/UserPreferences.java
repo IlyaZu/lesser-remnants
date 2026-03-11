@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import rotp.Rotp;
-import rotp.model.game.GameSession;
 import rotp.util.LanguageManager;
 import rotp.util.sound.SoundManager;
 
@@ -51,8 +50,10 @@ public class UserPreferences {
     private static final String SENSITIVITY_LOW = "GAME_SETTINGS_SENSITIVITY_LOW";
     
     private static final String PREFERENCES_FILE = "Remnants.cfg";
+    private static final String BACKUP_DIRECTORY = "backup";
     private static final int MAX_BACKUP_TURNS = 10;
     private static final String keyFormat = "%-20s: ";
+    
     private static boolean playMusic = true;
     private static boolean playSounds = true;
     private static int musicVolume = 10;
@@ -165,7 +166,7 @@ public class UserPreferences {
             return saveDir;
     }
     public static String backupDirectoryPath() {
-        return saveDirectoryPath()+"/"+GameSession.BACKUP_DIRECTORY;
+        return saveDirectoryPath()+"/"+BACKUP_DIRECTORY;
     }
     public static String saveDir()          { return saveDir; }
     public static void saveDir(String s)    { saveDir = s; save(); }

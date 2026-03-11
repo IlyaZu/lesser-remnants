@@ -362,7 +362,7 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         GameUI.gameName = fileBaseName(s);
         repaint();
         buttonClick();
-        String dirName = showingBackups ? session().backupDir() : session().saveDir();
+        String dirName = showingBackups ? UserPreferences.backupDirectoryPath() : UserPreferences.saveDirectoryPath();
         final Runnable load = () -> {
             GameSession.instance().loadSession(dirName, s, false);
         };
