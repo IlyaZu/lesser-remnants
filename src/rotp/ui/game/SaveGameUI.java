@@ -58,22 +58,22 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private final static String CANCEL_ACTION = "cancel-input";
     private final static String SAVE_ACTION   = "save-input";
     private static final SimpleDateFormat fileDateFmt = new SimpleDateFormat("MMM dd, HH:mm");
-    static SaveGameUI current;
+    private static SaveGameUI current;
 
     private final BaseTextField newFileField = new BaseTextField("");
 
-    FileListingPanel listingPanel;
-    List<String> saveFiles = new ArrayList<>();
-    List<Long> saveSizes = new ArrayList<>();
-    List<String> saveDates = new ArrayList<>();
-    int selectIndex = -1;
-    Rectangle hoverBox;
-    Rectangle selectBox;
-    int start = 0;
-    int end = 0;
-    boolean saving = false;
+    private FileListingPanel listingPanel;
+    private List<String> saveFiles = new ArrayList<>();
+    private List<Long> saveSizes = new ArrayList<>();
+    private List<String> saveDates = new ArrayList<>();
+    private int selectIndex = -1;
+    private Rectangle hoverBox;
+    private Rectangle selectBox;
+    private int start = 0;
+    private int end = 0;
+    private boolean saving = false;
 
-    int buttonW, button1X, button2X;
+    private int buttonW, button1X, button2X;
     private final Rectangle cancelBox = new Rectangle();
     private final Rectangle saveBox = new Rectangle();
     private LinearGradientPaint[] saveBackC;
