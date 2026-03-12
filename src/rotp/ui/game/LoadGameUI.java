@@ -38,8 +38,6 @@ import java.io.FilenameFilter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
@@ -54,12 +52,6 @@ import rotp.ui.main.SystemPanel;
 public final class LoadGameUI extends BasePanel implements MouseListener, MouseWheelListener {
     private static final long serialVersionUID = 1L;
     private static final int MAX_FILES = 20;
-    private static final int SORT_FN_UP = 1;
-    private static final int SORT_FN_DN = 2;
-    private static final int SORT_DT_UP = 3;
-    private static final int SORT_DT_DN = 4;
-    private static final int SORT_SZ_UP = 5;
-    private static final int SORT_SZ_DN = 6;
     
     private static final SimpleDateFormat fileDateFmt = new SimpleDateFormat("MMM dd, HH:mm");
     private static LoadGameUI current;
@@ -75,7 +67,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
     private int start = 0;
     private int end = 0;
     
-    private int sortOrder = SORT_DT_UP;
     private int buttonW, button1X, button2X;
 
     private boolean hasAutosave = false;
@@ -86,9 +77,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
     private String saveDirInfo = "";
     private final Rectangle cancelBox = new Rectangle();
     private final Rectangle loadBox = new Rectangle();
-    private final Rectangle fileNameBox = new Rectangle();
-    private final Rectangle fileSizeBox = new Rectangle();
-    private final Rectangle fileDateBox = new Rectangle();
     private final RoundRectangle2D saveDirBox = new RoundRectangle2D.Float();
     private final RoundRectangle2D backupDirBox = new RoundRectangle2D.Float();
     private LinearGradientPaint[] loadBackC;
@@ -164,14 +152,8 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
             saveSizes.add(autoSave.length());
         }
         
-        switch(sortOrder) {
-            case SORT_FN_UP : Arrays.sort(filesList, FILE_NAME); break;
-            case SORT_FN_DN : Arrays.sort(filesList, Collections.reverseOrder(FILE_NAME)); break;
-            case SORT_DT_UP : Arrays.sort(filesList, FILE_DATE); break;
-            case SORT_DT_DN : Arrays.sort(filesList, Collections.reverseOrder(FILE_DATE)); break;
-            case SORT_SZ_UP : Arrays.sort(filesList, FILE_SIZE); break;
-            case SORT_SZ_DN : Arrays.sort(filesList, Collections.reverseOrder(FILE_SIZE)); break;
-        }
+        Arrays.sort(filesList, (file1, file2) -> Long.valueOf(file2.lastModified()).compareTo(file1.lastModified()));
+        
         for (File f : filesList){
             if (f.isFile()) {
                 String name = f.getName();
@@ -272,30 +254,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         selectedFile = selectedFileName(selectIndex);
         if ((prevStart != start) || (prevSelect != selectIndex))
             repaint();
-    }
-    private void sortByFileName() {
-        switch (sortOrder) {
-            case SORT_FN_UP : sortOrder = SORT_FN_DN; break;
-            default         : sortOrder = SORT_FN_UP; break;
-        }
-        sortListing();
-        repaint();
-    }
-    private void sortByDate() {
-        switch (sortOrder) {
-            case SORT_DT_UP : sortOrder = SORT_DT_DN; break;
-            default         : sortOrder = SORT_DT_UP; break;
-        }
-        sortListing();
-        repaint();
-    }
-    private void sortBySize() {
-        switch (sortOrder) {
-            case SORT_SZ_UP : sortOrder = SORT_SZ_DN; break;
-            default         : sortOrder = SORT_SZ_UP; break;
-        }
-        sortListing();
-        repaint();
     }
     private void toggleSaveBackupListing() {
         showingBackups = !showingBackups;
@@ -415,7 +373,7 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
             int wSide = s40;
             int wBottom = s80;
             g.setColor(GameUI.loadListMask());
-            g.fillRect(x0-wSide, y0-wTop, w0+wSide+wSide, h0+lineH+wTop+wBottom);
+            g.fillRect(x0-wSide, y0-wTop, w0+wSide+wSide, h0+wTop+wBottom);
             
             // draw dir info
             if (hasBackupDir) {
@@ -452,15 +410,10 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
             }
 
             g.setColor(GameUI.raceCenterColor());
-            g.fillRect(x0, y0, w0, h0+lineH);
+            g.fillRect(x0, y0, w0, h0);
             
-            g.setColor(GameUI.sortLabelBackColor());
-            g.fillRect(x0, y0, w0, lineH);
-            drawFilenameButton(g, x0+s30, y0+lineH);
-            drawSizeButton(g, x0+w0-scaled(150), y0+lineH);
-            drawDateButton(g, x0+w0-s30, y0+lineH);
             // draw list of games to load
-            int lineY = y0+s5+lineH;
+            int lineY = y0+s5;
             listBox.setBounds(x0, y0, w0, h0);
             for (int i=start;i<start+MAX_FILES;i++) {
                 int boxIndex = i-start;
@@ -533,33 +486,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
                 drawNotice(g, 30);
             }
         }
-        private void drawFilenameButton(Graphics g, int x, int y) {
-            Color textC = fileNameBox == hoverBox ? GameUI.textHoverColor() : GameUI.textColor();
-            g.setFont(narrowFont(20));
-            String title = text("LOAD_GAME_FILENAME");
-            int sw = g.getFontMetrics().stringWidth(title);
-            fileNameBox.setBounds(x, y-lineH,sw,lineH);
-            g.setColor(textC);
-            drawString(g,title, x, y-(lineH/5));
-        }
-        private void drawSizeButton(Graphics g, int x, int y) {
-            Color textC = fileSizeBox == hoverBox ? GameUI.textHoverColor() : GameUI.textColor();
-            g.setFont(narrowFont(20));
-            String title = text("LOAD_GAME_SIZE");
-            int sw = g.getFontMetrics().stringWidth(title);
-            fileSizeBox.setBounds(x-sw, y-lineH, sw, lineH);
-            g.setColor(textC);
-            drawString(g,title, x-sw, y-(lineH/5));
-        }
-        private void drawDateButton(Graphics g, int x, int y) {
-            Color textC = fileDateBox == hoverBox ? GameUI.textHoverColor() : GameUI.textColor();
-            g.setFont(narrowFont(20));
-            String title = text("LOAD_GAME_DATE");
-            int sw = g.getFontMetrics().stringWidth(title);
-            fileDateBox.setBounds(x-sw, y-lineH, sw, lineH);
-            g.setColor(textC);
-            drawString(g,title, x-sw, y-(lineH/5));
-        }
         private void scrollY(int deltaY) {
             yOffset += deltaY;
             if (yOffset > lineH) {
@@ -611,12 +537,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
                 hoverBox = loadBox;
             else if (cancelBox.contains(x,y))
                 hoverBox = cancelBox;
-            else if (fileNameBox.contains(x,y))
-                hoverBox = fileNameBox;
-            else if (fileDateBox.contains(x,y))
-                hoverBox = fileDateBox;
-            else if (fileSizeBox.contains(x,y))
-                hoverBox = fileSizeBox;
             else if (saveDirBox.contains(x,y))
                 hoverBox = saveDirBox;
             else if (backupDirBox.contains(x,y))
@@ -659,18 +579,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
                 loadGame(selectedFile);
                 return;
             }
-            if (hoverBox == fileNameBox) {
-                sortByFileName();
-                return;
-            }
-            if (hoverBox == fileSizeBox) {
-                sortBySize();
-                return;
-            }
-            if (hoverBox == fileDateBox) {
-                sortByDate();
-                return;
-            }
             if (hoverBox == cancelBox) {
                 cancelLoad();
                 return;
@@ -699,7 +607,4 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
             }
         }
     }
-    public static Comparator<File> FILE_NAME = (File f1, File f2) -> f1.getName().toLowerCase().compareTo(f2.getName().toLowerCase());
-    public static Comparator<File> FILE_DATE = (File f1, File f2) -> Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-    public static Comparator<File> FILE_SIZE = (File f1, File f2) -> Long.valueOf(f2.length()).compareTo(f1.length());
 }
