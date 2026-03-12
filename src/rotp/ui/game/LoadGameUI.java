@@ -82,7 +82,10 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
     private LinearGradientPaint[] cancelBackC;
 
     public LoadGameUI() {
-        initModel();
+        addMouseWheelListener(this);
+        listingPanel = new LoadListingPanel();
+        setLayout(new BorderLayout());
+        add(listingPanel, BorderLayout.CENTER);
     }
     public void init() {
         saveFiles.clear();
@@ -226,12 +229,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         int imgW = back.getWidth(null);
         int imgH = back.getHeight(null);
         g.drawImage(back, 0, 0, getWidth(), getHeight(), 0, 0, imgW, imgH, this);
-    }
-    private void initModel() {
-        addMouseWheelListener(this);
-        listingPanel = new LoadListingPanel();
-        setLayout(new BorderLayout());
-        add(listingPanel, BorderLayout.CENTER);
     }
     private void scrollDown() {
         int prevStart = start;
