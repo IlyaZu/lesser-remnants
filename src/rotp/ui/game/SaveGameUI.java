@@ -58,7 +58,6 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private final static String CANCEL_ACTION = "cancel-input";
     private final static String SAVE_ACTION   = "save-input";
     private static final SimpleDateFormat fileDateFmt = new SimpleDateFormat("MMM dd, HH:mm");
-    private static SaveGameUI current;
 
     private final BaseTextField newFileField = new BaseTextField("");
 
@@ -80,7 +79,6 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private LinearGradientPaint[] cancelBackC;
 
     public SaveGameUI() {
-        current = this;
         initModel();
     }
     public void init() {
@@ -531,7 +529,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
                     String saveName = saveFiles.get(start+selectIndex).trim();
                     newFileField.setText(saveName);
                 }
-                current.repaint();
+                SaveGameUI.this.repaint();
             }
         }
     }

@@ -54,7 +54,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
     private static final int MAX_FILES = 20;
     
     private static final SimpleDateFormat fileDateFmt = new SimpleDateFormat("MMM dd, HH:mm");
-    private static LoadGameUI current;
 
     private LoadListingPanel listingPanel;
     private List<String> saveFiles = new ArrayList<>();
@@ -83,7 +82,6 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
     private LinearGradientPaint[] cancelBackC;
 
     public LoadGameUI() {
-        current = this;
         initModel();
     }
     public void init() {
@@ -261,7 +259,7 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
         start = 0;
         selectIndex = 0;
         sortListing();
-        current.repaint();
+        this.repaint();
     }
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
@@ -603,7 +601,7 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
                 if (!saveFiles.isEmpty()) {
                     selectedFile = selectedFileName(selectIndex);
                 }
-                current.repaint();
+                LoadGameUI.this.repaint();
             }
         }
     }
