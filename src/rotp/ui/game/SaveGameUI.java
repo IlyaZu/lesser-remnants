@@ -79,7 +79,11 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private LinearGradientPaint[] cancelBackC;
 
     public SaveGameUI() {
-        initModel();
+        newFileField.setLimit(255);
+        listingPanel = new FileListingPanel();
+        setLayout(new BorderLayout());
+        add(listingPanel, BorderLayout.CENTER);
+        addMouseWheelListener(this);
     }
     public void init() {
         saveFiles.clear();
@@ -164,13 +168,6 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
         int imgW = back.getWidth(null);
         int imgH = back.getHeight(null);
         g.drawImage(back, 0, 0, getWidth(), getHeight(), 0, 0, imgW, imgH, this);
-    }
-    private void initModel() {
-        newFileField.setLimit(255);
-        listingPanel = new FileListingPanel();
-        setLayout(new BorderLayout());
-        add(listingPanel, BorderLayout.CENTER);
-        addMouseWheelListener(this);
     }
     private void scrollDown() {
         int prevStart = start;
