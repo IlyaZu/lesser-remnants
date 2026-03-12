@@ -58,8 +58,8 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private static final long serialVersionUID = 1L;
     public static String AMBIENCE_KEY = "IntroAmbience";
 
-    public static final int BG_DURATION = 80;
-    public static final float SLIDESHOW_MAX = 15f;
+    private static final int BG_DURATION = 80;
+    private static final float SLIDESHOW_MAX = 15f;
     
     public static String gameName = "";
     
@@ -107,24 +107,24 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private static Border buttonBorder;
     private static Border saveGameBorder;
     private static Border saveListBorder;
-    BaseText discussText, continueText, newGameText, loadGameText, saveGameText, settingsText, exitText, restartText;
-    BaseText versionText, manualText;
-    BaseText developerText, artistText, graphicDsnrText, writerText, soundText, translatorText, slideshowText;
-    BaseText shrinkText, enlargeText;
-    BaseText hoverBox;
-    Rectangle languageBox = new Rectangle();
-    boolean mouseDepressed = false;
-    boolean hideText = false;
-    int startingScale = 100;
-    String startingDisplayMode;
+    private BaseText discussText, continueText, newGameText, loadGameText, saveGameText, settingsText, exitText, restartText;
+    private BaseText versionText, manualText;
+    private BaseText developerText, artistText, graphicDsnrText, writerText, soundText, translatorText, slideshowText;
+    private BaseText shrinkText, enlargeText;
+    private BaseText hoverBox;
+    private Rectangle languageBox = new Rectangle();
+    private boolean mouseDepressed = false;
+    private boolean hideText = false;
+    private int startingScale = 100;
+    private String startingDisplayMode;
     public static Image defaultBackground;
-    Image backImg1, backImg2;
-    BufferedImage titleImg;
-    BufferedImage backImg;
-    String imageKey1, imageKey2;
-    int animationTimer = BG_DURATION;
+    private Image backImg1, backImg2;
+    private BufferedImage titleImg;
+    private BufferedImage backImg;
+    private String imageKey1, imageKey2;
+    private int animationTimer = BG_DURATION;
     private final GameLanguagePane languagePanel;
-    float slideshowFade = SLIDESHOW_MAX;
+    private float slideshowFade = SLIDESHOW_MAX;
     
     public static Color langShade()               { return langShade[opt()]; }
     public static Color titleColor()              { return titleColor[opt()]; }
