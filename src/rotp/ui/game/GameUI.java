@@ -49,7 +49,6 @@ import rotp.ui.BasePanel;
 import rotp.ui.BaseText;
 import rotp.ui.RotPUI;
 import rotp.ui.UserPreferences;
-import rotp.ui.sprites.RoundGradientPaint;
 import rotp.util.FontManager;
 import rotp.util.ImageManager;
 import rotp.util.LanguageManager;
@@ -58,7 +57,6 @@ import rotp.util.ThickBevelBorder;
 public class GameUI  extends BasePanel implements MouseListener, MouseMotionListener, ActionListener {
     private static final long serialVersionUID = 1L;
     public static String AMBIENCE_KEY = "IntroAmbience";
-    protected static RoundGradientPaint rgp;
 
     public static final int BG_DURATION = 80;
     public static final float SLIDESHOW_MAX = 15f;
@@ -109,10 +107,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private static Border buttonBorder;
     private static Border saveGameBorder;
     private static Border saveListBorder;
-    int fuzz = 8;
-    int fuzzSc = 2;
-    int diff = s60;
-    int languageX;
     BaseText discussText, continueText, newGameText, loadGameText, saveGameText, settingsText, exitText, restartText;
     BaseText versionText, manualText;
     BaseText developerText, artistText, graphicDsnrText, writerText, soundText, translatorText, slideshowText;
