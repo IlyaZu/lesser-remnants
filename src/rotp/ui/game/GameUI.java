@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private static final Color[] loadHiBackgroundColor = { new Color(188,123,81), new Color(91,101,100) };
     private static final Color[] loadHoverBackgroundColor = { new Color(219,167,122), new Color(160,172,170) };
     private static final Color[] loadListMask = { new Color(0,0,0,120), new Color(0,0,0,120) };
-    private static final Color[] sortLabelBackColor = { new Color(100,70,50), new Color(59,66,65) };
     private static LinearGradientPaint[] loadBackground;
     private static LinearGradientPaint[] raceLeftBackground;
     private static LinearGradientPaint[] raceRightBackground;
@@ -156,7 +155,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     public static Color loadHiBackground()        { return loadHiBackgroundColor[opt()]; }
     public static Color loadHoverBackground()     { return loadHoverBackgroundColor[opt()]; }
     public static Color loadListMask()            { return loadListMask[opt()]; }
-    public static Color sortLabelBackColor()      { return sortLabelBackColor[opt()]; }
     public static LinearGradientPaint loadBackground() {
         if (loadBackground == null) {
             loadBackground = new LinearGradientPaint[2];
