@@ -28,7 +28,7 @@ public class DeclareWarIncident extends DiplomaticIncident {
         return inc;
     }
     private DeclareWarIncident(Empire e1, Empire e2) {
-        super(-70, "INC_DECLARED_WAR_TITLE", "INC_DECLARED_WAR_DESC");
+        super(-50, "INC_DECLARED_WAR_TITLE", "INC_DECLARED_WAR_DESC");
         empAggressor = e1.id;
         empVictim = e2.id;
     }
