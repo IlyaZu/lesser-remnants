@@ -329,6 +329,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
                     inc = DeclareWarIncident.create(owner(), empire()); break;
             }
         }
+        addIncident(inc);
         otherEmbassy().addIncident(inc);
 
         // if oath broken, then create that incident as well
