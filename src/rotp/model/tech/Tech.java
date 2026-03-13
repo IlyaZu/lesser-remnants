@@ -229,9 +229,4 @@ public class Tech implements Base {
         float pr2 = comparatorCiv.ai().scientist().warTradeValue(o2);
         return Float.compare(pr2, pr1);
     };
-    public static Comparator<Tech> TRADE_PRIORITY = (Tech o1, Tech o2) -> {
-        return Integer.compare(o2.level, o1.level);
-    } // order that we are willing to trade away techs
-    // from lowest-level to highest-level
-    ;
 }
