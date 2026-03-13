@@ -146,7 +146,7 @@ public final class LoadGameUI extends BasePanel implements MouseListener, MouseW
             filesList = saveDir.listFiles(filter);
         
         File autoSave = new File(saveDir, GameSession.RECENT_SAVEFILE);
-        if (autoSave.isFile()) {
+        if (autoSave.isFile() && !showingBackups) {
             hasAutosave = true;
             saveFiles.add(text("LOAD_GAME_AUTOSAVE"));
             saveDates.add(fileDateFmt.format(autoSave.lastModified()));
