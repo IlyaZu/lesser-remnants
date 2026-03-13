@@ -177,7 +177,7 @@ public class AIDiplomat implements Base, Diplomat {
                             // techs the AI is willing to consider in exchange for wantedTech
                             // find the tech with the lowest trade value
                             counterTechs.add(wantedTech);
-                            Collections.sort(counterTechs, Tech.TRADE_PRIORITY);
+                            Collections.sort(counterTechs, (tech1, tech2) -> Integer.compare(tech2.level, tech1.level));
                             Tech cheapestCounter = counterTechs.get(0);
                             // if the lowest trade value tech is not the requested tech, then make the deal
                             if (cheapestCounter != wantedTech)
