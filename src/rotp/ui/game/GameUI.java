@@ -36,8 +36,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -697,7 +697,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
     private void openRedditPage() {
         try {
             buttonClick();
-            Desktop.getDesktop().browse(new URL("http://www.reddit.com/r/rotp").toURI());
+            Desktop.getDesktop().browse(new URI("http://www.reddit.com/r/rotp"));
         } catch (IOException | URISyntaxException e) {}
     }
     private void openManual() {
