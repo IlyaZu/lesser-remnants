@@ -254,7 +254,7 @@ public class AIDiplomat implements Base, Diplomat {
 
         v.otherView().embassy().tradeAccepted();
         v.otherView().embassy().establishTradeTreaty(level);
-        return DiplomaticReplies.acceptTrade(v.otherView(), level);
+        return DiplomaticReplies.acceptTrade(v, level);
     }
     @Override
     public DiplomaticReply refuseOfferTrade(Empire requestor, int level) {
@@ -471,7 +471,7 @@ public class AIDiplomat implements Base, Diplomat {
             return refuseOfferPact(requestor);
 
         v.embassy().signPact();
-        return DiplomaticReplies.acceptPact(v.otherView());
+        return DiplomaticReplies.acceptPact(v);
     }
     @Override
     public DiplomaticReply refuseOfferPact(Empire requestor) {
