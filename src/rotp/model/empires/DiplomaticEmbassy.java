@@ -289,15 +289,12 @@ public class DiplomaticEmbassy implements Base, Serializable {
         view.trade().startRoute(level);
     }
     public void declareJointWar(Empire requestor) {
-        declareWar(requestor, DialogueManager.DECLARE_HATE_WAR, null);
+        declareWar(requestor, DialogueManager.DECLARE_HATE_WAR);
     }
     public void declareWar(String warCauseId) {
-        declareWar(null, warCauseId, null);
+        declareWar(null, warCauseId);
     }
-    public void declareWar(DiplomaticIncident warCauseIncident) {
-        declareWar(null, warCauseIncident.declareWarId(), warCauseIncident);
-    }
-    private void declareWar(Empire warRequestor, String warCauseId, DiplomaticIncident warCauseIncident) {
+    private void declareWar(Empire warRequestor, String warCauseId) {
         endTreaty();
         int oathBreakType = 0;
         if (alliance())
@@ -319,16 +316,11 @@ public class DiplomaticEmbassy implements Base, Serializable {
         withdrawAmbassador();
         otherEmbassy().withdrawAmbassador();
 
-        // add war-causing incident to embassy
-        DiplomaticIncident inc = warCauseIncident;
-        if (inc == null) {
-            switch(warCauseId) {
-                case DialogueManager.DECLARE_ERRATIC_WAR :
-                    inc = ErraticWarIncident.create(owner(), empire()); break;
-                default:
-                    inc = DeclareWarIncident.create(owner(), empire()); break;
-            }
-        }
+        // Add war incident to embassy
+        DiplomaticIncident inc = switch(warCauseId) {
+            case DialogueManager.DECLARE_ERRATIC_WAR -> ErraticWarIncident.create(owner(), empire());
+            default -> DeclareWarIncident.create(owner(), empire());
+        };
         addIncident(inc);
         otherEmbassy().addIncident(inc);
 

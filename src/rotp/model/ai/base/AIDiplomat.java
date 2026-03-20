@@ -952,26 +952,25 @@ public class AIDiplomat implements Base, Diplomat {
         if(!empire.inShipRange(view.empId()))
             return false;
         
-        // look at new incidents. If any trigger war, pick
-        // the one with the greatest severity
-        DiplomaticIncident warIncident = null;
-        float warIncidentSeverity = 0;
-        
         // check for a war incident if we are not at peace, or the start
         // date of our peace treaty precedes the current time
         if (!view.embassy().atPeace() || (view.embassy().treatyTurn() < galaxy().currentTurn())) {
+            // look at new incidents. If any trigger war, pick
+            // the one with the greatest severity
+            String declareWarId = null;
+            float warIncidentSeverity = 0;
             for (DiplomaticIncident ev: view.embassy().newIncidents()) {
                 boolean isWarIncident = !ev.declareWarId().isEmpty();
                 boolean isTriggerIncident = ev.triggersWar() || ev.triggersWarning() && view.embassy().onLastWarning();
                 boolean isWorseIncident = ev.severity() < warIncidentSeverity;
                 
                 if (isWarIncident && isTriggerIncident && isWorseIncident) {
-                    warIncident = ev;
+                    declareWarId = ev.declareWarId();
                     warIncidentSeverity = ev.severity();
                 }
             }
-            if (warIncident != null) {
-                view.embassy().declareWar(warIncident);
+            if (declareWarId != null) {
+                view.embassy().declareWar(declareWarId);
                 return true;
             }
         }
