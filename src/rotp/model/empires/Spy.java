@@ -37,7 +37,7 @@ public class Spy implements Base, Serializable {
     private int fate;
     private int mission;
     private int identity;
-    public Spy(SpyNetwork sn) { }
+    
     public void attemptInfiltration(float securityAdj) {
         // determine spy's fate.. p271 of Strategy Guide, Table 12-1
         float r = random() + securityAdj;
