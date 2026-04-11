@@ -31,10 +31,6 @@ public class Spy implements Base, Serializable {
     private final static int MISSION_FAILED = 1;
     private final static int MISSION_SUCCEEDS = 2;
 
-    private final static int FATE_CLEARED = 0;
-    private final static int FATE_STOPPED = 1;
-
-    private int fate;
     private int mission;
     private int identity;
     
@@ -43,27 +39,21 @@ public class Spy implements Base, Serializable {
         float r = random() + securityAdj;
         mission = MISSION_UNATTEMPTED;
         if (r < 0) {
-            fate = FATE_CLEARED;
             identity = IDENTITY_CAN_FRAME;
         }
         else if (r <= .3) {
-            fate = FATE_CLEARED;
             identity = IDENTITY_UNDISCOVERED;
         }
         else if (r <= .5) {
-            fate = FATE_CLEARED;
             identity = IDENTITY_WILL_BE_CAUGHT;
         }
         else if (r <= .7)  {
-            fate = FATE_STOPPED;
             identity = IDENTITY_UNDISCOVERED;
         }
         else if (r <= 1) {
-            fate = FATE_STOPPED;
             identity = IDENTITY_CAUGHT;
         }
         else {
-            fate = FATE_STOPPED;
             identity = IDENTITY_CONFESSES;
         }
     }
@@ -76,8 +66,6 @@ public class Spy implements Base, Serializable {
         else if (identity == IDENTITY_WILL_BE_CAUGHT)
             identity = IDENTITY_CAUGHT;
     }
-    public boolean clearedToInfiltrate() { return fate == FATE_CLEARED; }
-    public boolean stopped()             { return fate == FATE_STOPPED; }
     public boolean eliminated()          { return (identity == IDENTITY_CAUGHT) || (identity == IDENTITY_CONFESSES); }
     public boolean caught()              { return identity == IDENTITY_CAUGHT; }
     public boolean confesses()           { return identity == IDENTITY_CONFESSES; }
