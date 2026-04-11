@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,18 +21,18 @@ import rotp.util.Base;
 
 public class Spy implements Base, Serializable {
     private static final long serialVersionUID = 1L;
-    final static int IDENTITY_CAN_FRAME = 0;
-    final static int IDENTITY_UNDISCOVERED = 1;
-    final static int IDENTITY_WILL_BE_CAUGHT = 2;
-    final static int IDENTITY_CAUGHT = 3;
-    final static int IDENTITY_CONFESSES = 4;
+    private final static int IDENTITY_CAN_FRAME = 0;
+    private final static int IDENTITY_UNDISCOVERED = 1;
+    private final static int IDENTITY_WILL_BE_CAUGHT = 2;
+    private final static int IDENTITY_CAUGHT = 3;
+    private final static int IDENTITY_CONFESSES = 4;
 
-    final static int MISSION_UNATTEMPTED = 0;
-    final static int MISSION_FAILED = 1;
-    final static int MISSION_SUCCEEDS = 2;
+    private final static int MISSION_UNATTEMPTED = 0;
+    private final static int MISSION_FAILED = 1;
+    private final static int MISSION_SUCCEEDS = 2;
 
-    final static int FATE_CLEARED = 0;
-    final static int FATE_STOPPED = 1;
+    private final static int FATE_CLEARED = 0;
+    private final static int FATE_STOPPED = 1;
 
     private int fate;
     private int mission;
