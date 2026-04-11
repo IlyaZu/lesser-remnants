@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class EspionageMission implements Base, Serializable {
     private EspionageTechIncident incident;
     private String stolenTech;
     private final StarSystem targetSystem;
-    public Empire framedEmpire;
+    private Empire framedEmpire;
     // map of category ids and id of highest-rated available tech
     private final HashMap<String, String> techChoices = new HashMap<>();
     private final List<Empire> empiresToFrame = new ArrayList<>();
