@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -203,7 +203,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         mode = MODE_SHOW_TECH;
         background = BACKGROUND_ALIEN_LAB;
         researchedTech = false;
-        tech = m.choice();
+        tech = tech(m.stolenTech());
         system = m.targetSystem();
         sourceEmpire = gal.empire(empId);
         player().race().resetSpy();
@@ -640,7 +640,7 @@ public class DiscoverTechUI extends FadeInPanel implements MouseListener, MouseM
         else if (buttonId == 2) {
             mission.frameEmpire(frameEmpire2);
         }
-        if (mission.hasFramed()) {
+        if (mission.framedEmpire() != null) {
             if (shouldReallocate()) {
                 mode = MODE_REALLOCATE;
                 repaint();

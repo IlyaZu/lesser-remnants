@@ -102,10 +102,7 @@ public class EspionageMission implements Base, Serializable {
     public Empire thief()                 { return framedEmpire != null ? framedEmpire : spies.view().owner(); }
     public Empire spyEmpire()             { return spies.view().owner(); }
     public String stolenTech()            { return stolenTech; }
-    public Tech choice()                  { return tech(stolenTech); }
-    public boolean hasStolenTech()        { return stolenTech != null; }
     public boolean canFrame()             { return spy.canFrame() && (empiresToFrame.size() > 1); }
-    public boolean hasFramed()            { return framedEmpire != null; }
     public Empire framedEmpire()          { return framedEmpire; }
     public Tech techChoice(String id)     { return tech(techChoices.get(id)); }
     public List<Empire> empiresToFrame()  { return empiresToFrame; }
