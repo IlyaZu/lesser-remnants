@@ -61,8 +61,6 @@ public abstract class DiplomaticIncident implements Base, Serializable {
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
 
-    public boolean isSpying()            { return false; }
-
     public boolean triggersPraise()      { return !praiseMessageId().isEmpty(); }
     public boolean triggersWarning()     { return !warningMessageId().isEmpty(); }
     public boolean triggersWar()         { return !declareWarId().isEmpty(); }

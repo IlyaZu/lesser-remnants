@@ -46,10 +46,8 @@ public class EspionageTechIncident extends DiplomaticIncident {
     }
     private static float calculateSeverity(EmpireView view) {
         float multiplier = view.empire().leader().isTechnologist()? 2 : 1;
-        return Math.max(-20,-10+view.embassy().currentSpyIncidentSeverity()) * multiplier;
+        return -10 * multiplier;
     }
-    @Override
-    public boolean isSpying()         { return true; }
     @Override
     public String description()       {
         if (empSpy == empThief)

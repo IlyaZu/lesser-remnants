@@ -36,13 +36,13 @@ public class SpyConfessionIncident extends DiplomaticIncident {
     }
     private static float calculateSeverity(EmpireView view, SpyNetwork spies) {
         if (spies.isEspionage()) {
-            return Math.max(-20, -5+view.embassy().currentSpyIncidentSeverity());
+            return -5;
         }
         else if (spies.isSabotage()) {
-            return Math.max(-20, -10+view.embassy().currentSpyIncidentSeverity());
+            return -10;
         }
         else {
-            return Math.max(-20, -10+view.embassy().currentSpyIncidentSeverity());
+            return -10;
         }
     }
     private static String getDescriptionKey(SpyNetwork spies) {
@@ -56,8 +56,6 @@ public class SpyConfessionIncident extends DiplomaticIncident {
             return "INC_SPY_CAPTURED_DESC";
         }
     }
-    @Override
-    public boolean isSpying()           { return true; }
     @Override
     public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override

@@ -47,11 +47,9 @@ public class SabotageRebellionIncident extends DiplomaticIncident {
     }
     private static float calculateSeverity(EmpireView ev, SabotageMission m) {
         float multiplier = ev.empire().leader().isXenophobic()? 2 : 1;
-        return Math.max(-25,(-2*m.rebelsIncited())+ev.embassy().currentSpyIncidentSeverity()) * multiplier;
+        return Math.max(-25,-2*m.rebelsIncited()) * multiplier;
     }
     private String systemName()      { return player().sv.name(sysId); }
-    @Override
-    public boolean isSpying()        { return true; }
     @Override
     public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_SABOTAGE; }
     @Override
