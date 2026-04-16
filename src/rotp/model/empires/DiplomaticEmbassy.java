@@ -113,14 +113,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public final void setNoTreaty() {
         treaty = new TreatyNone(view.owner(), view.empire());
     }
-    public float currentSpyIncidentSeverity() {
-        float sev = 0;
-        for (DiplomaticIncident inc: allIncidents()) {
-            if (inc.isSpying())
-                sev += inc.severity();
-        }
-        return max(-50,sev);
-    }
     public void nextTurn(float prod) {
         treaty.nextTurn(empire());
     }

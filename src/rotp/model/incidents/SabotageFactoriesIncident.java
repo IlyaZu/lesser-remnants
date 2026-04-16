@@ -67,11 +67,9 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     }
     private static float calculateSeverity(EmpireView view, SabotageMission m) {
         float multiplier = view.empire().leader().isIndustrialist() ? 2 : 1;
-        return Math.max(-20,(-1*m.factoriesDestroyed())+view.embassy().currentSpyIncidentSeverity()) * multiplier;
+        return Math.max(-20,-1*m.factoriesDestroyed()) * multiplier;
     }
     private String systemName()      { return player().sv.name(sysId); }
-    @Override
-    public boolean isSpying()        { return true; }
     @Override
     public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_SABOTAGE; }
     @Override
