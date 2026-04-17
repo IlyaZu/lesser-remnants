@@ -405,7 +405,7 @@ public final class SpyNetwork implements Base, Serializable {
         }
 
         // if spy caught or is going to frame an empire, create incident
-        if (bestSpy.caught() || bestSpy.canFrame()) {
+        if (bestSpy.caught() || eMission.canFrame()) {
             Empire victim = view.empire();
             Empire thief = eMission.thief();
             EmpireView victimView = victim.viewForEmpire(thief);
