@@ -409,8 +409,7 @@ public final class SpyNetwork implements Base, Serializable {
             Empire victim = view.empire();
             Empire thief = eMission.thief();
             EmpireView victimView = victim.viewForEmpire(thief);
-            if (victimView != null)
-                victimView.embassy().addIncident(new EspionageTechIncident(victimView, eMission));
+            victimView.embassy().addIncident(new EspionageTechIncident(victimView, eMission));
         }
         if (bestSpy.caught())
             checkForTreatyBreak();
