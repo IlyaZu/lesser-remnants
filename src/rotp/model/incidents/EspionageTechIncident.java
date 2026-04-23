@@ -16,7 +16,6 @@
  */
 package rotp.model.incidents;
 
-import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.EspionageMission;
 import rotp.ui.diplomacy.DialogueManager;
@@ -26,14 +25,11 @@ public class EspionageTechIncident extends DiplomaticIncident {
     private static final long serialVersionUID = 1L;
     private final int empSpy;
     private final int empVictim;
-    private int empThief;
+    private final int empThief;
     private final String techId;
 
     public EspionageTechIncident(EmpireView ev, EspionageMission m) {
-        // FIXME Framing an empire for espionage currently does not work.
-        // This is because the incident is created and added to an embassy before the empire to frame is selected.
-        // As part of this fix replace PLACEGOLDER descriptioKey.
-        super(calculateSeverity(ev), "INC_TECH_STOLEN_TITLE", "PLACEHOLDER");
+        super(calculateSeverity(ev), "INC_TECH_STOLEN_TITLE", getDescriptionKey(m));
         ev.embassy().resetAllianceTimer();
         // empSpy is the actual spy
         // empThief is the suspected spy (the one who was framed)
@@ -41,24 +37,20 @@ public class EspionageTechIncident extends DiplomaticIncident {
         empVictim = ev.owner().id;
         empThief = m.thief().id;
         techId = m.stolenTech();
-        m.incident(this);
-
+        if (galaxy().empire(empVictim).isPlayerControlled())
+            TechStolenAlert.create(empThief);
     }
     private static float calculateSeverity(EmpireView view) {
         float multiplier = view.empire().leader().isTechnologist()? 2 : 1;
         return -10 * multiplier;
     }
-    @Override
-    public String description()       {
-        if (empSpy == empThief)
-            return  decode(text("INC_TECH_STOLEN_DESC"));
-        else
-            return decode(text("INC_TECH_FRAMED_DESC"));
-    }
-    public void frameEmpire(Empire e) {
-        empThief = e.id;
-        if (galaxy().empire(empVictim).isPlayerControlled())
-            TechStolenAlert.create(empThief);
+    private static String getDescriptionKey(EspionageMission mission) {
+        if (mission.spyEmpire().id == mission.thief().id) {
+            return "INC_TECH_STOLEN_DESC";
+        }
+        else {
+            return "INC_TECH_FRAMED_DESC";
+        }
     }
     @Override
     public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_ESPIONAGE; }
