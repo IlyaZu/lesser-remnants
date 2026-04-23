@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import rotp.model.galaxy.StarSystem;
-import rotp.model.incidents.EspionageTechIncident;
 import rotp.model.tech.Tech;
 import rotp.model.tech.TechCategory;
 import rotp.util.Base;
@@ -30,7 +29,6 @@ public class EspionageMission implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     private final SpyNetwork spies;
     private final Spy spy;
-    private EspionageTechIncident incident;
     private String stolenTech;
     private final StarSystem targetSystem;
     private Empire framedEmpire;
@@ -87,7 +85,6 @@ public class EspionageMission implements Base, Serializable {
             empiresToFrame.add(random(potentialFrames));
         }
     }
-    public void incident(EspionageTechIncident inc)  { incident = inc; }
     public void stealTech(Tech t)   {
         stolenTech = t.id();
         spies.owner().stealTech(stolenTech);
@@ -96,8 +93,6 @@ public class EspionageMission implements Base, Serializable {
         if (e == null)
             return;
         framedEmpire = e;
-        if (incident != null)
-            incident.frameEmpire(e);
     }
     public Empire thief()                 { return framedEmpire != null ? framedEmpire : spies.view().owner(); }
     public Empire spyEmpire()             { return spies.view().owner(); }
