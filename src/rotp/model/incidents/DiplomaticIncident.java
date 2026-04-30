@@ -35,19 +35,19 @@ public abstract class DiplomaticIncident implements Base, Serializable {
         this.descriptionKey = descriptionKey;
     }
     
-    public int turnOccurred() {
+    public final int turnOccurred() {
         return turnOccurred;
     }
     
-    public float severity() {
+    public final float severity() {
         return severity;
     }
 
-    public String title() {
+    public final String title() {
         return text(titleKey);
     }
 
-    public String description() {
+    public final String description() {
         return decode(text(descriptionKey));
     }
 
