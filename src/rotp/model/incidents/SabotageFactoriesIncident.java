@@ -71,7 +71,7 @@ public class SabotageFactoriesIncident extends DiplomaticIncident {
     }
     private String systemName()      { return player().sv.name(sysId); }
     @Override
-    public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_SABOTAGE; }
+    public String warningMessageId() { return DialogueManager.WARNING_SABOTAGE; }
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
     @Override
