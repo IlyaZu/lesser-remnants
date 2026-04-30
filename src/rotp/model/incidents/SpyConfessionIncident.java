@@ -20,7 +20,7 @@ import rotp.model.empires.EmpireView;
 import rotp.model.empires.SpyNetwork;
 import rotp.ui.diplomacy.DialogueManager;
 
-public class SpyConfessionIncident extends DiplomaticIncident {
+public class SpyConfessionIncident extends DiplomaticIncident { // TODO REMOVE
     private static final long serialVersionUID = 1L;
     private final int empVictim;
     private final int empSpy;
@@ -56,8 +56,6 @@ public class SpyConfessionIncident extends DiplomaticIncident {
             return "INC_SPY_CAPTURED_DESC";
         }
     }
-    @Override
-    public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
     public String warningMessageId() {
         if (missionType == 2)

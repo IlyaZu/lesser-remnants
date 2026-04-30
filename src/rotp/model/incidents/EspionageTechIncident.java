@@ -53,11 +53,9 @@ public class EspionageTechIncident extends DiplomaticIncident {
         }
     }
     @Override
-    public String warningMessageId() { return galaxy().empire(empVictim).isPlayerControlled() ? "" : DialogueManager.WARNING_ESPIONAGE; }
+    public String warningMessageId() { return DialogueManager.WARNING_ESPIONAGE; }
     @Override
     public String declareWarId()     { return DialogueManager.DECLARE_SPYING_WAR; }
-    @Override
-    public boolean triggersWar()        { return false; } // war is only triggered after a warning
     @Override
     public String decode(String s) {
         String frameMessage = empThief == empSpy ? "" : text("SPY_FRAMED");
