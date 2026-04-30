@@ -1,6 +1,6 @@
  /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
  */
 package rotp.model.ai.xilmi;
 
-import java.util.Collections;
 import java.util.List;
-import rotp.model.ai.interfaces.SpyMaster;
+import rotp.model.ai.base.AISpyMaster;
 import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.empires.SpyNetwork;
 import rotp.model.empires.SpyNetwork.Sabotage;
-import rotp.model.galaxy.StarSystem;
-import rotp.util.Base;
 
-public class AISpyMaster implements Base, SpyMaster {
+public class AIXilmiSpyMaster extends AISpyMaster {
     private final Empire empire;
-    public AISpyMaster (Empire c) {
+    public AIXilmiSpyMaster (Empire c) {
+        super(c);
         empire = c;
     }
     @Override
@@ -203,42 +201,6 @@ public class AISpyMaster implements Base, SpyMaster {
             return Sabotage.FACTORIES;
         else
             return null;
-    }
-    @Override
-    public StarSystem bestSystemForSabotage(EmpireView v, Sabotage choice) {
-        // invoked when a Sabotage attempt is successful
-        // choice: 1 - factories, 2 - missiles, 3 - rebellion
-
-        List<StarSystem> targets = v.empire().allColonizedSystems();
-
-        switch(choice){
-            case FACTORIES:
-                StarSystem.VIEWING_EMPIRE = empire;
-                Collections.sort(targets, StarSystem.VDISTANCE);
-                for (StarSystem tgt: targets) {
-                    if (empire.sv.canSabotageFactories(tgt.id))
-                        return tgt;
-                }
-                return null;
-            case MISSILES:
-                StarSystem.VIEWING_EMPIRE = empire;
-                Collections.sort(targets, StarSystem.VDISTANCE);
-                for (StarSystem tgt: targets) {
-                    if (empire.sv.canSabotageBases(tgt.id))
-                        return tgt;
-                }
-                return null;
-            case REBELS:
-            default:
-                StarSystem.VIEWING_EMPIRE = empire;
-                Collections.sort(targets, StarSystem.VPOPULATION);
-                for (int i=(targets.size()-1);i>=0;i--) {
-                    StarSystem tgt = targets.get(i);
-                    if (empire.sv.canInciteRebellion(tgt.id))
-                        return tgt;
-                }
-                return null;
-        }
     }
     @Override
     public Empire suggestToFrame(List<Empire> empires) {
