@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -83,8 +82,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     private Image rangeMapBuffer;
     public static BufferedImage sharedStarBackground;
     private final float zoomBase = 1.1f;
-    boolean dragSelecting = false;
-    private int selectX0, selectY0, selectX1, selectY1;
     private int lastMouseX, lastMouseY;
     private long lastMouseTime;
     private boolean redrawRangeMap = true;
@@ -257,7 +254,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         parent.drawTitle(g2);
         parent.drawAlerts(g2);
         drawControlSprites(g2);
-        drawRangeSelect(g2);
         g2.dispose();
     }
     private Image mapBuffer() {
@@ -518,21 +514,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
                 sprite.draw(this, g);
         }
     }
-    public void drawRangeSelect(Graphics2D g) {
-        if ((selectX0 == selectX1) || (selectY0 == selectY1))
-            return;
-        
-        int x = min(selectX0, selectX1);
-        int y = min(selectY0, selectY1);
-        int w = Math.abs(selectX0-selectX1);
-        int h = Math.abs(selectY0-selectY1);
-        Stroke prev = g.getStroke();
-        g.setStroke(stroke1);
-        g.setColor(Color.white);
-        g.drawRect(x,y,w,h);
-        
-        g.setStroke(prev);
-    }
     private Sprite spriteAt(int x1, int y1) {
         // In order of hovering priority:
         // 1. Next Turn Sprites
@@ -685,34 +666,10 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         int x = e.getX();
         int y = e.getY();
 
-        boolean rightClick = SwingUtilities.isRightMouseButton(e) && parent.allowsDragSelect();
         int deltaX = x - lastMouseX;
         int deltaY = y - lastMouseY;
 
-        if (rightClick) {
-            int prevSelectX0 = selectX0;
-            int prevSelectY0 = selectY0;
-            int prevSelectX1 = selectX1;
-            int prevSelectY1 = selectY1;
-            int boundsX0 = min(prevSelectX0, prevSelectX1, x);
-            int boundsY0 = min(prevSelectY0, prevSelectY1, y);
-            int boundsX1 = max(prevSelectX0, prevSelectX1, x);
-            int boundsY1 = max(prevSelectY0, prevSelectY1, y);
-            if (x > selectX0) {
-                selectX1 = x;
-            }
-            else if (x < selectX0) {
-                selectX0 = x; selectX1 = prevSelectX1;
-            }
-            if (y > selectY0) {
-                selectY1 = y;
-            }
-            else if (y < selectY0) {
-                selectY0 = y; selectY1 = prevSelectY1;
-            }
-            paintImmediately(boundsX0, boundsY0, s5+boundsX1-boundsX0, s5+boundsY1-boundsY0);
-        }
-        else if (parent.canChangeMapScales()) {
+        if (parent.canChangeMapScales()) {
             // find the xy map coords of current focus, adjust by the
             // dragged deltas, then recenter the map on the new focus
             dragMap(deltaX, deltaY);
@@ -787,26 +744,9 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         parent.hoveringOverSprite(null);
     }
     @Override
-    public void mousePressed(MouseEvent e) {
-        boolean rightClick = SwingUtilities.isRightMouseButton(e) && parent.allowsDragSelect();
-        if (rightClick) {
-            dragSelecting = true;
-            selectX0 = selectX1 = e.getX();
-            selectY0 = selectY1 = e.getY();
-        }
-    }
+    public void mousePressed(MouseEvent e) {}
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean shift = e.isShiftDown();
-        if (dragSelecting) {
-            if ((selectX0 != selectX1) && (selectY0 != selectY1))
-                parent.dragSelect(selectX0, selectY0, selectX1, selectY1, shift);
-            selectX0 = selectX1 = selectY0 = selectY1 = 0;
-            dragSelecting = false;
-            repaint();
-            return;
-        }
-
         if (e.getButton() > 3)
             return;
         

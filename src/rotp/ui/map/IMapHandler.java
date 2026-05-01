@@ -56,7 +56,6 @@ public interface IMapHandler {
 
     default public boolean forwardMouseEvents() { return false; }
     default public void mouseWheelMoved(MouseWheelEvent e)  { }
-    default public boolean dragSelect(int x0, int y0, int x1, int y, boolean shift) { return false; }
 
     default public void hoveringOverSprite(Sprite o)              { }
     default public void clickingOnSprite(Sprite o, int cnt, boolean right, boolean click)       { }
@@ -70,7 +69,6 @@ public interface IMapHandler {
     default public boolean showTreasuryResearchBar()       { return false; }
     default public boolean showAllCurrentResearch()        { return false; }
     default public boolean showSpyReportIcon()             { return false; }
-    default public boolean allowsDragSelect()              { return false; }
     default public boolean hoverOverFleets()               { return true; }
     default public boolean hoverOverSystems()              { return true; }
     default public boolean hoverOverFlightPaths()          { return true; }
