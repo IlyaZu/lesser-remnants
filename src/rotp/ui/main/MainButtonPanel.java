@@ -93,7 +93,7 @@ public final class MainButtonPanel extends BasePanel implements MouseListener, M
         nextTurnBackground = new GradientPaint(midM,0,nextTurnLightC,rightM,0,nextTurnDarkC);
         nextTurnDisableBackground = new GradientPaint(midM,0,nextTurnDisableLightC,rightM,0,nextTurnDisableDarkC);
         nextTurnHoverBackground = new GradientPaint(midM,0,nextTurnLightC,rightM,0,hoverC);
-        nextTurnDepressedBackground = new GradientPaint(midM,0,nextTurnLightC,rightM,0,depressedC);        
+        nextTurnDepressedBackground = new GradientPaint(midM,0,nextTurnLightC,rightM,0,depressedC);
     }
     public void init() {
         allowNextTurn = false;
@@ -114,7 +114,7 @@ public final class MainButtonPanel extends BasePanel implements MouseListener, M
         
         Graphics2D g = (Graphics2D) g0;
         
-        if (buttonBackground == null) 
+        if (buttonBackground == null)
             initGradients(w);
         g.setColor(Color.black);
         g.fillRect(0, 0, w, h);
