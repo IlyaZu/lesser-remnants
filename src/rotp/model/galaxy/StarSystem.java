@@ -403,9 +403,6 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
     public static Comparator<StarSystem> DISTANCE_TO_TARGET_SYSTEM =
             (sys1, sys2) -> Float.compare(sys1.distanceTo(TARGET_SYSTEM), sys2.distanceTo(TARGET_SYSTEM));
             
-    public static Comparator<StarSystem> TRANSPORT_TIME_TO_TARGET_SYSTEM =
-            (sys1, sys2) -> Float.compare(sys1.transportTimeTo(TARGET_SYSTEM), sys2.transportTimeTo(TARGET_SYSTEM));
-            
     public static Empire TARGET_EMPIRE;
     public static Comparator<StarSystem> DISTANCE_TO_TARGET_EMPIRE =
             (sys1, sys2) -> Float.compare(TARGET_EMPIRE.sv.distance(sys1.id), TARGET_EMPIRE.sv.distance(sys2.id));

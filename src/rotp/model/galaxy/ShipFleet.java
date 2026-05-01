@@ -521,17 +521,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         
         return true;
     }
-    public boolean canMassDeployTo(StarSystem sys) {
-        if (sys == null)
-            return false;
-        //allow if already orbiting the sv.system
-        if (inOrbit() && !inTransit() && (system() == sys))
-            return true;
-        // retreating fleets can only go to different systems, colonized by friendly empire
-        if (retreating)
-            return (sys != system()) && sys.isColonized() && sys.empire().alliedWith(empId());
-        return true;
-    }
     @Override
     public float hullPoints() {
         float pts = 0;

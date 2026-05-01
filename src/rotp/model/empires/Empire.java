@@ -176,12 +176,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     public float totalReserve()                   { return totalReserve; }
     public NamedObject lastAttacker()             { return lastAttacker; }
     public void lastAttacker(NamedObject e)       { lastAttacker = e; }
-    public List<ShipFleet> assignableFleets()     {
-        if (tech().hyperspaceCommunications())
-            return galaxy().ships.allFleets(id);
-        else
-            return galaxy().ships.notInTransitFleets(id);
-    }
     public List<Ship> visibleShips()              { return visibleShips; }
     public EmpireView[] empireViews()             { return empireViews; }
     public List<StarSystem> newSystems()          { return newSystems; }
@@ -467,25 +461,8 @@ public final class Empire implements Base, NamedObject, Serializable {
                 sv.rallySystem(sys.id, dest);
         }
     }
-    public void stopRallies(List<StarSystem> fromSystems) {
-        for (StarSystem sys: fromSystems)
-            sv.stopRally(sys.id);
-    }
     public void deployTransport(StarSystem from) {
         from.transportSprite().accept();
-    }
-    public void deployTransports(List<StarSystem> fromSystems, StarSystem dest, boolean synch) {
-        if (synch) {
-            float maxTime = 0;
-            for (StarSystem from: fromSystems)
-                maxTime = max(maxTime, from.colony().transport().travelTime(dest));
-            for (StarSystem from: fromSystems)
-                from.transportSprite().accept(maxTime);
-        }
-        else {
-            for (StarSystem from: fromSystems)
-                from.transportSprite().accept();
-        }
     }
     public int travelTurns(StarSystem from, StarSystem dest, float speed) {
         if (from.hasStargate(this) && dest.hasStargate(this))
@@ -516,10 +493,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
         colonizedSystems.clear();
         colonizedSystems.addAll(good);
-    }
-    public void cancelTransports(List<StarSystem> fromSystems) {
-        for (StarSystem from: fromSystems)
-            from.transportSprite().clear();
     }
     public void addColonyOrder(Colony.Orders order, float amt) {
         for (StarSystem sys: allColonizedSystems()) {

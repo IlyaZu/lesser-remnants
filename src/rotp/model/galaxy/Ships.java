@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import rotp.model.colony.ColonyShipyard;
 import rotp.model.empires.Empire;
-import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipDesignLab;
 import rotp.ui.sprites.ShipRelocationSprite;
 import rotp.util.Base;
@@ -192,13 +192,6 @@ public class Ships implements Base, Serializable {
             session().replaceVarValue(sourceFleet, deployedFleet);
         }
         return deployedFleet;
-    }
-    public boolean deploySubfleet(ShipFleet sourceFleet, List<ShipDesign> designs, int destSysId) {  
-        int[] counts = new int[sourceFleet.num.length];
-        for (ShipDesign d: designs) 
-            counts[d.id()] = sourceFleet.num(d.id());
-        
-        return deploySubfleet(sourceFleet, counts, destSysId);        
     }
     public boolean deploySubfleet(ShipFleet sourceFleet, int[] counts, int destSysId) {   
         // returns true if a new subfleet was created
@@ -406,44 +399,6 @@ public class Ships implements Base, Serializable {
         session().replaceVarValue(sourceFleet, orbitingFleet);
         
         return true;
-    }
-    public void undeployFleet(ShipFleet sourceFleet, List<ShipDesign> designs) {
-        if (!sourceFleet.deployed())
-            return;
-        // returns true if the source fleet was scrapped
-        StarSystem sys = sourceFleet.system();
-        int empId = sourceFleet.empId;
-        
-        int count = 0;
-        for (ShipDesign d: designs) 
-            count += sourceFleet.num(d.id());
-            
-        if (count == 0) {
-            err("Undeploying subfleet of zero ships");
-            return;
-        }    
-        if (count == sourceFleet.numShips()) {
-            undeployFleet(sourceFleet); // undeploy entire fleet
-            return;
-        }
-                
-        ShipFleet orbitingFleet = orbitingFleet(empId, sys.id);     
-        // if none exists, creating orbiting fleet to hold undeploying ships
-        if (orbitingFleet == null) {
-            orbitingFleet = new ShipFleet(empId, sys);
-            orbitingFleet.makeOrbiting();
-            allFleets.add(orbitingFleet); 
-            galaxy().empire(empId).addVisibleShip(orbitingFleet);
-        }        
-        
-        // move undeploying ships into orbiting fleet
-        for (ShipDesign d: designs) {
-            int i = d.id();
-            int a = orbitingFleet.num(i);
-            int b = sourceFleet.num(i);
-            orbitingFleet.num(i, a+b);
-            sourceFleet.num(i, 0);
-        }
     }
     public void deleteFleet(ShipFleet fl) {
         fl.reset();

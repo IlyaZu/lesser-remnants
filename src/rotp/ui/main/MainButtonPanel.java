@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ public final class MainButtonPanel extends BasePanel implements MouseListener, M
     int buttonW;
     String[] buttons = { "MAIN_NAVIGATION_GAME",
                     "MAIN_NAVIGATION_SYSTEMS",
-                    "MAIN_NAVIGATION_FLEETS",
                     "MAIN_NAVIGATION_DESIGN",
                     "MAIN_NAVIGATION_RACES",
                     "MAIN_NAVIGATION_COLONIES",
@@ -183,11 +182,10 @@ public final class MainButtonPanel extends BasePanel implements MouseListener, M
         switch(i) {
             case 0: RotPUI.instance().selectGamePanel();    break;
             case 1: RotPUI.instance().selectSystemsPanel(); break;
-            case 2: RotPUI.instance().selectFleetPanel();   break;
-            case 3: RotPUI.instance().selectDesignPanel();  break;
-            case 4: RotPUI.instance().selectRacesPanel();   break;
-            case 5: RotPUI.instance().selectPlanetsPanel(); break;
-            case 6: RotPUI.instance().selectTechPanel();    break;
+            case 2: RotPUI.instance().selectDesignPanel();  break;
+            case 3: RotPUI.instance().selectRacesPanel();   break;
+            case 4: RotPUI.instance().selectPlanetsPanel(); break;
+            case 5: RotPUI.instance().selectTechPanel();    break;
             default: break;
         }
     }

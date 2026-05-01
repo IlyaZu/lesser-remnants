@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ import rotp.ui.BaseTextField;
 import rotp.ui.ExitButton;
 import rotp.ui.RotPUI;
 import rotp.ui.SystemViewer;
-import rotp.ui.fleets.FleetUI;
 import rotp.ui.fleets.SystemListingUI;
 import rotp.ui.fleets.SystemListingUI.Column;
 import rotp.ui.fleets.SystemListingUI.DataView;
@@ -85,6 +84,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private static final Color sliderBoxBlue = new Color(34,140,142);
     private static final Color enabledArrowColor = Color.black;
     private static final Color disabledArrowColor = new Color(65,65,65);
+    private static final Color backHiC = new Color(178,124,87);
 
     private static Palette palette;
     private static BaseTextField notesField;
@@ -1716,7 +1716,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             int labelX = checkX+checkW+s6;
             Stroke prev = g.getStroke();
             g.setStroke(stroke2);
-            g.setColor(FleetUI.backHiC);
+            g.setColor(backHiC);
             g.fill(reserveBox);
             if (hoverBox == reserveBox) {
                 g.setColor(Color.yellow);
