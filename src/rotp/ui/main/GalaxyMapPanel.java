@@ -64,9 +64,6 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     
     private static final Color unreachableBackground = new Color(0,0,0);
 
-    public static Color gridLight = new Color(160,160,160);
-    public static Color gridDark = new Color(64,64,64);
-
     private final IMapHandler parent;
 
     // static fields shared across all galaxy map panels to keep them
