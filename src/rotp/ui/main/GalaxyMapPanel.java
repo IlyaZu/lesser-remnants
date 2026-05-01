@@ -86,12 +86,12 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
     private long lastMouseTime;
     private boolean redrawRangeMap = true;
     public Sprite hoverSprite;
-    int backOffsetX = 0;
-    int backOffsetY = 0;
-    float areaOffsetX = 0;
-    float areaOffsetY = 0;
-    Area shipRangeArea;
-    Area scoutRangeArea;
+    private int backOffsetX = 0;
+    private int backOffsetY = 0;
+    private float areaOffsetX = 0;
+    private float areaOffsetY = 0;
+    private Area shipRangeArea;
+    private Area scoutRangeArea;
     private int maxMouseVelocity = -1;
     private boolean searchingSprite = false;
 
