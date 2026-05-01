@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,6 @@ import rotp.ui.design.DesignUI;
 import rotp.ui.game.HelpUI;
 import rotp.ui.diplomacy.DialogueManager;
 import rotp.ui.diplomacy.DiplomacyRequestReply;
-import rotp.ui.fleets.FleetUI;
 import rotp.ui.map.SystemsUI;
 import rotp.ui.game.GameOverUI;
 import rotp.ui.game.GameSettingsUI;
@@ -131,7 +130,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private static final String MAIN_PANEL = "Main";
     private static final String GAME_PANEL = "Game";
     private static final String DESIGN_PANEL = "Design";
-    private static final String FLEET_PANEL = "Fleet";
     private static final String SYSTEMS_PANEL = "Systems";
     private static final String RACES_PANEL = "Races";
     private static final String PLANETS_PANEL = "Planets";
@@ -187,7 +185,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private final RaceIntroUI raceIntroUI = new RaceIntroUI();
     private MainUI mainUI;
     private final DesignUI designUI = new DesignUI();
-    private final FleetUI fleetUI = new FleetUI();
     private final SystemsUI systemsUI = new SystemsUI();
     private final RacesUI racesUI = new RacesUI();
     private final PlanetsUI planetsUI = new PlanetsUI();
@@ -335,7 +332,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             selectPanel(GAME_PANEL, gameUI);
     }
     public void selectDesignPanel()    { designUI.init(); selectPanel(DESIGN_PANEL, designUI); }
-    public void selectFleetPanel()     { fleetUI.init(); selectPanel(FLEET_PANEL, fleetUI); }
     public void selectSystemsPanel()   { systemsUI.init(); selectPanel(SYSTEMS_PANEL, systemsUI); }
     public void selectRacesPanel()     { racesUI.init(); selectPanel(RACES_PANEL, racesUI); }
     public void selectPlanetsPanel()   { planetsUI.init(); selectPanel(PLANETS_PANEL, planetsUI); }
@@ -604,7 +600,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         add(raceIntroUI, INTRO_PANEL);
         add(mainUI(), MAIN_PANEL);
         add(designUI, DESIGN_PANEL);
-        add(fleetUI, FLEET_PANEL);
         add(systemsUI, SYSTEMS_PANEL);
         add(racesUI, RACES_PANEL);
         add(planetsUI, PLANETS_PANEL);
