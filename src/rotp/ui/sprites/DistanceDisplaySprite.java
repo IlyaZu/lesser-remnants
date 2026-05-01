@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,16 @@
  */
 package rotp.ui.sprites;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import rotp.ui.BasePanel;
 import rotp.ui.main.GalaxyMapPanel;
 
 public class DistanceDisplaySprite extends MapControlSprite  {
+    private static final Color gridLight = new Color(160,160,160);
+    private static final Color gridDark = new Color(64,64,64);
+    
     public DistanceDisplaySprite(int xOff, int yOff, int w, int h) {
         super(xOff, yOff, w, h);
     }
@@ -40,9 +44,9 @@ public class DistanceDisplaySprite extends MapControlSprite  {
         Stroke str0 = g2.getStroke();
         g2.setStroke(BasePanel.stroke1);
         if (map.showDistance())
-            g2.setColor(GalaxyMapPanel.gridLight);
+            g2.setColor(gridLight);
         else
-            g2.setColor(GalaxyMapPanel.gridDark);
+            g2.setColor(gridDark);
 
         g2.setClip(startX, startY, width, height);
         int centerX= startX+(width/2);
