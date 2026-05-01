@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,7 +87,6 @@ public interface IMapHandler {
     default public void drawAlerts(Graphics2D g)         { }
 
     default Empire empireBoundaries()                    { return Empire.thePlayer(); }
-    default public boolean showYear()                    { return true; }
     default Image flagImage(StarSystem s)                { return Empire.thePlayer().sv.flagImage(s.id); }
     default Image mapFlagImage(StarSystem s)             { return Empire.thePlayer().sv.mapFlagImage(s.id); }
     default Image flagHover(StarSystem s)                { return ImageManager.current().image("Flag_Hover"); }

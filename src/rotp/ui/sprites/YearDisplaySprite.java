@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,10 @@ package rotp.ui.sprites;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import rotp.ui.main.GalaxyMapPanel;
-import rotp.ui.main.MainUI;
 
 public class YearDisplaySprite extends MapSprite {
     private int mapX, mapY, buttonW, buttonH;
     private int minMapX, maxButtonW;
-    private final MainUI parent;
-
-    public YearDisplaySprite(MainUI p)  { parent = p; }
 
     @Override
     public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
@@ -40,8 +36,6 @@ public class YearDisplaySprite extends MapSprite {
     }
     @Override
     public void draw(GalaxyMapPanel map, Graphics2D g) {
-        if (!parent.showYear())
-            return;
         if (session().currentAlert() != null)
             return;
 
