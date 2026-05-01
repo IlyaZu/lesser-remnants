@@ -50,10 +50,10 @@ public class Ships implements Base, Serializable {
             rallyingFleet.rallySysId(rallySysId);
             rallyingFleet.makeDeployed();
             allFleets.add(rallyingFleet);
-        }       
+        }
         
         // move rallyCount ships from orbitingFleet to rallyingFleet
-        rallyingFleet.addShips(designId, rallyCount);  
+        rallyingFleet.addShips(designId, rallyCount);
         orbitingFleet.removeShips(designId, rallyCount, true);
     }
     public void forwardRallyFleet(ShipFleet fl, int empId, int sysId, int rallySysId) {
@@ -64,7 +64,7 @@ public class Ships implements Base, Serializable {
             existingFleet.rallySysId(rallySysId);
             existingFleet.destSysId(rallySysId);
             existingFleet.makeDeployed();
-        }       
+        }
         else {
             existingFleet.addFleet(fl);
             fl.disband();
@@ -79,10 +79,10 @@ public class Ships implements Base, Serializable {
             existingFleet = new ShipFleet(empId, sys);
             existingFleet.makeOrbiting();
             allFleets.add(existingFleet);
-        }        
+        }
         existingFleet.addShips(designId, count);
     }
-    public void deployShips(int empId, int sysId, int[] counts, int destSysId) {    
+    public void deployShips(int empId, int sysId, int[] counts, int destSysId) {
         // get orbiting fleet to pull ships from
         ShipFleet orbitingFleet = orbitingFleet(empId, sysId);
         if (orbitingFleet == null) {
@@ -111,8 +111,8 @@ public class Ships implements Base, Serializable {
             return;
         }
             
-        // else we create a new deployed fleet 
-        // else we create a new deployed subfleet from the source 
+        // else we create a new deployed fleet
+        // else we create a new deployed subfleet from the source
         StarSystem sys = galaxy().system(sysId);
         StarSystem destSys = galaxy().system(destSysId);
         
@@ -120,18 +120,18 @@ public class Ships implements Base, Serializable {
         int minSpeed = 9;
         Empire sourceEmp = orbitingFleet.empire();
         for (int i=0; i<actual.length; i++) {
-            if (counts[i] > 0) 
+            if (counts[i] > 0)
                 minSpeed = min(minSpeed, sourceEmp.shipLab().design(i).warpSpeed());
-        }   
+        }
         int turns = sourceEmp.travelTurns(sys, destSys, minSpeed);
         // find any existing deployed fleets to that dest with the same travel turns
-        ShipFleet deployedFleet = deployedFleet(empId, sysId, destSysId, turns);    
+        ShipFleet deployedFleet = deployedFleet(empId, sysId, destSysId, turns);
         
         if (deployedFleet == null) {
             deployedFleet = new ShipFleet(empId, sys);
             deployedFleet.destSysId(destSysId);
             deployedFleet.makeDeployed();
-            allFleets.add(deployedFleet);            
+            allFleets.add(deployedFleet);
             galaxy().empire(empId).addVisibleShip(deployedFleet);
         }
         
@@ -140,7 +140,7 @@ public class Ships implements Base, Serializable {
             int startCount = orbitingFleet.num(i);
             deployedFleet.num(i, actual[i]);
             orbitingFleet.num(i, startCount-actual[i]);
-        }        
+        }
         deployedFleet.setArrivalTime();
         // if source fleet is gone, remove it and subst session vars
         if (orbitingFleet.isEmpty()) {
@@ -163,9 +163,9 @@ public class Ships implements Base, Serializable {
         int turns = sourceFleet.travelTurns(destSys);
         
         // get deployed fleet to add ships to
-        ShipFleet deployedFleet = deployedFleet(sourceFleet.empId, sysId, destSysId, turns);   
+        ShipFleet deployedFleet = deployedFleet(sourceFleet.empId, sysId, destSysId, turns);
         
-        if (deployedFleet == sourceFleet) 
+        if (deployedFleet == sourceFleet)
             return sourceFleet;
         
         // if no deployed fleet, use this one
@@ -174,7 +174,7 @@ public class Ships implements Base, Serializable {
             sourceFleet.makeDeployed();
             sourceFleet.setArrivalTime();
             return sourceFleet;
-        }   
+        }
         
         // transfer ships from source to deployed fleet
         for (int i=0; i<sourceFleet.num.length; i++) {
@@ -182,7 +182,7 @@ public class Ships implements Base, Serializable {
             int b = deployedFleet.num(i);
             deployedFleet.num(i, a+b);
             sourceFleet.num(i, 0);
-        }         
+        }
         // recalc arrival time (added ships may change this)
         deployedFleet.setArrivalTime();
         
@@ -193,7 +193,7 @@ public class Ships implements Base, Serializable {
         }
         return deployedFleet;
     }
-    public boolean deploySubfleet(ShipFleet sourceFleet, int[] counts, int destSysId) {   
+    public boolean deploySubfleet(ShipFleet sourceFleet, int[] counts, int destSysId) {
         // returns true if a new subfleet was created
          // adjust ship counts
         int[] actual = new int[counts.length];
@@ -214,10 +214,10 @@ public class Ships implements Base, Serializable {
         }
         
         // cannot redirect a partial fleet, even with HC
-        if (sourceFleet.inTransit()) 
+        if (sourceFleet.inTransit())
             return false;
               
-        // else we create a new deployed subfleet from the source 
+        // else we create a new deployed subfleet from the source
         StarSystem sys = sourceFleet.system();
         StarSystem destSys = galaxy().system(destSysId);
         
@@ -225,14 +225,14 @@ public class Ships implements Base, Serializable {
         int minSpeed = 9;
         Empire sourceEmp = sourceFleet.empire();
         for (int i=0; i<actual.length; i++) {
-            if (counts[i] > 0) 
+            if (counts[i] > 0)
                 minSpeed = min(minSpeed, sourceEmp.shipLab().design(i).warpSpeed());
-        }   
+        }
         int turns = sourceEmp.travelTurns(sys, destSys, minSpeed);
         
         // find any existing deployed fleets to that dest with the same travel turns
         int empId = sourceFleet.empId;
-        ShipFleet deployedFleet = deployedFleet(empId, sys.id, destSysId, turns);    
+        ShipFleet deployedFleet = deployedFleet(empId, sys.id, destSysId, turns);
         
         if (deployedFleet == null) {
             // if entire source fleet is being deployed just use it
@@ -241,11 +241,11 @@ public class Ships implements Base, Serializable {
                 sourceFleet.makeDeployed();
                 sourceFleet.setArrivalTime();
                 return false;
-            }           
+            }
             deployedFleet = new ShipFleet(empId, sys);
             deployedFleet.destSysId(destSysId);
             deployedFleet.makeDeployed();
-            allFleets.add(deployedFleet); 
+            allFleets.add(deployedFleet);
             galaxy().empire(empId).addVisibleShip(deployedFleet);
         }
         
@@ -255,7 +255,7 @@ public class Ships implements Base, Serializable {
             int destCount = deployedFleet.num(i);
             deployedFleet.num(i, destCount+actual[i]);
             sourceFleet.num(i, srcCount-actual[i]);
-        }        
+        }
         deployedFleet.setArrivalTime();
         
         // if source fleet is gone, remove it and subst session vars
@@ -265,8 +265,8 @@ public class Ships implements Base, Serializable {
         }
         return true;
     }
-    public ShipFleet redirectFleet(ShipFleet sourceFleet, int destSysId) {   
-        // else we creat a new deployed subfleet from the source 
+    public ShipFleet redirectFleet(ShipFleet sourceFleet, int destSysId) {
+        // else we creat a new deployed subfleet from the source
         float currX = sourceFleet.x();
         float currY = sourceFleet.y();
       
@@ -283,7 +283,7 @@ public class Ships implements Base, Serializable {
             sourceFleet.makeDeployed();
             sourceFleet.retreating(true);
             sourceFleet.setArrivalTime();
-            return sourceFleet;  
+            return sourceFleet;
         }
         
         // transfer ships from orbiting to retreating fleet
@@ -292,7 +292,7 @@ public class Ships implements Base, Serializable {
             int b = retreatingFleet.num(i);
             retreatingFleet.num(i, a+b);
             sourceFleet.num(i, 0);
-        }        
+        }
         retreatingFleet.setArrivalTime();
         retreatingFleet.retreating(true);
         deleteFleet(sourceFleet);
@@ -302,7 +302,7 @@ public class Ships implements Base, Serializable {
     }
     public ShipFleet retreatSubfleet(ShipFleet sourceFleet, int designId, int destSysId) {
         int retreatCount = sourceFleet.num(designId);
-        if (retreatCount == 0) 
+        if (retreatCount == 0)
             return null;
         
         int allCount = sourceFleet.numShips();
@@ -324,12 +324,12 @@ public class Ships implements Base, Serializable {
                 sourceFleet.retreating(true);
                 sourceFleet.setArrivalTime();
                 return sourceFleet;
-            }                
+            }
             retreatingFleet = new ShipFleet(empId, sys);
             retreatingFleet.destSysId(destSysId);
             retreatingFleet.makeDeployed();
             retreatingFleet.retreating(true);
-            allFleets.add(retreatingFleet); 
+            allFleets.add(retreatingFleet);
             galaxy().empire(empId).addVisibleShip(retreatingFleet);
         }
         
@@ -370,7 +370,7 @@ public class Ships implements Base, Serializable {
                     fl.num(i,0);
                 }
                 deleteFleet(fl);
-                session().replaceVarValue(fl, orbitingFleet);            
+                session().replaceVarValue(fl, orbitingFleet);
             }
         }
         return cancelled;
@@ -387,7 +387,7 @@ public class Ships implements Base, Serializable {
             sourceFleet.rallySysId(StarSystem.NULL_ID);
             sourceFleet.destSysId(StarSystem.NULL_ID);
             return false;
-        }        
+        }
         
         for (int i=0;i<sourceFleet.num.length;i++) {
             int a = sourceFleet.num(i);
@@ -428,7 +428,7 @@ public class Ships implements Base, Serializable {
     }
     public void reloadBombs() {
         List<ShipFleet> fleetsAll = allFleetsCopy();
-        for (ShipFleet fl: fleetsAll) 
+        for (ShipFleet fl: fleetsAll)
             fl.reloadBombs();
     }
     public void disembarkRalliedFleets() {
@@ -462,7 +462,7 @@ public class Ships implements Base, Serializable {
             }
         }
         // if an orbiting fleet already exists, merge with it
-        ShipFleet orbitingFleet = orbitingFleet(fleet.empId, sys.id);       
+        ShipFleet orbitingFleet = orbitingFleet(fleet.empId, sys.id);
         if (orbitingFleet == null) {
             fleet.arrive(sys, true);
             orbitingFleet = fleet;
@@ -508,7 +508,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && (fl.sysId() == sysId) 
+            if ((fl.empId == empId) && (fl.sysId() == sysId)
             && fl.isOrbiting() && !fl.isRallied())
                 return fl;
         }
@@ -518,7 +518,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && (fl.sysId() == sysId) 
+            if ((fl.empId == empId) && (fl.sysId() == sysId)
             && fl.isDeployed() && (fl.rallySysId() == rallySysId))
                 return fl;
         }
@@ -528,7 +528,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && (fl.sysId() == sysId) 
+            if ((fl.empId == empId) && (fl.sysId() == sysId)
             && fl.isDeployed() && fl.retreating() && (fl.destSysId() == destSysId))
                 return fl;
         }
@@ -538,7 +538,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         List<ShipFleet> retreating = new ArrayList<>();
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && (fl.sysId() == sysId) 
+            if ((fl.empId == empId) && (fl.sysId() == sysId)
             && fl.isDeployed() && fl.retreating())
                 retreating.add(fl);
         }
@@ -548,7 +548,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && (fl.sysId() == sysId) 
+            if ((fl.empId == empId) && (fl.sysId() == sysId)
             && fl.isDeployed() && (fl.destSysId() == destSysId)) {
                 StarSystem destSys = galaxy().system(destSysId);
                 if (fl.travelTurns(destSys) == turns)
@@ -574,7 +574,7 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            // NPE was found on a map repaint during next turn. 
+            // NPE was found on a map repaint during next turn.
             // unsure how this is possible since allFleets var is private with no accessor
             // all allFleets.add() calls are in this class and only add new ShipFleet().
             if (fl != null) {
@@ -607,13 +607,13 @@ public class Ships implements Base, Serializable {
         return fleets;
     }
     public List<ShipFleet> inTransitNotRetreatingFleets(int empId, int designId) {
-        // this specific piece of code is used to find any colony ships stiil 
+        // this specific piece of code is used to find any colony ships stiil
         // en route to their dest so the AI doesn't prematurely scrap them
         List<ShipFleet> fleets = new ArrayList<>();
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if ((fl.empId == empId) && fl.isInTransit() 
+            if ((fl.empId == empId) && fl.isInTransit()
             && !fl.retreating() && (fl.num[designId] > 0))
                     fleets.add(fl);
         }
@@ -659,7 +659,7 @@ public class Ships implements Base, Serializable {
             }
         }
         
-        for (ShipFleet fl: emptyFleets) 
+        for (ShipFleet fl: emptyFleets)
             this.deleteFleet(fl);
         
         return scrapCount;
@@ -694,8 +694,8 @@ public class Ships implements Base, Serializable {
         
         List<StarSystem> colonies = galaxy().empire(empireId).allColonizedSystems();
         for (StarSystem s: colonies) {
-            ColonyShipyard sy = s.colony().shipyard();            
-            if ((sy.allocation() > 0) && sy.design().isShip()) 
+            ColonyShipyard sy = s.colony().shipyard();
+            if ((sy.allocation() > 0) && sy.design().isShip())
                 count[sy.design().id()]++;
         }
         return count;
@@ -705,10 +705,10 @@ public class Ships implements Base, Serializable {
         List<ShipFleet> fleetsAll = allFleetsCopy();
         
         for (ShipFleet fl: fleetsAll) {
-            if (fl.empId == empireId) 
+            if (fl.empId == empireId)
                 count += fl.num(designId);
-        }       
-        return count;        
+        }
+        return count;
     }
     public int hullSizeCount(int empireId, int hullSize) {
         int[] count = shipDesignCounts(empireId);
@@ -719,6 +719,6 @@ public class Ships implements Base, Serializable {
             if (lab.design(i).size() == hullSize)
                 hullCount += count[i];
         }
-        return hullCount;        
+        return hullCount;
     }
 }
