@@ -53,7 +53,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     private static final Color headerEdgeC = new Color(100,70,50);
     private static final Color cellBorderC = new Color(150,129,108);
     protected static final Color selectedC = new Color(178,124,87);
-    protected static final Color unselectedC = new Color(112,85,68);
+    private static final Color unselectedC = new Color(112,85,68);
     private static final Color selectedRedC = new Color(192,0,0);
     private static final Color unselectedRedC = new Color(128,0,0);
     private static final Color scrollBarC = new Color(211,166,125);
@@ -70,7 +70,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     private int SYSTEM_FLAG = 5;
 
     private final BasePanel topParent;
-    protected Palette palette;
+    private Palette palette;
     private final List<Sprite> sprites = new ArrayList<>();
     private final List<List<SystemButton>> rowButtons = new ArrayList<>();
     private SystemButton hoveringButton;
@@ -113,8 +113,8 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     protected abstract void controlSelectedSystem(StarSystem sv, boolean updateFieldValues);
     protected boolean isSelected(StarSystem sys) {  return lastSelectedSystem() == sys; }
     protected abstract DataView dataView();
-    public int rowHeight()          { return s30; }
-    protected int dataFontSize()    { return 20; }
+    private int rowHeight()          { return s30; }
+    private int dataFontSize()    { return 20; }
     @Override
     public void open() {
         int rowH = rowHeight();
@@ -155,7 +155,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     public SystemSetTransportsColumn newSystemSetTransportsColumn(String s1, SystemListingUI ui, int i) {
         return new SystemSetTransportsColumn(s1, ui, i);
     }
-    public void sort(Comparator<StarSystem> comp, boolean reversed) {
+    private void sort(Comparator<StarSystem> comp, boolean reversed) {
         Collections.sort(systems(), comp);
         if (reversed)
             Collections.reverse(systems());
@@ -486,7 +486,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         public void addColumn(Column c)   { columns.add(c); }
     }
     public abstract class Column {
-        public static final String YEARS_OR_TURNS = "YEARS_OR_TURNS";
+        private static final String YEARS_OR_TURNS = "YEARS_OR_TURNS";
         String headerKey;
         int width;
         int x, y;
