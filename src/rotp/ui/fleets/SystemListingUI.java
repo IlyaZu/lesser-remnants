@@ -21,7 +21,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LinearGradientPaint;
-import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
@@ -41,7 +40,6 @@ import rotp.model.galaxy.StarSystem;
 import rotp.ui.BasePanel;
 import rotp.ui.BaseTextField;
 import rotp.ui.main.SystemPanel;
-import rotp.ui.sprites.SystemTransportSprite;
 import rotp.util.Base;
 import rotp.util.Palette;
 
@@ -63,10 +61,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     public static final int RIGHT = 1;
 
     // unique ids for various button types that may be on a row
-    private int TRANSPORT_SLIDER = 1;
-    private int TRANSPORT_DECREMENT = 2;
-    private int TRANSPORT_INCREMENT = 3;
-    private int TRANSPORT_STOP = 4;
     private int SYSTEM_FLAG = 5;
 
     private final BasePanel topParent;
@@ -570,194 +564,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             }
         }
     }
-    public class SystemSetTransportsColumn extends Column {
-        StarSystem targetSystem;
-        SystemListingUI parentUI;
-        final int MAX_TICKS = 50;
-        private final Color sliderBoxBlue = new Color(34,140,142);
-        private final Color sliderButtonColor = Color.black;
-
-        int boxAreaL, boxAreaW;
-        // polygon coordinates for left & right increment buttons
-        private final int leftButtonX[] = new int[3];
-        private final int leftButtonY[] = new int[3];
-        private final int rightButtonX[] = new int[3];
-        private final int rightButtonY[] = new int[3];
-        SystemSetTransportsColumn(String s1, SystemListingUI ui, int i) {
-            headerKey = s1;
-            parentUI = ui;
-            width = scaled(i);
-        }
-        public void targetSystem(StarSystem s)  { targetSystem = s; }
-        @Override
-        public void draw(Graphics g, RowSprite row, StarSystem sys, int x, int y, int w) {
-            super.draw(g, row, sys, x, y, w);
-
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setColor(Color.black);
-            if (targetSystem == null)
-                return;
-
-            if (!player().canSendTransportsFrom(sys)) {
-                if (sys.colony().inRebellion())
-                    drawErrorString(g2, text("MAIN_PLANET_REBELLION"), x+s10, y-s6);
-                else if (sys.colony().quarantined())
-                    drawErrorString(g2, text("MAIN_PLANET_QUARANTINE"), x+s10, y-s6);
-                return;
-            }
-
-            StarSystem dest = sys.colony().transportDestination();
-            if ((dest == null) || (dest == targetSystem)) {
-                drawSliderBox(g2, row, sys, x, y - s23, w);
-            } else {
-                drawExistingTransports(g2, row, sys, x, y - s26, w);
-            }
-        }
-        private void drawErrorString(Graphics2D g, String err, int x0, int y1) {
-            g.setFont(narrowFont(18));
-            g.setColor(SystemPanel.blackText);
-            drawString(g,err,x0,y1);
-        }
-        private void drawSliderBox(Graphics2D g, RowSprite row, StarSystem sys, int x0, int y1, int w) {
-            int amt = sys.transportSprite().amt();
-            int maxAmt = player().sv.maxTransportsToSend(sys.id);
-            if (maxAmt == 0) {
-                drawUnableToSendTransports(g, row, sys, x0, y1-s3, w);
-                return;
-            }
-
-            TransportSliderButton sliderBox = (TransportSliderButton) row.getButton(TRANSPORT_SLIDER);
-            if (sliderBox == null) {
-                sliderBox = new TransportSliderButton();
-                row.addButton(sliderBox);
-            }
-            TransportDecrementButton leftArrow = (TransportDecrementButton) row.getButton(TRANSPORT_DECREMENT);
-            if (leftArrow == null) {
-                leftArrow = new TransportDecrementButton();
-                row.addButton(leftArrow);
-            }
-            TransportIncrementButton rightArrow = (TransportIncrementButton) row.getButton(TRANSPORT_INCREMENT);
-            if (rightArrow == null) {
-                rightArrow = new TransportIncrementButton();
-                row.addButton(rightArrow);
-            }
-            // slider arrow buttons
-            int arrowLeftM = x0+s15;
-            int arrowRightM = x0+w-s60;
-            int arrowW = s8;
-            int arrowTopY = y1;
-            int arrowH = s16;
-            leftButtonX[0] = arrowLeftM; leftButtonX[1] = arrowLeftM+arrowW; leftButtonX[2] = arrowLeftM+arrowW;
-            leftButtonY[0] = arrowTopY+(arrowH/2); leftButtonY[1] = arrowTopY; leftButtonY[2] = arrowTopY+arrowH;
-            rightButtonX[0] = arrowRightM; rightButtonX[1] = arrowRightM-arrowW; rightButtonX[2] = arrowRightM-arrowW;
-            rightButtonY[0] = arrowTopY+(arrowH/2); rightButtonY[1] = arrowTopY; rightButtonY[2] = arrowTopY+arrowH;
-            leftArrow.reset();
-            rightArrow.reset();
-            for (int i=0;i<3;i++) {
-                leftArrow.addPoint(leftButtonX[i], leftButtonY[i]);
-                rightArrow.addPoint(rightButtonX[i], rightButtonY[i]);
-            }
-
-            if (parentUI.hoveringButton == leftArrow)
-                g.setColor(Color.yellow);
-            else
-                g.setColor(sliderButtonColor);
-            g.fillPolygon(leftButtonX, leftButtonY, 3);
-            if (parentUI.hoveringButton == rightArrow)
-                g.setColor(Color.yellow);
-            else
-                g.setColor(sliderButtonColor);
-            g.fillPolygon(rightButtonX, rightButtonY, 3);
-
-            // slider box
-            int boxL = arrowLeftM+arrowW+s4;
-            int boxR = arrowRightM-arrowW-s4;
-            int boxW = boxR - boxL;
-            int boxTopY = arrowTopY;
-            int boxH = arrowH;
-            int boxBorderW = s2;
-
-            g.setColor(Color.black);
-            g.fillRect(boxL, boxTopY, boxW, boxH);
-            g.setColor(sliderBoxBlue);
-            g.fillRect(boxL, boxTopY+s1, boxW*amt/maxAmt, boxH-s2);
-
-            if (parentUI.hoveringButton == sliderBox) {
-                g.setColor(Color.yellow);
-                Stroke prev = g.getStroke();
-                g.setStroke(stroke2);
-                g.drawRect(boxL, boxTopY, boxW, boxH);
-                g.setStroke(prev);
-            }
-
-            boxAreaL = boxL+boxBorderW;
-            boxAreaW = boxW-boxBorderW-boxBorderW;
-            sliderBox.setBounds(boxAreaL, boxTopY, boxAreaW, boxH);
-
-            if (amt > 0) {
-                g.setColor(Color.black);
-                g.setFont(narrowFont(dataFontSize()));
-                String amtStr = str(amt);
-                int amtW = g.getFontMetrics().stringWidth(amtStr);
-                drawString(g,amtStr, arrowRightM+s35-amtW, boxTopY+boxH-s1);
-            }
-        }
-        private void drawUnableToSendTransports(Graphics2D g, RowSprite row, StarSystem sys, int x0, int y1, int w) {
-            g.setColor(Color.black);
-            String sysName = player().sv.name(sys.id);
-            String detail = text("FLEETS_CANNOT_SEND_TRANSPORTS", sysName);
-            scaledFont(g, detail, w-s20, 20, 12);
-            drawString(g,detail, x0+s10, y1+s18);
-        }
-        private void drawExistingTransports(Graphics2D g, RowSprite row, StarSystem sys, int x0, int y1, int w) {
-            TransportStopButton stopButton = (TransportStopButton) row.getButton(TRANSPORT_STOP);
-            if (stopButton == null) {
-                stopButton = new TransportStopButton();
-                row.addButton(stopButton);
-            }
-            g.setFont(narrowFont(16));
-            String lbl = text("FLEETS_EXISTING_STOP");
-            int lblW = g.getFontMetrics().stringWidth(lbl);
-
-            // button
-            int boxR = x0+w-s10;
-            int boxL = boxR-lblW-s10;
-            int boxW = boxR - boxL;
-            int boxTopY = y1;
-            int boxH = s20;
-
-            g.setColor(Color.black);
-            g.fillRect(boxL+s2, boxTopY+s2, boxW, boxH);
-            g.setColor(palette.medBack);
-            g.fillRect(boxL, boxTopY, boxW, boxH);
-
-            Stroke prev = g.getStroke();
-            Color c0 = parentUI.hoveringButton == stopButton ? Color.yellow : SystemPanel.whiteText;
-            g.setColor(c0);
-            g.setStroke(stroke1);
-            g.drawRect(boxL, boxTopY, boxW, boxH);
-            g.setStroke(prev);
-
-            drawShadowedString(g, lbl, 2, boxL+s5, boxTopY+boxH-s5, SystemPanel.textShadowC, c0);
-
-            stopButton.setBounds(boxL, boxTopY, boxW, boxH);
-
-            g.setColor(Color.black);
-            SystemTransportSprite spr = sys.transportSprite();
-            String sysName = player().sv.name(spr.starSystem().id);
-            String detail = text("FLEETS_EXISTING_TRANSPORT", str(spr.amt()), sysName);
-            List<String> detailLines = scaledWrappedLines(g, detail, boxL-s25-x0, 2, 14, 12);
-
-
-            //this.scaledFont(g, detail, boxL-s5-x0, 20, 12);
-            if (detailLines.size() == 1)
-                drawString(g,detail, x0+s10, boxTopY+boxH-s2);
-            else {
-                drawString(g,detailLines.get(0), x0+s10, y1+boxH-s12);
-                drawString(g,detailLines.get(1), x0+s10, y1+boxH+s1);
-            }
-        }
-    }
     public class SystemDataColumn extends Column {
         String attributeKey;
         Color color;
@@ -895,44 +701,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             notesField.setBounds(x, y-s30, w, s30);
             notesField.setVisible(true);
             notesField.repaint();
-        }
-    }
-    public class PlanetTypeColumn extends Column implements Base {
-        String attributeKey;
-        Comparator<StarSystem> comp;
-        PlanetTypeColumn(String s1, String s2, int i, Comparator<StarSystem> c) {
-            headerKey = s1;
-            attributeKey = s2;
-            width = scaled(i);
-            comp = c;
-            align = CENTER;
-        }
-        public boolean enabled()  { return comp != null; }
-        @Override
-        public void click() {
-            super.click();
-            if (enabled()) {
-                reversed = !reversed;
-                sort(comp, reversed);
-            }
-        }
-        @Override
-        public void draw(Graphics g, RowSprite row, StarSystem sys, int x, int y, int w) {
-            super.draw(g, row, sys, x, y, w);
-            String val = sys.getAttribute(attributeKey);
-            int sw = g.getFontMetrics().stringWidth(val);
-
-            if (player().isEnvironmentFertile(sys) || player().isEnvironmentGaia(sys))
-                g.setColor(palette.green);
-            else if (player().isEnvironmentHostile(sys))
-                g.setColor(palette.maroon);
-            else
-                g.setColor(palette.black);
-            switch(align) {
-                case LEFT:    drawString(g,val, x+s5, y-s5); break;
-                case RIGHT:   drawString(g,val, x+w-s10-sw, y-s5); break;
-                case CENTER:  drawString(g,val, x+((w-sw)/2), y-s5); break;
-            }
         }
     }
     public class SystemDeltaDataColumn extends Column implements Base {
@@ -1117,98 +885,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         default boolean wantsMouseWheel()      { return false; }
         default void mouseReleased(StarSystem s, MouseEvent e) { }
         default void mouseWheelMoved(StarSystem s, MouseWheelEvent e) { }
-    }
-    class TransportSliderButton extends Rectangle implements SystemButton {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void mouseReleased(StarSystem sys, MouseEvent e) {
-            if (e.getButton() > 3)
-                return;
-            if (sys == null)
-                return;
-            int maxSendingSize = player().sv.maxTransportsToSend(sys.id);
-            float pct = (float) (e.getX() -x) / width;
-            int newAmt = max(0, (int) Math.ceil(pct*(maxSendingSize+1))-1);
-            int oldAmt = sys.transportSprite().amt();
-            if (oldAmt != newAmt) {
-                softClick();
-                sys.transportSprite().amt(newAmt);
-                repaint();
-            }
-        }
-        @Override
-        public void reset() { setBounds(0,0,0,0); }
-        @Override
-        public int id()     { return TRANSPORT_SLIDER; }
-        @Override
-        public boolean contains(int x, int y)  { return super.contains(x,y); }
-        @Override
-        public boolean wantsMouseWheel()       { return true; }
-        @Override
-        public void mouseWheelMoved(StarSystem sys, MouseWheelEvent e) {
-            int rot = e.getWheelRotation();
-            if (rot > 0)
-                sys.transportSprite().decrement(rot);
-            else if (rot  < 0)
-                sys.transportSprite().increment(-rot);
-        }
-    }
-    class TransportDecrementButton extends Polygon implements SystemButton {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void mouseReleased(StarSystem sys, MouseEvent e) {
-            if (e.getButton() > 3)
-                return;
-            if (sys.transportSprite().decrement(1)) {
-                softClick();
-                repaint();
-            }
-            else
-                misClick();
-        }
-        @Override
-        public void reset() { super.reset(); }
-        @Override
-        public int id()     { return TRANSPORT_DECREMENT; }
-        @Override
-        public boolean contains(int x, int y)  { return super.contains(x,y); }
-    }
-    class TransportIncrementButton extends Polygon implements SystemButton {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void mouseReleased(StarSystem sys, MouseEvent e) {
-            if (e.getButton() > 3)
-                return;
-            if (sys.transportSprite().increment(1)) {
-                softClick();
-                repaint();
-            }
-            else
-                misClick();
-        }
-        @Override
-        public void reset() { super.reset(); }
-        @Override
-        public int id()     { return TRANSPORT_INCREMENT; }
-        @Override
-        public boolean contains(int x, int y)  { return super.contains(x,y); }
-    }
-    class TransportStopButton extends Rectangle implements SystemButton {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void mouseReleased(StarSystem sys, MouseEvent e) {
-            if (e.getButton() > 3)
-                return;
-            sys.transportSprite().clear();
-            softClick();
-            repaint();
-        }
-        @Override
-        public void reset() { setBounds(0,0,0,0); }
-        @Override
-        public int id()     { return TRANSPORT_STOP; }
-        @Override
-        public boolean contains(int x, int y)  { return super.contains(x,y); }
     }
     class SystemFlagButton extends Rectangle implements SystemButton {
         private static final long serialVersionUID = 1L;

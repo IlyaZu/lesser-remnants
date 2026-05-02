@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU GeneraFl Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -797,11 +797,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         if (transport == null)
             transport = new Transport(starSystem());
         return transport;
-    }
-    public StarSystem transportDestination() {
-        if ((transport == null) || !transport.isActive())
-            return null;
-        return transport.destination();
     }
     public boolean transporting() {
         return (transport().isActive());
