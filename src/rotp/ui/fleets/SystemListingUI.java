@@ -110,10 +110,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     protected boolean isSelected(StarSystem sys) {  return lastSelectedSystem() == sys; }
     protected abstract DataView dataView();
     public int rowHeight()          { return s30; }
-    protected Color selectedC()     { return selectedC; }
-    protected Color unselectedC()   { return unselectedC; }
-    protected Color selectedRedC()  { return selectedRedC; }
-    protected Color unselectedRedC(){ return unselectedRedC; }
     protected int dataFontSize()    { return 20; }
     @Override
     public void open() {
@@ -516,8 +512,8 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             g.setFont(narrowFont(dataFontSize()));
             SystemView sv = player().sv.view(sys.id);
             boolean alert = sv.isAlert();
-            Color selectedC = alert ? selectedRedC() : selectedC();
-            Color unselectedC = alert ? unselectedRedC() : unselectedC();
+            Color selectedC = alert ? selectedRedC : SystemListingUI.selectedC;
+            Color unselectedC = alert ? unselectedRedC : SystemListingUI.unselectedC;
             Color backC = (isSelected(sys)) || (selectedColumn == this) ? selectedC : unselectedC;
             drawCell(g, backC, x,y,w);
         }
@@ -866,9 +862,9 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
 
             SystemView sv = player().sv.view(sys.id);
             if (sv.isAlert())
-                nameField.setBackground(selectedRedC());
+                nameField.setBackground(selectedRedC);
             else
-                nameField.setBackground(selectedC());
+                nameField.setBackground(selectedC);
             
             nameField.setBounds(x, y-s30, w, s30);
             nameField.setVisible(true);
@@ -906,9 +902,9 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
 
             SystemView sv = player().sv.view(sys.id);
             if (sv.isAlert())
-                notesField.setBackground(selectedRedC());
+                notesField.setBackground(selectedRedC);
             else
-                notesField.setBackground(selectedC());
+                notesField.setBackground(selectedC);
             notesField.setBounds(x, y-s30, w, s30);
             notesField.setVisible(true);
             notesField.repaint();
