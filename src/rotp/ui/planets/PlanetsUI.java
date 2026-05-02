@@ -16,6 +16,9 @@
  */
 package rotp.ui.planets;
 
+import static rotp.ui.planets.SystemListingUI.LEFT;
+import static rotp.ui.planets.SystemListingUI.RIGHT;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -60,17 +63,14 @@ import rotp.ui.BaseTextField;
 import rotp.ui.ExitButton;
 import rotp.ui.RotPUI;
 import rotp.ui.SystemViewer;
-import rotp.ui.fleets.SystemListingUI;
-import rotp.ui.fleets.SystemListingUI.Column;
-import rotp.ui.fleets.SystemListingUI.DataView;
-import static rotp.ui.fleets.SystemListingUI.LEFT;
-import static rotp.ui.fleets.SystemListingUI.RIGHT;
 import rotp.ui.game.HelpUI;
 import rotp.ui.main.EmpireColonyFoundedPane;
 import rotp.ui.main.EmpireColonyInfoPane;
 import rotp.ui.main.EmpireColonySpendingPane;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
+import rotp.ui.planets.SystemListingUI.Column;
+import rotp.ui.planets.SystemListingUI.DataView;
 import rotp.util.Palette;
 import rotp.util.ShadowBorder;
 
