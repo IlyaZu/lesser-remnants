@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,7 +109,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     protected abstract void controlSelectedSystem(StarSystem sv, boolean updateFieldValues);
     protected boolean isSelected(StarSystem sys) {  return lastSelectedSystem() == sys; }
     protected abstract DataView dataView();
-    protected boolean selectRows()  { return true; }
     public int rowHeight()          { return s30; }
     protected Color selectedC()     { return selectedC; }
     protected Color unselectedC()   { return unselectedC; }
@@ -482,9 +481,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         }
 
         Sprite sprite = matchingSprite(x,y);
-        if (sprite instanceof RowSprite && !selectRows())
-            return;
-
         if (sprite != null) {
             if (shift)
                 sprite.shiftClick();
