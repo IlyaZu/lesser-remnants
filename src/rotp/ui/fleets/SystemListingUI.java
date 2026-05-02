@@ -98,10 +98,14 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     public SystemListingUI(BasePanel p) {
         topParent = p;
         cellBorder = newLineBorder(cellBorderC, 1);
-        initModel();
+        palette = Palette.named("Brown");
+        setOpaque(true);
+        setBackground(palette.darkBack);
+        setLayout(null);
+        addMouseListener(this);
+        addMouseMotionListener(this);
+        addMouseWheelListener(this);
     }
-    protected void initPalette() { palette = Palette.named("Brown"); }
-    protected void postInit() { }
     protected abstract List<StarSystem> systems();
     protected abstract StarSystem lastSelectedSystem();
     protected abstract void selectedSystem(StarSystem sv, boolean updateFieldValues);
@@ -125,16 +129,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             startY = (int) (rowH * (rowIndex - displayedRows));
     }
     public void close() { }
-    private void initModel() {
-        initPalette();
-        setOpaque(true);
-        setBackground(palette.darkBack);
-        setLayout(null);
-        addMouseListener(this);
-        addMouseMotionListener(this);
-        addMouseWheelListener(this);
-        postInit();
-    }
     public void selectedColumn(Column col)  { selectedColumn = col; }
     public DataView newDataView() { return new DataView(); }
     public RowNumColumn newRowNumColumn(String s, int i, int align) {

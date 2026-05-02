@@ -1402,6 +1402,10 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         private static final long serialVersionUID = 1L;
         PlanetDataListingUI(BasePanel p) {
             super(p);
+            nameField.addMouseListener(this);
+            notesField.addMouseListener(this);
+            add(nameField);
+            add(notesField);
             setBorder(BorderFactory.createMatteBorder(scaled(3), 0,0,0, selectedC));
         }
         @Override
@@ -1425,13 +1429,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         @Override
         protected boolean isSelected(StarSystem sys) {
             return SELECTED_SYSTEMS.contains(sys);
-        }
-        @Override
-        protected void postInit() {
-            nameField.addMouseListener(this);
-            notesField.addMouseListener(this);
-            add(nameField);
-            add(notesField);
         }
     }
     private class EmpireRevenueUI extends BasePanel {
