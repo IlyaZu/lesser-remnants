@@ -128,7 +128,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         else
             startY = (int) (rowH * (rowIndex - displayedRows));
     }
-    public void close() { }
     public void selectedColumn(Column col)  { selectedColumn = col; }
     public DataView newDataView() { return new DataView(); }
     public RowNumColumn newRowNumColumn(String s, int i, int align) {
@@ -148,12 +147,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     }
     public SystemNotesColumn newSystemNotesColumn(BaseTextField field, String s1, String s2, int i, Color clr) {
         return new SystemNotesColumn(field, s1, s2, i, clr);
-    }
-    public PlanetTypeColumn newPlanetTypeColumn(String s1, String s2, int i, Comparator<StarSystem> c) {
-        return new PlanetTypeColumn(s1, s2, i, c);
-    }
-    public SystemSetTransportsColumn newSystemSetTransportsColumn(String s1, SystemListingUI ui, int i) {
-        return new SystemSetTransportsColumn(s1, ui, i);
     }
     private void sort(Comparator<StarSystem> comp, boolean reversed) {
         Collections.sort(systems(), comp);
