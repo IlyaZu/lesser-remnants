@@ -165,7 +165,6 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("scientist"))        { r.scientistKey = value; return; }
         if (key.equalsIgnoreCase("trooper"))          { r.soldierKey = value; return; }
         if (key.equalsIgnoreCase("spy"))              { r.spyKey = value; return; }
-        if (key.equalsIgnoreCase("leader"))           { r.leaderKey = value; return; }
         if (key.equalsIgnoreCase("diploTheme"))       { r.diplomacyTheme = value; return; }
         if (key.equalsIgnoreCase("gnn"))              { r.gnnKey = value; return; }
         if (key.equalsIgnoreCase("gnnHost"))          { r.gnnHostKey = value; return; }

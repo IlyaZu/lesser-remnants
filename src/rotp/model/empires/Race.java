@@ -62,7 +62,6 @@ public class Race implements Base, Serializable {
     public String scientistKey;
     public String soldierKey;
     public String spyFaceKey;
-    public String leaderKey;
     public String soldierFaceKey;
     public String mugshotKey;
     public String wideMugshotKey;
@@ -296,7 +295,6 @@ public class Race implements Base, Serializable {
     public BufferedImage scientistQuiet()     { return currentFrame(scientistKey, notTalking);  }
     public BufferedImage soldierQuiet()       { return currentFrame(soldierKey, notTalking);  }
     public BufferedImage spyQuiet()           { return currentFrame(spyKey, notTalking);  }
-    public BufferedImage councilLeader()      { return asBufferedImage(image(leaderKey));  }
     public BufferedImage diploMug()    {
         if (diploMug == null)
             diploMug = newBufferedImage(diploMugshotQuiet());

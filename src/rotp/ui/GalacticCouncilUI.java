@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -354,10 +354,9 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         int x3a = x1+s10;
         int x3b = x1+w1-s10-w3;
         
-        // council leader images shoud be 480x216... we want to show the middle 200x216 for this screen
         BufferedImage backImg = raceBackImg();
-        BufferedImage img1 = c.candidate1().race().councilLeader().getSubimage(140, 0, 200, 216);
-        BufferedImage img2 = c.candidate2().race().councilLeader().getSubimage(140, 0, 200, 216);
+        BufferedImage img1 = c.candidate1().race().diploMugshotQuiet();
+        BufferedImage img2 = c.candidate2().race().diploMugshotQuiet();
 
         g.drawImage(backImg, x3a, y3, w3, h3, null);
         g.drawImage(img1, x3a, y3, w3, h3, null);
@@ -586,13 +585,13 @@ public final class GalacticCouncilUI extends FadeInPanel implements MouseListene
         drawShadowedString(g, titleStr, 3, x1b, y1a+s40, SystemPanel.textShadowC, SystemPanel.whiteText);
         
         // paint candidates
-        int w3 = scaled(480);
+        int w3 = scaled(200);
         int h3 = scaled(216);
         int y3 = y1b+s5;
-        int x3a = x1+s10;
+        int x3a = x1+s10+scaled(140);
        
         BufferedImage backImg = wideBackImg();
-        BufferedImage img1 = c.leader().race().councilLeader();
+        BufferedImage img1 = c.leader().race().diploMugshotQuiet();
 
         g.drawImage(backImg, x3a, y3, w3, h3, null);
         g.drawImage(img1, x3a, y3, w3, h3, null);
