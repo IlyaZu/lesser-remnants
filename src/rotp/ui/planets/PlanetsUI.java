@@ -20,7 +20,6 @@ import static rotp.ui.planets.SystemListingUI.LEFT;
 import static rotp.ui.planets.SystemListingUI.RIGHT;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -76,8 +75,6 @@ import rotp.util.ShadowBorder;
 
 public class PlanetsUI extends BasePanel implements SystemViewer {
     private static final long serialVersionUID = 1L;
-    private static final String SINGLE_PLANET_PANEL = "SinglePlanet";
-    private static final String MULTI_PLANET_PANEL = "MultiPlanet";
 
     private static final Color selectedC = new Color(178,124,87);
     private static final Color unselectedC = new Color(112,85,68);
@@ -93,8 +90,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private final static int DOWN_ACTION = 2;
     private final static String CANCEL_ACTION = "cancel-input";
     
-    private static final List<StarSystem> SELECTED_SYSTEMS = new ArrayList<>();
-    private static StarSystem ANCHOR_SYSTEM;
+    private StarSystem selectedSystem;
 
     private int pad = 10;
     private List<StarSystem> displayedSystems;
@@ -102,14 +98,9 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
 
     private final TransferReserveUI transferReservePane;
     private final PlanetDisplayPanel planetDisplayPane;
-    private final MultiPlanetDisplayPanel multiPlanetDisplayPane;
     private final PlanetViewSelectionPanel viewSelectionPane;
     private EmpireColonySpendingPane spendingPane;
     private EmpireColonyFoundedPane colonyFoundedPane;
-    private MultiColonySpendingPane multiSpendingPane;
-
-    private BasePanel rightPlanetPanel;
-    private final CardLayout planetCardLayout = new CardLayout();
 
     private final PlanetsUI instance;
     private final PlanetListingUI planetListing;
@@ -126,7 +117,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         viewSelectionPane = new PlanetViewSelectionPanel(this);
         transferReservePane = new TransferReserveUI();
         planetDisplayPane = new PlanetDisplayPanel(this);
-        multiPlanetDisplayPane = new MultiPlanetDisplayPanel();
         planetListing = new PlanetListingUI(this);
 
         initModel();
@@ -144,16 +134,10 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         centerPanel.add(planetListing, BorderLayout.CENTER);
         centerPanel.add(new EmpireRevenueUI(), BorderLayout.SOUTH);
 
-        rightPlanetPanel = new BasePanel();
-        rightPlanetPanel.setOpaque(false);
-        rightPlanetPanel.setLayout(planetCardLayout);
-        rightPlanetPanel.add(planetDisplayPane, SINGLE_PLANET_PANEL);
-        rightPlanetPanel.add(multiPlanetDisplayPane, MULTI_PLANET_PANEL);
-
         BasePanel rightPanel = new BasePanel();
         rightPanel.setOpaque(false);
         rightPanel.setLayout(new BorderLayout(0,s22));
-        rightPanel.add(rightPlanetPanel, BorderLayout.NORTH);
+        rightPanel.add(planetDisplayPane, BorderLayout.NORTH);
         rightPanel.add(new ExitPlanetsButton(getWidth(), s60, s10, s2), BorderLayout.SOUTH);
 
         setBackground(Color.black);
@@ -167,8 +151,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
 
         initDataViews();
     }
-    private void showSinglePlanetPanel() { planetCardLayout.show(rightPlanetPanel, SINGLE_PLANET_PANEL); }
-    private void showMultiPlanetPanel() { planetCardLayout.show(rightPlanetPanel, MULTI_PLANET_PANEL); }
     private void initTextFields() {
         notesField = new BaseTextField(this);
         notesField.setLimit(50);
@@ -355,7 +337,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     public void keyPressed(KeyEvent e) {
         boolean repaint = false;
         boolean shift = e.isShiftDown();
-        boolean control = e.isControlDown();
         switch(e.getKeyCode()) {
             case KeyEvent.VK_F1:
                 showHelp();
@@ -378,26 +359,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 colonyFoundedPane.toggleFlagColor(shift);
                 instance.repaint();
                 return;
-            case KeyEvent.VK_A:
-                if (control) {
-                    selectAllSystems();
-                }
-                return;
-            case KeyEvent.VK_S:
-                multiSpendingPane.selectCat(0);
-                return;
-            case KeyEvent.VK_D:
-                multiSpendingPane.selectCat(1);
-                return;
-            case KeyEvent.VK_I:
-                multiSpendingPane.selectCat(2);
-                return;
-            case KeyEvent.VK_E:
-                multiSpendingPane.selectCat(3);
-                return;
-            case KeyEvent.VK_T:
-                multiSpendingPane.selectCat(4);
-                return;
         }
         if (repaint)
             repaint();
@@ -411,19 +372,19 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         }
         return displayedSystems;
     }
-    private StarSystem anchorSystem() {
-        if (ANCHOR_SYSTEM == null) {
-            ANCHOR_SYSTEM = (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM");
+    private StarSystem selectedSystem() {
+        if (selectedSystem == null) {
+            selectedSystem = (StarSystem) sessionVar("MAINUI_SELECTED_SYSTEM");
         }
-        return ANCHOR_SYSTEM;
+        return selectedSystem;
     }
-    private void setAnchorSystem(StarSystem sys, boolean updateFieldValues) {
+    private void setSelectedSystem(StarSystem sys, boolean updateFieldValues) {
         notesField.setVisible(false);
         nameField.setVisible(false);
         RotPUI.instance().requestFocusInWindow();
         if (updateFieldValues)
             setFieldValues(lastSelectedSystem());
-        ANCHOR_SYSTEM = sys;
+        selectedSystem = sys;
         notesField.setText(sys.notes());
         notesField.setCaretPosition(notesField.getText().length());
         nameField.setText(player().sv.name(sys.id));
@@ -432,71 +393,11 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     @Override
     public StarSystem systemViewToDisplay()  { return lastSelectedSystem(); }
     
-    private void selectAllSystems() {
-        SELECTED_SYSTEMS.clear();
-        SELECTED_SYSTEMS.addAll(allSystems());
-        
-        if (SELECTED_SYSTEMS.size() > 1)
-            showMultiPlanetPanel();
-        repaint();
-        setAnchorSystem(SELECTED_SYSTEMS.get(0), true);
-    }
-    private void shiftSelectedSystem(StarSystem sys, boolean updateFieldValues) {
-        StarSystem anchor = anchorSystem();
-        List<StarSystem> allSystems = allSystems();
-
-        int prevAnchorIndex = allSystems.indexOf(anchor);
-        int newAnchorIndex = allSystems.indexOf(sys);
-        
-        SELECTED_SYSTEMS.clear();
-        
-        if (prevAnchorIndex == newAnchorIndex) {
-            SELECTED_SYSTEMS.add(sys);
-            showSinglePlanetPanel();
-            return;
-        }
-        
-        int start = min(prevAnchorIndex, newAnchorIndex);
-        int end = max(prevAnchorIndex, newAnchorIndex);
-        
-        for (int i=start;i<=end;i++) {
-            StarSystem sys1 = allSystems.get(i);
-            SELECTED_SYSTEMS.add(sys1);
-        }
-        showMultiPlanetPanel();
-        
-        setAnchorSystem(sys, updateFieldValues);
-    }
-    private boolean controlSelectedSystem(StarSystem sys, boolean updateFieldValues) {
-        boolean toggled = true;
-        if (SELECTED_SYSTEMS.contains(sys)) {
-            if (SELECTED_SYSTEMS.size() == 1)
-                toggled = false;
-            else
-                SELECTED_SYSTEMS.remove(sys);
-        }
-        else
-            SELECTED_SYSTEMS.add(sys);
-        
-        if (toggled)
-            setAnchorSystem(sys, updateFieldValues);
-        
-        if (SELECTED_SYSTEMS.size() == 1)
-            showSinglePlanetPanel();
-        else
-            showMultiPlanetPanel();
-        
-        return toggled;
-    }
     private synchronized void selectedSystem(StarSystem sys, boolean updateFieldValues) {
         sessionVar("MAINUI_SELECTED_SYSTEM", sys);
         sessionVar("MAINUI_CLICKED_SPRITE", sys);
         
-        SELECTED_SYSTEMS.clear();
-        SELECTED_SYSTEMS.add(sys);
-        
-        setAnchorSystem(sys, updateFieldValues);
-        showSinglePlanetPanel();
+        setSelectedSystem(sys, updateFieldValues);
     }
     private void setFieldValues(StarSystem sys) {
         if (sys != null) {
@@ -508,7 +409,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         }
     }
     private StarSystem lastSelectedSystem() {
-        StarSystem sys = anchorSystem();
+        StarSystem sys = selectedSystem();
         Empire pl = player();
         int id = sys.id;
         if (pl.sv.empire(id) != pl)
@@ -543,7 +444,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     }
     private void finish(boolean disableNextTurn) {
         displayedSystems = null;
-        ANCHOR_SYSTEM = null;
+        selectedSystem = null;
         buttonClick();
         RotPUI.instance().selectMainPanel(disableNextTurn);
     }
@@ -705,65 +606,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
             empireDetailPane.setLayout(new BorderLayout(0,s3));
             empireDetailPane.add(empireDetailTopPane, BorderLayout.NORTH);
             empireDetailPane.add(spendingPane, BorderLayout.CENTER);
-            empireDetailPane.add(empireDetailBottomPane, BorderLayout.SOUTH);
-            return empireDetailPane;
-        }
-    }
-    private class MultiPlanetDisplayPanel extends SystemPanel {
-        private static final long serialVersionUID = 1L;
-        EmpireInfoGraphicPane graphicPane;
-        public MultiPlanetDisplayPanel() {
-            setOpaque(true);
-            setBackground(selectedC);
-            setBorder(newEmptyBorder(6,6,6,6));
-            setPreferredSize(new Dimension(scaled(250), scaled(670)));
-
-            graphicPane = new EmpireInfoGraphicPane(this);
-            graphicPane.setPreferredSize(new Dimension(getWidth(),scaled(140)));
-
-            BorderLayout layout = new BorderLayout();
-            layout.setVgap(s6);
-            setLayout(layout);
-            add(topPane(), BorderLayout.NORTH);
-            add(detailPane(), BorderLayout.CENTER);
-        }
-        @Override
-        public List<StarSystem> systemsToDisplay() { return SELECTED_SYSTEMS; }
-        @Override
-        public StarSystem systemViewToDisplay() { return lastSelectedSystem(); }
-        @Override
-        public void repaintAll()                { instance.repaint(); }
-        @Override
-        public void animate() { graphicPane.animate(); }
-        @Override
-        protected BasePanel topPane() {
-            return graphicPane;
-        }
-        @Override
-        protected BasePanel detailPane() {
-            BasePanel empireDetailTopPane = new BasePanel();
-            empireDetailTopPane.setOpaque(false);
-            empireDetailTopPane.setBorder(new ShadowBorder(palette.bdrHiOut, palette.bdrLoIn));
-            empireDetailTopPane.setLayout(new BorderLayout(0,s1));
-            empireDetailTopPane.setPreferredSize(new Dimension(getWidth(),scaled(120)));
-            colonyFoundedPane = new EmpireColonyFoundedPane(this, null, unselectedC);
-            empireDetailTopPane.add(colonyFoundedPane, BorderLayout.NORTH);
-            empireDetailTopPane.add(new EmpireColonyInfoPane(this, unselectedC, palette.bdrHiIn, palette.yellow, palette.bdrLoIn), BorderLayout.CENTER);
-
-            BasePanel empireDetailBottomPane = new BasePanel();
-            empireDetailBottomPane.setOpaque(false);
-            empireDetailBottomPane.setBorder(new ShadowBorder(palette.bdrHiOut, palette.bdrLoIn));
-            empireDetailBottomPane.setLayout(new BorderLayout(0,s3));
-            empireDetailBottomPane.setPreferredSize(new Dimension(getWidth(),scaled(110)));
-            empireDetailBottomPane.add(new ColonyShipPane(this), BorderLayout.CENTER);
-            empireDetailBottomPane.setBorder(newEmptyBorder(0,0,0,0));
-
-            multiSpendingPane = new MultiColonySpendingPane(this, unselectedC, palette.white, palette.bdrHiOut, palette.bdrLoIn);
-            BasePanel empireDetailPane = new BasePanel();
-            empireDetailPane.setOpaque(false);
-            empireDetailPane.setLayout(new BorderLayout(0,s3));
-            empireDetailPane.add(empireDetailTopPane, BorderLayout.NORTH);
-            empireDetailPane.add(multiSpendingPane, BorderLayout.CENTER);
             empireDetailPane.add(empireDetailBottomPane, BorderLayout.SOUTH);
             return empireDetailPane;
         }
@@ -1415,20 +1257,12 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         @Override
         protected StarSystem lastSelectedSystem() { return instance.lastSelectedSystem(); }
         @Override
-        protected void selectedSystem(StarSystem sys, boolean updateFieldValues) {
-            instance.selectedSystem(sys, updateFieldValues);
-        }
-        @Override
-        protected void shiftSelectedSystem(StarSystem sys, boolean updateFieldValues) {
-            instance.shiftSelectedSystem(sys, updateFieldValues);
-        }
-        @Override
-        protected void controlSelectedSystem(StarSystem sys, boolean updateFieldValues) {
-            instance.controlSelectedSystem(sys, updateFieldValues);
+        protected void selectedSystem(StarSystem sys) {
+            PlanetsUI.this.selectedSystem(sys, true);
         }
         @Override
         protected boolean isSelected(StarSystem sys) {
-            return SELECTED_SYSTEMS.contains(sys);
+            return PlanetsUI.this.selectedSystem() == sys;
         }
     }
     private class EmpireRevenueUI extends BasePanel {
