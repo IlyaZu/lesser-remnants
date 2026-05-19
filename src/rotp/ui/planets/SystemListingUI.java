@@ -102,9 +102,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     }
     protected abstract List<StarSystem> systems();
     protected abstract StarSystem lastSelectedSystem();
-    protected abstract void selectedSystem(StarSystem sv, boolean updateFieldValues);
-    protected abstract void shiftSelectedSystem(StarSystem sv, boolean updateFieldValues);
-    protected abstract void controlSelectedSystem(StarSystem sv, boolean updateFieldValues);
+    protected abstract void selectedSystem(StarSystem sv);
     protected boolean isSelected(StarSystem sys) {  return lastSelectedSystem() == sys; }
     protected abstract DataView dataView();
     private int rowHeight()          { return s30; }
@@ -426,9 +424,6 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         int x = e.getX();
         int y = e.getY();
         
-        boolean shift = e.isShiftDown();
-        boolean ctrl = e.isControlDown();
-        
         if (hoverBox == listScroller)
             return;
 
@@ -459,12 +454,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
 
         Sprite sprite = matchingSprite(x,y);
         if (sprite != null) {
-            if (shift)
-                sprite.shiftClick();
-            else if (ctrl)
-                sprite.controlClick();
-            else
-                sprite.click();
+            sprite.click();
             topParent.repaint();
         }
     }
@@ -796,9 +786,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     public abstract class Sprite {
         public void exit()   { hoveringSprite = null; }
         public void enter()  { hoveringSprite = this; }
-        public void click()  { }
-        public void shiftClick()  { }
-        public void controlClick()  { }
+        public abstract void click();
         public abstract boolean isSelectableAt(int x, int y);
         public boolean equalsSprite(Sprite s)  { return this == s; }
         public StarSystem system()             { return null; }
@@ -871,11 +859,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         @Override
         public void exit()  {  }
         @Override
-        public void click() { selectedSystem(system, true); }
-        @Override
-        public void shiftClick() { shiftSelectedSystem(system, true); }
-        @Override
-        public void controlClick() { controlSelectedSystem(system, true); }
+        public void click() { selectedSystem(system); }
     }
     interface SystemButton {
         void reset();
