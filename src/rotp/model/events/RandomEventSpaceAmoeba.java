@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package rotp.model.events;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import rotp.model.colony.Colony;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.SpaceAmoeba;
@@ -134,37 +136,30 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
     }
     private void moveToNextSystem() {
         StarSystem targetSystem = galaxy().system(sysId);
-        // next system is one of the 10 nearest systems
-        // more likely to go to new system (25%) than visited system (5%)
         int[] near = targetSystem.nearbySystems();
-        boolean stopLooking = false;
         
-        int nextSysId = -1;
-        int loops = 0;
-        if (near.length > 0) {
-            while (!stopLooking) {
-                loops++;
-                for (int i=0;i<near.length;i++) {
-                    float chance = monster.vistedSystems().contains(near[i]) ? 0.05f : 0.25f;
-                    if (random() < chance) {
-                        nextSysId = near[i];
-                        stopLooking = true;
-                        break;
-                    }
-                }
-                if (loops > 10)
-                    stopLooking = true;
+        List<Integer> destinationIds = new ArrayList<>(near.length);
+        for (int destinationId : near) {
+            // Don't double back on yourself.
+            if (monster.vistedSystems().contains(destinationId)) {
+                continue;
+            }
+            
+            Empire destinationEmpire = galaxy().system(destinationId).empire();
+            if (destinationEmpire != null && destinationEmpire.id == empId) {
+                destinationIds.add(destinationId);
             }
         }
         
-        if (nextSysId < 0) {
-            log("ERR: Could not find next system. Space Amoeba removed.");
+        if (destinationIds.isEmpty()) {
+            // TODO The monster leaving the galaxy on its own accord should be communicated to the player.
             galaxy().events().removeActiveEvent(this);
             return;
         }
-    
-        log("Space Amoeba moving to system: "+nextSysId);
-        StarSystem nextSys = galaxy().system(nextSysId);
+        
+        int selectedSystemId = random(destinationIds);
+        log("Space Amoeba moving to system: "+selectedSystemId);
+        StarSystem nextSys = galaxy().system(selectedSystemId);
         float slowdownEffect = max(1, 100.0f / galaxy().maxNumStarSystems());
         turnCount = (int) Math.ceil(1.5*slowdownEffect*nextSys.distanceTo(targetSystem));
         sysId = nextSys.id;
