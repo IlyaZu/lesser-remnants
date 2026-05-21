@@ -102,7 +102,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private EmpireColonySpendingPane spendingPane;
     private EmpireColonyFoundedPane colonyFoundedPane;
 
-    private final PlanetsUI instance;
     private final PlanetListingUI planetListing;
     private PlanetDataListingUI listingUI;
     private LinearGradientPaint backGradient;
@@ -110,7 +109,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     public PlanetsUI() {
         palette = Palette.named("Brown");
         pad = s10;
-        instance = this;
 
         initTextFields();
 
@@ -357,7 +355,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 spendingPane.keyPressed(e); return;
             case KeyEvent.VK_F:
                 colonyFoundedPane.toggleFlagColor(shift);
-                instance.repaint();
+                this.repaint();
                 return;
         }
         if (repaint)
@@ -964,7 +962,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 if (click)
                     softClick();
                 setAllShipDesigns();
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
         }
         public void prevShipDesign(boolean click) {
@@ -975,7 +973,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                 if (click)
                     softClick();
                 setAllShipDesigns();
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
         }
         private void setAllShipDesigns() {
@@ -1048,22 +1046,22 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
                     prevShipDesign(true);
                 else
                     nextShipDesign(true);
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
             else if (shipNameBox.contains(x,y)){
                 if (rightClick)
                     prevShipDesign(true);
                 else
                     nextShipDesign(true);
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
             else if (nextDesign.contains(x,y)){
                 nextShipDesign(true);
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
             else if (prevDesign.contains(x,y)){
                 prevShipDesign(true);
-                instance.repaint();
+                PlanetsUI.this.repaint();
             }
         }
         @Override
@@ -1253,9 +1251,9 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         @Override
         protected DataView dataView() { return dataView; }
         @Override
-        protected List<StarSystem> systems() { return instance.allSystems();  }
+        protected List<StarSystem> systems() { return PlanetsUI.this.allSystems();  }
         @Override
-        protected StarSystem lastSelectedSystem() { return instance.lastSelectedSystem(); }
+        protected StarSystem lastSelectedSystem() { return PlanetsUI.this.lastSelectedSystem(); }
         @Override
         protected void selectedSystem(StarSystem sys) {
             PlanetsUI.this.selectedSystem(sys, true);
@@ -1763,7 +1761,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         @Override
         public void actionPerformed(ActionEvent ev) {
             if (listingUI.scrollUp())
-                instance.repaint();
+                PlanetsUI.this.repaint();
         }
     }
     private class DownAction extends AbstractAction {
@@ -1771,7 +1769,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
         @Override
         public void actionPerformed(ActionEvent ev) {
             if (listingUI.scrollDown())
-                instance.repaint();
+                PlanetsUI.this.repaint();
         }
     }
     private class CancelAction extends AbstractAction {
