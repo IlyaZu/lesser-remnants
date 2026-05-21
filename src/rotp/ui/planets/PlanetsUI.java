@@ -83,7 +83,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private static final Color disabledArrowColor = new Color(65,65,65);
     private static final Color backHiC = new Color(178,124,87);
 
-    private static Palette palette;
+    private static final Palette palette = Palette.named("Brown");
     private static BaseTextField notesField;
     private static BaseTextField nameField;
     private final static int UP_ACTION = 1;
@@ -92,7 +92,7 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     
     private StarSystem selectedSystem;
 
-    private int pad = 10;
+    private static final int pad = s10;
     private List<StarSystem> displayedSystems;
     private DataView dataView;
 
@@ -107,9 +107,6 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private LinearGradientPaint backGradient;
 
     public PlanetsUI() {
-        palette = Palette.named("Brown");
-        pad = s10;
-
         initTextFields();
 
         viewSelectionPane = new PlanetViewSelectionPanel(this);
