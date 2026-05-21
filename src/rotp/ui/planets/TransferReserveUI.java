@@ -50,7 +50,7 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
 
     private static final Color sliderButtonColor = Color.black;
     private static final Color sliderBoxBlue = new Color(34,140,142);
-    static final int MAX_TICKS = 50;
+    private static final int MAX_TICKS = 50;
 
     private StarSystem targetSystem;
 
@@ -63,8 +63,8 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
     private final Polygon leftArrow = new Polygon();
     private final Polygon rightArrow = new Polygon();
 
-    int boxAreaL, boxAreaW;
-    int amt = 0;
+    private int boxAreaL, boxAreaW;
+    private int amt = 0;
 
     // polygon coordinates for left & right increment buttons
     private final int leftButtonX[] = new int[3];
