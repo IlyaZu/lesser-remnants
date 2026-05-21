@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,6 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
     private final int leftButtonY[] = new int[3];
     private final int rightButtonX[] = new int[3];
     private final int rightButtonY[] = new int[3];
-    Shape textureClip;
 
     public TransferReserveUI() {
         setOpaque(false);
@@ -114,8 +113,6 @@ public final class TransferReserveUI extends BasePanel implements MouseListener,
         g.fillRect(x0, y0, boxWidth, boxHeight);
         g.setColor(backC);
         g.fillRect(x0+s15, y0+s15, boxWidth-s30, boxHeight-s30);
-
-        textureClip = new Rectangle(x0+s15, y0+s15, boxWidth-s30, boxHeight-s30);
 
         // draw title
         g.setColor(yellowText);
