@@ -86,9 +86,9 @@ public class PlanetsUI extends BasePanel implements SystemViewer {
     private static final Palette palette = Palette.named("Brown");
     private static BaseTextField notesField;
     private static BaseTextField nameField;
-    private final static int UP_ACTION = 1;
-    private final static int DOWN_ACTION = 2;
-    private final static String CANCEL_ACTION = "cancel-input";
+    private static final int UP_ACTION = 1;
+    private static final int DOWN_ACTION = 2;
+    private static final String CANCEL_ACTION = "cancel-input";
     
     private StarSystem selectedSystem;
 
