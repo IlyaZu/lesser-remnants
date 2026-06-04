@@ -1104,11 +1104,10 @@ public class AIDiplomat implements Base, Diplomat {
     
     private float calculateVoteWeight(Empire candidate) {
         EmpireView view = empire.viewForEmpire(candidate);
-        float weight = view.embassy().relations()/100.0f + candidate.orionCouncilBonus();
-        weight += candidate.id == empire.lastCouncilVoteEmpId() ? 0.5f : 0;
-        weight += view.embassy().alliance() ? 1 : 0;
-        weight += view.embassy().pact() ? 0.5f : 0;
-        weight += view.embassy().war() ? -1 : 0;
+        float weight = view.embassy().relations()/100 + candidate.orionCouncilBonus();
+        weight += candidate.id == empire.lastCouncilVoteEmpId() ? 0.5 : 0;
+        weight += view.embassy().alliance() ? 0.5 : 0;
+        weight += view.embassy().war() ? -0.5 : 0;
         return weight;
     }
     
