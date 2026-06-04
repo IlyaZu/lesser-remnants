@@ -551,11 +551,9 @@ public class AIDiplomat implements Base, Diplomat {
             if (hisAllies.contains(enemy))
                 return v.refuse(DialogueManager.DECLINE_ENEMY_ALLY, enemy);
         }
-        
-        int erraticLeaderPenalty = requestor.leader().isErratic() ? -40 : 0;
  
         // if we don't like the requestor well enough, refuse now
-        if (calculateAllianceChance(v) + erraticLeaderPenalty < 60)
+        if (calculateAllianceChance(v) < 60)
             return refuseOfferAlliance(requestor);
         
         v.embassy().signAlliance();
