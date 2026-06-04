@@ -552,17 +552,10 @@ public class AIDiplomat implements Base, Diplomat {
                 return v.refuse(DialogueManager.DECLINE_ENEMY_ALLY, enemy);
         }
         
-        // be more willing if the requestor is someone we can use the alliance
-        // to help us fight a war
-        int joinWarBonus = 0;
-        for (Empire enemy: myEnemies) {
-            if (!requestor.atWarWith(enemy.id) && requestor.inEconomicRange(enemy.id))
-                joinWarBonus = 30;
-        }
         int erraticLeaderPenalty = requestor.leader().isErratic() ? -40 : 0;
  
         // if we don't like the requestor well enough, refuse now
-        if (calculateAllianceChance(v) + erraticLeaderPenalty + joinWarBonus < 60)
+        if (calculateAllianceChance(v) + erraticLeaderPenalty < 60)
             return refuseOfferAlliance(requestor);
         
         v.embassy().signAlliance();
