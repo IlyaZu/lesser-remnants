@@ -452,7 +452,7 @@ public class DiplomaticEmbassy implements Base, Serializable {
         return severity * modifier;
     }
     
-    public float baseRelations() {
+    private float baseRelations() {
         return owner().baseRelations(empire());
     }
 
@@ -460,7 +460,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
         newIncidents().clear();
         clearForgottenIncidents();
         
-        addIncident(SimpleIncident.createDriftRelationsIncident(view));
+        float driftSeverity = (baseRelations() - relations())/50;
+        addIncident(SimpleIncident.createDriftRelationsIncident(driftSeverity, view));
         if (pact()) {
             addIncident(SimpleIncident.createPactIncident(view));
         }
