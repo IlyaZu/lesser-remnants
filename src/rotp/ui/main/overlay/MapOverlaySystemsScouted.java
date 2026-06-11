@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package rotp.ui.main.overlay;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
@@ -37,7 +36,7 @@ import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.main.MainUI;
 import rotp.ui.main.SystemPanel;
 import rotp.ui.sprites.TextButtonSprite;
-import rotp.ui.sprites.MapSprite;
+import rotp.ui.sprites.SystemFlagSprite;
 
 public class MapOverlaySystemsScouted extends MapOverlay {
     private static final Color maskC = new Color(40,40,40,160);
@@ -48,7 +47,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             new TextButtonSprite("MAIN_ALLOCATE_NEXT_SYSTEM", true, this::nextSystem);
     private final TextButtonSprite continueButton =
             new TextButtonSprite("MAIN_ALLOCATE_CLOSE", false, this::advanceMap);
-    private final SystemFlagSprite flagButton = new SystemFlagSprite();
+    private final SystemFlagSprite flagButton;
     private final MainUI parent;
     
     private Area mask;
@@ -62,6 +61,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
     
     public MapOverlaySystemsScouted(MainUI p) {
         parent = p;
+        flagButton = new SystemFlagSprite(p::repaint);
     }
     
     public void init(HashMap<String, List<StarSystem>> newSystems) {
@@ -70,7 +70,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         systemIndex = 0;
         isOpen = true;
         orderedSystems.clear();
-        flagButton.reset();
         if (newSystems.isEmpty())
             advanceMap();
         else {
@@ -83,6 +82,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
             orderedSystems.addAll(allySystems);
             Collections.sort(orderedSystems, StarSystem.NAME);
             mapSelectIndex(0);
+            flagButton.setSystemId(orderedSystems.get(systemIndex).id);
         }
     }
     
@@ -95,29 +95,23 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         parent.clickedSprite(nextSystem);
         parent.repaint();
     }
-    private StarSystem starSystem() {
-        return orderedSystems.get(systemIndex);
-    }
     public void nextSystem() {
         systemIndex++;
         if (systemIndex >= orderedSystems.size())
             systemIndex = 0;
         mapSelectIndex(systemIndex);
+        flagButton.setSystemId(orderedSystems.get(systemIndex).id);
     }
     public void previousSystem() {
         systemIndex--;
         if (systemIndex < 0)
             systemIndex = orderedSystems.size()-1;
         mapSelectIndex(systemIndex);
+        flagButton.setSystemId(orderedSystems.get(systemIndex).id);
     }
     private void toggleFlagColor(boolean reverse) {
         StarSystem sys = orderedSystems.get(systemIndex);
         player().sv.toggleFlagColor(sys.id, reverse);
-        parent.repaint();
-    }
-    private void resetFlagColor() {
-        StarSystem sys = orderedSystems.get(systemIndex);
-        player().sv.resetFlagColor(sys.id);
         parent.repaint();
     }
     @Override
@@ -347,9 +341,7 @@ public class MapOverlaySystemsScouted extends MapOverlay {
         
         // planet flag
         parent.addNextTurnControl(flagButton);
-        flagButton.init(this, g);
-        flagButton.mapX(boxX+boxW-flagButton.width()+s10);
-        flagButton.mapY(boxY+boxH-buttonPaneH-flagButton.height()+s10);
+        flagButton.setPosition(boxX+boxW-flagButton.getWidth()+s10, boxY+boxH-buttonPaneH-flagButton.getHeight()+s10);
         flagButton.draw(parent.map(), g);
 
         // init and draw continue button sprite
@@ -405,73 +397,6 @@ public class MapOverlaySystemsScouted extends MapOverlay {
                 misClick(); break;
         }
         return true;
-    }
-    class SystemFlagSprite extends MapSprite {
-        private int mapX, mapY, buttonW, buttonH;
-        private int selectX, selectY, selectW, selectH;
-
-        private MapOverlaySystemsScouted parent;
-
-        protected int mapX()      { return mapX; }
-        protected int mapY()      { return mapY; }
-        public void mapX(int i)   { selectX = mapX = i; }
-        public void mapY(int i)   { selectY = mapY = i; }
-
-        public int width()        { return buttonW; }
-        public int height()       { return buttonH; }
-        public void reset()        { }
-
-        public void init(MapOverlaySystemsScouted p, Graphics2D g)  {
-            parent = p;
-            buttonW = BasePanel.s70;
-            buttonH = BasePanel.s70;
-            selectW = buttonW;
-            selectH = buttonH;
-        }
-        public void setSelectionBounds(int x, int y, int w, int h) {
-            selectX = x;
-            selectY = y;
-            selectW = w;
-            selectH = h;
-        }
-        @Override
-        public boolean acceptDoubleClicks()         { return true; }
-        @Override
-        public boolean acceptWheel()                { return true; }
-        @Override
-        public boolean isSelectableAt(GalaxyMapPanel map, int x, int y) {
-            hovering = x >= selectX
-                        && x <= selectX+selectW
-                        && y >= selectY
-                        && y <= selectY+selectH;
-            return hovering;
-        }
-        @Override
-        public void draw(GalaxyMapPanel map, Graphics2D g) {
-            StarSystem sys = parent.starSystem();
-            Image flagImage = parent.parent.flagImage(sys);
-            Image flagHaze = parent.parent.flagHaze(sys);
-            g.drawImage(flagHaze, mapX, mapY, buttonW, buttonH, null);
-            if (hovering) {
-                Image flagHover = parent.parent.flagHover(sys);
-                g.drawImage(flagHover, mapX, mapY, buttonW, buttonH, null);
-            }
-            g.drawImage(flagImage, mapX, mapY, buttonW, buttonH, null);
-        }
-        @Override
-        public void click(GalaxyMapPanel map, int count, boolean rightClick, boolean click) {
-            if (rightClick)
-                parent.resetFlagColor();
-            else
-                parent.toggleFlagColor(false);
-        }
-        @Override
-        public void wheel(GalaxyMapPanel map, int rotation, boolean click) {
-            if (rotation < 0)
-                parent.toggleFlagColor(true);
-            else
-                parent.toggleFlagColor(false);
-        }
     }
 }
     

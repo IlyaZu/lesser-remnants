@@ -88,7 +88,6 @@ public interface IMapHandler {
     default Image flagImage(StarSystem s)                { return Empire.thePlayer().sv.flagImage(s.id); }
     default Image mapFlagImage(StarSystem s)             { return Empire.thePlayer().sv.mapFlagImage(s.id); }
     default Image flagHover(StarSystem s)                { return ImageManager.current().image("Flag_Hover"); }
-    default Image flagHaze(StarSystem s)                 { return ImageManager.current().image("Flag_Haze"); }
     default boolean showOwnership(StarSystem s)          { return true; }
     default boolean drawShield()                         { return true; }
     default boolean drawStargate()                       { return true; }
