@@ -1008,7 +1008,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // neither of these incidents are added to the embassies. They are for
         // player notification only.
         if (tr.size() == 0) {
-            log(concat(str(tr.launchSize()), " ", tr.empire().raceName(), " transports perished at ", name()));
+            log(tr.launchSize() + " " + tr.empire().raceName() + " transports perished at " + name());
             if (tr.empire().isPlayerControlled()) {
                 TransportsKilledAlert.create(defendingEmpire, starSystem(), tr.launchSize());
             } else if (empire().isPlayerControlled())

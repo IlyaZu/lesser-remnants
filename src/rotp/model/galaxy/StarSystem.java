@@ -153,7 +153,7 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
         y = y0;
     }
     @Override
-    public String toString()                    { return concat("Star System: ", name()); }
+    public String toString()                    { return "Star System: " + name(); }
 
     public boolean unnamed()                    { return name().isEmpty(); }
     public SpaceMonster monster()               { return monster; }
@@ -347,10 +347,10 @@ public class StarSystem implements Base, Sprite, IMappedObject, Serializable {
                 if (maxSize == currSize)
                     return str(currSize)+" ";
                 else
-                    return concat(str(currSize),"+");
+                    return currSize + "+";
             case "PLANET_TYPE":      return planet().type().name();
             case "NOTES":            return notes();
-            case "CAPACITY":         return concat(str((int)(colony().currentProductionCapacity()*100)),"%");
+            case "CAPACITY":         return ((int)(colony().currentProductionCapacity()*100)) + "%";
             case "RESERVE":          return str((int)colony().reserveIncome());
             case "SHIPYARD":         return colony().shipyardProject();
             case "TRANSPORT_TURNS":  return str((int)Math.ceil(transportTimeTo(TARGET_SYSTEM)));

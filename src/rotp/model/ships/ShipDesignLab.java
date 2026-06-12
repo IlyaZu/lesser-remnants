@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -315,7 +315,7 @@ public class ShipDesignLab implements Base, Serializable {
     public void nameDesign(ShipDesign d) {
         List<String> shipNames = empire.race().shipNames(d.size());
         if ((shipNames == null) || shipNames.isEmpty()) {
-            d.name(concat("Ship", str(roll(100,999))));
+            d.name("Ship" + roll(100,999));
             return;
         }
         List<String> remainingNames = new ArrayList<>();
@@ -324,7 +324,7 @@ public class ShipDesignLab implements Base, Serializable {
                 remainingNames.add(name);
         }
         if (remainingNames.isEmpty()) {
-            d.name(concat("Ship", str(roll(100,999))));
+            d.name("Ship" + roll(100,999));
             return;
         }
         int index = min(0,remainingNames.size()-1);

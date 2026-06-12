@@ -260,7 +260,7 @@ public class MapOverlayBombardPrompt extends MapOverlay {
         String baseStr = text("MAIN_BOMBARD_BASES", endBases);
         String shieldStr = text("MAIN_BOMBARD_SHIELD", shield);
 
-        String allText = concat(popStr,dmgStr,factStr,dmgStr,baseStr,dmgStr,shieldStr);
+        String allText = popStr+dmgStr+factStr+dmgStr+baseStr+dmgStr+shieldStr;
         int fontSize1 = scaledFont(g, allText, boxW-s15-s15-(3*pad)-(3*p1), 20, 13);
         g.setFont(narrowFont(fontSize1));
         int allsw = g.getFontMetrics().stringWidth(allText);

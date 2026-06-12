@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,7 +125,7 @@ public class DialogueManager implements Base {
                 matchingStrings.add(str);
         }
         if (matchingStrings.isEmpty())
-            return concat("Message not found. type:", type);
+            return "Message not found. type:" + type;
         else
             return speaker.race().dialogue(random(matchingStrings).key());
     }
@@ -138,7 +138,7 @@ public class DialogueManager implements Base {
                 matchingStrings.add(str);
         }
         if (matchingStrings.isEmpty())
-            return concat("Message not found. type:", type);
+            return "Message not found. type:" + type;
         else
             return diplomat.race().dialogue(random(matchingStrings).key());
     }
@@ -230,7 +230,7 @@ public class DialogueManager implements Base {
             }
         }
         catch (IOException e) {
-            throw new RuntimeException(concat("load.load -- IOException: ", e.toString()));
+            throw new RuntimeException("load.load -- IOException: " + e.toString());
         }
         finally {
             try { in.close(); }

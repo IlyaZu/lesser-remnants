@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class AITreasurer implements Base, Treasurer {
         empire = c;
     }
     @Override
-    public String toString()   { return concat("Treasurer: ", empire.raceName()); }
+    public String toString()   { return "Treasurer: " + empire.raceName(); }
     @Override
     public void allocateReserve() {
         List<StarSystem> allSystems = empire.allColonizedSystems();

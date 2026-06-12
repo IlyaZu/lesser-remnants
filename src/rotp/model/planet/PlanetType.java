@@ -112,7 +112,7 @@ public class PlanetType implements Base {
         terrainSeeds.add(roll(1,TERRAIN_MAX-1));
     }
     @Override
-    public String toString()                  { return concat("PlanetType: ", key); }
+    public String toString()                  { return "PlanetType: " + key; }
 
     public String key()                       { return key; }
     public void key(String s)                 { key = s; }

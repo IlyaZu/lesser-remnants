@@ -231,7 +231,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
     private String fullSelectedFileName() {
         String fileName = newFileField.getText().trim();
         if (!fileName.isEmpty())
-            return  concat(fileName, GameSession.SAVEFILE_EXTENSION);
+            return fileName + GameSession.SAVEFILE_EXTENSION;
         return "";
     }
     public void saveGame(String s) {
@@ -252,7 +252,7 @@ public final class SaveGameUI extends BasePanel implements MouseListener, MouseW
                 RotPUI.instance().selectGamePanel();
             }
             catch(Exception e) {
-                showError(concat("Save unsuccessful: ", s));
+                showError("Save unsuccessful: " + s);
                 saving = false;
                 return;
             }

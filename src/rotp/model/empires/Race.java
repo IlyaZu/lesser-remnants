@@ -200,7 +200,7 @@ public class Race implements Base, Serializable {
     }
     public LabelManager raceLabels()              { return labels; }
     @Override
-    public String toString()                      { return concat("Race:", id); }
+    public String toString()                      { return "Race:" + id; }
 
     @Override
     public String text(String key) {
@@ -276,7 +276,7 @@ public class Race implements Base, Serializable {
     public Image dialogPact()                 { return image(dlgPactKey); }
     public Image council()                    { return image(councilKey);  }
     public Image gnnEvent(String id)          { return image(gnnEventKey(id)); }
-    private String gnnEventKey(String id)     { return concat(gnnColor,"_",id); }
+    private String gnnEventKey(String id)     { return gnnColor+"_"+id; }
     public BufferedImage gnn()                { return currentFrame(gnnKey); }
     public BufferedImage gnnHost()            { return currentFrame(gnnHostKey); }
     public BufferedImage laboratory()         { return currentFrame(laboratoryKey);  }
@@ -441,7 +441,7 @@ public class Race implements Base, Serializable {
 
         List<String> forts = substrings(vals.get(0), '|');
         for (String fort: forts) {
-            String fortKey = concat(fort, ",", vals.get(1));
+            String fortKey = fort + "," + vals.get(1);
             fortressKeys.add(fortKey);
         }
     }
@@ -458,14 +458,14 @@ public class Race implements Base, Serializable {
         if (vals.size() != 3)
             err("Invalid TransportDesc string: ", s);
 
-        transportDescKey  = concat(vals.get(0), ",", vals.get(2));
+        transportDescKey  = vals.get(0) + "," + vals.get(2);
     }
     public void parseTransportOpen(String s) {
         List<String> vals = substrings(s, ',');
         if (vals.size() != 3)
             err("Invalid Transport Open string: ", s);
 
-        transportOpenKey  = concat(vals.get(0), ",", vals.get(2));
+        transportOpenKey  = vals.get(0) + "," + vals.get(2);
         transportOpenFrames = parseInt(vals.get(1));
     }
     public void parseWinSplash(String s) {

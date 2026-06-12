@@ -81,7 +81,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         bridgeHeadConfidenceBuffer = new HashMap<>();
     }
     @Override
-    public String toString()   { return concat("FleetCommander: ", empire.raceName()); }
+    public String toString()   { return "FleetCommander: " + empire.raceName(); }
     private Location getThreatCenter()
     {
         if(threatCenter.distanceTo(0, 0) != 0)

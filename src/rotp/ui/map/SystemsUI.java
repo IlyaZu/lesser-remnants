@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -517,10 +517,10 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
 
         Colony col = sv.system().colony();
         if (col.inRebellion())
-            return concat(text("SYSTEMS_STATUS_REBELLION"),transportMsg);
+            return text("SYSTEMS_STATUS_REBELLION") + transportMsg;
         
         if (col.creatingWaste())
-            return concat(text("SYSTEMS_EXPLOIT_WASTE"), transportMsg);
+            return text("SYSTEMS_EXPLOIT_WASTE") + transportMsg;
         
         int pct = (int) (100*col.currentProductionCapacity());
         String capMsg;
@@ -533,7 +533,7 @@ public final class SystemsUI extends BasePanel implements IMapHandler, ActionLis
         else
             capMsg = text("SYSTEMS_EXPLOIT_COMPLETE");
         
-        return concat(capMsg, transportMsg);
+        return capMsg + transportMsg;
     }
     private String exterminateAlertDescription(SystemView sv) {
         Empire pl = player();

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,9 +50,9 @@ public class ShipDecision implements Base, Serializable {
         String design = bestDesign == null ? "null" : bestDesign.name();
         String orders = fleetOrders == null ? "null" : fleetOrders.toString();
         if (sysId == StarSystem.NULL_ID)
-            return concat("ShipDecision: ", design, " in ", str((int)Math.ceil(turns)), " turns using: ", orders);
+            return "ShipDecision: " + design + " in " + ((int)Math.ceil(turns)) + " turns using: " + orders;
         else
-            return concat("ShipDecision: ", design, " in ", str((int)Math.ceil(turns)), " turns from: ", str(sysId));
+            return "ShipDecision: " + design + " in " + ((int)Math.ceil(turns)) + " turns from: " + sysId;
     }
     public boolean implement(List<FleetOrders> orders, List<Integer> systemsCommitted) {
         if ((fleetOrders == null) && !hasSystem()) {

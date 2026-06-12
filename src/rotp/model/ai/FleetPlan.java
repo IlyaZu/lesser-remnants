@@ -67,8 +67,8 @@ public class FleetPlan implements Base, Serializable {
     public String toString() {
         String name = str(destId);
         if (name.isEmpty())
-            name = concat("Unexplored (", str(destId), ")");
-        return concat(str(priority()), ":", name, " - ");
+            name = "Unexplored (" + destId + ")";
+        return priority() + ":" + name + " - ";
     }
     private ShipDesignLab lab() {
         if (lab == null)
@@ -86,11 +86,11 @@ public class FleetPlan implements Base, Serializable {
             needed[i]=0;
     }
     public String fullName() {
-        String name = concat("fp ", str(destId), " pri:", str(priority), "  ships:");
+        String name = "fp " + destId + " pri:" + priority + "  ships:";
         //check that otherFleet has matching stacks with enough ships & BC
         for (int i=0;i<needed.length;i++) {
             if (needed[i]> 0)
-                name = concat(name, str(needed[i]), "-", lab().design(i).name(), ";");
+                name = name + needed[i] + "-" + lab().design(i).name() + ";";
         }
         return name;
     }

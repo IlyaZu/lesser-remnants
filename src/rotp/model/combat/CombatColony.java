@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,13 +66,13 @@ public class CombatColony extends CombatEntity {
     @Override
     public String toString() {
         if (target != null)
-            return concat(shortString(), "  targeting: [", target.shortString(), "]");
+            return shortString() + "  targeting: [" + target.shortString() + "]";
         else
             return shortString();
     }
     @Override
     public String shortString() {
-        return concat("Colony in: ", colony.starSystem().name(), " -- bases: ", str(num), " at:", str(x), ",", str(y));
+        return "Colony in: " + colony.starSystem().name() + " -- bases: " + num + " at:" + x + "," + y;
     }
     public float populationLost()   { return colony.destroyed() ? (int) startingPop : (int) startingPop - (int) colony.population(); }
     public float factoriesLost()    { return colony.destroyed() ? (int) startingFactories : (int) startingFactories - (int) colony.industry().factories(); }

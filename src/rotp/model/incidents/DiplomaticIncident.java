@@ -57,7 +57,7 @@ public abstract class DiplomaticIncident implements Base, Serializable {
     public void notifyOfPraise()         { }  // provides hook to avoid constant praise
 
     @Override
-    public String toString() {  return concat(str(turnOccurred), ": ", title(), " = ", fmt(severity(),1)); }
+    public String toString() {  return turnOccurred + ": " + title() + " = " + fmt(severity(),1); }
 
     public String decode(String s)       { return s.replace("[year]", str(turnOccurred)); }
 

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -130,7 +130,7 @@ public class EmpireColonyInfoPane extends BasePanel {
             String strTitle = titleString();
             String strDataLabel = dataLabelString(colonies);
             String strData1 = valueString(colonies);
-            String strData2 = value(colonies) == maxValue(colonies) ? "" : concat("/", maxValueString(colonies));
+            String strData2 = value(colonies) == maxValue(colonies) ? "" : ("/" + maxValueString(colonies));
 
             int x0 = s5;
             int y0 = getHeight()-s6;
@@ -470,7 +470,7 @@ public class EmpireColonyInfoPane extends BasePanel {
 
             String str1 = text("MAIN_COLONY_PRODUCTION");
             String str2 = str(income);
-            String str3 = concat("(", str(prod), ")");
+            String str3 = "(" + prod + ")";
 
             int y0 = getHeight()-s6;
             g.setColor(SystemPanel.blackText);

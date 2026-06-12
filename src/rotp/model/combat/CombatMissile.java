@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class CombatMissile extends CombatEntity {
     }
     @Override
     public String fullName() {
-        return concat(str(num), ":", missile.name(), "-", Integer.toHexString(hashCode()));
+        return num + ":" + missile.name() + "-" + Integer.toHexString(hashCode());
     }
 
     @Override

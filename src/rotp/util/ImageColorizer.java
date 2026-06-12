@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -312,7 +312,7 @@ public final class ImageColorizer implements Base {
             case ORANGE: return makeOrange(img);
             case DARK_GREEN:  return makeDarkGreen(img);
             case LIGHT_BLUE:  return makeLightBlue(img);
-            default: throw new RuntimeException(concat("Unknown color id: ", str(id)));
+            default: throw new RuntimeException("Unknown color id: " + id);
         }
     }
 

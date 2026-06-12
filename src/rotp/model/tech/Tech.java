@@ -120,7 +120,7 @@ public class Tech implements Base {
     }
 
     @Override
-    public String toString() { return concat("Tech: ", name); }
+    public String toString() { return "Tech: " + name; }
 
     public String name()                  { return text(name); }
     public Integer level()                { return level; }

@@ -53,7 +53,7 @@ public enum RaceFactory implements Base {
             return;
 
         // try to open the race file
-        String raceDirPath = concat("races/", raceDirName);
+        String raceDirPath = "races/" + raceDirName;
         String filename = raceDirPath+"/definition.txt";
         BufferedReader in = reader(filename);
         if (in == null) {
@@ -84,7 +84,7 @@ public enum RaceFactory implements Base {
             loadRaceLangFiles(r, langDir);
     }
     private void loadRaceLangFiles(Race r, String langDir) {
-        String dir = concat("lang/", langDir, "/races/");
+        String dir = "lang/" + langDir + "/races/";
         List<String> sNames = readSystemNames(dir+r.langKey+".systems.txt");
         if (sNames != null)
             r.systemNames = sNames;

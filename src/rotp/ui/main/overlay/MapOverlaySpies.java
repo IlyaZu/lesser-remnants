@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -239,11 +239,11 @@ public class MapOverlaySpies extends MapOverlay {
             desc = selectedEmpire.replaceTokens(desc, "alien");
             if (rpt.confessedMission() != null) {
                 switch(rpt.confessedMission()) {
-                    case SABOTAGE: desc = concat(desc," ", text("NOTICE_SPIES_LOST_CONFESSED")); break;
-                    case ESPIONAGE: desc = concat(desc," ", text("NOTICE_SPIES_LOST_CONFESSED2")); break;
+                    case SABOTAGE: desc = desc + " " + text("NOTICE_SPIES_LOST_CONFESSED"); break;
+                    case ESPIONAGE: desc = desc + " " + text("NOTICE_SPIES_LOST_CONFESSED2"); break;
                     case HIDE:
                         if (selectedEmpire.leader().isXenophobic())
-                            desc = concat(desc, " ", text("NOTICE_SPIES_LOST_CONFESSED3")); break;
+                            desc = desc + " " + text("NOTICE_SPIES_LOST_CONFESSED3"); break;
                 }
             }
             g.setFont(narrowFont(15));
@@ -263,8 +263,8 @@ public class MapOverlaySpies extends MapOverlay {
             desc = selectedEmpire.replaceTokens(desc, "alien");
             if (theirRpt.confessedMission() != null) {
                 switch(theirRpt.confessedMission()) {
-                    case SABOTAGE: desc = concat(desc," ", text("NOTICE_SPIES_CAUGHT_CONFESSED")); break;
-                    case ESPIONAGE: desc = concat(desc," ", text("NOTICE_SPIES_CAUGHT_CONFESSED2")); break;
+                    case SABOTAGE: desc = desc + " " + text("NOTICE_SPIES_CAUGHT_CONFESSED"); break;
+                    case ESPIONAGE: desc = desc + " " + text("NOTICE_SPIES_CAUGHT_CONFESSED2"); break;
                 }
             }
             g.setFont(narrowFont(15));
@@ -306,7 +306,7 @@ public class MapOverlaySpies extends MapOverlay {
             String desc = text("NOTICE_SPIES_ESPIONAGE", t.name());
             desc = selectedEmpire.replaceTokens(desc, "alien");
             if (framed != null) {
-                desc = concat(desc, " ", text("NOTICE_SPIES_ESPIONAGE_FRAME"));
+                desc = desc + " " + text("NOTICE_SPIES_ESPIONAGE_FRAME");
                 desc = framed.replaceTokens(desc, "framed");
             }
             g.setFont(narrowFont(15));

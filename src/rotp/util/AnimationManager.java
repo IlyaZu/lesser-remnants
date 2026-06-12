@@ -164,26 +164,26 @@ public enum AnimationManager implements Base {
         List<String> xy = substrings(vals.get(0),'@');
 
         if ((xy.size() != 2))
-            throw new Exception(concat("Invalid size specification-1: [", s, "] for animation"));
+            throw new Exception("Invalid size specification-1: [" + s + "] for animation");
 
         int x = this.parseInt(xy.get(0));
         int y = this.parseInt(xy.get(1));
 
         if ((x<0) || (y<0))
-                throw new Exception(concat("Invalid size specification-2: [", s, "] for animation"));
+                throw new Exception("Invalid size specification-2: [" + s + "] for animation");
         int w = 0;
         int h = 0;
 
         if (vals.size() > 1) {
             List<String> wh = substrings(vals.get(1),'x');
             if (wh.size() != 2)
-                throw new Exception(concat("Invalid size specification-3: [", s, "] for animation"));
+                throw new Exception("Invalid size specification-3: [" + s + "] for animation");
 
             w = this.parseInt(wh.get(0));
             h = this.parseInt(wh.get(1));
 
             if ((w<1) || (h<1))
-                throw new Exception(concat("Invalid size specification-4: [", s, "] for animation"));
+                throw new Exception("Invalid size specification-4: [" + s + "] for animation");
         }
         return new Rectangle(x,y,w,h);
     }

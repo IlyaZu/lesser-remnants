@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -309,7 +309,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         g.setFont(narrowFont(16));
         drawString(g,text("RACES_MILITARY_TROOP_BONUS"), x0, y0);
         g.setFont(narrowFont(15));
-        String bonus = concat("+",str((int)tech.troopCombatAdj(false)));
+        String bonus = "+" + ((int)tech.troopCombatAdj(false));
         sw = g.getFontMetrics().stringWidth(bonus);
         drawString(g,bonus, x+w-s10-sw, y0);
         
@@ -411,7 +411,7 @@ public final class RacesMilitaryUI extends BasePanel implements MouseListener, M
         g.setFont(narrowFont(16));
         drawString(g,text("RACES_MILITARY_TROOP_BONUS"), x0, y0);
         g.setFont(narrowFont(15));
-        String bonus = concat("+",str((int)tech.troopCombatAdj(false)));
+        String bonus = "+" + ((int)tech.troopCombatAdj(false));
         sw = g.getFontMetrics().stringWidth(bonus);
         drawString(g,bonus, x+w-s10-sw, y0);
     }

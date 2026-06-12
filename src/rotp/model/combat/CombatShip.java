@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,14 +143,14 @@ public class CombatShip extends CombatEntity {
     @Override
     public String toString() {
         if (target != null)
-            return concat(shortString(), "  targeting: [", target.shortString(), "]");
+            return shortString() + "  targeting: [" + target.shortString() + "]";
         else
             return shortString();
     }
     
     @Override
     public String shortString() {
-        return concat(name, " hp: ", str((int)hits), "/", str((int)maxHits), " at:", str(x), ",", str(y));
+        return name + " hp: " + ((int)hits) + "/" + ((int)maxHits) + " at:" + x + "," + y;
     }
     
     @Override
