@@ -251,23 +251,6 @@ public interface Base {
         else
             return  n1*(n1+1)/2;
     }
-    public default List<String> varTokens(String s, String key) {
-        String startKey = "["+key+"_";
-        int keySize = startKey.length();
-        List<String> tokens = new ArrayList<>();
-        int prevIndex = -1;
-        int nextIndex = s.indexOf(startKey, prevIndex);
-        while (nextIndex >= 0) {
-            int endIndex = s.indexOf(']', nextIndex);
-            if (endIndex <= nextIndex)
-                return tokens;
-            String var = s.substring(nextIndex+keySize-1, endIndex);
-            tokens.add(var);
-            prevIndex = nextIndex;
-            nextIndex = s.indexOf(startKey, endIndex);
-        }
-        return tokens;
-    }
     public default float sqrt(int i)                 { return (float) Math.sqrt(i); }
     public default float sqrt(float f)               { return (float) Math.sqrt(f); }
     public default int max(int v1, int v2)           { return Math.max(v1,v2); }

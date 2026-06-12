@@ -385,7 +385,7 @@ public final class Empire implements Base, NamedObject, Serializable {
     public String toString()   { return "Empire: " + raceName(); }
 
     public String replaceTokens(String s, String key) {
-        List<String> tokens = this.varTokens(s, key);
+        List<String> tokens = varTokens(s, key);
         String s1 = s;
         for (String token: tokens) {
             String replString = "[" + key + token +"]";
@@ -401,6 +401,23 @@ public final class Empire implements Base, NamedObject, Serializable {
             }
         }
         return s1;
+    }
+    private List<String> varTokens(String s, String key) {
+        String startKey = "["+key+"_";
+        int keySize = startKey.length();
+        List<String> tokens = new ArrayList<>();
+        int prevIndex = -1;
+        int nextIndex = s.indexOf(startKey, prevIndex);
+        while (nextIndex >= 0) {
+            int endIndex = s.indexOf(']', nextIndex);
+            if (endIndex <= nextIndex)
+                return tokens;
+            String var = s.substring(nextIndex+keySize-1, endIndex);
+            tokens.add(var);
+            prevIndex = nextIndex;
+            nextIndex = s.indexOf(startKey, endIndex);
+        }
+        return tokens;
     }
     public String label(String token) {
         List<String> values = substrings(race().text(token), ',');
