@@ -49,7 +49,7 @@ public class AIFleetCommander implements Base, FleetCommander {
     private List<Integer> systemsCommitted()  {return systemsCommitted;  }
     public AIFleetCommander (Empire c) {
         empire = c;
-        sendColonyMissions = true; 
+        sendColonyMissions = true;
         fleetPlans = new ArrayList<>(DEFAULT_SIZE);
         systems = new ArrayList<>(DEFAULT_SIZE);
         systemsCommitted = new ArrayList<>(DEFAULT_SIZE);
@@ -114,7 +114,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         // make fleet plans for each unplanned system
         for (int id=0; id<empire.sv.count();id++) {
             reviseFleetPlan(id);
-            if (empire.sv.hasFleetPlan(id) && !empire.sv.fleetPlan(id).isClear()) 
+            if (empire.sv.hasFleetPlan(id) && !empire.sv.fleetPlan(id).isClear())
                 fleetPlans.add(empire.sv.fleetPlan(id));
         }
 
@@ -147,15 +147,15 @@ public class AIFleetCommander implements Base, FleetCommander {
         int numComplete = 0;
 
         log("Fleet Plans to fill:  ", str(numPlans), "  ships: ", str(numShips));
-        //for (FleetPlan fp: fleetPlans) 
-        //    log(fp.fullName());          
+        //for (FleetPlan fp: fleetPlans)
+        //    log(fp.fullName());
         
         List<FleetPlan> retreatPlans = new ArrayList<>();
         for (FleetPlan fPlan: fleetPlans) {
             NoticeMessage.setSubstatus(text("TURN_DEPLOY_FLEET_X", str(numComplete), str(numPlans)));
-            if (fPlan.priority() == FleetPlan.RETREAT) 
+            if (fPlan.priority() == FleetPlan.RETREAT)
                 retreatPlans.add(fPlan);
-            else 
+            else
                 assignShipsToFleetPlans(fPlan, fleetOrders);
             numComplete += 1;
         }
@@ -185,7 +185,7 @@ public class AIFleetCommander implements Base, FleetCommander {
         // if this is a staged plan and is unfilled by fleet at staging point, all future ships go to staging point
         if (fPlan.isStaged() && fPlan.needsShips()) {
             ShipFleet stagingFleet = empire.sv.orbitingFleet(fPlan.stagingPointId);
-            if (fPlan.canBeFilledBy(stagingFleet)) 
+            if (fPlan.canBeFilledBy(stagingFleet))
                 fPlan.subtract(stagingFleet.orders());
             else
                 fPlan.switchToStagingPoint();
@@ -215,25 +215,25 @@ public class AIFleetCommander implements Base, FleetCommander {
             }
         }
     }
-    private void reviseFleetPlan(int sysId) {        
+    private void reviseFleetPlan(int sysId) {
         Galaxy gal = galaxy();
         float scoutRange = empire.scoutRange();
         float shipRange = empire.shipRange();
         // if out of scout range, forget it
-        if (!empire.sv.withinRange(sysId, scoutRange)) 
+        if (!empire.sv.withinRange(sysId, scoutRange))
             return;
         // if a fleet plan has already been assigned (by AIGeneral), then skip
-        if (empire.sv.fleetPlan(sysId).needsShips()) 
+        if (empire.sv.fleetPlan(sysId).needsShips())
             return;
         // if guarded, forget it for now
-        if (empire.sv.isGuarded(sysId)) 
+        if (empire.sv.isGuarded(sysId))
             return;
 
         // if not scouted and owner still using scouts, send a scout
-        // if it has no known missile bases or if it is an ally 
+        // if it has no known missile bases or if it is an ally
         if (!empire.sv.isScouted(sysId)) {
             if (empire.alliedWith(empire.sv.empId(sysId))
-            || (empire.sv.bases(sysId) == 0)) 
+            || (empire.sv.bases(sysId) == 0))
                 setScoutFleetPlan(sysId);
             return;
         }
@@ -316,9 +316,9 @@ public class AIFleetCommander implements Base, FleetCommander {
 
         float value = empire.sv.currentSize(id);
         
-        //increase value by 5 for each of our systems it is near, and 
+        //increase value by 5 for each of our systems it is near, and
         //decrease by 2 for alien systems. This is an attempt to encourage
-        //colonization of inner colonies (easier to defend) even if they 
+        //colonization of inner colonies (easier to defend) even if they
         //are not as good as outer colonies
         int[] nearbySysIds = empire.sv.galaxy().system(id).nearbySystems();
         for (int nearSysId: nearbySysIds) {
