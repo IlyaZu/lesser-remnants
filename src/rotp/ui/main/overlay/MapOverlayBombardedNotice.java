@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -204,7 +204,7 @@ public class MapOverlayBombardedNotice extends MapOverlay {
         String baseStr = text("MAIN_BOMBARD_BASES", endBases);
         String shieldStr = text("MAIN_BOMBARD_SHIELD", shield);
 
-        String allText = concat(popStr,dmgStr,factStr,dmgStr,baseStr,dmgStr,shieldStr);
+        String allText = popStr+dmgStr+factStr+dmgStr+baseStr+dmgStr+shieldStr;
         int fontSize1 = scaledFont(g, allText, boxW-s10-s10-(3*pad)-(3*p1), 20, 13);
         g.setFont(narrowFont(fontSize1));
         int allsw = g.getFontMetrics().stringWidth(allText);

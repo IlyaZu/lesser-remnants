@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         message.returnToMap(notif.returnToMap());
         messageRemark = "";
         if (message == null)
-            messageRemark = concat("Message type not defined: ", notif.type());
+            messageRemark = "Message type not defined: " + notif.type();
         else if (notif.otherEmpire() == null)
             messageRemark = diplomatEmpire.decode(message.remark(notif.otherEmpire()), player());
         else

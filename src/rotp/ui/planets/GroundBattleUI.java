@@ -370,7 +370,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         String attArmorDesc = text("INVASION_TROOP_ARMOR_DESC", transport.armorDesc(), transport.battleSuitDesc());
         String attShieldDesc = transport.shieldDesc();
         String attWpnDesc = transport.weaponDesc();
-        String attLine = concat(attArmorDesc, attShieldDesc, attWpnDesc);
+        String attLine = attArmorDesc + attShieldDesc + attWpnDesc;
         g.setFont(narrowFont(28));
         // draw attacker15s
         x0 = s40;
@@ -414,7 +414,7 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
         String defArmorDesc = text("INVASION_TROOP_ARMOR_DESC", defense.armorDesc(), defense.battleSuitDesc());
         String defShieldDesc = defense.personalShieldDesc();
         String defWpnDesc = defense.weaponDesc();
-        String defLine = concat(defArmorDesc, defShieldDesc, defWpnDesc);
+        String defLine = defArmorDesc + defShieldDesc + defWpnDesc;
         scaledFont(g, defLine, w/2-s60, 22, 18);
         y0 += s30;
         x0 = w-s30;

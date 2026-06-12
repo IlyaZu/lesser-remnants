@@ -45,7 +45,7 @@ public class AIDiplomat implements Base, Diplomat {
         empire = c;
     }
     @Override
-    public String toString()   { return concat("Diplomat: ", empire.raceName()); }
+    public String toString()   { return "Diplomat: " + empire.raceName(); }
 
     private boolean diplomats(int empId) {
         return empire.viewForEmpire(empId).diplomats();

@@ -424,7 +424,7 @@ public final class GameSession implements Base, Serializable {
         String turn = "T"+pad4.format(num);
         String opp = "vs"+options().selectedNumberOpponents();
         String dash = "-";
-        return concat(leader,dash,race,dash,gShape,dash,gSize,dash,diff,dash,opp,dash,turn,SAVEFILE_EXTENSION);
+        return leader+dash+race+dash+gShape+dash+gSize+dash+diff+dash+opp+dash+turn+SAVEFILE_EXTENSION;
     }
     private void saveRecentSession(boolean endOfTurn) {
         String filename = RECENT_SAVEFILE;

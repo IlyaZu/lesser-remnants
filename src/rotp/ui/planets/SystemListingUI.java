@@ -707,7 +707,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             color = clr;
             comp = c;
             align = a;
-            deltaKey = concat("DELTA_", attributeKey);
+            deltaKey = "DELTA_" + attributeKey;
         }
         public boolean enabled()  { return comp != null; }
         @Override

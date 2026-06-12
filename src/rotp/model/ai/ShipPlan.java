@@ -41,7 +41,7 @@ public class ShipPlan implements Base, Serializable {
         num = n;
     }
     public String name() {
-        return concat(str(num), " ", design.name(), "(", str(bc), ") to ", str(plan.destId));
+        return num + " " + design.name() + "(" + bc + ") to " + plan.destId;
     }
     public float priority() {
         return plan.priority();

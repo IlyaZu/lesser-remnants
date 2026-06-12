@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,9 +78,9 @@ public abstract class CombatEntity implements Base {
     public float transparency = 1;
 
     public String shortString() {
-        return concat(toString()," at:", str(x), ",", str(y));
+        return toString() + " at:" + x + "," + y;
     }
-    public String fullName()            { return concat(str(num), ":", raceName(), " ", name()); }
+    public String fullName()            { return num + ":" + raceName() + " " + name(); }
     private String raceName()            { return empire != null ? empire.raceName() : name(); }
     public abstract String name();
     public int initiative()           { return 0; }

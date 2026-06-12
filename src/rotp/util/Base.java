@@ -172,7 +172,7 @@ public interface Base {
         RotPUI.instance().selectErrorPanel(e);
     }
     public default void err(String... text) {
-        String output = concat(text);
+        String output = String.join("", text);
         System.err.println(output);
         if (RotPUI.useDebugFile) {
             PrintWriter debugFile = RotPUI.debugFile();
@@ -185,7 +185,7 @@ public interface Base {
     public default void log(String... text) {
         if (!Rotp.logging)
             return;
-        String output = concat(text);
+        String output = String.join("", text);
         System.out.println(output);
         if (RotPUI.useDebugFile) {
             PrintWriter debugFile = RotPUI.debugFile();
@@ -252,7 +252,7 @@ public interface Base {
             return  n1*(n1+1)/2;
     }
     public default List<String> varTokens(String s, String key) {
-        String startKey = concat("[",key,"_");
+        String startKey = "["+key+"_";
         int keySize = startKey.length();
         List<String> tokens = new ArrayList<>();
         int prevIndex = -1;
@@ -267,18 +267,6 @@ public interface Base {
             nextIndex = s.indexOf(startKey, endIndex);
         }
         return tokens;
-    }
-    public default String concat(String s1, String s2) { return str(s1).concat(str(s2)); }
-    public default String concat(String... s) {
-        if (s.length == 1)
-            return s[0];
-        if (s.length == 2)
-            return s[0].concat(s[1]);
-
-        StringBuilder sb = new StringBuilder(s.length*16);
-        for (int i=0;i<s.length;i++)
-            sb.append(s[i]);
-        return sb.toString();
     }
     public default float sqrt(int i)                 { return (float) Math.sqrt(i); }
     public default float sqrt(float f)               { return (float) Math.sqrt(f); }

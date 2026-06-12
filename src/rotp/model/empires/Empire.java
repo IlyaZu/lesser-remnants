@@ -382,13 +382,13 @@ public final class Empire implements Base, NamedObject, Serializable {
         return galaxy().ships.hullSizeCount(id, hullSize);
     }
     @Override
-    public String toString()   { return concat("Empire: ", raceName()); }
+    public String toString()   { return "Empire: " + raceName(); }
 
     public String replaceTokens(String s, String key) {
         List<String> tokens = this.varTokens(s, key);
         String s1 = s;
         for (String token: tokens) {
-            String replString = concat("[",key, token,"]");
+            String replString = "[" + key + token +"]";
             // leader name is special case, not in dictionary
             if (token.equals("_name"))
                 s1 = s1.replace(replString, leader().name());

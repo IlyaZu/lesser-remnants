@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,9 +98,9 @@ public class ErrorUI extends BasePanel implements MouseListener, MouseMotionList
 
         g.setColor(Color.white);
         g.setFont(narrowFont(14));
-        String s = concat(str(total-free), "M / ", str(total), "M / ", str(max), "M  (", str(Rotp.maxUsedMemory), ")");
+        String s = used + "M / " + total + "M / " + max + "M  (" + Rotp.maxUsedMemory + ")";
         if (threads >= 15)
-            s = concat(s, " T:", str(threads));
+            s = s + " T:" + threads;
         int sw = g.getFontMetrics().stringWidth(s);
         drawString(g, s, getWidth()-sw-s5, getHeight()-s5);
     }

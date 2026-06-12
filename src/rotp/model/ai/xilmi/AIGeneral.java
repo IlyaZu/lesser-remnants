@@ -64,7 +64,7 @@ public class AIGeneral implements Base, General {
     @Override
     public List<StarSystem> rushShipSystems() { return rushShipSystems; }
     @Override
-    public String toString()   { return concat("General: ", empire.raceName()); }
+    public String toString()   { return "General: " + empire.raceName(); }
     @Override
     public boolean inWarMode()  { return empire.numEnemies() > 0; }
     @Override

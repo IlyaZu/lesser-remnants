@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ public class Transport implements Base, Ship, Sprite, Serializable {
         empire = sys.empire();
     }
     @Override
-    public String toString()          { return concat("Transport: ", Integer.toHexString(hashCode())); }
+    public String toString()          { return "Transport: " + Integer.toHexString(hashCode()); }
     private Colony home()              { return from.colony(); }
     public StarSystem destination()   { return dest; }
     public void setDest(StarSystem d) { dest = d; }
@@ -276,14 +276,14 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     }
     public void land() {
         if (!dest.isColonized()) {
-            log(concat(str(size), " ", empire.name(), " transports perished at ", dest.name()));
+            log(size + " " + empire.name() + " transports perished at " + dest.name());
             if (empire.isPlayerControlled())
                 TransportsPerishedAlert.create(dest);
             size = 0;
         }
         else if (dest.empire() != empire) {
             if (surrenderOnArrival()) {
-                log(concat(str(size), " ", empire.name(), " transports surrendered at ", dest.name()));
+                log(size + " " + empire.name() + " transports surrendered at " + dest.name());
                 if (empire.isPlayerControlled() || dest.empire().isPlayerControlled())
                     TransportsCapturedAlert.create(empire, dest.empire(), dest, originalSize);
                 size = 0;
