@@ -405,7 +405,7 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
         soundText.displayText(text("CREDITS_SOUND"));
         translatorText.displayText(text("CREDITS_TRANSLATOR"));
         slideshowText.displayText(text("CREDITS_ILLUSTRATOR"));
-        versionText.displayText(text("GAME_VERSION", str(Rotp.releaseId)));
+        versionText.displayText(text("GAME_VERSION", Rotp.releaseId));
     }
     public void init() {
         slideshowFade = SLIDESHOW_MAX;
