@@ -326,12 +326,8 @@ public class Planet implements Base, IMappedObject, Serializable {
         }
     }
     public void terraformAtmosphere() {
-        // change env to NORMAL
-        // upgrade type to MINIMAL
-        // add 20 to planet size
         if (isEnvironmentHostile()) {
-            environment = Math.max(environment, ENVIRONMENT_NORMAL);
-            planetTypeKey = PlanetType.MINIMAL;
+            environment = ENVIRONMENT_NORMAL;
             increaseBaseSize(20);
             starSystem().addEvent(new SystemTerraformingEvent("SYSEVENT_ATMOSPHERE_TERRAFORMED"));
             colony.empire().sv.refreshFullScan(starSystem().id);
