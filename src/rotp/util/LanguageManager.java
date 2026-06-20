@@ -16,7 +16,6 @@
  */
 package rotp.util;
 
-import java.awt.ComponentOrientation;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,10 +25,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import rotp.Rotp;
 import rotp.model.empires.RaceFactory;
-import rotp.ui.UserPreferences;
 
 public class LanguageManager implements Base {
     private static final LanguageManager instance = new LanguageManager();
@@ -43,7 +40,6 @@ public class LanguageManager implements Base {
     public static final char[] latinDigits = { '0','1','2','3','4','5','6','7','8','9' };
     public static char[] customDigits = null;
 
-    public static void selectDefaultLanguage() { instance.selectLanguage(LanguageManager.DEFAULT_LANGUAGE); }
     public static int selectedLanguage()        { return selectedLanguage; }
     public static void selectedLanguage(int i)  { selectedLanguage = i; }
 
@@ -74,14 +70,6 @@ public class LanguageManager implements Base {
         }
         return null;
     }
-    public static int languageNumber(String dir) {
-        for (int i=0;i<languages.size();i++) {
-            Language lang = languages.get(i);
-            if (lang.directory.equalsIgnoreCase(dir))
-                return i;
-        }
-        return DEFAULT_LANGUAGE;
-    }
     public static void selectLanguage(String dir) {
         for (int i=0;i<languages.size();i++) {
             Language lang = languages.get(i);
@@ -92,30 +80,13 @@ public class LanguageManager implements Base {
         }
     }
     public static String selectedLanguageDir() { return languages.get(selectedLanguage).directory; }
-    public static String languageDir(int i)    { return languages.get(i).directory; }
     public String selectedLanguageName() {
         return language(selectedLanguage());
     }
-    public String defaultLanguageFullPath()   { return baseDir+languages().get(DEFAULT_LANGUAGE).directory; }
     public String selectedLanguageFullPath()  { return baseDir+languages().get(selectedLanguage()).directory; }
 
     public String language(int i)   { return languages().get(i).name; }
-    public String langDir(int i)    { return languages().get(i).directory; }
-    public String langSubdir(int i) { return languages().get(i).subdirectory;    }
-    public String fontName(int i)   { return languages().get(i).font; }
-    public Locale locale(int i)     { return languages().get(i).locale; }
     public boolean logographic(int i)   { return languages().get(i).logographic; }
-    public ComponentOrientation orientation(int i) { return languages().get(i).orientation; }
-    public void cycleLanguage(boolean up) {
-        int i = selectedLanguage();
-        i += (up?1:-1);
-        if (i < 0)
-            i = languages().size() - 1;
-        else if (i >= languages().size())
-            i = 0;
-
-        selectLanguage(i);
-        UserPreferences.save();
     }
     public void selectLanguage(int i) {
         if (selectedLanguage() == i)
@@ -139,14 +110,7 @@ public class LanguageManager implements Base {
         labels().load(currDir);
         RaceFactory.current().loadRaceLangFiles(newLang.directory);
     }
-    public String defaultLangDir()    { return langDir(DEFAULT_LANGUAGE); }
-    public String currentLanguage()   { return language(selectedLanguage()); }
-    public String currentLangDir()    { return langDir(selectedLanguage()); }
-    public String currentLangSubdir() { return langSubdir(selectedLanguage()); }
-    public String currentFont()       { return fontName(selectedLanguage()); }
-    public Locale currentLocale()     { return locale(selectedLanguage()); }
     public boolean currentLogographic() { return logographic(selectedLanguage()); }
-    public ComponentOrientation currentOrientation()  { return orientation(selectedLanguage()); }
 
     private void loadLanguages() {
         loadInstalledLanguages();
@@ -161,7 +125,7 @@ public class LanguageManager implements Base {
                     if (langName != null) {
                         FontManager.current().loadLanguageFonts(baseDir, langCode);
                         if (language == null)
-                            languages.add(new Language(langCode, "", langName, "", "", false,null));
+                            languages.add(new Language(langCode, langName, false, null));
                         else
                             language.name = langName;
                     }
@@ -223,40 +187,26 @@ public class LanguageManager implements Base {
 
         List<String> strings = substrings(input, ',');
         String dirString = strings.get(0);
-        String subdirString = "";
         String nameString = strings.get(1);
-        String orientString = strings.get(2);
-        String fontString = strings.get(3);
         String logoString = strings.get(4);
         char[] digitsString = strings.size() > 5 ? strings.get(5).toCharArray() : null;
          
         boolean logo = logoString.equalsIgnoreCase("Y");
 
-        languages.add(new Language(dirString, subdirString, nameString, orientString, fontString, logo, digitsString));
+        languages.add(new Language(dirString, nameString, logo, digitsString));
         // load fonts for selected lanage
         FontManager.current().loadLanguageFonts(baseDir, dirString);
     }
     private static class Language {
         String directory;
-        String subdirectory;
-        Locale locale;
-        ComponentOrientation orientation;
         boolean logographic = false;
         String name;
-        String font;
         char[] digits;
-        public Language(String dir, String sub, String n, String o, String f, boolean logo, char[] d) {
+        public Language(String dir, String n, boolean logo, char[] d) {
             directory = dir;
-            subdirectory = sub;
             name = n;
-            font = f;
             logographic = logo;
-            locale = new Locale(dir);
             digits = d;
-            if (o.trim().equalsIgnoreCase("RT"))
-                orientation = ComponentOrientation.RIGHT_TO_LEFT;
-            else
-                orientation = ComponentOrientation.LEFT_TO_RIGHT;
         }
     }
 }
