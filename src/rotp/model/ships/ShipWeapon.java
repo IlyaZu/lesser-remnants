@@ -40,6 +40,13 @@ public class ShipWeapon extends ShipComponent {
         float dmg = (summate(max-shd) - summate(min-shd-1)) / (max-min+1);
         return attacksPerRound() * dmg * scatterAttacks();
     }
+    private int summate(float n) {
+        int n1 = (int) n;
+        if (n1 < 1)
+            return 0;
+        else
+            return  n1*(n1+1)/2;
+    }
     private float max(ShipDesign d, int i) {
         return noWeapon() ? 0 : max(0, (float)Math.floor(d.availableSpaceForWeaponSlot(i) / space(d))) ;
     }

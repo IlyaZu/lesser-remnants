@@ -242,13 +242,6 @@ public interface Base {
             return low;
         return low+(int)((hi-low+1)*random());
     }
-    public default int summate(float n) {
-        int n1 = (int) n;
-        if (n1 < 1)
-            return 0;
-        else
-            return  n1*(n1+1)/2;
-    }
     public default float sqrt(int i)                 { return (float) Math.sqrt(i); }
     public default float sqrt(float f)               { return (float) Math.sqrt(f); }
     public default int max(int v1, int v2)           { return Math.max(v1,v2); }
