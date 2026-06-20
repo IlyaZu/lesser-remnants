@@ -97,9 +97,7 @@ public interface Base {
     public default int unscaled(int i) {
         return RotPUI.unscaledSize(i);
     }
-    public default void mapClick()    { playAudioClip("MapClick"); }
     public default void buttonClick() { playAudioClip("ButtonClick"); }
-    public default void menuClick()   { playAudioClip("MenuClick"); }
     public default void softClick()   { playAudioClip("SoftClick"); }
     public default void misClick()    { playAudioClip("MisClick"); }
 
