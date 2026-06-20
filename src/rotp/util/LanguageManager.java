@@ -32,10 +32,10 @@ import rotp.model.empires.RaceFactory;
 import rotp.ui.UserPreferences;
 
 public class LanguageManager implements Base {
-    static LanguageManager instance = new LanguageManager();
+    private static final LanguageManager instance = new LanguageManager();
     public static LanguageManager current() { return instance; }
 
-    public static int DEFAULT_LANGUAGE = 0;
+    private static int DEFAULT_LANGUAGE = 0;
     private static final String baseDir = "lang/";
     private static final String languageFile = "languages.txt";
     private static final List<Language> languages = new ArrayList<>();
@@ -158,7 +158,7 @@ public class LanguageManager implements Base {
     public boolean currentLogographic() { return logographic(selectedLanguage()); }
     public ComponentOrientation currentOrientation()  { return orientation(selectedLanguage()); }
 
-    protected void loadLanguages() {
+    private void loadLanguages() {
         loadInstalledLanguages();
         File langDir = new File(Rotp.jarPath()+"/lang");
         File[] langFolders = langDir.listFiles();
@@ -179,7 +179,7 @@ public class LanguageManager implements Base {
             }
         }
     }
-    protected String languageDisplayName(String fn) {
+    private String languageDisplayName(String fn) {
         FileInputStream fis;
         try {
             fis = new FileInputStream(new File(Rotp.jarPath()+"/lang/"+fn, "fonts.txt"));
@@ -211,7 +211,7 @@ public class LanguageManager implements Base {
         }
         return null;
     }
-    protected void loadInstalledLanguages() {
+    private void loadInstalledLanguages() {
         BufferedReader in = reader(baseDir+languageFile);
         if (in == null) {
             err("LanguageManager.loadInstalledLanguages() - can't find language file! ", baseDir, languageFile);
@@ -227,7 +227,7 @@ public class LanguageManager implements Base {
             err("LanguageManager.loadInstalledLanguages() -- IOException: ", e.toString());
         }
     }
-    protected void loadInstalledLanguageLine(String input) {
+    private void loadInstalledLanguageLine(String input) {
         if (isComment(input))
             return;
 
@@ -246,7 +246,7 @@ public class LanguageManager implements Base {
         // load fonts for selected lanage
         FontManager.current().loadLanguageFonts(baseDir, dirString);
     }
-    class Language {
+    private static class Language {
         String directory;
         String subdirectory;
         Locale locale;

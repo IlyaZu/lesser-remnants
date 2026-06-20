@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public class ShipWeapon extends ShipComponent {
         float dmg = (summate(max-shd) - summate(min-shd-1)) / (max-min+1);
         return attacksPerRound() * dmg * scatterAttacks();
     }
-    public float max(ShipDesign d, int i) {
+    private float max(ShipDesign d, int i) {
         return noWeapon() ? 0 : max(0, (float)Math.floor(d.availableSpaceForWeaponSlot(i) / space(d))) ;
     }
     @Override
