@@ -121,7 +121,6 @@ public class LanguageManager implements Base {
         if (selectedLanguage() == i)
             return;
 
-        //Language defLang = languages().get(DEFAULT_LANGUAGE);
         Language newLang = languages().get(i);
 
         // load fonts for selected language
@@ -131,23 +130,14 @@ public class LanguageManager implements Base {
         labels().resetDialogue();
         RaceFactory.current().resetRaceLangFiles();
 
-        // reload default labels, since that is assured of completeness
-        //String currDir = baseDir+defLang.directory+"/";
-        //labels().loadLabelFile(currDir);
-        //labels().loadDialogueFile(currDir);
-        //labels().loadTechsFile(currDir);
-        //RaceFactory.current().loadRaceLangFiles(defLang.directory);
-
         // now overwrite those with labels for the selected language
         selectedLanguage(i);
         
         customDigits = newLang.digits;
 
-        //if (i != DEFAULT_LANGUAGE) {
-            String currDir = baseDir+newLang.directory+"/";
-            labels().load(currDir);
-            RaceFactory.current().loadRaceLangFiles(newLang.directory);
-        //}
+        String currDir = baseDir+newLang.directory+"/";
+        labels().load(currDir);
+        RaceFactory.current().loadRaceLangFiles(newLang.directory);
     }
     public String defaultLangDir()    { return langDir(DEFAULT_LANGUAGE); }
     public String currentLanguage()   { return language(selectedLanguage()); }
