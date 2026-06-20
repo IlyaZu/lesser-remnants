@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,7 +148,7 @@ public class LanguageManager implements Base {
             labels().load(currDir);
             RaceFactory.current().loadRaceLangFiles(newLang.directory);
         //}
-    } 
+    }
     public String defaultLangDir()    { return langDir(DEFAULT_LANGUAGE); }
     public String currentLanguage()   { return language(selectedLanguage()); }
     public String currentLangDir()    { return langDir(selectedLanguage()); }
@@ -169,9 +170,9 @@ public class LanguageManager implements Base {
                     Language language = languageForCode(langCode);
                     if (langName != null) {
                         FontManager.current().loadLanguageFonts(baseDir, langCode);
-                        if (language == null) 
+                        if (language == null)
                             languages.add(new Language(langCode, "", langName, "", "", false,null));
-                        else 
+                        else
                             language.name = langName;
                     }
                 }
