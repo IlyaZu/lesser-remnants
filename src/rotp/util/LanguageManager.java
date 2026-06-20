@@ -41,12 +41,11 @@ public class LanguageManager implements Base {
     public static char[] customDigits = null;
 
     public static int selectedLanguage()        { return selectedLanguage; }
-    public static void selectedLanguage(int i)  { selectedLanguage = i; }
 
     private List<Language> languages()  {
         if (languages.isEmpty()) {
             loadLanguages();
-            selectedLanguage(-1);
+            selectedLanguage = -1;
             selectLanguage(DEFAULT_LANGUAGE);
         }
         return languages;
@@ -79,17 +78,18 @@ public class LanguageManager implements Base {
             }
         }
     }
-    public static String selectedLanguageDir() { return languages.get(selectedLanguage).directory; }
+    public static String selectedLanguageDir() {
+        return languages.get(selectedLanguage).directory;
+    }
     public String selectedLanguageName() {
-        return language(selectedLanguage());
+        return languages().get(selectedLanguage).name;
     }
-    public String selectedLanguageFullPath()  { return baseDir+languages().get(selectedLanguage()).directory; }
+    public String selectedLanguageFullPath() {
+        return baseDir+languages().get(selectedLanguage).directory;
+    }
 
-    public String language(int i)   { return languages().get(i).name; }
-    public boolean logographic(int i)   { return languages().get(i).logographic; }
-    }
     public void selectLanguage(int i) {
-        if (selectedLanguage() == i)
+        if (selectedLanguage == i)
             return;
 
         Language newLang = languages().get(i);
@@ -102,7 +102,7 @@ public class LanguageManager implements Base {
         RaceFactory.current().resetRaceLangFiles();
 
         // now overwrite those with labels for the selected language
-        selectedLanguage(i);
+        selectedLanguage = i;
         
         customDigits = newLang.digits;
 
@@ -110,7 +110,9 @@ public class LanguageManager implements Base {
         labels().load(currDir);
         RaceFactory.current().loadRaceLangFiles(newLang.directory);
     }
-    public boolean currentLogographic() { return logographic(selectedLanguage()); }
+    public boolean currentLogographic() {
+        return languages().get(selectedLanguage).logographic;
+    }
 
     private void loadLanguages() {
         loadInstalledLanguages();
