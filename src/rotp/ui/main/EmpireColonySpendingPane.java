@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -244,7 +244,7 @@ public class EmpireColonySpendingPane extends BasePanel {
             if (category == Colony.ECOLOGY)  {
                 int popGrowth = colony.ecology().upcomingPopGrowth();
                 g.setFont(narrowFont(14));
-                String popStr = text("MAIN_COLONY_SPENDING_ECO_GROWTH",strFormat("%+3d", popGrowth));
+                String popStr = text("MAIN_COLONY_SPENDING_ECO_GROWTH", String.format("%+3d", popGrowth));
                 int sw1 = g.getFontMetrics().stringWidth(popStr);
                 int x1 = (boxW-sw1)/2;
                 
