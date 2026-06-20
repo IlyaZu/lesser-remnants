@@ -817,9 +817,6 @@ public interface Base {
         drawBackgroundStars(img, img.getGraphics(), img.getWidth(obs), img.getHeight(obs), minDist, varDist);
     }
     public default void drawBackgroundStars(Graphics g, int w, int h) {
-        drawBackgroundStars(g, w, h, scaled(50), scaled(100));
-    }
-    public default void drawBackgroundStars(Graphics g, int w, int h, int minDist, int varDist) {
         // draw background stars
         g.setColor(new Color(0,0,0,0));
         g.fillRect(0,0,w,h);
@@ -836,6 +833,8 @@ public interface Base {
         int s1 = BasePanel.s1;
         int s2 = BasePanel.s2;
 
+        int minDist = scaled(50);
+        int varDist = scaled(100);
         while (p < count) {
             p += (minDist + (int) Math.ceil(random()*varDist));
             int x1 = p % w;
