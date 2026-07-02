@@ -26,13 +26,11 @@ To this end when a problem is found with the code/UI/story/game mechanics - the 
 If that is deemed not to be a valid solution, minimalistic changes to the aforementioned will be considered.
 No new features are planned.
 
-## Notable Changes
+## Unobvious Changes
 
 This is not the complete list of changes (see the git history for that) but a highlight of changes that might not be readily apparent.
 
-### Simplified Victory Conditions
-
-<strong>Final War has been removed.</strong>
+### Removed Final War
 
 One of great things about Master of Orion is that it realised that cleaning up the map after you had already won is really boring.
 So the victory condition is outnumbering your opponents 2:1 (either by yourself or as a coalition) - thus removing the later boring third of the game.
@@ -44,7 +42,7 @@ Likewise allowing the Human player to rebel against the council puts you back in
 While I understand that this gives the player an opportunity for "revenge", which helps to make the experience of losing more palatable, I think there is value in leaving the sting of defeat un-balmed, which makes it a better teachable moment and a more memorable experience.
 This is also now removed.
 
-<strong>Alliance Victory has been removed.</strong>
+### Removed Alliance Victory
 
 This win condition is redundant as:
 * If you are a Galactic Council candidate, your allies can demonstrate their loyalty by voting for you. If they don't then I don't think you've won.
@@ -63,9 +61,15 @@ To this end, the relationship calculations have been completely reworked.
 Now each incident contributes to the overall relationship score and the score, as a whole, drifts towards the base relationship at a "fixed" rate.
 This means two bad events are going to be forgiven in twice the time (roughly) and small reoccurring incidents can build up to have a large impact.
 
-The way incident severity is calculated has also been reworked to account for this change and generally improve the diplomatic game dynamics.
 The way AI responds to different levels of relationship score has also been adjusted.
-Both of those things are likely to be subjects of future and on going work as it is likely something that will need a lot of polish.
+
+### Reworked diplomatic incidents
+
+A number of diplomatic incidents (things wat make relations go up and down) have been removed, added or changed beyond recognition.
+For example, use of bio weapons no longer decrease you a relations with other Empires.
+My advice would be to go in assuming things don't work in the same way they once did.
+
+The intent of all of these changes is to simplify and to deepen the diplomatic game dynamics.
 
 ## Stability
 
