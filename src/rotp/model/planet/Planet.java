@@ -102,9 +102,7 @@ public class Planet implements Base, IMappedObject, Serializable {
     public int iceLevel()                  { return iceLevel; }
     public int terrainSeed()               { return terrainSeed; }
     public void terrainSeed(int i)         { terrainSeed = i; }
-    public float terrainVal()              { return (float) terrainSeed / PlanetType.TERRAIN_MAX; }
     public int environment()               { return environment; }
-    public float oceanPct()                { return oceanPct; }
     public void makeEnvironmentNone()      { environment = ENVIRONMENT_NONE; }
     public void makeEnvironmentHostile()   { environment = ENVIRONMENT_HOSTILE; }
     public void makeEnvironmentFertile()   { environment = ENVIRONMENT_FERTILE; }
@@ -116,14 +114,13 @@ public class Planet implements Base, IMappedObject, Serializable {
     public boolean isResourceRich()        { return resources == RICH; }
     public boolean isResourceUltraRich()   { return resources == ULTRA_RICH; }
 
-    public int resources()                 { return resources; }
     public void setResourceUltraPoor()     { resources = ULTRA_POOR; }
     public void setResourcePoor()          { resources = POOR; }
     public void setResourceRich()          { resources = RICH; }
     public void setResourceUltraRich()     { resources = ULTRA_RICH; }
 
     public int resourcesSort() {
-        return artifacts > 0 ? artifacts() : resources();
+        return artifacts > 0 ? artifacts() : resources;
     }
     public int artifacts()                 { return artifacts; }
     public void setArtifact()              {
@@ -209,7 +206,6 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (systemEmp != null)
             systemEmp.sv.refreshFullScan(starSystem().id);
     }
-    public int rotationDirection()         { return rotationDirection; }
 
     public Planet(StarSystem s) {
         system = s;
@@ -383,7 +379,7 @@ public class Planet implements Base, IMappedObject, Serializable {
     }
     public void rotate(float n)    {
         // delta should be between -1 and 1
-        float delta = .001f*n*rotationDirection();
+        float delta = .001f*n*rotationDirection;
         delta = delta - (int) delta;
 
         viewPct += delta;
@@ -438,12 +434,9 @@ public class Planet implements Base, IMappedObject, Serializable {
             return;
         if (type().smallSphere(this) == null) {
             log("Generating sphere for: ", type().toString());
-            GameSession.instance().smallSphereService().submit(sphereGenerator(Sphere2D.SMALL_PLANET_R));
+            GameSession.instance().smallSphereService().submit(() -> generate2DSphere(Sphere2D.SMALL_PLANET_R));
             generate2DSphere(Sphere2D.FAST_PLANET_R);
         }
-    }
-    public Runnable sphereGenerator(final int radius) {
-        return () -> { generate2DSphere(radius); };
     }
     public FastImage terrainSphere(int desiredW) {
         Sphere2D sphere = sphere2d(desiredW);
@@ -467,7 +460,8 @@ public class Planet implements Base, IMappedObject, Serializable {
 
         log("Generate2DSphere()  sphereResolution:" + type().sphereResolution(this)+", radius:" + radius);
         // generate height map and resultant terrain grayscale image
-        PlanetHeightMap heightMap =  new PlanetHeightMap(terrainVal(), radius, oceanPct());
+        float terrainVal = (float) terrainSeed / PlanetType.TERRAIN_MAX;
+        PlanetHeightMap heightMap =  new PlanetHeightMap(terrainVal, radius, oceanPct);
         oceanLevel  = heightMap.seaLevel() - Byte.MIN_VALUE;
         FastImage terrainImg = FastImage.fromHeightMap(heightMap);
 
