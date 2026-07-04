@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,7 +125,7 @@ public class ExploredSystemPanel extends SystemPanel {
                     g.drawImage(img, 0, topH, w, h, 0, 0, img.getWidth(), img.getHeight(), null);
                 g.setFont(narrowFont(16));
                 g.setColor(grayText);
-                String desc = pt.description(player());
+                String desc = pt.description();
                 List<String> descLines =  wrappedLines(g, text(desc), getWidth()-s12);
 
                 int ydelta = s18;

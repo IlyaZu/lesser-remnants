@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rotp.model.empires.Empire;
 import rotp.ui.util.planets.Sphere2D;
 import rotp.util.Base;
 import rotp.util.ColorMap;
@@ -60,8 +59,7 @@ public class PlanetType implements Base {
     public static final int HOSTILITY_MINIMAL = 6;
 
     private String key;
-    private String descBiological;
-    private String descSilicoid;
+    private String description;
     private String terrainKey;
     private String panoramaKey;
     private final List<Integer> terrainSeeds = new ArrayList<>();
@@ -109,8 +107,8 @@ public class PlanetType implements Base {
 
     public String key()                       { return key; }
     public void key(String s)                 { key = s; }
-    public void descBiological(String s)         { descBiological = s; }
-    public void descSilicoid(String s)         { descSilicoid = s; }
+    public String description()               { return description;}
+    public void description(String s)         { description = s; }
     public int hostility()                    { return hostility; }
     public void hostility(int i)              { hostility = i; }
     public void terrainKey(String s)          { terrainKey = s; }
@@ -145,12 +143,6 @@ public class PlanetType implements Base {
 
     public boolean isAsteroids()              { return key.equals(NONE); }
 
-    public String description(Empire emp) {
-        if (emp.ignoresPlanetEnvironment())
-            return descSilicoid;
-        else
-            return descBiological;
-    }
     public BufferedImage terrainImage()           {
         if (terrainImage == null)
             terrainImage = newBufferedImage(currentFrame(terrainKey));
