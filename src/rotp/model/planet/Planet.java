@@ -37,32 +37,16 @@ import rotp.model.tech.TechSoilEnrichment;
 import rotp.ui.util.planets.Sphere2D;
 import rotp.ui.util.planets.SphereShadowPaint;
 import rotp.util.Base;
-import rotp.util.ColorRange;
 import rotp.util.FastImage;
 
 public class Planet implements Base, IMappedObject, Serializable {
     private static final long serialVersionUID = 1L;
-    public static int COUNT = 0;
 
     private static final SphereShadowPaint ssp = new SphereShadowPaint();
     private static BufferedImage buffer1, buffer2;
     private static BufferedImage lastBuffer;
     private static final HashMap<Integer, BufferedImage> sphereShadows = new HashMap<>();
-    private static final ColorRange OCEAN_WATER_C = new ColorRange(new Color(154,140,155), new Color(0,20,100));
-    private static final Color OCEAN_TOXIC_C = new Color(103,29,16);
-    private static final ColorRange TERRAINLO_TERRAN_C = new ColorRange(new Color(141,131,95), new Color(92,114,75));
-    private static final ColorRange TERRAINHI_TERRAN_C = new ColorRange(new Color(155,121,94), new Color(155,155,94));
-    private static final Color TERRAIN_TOXIC_HI = new Color(237,136,44);
-    private static final Color TERRAIN_TOXIC_LO = new Color(136,80,33);
-    private static final Color NONE_C = new Color(0,0,0,0);
-    private static final ColorRange CLOUD_TOXIC_C = new ColorRange(new Color(246,182,95,25), new Color(233,171,88,25)); // titan atmo
-    private static final Color CLOUD_INFERNO_C = new Color(228,227,225); // venus atmo
-    private static final Color CLOUD_TERRAN_C = Color.white;
-    private static final Color TERRAIN_ICE_C = new Color(186,194,201);
-    private static final Color TERRAIN_RUST_C1 = new Color(88,58,50);  // mars dark surface
-    private static final Color TERRAIN_RUST_C2 = new Color(187,111,85); // mars bright surface
-    private static final Color TERRAIN_RADIATED_C1 = new Color(137,103,75); // mars bright surface
-    private static final Color TERRAIN_RADIATED_C2 = new Color(132,116,93); // mars bright surface
+
     // environment
     private static final int ENVIRONMENT_NONE = -1;
     private static final int ENVIRONMENT_HOSTILE = 0;
@@ -101,14 +85,9 @@ public class Planet implements Base, IMappedObject, Serializable {
     private int iceLevel = 0;
     private int terrainSeed = 0;
     private float oceanPct = 0;
-    private int cloudThickness = 0;  //200 nothing, 550 all white, 400-450 terran
     private final int[] alienFactories;
 
     // vars used for sprite drawing
-    public Color terrainColor1 = Color.green;
-    public Color terrainColor2 = Color.green.darker();
-    public Color oceanColor = Color.blue;
-    public Color cloudColor = Color.white;
     public Color iceColor = Color.white;
     public int oceanLevel;
 
@@ -121,16 +100,13 @@ public class Planet implements Base, IMappedObject, Serializable {
         return type;
     }
     public int iceLevel()                  { return iceLevel; }
-    public int cloudThickness()            { return cloudThickness; }
     public int terrainSeed()               { return terrainSeed; }
     public void terrainSeed(int i)         { terrainSeed = i; }
     public float terrainVal()              { return (float) terrainSeed / PlanetType.TERRAIN_MAX; }
     public int environment()               { return environment; }
     public float oceanPct()                { return oceanPct; }
-    public void degradeEnvironment()       { environment = min(environment(), ENVIRONMENT_NORMAL); }
     public void makeEnvironmentNone()      { environment = ENVIRONMENT_NONE; }
     public void makeEnvironmentHostile()   { environment = ENVIRONMENT_HOSTILE; }
-    public void makeEnvironmentNormal()    { environment = ENVIRONMENT_NORMAL; }
     public void makeEnvironmentFertile()   { environment = ENVIRONMENT_FERTILE; }
     public void makeEnvironmentGaia()      { environment = ENVIRONMENT_GAIA; }
 
@@ -141,11 +117,8 @@ public class Planet implements Base, IMappedObject, Serializable {
     public boolean isResourceUltraRich()   { return resources == ULTRA_RICH; }
 
     public int resources()                 { return resources; }
-    public void depleteResources()         { resources = max(ULTRA_POOR, resources-1); }
-    public void enrichResources()          { resources = min(ULTRA_RICH, resources+1); }
     public void setResourceUltraPoor()     { resources = ULTRA_POOR; }
     public void setResourcePoor()          { resources = POOR; }
-    public void setResourceNormal()        { resources = NORMAL; }
     public void setResourceRich()          { resources = RICH; }
     public void setResourceUltraRich()     { resources = ULTRA_RICH; }
 
@@ -239,7 +212,6 @@ public class Planet implements Base, IMappedObject, Serializable {
     public int rotationDirection()         { return rotationDirection; }
 
     public Planet(StarSystem s) {
-        COUNT++;
         system = s;
         rotationDirection = random() < 0.5 ? -1 : 1;
         alienFactories = new int[galaxy().numEmpires()];
@@ -252,8 +224,6 @@ public class Planet implements Base, IMappedObject, Serializable {
         landscapeKey = pt.randomLandscapeKey();
         oceanPct = pt.randomOceanPct();
         iceLevel = pt.randomIceLevel();
-        cloudThickness = pt.randomCloudThickness();
-        initColors();
     }
     public int alienFactories(int empId)  { return alienFactories[empId]; }
     public void addAlienFactories(int empId, int factories) {
@@ -410,92 +380,6 @@ public class Planet implements Base, IMappedObject, Serializable {
         }
 
         return size;
-    }
-    private void initColors() {
-        switch(type().key()) {
-            case PlanetType.OCEAN:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(pow(oceanPct(), 3));
-                terrainColor2 = TERRAINLO_TERRAN_C.color(pow(oceanPct(), 3));
-                break;
-            case PlanetType.JUNGLE:
-                // use Lefebre2 color map
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(pow(oceanPct(), 3));
-                terrainColor2 = TERRAINLO_TERRAN_C.color(pow(oceanPct(), 3));
-                break;
-            case PlanetType.TERRAN:
-                // use Lefebre
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color((float)Math.pow(oceanPct(),0.25));
-                terrainColor2 = TERRAINLO_TERRAN_C.color((float)Math.pow(oceanPct(), 0.25));
-                break;
-            case PlanetType.STEPPE:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(sqrt(oceanPct()));
-                terrainColor2 = TERRAINLO_TERRAN_C.color(sqrt(oceanPct()));
-                break;
-            case PlanetType.ARID:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(oceanPct());
-                terrainColor2 = TERRAINLO_TERRAN_C.color(oceanPct());
-                break;
-            case PlanetType.DESERT:
-                // use Bathymetric color map
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(oceanPct());
-                terrainColor2 = TERRAINLO_TERRAN_C.color(oceanPct());
-                break;
-            case PlanetType.MINIMAL:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(sqrt(oceanPct()));
-                terrainColor2 = TERRAINLO_TERRAN_C.color(sqrt(oceanPct()));
-                break;
-            case PlanetType.BARREN:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAINHI_TERRAN_C.color(sqrt(oceanPct()));
-                terrainColor2 = TERRAINLO_TERRAN_C.color(sqrt(oceanPct()));
-                break;
-            case PlanetType.TUNDRA:
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor1 = TERRAIN_ICE_C;
-                terrainColor2 = TERRAIN_ICE_C;
-                break;
-            case PlanetType.DEAD:
-                // use Mars
-                oceanColor = OCEAN_WATER_C.color(sqrt(oceanPct()));
-                cloudColor = CLOUD_TERRAN_C;
-                terrainColor2 = TERRAIN_RUST_C1;
-                terrainColor1 = TERRAIN_RUST_C2;
-                break;
-            case PlanetType.INFERNO:
-                oceanColor = NONE_C;
-                cloudColor = CLOUD_INFERNO_C;
-                terrainColor2 = TERRAIN_RUST_C1;
-                terrainColor1 = TERRAIN_RUST_C2;
-                break;
-            case PlanetType.TOXIC:
-                oceanColor = OCEAN_TOXIC_C;
-                cloudColor = CLOUD_TOXIC_C.randomColor();
-                terrainColor1 = TERRAIN_TOXIC_HI;
-                terrainColor2 = TERRAIN_TOXIC_LO;
-                break;
-            case PlanetType.RADIATED:
-                oceanColor = NONE_C;
-                cloudColor = NONE_C;
-                terrainColor2 = TERRAIN_RADIATED_C1;
-                terrainColor1 = TERRAIN_RADIATED_C2;
-                break;
-        }
     }
     public void rotate(float n)    {
         // delta should be between -1 and 1

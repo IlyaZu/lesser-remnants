@@ -51,7 +51,6 @@ public class PlanetType implements Base {
     public static final String JUNGLE = "PLANET_JUNGLE";
     public static final String TERRAN = "PLANET_TERRAN";
 
-    public static final int HOSTILITY_NONE = 99;
     public static final int HOSTILITY_RADIATED = 12;
     public static final int HOSTILITY_TOXIC = 11;
     public static final int HOSTILITY_INFERNO = 10;
@@ -59,12 +58,6 @@ public class PlanetType implements Base {
     public static final int HOSTILITY_TUNDRA = 8;
     public static final int HOSTILITY_BARREN = 7;
     public static final int HOSTILITY_MINIMAL = 6;
-    public static final int HOSTILITY_DESERT = 5;
-    public static final int HOSTILITY_STEPPE = 4;
-    public static final int HOSTILITY_ARID = 3;
-    public static final int HOSTILITY_OCEAN = 2;
-    public static final int HOSTILITY_JUNGLE = 1;
-    public static final int HOSTILITY_TERRAN = 0;
 
     private String key;
     private String descBiological;
@@ -122,17 +115,13 @@ public class PlanetType implements Base {
     public void descSilicoid(String s)         { descSilicoid = s; }
     public int hostility()                    { return hostility; }
     public void hostility(int i)              { hostility = i; }
-    public String terrainKey()                { return terrainKey; }
     public void terrainKey(String s)          { terrainKey = s; }
-    public String panoramaKey()               { return panoramaKey; }
     public void panoramaKey(String s)         { panoramaKey = s; }
     public int minSize()                      { return minSize; }
     public void minSize(int i)                { minSize = i; }
     public int maxSize()                      { return maxSize; }
     public void maxSize(int i)                { maxSize = i; }
     public void landscapeKeys(String s)       { landscapeKeys.addAll(substrings(s, ',')); }
-    public List<String> atmosphereKeys()      { return atmosphereKeys; }
-    public List<String> cloudKeys()           { return cloudKeys; }
 
     public int shipX(int i)                   { return shipX[i]; }
     public void shipX(int i, int val)         { shipX[i] = val; }
@@ -249,36 +238,6 @@ public class PlanetType implements Base {
             case PlanetType.RADIATED:
             default:
                 return  roll(0,20);
-        }
-    }
-    public int randomCloudThickness() {
-        // inferno 600+
-        // none = 0
-        // wisps = 300-350
-        // thin 350-400
-        // terran 400-450
-        // heavy 450-500
-        switch(key()) {
-            case PlanetType.OCEAN:
-            case PlanetType.JUNGLE:
-            case PlanetType.TERRAN:
-            case PlanetType.STEPPE:
-                return roll(400,450);
-            case PlanetType.ARID:
-            case PlanetType.DESERT:
-            case PlanetType.TUNDRA:
-                return roll(350,400);
-            case PlanetType.MINIMAL:
-            case PlanetType.BARREN:
-                return roll(300,350);
-            case PlanetType.INFERNO:
-                return 700;
-            case PlanetType.TOXIC:
-                return roll(300,500);
-            case PlanetType.DEAD:
-            case PlanetType.RADIATED:
-            default:
-                return  0;
         }
     }
 }
