@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ import rotp.ui.combat.ShipBattleUI;
 import rotp.ui.game.HelpUI;
 import rotp.ui.main.SystemPanel;
 import rotp.util.AnimationManager;
-import rotp.util.Base;
 import rotp.util.ImageColorizer;
 import rotp.util.Palette;
 
@@ -1235,7 +1234,7 @@ public class DesignUI extends BasePanel {
             BufferedImage img = shipImages.get(shipImageIndex);
 
             if (des.shipColor() > 0)
-                img = Base.colorizer.makeColor(des.shipColor(), img);
+                img = ImageColorizer.current().makeColor(des.shipColor(), img);
 
             g.drawImage(img, 0, 0, this);
 

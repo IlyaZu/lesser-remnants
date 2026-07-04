@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 import rotp.model.galaxy.Galaxy;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.PlanetType;
-import rotp.util.Base;
+import rotp.util.ImageColorizer;
 
 public final class ShipDesign extends Design {
     private static final long serialVersionUID = 1L;
@@ -109,7 +109,7 @@ public final class ShipDesign extends Design {
             ShipImage shipImage = shipImage();
             image = icon(shipImage.nextIcon()).getImage();
             if (shipColor > 0)
-                image = Base.colorizer.makeColor(shipColor, image);
+                image = ImageColorizer.current().makeColor(shipColor, image);
         }
         return image;
     }

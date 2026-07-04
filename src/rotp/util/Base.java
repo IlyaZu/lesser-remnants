@@ -70,7 +70,6 @@ public interface Base {
     public static DecimalFormat df6 = new DecimalFormat("0.000000");
     public static DecimalFormat pad4 = new DecimalFormat("0000");
     
-    static ImageColorizer colorizer = new ImageColorizer();
     public static String[] textSubs = { "%1", "%2", "%3", "%4", "%5", "%6", "%7", "%8" };
 
     public default GameSession session()   { return GameSession.instance(); }
