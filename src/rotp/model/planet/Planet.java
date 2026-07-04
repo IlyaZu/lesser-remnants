@@ -91,7 +91,7 @@ public class Planet implements Base, IMappedObject, Serializable {
     public Color iceColor = Color.white;
     public int oceanLevel;
 
-    public transient float viewPct;
+    private transient float viewPct;
     private transient PlanetType type;
 
     public PlanetType type()               {
@@ -253,7 +253,7 @@ public class Planet implements Base, IMappedObject, Serializable {
 
     public float baseSize()        { return baseSize; }
     public void baseSize(float d)  { baseSize = d; }
-    public void increaseBaseSize(float amt) {
+    private void increaseBaseSize(float amt) {
         // max base size for planet (before general terraforming) is 180
         float maxSize = 180;
         float newSize = Math.min(maxSize, baseSize()+amt);
@@ -429,7 +429,7 @@ public class Planet implements Base, IMappedObject, Serializable {
         g.dispose();
         return lastBuffer;
     }
-    public void prepareImage() {
+    private void prepareImage() {
         if (type().isAsteroids())
             return;
         if (type().smallSphere(this) == null) {
@@ -438,14 +438,14 @@ public class Planet implements Base, IMappedObject, Serializable {
             generate2DSphere(Sphere2D.FAST_PLANET_R);
         }
     }
-    public FastImage terrainSphere(int desiredW) {
+    private FastImage terrainSphere(int desiredW) {
         Sphere2D sphere = sphere2d(desiredW);
 
         if (sphere == null)
             err("Sphere2D was NULL!");
         return sphere2d(desiredW).image(viewPct);
     }
-    public Sphere2D sphere2d(int desiredW) {
+    private Sphere2D sphere2d(int desiredW) {
         if  (type().isAsteroids())
             return null;
 
@@ -454,7 +454,7 @@ public class Planet implements Base, IMappedObject, Serializable {
             err("Sphere is null for: ", type().toString());
         return type().smallSphere(this);
     }
-    public void generate2DSphere(int radius) {
+    private void generate2DSphere(int radius) {
         if (type().sphereResolution(this) >= radius)
             return;
 
