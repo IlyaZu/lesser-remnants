@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,8 +119,7 @@ public class PlanetFactory implements Base {
 
         switch(key) {
             case "key"            : type.key(val); return;
-            case "descBiological" : type.descBiological(val); return;
-            case "descSilicoid"   : type.descSilicoid(val); return;
+            case "descBiological" : type.description(val); return;
             case "hostility"      : type.hostility(parseInt(val)); return;
             case "terrainImage"   : type.terrainKey(val); return;
             case "panoramaImage"  : type.panoramaKey(val); return;
