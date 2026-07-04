@@ -29,6 +29,7 @@ import rotp.model.empires.Leader.Objective;
 import rotp.model.empires.Leader.Personality;
 import rotp.model.planet.PlanetType;
 import rotp.model.ships.ShipDesign;
+import rotp.util.AnimationManager;
 import rotp.util.Base;
 import rotp.util.LabelManager;
 
@@ -345,16 +346,16 @@ public class Race implements Base, Serializable {
     public BufferedImage fortress(int i)      { return currentFrame(fortressKeys.get(i)); }
     public int randomFortress()               { return roll(1,fortressKeys.size())-1; }
     public BufferedImage shield()             { return currentFrame(shieldKey); }
-    public void resetMugshot()                { resetAnimation(mugshotKey); }
-    public void resetSetupImage()             { resetAnimation(setupImageKey); }
-    public void resetDiplomat()               { resetAnimation(diplomatKey); }
-    public void resetScientist()              { resetAnimation(scientistKey); }
-    public void resetSoldier()                { resetAnimation(soldierKey); }
-    public void resetSpy()                    { resetAnimation(spyKey); }
+    public void resetMugshot()                { AnimationManager.current().reset(mugshotKey); }
+    public void resetSetupImage()             { AnimationManager.current().reset(setupImageKey); }
+    public void resetDiplomat()               { AnimationManager.current().reset(diplomatKey); }
+    public void resetScientist()              { AnimationManager.current().reset(scientistKey); }
+    public void resetSoldier()                { AnimationManager.current().reset(soldierKey); }
+    public void resetSpy()                    { AnimationManager.current().reset(spyKey); }
     public void resetGNN(String id)           {
-        resetAnimation(gnnKey);
-        resetAnimation(gnnHostKey);
-        resetAnimation(gnnEventKey(id));
+        AnimationManager.current().reset(gnnKey);
+        AnimationManager.current().reset(gnnHostKey);
+        AnimationManager.current().reset(gnnEventKey(id));
     }
     public boolean isHostile(PlanetType pt) {
         return ignoresPlanetEnvironment() ? false : pt.hostileToTerrans();
