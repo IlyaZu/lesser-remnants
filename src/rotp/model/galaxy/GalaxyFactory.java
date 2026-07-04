@@ -25,7 +25,6 @@ import rotp.model.empires.Race;
 import rotp.model.galaxy.GalaxyShape.EmpireSystem;
 import rotp.model.game.GameSession;
 import rotp.model.game.IGameOptions;
-import rotp.model.planet.Planet;
 import rotp.ui.util.planets.PlanetImager;
 import rotp.util.Base;
 
@@ -83,7 +82,7 @@ public class GalaxyFactory implements Base {
             n.enrichCentralSystem();
 
         long tm2 = System.currentTimeMillis();
-        log(str(g.numStarSystems()) ," Systems, ",str(Planet.COUNT)," Planets: "+(tm2-tm1)+"ms");
+        log(str(g.numStarSystems())," Planets: "+(tm2-tm1)+"ms");
 
         // after systems created, add system views for each emp
         for (Empire e: g.empires()) {

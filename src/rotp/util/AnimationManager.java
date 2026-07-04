@@ -32,16 +32,11 @@ public enum AnimationManager implements Base {
     INSTANCE;
     public static AnimationManager current()  { return INSTANCE; }
 
-    private static final String animationListFile = "data/animations.txt";
-
     private static final HashMap<Integer,List<BufferedImage>> cachedImages = new HashMap<>();
     private static final HashMap<Integer,List<BufferedImage>> activeImages = new HashMap<>();
 
     private final HashMap<String, Animation> animations = new HashMap<>();
 
-    private AnimationManager() {
-        loadAnimationList(animationListFile);
-    }
     @Override
     public boolean playAnimations()   { return UserPreferences.playAnimations() && !lowMemory(); }
     public void reset(String animationSpecifier) {
