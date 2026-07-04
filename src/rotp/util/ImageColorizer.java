@@ -48,18 +48,18 @@ public final class ImageColorizer implements Base {
     private static final Color COLOR_GREEN = new Color(57,181,84);
     private static final Color COLOR_YELLOW = new Color(247,186,79);
 
-    public static final int YELLOW = 1;
-    public static final int ORANGE = 2;
-    public static final int PURPLE = 3;
-    public static final int AQUA = 4;
-    public static final int WHITE = 5;
-    public static final int GRAY = 6;
-    public static final int BLACK = 7;
-    public static final int RED = 8;
-    public static final int GREEN = 9;
-    public static final int BLUE = 10;
-    public static final int LIGHT_BLUE = 11;
-    public static final int DARK_GREEN = 12;
+    private static final int YELLOW = 1;
+    private static final int ORANGE = 2;
+    private static final int PURPLE = 3;
+    private static final int AQUA = 4;
+    private static final int WHITE = 5;
+    private static final int GRAY = 6;
+    private static final int BLACK = 7;
+    private static final int RED = 8;
+    private static final int GREEN = 9;
+    private static final int BLUE = 10;
+    private static final int LIGHT_BLUE = 11;
+    private static final int DARK_GREEN = 12;
 
     public static Color color(int id) {
         switch(id) {
@@ -78,7 +78,7 @@ public final class ImageColorizer implements Base {
             default: throw new RuntimeException("Unknown color id: "+id);
         }
     }
-    public void reset() {
+    private void reset() {
         avgGrayLevel = 0;
         onlyWhite = false;
         onlyBlack = false;
@@ -91,7 +91,7 @@ public final class ImageColorizer implements Base {
         transforms.clear();
     }
 
-    public boolean modify(int r, int g, int b) {
+    private boolean modify(int r, int g, int b) {
         int sum = r+g+b;
         int min = Math.min(r, Math.min(g, b));
         int max = Math.max(r, Math.max(g, b));
@@ -221,7 +221,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeBlue(Image base) {
+    private BufferedImage makeBlue(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -248,7 +248,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeLightBlue(Image base) {
+    private BufferedImage makeLightBlue(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -276,7 +276,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeDarkGreen(Image base) {
+    private BufferedImage makeDarkGreen(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -307,7 +307,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeYellow(Image base) {
+    private BufferedImage makeYellow(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -336,7 +336,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeOrange(Image base) {
+    private BufferedImage makeOrange(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -366,7 +366,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeBlack(Image base) {
+    private BufferedImage makeBlack(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         Rectangle rect = getScope(img);
@@ -431,7 +431,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeAqua(Image base) {
+    private BufferedImage makeAqua(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -462,7 +462,7 @@ public final class ImageColorizer implements Base {
         reset();
         return img;
     }
-    public BufferedImage makeWhite(Image base) {
+    private BufferedImage makeWhite(Image base) {
         BufferedImage img = newBufferedImage(base);
 
         int w = img.getWidth();
@@ -485,7 +485,7 @@ public final class ImageColorizer implements Base {
         return img;
     }
 
-    public Rectangle getScope(BufferedImage img) {
+    private Rectangle getScope(BufferedImage img) {
         if (scope != null)
                 return scope;
 
