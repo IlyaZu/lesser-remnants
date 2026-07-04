@@ -134,7 +134,6 @@ public class PlanetFactory implements Base {
             case "ship2"          : parseShipValues(type, 2, substrings(val, ',')); return;
             case "ship3"          : parseShipValues(type, 3, substrings(val, ',')); return;
         }
-        err("unknown key->", input);
     }
     private void parseShipValues(PlanetType pt, int shipNum, List<String> vals) {
         pt.shipX(shipNum, parseInt(vals.get(0)));
