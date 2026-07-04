@@ -23,6 +23,9 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public final class ImageColorizer implements Base {
+    private static final ImageColorizer INSTANCE = new ImageColorizer();
+    public static ImageColorizer current() { return INSTANCE; }
+    
     private int avgGrayLevel = 0;
     private int minGrayLevel = 0;
     private int maxGrayLevel = 0;
