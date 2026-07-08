@@ -19,7 +19,6 @@ package rotp.model.galaxy;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import rotp.model.game.IGameOptions;
 import rotp.util.Base;
@@ -81,9 +80,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     public List<EmpireSystem> empireSystems() { return empSystems; }
     public int empireSystemStars()            { return homeStars; }
     public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
-    
-    public List<String> options1()            { return Collections.emptyList(); }
-    public String defaultOption1()            { return ""; }
 
     public float systemBuffer() {
         return 1.9f;

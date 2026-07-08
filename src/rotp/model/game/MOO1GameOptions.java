@@ -49,7 +49,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
     private String selectedGalaxySize;
     private String selectedGalaxyShape;
-    private String selectedGalaxyShapeOption1;
     
     private String selectedGameDifficulty;
     private String selectedRandomEventOption;
@@ -94,10 +93,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedGalaxyShape()          { return selectedGalaxyShape; }
     @Override
     public void selectedGalaxyShape(String s)    { selectedGalaxyShape = s; setGalaxyShape(); generateGalaxy(); }
-    @Override
-    public String selectedGalaxyShapeOption1()       { return selectedGalaxyShapeOption1; }
-    @Override
-    public void selectedGalaxyShapeOption1(String s) { selectedGalaxyShapeOption1 = s; }
     @Override
     public String selectedGameDifficulty()       { return selectedGameDifficulty; }
     @Override
@@ -170,7 +165,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         
         selectedGalaxySize = opt.selectedGalaxySize;
         selectedGalaxyShape = opt.selectedGalaxyShape;
-        selectedGalaxyShapeOption1 = opt.selectedGalaxyShapeOption1;
         selectedGameDifficulty = opt.selectedGameDifficulty;
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
@@ -186,7 +180,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             player.copy(opt.player);
         
         setGalaxyShape();
-        selectedGalaxyShapeOption1 = opt.selectedGalaxyShapeOption1;
 
         generateGalaxy();
     }
@@ -204,7 +197,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             default:
                 galaxyShape = new GalaxyRectangularShape(this);
         }
-        selectedGalaxyShapeOption1 = galaxyShape.defaultOption1();
     }
     @Override
     public int numberStarSystems() {
@@ -341,8 +333,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     
-    @Override
-    public List<String> galaxyShapeOptions1() { return galaxyShape.options1(); }
     @Override
     public List<String> gameDifficultyOptions() {
         List<String> list = new ArrayList<>();
