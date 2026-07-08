@@ -19,47 +19,21 @@ package rotp.model.galaxy;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
-import java.util.List;
 import rotp.model.game.IGameOptions;
 
 public class GalaxyEllipticalShape extends GalaxyShape {
-    private static final List<String> options1 = new ArrayList<>();
     private static final long serialVersionUID = 1L;
-    static {
-        options1.add("SETUP_VOID_0");
-        options1.add("SETUP_VOID_1");
-        options1.add("SETUP_VOID_2");
-        options1.add("SETUP_VOID_3");
-        options1.add("SETUP_VOID_4");
-    }
 
-    private Shape ellipse, hole;
-    private float voidSize = 0.0f;
+    private Shape ellipse;
     
     public GalaxyEllipticalShape(IGameOptions options) {
         opts = options;
     }
     @Override
-    public List<String> options1()  { return options1; }
-    @Override
-    public String defaultOption1()  { return options1.get(0); }
-    @Override
     public float maxScaleAdj()               { return 0.8f; }
     @Override
     public void init(int n) {
         super.init(n);
-
-        int option1 = max(0, options1.indexOf(opts.selectedGalaxyShapeOption1()));
-        
-        switch(option1) {
-            case 0: voidSize = 0.0f; break;
-            case 1: voidSize = 0.2f; break;
-            case 2: voidSize = 0.4f; break;
-            case 3: voidSize = 0.6f; break;
-            case 4: voidSize = 0.8f; break;
-            default: voidSize = 0.0f; break;
-        }
         // reset w/h vars since aspect ratio may have changed
         initWidthHeight();
         
@@ -68,15 +42,6 @@ public class GalaxyEllipticalShape extends GalaxyShape {
         float gH = (float) galaxyHeightLY();
         
         ellipse = new Ellipse2D.Float(gE,gE,gW,gH);
-        
-        hole = null;
-        if (voidSize > 0) {
-            float vW = voidSize*gW;
-            float vH = voidSize*gH;
-            float vX = gE+((gW-vW)/2);
-            float vY = gE+((gH-vH)/2);
-            hole = new Ellipse2D.Float(vX, vY,vW,vH);
-        }
     }
     @Override
     protected int galaxyWidthLY() {
@@ -93,10 +58,7 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     }
     @Override
     public boolean valid(float x, float y) {
-        if (hole == null)
-            return ellipse.contains(x, y);
-        else
-            return ellipse.contains(x, y) && !hole.contains(x, y);
+        return ellipse.contains(x, y);
     }
     private float randomLocation(float max, float buff) {
         return buff + (random() * (max-buff-buff));

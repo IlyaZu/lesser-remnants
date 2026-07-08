@@ -69,7 +69,6 @@ public interface IGameOptions {
     // selectable options
     public List<String> galaxySizeOptions();
     public List<String> galaxyShapeOptions();
-    public List<String> galaxyShapeOptions1();
     public List<String> randomEventOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -89,9 +88,6 @@ public interface IGameOptions {
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
     public void specificOpponentAIOption(String s, int empId);
-    
-    public String selectedGalaxyShapeOption1();
-    public void selectedGalaxyShapeOption1(String s);
     
     public String selectedGameDifficulty();
     public void selectedGameDifficulty(String s);
@@ -134,20 +130,6 @@ public interface IGameOptions {
     default String prevGalaxyShape() {
         List<String> opts = galaxyShapeOptions();
         int index = opts.indexOf(selectedGalaxyShape())-1;
-        return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default String nextGalaxyShapeOption1() {
-        List<String> opts = galaxyShapeOptions1();
-        if (opts.isEmpty())
-            return "";
-        int index = opts.indexOf(selectedGalaxyShapeOption1())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String prevGalaxyShapeOption1() {
-        List<String> opts = galaxyShapeOptions1();
-        if (opts.isEmpty())
-            return "";
-        int index = opts.indexOf(selectedGalaxyShapeOption1())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
     }
     default String nextGameDifficulty() {

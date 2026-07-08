@@ -54,9 +54,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private Rectangle shapeBox = new Rectangle();
     private Polygon shapeBoxL = new Polygon();
     private Polygon shapeBoxR = new Polygon();
-    private Rectangle mapOption1Box = new Rectangle();
-    private Polygon mapOption1BoxL = new Polygon();
-    private Polygon mapOption1BoxR = new Polygon();
     private Rectangle sizeBox = new Rectangle();
     private Polygon sizeBoxL = new Polygon();
     private Polygon sizeBoxR = new Polygon();
@@ -193,13 +190,11 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             ||  (hoverBox == sizeBoxL)  || (hoverBox == sizeBoxR)
             ||  (hoverBox == diffBoxL)  || (hoverBox == diffBoxR)
             ||  (hoverBox == aiBoxL)  || (hoverBox == aiBoxR)
-            ||  (hoverBox == mapOption1BoxL)  || (hoverBox == mapOption1BoxR)
             ||  (hoverBox == oppBoxU)   || (hoverBox == oppBoxD)) {
             g.setColor(Color.yellow);
             g.fill(hoverBox);
         }
         else if ((hoverBox == shapeBox) || (hoverBox == sizeBox)
-            || (hoverBox == mapOption1Box)
             || (hoverBox == aiBox)
             || (hoverBox == diffBox)   || (hoverBox == oppBox)) {
             Stroke prev = g.getStroke();
@@ -248,13 +243,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         int shapeSW = g.getFontMetrics().stringWidth(shapeLbl);
         int x5a =shapeBox.x+((shapeBox.width-shapeSW)/2);
         drawString(g,shapeLbl, x5a, y5);
-        
-        if (!newGameOptions().galaxyShapeOptions1().isEmpty()) {
-            String label1 = text(newGameOptions().selectedGalaxyShapeOption1());
-            int sw1 = g.getFontMetrics().stringWidth(label1);
-            int x5d =mapOption1Box.x+((mapOption1Box.width-sw1)/2);
-            drawString(g,label1, x5d, y5+s20);
-        }
 
         String sizeLbl = text(newGameOptions().selectedGalaxySize());
         int sizeSW = g.getFontMetrics().stringWidth(sizeLbl);
@@ -380,18 +368,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         repaint();
     }
     
-    private void nextMapOption1(boolean click) {
-        if (click) softClick();
-        newGameOptions().selectedGalaxyShapeOption1(newGameOptions().nextGalaxyShapeOption1());
-        newGameOptions().galaxyShape().generate();
-        repaint();
-    }
-    private void prevMapOption1(boolean click) {
-        if (click) softClick();
-        newGameOptions().selectedGalaxyShapeOption1(newGameOptions().prevGalaxyShapeOption1());
-        newGameOptions().galaxyShape().generate();
-        repaint();
-    }
     private void nextGameDifficulty(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGameDifficulty(newGameOptions().nextGameDifficulty());
@@ -644,22 +620,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.fill(shapeBoxR);
         shapeBox.setBounds(sliderX, sliderY, sliderW, sliderH);
         g.fill(shapeBox);
-        
-        mapOption1BoxL.reset();
-        mapOption1BoxR.reset();
-        mapOption1Box.setBounds(0,0,0,0);
-        if (!newGameOptions().galaxyShapeOptions1().isEmpty()) {
-            mapOption1BoxL.addPoint(sliderX-s4,sliderY+s1+s20);
-            mapOption1BoxL.addPoint(sliderX-s4,sliderY+sliderH-s2+s20);
-            mapOption1BoxL.addPoint(sliderX-s13,sliderY+(sliderH/2)+s20);
-            g.fill(mapOption1BoxL);
-            mapOption1BoxR.addPoint(sliderX+sliderW+s4,sliderY+s1+s20);
-            mapOption1BoxR.addPoint(sliderX+sliderW+s4,sliderY+sliderH-s2+s20);
-            mapOption1BoxR.addPoint(sliderX+sliderW+s13,sliderY+(sliderH/2)+s20);
-            g.fill(mapOption1BoxR);
-            mapOption1Box.setBounds(sliderX, sliderY+s20, sliderW, sliderH);
-            g.fill(mapOption1Box);
-        }
 
         sliderX += sectionW;
         sizeBoxL.reset();
@@ -748,12 +708,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             hoverBox = shapeBoxR;
         else if (shapeBox.contains(x,y))
             hoverBox = shapeBox;
-        else if (mapOption1BoxL.contains(x,y))
-            hoverBox = mapOption1BoxL;
-        else if (mapOption1BoxR.contains(x,y))
-            hoverBox = mapOption1BoxR;
-        else if (mapOption1Box.contains(x,y))
-            hoverBox = mapOption1Box;
         else if (sizeBoxL.contains(x,y))
             hoverBox = sizeBoxL;
         else if (sizeBoxR.contains(x,y))
@@ -817,12 +771,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             nextGalaxyShape(true);
         else if (hoverBox == shapeBoxR)
             nextGalaxyShape(true);
-        else if (hoverBox == mapOption1BoxL)
-            prevMapOption1(true);
-        else if (hoverBox == mapOption1Box)
-            nextMapOption1(true);
-        else if (hoverBox == mapOption1BoxR)
-            nextMapOption1(true);
         else if (hoverBox == sizeBoxL)
             prevGalaxySize(false, true);
         else if (hoverBox == sizeBox)
@@ -878,12 +826,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
                 prevGalaxyShape(false);
             else
                 nextGalaxyShape(false);
-        }
-        else if (hoverBox == mapOption1Box) {
-            if (up)
-                prevMapOption1(false);
-            else
-                nextMapOption1(false);
         }
         else if (hoverBox == sizeBox) {
             if (up)
