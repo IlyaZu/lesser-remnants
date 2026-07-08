@@ -301,14 +301,6 @@ public abstract class GalaxyShape implements Base, Serializable {
         public float colonyX()   { return x[0]; }
         public float colonyY()   { return y[0]; }
 
-        public boolean inNebula(Nebula neb) {
-            for (int i=0;i<num;i++) {
-                if (neb.contains(x[i], y[i]))
-                    return true;
-            }
-            return false;
-        }
-
         private boolean addNewHomeSystem(GalaxyShape sp) {
             int attempts = 0;
             Point.Float pt = new Point.Float();
