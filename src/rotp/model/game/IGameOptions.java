@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,6 @@ public interface IGameOptions {
     public List<String> galaxySizeOptions();
     public List<String> galaxyShapeOptions();
     public List<String> galaxyShapeOptions1();
-    public List<String> galaxyShapeOptions2();
     public List<String> randomEventOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
@@ -93,8 +92,6 @@ public interface IGameOptions {
     
     public String selectedGalaxyShapeOption1();
     public void selectedGalaxyShapeOption1(String s);
-    public String selectedGalaxyShapeOption2();
-    public void selectedGalaxyShapeOption2(String s);
     
     public String selectedGameDifficulty();
     public void selectedGameDifficulty(String s);
@@ -151,20 +148,6 @@ public interface IGameOptions {
         if (opts.isEmpty())
             return "";
         int index = opts.indexOf(selectedGalaxyShapeOption1())-1;
-        return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default String nextGalaxyShapeOption2() {
-        List<String> opts = galaxyShapeOptions2();
-        if (opts.isEmpty())
-            return "";
-        int index = opts.indexOf(selectedGalaxyShapeOption2())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
-    }
-    default String prevGalaxyShapeOption2() {
-        List<String> opts = galaxyShapeOptions2();
-        if (opts.isEmpty())
-            return "";
-        int index = opts.indexOf(selectedGalaxyShapeOption2())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
     }
     default String nextGameDifficulty() {

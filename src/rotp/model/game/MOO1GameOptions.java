@@ -50,7 +50,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGalaxySize;
     private String selectedGalaxyShape;
     private String selectedGalaxyShapeOption1;
-    private String selectedGalaxyShapeOption2;
     
     private String selectedGameDifficulty;
     private String selectedRandomEventOption;
@@ -99,10 +98,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedGalaxyShapeOption1()       { return selectedGalaxyShapeOption1; }
     @Override
     public void selectedGalaxyShapeOption1(String s) { selectedGalaxyShapeOption1 = s; }
-    @Override
-    public String selectedGalaxyShapeOption2()       { return selectedGalaxyShapeOption2; }
-    @Override
-    public void selectedGalaxyShapeOption2(String s) { selectedGalaxyShapeOption2 = s; }
     @Override
     public String selectedGameDifficulty()       { return selectedGameDifficulty; }
     @Override
@@ -176,7 +171,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedGalaxySize = opt.selectedGalaxySize;
         selectedGalaxyShape = opt.selectedGalaxyShape;
         selectedGalaxyShapeOption1 = opt.selectedGalaxyShapeOption1;
-        selectedGalaxyShapeOption2 = opt.selectedGalaxyShapeOption2;
         selectedGameDifficulty = opt.selectedGameDifficulty;
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
@@ -193,7 +187,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         
         setGalaxyShape();
         selectedGalaxyShapeOption1 = opt.selectedGalaxyShapeOption1;
-        selectedGalaxyShapeOption2 = opt.selectedGalaxyShapeOption2;
 
         generateGalaxy();
     }
@@ -212,7 +205,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                 galaxyShape = new GalaxyRectangularShape(this);
         }
         selectedGalaxyShapeOption1 = galaxyShape.defaultOption1();
-        selectedGalaxyShapeOption2 = galaxyShape.defaultOption2();
     }
     @Override
     public int numberStarSystems() {
@@ -351,8 +343,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     
     @Override
     public List<String> galaxyShapeOptions1() { return galaxyShape.options1(); }
-    @Override
-    public List<String> galaxyShapeOptions2() { return galaxyShape.options2(); }
     @Override
     public List<String> gameDifficultyOptions() {
         List<String> list = new ArrayList<>();
