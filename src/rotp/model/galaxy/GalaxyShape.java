@@ -89,7 +89,8 @@ public abstract class GalaxyShape implements Base, Serializable {
         homeStars = 0;
         empSystems.clear();
         maxStars = numStars;
-        initWidthHeight();
+        width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
+        height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
         float minSize = min(width, height);
         usingRegions = minSize > 100;
         if (usingRegions) {
@@ -105,10 +106,6 @@ public abstract class GalaxyShape implements Base, Serializable {
             x = new float[maxStars];
             y = new float[maxStars];
         }
-    }
-    public void initWidthHeight() {
-        width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
-        height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
     }
     public void generate() {
         int numOpps = opts.selectedNumberOpponents()+1;
