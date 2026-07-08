@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,9 +83,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
     
     public List<String> options1()            { return Collections.emptyList(); }
-    public List<String> options2()            { return Collections.emptyList(); }
     public String defaultOption1()            { return ""; }
-    public String defaultOption2()            { return ""; }
 
     public float systemBuffer() {
         return 1.9f;
