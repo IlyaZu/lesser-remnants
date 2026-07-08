@@ -81,7 +81,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     public int empireSystemStars()            { return homeStars; }
     public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
 
-    public float systemBuffer() {
+    private float systemBuffer() {
         return 1.9f;
     }
     public void init(int numStars) {
@@ -165,13 +165,13 @@ public abstract class GalaxyShape implements Base, Serializable {
         }
         return 12;
     }
-    protected Point.Float addOrion() {
+    private Point.Float addOrion() {
         Point.Float pt = new Point.Float();
         findAnyValidLocation(pt);
         addSystem(pt);
         return pt;
     }
-    protected int addUncolonizedSystems() {
+    private int addUncolonizedSystems() {
         int maxAttempts = maxStars * 10;
         
         // we've already generated 3 stars for every empire so reduce their
@@ -186,7 +186,7 @@ public abstract class GalaxyShape implements Base, Serializable {
         }
         return attempts;
     }
-    public Point.Float findAnyValidLocation(Point.Float p) {
+    private Point.Float findAnyValidLocation(Point.Float p) {
         setRandom(p);
         while (!valid(p))
             setRandom(p);
@@ -209,7 +209,7 @@ public abstract class GalaxyShape implements Base, Serializable {
             num++;
         }
     }
-    protected boolean isTooNearExistingSystem(float x0, float y0, boolean isHomeworld) {
+    private boolean isTooNearExistingSystem(float x0, float y0, boolean isHomeworld) {
         if (isHomeworld) {
             if (distance(x0,y0,orionXY.x,orionXY.y) <= orionBuffer)
                 return true;
@@ -283,12 +283,12 @@ public abstract class GalaxyShape implements Base, Serializable {
         }
     }
     public final class EmpireSystem implements Serializable {
-        float[] x = new float[3];
-        float[] y = new float[3];
-        int num = 0;
-        boolean valid = false;
+        private float[] x = new float[3];
+        private float[] y = new float[3];
+        private int num = 0;
+        private boolean valid = false;
 
-        public EmpireSystem(GalaxyShape sp) {
+        private EmpireSystem(GalaxyShape sp) {
             // empire is valid if it can create a valid home system
             // and two valid nearby stars
             valid = addNewHomeSystem(sp);
