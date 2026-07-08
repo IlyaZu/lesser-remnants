@@ -34,8 +34,6 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     @Override
     public void init(int n) {
         super.init(n);
-        // reset w/h vars since aspect ratio may have changed
-        initWidthHeight();
         
         float gE = (float) galaxyEdgeBuffer();
         float gW = (float) galaxyWidthLY();
