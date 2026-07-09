@@ -34,7 +34,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     private float[] y;
     private int width = 0;
     private int height = 0;
-    int maxStars = 0;
+    private int maxStars = 0;
     private int num = 0;
     private int homeStars = 0;
     private int genAttempt = 0;
@@ -45,8 +45,8 @@ public abstract class GalaxyShape implements Base, Serializable {
     public int width()          { return width; }
     public int height()         { return height; }
     
-    protected abstract int galaxyWidthLY();
-    protected abstract int galaxyHeightLY();
+    protected abstract int galaxyWidthLY(int numStars);
+    protected abstract int galaxyHeightLY(int numStars);
     public abstract void setRandom(Point.Float p);
     public abstract boolean valid(float x, float y);
     protected abstract float sizeFactor(String size);
@@ -64,8 +64,8 @@ public abstract class GalaxyShape implements Base, Serializable {
 
     public void init(int numStars) {
         maxStars = numStars;
-        width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
-        height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
+        width = galaxyWidthLY(numStars) + (2 * galaxyEdgeBuffer());
+        height = galaxyHeightLY(numStars) + (2 * galaxyEdgeBuffer());
         x = new float[maxStars];
         y = new float[maxStars];
     }

@@ -32,22 +32,22 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     @Override
     public float maxScaleAdj()               { return 0.8f; }
     @Override
-    public void init(int n) {
-        super.init(n);
+    public void init(int numStars) {
+        super.init(numStars);
         
         float gE = (float) galaxyEdgeBuffer();
-        float gW = (float) galaxyWidthLY();
-        float gH = (float) galaxyHeightLY();
+        float gW = (float) galaxyWidthLY(numStars);
+        float gH = (float) galaxyHeightLY(numStars);
         
         ellipse = new Ellipse2D.Float(gE,gE,gW,gH);
     }
     @Override
-    protected int galaxyWidthLY() {
-        return (int) (Math.sqrt(maxStars*adjustedSizeFactor()));
+    protected int galaxyWidthLY(int numStars) {
+        return (int) (Math.sqrt(numStars*adjustedSizeFactor()));
     }
     @Override
-    protected int galaxyHeightLY() {
-        return (int) (Math.sqrt(maxStars*adjustedSizeFactor()));
+    protected int galaxyHeightLY(int numStars) {
+        return (int) (Math.sqrt(numStars*adjustedSizeFactor()));
     }
     @Override
     public void setRandom(Point.Float pt) {
