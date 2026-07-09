@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ public class GalaxyRectangularShape extends GalaxyShape {
     public float maxScaleAdj()               { return 0.95f; }
     
     @Override
-    protected int galaxyWidthLY() {
-        return (int) (Math.sqrt(4.0/3.0*opts.numberStarSystems()*adjustedSizeFactor()));
+    protected int galaxyWidthLY(int numStars) {
+        return (int) (Math.sqrt(4.0/3.0*numStars*adjustedSizeFactor()));
     }
     @Override
-    protected int galaxyHeightLY() {
-        return (int) (Math.sqrt(3.0/4.0*opts.numberStarSystems()*adjustedSizeFactor()));
+    protected int galaxyHeightLY(int numStars) {
+        return (int) (Math.sqrt(3.0/4.0*numStars*adjustedSizeFactor()));
     }
     @Override
     public void setRandom(Point.Float pt) {
