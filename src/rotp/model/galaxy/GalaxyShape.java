@@ -64,9 +64,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
 
     public void init(int numStars) {
-        num = 0;
-        homeStars = 0;
-        empSystems.clear();
         maxStars = numStars;
         width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
         height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
