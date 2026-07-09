@@ -35,7 +35,7 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     public void init(int numStars) {
         super.init(numStars);
         
-        float gE = (float) galaxyEdgeBuffer();
+        float gE = (float) EDGE_BUFFER;
         float gW = (float) galaxyWidthLY(numStars);
         float gH = (float) galaxyHeightLY(numStars);
         
@@ -51,8 +51,8 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     }
     @Override
     public void setRandom(Point.Float pt) {
-        pt.x = randomLocation(width(), galaxyEdgeBuffer());
-        pt.y = randomLocation(height(), galaxyEdgeBuffer());
+        pt.x = randomLocation(width(), EDGE_BUFFER);
+        pt.y = randomLocation(height(), EDGE_BUFFER);
     }
     @Override
     public boolean valid(float x, float y) {

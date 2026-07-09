@@ -38,12 +38,12 @@ public class GalaxyRectangularShape extends GalaxyShape {
     }
     @Override
     public void setRandom(Point.Float pt) {
-        pt.x = randomLocation(width(), galaxyEdgeBuffer());
-        pt.y = randomLocation(height(), galaxyEdgeBuffer());
+        pt.x = randomLocation(width(), EDGE_BUFFER);
+        pt.y = randomLocation(height(), EDGE_BUFFER);
     }
     @Override
     public boolean valid(float x, float y) {
-        float buff = galaxyEdgeBuffer();
+        float buff = EDGE_BUFFER;
         if (x > (width()-buff))
             return false;
         if (x < buff)
