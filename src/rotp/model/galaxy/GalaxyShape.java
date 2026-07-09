@@ -32,15 +32,12 @@ public abstract class GalaxyShape implements Base, Serializable {
     private float empireBuffer = 6;
     private float[] x;
     private float[] y;
-    private ShapeRegion[][] regions;
-    private int regionScale = 16;
     private int width = 0;
     private int height = 0;
     int maxStars = 0;
     private int num = 0;
     private int homeStars = 0;
     private int genAttempt = 0;
-    private boolean usingRegions = false;
     private List<EmpireSystem> empSystems = new ArrayList<>();
     private Point.Float orionXY;
     IGameOptions opts;
@@ -57,25 +54,8 @@ public abstract class GalaxyShape implements Base, Serializable {
 
     public boolean valid(Point.Float p) { return valid(p.x, p.y); }
     public void coords(int n, Point.Float pt) {
-        int i = n;
-        if (usingRegions) {
-            for (int a=0;a<regionScale;a++) {
-                for (int b=0;b<regionScale;b++) {
-                    if (i >= regions[a][b].num)
-                        i -= regions[a][b].num;
-                    else {
-                        pt.x = regions[a][b].x[i];
-                        pt.y = regions[a][b].y[i];
-                        return;
-                    }
-                }
-            }
-            throw new RuntimeException("Invalid x index requested: "+i);
-        }
-        else {
-            pt.x = x[i];
-            pt.y = y[i];
-        }
+        pt.x = x[n];
+        pt.y = y[n];
     }
     public int numberStarSystems()            { return num; }
     public int totalStarSystems()             { return num+homeStars;}
@@ -90,25 +70,12 @@ public abstract class GalaxyShape implements Base, Serializable {
         maxStars = numStars;
         width = galaxyWidthLY() + (2 * galaxyEdgeBuffer());
         height = galaxyHeightLY() + (2 * galaxyEdgeBuffer());
-        float minSize = min(width, height);
-        usingRegions = minSize > 100;
-        if (usingRegions) {
-            regionScale = min(64, (int) (minSize / 6.0));
-            regions = new ShapeRegion[regionScale][regionScale];
-            int regionStars = (int) (2.5*maxStars/regionScale);
-            for (int i=0;i<regionScale;i++) {
-                for (int j=0;j<regionScale;j++)
-                    regions[i][j] = new ShapeRegion(regionStars);
-            }
-        }
-        else {
-            x = new float[maxStars];
-            y = new float[maxStars];
-        }
+        x = new float[maxStars];
+        y = new float[maxStars];
     }
     public void generate() {
         int numOpps = opts.selectedNumberOpponents()+1;
-        log("Galaxy shape: "+maxStars+ " stars"+ "  regionScale: "+regionScale+"   emps:"+numOpps);
+        log("Galaxy shape: "+maxStars+ " stars"+ "   emps:"+numOpps);
         long tm0 = System.currentTimeMillis();
         genAttempt = 0;
         empSystems.clear();
@@ -147,7 +114,7 @@ public abstract class GalaxyShape implements Base, Serializable {
         // add other systems to fill out galaxy
         int attempts = addUncolonizedSystems();
         long tm1 = System.currentTimeMillis();
-        log("Galaxy generation: "+(tm1-tm0)+"ms  Regions: " + usingRegions+"  Attempts: ", str(attempts), "  stars:", str(num), "/", str(maxStars));
+        log("Galaxy generation: "+(tm1-tm0)+"ms  Attempts: ", str(attempts), "  stars:", str(num), "/", str(maxStars));
     }
     protected int galaxyEdgeBuffer() {
         switch(opts.selectedGalaxySize()) {
@@ -189,20 +156,9 @@ public abstract class GalaxyShape implements Base, Serializable {
         return p;
     }
     private void addSystem(Point.Float pt) {
-        addSystem(pt.x, pt.y);
-    }
-    private void addSystem(float x0, float y0) {
-        if (usingRegions) {
-            int xRgn = (int) (regionScale*x0/width);
-            int yRgn = (int) (regionScale*y0/height);
-            regions[xRgn][yRgn].addSystem(x0,y0);
-            num++;
-        }
-        else {
-            x[num] = x0;
-            y[num] = y0;
-            num++;
-        }
+        x[num] = pt.x;
+        y[num] = pt.y;
+        num++;
     }
     private boolean isTooNearExistingSystem(float x0, float y0, boolean isHomeworld) {
         if (isHomeworld) {
@@ -214,34 +170,12 @@ public abstract class GalaxyShape implements Base, Serializable {
             }
         }
         // not too close to other systems in galaxy
-        if (usingRegions) {
-            if (isTooNearSystemsInNeighboringRegions(x0,y0))
-                return true;
-        }
-        else {
-            if (isTooNearSystemsInEntireGalaxy(x0,y0))
-                return true;
-        }
+        if (isTooNearSystemsInEntireGalaxy(x0,y0))
+            return true;
         // not too close to other systems in any empire system
         for (EmpireSystem emp: empSystems) {
             for (int i=0;i<emp.num;i++) {
                 if (distance(x0,y0,emp.x(i),emp.y(i)) <= SYSTEM_BUFFER)
-                    return true;
-            }
-        }
-        return false;
-    }
-    private boolean isTooNearSystemsInNeighboringRegions(float x0, float y0) {
-        int xRgn = (int)(x0*regionScale/width);
-        int yRgn = (int)(y0*regionScale/height);
-        int yMin = max(0,yRgn-1);
-        int yMax = min(regionScale-1,yRgn+1);
-        int xMin = max(0,xRgn-1);
-        int xMax = min(regionScale-1,xRgn+1);
-
-        for (int x1=xMin;x1<=xMax;x1++) {
-            for (int y1=yMin;y1<=yMax;y1++) {
-                if (regions[x1][y1].isTooNearSystems(x0,y0))
                     return true;
             }
         }
@@ -253,27 +187,6 @@ public abstract class GalaxyShape implements Base, Serializable {
                 return true;
         }
         return false;
-    }
-    private class ShapeRegion implements Serializable {
-        int num = 0;
-        float[] x;
-        float[] y;
-        public ShapeRegion(int maxStars) {
-            x = new float[maxStars];
-            y = new float[maxStars];
-        }
-        public boolean isTooNearSystems(float x0, float y0) {
-            for (int i=0;i<num;i++) {
-                if (distance(x0,y0,x[i],y[i]) <= SYSTEM_BUFFER)
-                    return true;
-            }
-            return false;
-        }
-        private void addSystem(float x0, float y0) {
-            x[num] = x0;
-            y[num] = y0;
-            num++;
-        }
     }
     public final class EmpireSystem implements Serializable {
         private float[] x = new float[3];
