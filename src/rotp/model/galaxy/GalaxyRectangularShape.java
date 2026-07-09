@@ -59,7 +59,7 @@ public class GalaxyRectangularShape extends GalaxyShape {
     }
     @Override
     protected float sizeFactor(String size) {
-        switch (opts.selectedGalaxySize()) {
+        switch (size) {
             case IGameOptions.SIZE_TINY:      return 10;
             case IGameOptions.SIZE_SMALL:     return 15;
             case IGameOptions.SIZE_MEDIUM:    return 17;
