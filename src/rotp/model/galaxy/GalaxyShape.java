@@ -27,6 +27,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     private static final long serialVersionUID = 1L;
     
     private static final float SYSTEM_BUFFER = 1.9f;
+    public static final int EDGE_BUFFER = 1;
     
     private float orionBuffer = 8;
     private float empireBuffer = 6;
@@ -64,8 +65,8 @@ public abstract class GalaxyShape implements Base, Serializable {
 
     public void init(int numStars) {
         maxStars = numStars;
-        width = galaxyWidthLY(numStars) + (2 * galaxyEdgeBuffer());
-        height = galaxyHeightLY(numStars) + (2 * galaxyEdgeBuffer());
+        width = galaxyWidthLY(numStars) + (2 * EDGE_BUFFER);
+        height = galaxyHeightLY(numStars) + (2 * EDGE_BUFFER);
         x = new float[maxStars];
         y = new float[maxStars];
     }
@@ -111,17 +112,6 @@ public abstract class GalaxyShape implements Base, Serializable {
         int attempts = addUncolonizedSystems();
         long tm1 = System.currentTimeMillis();
         log("Galaxy generation: "+(tm1-tm0)+"ms  Attempts: ", str(attempts), "  stars:", str(num), "/", str(maxStars));
-    }
-    protected int galaxyEdgeBuffer() {
-        switch(opts.selectedGalaxySize()) {
-            case IGameOptions.SIZE_TINY:      return 1;
-            case IGameOptions.SIZE_SMALL:     return 1;
-            case IGameOptions.SIZE_MEDIUM:    return 1;
-            case IGameOptions.SIZE_LARGE:     return 2;
-            case IGameOptions.SIZE_HUGE:      return 2;
-            case IGameOptions.SIZE_MASSIVE:   return 2;
-        }
-        return 12;
     }
     private Point.Float addOrion() {
         Point.Float pt = new Point.Float();
