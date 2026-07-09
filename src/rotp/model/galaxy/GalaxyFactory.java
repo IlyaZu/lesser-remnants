@@ -45,7 +45,9 @@ public class GalaxyFactory implements Base {
         opts.randomizeColors();
         GalaxyShape shape = opts.galaxyShape();
 
-        shape.generate();
+        int numEmpires = opts.selectedNumberOpponents()+1;
+        int numStars = opts.numberStarSystems();
+        shape.generate(numEmpires, numStars);
 
         Galaxy g = new Galaxy(shape);
         GameSession.instance().galaxy(g);
