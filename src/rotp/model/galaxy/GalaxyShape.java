@@ -60,7 +60,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     public int numberStarSystems()            { return num; }
     public int totalStarSystems()             { return num+homeStars;}
     public List<EmpireSystem> empireSystems() { return empSystems; }
-    public int empireSystemStars()            { return homeStars; }
     public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
 
     public void init(int numStars) {
