@@ -70,9 +70,8 @@ public abstract class GalaxyShape implements Base, Serializable {
         x = new float[maxStars];
         y = new float[maxStars];
     }
-    public void generate() {
-        int numOpps = opts.selectedNumberOpponents()+1;
-        log("Galaxy shape: "+maxStars+ " stars"+ "   emps:"+numOpps);
+    public void generate(int numEmpires, int numStars) {
+        log("Galaxy shape: "+maxStars+ " stars"+ "   emps:"+numEmpires);
         long tm0 = System.currentTimeMillis();
         genAttempt = 0;
         empSystems.clear();
@@ -87,19 +86,19 @@ public abstract class GalaxyShape implements Base, Serializable {
         // of 6 ly... this means that it will not increase until there is at least a 12:1
         // ratio. However, the minimum buffer will never exceed the "MAX_MIN", to ensure that
         // massive maps don't always GUARANTEE hundreds of light-years of space to expand uncontested
-        empireBuffer = min(maxMinEmpireBuffer, max(minEmpireBuffer, (maxStars/(numOpps*2))));
+        empireBuffer = min(maxMinEmpireBuffer, max(minEmpireBuffer, (maxStars/(numEmpires*2))));
         // Orion buffer is 50% greater with minimum of 8 ly.
         orionBuffer = max(minOrionBuffer, empireBuffer*3/2);
 
         // add systems needed for empires
-        while (empSystems.size() < numOpps) {
-            init(opts.numberStarSystems());
+        while (empSystems.size() < numEmpires) {
+            init(numStars);
             genAttempt++;
             empSystems.clear();
             homeStars = 0;
             num = 0;
             orionXY = addOrion();
-            for (int i=0;i<numOpps;i++) {
+            for (int i=0;i<numEmpires;i++) {
                 EmpireSystem sys = new EmpireSystem(this);
                 if (sys.valid) {
                     empSystems.add(sys);

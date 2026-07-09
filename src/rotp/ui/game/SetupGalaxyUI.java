@@ -356,14 +356,18 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private void nextGalaxyShape(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShape(newGameOptions().nextGalaxyShape());
-        newGameOptions().galaxyShape().generate();
+        int numEmpires = newGameOptions().selectedNumberOpponents()+1;
+        int numStars = newGameOptions().numberStarSystems();
+        newGameOptions().galaxyShape().generate(numEmpires, numStars);
         backImg = null;
         repaint();
     }
     private void prevGalaxyShape(boolean click) {
         if (click) softClick();
         newGameOptions().selectedGalaxyShape(newGameOptions().prevGalaxyShape());
-        newGameOptions().galaxyShape().generate();
+        int numEmpires = newGameOptions().selectedNumberOpponents()+1;
+        int numStars = newGameOptions().numberStarSystems();
+        newGameOptions().galaxyShape().generate(numEmpires, numStars);
         backImg = null;
         repaint();
     }
