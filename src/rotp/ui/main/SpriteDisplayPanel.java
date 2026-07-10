@@ -76,13 +76,13 @@ public class SpriteDisplayPanel extends BasePanel implements SystemViewer, Mouse
     public boolean canEscape() {
         return currentPanel.canEscape();
     }
-    public boolean hoverOverFleets() { 
+    public boolean hoverOverFleets() {
         return currentPanel instanceof MapSpriteViewer ? ((MapSpriteViewer) currentPanel).hoverOverFleets() : true;
     }
-    public boolean hoverOverSystems() { 
+    public boolean hoverOverSystems() {
         return currentPanel instanceof MapSpriteViewer ? ((MapSpriteViewer) currentPanel).hoverOverSystems() : true;
     }
-    public boolean hoverOverFlightPaths(){ 
+    public boolean hoverOverFlightPaths(){
         return currentPanel instanceof MapSpriteViewer ? ((MapSpriteViewer) currentPanel).hoverOverFlightPaths() : true;
     }
     @Override

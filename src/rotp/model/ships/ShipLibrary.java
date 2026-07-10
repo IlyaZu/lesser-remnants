@@ -220,7 +220,7 @@ public class ShipLibrary implements Base {
                     else {
                         for (String f: frameKey) {
                             shipIconKey = fileName(i,j,k,f);
-                            if (url(shipIconKey) != null) 
+                            if (url(shipIconKey) != null)
                                 styleImage.iconKeys.add(shipIconKey);
                         }
                     }

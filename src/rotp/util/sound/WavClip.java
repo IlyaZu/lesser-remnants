@@ -39,7 +39,7 @@ public class WavClip  implements SoundClip, Base {
     String style = "";
     
     public static WavClip play(String fn, float clipGain, float masterVolume) {
-        if (!loadedClips.containsKey(fn)) 
+        if (!loadedClips.containsKey(fn))
             loadedClips.put(fn, new WavClip(fn, clipGain));
         
         WavClip wc = loadedClips.get(fn);
@@ -48,7 +48,7 @@ public class WavClip  implements SoundClip, Base {
         return wc;
     }
     public static WavClip playContinuously(String fn, float clipGain, String s, float masterVolume) {
-         if (!loadedClips.containsKey(fn)) 
+         if (!loadedClips.containsKey(fn))
             loadedClips.put(fn, new WavClip(fn, clipGain));
         
         WavClip wc = loadedClips.get(fn);
@@ -56,14 +56,14 @@ public class WavClip  implements SoundClip, Base {
         wc.style = s;
         wc.playContinuously();
         return wc;
-    }          
+    }
     public static void setVolume(String fn, float vol) {
          if (!loadedClips.containsKey(fn))
              return;
         
         WavClip wc = loadedClips.get(fn);
         wc.setVolume(vol);
-    }          
+    }
     public WavClip(String fn, float vol) {
         filename = fn;
         gain = vol;
@@ -139,9 +139,9 @@ public class WavClip  implements SoundClip, Base {
     public static InputStream wavFileStream(String n) {
         String fullString = "../rotp/" +n;
 
-        try { return new FileInputStream(new File(Rotp.jarPath(), n)); } 
+        try { return new FileInputStream(new File(Rotp.jarPath(), n)); }
         catch (FileNotFoundException e) {
-                try { return new FileInputStream(fullString); } 
+                try { return new FileInputStream(fullString); }
                 catch (FileNotFoundException ex) {
                     return Rotp.class.getResourceAsStream(n);
                 }
