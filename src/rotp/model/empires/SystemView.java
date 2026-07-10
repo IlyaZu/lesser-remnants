@@ -196,7 +196,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public void refreshFullScan() {
         if (!scouted()) {
-            log("Orbital scan scouts new system: ", system().name());
             owner().shareSystemInfoWithAllies(this);
             if (owner().isPlayerControlled()) {
                 session().addSystemScouted(system());
@@ -218,7 +217,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public void refreshAllySharingScan() {
         if (owner().isPlayerControlled() && !scouted()) {
-            log("Ally shares new system data: ", system().name());
             session().addSystemScoutedByAllies(system());
         }
 
@@ -229,7 +227,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public void refreshLongRangePlanetScan() {
         if (!scouted()) {
-            log("Long range planet scan scouts new system: ", system().name());
             owner().shareSystemInfoWithAllies(this);
             if (owner().isPlayerControlled())
                 session().addSystemScoutedByAstronomers(system());
@@ -243,7 +240,6 @@ public class SystemView implements IMappedObject, Base, Serializable {
     }
     public void refreshLongRangeShipScan() {
         if (!scouted()) {
-            log("Long range ship scan scouts new system: ", system().name());
             owner().shareSystemInfoWithAllies(this);
             if (owner().isPlayer())
                 session().addSystemScouted(system());

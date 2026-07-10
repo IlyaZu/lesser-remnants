@@ -564,8 +564,6 @@ public class FleetPanel extends BasePanel implements MapSpriteViewer {
             else {
                 StarSystem sys1 = fl.system();
                 String str2 = sys1 == null ? "" : text("MAIN_FLEET_LOCATION", pl.sv.name(sys1.id));
-                if (str2.isEmpty())
-                    log("ERROR: No system assigned to fleet ");
                 int sw2 = g.getFontMetrics().stringWidth(str2);
                 drawString(g,str2, w-sw2-s10, y0);
                 y0 -= s25;

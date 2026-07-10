@@ -118,7 +118,6 @@ public class AI implements Base {
         return new ColonyTransporter(sys.colony(), popNeeded, maxPopToGive, minTransports);
     }
     public void sendTransports() {
-        long tm0 = System.currentTimeMillis();
         int minTransportSize = empire.generalAI().minTransportSize();
         List<ColonyTransporter> needy = new ArrayList<>();
         List<ColonyTransporter> givey = new ArrayList<>();
@@ -133,7 +132,6 @@ public class AI implements Base {
         }
 
         if (needy.isEmpty() || givey.isEmpty()) {
-            log("sendTransports (NONE): "+empire.raceName()+"   "+(System.currentTimeMillis()-tm0)+"ms");
             return;
         }
 
@@ -163,8 +161,6 @@ public class AI implements Base {
             if(allGiversBusy)
                 break;
         }
-        long tm1 = System.currentTimeMillis();
-        log("sendTransports: "+empire.raceName()+"   "+(tm1-tm0)+"ms");
     }
     public void checkColonize(StarSystem sys, ShipFleet fl) {
         if (fl.retreating())

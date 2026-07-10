@@ -211,7 +211,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         withdrawAmbassador(baseTurns+1);
     }
     public void assessTurn() {
-        log(view+" Embassy: assess turn");
         resetIncidents();
         
         // player refusals are remembered for the
@@ -401,7 +400,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         }
     }
     public void makeFirstContact() {
-        log("First Contact: ", owner().name(), " & ", empire().name());
         makeContact();
         if (empire().isPlayerControlled())
             DiplomaticNotification.create(view, dialogueContactType(owner().leader()));
@@ -426,7 +424,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
     }
     public void resetTreaty()   { setTreaty(new TreatyNone(view.owner(), view.empire())); }
     public void addIncident(DiplomaticIncident inc) {
-        log(view.toString(), ": Adding incident- ", str(inc.severity()), ":", inc.toString());
         incidents.add(inc);
         updateRelations(inc.severity());
     }
@@ -486,7 +483,6 @@ public class DiplomaticEmbassy implements Base, Serializable {
         while (incidentIterator.hasNext()) {
             DiplomaticIncident incident = incidentIterator.next();
             if (isForgotten(incident)) {
-                log("Forgetting: ", incident.toString());
                 incidentIterator.remove();
             }
         }

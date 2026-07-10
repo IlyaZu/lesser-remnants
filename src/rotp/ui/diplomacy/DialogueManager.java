@@ -216,7 +216,6 @@ public class DialogueManager implements Base {
     }
     private void loadDialogStrings(String filename) {
         // loads dialog strings from dialog.txt file... which does not have language-specific data
-        log("Loading Dialog Strings...");
         BufferedReader in = reader(filename);
         if (in == null) {
             err("Cannot find dialog file: ", filename);

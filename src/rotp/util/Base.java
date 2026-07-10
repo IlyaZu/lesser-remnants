@@ -179,19 +179,6 @@ public interface Base {
             }
         }
     }
-    public default void log(String... text) {
-        if (!Rotp.logging)
-            return;
-        String output = String.join("", text);
-        System.out.println(output);
-        if (RotPUI.useDebugFile) {
-            PrintWriter debugFile = RotPUI.debugFile();
-            if (debugFile != null) {
-                debugFile.println(output);
-                debugFile.flush();
-            }
-        }
-    }
     public default boolean veryLowMemory() {
         return Rotp.maxHeapMemory < 500;
     }

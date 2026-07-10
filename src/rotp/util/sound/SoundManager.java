@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,16 +51,13 @@ public enum SoundManager implements Base {
 
     private void init() {
         sounds.clear();
-        long st = System.currentTimeMillis();
         try {
             loadSoundFiles(soundListDir);
             loadMusicFiles(soundListDir);
         }
         catch(Exception | NoClassDefFoundError e) {
-            log("SoundManager.init error: "+e.getMessage());
             disableOnError("on init: "+e.getMessage());
         }
-        log("SoundManager loaded: ", str(System.currentTimeMillis()-st), "ms");
     }
     public static int soundLevel()       { return UserPreferences.soundVolume(); }
     public static int musicLevel()       { return UserPreferences.musicVolume(); }
@@ -85,7 +82,6 @@ public enum SoundManager implements Base {
                 pauseAmbience();
         }
         catch (Exception e) {
-            log("SoundManager.music error1: "+e.getMessage());
             disableOnError("on toggle:"+e.getMessage());
         }
     }
@@ -127,7 +123,6 @@ public enum SoundManager implements Base {
         if (key.equals(currentAmbienceKey))
             return;
 
-        log("playing ambience: ", key);
         if (currentAmbience != null)
             currentAmbience.pausePlaying();
 
@@ -142,7 +137,6 @@ public enum SoundManager implements Base {
     }
     @Override
     public SoundClip playAudioClip(String key) {
-        log("play audio clip: "+key);
         if (!playSounds())
             return null;
         Sound s = sounds.get(key);
@@ -163,7 +157,6 @@ public enum SoundManager implements Base {
         return (s == null) ? null : s.playContinuously(s.gain);
     }
     private List<String> loadSoundFiles(String dir) {
-        log("Loading Sounds: ", dir);
         List<String> soundKeysAdded = new ArrayList<>();
         BufferedReader in = reader(dir+soundsFileName);
         if (in == null)
@@ -184,7 +177,6 @@ public enum SoundManager implements Base {
         return soundKeysAdded;
     }
     private List<String> loadMusicFiles(String dir) {
-        log("Loading Music: ", dir);
         List<String> soundKeysAdded = new ArrayList<>();
         BufferedReader in = reader(dir+musicFileName);
         if (in == null)

@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import rotp.Rotp;
 import rotp.util.AnimationManager;
 import rotp.util.Base;
 import rotp.util.ImageManager;
@@ -34,7 +33,6 @@ public enum RaceFactory implements Base {
         loadDataFiles();
     }
     public void loadDataFiles() {
-        log("Loading Races: ", raceListFile);
         BufferedReader in = reader(raceListFile);
         if (in == null)
             return;
@@ -99,19 +97,15 @@ public enum RaceFactory implements Base {
         if (in == null)
             return;
 
-        int wc = 0;
         try {
             String input;
             while ((input = in.readLine()) != null)
-                wc += loadRaceLangLine(r, input, langDir);
+                loadRaceLangLine(r, input, langDir);
             in.close();
         }
         catch (IOException e) {
             err("RaceFactory.loadRaceLangFile(", r.directoryName+") -- IOException: ", e.toString());
         }
-        
-        if (Rotp.countWords)
-            log("WORDS - "+filename+": "+wc);
     }
     private List<String> readSystemNames(String filePath) {
         BufferedReader reader = reader(filePath);
@@ -234,36 +228,30 @@ public enum RaceFactory implements Base {
         if (key.equalsIgnoreCase("shipdesign"))    { parseShipDesignMods(r, substrings(value,',')); return; }
     }
 
-    private int loadRaceLangLine(Race r, String input, String langDir) {
+    private void loadRaceLangLine(Race r, String input, String langDir) {
         if (isComment(input))
-            return 0;
+            return;
 
         List<String> vals = substrings(input, ':');
         if (vals.size() < 2)
-            return 0;
+            return;
 
         String key = vals.get(0);
         String value = vals.get(1);
 
-        int wc = 0;
-        
-        if (Rotp.countWords)
-            wc = substrings(value,',').size();  // uncomment
-        
-        if (key.equalsIgnoreCase("name"))          { r.parseRaceNames(value, langDir); return wc; }
-        if (key.equalsIgnoreCase("desc1"))         { r.description1 = value; return wc; }
-        if (key.equalsIgnoreCase("desc2"))         { r.description2 = value; return wc; }
-        if (key.equalsIgnoreCase("desc3"))         { r.description3 = value; return wc; }
-        if (key.equalsIgnoreCase("home"))          { r.homeSystemNames.clear(); r.homeSystemNames.addAll(substrings(value, ',')); return wc; }
-        if (key.equalsIgnoreCase("title"))         { r.title(value.trim()); return wc; }
-        if (key.equalsIgnoreCase("fulltitle"))     { r.fullTitle(value.trim()); return wc; }
-        if (key.equalsIgnoreCase("leader"))        { r.leaderNames.clear(); r.leaderNames.addAll(substrings(value, ',')); return wc; }
-        if (key.equalsIgnoreCase("ship1"))         { r.shipNamesSmall.clear(); r.shipNamesSmall.addAll(substrings(value, ',')); return wc; }
-        if (key.equalsIgnoreCase("ship2"))         { r.shipNamesMedium.clear(); r.shipNamesMedium.addAll(substrings(value, ',')); return wc; }
-        if (key.equalsIgnoreCase("ship3"))         { r.shipNamesLarge.clear(); r.shipNamesLarge.addAll(substrings(value, ',')); return wc; }
-        if (key.equalsIgnoreCase("ship4"))         { r.shipNamesHuge.clear(); r.shipNamesHuge.addAll(substrings(value, ',')); return wc; }
+        if (key.equalsIgnoreCase("name"))          { r.parseRaceNames(value, langDir); return; }
+        if (key.equalsIgnoreCase("desc1"))         { r.description1 = value; return; }
+        if (key.equalsIgnoreCase("desc2"))         { r.description2 = value; return; }
+        if (key.equalsIgnoreCase("desc3"))         { r.description3 = value; return; }
+        if (key.equalsIgnoreCase("home"))          { r.homeSystemNames.clear(); r.homeSystemNames.addAll(substrings(value, ',')); return; }
+        if (key.equalsIgnoreCase("title"))         { r.title(value.trim()); return; }
+        if (key.equalsIgnoreCase("fulltitle"))     { r.fullTitle(value.trim()); return; }
+        if (key.equalsIgnoreCase("leader"))        { r.leaderNames.clear(); r.leaderNames.addAll(substrings(value, ',')); return; }
+        if (key.equalsIgnoreCase("ship1"))         { r.shipNamesSmall.clear(); r.shipNamesSmall.addAll(substrings(value, ',')); return; }
+        if (key.equalsIgnoreCase("ship2"))         { r.shipNamesMedium.clear(); r.shipNamesMedium.addAll(substrings(value, ',')); return; }
+        if (key.equalsIgnoreCase("ship3"))         { r.shipNamesLarge.clear(); r.shipNamesLarge.addAll(substrings(value, ',')); return; }
+        if (key.equalsIgnoreCase("ship4"))         { r.shipNamesHuge.clear(); r.shipNamesHuge.addAll(substrings(value, ',')); return; }
         err("unknown key->", input);
-        return 0;
     }
     private void parseDialogTextMargins(Race r, List<String> vals) {
         if (vals.size() < 2)

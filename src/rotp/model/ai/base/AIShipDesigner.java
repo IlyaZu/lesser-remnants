@@ -50,7 +50,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
     @Override
     public void nextTurn() {
         if (empire.isAIControlled()) {
-            log(this+": nextTurn");
             shipCounts = galaxy().ships.shipDesignCounts(empire.id);
             countdownObsoleteDesigns();
             // designs are updated in a specific order in order to prioritize
@@ -103,7 +102,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
                 // needs to be freed up
                 if (d.remainingLife() < 0) {
                     if (!lab.slotInUse(slot)) {
-                        log("Empire: "+empire.name()+ "  Scrapping obsolete design: "+d.name()+"  in slot:"+slot);
                         lab.scrapDesign(d);
                     }
                 }
@@ -146,7 +144,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // if currDesign is obsolete, replace it immediately with new design
         if (currDesign.obsolete() && (currDesign.remainingLife() < 1)) {
             lab.scrapDesign(currDesign);
-            log("Replacing obsolete colony design");
             lab.setColonyDesign(newDesign, currSlot);
             return;
         }
@@ -165,7 +162,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         List<ShipFleet> colonyFleets = galaxy().ships.inTransitNotRetreatingFleets(empire.id, currDesign.id());
         if (colonyFleets.isEmpty()) {
             lab.scrapDesign(currDesign);
-            log("No more colony ships in transit: updating colony design");
             lab.setColonyDesign(newDesign, currSlot);
             return;
         }
@@ -195,7 +191,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // if currDesign is obsolete, replace it immediately
         if (currDesign.obsolete() && (currDesign.remainingLife() < 1)) {
             lab.scrapDesign(currDesign);
-            log("Replacing obsolete bomber design");
             lab.setBomberDesign(newDesign, currSlot);
             return;
         }
@@ -209,7 +204,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         if (easyToReplace) {
             lab.scrapDesign(currDesign);
-            log("Bomber easy to replace");
             lab.setBomberDesign(newDesign, currSlot);
             return;
         }
@@ -241,14 +235,12 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {
             lab.scrapDesign(currDesign);
-            log("No enemies: Bomber upgrade chance:"+upgradeChance);
             lab.setBomberDesign(newDesign, currSlot);
             return;
         }
         
         // if there is a slot available, use it for the new design
         if (slot > 0) {
-            log("Slot available: Bomber upgrade chance:"+upgradeChance);
             lab.setBomberDesign(newDesign, slot);
             return;
         }
@@ -279,7 +271,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // if currDesign is obsolete, replace it immediately with new design
         if (currDesign.obsolete() && (currDesign.remainingLife() < 1)) {
             lab.scrapDesign(currDesign);
-            log("Replacing obsolete fighter design");
             lab.setFighterDesign(newDesign, currSlot);
             return;
         }
@@ -293,7 +284,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         if (easyToReplace) {
             lab.scrapDesign(currDesign);
-            log("Fighter easy to replace");
             lab.setFighterDesign(newDesign, currSlot);
             return;
         }
@@ -323,14 +313,12 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {
             lab.scrapDesign(currDesign);
-            log("No enemies: Fighter upgrade chance:"+upgradeChance);
             lab.setFighterDesign(newDesign, currSlot);
             return;
         }
         
         // if there is a slot available, use it for the new design
         if (slot > 0) {
-            log("Slot available: Fighter upgrade chance:"+upgradeChance);
             lab.setFighterDesign(newDesign, slot);
             return;
         }
@@ -363,7 +351,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
        // if currDesign is obsolete, replace it immediately with new design
         if (currDesign.obsolete() && (currDesign.remainingLife() < 1)) {
             lab.scrapDesign(currDesign);
-            log("Replacing obsolete destroyer design");
             lab.setDestroyerDesign(newDesign, currSlot);
             return;
         }
@@ -378,7 +365,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         if (easyToReplace) {
             lab.scrapDesign(currDesign);
-            log("Destroyer easy to replace");
             lab.setDestroyerDesign(newDesign, currSlot);
             return;
         }
@@ -407,14 +393,12 @@ public class AIShipDesigner implements Base, ShipDesigner {
         // unnecessarily using the empty slot if we don't have to
         if ((slot < 0) && empire().enemies().isEmpty()) {
             lab.scrapDesign(currDesign);
-            log("No enemies: Destroyer upgrade chance:"+upgradeChance);
             lab.setDestroyerDesign(newDesign, currSlot);
             return;
         }
         
         // if there is a slot available, use it for the new design
         if (slot > 0) {
-            log("Slot available: Destroyer upgrade chance:"+upgradeChance);
             lab.setDestroyerDesign(newDesign, slot);
             return;
         }

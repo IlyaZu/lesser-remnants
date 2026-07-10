@@ -208,7 +208,6 @@ public class ShipDesignLab implements Base, Serializable {
         d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         scoutDesignId = slot;
-        log("Empire: "+empire.name()+" creates scout design: "+d.name()+"  slot:"+slot);
     }
     public void setColonyDesign(ShipDesign d, int slot) {
         d.mission(ShipDesign.COLONY);
@@ -219,7 +218,6 @@ public class ShipDesignLab implements Base, Serializable {
         d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         colonyDesignId = slot;
-        log("Empire: "+empire.name()+" creates colony design: "+d.name()+"  slot:"+slot);
     }
     public void setFighterDesign(ShipDesign d, int slot) {
         d.mission(ShipDesign.FIGHTER);
@@ -230,7 +228,6 @@ public class ShipDesignLab implements Base, Serializable {
         d.shipColor(empire().defaultShipTint());
         empire().swapShipConstruction(fighterDesign(), d);
         fighterDesignId = slot;
-        log("Empire: "+empire.name()+" creates fighter design: "+d.name()+"  slot:"+slot);
     }
     public void setBomberDesign(ShipDesign d, int slot) {
         d.mission(ShipDesign.BOMBER);
@@ -241,7 +238,6 @@ public class ShipDesignLab implements Base, Serializable {
         d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         bomberDesignId = slot;
-        log("Empire: "+empire.name()+" creates bomber design: "+d.name()+"  slot:"+slot);
     }
     public void setDestroyerDesign(ShipDesign d, int slot) {
         d.mission(ShipDesign.DESTROYER);
@@ -252,7 +248,6 @@ public class ShipDesignLab implements Base, Serializable {
         d.seq(slot);
         d.shipColor(empire().defaultShipTint());
         destroyerDesignId = slot;
-        log("Empire: "+empire.name()+" creates destroyer design: "+d.name()+"  slot:"+slot);
     }
     public ShipDesign startingScoutDesign() {
         ShipDesign design = newBlankDesign(ShipDesign.SMALL);
@@ -421,7 +416,6 @@ public class ShipDesignLab implements Base, Serializable {
 
         // remove from existing fleets
         int scrappedCount = galaxy().ships.scrapDesign(empire.id, designId);
-        log("Empire: "+empire.name()+"  Scrapping design: ", d.name(), "  id: "+d.id()+"  count:", str(scrappedCount));
 
         d.scrapped(true);
         d.active(false);

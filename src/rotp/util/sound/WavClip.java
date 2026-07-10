@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,7 +78,6 @@ public class WavClip  implements SoundClip, Base {
                 clip = (Clip)AudioSystem.getLine(info);
                 clip.open(ais);
                 if (vol < 1 && clip.isControlSupported(MASTER_GAIN)) {
-                    log("setting gain for sound: "+filename+"  to "+(int)(gain*100));
                     FloatControl gain = (FloatControl) clip.getControl(MASTER_GAIN);
                     gain.setValue(20f * (float) Math.log10(vol));
                 }
@@ -98,7 +98,6 @@ public class WavClip  implements SoundClip, Base {
             return;
         
         float volume = min(1.0f, masterVolume*gain);
-        log("setting volume*gain for sound: "+filename+"  to "+(int)(volume*100));
         FloatControl gain = (FloatControl) clip.getControl(MASTER_GAIN);
         gain.setValue(20f * (float) Math.log10(volume));
     }

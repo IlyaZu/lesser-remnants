@@ -433,7 +433,6 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (type().isAsteroids())
             return;
         if (type().smallSphere(this) == null) {
-            log("Generating sphere for: ", type().toString());
             GameSession.instance().smallSphereService().submit(() -> generate2DSphere(Sphere2D.SMALL_PLANET_R));
             generate2DSphere(Sphere2D.FAST_PLANET_R);
         }
@@ -458,7 +457,6 @@ public class Planet implements Base, IMappedObject, Serializable {
         if (type().sphereResolution(this) >= radius)
             return;
 
-        log("Generate2DSphere()  sphereResolution:" + type().sphereResolution(this)+", radius:" + radius);
         // generate height map and resultant terrain grayscale image
         float terrainVal = (float) terrainSeed / PlanetType.TERRAIN_MAX;
         PlanetHeightMap heightMap =  new PlanetHeightMap(terrainVal, radius, oceanPct);

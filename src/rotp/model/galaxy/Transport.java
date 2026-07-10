@@ -276,14 +276,12 @@ public class Transport implements Base, Ship, Sprite, Serializable {
     }
     public void land() {
         if (!dest.isColonized()) {
-            log(size + " " + empire.name() + " transports perished at " + dest.name());
             if (empire.isPlayerControlled())
                 TransportsPerishedAlert.create(dest);
             size = 0;
         }
         else if (dest.empire() != empire) {
             if (surrenderOnArrival()) {
-                log(size + " " + empire.name() + " transports surrendered at " + dest.name());
                 if (empire.isPlayerControlled() || dest.empire().isPlayerControlled())
                     TransportsCapturedAlert.create(empire, dest.empire(), dest, originalSize);
                 size = 0;

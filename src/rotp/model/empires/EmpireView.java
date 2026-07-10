@@ -189,7 +189,6 @@ public final class EmpireView implements Base, Serializable {
             owner.sv.refreshSpyScan(sys.id);
     }
     public void nextTurn(float prod, float spyMod) {
-        log(this+": nextTurn");
         if (empire.extinct())
             return;
 
@@ -197,7 +196,6 @@ public final class EmpireView implements Base, Serializable {
         spies.nextTurn(prod, spyMod);
     }
     public void makeDiplomaticOffers() {
-        log(this+": makeDiplomaticOffers");
         if (owner.isAIControlled())
             owner.diplomatAI().makeDiplomaticOffers(this);
     }

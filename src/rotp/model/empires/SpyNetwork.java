@@ -246,7 +246,6 @@ public final class SpyNetwork implements Base, Serializable {
             return;
         }
         
-        log(view+" Spies: nextTurn");
         if (!activeSpies().isEmpty())
             view.refreshSystemSpyViews();
         
@@ -462,7 +461,6 @@ public final class SpyNetwork implements Base, Serializable {
         return tech.techsUnknownTo(owner());
     }
     private void allocateSpyBC(float bc) {
-        log("Allocating spy bc: "+bc);
         allocationBC += bc;
         float cost = costForNextSpy();
 

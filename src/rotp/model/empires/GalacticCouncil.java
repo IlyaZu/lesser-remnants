@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -200,8 +200,6 @@ public class GalacticCouncil implements Base, Serializable {
             votes[i] = (int) Math.ceil(voter.totalPlanetaryPopulation() / 100);
             totalVotes += votes[i];
         }
-
-        log("Convening council. # empires: " + empires.size());
     }
     private void initEmpires() {
         empires = galaxy().activeEmpires();

@@ -71,8 +71,6 @@ public abstract class GalaxyShape implements Base, Serializable {
         y = new float[maxStars];
     }
     public void generate(int numEmpires, int numStars) {
-        log("Galaxy shape: "+maxStars+ " stars"+ "   emps:"+numEmpires);
-        long tm0 = System.currentTimeMillis();
         genAttempt = 0;
         empSystems.clear();
         
@@ -108,9 +106,7 @@ public abstract class GalaxyShape implements Base, Serializable {
         }
 
         // add other systems to fill out galaxy
-        int attempts = addUncolonizedSystems();
-        long tm1 = System.currentTimeMillis();
-        log("Galaxy generation: "+(tm1-tm0)+"ms  Attempts: ", str(attempts), "  stars:", str(num), "/", str(maxStars));
+        addUncolonizedSystems();
     }
     private Point.Float addOrion() {
         Point.Float pt = new Point.Float();

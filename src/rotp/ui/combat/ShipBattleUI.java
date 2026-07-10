@@ -1634,7 +1634,6 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
     }
     private void moveMouseToCurrentStack() {
         if (robot == null) {
-            log("robot == null");
             return;
         }
         
@@ -1744,27 +1743,23 @@ public class ShipBattleUI extends FadeInPanel implements MouseListener, MouseMot
             case KeyEvent.VK_7:   clickActionButton(7, rightClick);  return;
             case KeyEvent.VK_8:   clickActionButton(8, rightClick);  return;
             case KeyEvent.VK_LEFT:
-                log("left");
                 mouseGridX = max(0,mouseGridX-1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 repaint();
                 return;
             case KeyEvent.VK_RIGHT:
-                log("right");
                 mouseGridX = min(GRID_COUNT_X-1,mouseGridX+1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 newTargetGridCell();
                 repaint();
                 return;
             case KeyEvent.VK_UP:
-                log("up");
                 mouseGridY = max(0,mouseGridY-1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 newTargetGridCell();
                 repaint();
                 return;
             case KeyEvent.VK_DOWN:
-                log("down");
                 mouseGridY = min(GRID_COUNT_Y-1,mouseGridY+1);
                 hoverBox = currentGrid = combatGrids[mouseGridX][mouseGridY];
                 newTargetGridCell();

@@ -47,7 +47,6 @@ public final class TechLibrary implements Base {
     @Override
     public Tech tech(String id)               { return techMap.get(id); }
     private void loadTechDataFile(String filename) {
-        log("Loading Techs...");
         BufferedReader in = reader(filename);
         if (in == null)
             return;
@@ -99,9 +98,7 @@ public final class TechLibrary implements Base {
         String effect = fields.size() > 5 ? fields.get(5) : "";
 
         Tech newTech = newLoadedTech(researchLevel, techType, techSeq, techFree);
-        if (newTech == null)
-            log("Error: couldn't create tech for: ", input);
-        else {
+        if (newTech != null) {
             newTech.iconFilename = iconName;
             newTech.effectKey = effect;
             loadingCat.addPossibleTech(newTech.id());
@@ -164,7 +161,6 @@ public final class TechLibrary implements Base {
     }
     public void loadTechFiles() {
         String dataDir = "data/";
-        log("Loading tech files from dir: ",dataDir);
         
         loadTechLangFile(Tech.ARMOR, "Armor.txt", dataDir);
         loadTechLangFile(Tech.ATMOSPHERE_ENRICHMENT, "AtmosphereEnrichment.txt", dataDir);
@@ -226,7 +222,6 @@ public final class TechLibrary implements Base {
         try {
             String input;
             loadingTech = null;
-            log("Loading tech file:",filename);
             while ((input = in.readLine()) != null)
                 loadTechLangLine(techType, input.trim());
             in.close();
@@ -274,7 +269,6 @@ public final class TechLibrary implements Base {
             case "detail" : loadingTech.detail = value;  break;
             case "item"   : loadingTech.item = value;    break;
             case "item2"  : loadingTech.item2 = value;   break;
-            default       : log("unknown key->", input);  return;
         }
     }
 }

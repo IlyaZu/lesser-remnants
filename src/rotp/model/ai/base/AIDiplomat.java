@@ -229,7 +229,6 @@ public class AIDiplomat implements Base, Diplomat {
     @Override
     public DiplomaticReply receiveOfferTrade(Empire requestor, int level) {
         // if the AI is asking the player, create an OfferTrade notification
-        log(empire.name(), " receiving offer trade from: ", requestor.name(), "  for:", str(level), " BC");
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_TRADE);
             return null;
@@ -296,7 +295,6 @@ public class AIDiplomat implements Base, Diplomat {
     private boolean canOfferPeaceTreaty(Empire e)           { return diplomats(id(e)) && empire.atWarWith(id(e)); }
     @Override
     public DiplomaticReply receiveOfferPeace(Empire requestor) {
-        log(empire.name(), " receiving offer of Peace from: ", requestor.name());
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_PEACE);
             return null;
@@ -446,7 +444,6 @@ public class AIDiplomat implements Base, Diplomat {
 
     @Override
     public DiplomaticReply receiveOfferPact(Empire requestor) {
-        log(empire.name(), " receiving offer of Pact from: ", requestor.name());
         EmpireView v = empire.viewForEmpire(requestor);
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_PACT);
@@ -529,7 +526,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
     @Override
     public DiplomaticReply receiveOfferAlliance(Empire requestor) {
-        log(empire.name(), " receiving offer of Alliance from: ", requestor.name());
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_ALLIANCE);
             return null;
@@ -618,7 +614,6 @@ public class AIDiplomat implements Base, Diplomat {
     }
     @Override
     public DiplomaticReply receiveOfferJointWar(Empire requestor, Empire target) {
-        log(empire.name(), " receiving offer of Joint War from: ", requestor.name());
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_JOINT_WAR, target);
             return null;
@@ -877,7 +872,6 @@ public class AIDiplomat implements Base, Diplomat {
         if (!view.inEconomicRange())
             return false;
 
-        log(view+": checkIssuePraise");
         DiplomaticIncident maxIncident = null;
         for (DiplomaticIncident ev: view.embassy().newIncidents()) {
             if (ev.triggersPraise() && moreSevere(ev, maxIncident))
@@ -886,8 +880,6 @@ public class AIDiplomat implements Base, Diplomat {
 
         if (maxIncident == null)
             return false;
-
-        log("maxInc:", maxIncident.praiseMessageId(), "  maxSev:", str(maxIncident.severity()));
 
         // don't issue praise unless new incidents are high enough
         if (maxIncident.severity() < view.embassy().minimumPraiseLevel())
@@ -908,10 +900,8 @@ public class AIDiplomat implements Base, Diplomat {
         if (emb.war())
             return false;
         float warnThreshold = -10;
-        log(view+": checkIssueWarning. Threshold: "+ warnThreshold);
         DiplomaticIncident maxIncident = null;
         for (DiplomaticIncident ev: emb.newIncidents()) {
-            log(view.toString(), "new incident:", ev.toString());
             if (ev.triggersWarning() && moreSevere(ev, maxIncident))
                 maxIncident = ev;
         }

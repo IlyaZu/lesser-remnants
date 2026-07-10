@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,6 @@ public enum ImageManager implements Base {
         return key.equalsIgnoreCase("NULL") || key.isEmpty() ? null : icon(random(imageFiles.get(key))).getImage();
     }
     public void loadImageList(String filename) {
-        log("Loading Images: ", filename);
         BufferedReader in = reader(filename);
         if (in == null)
             return;

@@ -422,7 +422,6 @@ public class GameUI  extends BasePanel implements MouseListener, MouseMotionList
             imageKey1 = imageKey2;
             imageKey2 = random(backImgKeys);
             backImg1 = backImg2;
-            log("getting image: "+imageKey2);
             backImg2 = ImageManager.current().image(imageKey2);
             backImg = newOpaqueImage(backImg1);
             animationTimer = BG_DURATION;

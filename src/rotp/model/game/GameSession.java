@@ -84,12 +84,10 @@ public final class GameSession implements Base, Serializable {
 
     public void pauseNextTurnProcessing(String s)   {
         if (performingTurn) {
-            log("Pausing Next Turn: ", s);
             suspendNextTurn = true;
         }
     }
     public void resumeNextTurnProcessing()  {
-        log("Resuming Next Turn");
         suspendNextTurn = false;
     }
     public HashMap<StarSystem, List<String>> systemsToAllocate() {
@@ -165,7 +163,6 @@ public final class GameSession implements Base, Serializable {
         if (sys.isColonized() && sys.colony().inRebellion())
             return;
         
-        log("Re-allocate: ", sys.name(), " :", reason);
         if (!systemsToAllocate().containsKey(sys))
             systemsToAllocate().put(sys, new ArrayList<>());
 
@@ -194,7 +191,6 @@ public final class GameSession implements Base, Serializable {
         
         synchronized(ONE_GAME_AT_A_TIME) {
             GalaxyFactory.current().newGalaxy();
-            log("Galaxy complete");
             status().startGame();
             clearScoutedSystems();
             systemsToAllocate().clear();
@@ -223,7 +219,6 @@ public final class GameSession implements Base, Serializable {
         keys.addAll(vars().keySet());
         for (String key: keys) {
             if (var(key) == prevValue) {
-                log("replacing value for session var: ", key);
                 var(key, newValue);
             }
         }
@@ -250,8 +245,6 @@ public final class GameSession implements Base, Serializable {
                 NoticeMessage.setStatus(turnTitle, text("TURN_SAVING"));
                 FlightPathSprite.clearWorkingPaths();
                 RotPUI.instance().mainUI().saveMapState();
-                log("Next Turn - BEGIN: ", str(galaxy.currentTurn()));
-                log("Autosaving pre-turn");
                 instance.saveRecentSession(false);
                 
                 long startMs = System.currentTimeMillis();
@@ -283,7 +276,6 @@ public final class GameSession implements Base, Serializable {
                     return;
 
                 if (processNotifications()) {
-                    log("Notifications processed 1 - back to MainPanel");
                     RotPUI.instance().selectMainPanel();
                 }
                 gal.postNextTurn1();
@@ -291,7 +283,6 @@ public final class GameSession implements Base, Serializable {
                     return;
 
                 if (processNotifications()) {
-                    log("Notifications processed 2 - back to MainPanel");
                     RotPUI.instance().selectMainPanel();
                 }
                 gal.refreshAllEmpireViews();
@@ -300,35 +291,28 @@ public final class GameSession implements Base, Serializable {
                 if (!inProgress())
                     return;
                 if (processNotifications()) {
-                    log("Notifications processed 3 - back to MainPanel");
                     RotPUI.instance().selectMainPanel();
                 }
                 // all diplomatic fallout: praise, warnings, treaty offers, war declarations
                 gal.assessTurn();
                 
                 if (processNotifications()){
-                    log("Notifications processed 4 - back to MainPanel");
                     RotPUI.instance().selectMainPanel();
                 }
                 gal.makeNextTurnDecisions();
 
                 if (processNotifications()){
-                    log("Notifications processed 5 - back to MainPanel");
                     RotPUI.instance().selectMainPanel();
                 }
                 if (!systemsToAllocate().isEmpty())
                     RotPUI.instance().allocateSystems();
 
-                log("Refreshing Player Views");
                 NoticeMessage.resetSubstatus(text("TURN_REFRESHING"));
                 validate();
                 gal.refreshAllEmpireViews();
-                log("Autosaving post-turn");
-                log("NEXT TURN PROCESSING TIME: ", str(System.currentTimeMillis()-startMs));
                 NoticeMessage.resetSubstatus(text("TURN_SAVING"));
                 instance.saveRecentSession(true);
 
-                log("Reselecting main panel");
                 RotPUI.instance().mainUI().showDisplayPanel();
                 RotPUI.instance().selectMainPanel();
                 notifications().clear();
@@ -339,7 +323,6 @@ public final class GameSession implements Base, Serializable {
                     } catch (InterruptedException e) { }
                 }
                 RotPUI.instance().repaint();
-                log("Next Turn - END: ", str(galaxy.currentTurn()));
             }
             catch(Exception e) {
                 err("Unexpected error during Next Turn:", e.toString());
@@ -357,7 +340,6 @@ public final class GameSession implements Base, Serializable {
         };
     }
     public boolean processNotifications() {
-        log("Processing player notifications: ", str(notifications().size()));
         if (haveScoutedSystems())
             session().addTurnNotification(new SystemsScoutedNotification());
 
@@ -377,7 +359,6 @@ public final class GameSession implements Base, Serializable {
         return text("MAIN_ADVANCING_YEAR", galaxy().currentTurn()+1);
     }
     public void saveSession(String filename, boolean backup) throws Exception {
-        log("Saving game as file: ", filename, "  backup: "+backup);
         GameSession currSession = GameSession.instance();
         String directoryPath = backup ? UserPreferences.backupDirectoryPath() : UserPreferences.saveDirectoryPath();
         File theDir = new File(directoryPath);
@@ -470,7 +451,6 @@ public final class GameSession implements Base, Serializable {
     }
     public void loadSession(String dir, String filename, boolean startUp) {
         try {
-            log("Loading game from file: ", filename);
             File saveFile = dir.isEmpty() ? new File(filename) : new File(dir, filename);
             GameSession newSession;
             // assume the file is not zipped, load it directly

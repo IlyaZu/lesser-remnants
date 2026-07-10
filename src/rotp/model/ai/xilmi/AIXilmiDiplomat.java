@@ -86,7 +86,6 @@ public class AIXilmiDiplomat extends AIDiplomat {
 //-----------------------------------
     @Override
     public DiplomaticReply receiveOfferJointWar(Empire requestor, Empire target) {
-        log(empire.name(), " receiving offer of Joint War from: ", requestor.name());
         if (empire.isPlayerControlled()) {
             DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_JOINT_WAR, target);
             return null;

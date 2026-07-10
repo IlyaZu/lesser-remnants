@@ -41,7 +41,6 @@ public class OfferPactMessage extends TurnNotificationMessage {
     }
     @Override
     public void select(int i) {
-        log("OfferPactMessage - selected: ", str(i));
         switch(i) {
         case 0:
             EmpireView view = player().viewForEmpire(diplomat());
