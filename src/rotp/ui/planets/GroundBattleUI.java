@@ -508,7 +508,6 @@ public class GroundBattleUI extends BasePanel implements MouseListener {
             for (int i=0;i<defendersKilled;i++)
                 assignRandomVictim(false);
             allStopFiring();
-            log("ending with defenders:"+totalDefenders);
             repaint();
         }
         else {

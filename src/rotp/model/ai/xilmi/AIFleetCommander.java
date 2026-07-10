@@ -121,7 +121,6 @@ public class AIFleetCommander implements Base, FleetCommander {
     @Override
     public void nextTurn() {
         if (empire.isAIControlled()) {
-            log(toString(), ": nextTurn");
             empire.shipLab().needColonyShips = false;
             empire.shipLab().needExtendedColonyShips = false;
             systemInfoBuffer.clear();
@@ -581,13 +580,8 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
 
         int numPlans = fleetPlans.size();
-        int numShips = 0;
-        for (FleetPlan fp: fleetPlans)
-            numShips += fp.numNeededShips();
 
         int numComplete = 0;
-
-        log("Fleet Plans to fill:  ", str(numPlans), "  ships: ", str(numShips));
         
         List<FleetPlan> retreatPlans = new ArrayList<>();
         for (FleetPlan fPlan: fleetPlans) {
@@ -609,7 +603,6 @@ public class AIFleetCommander implements Base, FleetCommander {
                     StarSystem safeSystem = RetreatSystem(fleet);
                     if(safeSystem == null)
                         safeSystem = empire.shipCaptainAI().retreatSystem(dest);
-                    log("Withdrawing fleet: ", fleet.toString(), " from: ", str(fp.destId), "  to: ", safeSystem.toString());
                     galaxy().ships.retreatFleet(fleet, safeSystem.id);
                 }
             }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,8 +77,6 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
         if (!enabled(i))
             return;
 
-        log("DiplomacyTechOfferMenu - selected: ", str(i));
-
         // exit if selected last option (forget it)
         if (i == counterOffers.size()) {
             escape();
@@ -91,10 +89,8 @@ public class DiplomacyTechOfferMenu extends DiplomacyRequestReply {
         // resume turn after reply is clicked
         reply.resumeTurn(true);
 
-        log("Replying to tech offer");
         // show reply confirmation from AI
         DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
-        log("Replying to tech offer - finished");
     }
     @Override
     public void escape() {

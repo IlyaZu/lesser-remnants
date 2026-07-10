@@ -506,7 +506,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
        try {
             drawNextTurnNotice = false;
             session().pauseNextTurnProcessing("Show Espionage");
-            log("==MAIN UI==   espionage mission");
             mainUI().showEspionageMission(mission, empId);
             selectMainPanel();
             session().waitUntilNextTurnCanProceed();
@@ -517,7 +516,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
 
     public void selectDiplomaticMessagePanel(DiplomaticNotification notif) {
         session().pauseNextTurnProcessing("Show Diplomatic Message");
-        log("==MAIN UI==   selectDiplomaticMessagePanel");
         diplomaticMessageUI.init(notif);
         if (!UserPreferences.windowed())
             selectDialogPanel(DIPLOMATIC_MESSAGE_PANEL, diplomaticMessageUI);
@@ -526,7 +524,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         session().waitUntilNextTurnCanProceed();
     }
     public void selectDiplomaticDialoguePanel(DiplomaticNotification notif) {
-        log("==MAIN UI==   selectDiplomaticDialoguePanel");
         diplomaticMessageUI.init(notif);
         diplomaticMessageUI.endFade();
         if (!UserPreferences.windowed())
@@ -535,7 +532,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             selectPanel(DIPLOMATIC_MESSAGE_PANEL, diplomaticMessageUI);
     }
     public void selectDiplomaticReplyPanel(DiplomacyRequestReply reply) {
-        log("==MAIN UI==   selectDiplomaticReplyPanel");
         diplomaticMessageUI.initReply(reply);
         diplomaticMessageUI.endFade();
         if (!UserPreferences.windowed())
@@ -545,7 +541,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     public void selectDiplomaticReplyModalPanel(DiplomacyRequestReply reply) {
         session().pauseNextTurnProcessing("Show Diplomatic Reply");
-        log("==MAIN UI==   selectDiplomaticReplyModalPanel");
         diplomaticMessageUI.initReply(reply);
         diplomaticMessageUI.endFade();
         if (!UserPreferences.windowed())
@@ -561,7 +556,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         try {
             drawNextTurnNotice = false;
             session().pauseNextTurnProcessing("Show Allocate Systems");
-            log("==MAIN UI==   allocate systems");
             mainUI().allocateSystems(session().systemsToAllocate());
             selectMainPanel();
             session().waitUntilNextTurnCanProceed();
@@ -571,14 +565,12 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     public void showSystemsScouted() {
         session().pauseNextTurnProcessing("Show Systems Scouted");
-        log("==MAIN UI==   show systems scouted");
         mainUI().showSystemsScouted(session().systemsScouted());
         selectMainPanel();
         session().waitUntilNextTurnCanProceed();
     }
     public void showSpyReport() {
         session().pauseNextTurnProcessing("Show SpyReport");
-        log("==MAIN UI==   show spy report");
         mainUI().showSpyReport();
         selectMainPanel();
         session().waitUntilNextTurnCanProceed();
@@ -640,7 +632,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
         currentPane = panelName;
         selectedPanel = panel;
         selectedPanel.playAmbience();
-        log("showing panel: ", panelName);
         layout.show(this, panelName);
     }
     @Override
@@ -748,7 +739,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
             dialogHolder.add(panel, key);
         }
         public void selectPanel(String panelName, BasePanel panel)   {
-            log("showing dialog panel: ", panelName);
             dialogLayout.show(dialogHolder, panelName);
         }
     }

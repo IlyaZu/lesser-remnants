@@ -55,7 +55,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
     @Override
     public void nextTurn() {
         if (empire.isAIControlled()) {
-            log(this+": nextTurn");
             shipCounts = galaxy().ships.shipDesignCounts(empire.id);
             // designs are updated in a specific order in order to prioritize
             // use of empty design slots
@@ -325,7 +324,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         
         // if there is a slot available, use it for the new design
         if (slot >= 0) {
-            log("Slot available: Bomber upgrade chance:"+upgradeChance);
             lab.setBomberDesign(newDesign, slot);
             currDesign.becomeObsolete(OBS_BOMBER_TURNS);
         }
@@ -431,7 +429,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
 
         // if there is a slot available, use it for the new design
         if (slot >= 0) {
-            log("Slot available: Fighter upgrade chance:"+upgradeChance);
             lab.setFighterDesign(newDesign, slot);
             currDesign.becomeObsolete(OBS_FIGHTER_TURNS);
         }

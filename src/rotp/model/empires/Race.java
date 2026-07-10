@@ -402,7 +402,6 @@ public class Race implements Base, Serializable {
                 allPossibleNames.remove(emp.sv.name(i));
         }
         String systemName = allPossibleNames.isEmpty() ? galaxy().nextSystemName(id) : allPossibleNames.get(0);
-        log("Naming system:", systemName);
         return systemName;
     }
     private List<String> masterNameList() {

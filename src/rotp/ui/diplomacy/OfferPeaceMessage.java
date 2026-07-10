@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,6 @@ public class OfferPeaceMessage extends TurnNotificationMessage {
     }
     @Override
     public void select(int i) {
-        log("OfferPeaceMessage - selected: ", str(i));
         switch(i) {
         case 0:
             DiplomaticReply reply = player().diplomatAI().acceptOfferPeace(diplomat());

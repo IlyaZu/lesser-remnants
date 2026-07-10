@@ -78,7 +78,6 @@ public class CombatManager implements Base {
             return;
         }
         empiresInConflict = sys.empiresInConflict();
-        log("Ship Combat starting in ", player().sv.name(sys.id), " between empires: ", empiresInConflict.toString());
 
         // build list of possible conflcts, where two orbiting fleets are in conflict at this system
         List<EmpireMatchup> matchups = new ArrayList<>();
@@ -197,7 +196,6 @@ public class CombatManager implements Base {
         }
 
         beginInSystem(sys, emp1, emp2);
-        log("Resolving ship battle between empire1:", emp1.name(), "  empire2:", emp2.name());
         ui = null;
 
         setupBattle(emp1, emp2);
@@ -219,7 +217,6 @@ public class CombatManager implements Base {
         if (system.empire() == emp)
             emp.lastAttacker(monster);
         monster.lastAttacker(emp);
-        log("Resolving ship battle between empire1:", emp.name(), "  monster:", monster.name());
         setupBattle(emp, monster);
         
         if (!combatIsFinished()) {
@@ -251,7 +248,6 @@ public class CombatManager implements Base {
 
     public void toggleAutoComplete() {
         autoComplete = !autoComplete;
-        log("Toggling Auto Complete: "+autoComplete);
 
         if (autoComplete) {
             autoRunThread = new Thread(autoRunProcess());
@@ -289,7 +285,6 @@ public class CombatManager implements Base {
         return autoComplete && !combatIsFinished();
     }
     public void continueToNextPlayerStack() {
-        log("Continuing To Next Player Stack");
         if (combatIsFinished())
             return;
         
@@ -435,7 +430,6 @@ public class CombatManager implements Base {
         results.logIncidents();
     }
     public void retreatStack(CombatEmpireShip stack, StarSystem s) {
-        log("Retreating: ", stack.fullName());
         performingStackTurn = true;
         stack.drawRetreat();
         results.addShipsRetreated(stack.design(), stack.num);
@@ -444,7 +438,6 @@ public class CombatManager implements Base {
         performingStackTurn = false;
     }
     public void destroyStack(CombatEntity stack) {
-        log("Destroyed: ", stack.fullName());
         if (stack instanceof CombatEmpireShip)
             results.addShipStackDestroyed(((CombatEmpireShip)stack).design(), stack.origNum);
         else if (stack instanceof CombatColony)
@@ -521,7 +514,6 @@ public class CombatManager implements Base {
                 passives.remove(st.empire);
         }
         for (Empire passiveEmp: passives) {
-            log("retreating empires from init: ",passives.toString());
             empiresInConflict.remove(passiveEmp);
         }
     }
@@ -562,7 +554,6 @@ public class CombatManager implements Base {
                 passives.remove(st.empire);
         }
         for (Empire passiveEmp: passives) {
-            log("retreating empires from init: ",passives.toString());
             empiresInConflict.remove(passiveEmp);
         }
     }
@@ -820,7 +811,6 @@ public class CombatManager implements Base {
         // stop after max turns to avoid infinite looping
         if (turnCounter > MAX_TURNS) {
             retreatEmpire(results.attacker());
-            log("combat finished-- max turns exceeded. Retreating: "+results.attacker());
             finished = true;
             if (showAnimations())
                 ui.showResult();
@@ -829,7 +819,6 @@ public class CombatManager implements Base {
 
         // no one is in conflict, the battle is over
         if (!remainingStacksInConflict()) {
-            log("combat finished-- remaining stacks unarmed or not in conflict");
             finished = true;
             if (showAnimations())
                 ui.showResult();

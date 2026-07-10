@@ -55,12 +55,7 @@ public class GalaxyFactory implements Base {
 
         List<String> alienRaces = buildAlienRaces();
 
-        log("Creating Galaxy size: ", fmt(g.width(),2), "@", fmt(g.height(),2));
-        long tm0 = System.currentTimeMillis();
-
         addNebulas(g, shape);
-        long tm1 = System.currentTimeMillis();
-        log(str(g.nebulas().size()) +" Nebulas: "+(tm1-tm0)+"ms");
 
         List<String> systemNames = playerRace.systemNames;
         Collections.shuffle(systemNames);
@@ -83,27 +78,18 @@ public class GalaxyFactory implements Base {
         for (Nebula n: g.nebulas())
             n.enrichCentralSystem();
 
-        long tm2 = System.currentTimeMillis();
-        log(str(g.numStarSystems())," Planets: "+(tm2-tm1)+"ms");
-
         // after systems created, add system views for each emp
         for (Empire e: g.empires()) {
             e.loadStartingTechs();
         }
-        long tm3 = System.currentTimeMillis();
-        log("load starting techs: "+(tm3-tm2)+"ms");
 
         for (Empire e: g.empires()) {
             e.loadStartingShipDesigns();
         }
-        long tm3b = System.currentTimeMillis();
-        log("load ship designs: "+(tm3b-tm3)+"ms");
 
         for (Empire e: g.empires()) {
             e.colonizeHomeworld();
         }
-        long tm3c = System.currentTimeMillis();
-        log("colonize homeworld: "+(tm3c-tm3b)+"ms");
 
         // after all is done, set playerCiv
         g.player(g.empire(0));
@@ -125,13 +111,8 @@ public class GalaxyFactory implements Base {
 
         g.council().init();
 
-        long tm4 = System.currentTimeMillis();
-        log("Other inits: "+(tm4-tm3c)+"ms");
-
         g.player().makeNextTurnDecisions();
         g.player().refreshViews();
-        long tm5 = System.currentTimeMillis();
-        log("Next Turn Decision: "+(tm5-tm4)+"ms");
 
         PlanetImager.current().finished();
         return g;
@@ -263,7 +244,6 @@ public class GalaxyFactory implements Base {
             sys.setXY(pt.x, pt.y);
             g.addStarSystem(sys);
         }
-        log("total systems created: ", str(g.numStarSystems()));
     }
     private void addNebulas(Galaxy g, GalaxyShape shape) {
         IGameOptions opts = GameSession.instance().options();

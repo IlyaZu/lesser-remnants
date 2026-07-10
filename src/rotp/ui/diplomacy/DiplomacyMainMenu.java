@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,6 @@ public class DiplomacyMainMenu extends DiplomaticMessage {
             return;
 
         Empire pl = player();
-        log("DiplomacyMainMenu - selected: ", str(i));
         int choice = options.get(i);
 
         switch(choice) {

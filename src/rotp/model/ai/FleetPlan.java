@@ -123,12 +123,6 @@ public class FleetPlan implements Base, Serializable {
         }
         return true;
     }
-    public int numNeededShips() {
-        int num = 0;
-        for (int i=0;i<needed.length;i++)
-            num += needed[i];
-        return num;
-    }
     public List<ShipPlan> shipPlans() {
         shipPlans.clear();
         for (int i=0;i<needed.length;i++) {
@@ -153,7 +147,6 @@ public class FleetPlan implements Base, Serializable {
     }
     public void addShips(ShipDesign design, int num) {
         if (lab().design(design.id()) != design) {
-            log("Error: adding ship with invalid design");
             return;
         }
         

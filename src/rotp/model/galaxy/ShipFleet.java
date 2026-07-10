@@ -363,7 +363,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
     }
     public void colonizeSystem(StarSystem sys, ShipDesign d) {
         String sName = empire().sv.name(sys.id);
-        log("Fleet: ", toString(), " colonizing system: ", sName, " with design:", d.name());
         empire().colonize(sName, sys);
         empire().sv.refreshFullScan(sys.id);
 
@@ -454,8 +453,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
         arrivalTime = galaxy().currentTurn();
         if (hasDestination())
             arrivalTime += travelTime(destination());
-        if (arrivalTime <= galaxy().currentTurn())
-            log("Error: ship arrivalTime <= currentTime");
     }
     public FleetOrders newOrders() {
         if (orders == null)
@@ -673,14 +670,12 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
             num[i] += otherFleet.num(i);
 
         session().replaceVarValue(otherFleet, this);
-        log("disband#3 fleet: ", otherFleet.toString());
         otherFleet.disband();
     }
     public void removeShips(int designId, int n, boolean disbandIfEmpty) {
         num[designId] = max(0, num[designId]-n);
 
         if (disbandIfEmpty && !hasShips()) {
-            log("disband#4 fleet: ", toString());
             disband();
         }
     }
@@ -691,7 +686,6 @@ public class ShipFleet implements Base, Sprite, Ship, Serializable {
 
         Empire victim = sys.empire();
         victim.lastAttacker(empire());
-        log(empire().name(), " fleet bombarding ", sys.name());
         CombatManager mgr = galaxy().shipCombat();
         mgr.setupBombardment(system(), this);
 

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -321,7 +321,6 @@ public class SelectNewTechUI extends BasePanel implements MouseListener, MouseMo
             return;
         
         finished = true;
-        log("Tech: ", t.name(), " selected for research");
         repaint();
         session().resumeNextTurnProcessing();
     }

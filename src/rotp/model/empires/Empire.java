@@ -307,7 +307,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         return scoutBorderColor;
     }
     public Empire(Galaxy g, int empId, String rk, StarSystem s, Integer cId, String name) {
-        log("creating empire for ",  rk);
         id = empId;
         raceKey = rk;
         homeSysId = capitalSysId = s.id;
@@ -670,7 +669,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         return income / empireBC;
     }
     public void nextTurn() {
-        log(this + ": NextTurn");
         shipBuildingSystems.clear();
         newSystems.clear();
         recalcPlanetaryProduction();
@@ -705,7 +703,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         recalcPlanetaryProduction();
     }
     public void postNextTurn() {
-        log(this + ": postNextTurn");
         float civProd = totalPlanetaryProduction();
         float spyMod = spySpendingModifier();
 
@@ -716,7 +713,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
     }
     public void assessTurn() {
-         log(this + ": AssessTurn");
         // have to assess trade & security views
         // before colonies since taxes may change
         empireViewsAssessTurn();
@@ -801,7 +797,6 @@ public final class Empire implements Base, NamedObject, Serializable {
     public void makeNextTurnDecisions() {
         recalcPlanetaryProduction();
         
-        log(this + ": make NextTurnDecisions");
         NoticeMessage.setSubstatus(text("TURN_SCRAP_SHIPS"));
         shipLab.nextTurn();
         
@@ -1006,7 +1001,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         return list;
     }
     public void refreshViews() {
-        log(this + ": refresh views");
         if (recalcDistances) {
             NoticeMessage.setSubstatus(text("TURN_RECALC_DISTANCES"));
             sv.calculateSystemDistances();
@@ -1652,26 +1646,22 @@ public final class Empire implements Base, NamedObject, Serializable {
     }
     public void stealTech(String id) {
         tech().learnTech(id);
-        log("Tech: "+tech(id).name(), " stolen");
     }
     public void learnTech(String techId) {
         boolean newTech = tech().learnTech(techId);
         if (newTech && isPlayerControlled()) {
-            log("Tech: ", techId, " researched");
             DiscoverTechNotification.create(techId);
         }
     }
     public void plunderTech(Tech t, StarSystem s, Empire emp) {
         boolean newTech = tech().learnTech(t.id);
         if (newTech && isPlayerControlled()) {
-            log("Tech: ", t.name(), " plundered from: ", s.name());
             PlunderTechNotification.create(t.id, s.id, emp.id);
         }
     }
     public void plunderShipTech(Tech t, int empId) {
         boolean newTech = tech().learnTech(t.id);
         if (newTech && isPlayerControlled()) {
-            log("Ship tech: ", t.name(), " plundered ");
             PlunderShipTechNotification.create(t.id, empId);
         }
     }
@@ -1688,7 +1678,6 @@ public final class Empire implements Base, NamedObject, Serializable {
             Tech tech = unknownTechs.remove(techIndex);
             boolean newTech = tech().learnTech(tech.id);
             if (newTech && isPlayerControlled()) {
-                log("Tech: ", tech.name(), " discovered on: ", s.name());
                 PlunderTechNotification.create(tech.id, s.id, -1);
             }
         }
@@ -1996,7 +1985,6 @@ public final class Empire implements Base, NamedObject, Serializable {
         // iterate over list copy to avoid comodification
         List<ShipFleet> fleets = galaxy().ships.allFleets(id);
         for (ShipFleet fl: fleets) {
-            log("disband#1 fleet: ", fl.toString());
             fl.disband();
         }
         

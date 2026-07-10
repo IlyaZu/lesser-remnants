@@ -434,9 +434,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     }
 
     public void nextTurn() {
-        log("Colony: ", empire.sv.name(starSystem().id),  ": NextTurn [" , shipyard().design().name() , "|" ,str(shipyard().allocation()) , "-"
-                    , str(defense().allocation()) , "-" , str(industry().allocation()) , "-" , str(ecology().allocation()) , "-"
-                    , str(research().allocation()) , "]");
         keepEcoLockedToClean = empire().isPlayerControlled() && (allocation[ECOLOGY] <= cleanupAllocation());
         previousPopulation = population;
         reallocationRequired = false;
@@ -835,7 +832,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // adjust pop to max allowed
 
         int xPop = min(pop, maxTransportsAllowed());
-        log("Scheduling " + xPop + " transports from: " + starSystem().name() + "  to: " + dest.name());
 
         // if zero or to this system, then clear
         if ((dest == starSystem()) || (xPop == 0))
@@ -859,13 +855,9 @@ public final class Colony implements Base, IMappedObject, Serializable {
             return;
         }
         population(min(planet.currentSize(), (population() + t.size())));
-        log("Accepting ", str(t.size()), " transports at: ", starSystem().name(), ". New pop:", fmt(population(), 2));
         t.size(0);
     }
     public void resistTransportWithRebels(Transport tr) {
-        log(str(rebels), " ", empire().raceName(), " rebels at ", starSystem().name(), " resisting ",
-                    str(tr.size()), " ", tr.empire().raceName(), " transports");
-        
         if (!tr.empire().canColonize(starSystem())) {
             // no appropriate alert message for this transport loss. Even more of an edge case.
             tr.size(0);
@@ -896,9 +888,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         tr.size(0);
     }
     public void resistTransport(Transport tr) {
-        log(empire().raceName() + " colony at " + starSystem().name() + " resisting " + tr.size() + " "
-                        + tr.empire().raceName() + " transports");
-        
         if (!tr.empire().canColonize(starSystem())) {
             if (tr.empire().isPlayerControlled())
                 TransportsKilledAlert.create(empire(), starSystem(), tr.launchSize());
@@ -1008,7 +997,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
         // neither of these incidents are added to the embassies. They are for
         // player notification only.
         if (tr.size() == 0) {
-            log(tr.launchSize() + " " + tr.empire().raceName() + " transports perished at " + name());
             if (tr.empire().isPlayerControlled()) {
                 TransportsKilledAlert.create(defendingEmpire, starSystem(), tr.launchSize());
             } else if (empire().isPlayerControlled())

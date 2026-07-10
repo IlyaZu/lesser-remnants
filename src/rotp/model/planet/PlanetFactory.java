@@ -71,7 +71,6 @@ public class PlanetFactory implements Base {
         return p;
     }
     private void loadDataFiles() {
-        log("Loading Planet Types...");
         BufferedReader in = reader(planetListFile);
         if (in == null)
             return;

@@ -59,7 +59,6 @@ public class AIFleetCommander implements Base, FleetCommander {
     @Override
     public void nextTurn() {
         if (empire.isAIControlled()) {
-            log(toString(), ": nextTurn");
             empire.shipLab().needColonyShips = false;
             empire.shipLab().needExtendedColonyShips = false;
             sendColonyMissions = !empire.shipLab().colonyDesign().obsolete();
@@ -140,13 +139,8 @@ public class AIFleetCommander implements Base, FleetCommander {
         }
 
         int numPlans = fleetPlans.size();
-        int numShips = 0;
-        for (FleetPlan fp: fleetPlans)
-            numShips += fp.numNeededShips();
 
         int numComplete = 0;
-
-        log("Fleet Plans to fill:  ", str(numPlans), "  ships: ", str(numShips));
         //for (FleetPlan fp: fleetPlans)
         //    log(fp.fullName());
         
@@ -168,7 +162,6 @@ public class AIFleetCommander implements Base, FleetCommander {
                 if (fleet != null) {
                     StarSystem dest = galaxy().system(fp.destId);
                     StarSystem safeSystem = empire.ai().shipCaptain().retreatSystem(dest);
-                    log("Withdrawing fleet: ", fleet.toString(), " from: ", str(fp.destId), "  to: ", safeSystem.toString());
                     galaxy().ships.retreatFleet(fleet, safeSystem.id);
                 }
             }
@@ -354,12 +347,10 @@ public class AIFleetCommander implements Base, FleetCommander {
                 if (ev.empire().sv.withinRange(id, range))
                     needEscort = true;
             }
-            log(empire.sv.name(id), ": setting Colony Plan: ", str(plan.priority), "  staged at:", str(plan.stagingPointId));
             if (needEscort) {
                 ShipDesignLab lab = empire.shipLab();
                 float speed = max(lab.colonyDesign().warpSpeed(), lab.fighterDesign().warpSpeed());
                 plan.stagingPointId = empire.alliedColonyNearestToSystem(gal.system(id), speed);
-                log(empire.sv.name(id), ": setting escorted Colony Plan: ", str(plan.priority), "  staged at:", str(plan.stagingPointId));
                 if (!empire.shipLab().fighterDesign().obsolete()) {
                     int numFighters = (int) max(1, value/60);
                     plan.addShips(empire.shipLab().fighterDesign(), numFighters);

@@ -124,7 +124,6 @@ public enum AnimationManager implements Base {
         return result;
     }
     public void loadAnimationList(String filename) {
-        log("Loading Animations: ", filename);
         BufferedReader in = reader(filename);
         if (in == null)
             return;

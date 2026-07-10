@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,13 +42,11 @@ public class Rotp {
     private static final String exeFileName = "Remnants.exe";
     public static int IMG_W = 1229;
     public static int IMG_H = 768;
-    public static boolean countWords = false;
     private static String startupDir = System.getProperty("startupdir");
     private static JFrame frame;
     public static String releaseId = "lesser";
     public static long maxHeapMemory = Runtime.getRuntime().maxMemory() / 1048576;
     public static long maxUsedMemory;
-    public static boolean logging = false;
     private static float resizeAmt =  -1.0f;
     private static int actualAlloc = -1;
     private static boolean reloadRecentSave = false;
@@ -60,7 +58,6 @@ public class Rotp {
         if (args.length == 0) {
             if (restartWithMoreMemory(frame, false))
                 return;
-            logging = false;
         }
         else {
             if (args[0].toLowerCase().endsWith(".rotp"))
@@ -68,7 +65,6 @@ public class Rotp {
         }
         
         reloadRecentSave = containsArg(args, "reload");
-        logging = containsArg(args, "log");
         stopIfInsufficientMemory(frame, (int)maxHeapMemory);
         Thread.setDefaultUncaughtExceptionHandler(new SwingExceptionHandler());
         frame.addWindowListener(new WindowAdapter() {
@@ -129,8 +125,6 @@ public class Rotp {
         int maxX = (int)((hFrame+IMG_W)*adj);
         int maxY = (int)((vFrame+IMG_H)*adj);
         FontManager.current().resetFonts();
-        if (logging)
-            System.out.println("setting size to: "+maxX+" x "+maxY);
         frame.getContentPane().setPreferredSize(new Dimension(maxX,maxY));
         frame.pack();
     }
@@ -148,8 +142,6 @@ public class Rotp {
 
             resizeAmt = (float) maxY/768;
             (new BasePanel()).loadScaledIntegers();
-            if (logging)
-                System.out.println("resize amt:"+resizeAmt);
         }
         return resizeAmt;
     }

@@ -66,7 +66,6 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
     }
     @Override
     public void trigger(Empire emp) {
-        log("Starting Amoeba event against: "+emp.raceName());
         StarSystem targetSystem = random(emp.allColonizedSystems());
         empId = emp.id;
         sysId = targetSystem.id;
@@ -158,7 +157,6 @@ public class RandomEventSpaceAmoeba implements Base, Serializable, RandomEvent {
         }
         
         int selectedSystemId = random(destinationIds);
-        log("Space Amoeba moving to system: "+selectedSystemId);
         StarSystem nextSys = galaxy().system(selectedSystemId);
         float slowdownEffect = max(1, 100.0f / galaxy().maxNumStarSystems());
         turnCount = (int) Math.ceil(1.5*slowdownEffect*nextSys.distanceTo(targetSystem));

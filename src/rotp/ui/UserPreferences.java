@@ -257,8 +257,6 @@ public class UserPreferences {
         if (key.isEmpty() || val.isEmpty())
                 return;
 
-        if (Rotp.logging)
-            System.out.println("Key:"+key+"  value:"+val);
         switch(key) {
             case "DISPLAY_MODE":  displayMode = displayModeFromSettingName(val); return;
             case "GRAPHICS":     graphicsMode = graphicsModeFromSettingName(val); return;
