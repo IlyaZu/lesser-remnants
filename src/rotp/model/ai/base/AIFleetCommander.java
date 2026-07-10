@@ -66,11 +66,6 @@ public class AIFleetCommander implements Base, FleetCommander {
             NoticeMessage.setSubstatus(text("TURN_FLEET_PLANS"));
             buildFleetPlans();
             fillFleetPlans();
-//            for (StarSystem sys: empire.allColonizedSystems()) {
-//                ColonyShipyard ship = sys.colony().shipyard();
-//                if (ship.building())
-//                    log("Building ", str(ship.desiredShips()), ":", ship.design().name(), " at ", empire.sv.name(sys.id));
-//            }
         }
     }
     @Override
@@ -141,8 +136,6 @@ public class AIFleetCommander implements Base, FleetCommander {
         int numPlans = fleetPlans.size();
 
         int numComplete = 0;
-        //for (FleetPlan fp: fleetPlans)
-        //    log(fp.fullName());
         
         List<FleetPlan> retreatPlans = new ArrayList<>();
         for (FleetPlan fPlan: fleetPlans) {
