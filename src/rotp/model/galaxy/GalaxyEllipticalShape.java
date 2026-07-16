@@ -43,11 +43,11 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     }
     @Override
     protected int galaxyWidthLY(int numStars) {
-        return (int) (Math.sqrt(numStars*adjustedSizeFactor()));
+        return (int) (Math.sqrt(numStars*sizeFactor(opts.selectedGalaxySize())));
     }
     @Override
     protected int galaxyHeightLY(int numStars) {
-        return (int) (Math.sqrt(numStars*adjustedSizeFactor()));
+        return (int) (Math.sqrt(numStars*sizeFactor(opts.selectedGalaxySize())));
     }
     @Override
     public void setRandom(Point.Float pt) {
@@ -61,16 +61,16 @@ public class GalaxyEllipticalShape extends GalaxyShape {
     private float randomLocation(float max, float buff) {
         return buff + (random() * (max-buff-buff));
     }
-    @Override
-    protected float sizeFactor(String size) {
-        switch (size) {
-            case IGameOptions.SIZE_TINY:      return 8;
-            case IGameOptions.SIZE_SMALL:     return 10;
-            case IGameOptions.SIZE_MEDIUM:    return 12;
-            case IGameOptions.SIZE_LARGE:     return 13;
-            case IGameOptions.SIZE_HUGE:      return 14;
-            case IGameOptions.SIZE_MASSIVE:   return 16;
-            default:                          return 19;
-        }
+    private float sizeFactor(String size) {
+        int sizeFactor = switch (size) {
+            case IGameOptions.SIZE_TINY    -> 8;
+            case IGameOptions.SIZE_SMALL   -> 10;
+            case IGameOptions.SIZE_MEDIUM  -> 12;
+            case IGameOptions.SIZE_LARGE   -> 13;
+            case IGameOptions.SIZE_HUGE    -> 14;
+            case IGameOptions.SIZE_MASSIVE -> 16;
+            default                        -> 19;
+        };
+        return sizeFactor + genAttempt()/3;
     }
 }
