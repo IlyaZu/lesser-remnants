@@ -50,7 +50,6 @@ public abstract class GalaxyShape implements Base, Serializable {
     protected abstract int galaxyHeightLY(int numStars);
     public abstract void setRandom(Point.Float p);
     public abstract boolean valid(float x, float y);
-    protected abstract float sizeFactor(String size);
     public abstract float maxScaleAdj();
 
     public boolean valid(Point.Float p) { return valid(p.x, p.y); }
@@ -61,7 +60,7 @@ public abstract class GalaxyShape implements Base, Serializable {
     public int numberStarSystems()            { return num; }
     public int totalStarSystems()             { return num+homeStars;}
     public List<EmpireSystem> empireSystems() { return empSystems; }
-    public float adjustedSizeFactor()        { return sizeFactor(opts.selectedGalaxySize()) + (genAttempt/3); }
+    public int genAttempt()                   { return genAttempt; }
 
     public void init(int numStars) {
         maxStars = numStars;
