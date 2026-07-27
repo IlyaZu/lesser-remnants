@@ -48,7 +48,7 @@ public class DialogString implements Base {
         int cThreshold = -30;
         int aThreshold = 30;
         int[] cCodes = { 1, 3, 5, 7 };  // 1,3,5,7 = 1-bit is set
-        int[] bCodes = { 2, 3, 6, 7 };  // 2,3,6,7 = 2-bit is set             
+        int[] bCodes = { 2, 3, 6, 7 };  // 2,3,6,7 = 2-bit is set
         int[] aCodes = { 4, 5, 6, 7 };  // 4,5,6,7 = 4-bit is set
 
         int[] testCodes = d < cThreshold ? cCodes: (d > aThreshold ? aCodes: bCodes);
@@ -63,7 +63,7 @@ public class DialogString implements Base {
         float cThreshold = 0.5f;
         float aThreshold = 2.0f;
         int[] cCodes = { 1, 3, 5, 7 };  // 1,3,5,7 = 1-bit is set
-        int[] bCodes = { 2, 3, 6, 7 };  // 2,3,6,7 = 2-bit is set             
+        int[] bCodes = { 2, 3, 6, 7 };  // 2,3,6,7 = 2-bit is set
         int[] aCodes = { 4, 5, 6, 7 };  // 4,5,6,7 = 4-bit is set
 
         int[] testCodes = d < cThreshold ? cCodes: (d > aThreshold ? aCodes: bCodes);
