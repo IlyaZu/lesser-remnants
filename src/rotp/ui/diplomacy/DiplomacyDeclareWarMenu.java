@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
-import rotp.ui.RotPUI;
 
 public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
     private final List<Integer> options = new ArrayList<>();
@@ -73,17 +72,12 @@ public class DiplomacyDeclareWarMenu extends DiplomaticMessage {
             reply.returnMenu(null);
         else
             reply.returnMenu(DialogueManager.DIPLOMACY_MAIN_MENU);
-        
-        reply.returnToMap(returnToMap());
 
         // show reply
         DiplomaticMessage.reply(DiplomacyRequestReply.create(diplomat(), reply));
     }
     @Override
     public void escape() {
-        if (returnToMap)
-            RotPUI.instance().selectMainPanel();
-        else
-            DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_MAIN_MENU);
+        DiplomaticMessage.show(view(), DialogueManager.DIPLOMACY_MAIN_MENU);
     }
 }
