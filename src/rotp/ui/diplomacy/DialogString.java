@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +21,10 @@ import rotp.model.empires.EmpireView;
 import rotp.util.Base;
 
 public class DialogString implements Base {
-    String messageType;
-    int relationsCode;
-    int powerCode;
-    String key;
+    private String messageType;
+    private int relationsCode;
+    private int powerCode;
+    private String key;
     public String key()               { return key; }
     public DialogString (String line) {
         decodeFileInput(line);

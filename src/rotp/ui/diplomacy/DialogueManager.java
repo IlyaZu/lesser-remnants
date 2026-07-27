@@ -27,7 +27,7 @@ import rotp.model.incidents.DiplomaticIncident;
 import rotp.util.Base;
 
 public class DialogueManager implements Base {
-    public static final String DIALOG_FILENAME = "data/dialogue.txt";
+    private static final String DIALOG_FILENAME = "data/dialogue.txt";
     // these values are used in the dialogue.txt file to identify message types
     public static final String CONTACT_PACIFIST         = "Contact-Pacifist";
     public static final String CONTACT_HONORABLE        = "Contact-Honorable";
@@ -98,8 +98,8 @@ public class DialogueManager implements Base {
     public static final String DECLARE_SPYING_WAR       = "DeclareWar-Spying";
     public static final String DECLARE_ERRATIC_WAR      = "DeclareWar-Erratic";
 
-    public HashMap<String, DiplomaticMessage> messages = new HashMap<>();
-    public List<DialogString> strings = new ArrayList<>();
+    private HashMap<String, DiplomaticMessage> messages = new HashMap<>();
+    private List<DialogString> strings = new ArrayList<>();
     private static final DialogueManager instance = new DialogueManager(DIALOG_FILENAME);
     public static DialogueManager current()       { return instance; }
     public DialogueManager(String filename) {
