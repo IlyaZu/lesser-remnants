@@ -21,10 +21,11 @@ import rotp.model.empires.EmpireView;
 import rotp.util.Base;
 
 public class DialogString implements Base {
-    private String messageType;
-    private int relationsCode;
-    private int powerCode;
-    private String key;
+    private final String messageType;
+    private final int relationsCode;
+    private final int powerCode;
+    private final String key;
+    
     public String key()               { return key; }
     public DialogString (String line) {
         List<String> parms = substrings(line,'|');
