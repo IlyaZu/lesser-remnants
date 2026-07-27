@@ -303,7 +303,7 @@ public final class SpyNetwork implements Base, Serializable {
         // this prevents activity after contact based on fleet contact
         return view.owner().numSystemsForCiv(view.empire()) > 0;
     }
-    public void updateTechList() {
+    private void updateTechList() {
         
         Empire emp = view().empire();
         Empire owner = view().owner();

@@ -151,7 +151,7 @@ public class DiplomaticMessageUI extends FadeInPanel implements MouseListener, M
         g.drawImage(img0,0,0,null);
         drawOverlay(g);
     }
-    public Image paintToImage() {
+    private Image paintToImage() {
         if (message == null)
             err(messageRemark);
         
