@@ -24,7 +24,6 @@ import rotp.ui.RotPUI;
 import rotp.util.Base;
 
 public class DiplomaticNotification implements TurnNotification, Base {
-    private EmpireView view;
     private Empire talker;
     private Empire other;
     private String type;
@@ -52,12 +51,10 @@ public class DiplomaticNotification implements TurnNotification, Base {
     }
 
     public DiplomaticNotification(EmpireView v, String messageType) {
-        view = v;
         talker = v.owner();
         type = messageType;
     }
     private DiplomaticNotification(EmpireView v, DiplomaticIncident inc, String messageType) {
-        view = v;
         talker = v.owner();
         type = messageType;
         incident = inc;
@@ -66,10 +63,8 @@ public class DiplomaticNotification implements TurnNotification, Base {
     public Empire otherEmpire()          { return other; }
     public DiplomaticIncident incident() { return incident; }
     public String type()                 { return type; }
-    public EmpireView view()             { return view; }
     public void setReturnToMap()         { returnToMap = true; }
     public boolean returnToMap()         { return returnToMap; }
-    public void view(EmpireView v)       { view = v; talker = v.owner(); }
     @Override
     public String displayOrder() { return DIPLOMATIC_MESSAGE; }
     @Override
