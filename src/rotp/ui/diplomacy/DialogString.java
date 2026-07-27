@@ -27,7 +27,12 @@ public class DialogString implements Base {
     private String key;
     public String key()               { return key; }
     public DialogString (String line) {
-        decodeFileInput(line);
+        List<String> parms = substrings(line,'|');
+        messageType = parms.get(0);
+        int filterCode = parseInt(parms.get(1)); // filter code is 2-digit number: [1-7][1-7]
+        relationsCode = filterCode / 10;  // first dight is for relations
+        powerCode = filterCode % 10;      // second dight is for relative power
+        key = parms.get(2);
     }
     public boolean matchesType(String t)      { return messageType.equals(t); }
     public boolean fitsContext(EmpireView view) {
@@ -35,14 +40,6 @@ public class DialogString implements Base {
             return true;
         return matchesRelations(view.embassy().relations())
             && matchesRelativePower(view.empirePower());
-    }
-    private void decodeFileInput(String line) {
-        List<String> parms = substrings(line,'|');
-        messageType = parms.get(0);
-        int filterCode = parseInt(parms.get(1)); // filter code is 2-digit number: [1-7][1-7]
-        relationsCode = filterCode / 10;  // first dight is for relations
-        powerCode = filterCode % 10;      // second dight is for relative power
-        key = parms.get(2);
     }
     private boolean matchesRelations(float d) {
         int cThreshold = -30;
