@@ -73,15 +73,14 @@ public abstract class DiplomaticMessage implements Base {
     public EmpireView view()                     { return diplomat.viewForEmpire(player()); }
 
     public boolean showTalking()                 { return true; }
-    public DialogueManager manager()             { return DialogueManager.current(); }
     public void returnToMap(boolean b)           { returnToMap = b; }
     public boolean returnToMap()                 { return returnToMap; }
     public String remark(Empire target) {
         if (remark == null) {
             if (target == null)
-               remark = decode(manager().randomMessage(messageType, diplomat()));
+               remark = decode(DialogueManager.current().randomMessage(messageType, diplomat()));
             else
-               remark = decode(manager().randomMessage(messageType, diplomat()), target);
+               remark = decode(DialogueManager.current().randomMessage(messageType, diplomat()), target);
         }
         return remark;
     }
