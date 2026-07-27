@@ -23,9 +23,6 @@ import rotp.model.empires.DiplomaticEmbassy;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
 import rotp.model.tech.Tech;
-import rotp.ui.diplomacy.DialogueManager;
-import rotp.ui.diplomacy.DiplomaticReply;
-import rotp.ui.notifications.DiplomaticNotification;
 
 public class AIXilmiDiplomat extends AIDiplomat {
     private final Empire empire;
@@ -80,50 +77,5 @@ public class AIXilmiDiplomat extends AIDiplomat {
                 return true;
         }
         return false;
-    }
-//-----------------------------------
-//  JOINT WARS
-//-----------------------------------
-    @Override
-    public DiplomaticReply receiveOfferJointWar(Empire requestor, Empire target) {
-        if (empire.isPlayerControlled()) {
-            DiplomaticNotification.create(requestor.viewForEmpire(empire), DialogueManager.OFFER_JOINT_WAR, target);
-            return null;
-        }
-        
-        if (empire.atWarWith(target.id))
-            return new DiplomaticReply(false, "Already at war with that empire");
-
-        EmpireView v = empire.viewForEmpire(requestor);
-        
-        // not helping someone whom I don't have real contact with
-        if (!empire.inEconomicRange(requestor.id))
-            return v.refuse(DialogueManager.DECLINE_OFFER, target);
-
-        // never willing to declare war on an ally
-        if (empire.alliedWith(target.id))
-            return v.refuse(DialogueManager.DECLINE_NO_WAR_ON_ALLY, target);
-        
-        // never willing to declare war on an NAP partner
-        if (empire.pactWith(target.id))
-            return v.refuse(DialogueManager.DECLINE_OFFER, target);
-        
-        // if a peacy treaty is in effect with the target, then refuse
-        if (empire.viewForEmpire(target.id).embassy().atPeace()) {
-            return v.refuse(DialogueManager.DECLINE_PEACE_TREATY, target);
-        }
-        
-         // will always declare war if allied with the requestor and he is already at war with the target
-        if (requestor.alliedWith(id(empire)) && requestor.atWarWith(target.id))
-            return acceptOfferJointWar(requestor, target);
-        
-        if(!empire.enemies().isEmpty())
-            return v.refuse(DialogueManager.DECLINE_OFFER, target);
-
-        //ail: refuse offer if we like the target more than the one who asks
-        if(empire.viewForEmpire(target).embassy().relations() > v.embassy().relations())
-            return v.refuse(DialogueManager.DECLINE_OFFER, target);
-        
-        return v.refuse(DialogueManager.DECLINE_OFFER, target);
     }
 }
