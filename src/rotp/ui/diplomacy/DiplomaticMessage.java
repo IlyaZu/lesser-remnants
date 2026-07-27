@@ -47,7 +47,6 @@ public abstract class DiplomaticMessage implements Base {
     private DiplomaticIncident incident;
     protected String messageType = "";
     protected String remark;
-    protected boolean returnToMap = false;
 
     public int numReplies()                      { return 1; }
     public int numDataLines()                    { return 0; }
@@ -64,7 +63,6 @@ public abstract class DiplomaticMessage implements Base {
         remark = null;
         incident = null;
         diplomat = null;
-        returnToMap = false;
     }
     public void diplomat(Empire v)               { diplomat = v; }
     public Empire diplomat()                     { return diplomat; }
@@ -73,8 +71,6 @@ public abstract class DiplomaticMessage implements Base {
     public EmpireView view()                     { return diplomat.viewForEmpire(player()); }
 
     public boolean showTalking()                 { return true; }
-    public void returnToMap(boolean b)           { returnToMap = b; }
-    public boolean returnToMap()                 { return returnToMap; }
     public String remark(Empire target) {
         if (remark == null) {
             if (target == null)
@@ -86,12 +82,7 @@ public abstract class DiplomaticMessage implements Base {
     }
 
     public static DiplomaticNotification show(EmpireView v, String type) {
-        return show(v,type,false);
-    }
-    public static DiplomaticNotification show(EmpireView v, String type, boolean returnToMap) {
         DiplomaticNotification notif = new DiplomaticNotification(v, type);
-        if (returnToMap)
-            notif.setReturnToMap();
         RotPUI.instance().selectDiplomaticDialoguePanel(notif);
         return notif;
     }
