@@ -32,7 +32,7 @@ public class LanguageManager implements Base {
     private static final LanguageManager instance = new LanguageManager();
     public static LanguageManager current() { return instance; }
 
-    private static int DEFAULT_LANGUAGE = 0;
+    private static final int DEFAULT_LANGUAGE = 0;
     private static final String baseDir = "lang/";
     private static final String languageFile = "languages.txt";
     private static final List<Language> languages = new ArrayList<>();
@@ -195,8 +195,8 @@ public class LanguageManager implements Base {
         FontManager.current().loadLanguageFonts(baseDir, dirString);
     }
     private static class Language {
-        String directory;
-        boolean logographic = false;
+        final String directory;
+        final boolean logographic;
         String name;
         public Language(String dir, String n, boolean logo) {
             directory = dir;
