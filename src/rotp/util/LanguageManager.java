@@ -36,7 +36,7 @@ public class LanguageManager implements Base {
     private static final String baseDir = "lang/";
     private static final String languageFile = "languages.txt";
     private static final List<Language> languages = new ArrayList<>();
-    private static int selectedLanguage = LanguageManager.DEFAULT_LANGUAGE;
+    private static int selectedLanguage = DEFAULT_LANGUAGE;
 
     public static int selectedLanguage()        { return selectedLanguage; }
 
