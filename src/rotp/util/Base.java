@@ -569,19 +569,7 @@ public interface Base {
     public default Border newEmptyBorder(int top, int left, int bottom, int right) {
         return BorderFactory.createEmptyBorder(scaled(top), scaled(left), scaled(bottom), scaled(right));
     }
-    public default String replaceDigits(String s0) {
-        String s = s0;
-        if (LanguageManager.customDigits != null) {
-            char[] oldDigits = LanguageManager.latinDigits;
-            char[] newDigits = LanguageManager.customDigits;
-            int n = min(oldDigits.length, newDigits.length);
-            for (int j=0;j<n;j++)
-                s = s.replace(oldDigits[j], newDigits[j]);
-        }
-        return s;
-    }
-    public default void drawString(Graphics g, String str0, int x, int y) {
-        String str = replaceDigits(str0);
+    public default void drawString(Graphics g, String str, int x, int y) {
         g.drawString(str, x, y);
     }
     public default void drawBorderedString(Graphics g, String str, int x, int y, Color back, Color fore) {
