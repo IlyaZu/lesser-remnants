@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ public interface TurnNotification extends Comparable<TurnNotification> {
     static final String RANDOM_EVENT     = "0002";  // before tech notifications
     static final String DISCOVER_TECH    = "0020";
     static final String PLUNDER_TECH     = "0021";
-    static final String STEAL_TECH       = "0022";
     static final String SELECT_NEW_TECH  = "0030";  // after all tech discovery notifications
     static final String SYSTEMS_SCOUTED  = "0100";
     static final String PROMPT_BOMBARD   = "4000";  // must occur before colonize prompt
