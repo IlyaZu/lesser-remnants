@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import rotp.model.ships.ShipSpecialTeleporter;
 
 public final class TechTeleporter extends Tech {
     public TechTeleporter(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(c, Tech.TELEPORTER, typeId, seq, lv);
+        super(Tech.TELEPORTER, typeId, seq, lv, c);
         free = b;
     }
     @Override

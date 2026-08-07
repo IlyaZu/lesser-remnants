@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechSubspaceInterdictor extends Tech {
     public TechSubspaceInterdictor(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(c, Tech.SUBSPACE_INTERDICTOR, typeId, seq, lv);
+        super(Tech.SUBSPACE_INTERDICTOR, typeId, seq, lv, c);
         free = b;
     }
     @Override

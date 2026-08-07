@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ public final class TechIndustrialWaste extends Tech {
     public float wasteModifier;
 
     public TechIndustrialWaste(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(c, Tech.INDUSTRIAL_WASTE, typeId, seq, lv);
+        super(Tech.INDUSTRIAL_WASTE, typeId, seq, lv, c);
         free = b;
         switch(typeSeq) {
             case 0: wasteModifier = .80f; break;
