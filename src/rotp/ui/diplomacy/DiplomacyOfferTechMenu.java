@@ -66,7 +66,7 @@ public class DiplomacyOfferTechMenu extends DiplomaticMessage {
 
         Tech tech = choices.get(i);
         EmpireView view = diplomat().viewForEmpire(player());
-        view.embassy().receiveTechnologyAid(tech.id);
+        view.embassy().receiveTechnologyAid(tech.id());
         // get the reply which contains text response from AI
         DiplomaticReply reply = DiplomaticReplies.acceptTechnologyAid(view, tech);
 

@@ -80,7 +80,7 @@ public class Tech implements Base {
     public static final int FUTURE_PROPULSION = 94;
     public static final int FUTURE_WEAPON = 95;
 
-    public final String id;
+    private final String id;
     public final int techType;
     public final int typeSeq;
     public final int level;

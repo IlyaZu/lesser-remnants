@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public class MissileBaseComponent implements Base, Serializable {
     private int baseCost = 0;
     
     public MissileBaseComponent(Tech tech) {
-        this.techId = tech.id;
+        this.techId = tech.id();
     }
 
     public Tech tech()                { return tech(techId); }
