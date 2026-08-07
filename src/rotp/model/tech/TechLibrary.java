@@ -37,7 +37,7 @@ public final class TechLibrary implements Base {
         instance.loadTechDataFile(techDataFile);
         instance.loadTechFiles();
     }
-    public static String techMatching(int type, int seq) {
+    private static String techMatching(int type, int seq) {
         for (Tech t : current().techMap.values()) {
             if ((t.techType == type) && (t.typeSeq == seq))
                     return t.id();
@@ -159,7 +159,7 @@ public final class TechLibrary implements Base {
 
         return null;
     }
-    public void loadTechFiles() {
+    private void loadTechFiles() {
         String dataDir = "data/";
         
         loadTechLangFile(Tech.ARMOR, "Armor.txt", dataDir);
