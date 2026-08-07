@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public final class TechControlEnvironment extends Tech {
     public String specialName;
 
     public TechControlEnvironment (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(c, Tech.CONTROL_ENVIRONMENT, typeId, seq, lv);
+        super(Tech.CONTROL_ENVIRONMENT, typeId, seq, lv, c);
         free = b;
         switch(typeSeq) {
             case 0: hostilityAllowed = PlanetType.HOSTILITY_MINIMAL; return;

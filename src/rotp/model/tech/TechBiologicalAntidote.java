@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ public final class TechBiologicalAntidote extends Tech {
     public int attackReduction;
 
     public TechBiologicalAntidote(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(c, Tech.BIOLOGICAL_ANTIDOTE, typeId, seq, lv);
+        super(Tech.BIOLOGICAL_ANTIDOTE, typeId, seq, lv, c);
         free = b;
         switch(typeSeq) {
             case 0: attackReduction = 1; break;

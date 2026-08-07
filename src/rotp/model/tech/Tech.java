@@ -84,7 +84,9 @@ public class Tech implements Base {
     public final int techType;
     public final int typeSeq;
     public final int level;
+    public final int quintile;
     private final TechCategory cat;
+
     public String iconFilename;
     public String effectKey;
 
@@ -95,20 +97,19 @@ public class Tech implements Base {
     public String item2 = null;
     public String shDesc2 = "";
 
-    public final int quintile;
     public boolean restricted = false;
     public boolean free = false;
     public float cost = 0;
     public float size = 0;
     public float power = 0;
 
-    public Tech(TechCategory category, int techType, String typeId, int typeSeq, int level) {
-        this.cat = category;
+    public Tech(int techType, String typeId, int typeSeq, int level, TechCategory category) {
         this.techType = techType;
         this.id = typeId + ":" + typeSeq;
         this.typeSeq = typeSeq;
         this.level = level;
         this.quintile = (level+4)/5;
+        this.cat = category;
     }
     
     public String id() {
