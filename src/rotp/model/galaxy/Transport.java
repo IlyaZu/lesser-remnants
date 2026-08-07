@@ -196,10 +196,10 @@ public class Transport implements Base, Ship, Sprite, Serializable {
         combatAdj = tech.troopCombatAdj(false);
         combatTransportPct = empire.combatTransportPct();
 
-        troopArmorId = tech.topArmorTech().id;
-        troopBattleSuitId = tech.topBattleSuitTech().id;
-        troopWeaponId = tech.topHandWeaponTech().id;
-        troopShieldId = tech.topPersonalShieldTech().id;
+        troopArmorId = tech.topArmorTech().id();
+        troopBattleSuitId = tech.topBattleSuitTech().id();
+        troopWeaponId = tech.topHandWeaponTech().id();
+        troopShieldId = tech.topPersonalShieldTech().id();
     }
     public void setDefaultTravelSpeed() {
         travelSpeed = from.canStargateTravelTo(dest) ? distanceTo(dest) : empire.transportTravelSpeed(from, dest);

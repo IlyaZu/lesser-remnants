@@ -1654,15 +1654,15 @@ public final class Empire implements Base, NamedObject, Serializable {
         }
     }
     public void plunderTech(Tech t, StarSystem s, Empire emp) {
-        boolean newTech = tech().learnTech(t.id);
+        boolean newTech = tech().learnTech(t.id());
         if (newTech && isPlayerControlled()) {
-            PlunderTechNotification.create(t.id, s.id, emp.id);
+            PlunderTechNotification.create(t.id(), s.id, emp.id);
         }
     }
     public void plunderShipTech(Tech t, int empId) {
-        boolean newTech = tech().learnTech(t.id);
+        boolean newTech = tech().learnTech(t.id());
         if (newTech && isPlayerControlled()) {
-            PlunderShipTechNotification.create(t.id, empId);
+            PlunderShipTechNotification.create(t.id(), empId);
         }
     }
     public void plunderAncientTech(StarSystem s) {
@@ -1676,9 +1676,9 @@ public final class Empire implements Base, NamedObject, Serializable {
         for (int i=0;i<numTechs && !unknownTechs.isEmpty();i++) {
             int techIndex = random.nextInt(unknownTechs.size());
             Tech tech = unknownTechs.remove(techIndex);
-            boolean newTech = tech().learnTech(tech.id);
+            boolean newTech = tech().learnTech(tech.id());
             if (newTech && isPlayerControlled()) {
-                PlunderTechNotification.create(tech.id, s.id, -1);
+                PlunderTechNotification.create(tech.id(), s.id, -1);
             }
         }
     }

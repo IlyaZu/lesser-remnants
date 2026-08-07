@@ -265,8 +265,8 @@ public class DiplomaticEmbassy implements Base, Serializable {
     public DiplomaticIncident exchangeTechnology(Tech offeredTech, Tech requestedTech) {
         // civ() is the requestor, and will be learning the requested tech
         // owner() is the requestee, who will be learning the counter-offered tech
-        owner().tech().acquireTechThroughTrade(offeredTech.id, empire().id);
-        empire().tech().acquireTechThroughTrade(requestedTech.id, owner().id);
+        owner().tech().acquireTechThroughTrade(offeredTech.id(), empire().id);
+        empire().tech().acquireTechThroughTrade(requestedTech.id(), owner().id);
 
         view.spies().noteTradedTech(requestedTech);
         view.otherView().spies().noteTradedTech(offeredTech);

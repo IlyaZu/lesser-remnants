@@ -105,7 +105,7 @@ public class DiplomacyOfferAidMenu extends DiplomaticMessage {
             else {
                 int techIndex = i-amounts.size();
                 Tech tech = techs.get(techIndex);
-                diplomatView.embassy().receiveTechnologyAid(tech.id);
+                diplomatView.embassy().receiveTechnologyAid(tech.id());
                 reply = DiplomaticReplies.acceptTechnologyAid(diplomatView, tech);
             }
         }

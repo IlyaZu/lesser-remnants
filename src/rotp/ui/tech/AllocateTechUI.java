@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -440,7 +440,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
             return "";
         float costRP = cat.costForTech(tech);
         float chance = 1;
-        if ((cat.currentTech() != null) && cat.currentTech().equals(tech.id)) {
+        if ((cat.currentTech() != null) && cat.currentTech().equals(tech.id())) {
             costRP -= cat.totalBC();
             chance = cat.upcomingDiscoveryChance();
         }
@@ -773,14 +773,14 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         Color backC = unknownTechC;
         Color textC = Color.white;
         
-        boolean known = knownT.contains(tech.id);
+        boolean known = knownT.contains(tech.id());
         boolean allowSelect = !known && newResearch && !tech.id().equals(currentT);
 
         if(known) {
             backC = knownTechC;
             textC = Color.black;
         }
-        else if (tech.id.equals(currentT))
+        else if (tech.id().equals(currentT))
             backC = currentTechC;
         
         Color c0 = backC;
@@ -820,7 +820,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
             // sliders to update the current tech cost label without the costly effort
             // of recreating the visual tree image. To do this, for each current tech
             // we save off the x/y positioning of the cost label for later reference.
-            if (tech.id.equals(currentT)) {
+            if (tech.id().equals(currentT)) {
                 int catId = tech.categoryIndex();
                 Point2D.Float pt = new Point2D.Float(x+w-s10,y0);
                 currentTechs[catId] = pt;
@@ -846,7 +846,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         }
         
         if (allowSelect) {
-            techSelections.put(techDetailBox, tech.id);
+            techSelections.put(techDetailBox, tech.id());
             Stroke prev = g.getStroke();
             g.setStroke(stroke2);
             g.setColor(Color.yellow);
