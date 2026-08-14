@@ -234,7 +234,7 @@ public class Rotp {
 
             String arg = reload ? " reload" : " arg1";
 
-            ProcessBuilder processBuilder = new ProcessBuilder(
+            var processBuilder = new ProcessBuilder(
                 "java",
                 "-Xmx" + actualAlloc + "m",
                 "-jar",
