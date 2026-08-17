@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2025-2026 Ilya Zushinskiy
+ * Modifications Copyright 2025-2026 Ilya Zushinskiy, Sean Macfoy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -177,11 +177,22 @@ public class Rotp {
         return (max == total) && (free < 300);
     }
     public static void restart() {
-        File exeFile = new File(startupDir+"/"+exeFileName);
-        String execStr = exeFile.exists() ? exeFileName : actualAlloc < 0 ? "java -jar "+jarFileName : "java -Xmx"+actualAlloc+"m -jar "+jarFileName+" arg1";
+        File exeFile = new File(startupDir + "/" + exeFileName);
 
         try {
-            Runtime.getRuntime().exec(execStr);
+            ProcessBuilder processBuilder;
+
+            if (exeFile.exists()) {
+              processBuilder = new ProcessBuilder(exeFileName);
+            }
+            else if (actualAlloc < 0) {
+              processBuilder = new ProcessBuilder("java", "-jar", jarFileName);
+            }
+            else {
+              processBuilder = new ProcessBuilder("java", "-Xmx" + actualAlloc + "m", "-jar", jarFileName, "arg1");
+            }
+
+            processBuilder.start();
             System.exit(0);
         } catch (IOException ex) {
             System.err.println("Error attempting restart: ");
@@ -220,10 +231,20 @@ public class Rotp {
         
         try {
             stopIfInsufficientMemory(frame, actualAlloc*9/10);
-            String argString = reload ? " reload" : " arg1";
-            String execStr  = "java -Xmx"+actualAlloc+"m -jar "+jarFileName+argString;
-            System.out.println("Only "+(int) allocMb+"Mb memory allocated by OS. Restarting game with command: "+execStr);
-            Runtime.getRuntime().exec(execStr);
+
+            String arg = reload ? " reload" : " arg1";
+
+            var processBuilder = new ProcessBuilder(
+                "java",
+                "-Xmx" + actualAlloc + "m",
+                "-jar",
+                jarFileName,
+                arg
+            );
+
+            System.out.println("Only " + (int)allocMb + "Mb memory allocated by OS. Restarting game.");
+
+            processBuilder.start();
             System.exit(0);
             return true;
         } catch (IOException ex) {
