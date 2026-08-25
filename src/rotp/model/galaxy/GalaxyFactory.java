@@ -109,8 +109,6 @@ public class GalaxyFactory implements Base {
             e.setVisibleShips(e.homeSysId());
         }
 
-        g.council().init();
-
         g.player().makeNextTurnDecisions();
         g.player().refreshViews();
 

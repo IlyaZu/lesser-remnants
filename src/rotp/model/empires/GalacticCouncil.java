@@ -35,7 +35,6 @@ public class GalacticCouncil implements Base, Serializable {
 
     private static final int INACTIVE = 0;
     private static final int ACTIVE = 1;
-    private static final int DISBANDED = 2;
 
     private static final int noticeDuration = 5;
     private static final int interval = 20;
@@ -66,27 +65,10 @@ public class GalacticCouncil implements Base, Serializable {
             initEmpires();
         return empires;
     }
-    public void init() {
-        if (galaxy().numActiveEmpires() > 2)
-            nextAction = CHECK;
-    }
-    public void checkIfDisband() {
-        int num = galaxy().numActiveEmpires();
-        if (active() &&  (num < 3)) {
-            if (num == 2)
-                GNNNotification.notifyCouncil(text("GNN_END_COUNCIL"));
-            end();
-        }
-    }
 
     public void nextTurn() {
         voters = null;
         empires = null;
-
-        if (galaxy().numActiveEmpires() < 3)
-            return;
-        if (disbanded())
-            return;
 
         actionCountdown--;
         if (actionCountdown > 0)
@@ -100,7 +82,6 @@ public class GalacticCouncil implements Base, Serializable {
     }
     public boolean inactive()         { return currentStatus == INACTIVE; }
     public boolean active()           { return currentStatus == ACTIVE; }
-    public boolean disbanded()        { return currentStatus == DISBANDED; }
     private void checkFormation() {
         Galaxy gal = galaxy();
         int limit = (int) Math.ceil(gal.numStarSystems()*PCT_REQUIRED);
@@ -177,10 +158,6 @@ public class GalacticCouncil implements Base, Serializable {
             closeConvention();
     }
     private void end() {
-        currentStatus = DISBANDED;
-        if (leader == null)
-            return;
-        
         if (leader.isPlayer()) {
             session().status().winDiplomatic();
         }
