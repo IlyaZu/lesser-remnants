@@ -8,21 +8,6 @@ SOURCE CODE
 ===========
 All *.java files in this game contain a copyright notice. There are TWO different types:
 
-All java files created by Ray Fowler or Ilya Zushinskiy:
- * Licensed under the GNU General Public License, Version 3 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     https://www.gnu.org/licenses/gpl-3.0.html
- *
-
-What this essentially means (read the license for full info):
- 1. You are free to edit this source code and create a new game from it, with the following requirements:
-    - a. You must make all of your source code available with the game (just like this game).
-    - b. You cannot protect your source code with a license more restrictive than this one.
-    - c. You must add a notice that you have modified the source code, if you have.
- 
-
 The /src/rotp/model/planet/PlanetHeightMap.java file:
  * This file is a Java-rewrite of the "Planet Generator" code (originally in C)
  * available from the following site:
@@ -35,6 +20,21 @@ The /src/rotp/model/planet/PlanetHeightMap.java file:
  * what other people may do with the program and the images they produce with
  * the program"
  *
+
+
+All other java files:
+ * Licensed under the GNU General Public License, Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     https://www.gnu.org/licenses/gpl-3.0.html
+ *
+
+What this essentially means (read the license for full info):
+ 1. You are free to edit this source code and create a new game from it, with the following requirements:
+    - a. You must make all of your source code available with the game (just like this game).
+    - b. You cannot protect your source code with a license more restrictive than this one.
+    - c. You must add a notice that you have modified the source code, if you have.
 
 
 =======
