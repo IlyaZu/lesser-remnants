@@ -23,7 +23,7 @@ public final class TechPlanetaryShield extends Tech {
     public int damage;
 
     public TechPlanetaryShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.PLANETARY_SHIELD, typeId, seq, lv, c);
+        super(Tech.PLANETARY_SHIELD, typeId, seq, lv, c, "PLANETSHIELD");
         free = b;
         switch(typeSeq) {
             case 0: damage = 5;  break;

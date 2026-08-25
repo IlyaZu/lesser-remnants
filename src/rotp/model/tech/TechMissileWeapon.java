@@ -46,7 +46,7 @@ public final class TechMissileWeapon extends Tech {
     public String imageKey()   { return imageKey; }
 
     public TechMissileWeapon(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.MISSILE_WEAPON, typeId, seq, lv, c);
+        super(Tech.MISSILE_WEAPON, typeId, seq, lv, c, "MISSWPN");
         free = b;
         switch(typeSeq) {
             case 0: // NUCLEAR MISSILE

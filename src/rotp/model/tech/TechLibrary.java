@@ -163,55 +163,30 @@ public final class TechLibrary implements Base {
         String dataDir = "data/";
         
         loadTechLangFile(Tech.ARMOR, "Armor.txt", dataDir);
-        loadTechLangFile(Tech.ATMOSPHERE_ENRICHMENT, "AtmosphereEnrichment.txt", dataDir);
         loadTechLangFile(Tech.AUTOMATED_REPAIR, "AutomatedRepair.txt", dataDir);
         loadTechLangFile(Tech.BATTLE_COMPUTER, "BattleComputer.txt", dataDir);
-        loadTechLangFile(Tech.BATTLE_SUIT, "BattleSuit.txt", dataDir);
         loadTechLangFile(Tech.BEAM_FOCUS, "BeamFocus.txt", dataDir);
-        loadTechLangFile(Tech.BIOLOGICAL_ANTIDOTE, "BiologicalAntidote.txt", dataDir);
         loadTechLangFile(Tech.BIOLOGICAL_WEAPON, "BiologicalWeapon.txt", dataDir);
-        loadTechLangFile(Tech.BLACK_HOLE, "BlackHole.txt", dataDir);
         loadTechLangFile(Tech.BOMB_WEAPON, "BombWeapon.txt", dataDir);
         loadTechLangFile(Tech.CLOAKING, "Cloaking.txt", dataDir);
-        loadTechLangFile(Tech.CLONING, "Cloning.txt", dataDir);
-        loadTechLangFile(Tech.COMBAT_TRANSPORTER, "CombatTransporter.txt", dataDir);
         loadTechLangFile(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment.txt", dataDir);
         loadTechLangFile(Tech.DEFLECTOR_SHIELD, "DeflectorShield.txt", dataDir);
         loadTechLangFile(Tech.DISPLACEMENT, "Displacement.txt", dataDir);
         loadTechLangFile(Tech.ECM_JAMMER, "ECMJammer.txt", dataDir);
-        loadTechLangFile(Tech.ECO_RESTORATION, "EcoRestoration.txt", dataDir);
         loadTechLangFile(Tech.ENERGY_PULSAR, "EnergyPulsar.txt", dataDir);
         loadTechLangFile(Tech.ENGINE_WARP, "EngineWarp.txt", dataDir);
-        loadTechLangFile(Tech.FUEL_RANGE, "FuelRange.txt", dataDir);
-        loadTechLangFile(Tech.HAND_WEAPON, "HandWeapon.txt", dataDir);
-        loadTechLangFile(Tech.HYPERSPACE_COMM, "HyperspaceComm.txt", dataDir);
-        loadTechLangFile(Tech.IMPROVED_INDUSTRIAL, "ImprovedIndustrial.txt", dataDir);
-        loadTechLangFile(Tech.IMPROVED_TERRAFORMING, "ImprovedTerraforming.txt", dataDir);
-        loadTechLangFile(Tech.INDUSTRIAL_WASTE, "IndustrialWaste.txt", dataDir);
         loadTechLangFile(Tech.MISSILE_SHIELD, "MissileShield.txt", dataDir);
         loadTechLangFile(Tech.MISSILE_WEAPON, "MissileWeapon.txt", dataDir);
-        loadTechLangFile(Tech.PERSONAL_SHIELD, "PersonalShield.txt", dataDir);
-        loadTechLangFile(Tech.PLANETARY_SHIELD, "PlanetaryShield.txt", dataDir);
         loadTechLangFile(Tech.REPULSOR, "Repulsor.txt", dataDir);
         loadTechLangFile(Tech.RESERVE_FUEL_RANGE, "ReserveFuelRange.txt", dataDir);
-        loadTechLangFile(Tech.ROBOTIC_CONTROLS, "RoboticControls.txt", dataDir);
         loadTechLangFile(Tech.SCANNER, "Scanner.txt", dataDir);
         loadTechLangFile(Tech.SHIP_INERTIAL, "ShipInertial.txt", dataDir);
         loadTechLangFile(Tech.SHIP_NULLIFIER, "ShipNullifier.txt", dataDir);
         loadTechLangFile(Tech.SHIP_WEAPON, "ShipWeapon.txt", dataDir);
-        loadTechLangFile(Tech.SOIL_ENRICHMENT, "SoilEnrichment.txt", dataDir);
-        loadTechLangFile(Tech.STARGATE, "Stargate.txt", dataDir);
         loadTechLangFile(Tech.STASIS_FIELD, "StasisField.txt", dataDir);
         loadTechLangFile(Tech.STREAM_PROJECTOR, "StreamProjector.txt", dataDir);
-        loadTechLangFile(Tech.SUBSPACE_INTERDICTOR, "SubspaceInterdictor.txt", dataDir);
         loadTechLangFile(Tech.TELEPORTER, "Teleporter.txt", dataDir);
         loadTechLangFile(Tech.TORPEDO_WEAPON, "TorpedoWeapon.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_COMPUTER, "FutureComputer.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_CONSTRUCTION, "FutureConstruction.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_FORCE_FIELD, "FutureForceField.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_PLANETOLOGY, "FuturePlanetology.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_PROPULSION, "FuturePropulsion.txt", dataDir);
-        loadTechLangFile(Tech.FUTURE_WEAPON, "FutureWeapon.txt", dataDir);
     }
     private void loadTechLangFile(int techType, String filename, String langDir) {
         // try to open the race file
@@ -263,10 +238,8 @@ public final class TechLibrary implements Base {
             return;
 
         switch(key) {
-            case "name"   : loadingTech.name = value;    break;
             case "brief"  : loadingTech.shDesc = value;  break;
             case "brief2" : loadingTech.shDesc2 = value; break;
-            case "detail" : loadingTech.detail = value;  break;
             case "item"   : loadingTech.item = value;    break;
             case "item2"  : loadingTech.item2 = value;   break;
         }

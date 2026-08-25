@@ -21,7 +21,7 @@ import rotp.model.empires.Empire;
 public final class TechFutureForceField extends Tech {
     int number;
     public TechFutureForceField (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_FORCE_FIELD, typeId, seq, lv, c);
+        super(Tech.FUTURE_FORCE_FIELD, typeId, seq, lv, c, "FUTUREFORCE");
         free = b;
     }
     @Override

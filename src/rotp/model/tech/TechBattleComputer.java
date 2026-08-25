@@ -26,7 +26,7 @@ public final class TechBattleComputer extends Tech {
     public MissileBaseComputer baseComputer;
 
     public TechBattleComputer (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BATTLE_COMPUTER, typeId, seq, lv, c);
+        super(Tech.BATTLE_COMPUTER, typeId, seq, lv, c, "COMPUTER");
         free = b;
         baseComputer = new MissileBaseComputer(this);
 

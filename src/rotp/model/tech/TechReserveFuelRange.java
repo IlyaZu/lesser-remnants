@@ -27,19 +27,11 @@ public final class TechReserveFuelRange extends Tech {
     public float range() { return range; }
 
     public TechReserveFuelRange (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.RESERVE_FUEL_RANGE, typeId, seq, lv, c);
+        super(Tech.RESERVE_FUEL_RANGE, typeId, seq, lv, c, "RSRVFUEL");
         free = b;
         switch(typeSeq) {
             case 0: range = 3; break;
         }
-    }
-    @Override
-    public String detail() {
-        float rng = range();
-        if (rng == (int) rng)
-            return text(detail, (int) rng);
-        else
-            return text(detail, df1.format(range()));
     }
     @Override
     public String brief() {

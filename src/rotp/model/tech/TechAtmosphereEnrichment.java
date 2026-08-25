@@ -23,7 +23,7 @@ public final class TechAtmosphereEnrichment extends Tech {
     public static TechAtmosphereEnrichment hostileTech;
 
     public TechAtmosphereEnrichment(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ATMOSPHERE_ENRICHMENT, typeId, seq, lv, c);
+        super(Tech.ATMOSPHERE_ENRICHMENT, typeId, seq, lv, c, "ATMOSPHERE");
         free = b;
         switch(typeSeq) {
             case 0:

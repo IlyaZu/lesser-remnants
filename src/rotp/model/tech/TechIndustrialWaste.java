@@ -24,7 +24,7 @@ public final class TechIndustrialWaste extends Tech {
     public float wasteModifier;
 
     public TechIndustrialWaste(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.INDUSTRIAL_WASTE, typeId, seq, lv, c);
+        super(Tech.INDUSTRIAL_WASTE, typeId, seq, lv, c, "INDWASTE");
         free = b;
         switch(typeSeq) {
             case 0: wasteModifier = .80f; break;

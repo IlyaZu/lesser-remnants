@@ -26,7 +26,7 @@ public final class TechECMJammer extends Tech {
     public MissileBaseECM baseECM;
 
     public TechECMJammer (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ECM_JAMMER, typeId, seq, lv, c);
+        super(Tech.ECM_JAMMER, typeId, seq, lv, c, "ECMJAMMER");
         free = b;
         baseECM = new MissileBaseECM(this);
 
