@@ -24,7 +24,7 @@ public final class TechRoboticControls extends Tech {
     public int mark;
 
     public TechRoboticControls (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ROBOTIC_CONTROLS, typeId, seq, lv, c);
+        super(Tech.ROBOTIC_CONTROLS, typeId, seq, lv, c, "ROBOTCTRL");
         free = b;
         switch(typeSeq) {
             case 0: mark = 3;  break;

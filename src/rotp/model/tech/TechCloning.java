@@ -23,7 +23,7 @@ public final class TechCloning extends Tech {
     public float growthCost;
 
     public TechCloning(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.CLONING, typeId, seq, lv, c);
+        super(Tech.CLONING, typeId, seq, lv, c, "CLONE");
         free = b;
         switch(typeSeq) {
             case 0:

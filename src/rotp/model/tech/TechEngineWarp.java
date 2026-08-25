@@ -26,7 +26,7 @@ public final class TechEngineWarp extends Tech {
     public String shName;
 
     public TechEngineWarp(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ENGINE_WARP, typeId, seq, lv, c);
+        super(Tech.ENGINE_WARP, typeId, seq, lv, c, "ENGINE");
         free = b;
         switch(typeSeq) {
             case 0: warp = 1; break;
@@ -42,7 +42,9 @@ public final class TechEngineWarp extends Tech {
     }
     
     @Override
-    public String detail()                { return text(detail, warp()); }
+    public String detail() {
+        return super.detail().replace("%1", ""+warp);
+    }
     @Override
     public boolean canBeMiniaturized()      { return true; }
     public int warp()                    { return warp; }

@@ -90,8 +90,8 @@ public class Tech implements Base {
     public String iconFilename;
     public String effectKey;
 
-    public String name = "";
-    public String detail = "";
+    private final String name;
+    private final String detail;
     public String item = null;
     public String shDesc = "";
     public String item2 = null;
@@ -103,13 +103,16 @@ public class Tech implements Base {
     public float size = 0;
     public float power = 0;
 
-    public Tech(int techType, String typeId, int typeSeq, int level, TechCategory category) {
+    public Tech(int techType, String typeId, int typeSeq, int level, TechCategory category, String textKeyPrefix) {
         this.techType = techType;
         this.id = typeId + ":" + typeSeq;
         this.typeSeq = typeSeq;
         this.level = level;
         this.quintile = (level+4)/5;
         this.cat = category;
+        
+        this.name = textKeyPrefix + "_" + typeSeq + "_NAME";
+        this.detail = textKeyPrefix + "_" + typeSeq + "_DETAIL";
     }
     
     public String id() {

@@ -25,7 +25,7 @@ public final class TechSoilEnrichment extends Tech {
     public int environment;
     
     public TechSoilEnrichment(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SOIL_ENRICHMENT, typeId, seq, lv, c);
+        super(Tech.SOIL_ENRICHMENT, typeId, seq, lv, c, "SOILENRICH");
         free = b;
         switch(typeSeq) {
             case 0:

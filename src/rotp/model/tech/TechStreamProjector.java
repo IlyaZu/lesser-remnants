@@ -38,7 +38,7 @@ public final class TechStreamProjector extends Tech {
     private transient Color beamColor;
 
     public TechStreamProjector(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.STREAM_PROJECTOR, typeId, seq, lv, c);
+        super(Tech.STREAM_PROJECTOR, typeId, seq, lv, c, "STREAMWPN");
         free = b;
         switch(typeSeq) {
             case 0:

@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechHyperspaceComm extends Tech {
     public TechHyperspaceComm(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.HYPERSPACE_COMM, typeId, seq, lv, c);
+        super(Tech.HYPERSPACE_COMM, typeId, seq, lv, c, "HYPERSPACE");
         free = b;
     }
     @Override

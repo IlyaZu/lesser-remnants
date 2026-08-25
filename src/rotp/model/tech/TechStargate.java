@@ -21,7 +21,7 @@ import rotp.model.empires.Empire;
 public final class TechStargate extends Tech {
     public static float MAINTENANCE = 300;
     public TechStargate(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.STARGATE, typeId, seq, lv, c);
+        super(Tech.STARGATE, typeId, seq, lv, c, "STARGATE");
         free = b;
         switch(typeSeq) {
             case 0:

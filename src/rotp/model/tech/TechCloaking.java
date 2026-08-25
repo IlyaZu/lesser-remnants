@@ -26,7 +26,7 @@ public final class TechCloaking extends Tech {
     public float move = 0;
 
     public TechCloaking (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.CLOAKING, typeId, seq, lv, c);
+        super(Tech.CLOAKING, typeId, seq, lv, c, "CLOAK");
         free = b;
         switch(typeSeq) {
             case 0:

@@ -25,7 +25,7 @@ public final class TechBeamFocus extends Tech {
     public int rangeAdj = 0;
 
     public TechBeamFocus (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BEAM_FOCUS, typeId, seq, lv, c);
+        super(Tech.BEAM_FOCUS, typeId, seq, lv, c, "BEAMFOCUS");
         free = b;
         switch(typeSeq) {
             case 0:
