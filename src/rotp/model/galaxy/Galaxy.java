@@ -229,9 +229,6 @@ public class Galaxy implements Base, Serializable {
         NoticeMessage.resetSubstatus(text("TURN_REBELLION"));
         for (Empire e: empires)
             e.checkForRebellionSpread();
-
-        NoticeMessage.resetSubstatus(text("TURN_COUNCIL"));
-        council().checkIfDisband();
     }
     private void checkForPlanetaryBombardment() {
         for (StarSystem sys: starSystems) {
