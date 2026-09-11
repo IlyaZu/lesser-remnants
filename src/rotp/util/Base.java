@@ -113,10 +113,16 @@ public interface Base {
     public default int id(Empire e)       { return e == null ? Empire.NULL_ID : e.id; }
     public default int id(StarSystem s)   { return s == null ? StarSystem.NULL_ID : s.id; }
     public default String text(String key) {
-        if ((galaxy() == null) || (player() == null))
-            return labels().label(key);
-        else
-            return player().race().text(key);
+    	return textOrDefault(key, key);
+    }
+    public default String textOrDefault(String key, String fallback) {
+    	if (galaxy() != null && player() != null && player().race().raceLabels().hasLabel(key)) {
+    		return player().race().raceLabels().label(key);
+        } else if (labels().hasLabel(key)) {
+        	return labels().label(key);
+        } else {
+        	return fallback;
+        }
     }
     public default String text(String key, String... vals) {
         String str = text(key);

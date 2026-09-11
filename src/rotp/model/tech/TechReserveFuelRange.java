@@ -35,11 +35,7 @@ public final class TechReserveFuelRange extends Tech {
     }
     @Override
     public String brief() {
-        float rng = range();
-        if (rng == (int) rng)
-            return text(shDesc, (int) rng);
-        else
-            return text(shDesc, df1.format(range()));
+    	return super.brief().replace("%1", ""+range);
     }
     @Override
     public boolean isObsolete(Empire c) {
