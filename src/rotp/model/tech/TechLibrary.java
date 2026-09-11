@@ -163,30 +163,11 @@ public final class TechLibrary implements Base {
         String dataDir = "data/";
         
         loadTechLangFile(Tech.ARMOR, "Armor.txt", dataDir);
-        loadTechLangFile(Tech.AUTOMATED_REPAIR, "AutomatedRepair.txt", dataDir);
         loadTechLangFile(Tech.BATTLE_COMPUTER, "BattleComputer.txt", dataDir);
-        loadTechLangFile(Tech.BEAM_FOCUS, "BeamFocus.txt", dataDir);
-        loadTechLangFile(Tech.BIOLOGICAL_WEAPON, "BiologicalWeapon.txt", dataDir);
-        loadTechLangFile(Tech.BOMB_WEAPON, "BombWeapon.txt", dataDir);
-        loadTechLangFile(Tech.CLOAKING, "Cloaking.txt", dataDir);
         loadTechLangFile(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment.txt", dataDir);
         loadTechLangFile(Tech.DEFLECTOR_SHIELD, "DeflectorShield.txt", dataDir);
-        loadTechLangFile(Tech.DISPLACEMENT, "Displacement.txt", dataDir);
         loadTechLangFile(Tech.ECM_JAMMER, "ECMJammer.txt", dataDir);
-        loadTechLangFile(Tech.ENERGY_PULSAR, "EnergyPulsar.txt", dataDir);
-        loadTechLangFile(Tech.ENGINE_WARP, "EngineWarp.txt", dataDir);
-        loadTechLangFile(Tech.MISSILE_SHIELD, "MissileShield.txt", dataDir);
-        loadTechLangFile(Tech.MISSILE_WEAPON, "MissileWeapon.txt", dataDir);
-        loadTechLangFile(Tech.REPULSOR, "Repulsor.txt", dataDir);
-        loadTechLangFile(Tech.RESERVE_FUEL_RANGE, "ReserveFuelRange.txt", dataDir);
-        loadTechLangFile(Tech.SCANNER, "Scanner.txt", dataDir);
-        loadTechLangFile(Tech.SHIP_INERTIAL, "ShipInertial.txt", dataDir);
-        loadTechLangFile(Tech.SHIP_NULLIFIER, "ShipNullifier.txt", dataDir);
         loadTechLangFile(Tech.SHIP_WEAPON, "ShipWeapon.txt", dataDir);
-        loadTechLangFile(Tech.STASIS_FIELD, "StasisField.txt", dataDir);
-        loadTechLangFile(Tech.STREAM_PROJECTOR, "StreamProjector.txt", dataDir);
-        loadTechLangFile(Tech.TELEPORTER, "Teleporter.txt", dataDir);
-        loadTechLangFile(Tech.TORPEDO_WEAPON, "TorpedoWeapon.txt", dataDir);
     }
     private void loadTechLangFile(int techType, String filename, String langDir) {
         // try to open the race file
@@ -238,8 +219,6 @@ public final class TechLibrary implements Base {
             return;
 
         switch(key) {
-            case "brief"  : loadingTech.shDesc = value;  break;
-            case "brief2" : loadingTech.shDesc2 = value; break;
             case "item"   : loadingTech.item = value;    break;
             case "item2"  : loadingTech.item2 = value;   break;
         }
