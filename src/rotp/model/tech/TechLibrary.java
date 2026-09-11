@@ -28,21 +28,12 @@ public final class TechLibrary implements Base {
     public static TechLibrary current()   { return instance; }
     public static TechCategory[] baseCategory = new TechCategory[TechTree.NUM_CATEGORIES];
     private static TechCategory loadingCat;
-    private static Tech loadingTech;
 
     private final HashMap <String, Tech> techMap = new HashMap<>();
 
     static {
         instance = new TechLibrary();
         instance.loadTechDataFile(techDataFile);
-        instance.loadTechFiles();
-    }
-    private static String techMatching(int type, int seq) {
-        for (Tech t : current().techMap.values()) {
-            if ((t.techType == type) && (t.typeSeq == seq))
-                    return t.id();
-        }
-        return null;
     }
     @Override
     public Tech tech(String id)               { return techMap.get(id); }
@@ -158,69 +149,5 @@ public final class TechLibrary implements Base {
         if (type.equalsIgnoreCase("FutureWeapon"))         { return new TechFutureWeapon(type, level, seq, free, loadingCat); }
 
         return null;
-    }
-    private void loadTechFiles() {
-        String dataDir = "data/";
-        
-        loadTechLangFile(Tech.ARMOR, "Armor.txt", dataDir);
-        loadTechLangFile(Tech.BATTLE_COMPUTER, "BattleComputer.txt", dataDir);
-        loadTechLangFile(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment.txt", dataDir);
-        loadTechLangFile(Tech.DEFLECTOR_SHIELD, "DeflectorShield.txt", dataDir);
-        loadTechLangFile(Tech.ECM_JAMMER, "ECMJammer.txt", dataDir);
-        loadTechLangFile(Tech.SHIP_WEAPON, "ShipWeapon.txt", dataDir);
-    }
-    private void loadTechLangFile(int techType, String filename, String langDir) {
-        // try to open the race file
-        BufferedReader in = reader(langDir + "tech/" + filename);
-        if (in == null)
-            return;
-
-        try {
-            String input;
-            loadingTech = null;
-            while ((input = in.readLine()) != null)
-                loadTechLangLine(techType, input.trim());
-            in.close();
-        }
-        catch (IOException e) {
-            err("TechTree.loadTechLangFile(", filename, ") -- IOException: ", e.toString());
-        }
-    }
-    private void loadTechLangLine(int techType, String input) {
-        if (isComment(input))
-            return;
-
-        if (input.equalsIgnoreCase("[tech]"))
-            return;
-
-        int techSeq = 0;
-        List<String> strings1 = substrings(input, ':');
-
-        if (strings1.size() < 2)
-            return;
-
-        String key = strings1.get(0);
-        String value = strings1.get(1);
-
-        // if a tech sequence number, then retrieve the tech we are loading into & load the default description
-        if (key.equalsIgnoreCase("seq")) {
-            try { techSeq = parseInt(value); }
-            catch (NumberFormatException e) {
-                err("TechTree.loadTechLangLine -- NumberFormatException for tech seq: " + value);
-            }
-            loadingTech = tech(TechLibrary.techMatching(techType, techSeq));
-            if (loadingTech == null)
-                err("Could not find a tech matching type:", str(techType), " and seq:", str(techSeq));
-            return;
-        }
-
-        // if no matching tech has been found to load into, ignore the remaining keys
-        if (loadingTech == null)
-            return;
-
-        switch(key) {
-            case "item"   : loadingTech.item = value;    break;
-            case "item2"  : loadingTech.item2 = value;   break;
-        }
     }
 }

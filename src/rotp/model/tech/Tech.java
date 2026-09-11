@@ -94,8 +94,8 @@ public class Tech implements Base {
     private final String detail;
     private final String shDesc;
     private final String shDesc2;
-    public String item = null;
-    public String item2 = null;
+    private final String item;
+    private final String item2;
 
     public boolean restricted = false;
     public boolean free = false;
@@ -115,6 +115,8 @@ public class Tech implements Base {
         this.detail = textKeyPrefix + "_" + typeSeq + "_DETAIL";
         this.shDesc = textKeyPrefix + "_" + typeSeq + "_BRIEF";
         this.shDesc2 = textKeyPrefix + "_" + typeSeq + "_BRIEF2";
+        this.item = textKeyPrefix + "_" + typeSeq + "_ITEM";
+        this.item2 = textKeyPrefix + "_" + typeSeq + "_ITEM2";
     }
     
     public String id() {
@@ -133,8 +135,8 @@ public class Tech implements Base {
     public String detail()                { return text(detail); }
     public String brief()                 { return textOrDefault(shDesc, ""); }
     public String brief2()                { return textOrDefault(shDesc2, ""); }
-    public String item()                  { return item == null ? name() : text(item); }
-    public String item2()                 { return item2 == null ? item() : text(item2); }
+    public String item()                  { return textOrDefault(item, name()); }
+    public String item2()                 { return textOrDefault(item2, item()); }
     public String imageKey()              { return ""; }
     public Image image()                  { return iconFilename == null ? null : image(iconFilename); }
     public int futureTechLevel()          { return 0; }
