@@ -883,7 +883,7 @@ public class AllocateTechUI extends BasePanel implements MouseListener, MouseMot
         if (currentTech == null)
             return;
 
-        int quintile = currentTech.quintile;
+        int quintile = currentTech.quintile();
         // 400px per quintile, 1 starts at 0.  2 & up start at visual 200
         if (quintile > 1)
             treeX = scaled((400*quintile)-600);
