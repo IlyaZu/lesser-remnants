@@ -21,8 +21,8 @@ import rotp.model.empires.Empire;
 public final class TechCombatTransporter extends Tech {
     public float pct;
 
-    public TechCombatTransporter(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.COMBAT_TRANSPORTER, typeId, seq, lv, c, "COMBATTRANSPORT");
+    public TechCombatTransporter(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.COMBAT_TRANSPORTER, "CombatTransporter", seq, lv, c, "COMBATTRANSPORT");
         free = b;
         switch(typeSeq) {
             case 0: pct = .50f; break;

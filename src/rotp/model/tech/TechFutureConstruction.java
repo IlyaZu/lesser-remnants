@@ -20,8 +20,8 @@ import rotp.model.empires.Empire;
 
 public final class TechFutureConstruction extends Tech {
     int number;
-    public TechFutureConstruction (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_CONSTRUCTION, typeId, seq, lv, c, "FUTURECONST");
+    public TechFutureConstruction (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.FUTURE_CONSTRUCTION, "FutureConstruction", seq, lv, c, "FUTURECONST");
         free = b;
     }
     @Override

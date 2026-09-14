@@ -23,8 +23,8 @@ import rotp.model.ships.ShipSpecialDisplacement;
 public final class TechDisplacement extends Tech {
     public float missPct = 0;
 
-    public TechDisplacement(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.DISPLACEMENT, typeId, seq, lv, c, "DISPLACEMENT");
+    public TechDisplacement(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.DISPLACEMENT, "Displacement", seq, lv, c, "DISPLACEMENT");
         free = b;
         switch(typeSeq) {
             case 0: missPct = .33f; break;

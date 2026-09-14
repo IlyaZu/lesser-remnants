@@ -21,8 +21,8 @@ import rotp.model.empires.Empire;
 public final class TechPersonalShield extends Tech {
     public int groundAttackBonus = -1;
 
-    public TechPersonalShield (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.PERSONAL_SHIELD, typeId, seq, lv, c, "PERSSHIELD");
+    public TechPersonalShield (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.PERSONAL_SHIELD, "PersonalShield", seq, lv, c, "PERSSHIELD");
         free = b;
         switch(typeSeq) {
             case 0: groundAttackBonus = 0; break;

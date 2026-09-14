@@ -25,8 +25,8 @@ public final class TechShipInertial extends Tech {
     public int combatSpeedBonus;
     public float blackHoleEffectMod;
 
-    public TechShipInertial(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SHIP_INERTIAL, typeId, seq, lv, c, "SHIPINERTIAL");
+    public TechShipInertial(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.SHIP_INERTIAL, "ShipInertial", seq, lv, c, "SHIPINERTIAL");
         free = b;
         switch(typeSeq) {
             case 0:

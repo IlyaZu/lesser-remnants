@@ -25,8 +25,8 @@ public final class TechEngineWarp extends Tech {
     private int warp;
     public String shName;
 
-    public TechEngineWarp(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ENGINE_WARP, typeId, seq, lv, c, "ENGINE");
+    public TechEngineWarp(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.ENGINE_WARP, "EngineWarp", seq, lv, c, "ENGINE");
         free = b;
         switch(typeSeq) {
             case 0: warp = 1; break;

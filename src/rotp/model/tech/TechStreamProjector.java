@@ -37,8 +37,8 @@ public final class TechStreamProjector extends Tech {
     public float shipsPerExtraArmorMod = 1;
     private transient Color beamColor;
 
-    public TechStreamProjector(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.STREAM_PROJECTOR, typeId, seq, lv, c, "STREAMWPN");
+    public TechStreamProjector(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.STREAM_PROJECTOR, "StreamProjector", seq, lv, c, "STREAMWPN");
         free = b;
         switch(typeSeq) {
             case 0:

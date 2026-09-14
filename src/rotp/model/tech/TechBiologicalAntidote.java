@@ -21,8 +21,8 @@ import rotp.model.empires.Empire;
 public final class TechBiologicalAntidote extends Tech {
     public int attackReduction;
 
-    public TechBiologicalAntidote(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BIOLOGICAL_ANTIDOTE, typeId, seq, lv, c, "BIOANTIDOTE");
+    public TechBiologicalAntidote(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.BIOLOGICAL_ANTIDOTE, "BiologicalAntidote", seq, lv, c, "BIOANTIDOTE");
         free = b;
         switch(typeSeq) {
             case 0: attackReduction = 1; break;

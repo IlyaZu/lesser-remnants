@@ -27,8 +27,8 @@ public final class TechArmor extends Tech {
     public int transportHP;
     public MissileBaseArmor baseArmor;
 
-    public TechArmor (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ARMOR, typeId, seq, lv, c, "ARMOR");
+    public TechArmor (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.ARMOR, "Armor", seq, lv, c, "ARMOR");
         free = b;
         baseArmor = new MissileBaseArmor(this);
 

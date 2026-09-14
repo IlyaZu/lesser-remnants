@@ -34,8 +34,8 @@ public final class TechHandWeapon extends Tech {
     public int combatMod = -1;
     public boolean rifle = false;
     public int deathType = COLLAPSE;
-    public TechHandWeapon (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.HAND_WEAPON, typeId, seq, lv, c, "HANDWEAPON");
+    public TechHandWeapon (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.HAND_WEAPON, "HandWeapon", seq, lv, c, "HANDWEAPON");
         free = b;
         switch(typeSeq) {
            case 0:

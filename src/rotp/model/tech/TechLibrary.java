@@ -97,56 +97,56 @@ public final class TechLibrary implements Base {
         }
     }
     private Tech newLoadedTech(int level, String type, int seq, boolean free) {
-        if (type.equalsIgnoreCase("Scanner"))              { return new TechScanner(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BattleComputer"))       { return new TechBattleComputer(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ECMJammer"))            { return new TechECMJammer(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("RoboticControls"))      { return new TechRoboticControls(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("HyperspaceComm"))       { return new TechHyperspaceComm(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BeamFocus"))            { return new TechBeamFocus(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ShipNullifier"))        { return new TechShipNullifier(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Armor"))                { return new TechArmor(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ReserveFuelRange"))     { return new TechReserveFuelRange(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ImprovedIndustrial"))   { return new TechImprovedIndustrial(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("IndustrialWaste"))      { return new TechIndustrialWaste(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BattleSuit"))           { return new TechBattleSuit(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("AutomatedRepair"))      { return new TechAutomatedRepair(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("DeflectorShield"))      { return new TechDeflectorShield(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Cloaking"))             { return new TechCloaking(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Repulsor"))             { return new TechRepulsor(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("PersonalShield"))       { return new TechPersonalShield(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("PlanetaryShield"))      { return new TechPlanetaryShield(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("MissileShield"))        { return new TechMissileShield(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("StasisField"))          { return new TechStasisField(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BlackHole"))            { return new TechBlackHole(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ControlEnvironment"))   { return new TechControlEnvironment(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("EcoRestoration"))       { return new TechEcoRestoration(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ImprovedTerraforming")) { return new TechImprovedTerraforming(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BiologicalWeapon"))     { return new TechBiologicalWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("SoilEnrichment"))       { return new TechSoilEnrichment(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BiologicalAntidote"))   { return new TechBiologicalAntidote(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Cloning"))              { return new TechCloning(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("AtmosphereEnrichment")) { return new TechAtmosphereEnrichment(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("EngineWarp"))           { return new TechEngineWarp(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FuelRange"))            { return new TechFuelRange(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ShipInertial"))         { return new TechShipInertial(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("EnergyPulsar"))         { return new TechEnergyPulsar(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Stargate"))             { return new TechStargate(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Teleporter"))           { return new TechTeleporter(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("SubspaceInterdictor"))  { return new TechSubspaceInterdictor(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("CombatTransporter"))    { return new TechCombatTransporter(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("Displacement"))         { return new TechDisplacement(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("BombWeapon"))           { return new TechBombWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("MissileWeapon"))        { return new TechMissileWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("ShipWeapon"))           { return new TechShipWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("HandWeapon"))           { return new TechHandWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("StreamProjector"))      { return new TechStreamProjector(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("TorpedoWeapon"))        { return new TechTorpedoWeapon(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FutureComputer"))       { return new TechFutureComputer(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FutureConstruction"))   { return new TechFutureConstruction(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FutureForceField"))     { return new TechFutureForceField(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FuturePlanetology"))    { return new TechFuturePlanetology(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FuturePropulsion"))     { return new TechFuturePropulsion(type, level, seq, free, loadingCat); }
-        if (type.equalsIgnoreCase("FutureWeapon"))         { return new TechFutureWeapon(type, level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Scanner"))              { return new TechScanner(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BattleComputer"))       { return new TechBattleComputer(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ECMJammer"))            { return new TechECMJammer(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("RoboticControls"))      { return new TechRoboticControls(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("HyperspaceComm"))       { return new TechHyperspaceComm(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BeamFocus"))            { return new TechBeamFocus(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ShipNullifier"))        { return new TechShipNullifier(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Armor"))                { return new TechArmor(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ReserveFuelRange"))     { return new TechReserveFuelRange(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ImprovedIndustrial"))   { return new TechImprovedIndustrial(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("IndustrialWaste"))      { return new TechIndustrialWaste(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BattleSuit"))           { return new TechBattleSuit(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("AutomatedRepair"))      { return new TechAutomatedRepair(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("DeflectorShield"))      { return new TechDeflectorShield(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Cloaking"))             { return new TechCloaking(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Repulsor"))             { return new TechRepulsor(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("PersonalShield"))       { return new TechPersonalShield(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("PlanetaryShield"))      { return new TechPlanetaryShield(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("MissileShield"))        { return new TechMissileShield(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("StasisField"))          { return new TechStasisField(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BlackHole"))            { return new TechBlackHole(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ControlEnvironment"))   { return new TechControlEnvironment(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("EcoRestoration"))       { return new TechEcoRestoration(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ImprovedTerraforming")) { return new TechImprovedTerraforming(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BiologicalWeapon"))     { return new TechBiologicalWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("SoilEnrichment"))       { return new TechSoilEnrichment(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BiologicalAntidote"))   { return new TechBiologicalAntidote(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Cloning"))              { return new TechCloning(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("AtmosphereEnrichment")) { return new TechAtmosphereEnrichment(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("EngineWarp"))           { return new TechEngineWarp(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FuelRange"))            { return new TechFuelRange(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ShipInertial"))         { return new TechShipInertial(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("EnergyPulsar"))         { return new TechEnergyPulsar(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Stargate"))             { return new TechStargate(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Teleporter"))           { return new TechTeleporter(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("SubspaceInterdictor"))  { return new TechSubspaceInterdictor(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("CombatTransporter"))    { return new TechCombatTransporter(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("Displacement"))         { return new TechDisplacement(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("BombWeapon"))           { return new TechBombWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("MissileWeapon"))        { return new TechMissileWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("ShipWeapon"))           { return new TechShipWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("HandWeapon"))           { return new TechHandWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("StreamProjector"))      { return new TechStreamProjector(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("TorpedoWeapon"))        { return new TechTorpedoWeapon(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FutureComputer"))       { return new TechFutureComputer(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FutureConstruction"))   { return new TechFutureConstruction(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FutureForceField"))     { return new TechFutureForceField(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FuturePlanetology"))    { return new TechFuturePlanetology(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FuturePropulsion"))     { return new TechFuturePropulsion(level, seq, free, loadingCat); }
+        if (type.equalsIgnoreCase("FutureWeapon"))         { return new TechFutureWeapon(level, seq, free, loadingCat); }
 
         return null;
     }

@@ -23,8 +23,8 @@ import rotp.model.ships.ShipSpecialRepair;
 public final class TechAutomatedRepair extends Tech {
     public float repairAdj;
 
-    public TechAutomatedRepair (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.AUTOMATED_REPAIR, typeId, seq, lv, c, "AUTOREPAIR");
+    public TechAutomatedRepair (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.AUTOMATED_REPAIR, "AutomatedRepair", seq, lv, c, "AUTOREPAIR");
         free = b;
         switch(typeSeq) {
             case 0:
