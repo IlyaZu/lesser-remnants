@@ -24,10 +24,9 @@ import rotp.model.ships.ShipSpecialColony;
 
 public final class TechControlEnvironment extends Tech {
     private int hostilityAllowed;
-    public String specialName;
 
-    public TechControlEnvironment (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.CONTROL_ENVIRONMENT, typeId, seq, lv, c, "CONTROLENV");
+    public TechControlEnvironment (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment", seq, lv, c, "CONTROLENV");
         free = b;
         switch(typeSeq) {
             case 0: hostilityAllowed = PlanetType.HOSTILITY_MINIMAL; return;

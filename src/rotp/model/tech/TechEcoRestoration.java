@@ -25,8 +25,8 @@ public final class TechEcoRestoration extends Tech {
     public int type;
     public int wasteEliminated;
 
-    public TechEcoRestoration (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ECO_RESTORATION, typeId, seq, lv, c, "ECORESTORATION");
+    public TechEcoRestoration (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.ECO_RESTORATION, "EcoRestoration", seq, lv, c, "ECORESTORATION");
         free = b;
         switch(typeSeq) {
             case 0: wasteEliminated = 2;  break;

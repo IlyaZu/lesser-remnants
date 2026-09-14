@@ -22,8 +22,8 @@ public final class TechImprovedIndustrial extends Tech {
     public static final int BASE_FACTORY_COST = 10;
     public float factoryCost;
 
-    public TechImprovedIndustrial (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.IMPROVED_INDUSTRIAL, typeId, seq, lv, c, "IMPRINDUSTRY");
+    public TechImprovedIndustrial (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.IMPROVED_INDUSTRIAL, "ImprovedIndustrial", seq, lv, c, "IMPRINDUSTRY");
         free = b;
         switch(typeSeq) {
             case 0: factoryCost = 9; break;

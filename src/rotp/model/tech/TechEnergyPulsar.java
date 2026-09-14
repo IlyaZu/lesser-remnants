@@ -33,8 +33,8 @@ public final class TechEnergyPulsar extends Tech {
     public int range = 1;
     private transient BufferedImage[] frames;
 
-    public TechEnergyPulsar(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ENERGY_PULSAR, typeId, seq, lv, c, "PULSAR");
+    public TechEnergyPulsar(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.ENERGY_PULSAR, "EnergyPulsar", seq, lv, c, "PULSAR");
         free = b;
         switch(typeSeq) {
             case 0:

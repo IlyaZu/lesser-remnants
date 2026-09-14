@@ -22,8 +22,8 @@ public final class TechCloning extends Tech {
     public static final int BASE_POPULATION_COST = 20;
     public float growthCost;
 
-    public TechCloning(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.CLONING, typeId, seq, lv, c, "CLONE");
+    public TechCloning(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.CLONING, "Cloning", seq, lv, c, "CLONE");
         free = b;
         switch(typeSeq) {
             case 0:

@@ -19,8 +19,8 @@ package rotp.model.tech;
 import rotp.model.empires.Empire;
 
 public final class TechSubspaceInterdictor extends Tech {
-    public TechSubspaceInterdictor(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SUBSPACE_INTERDICTOR, typeId, seq, lv, c, "SUBSPACEINT");
+    public TechSubspaceInterdictor(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.SUBSPACE_INTERDICTOR, "SubspaceInterdictor", seq, lv, c, "SUBSPACEINT");
         free = b;
     }
     @Override

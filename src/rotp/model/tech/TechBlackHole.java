@@ -27,8 +27,8 @@ import java.awt.*;
 public final class TechBlackHole extends Tech {
     public int range = 1;
 
-    public TechBlackHole(String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BLACK_HOLE, typeId, seq, lv, c, "BLACKHOLE");
+    public TechBlackHole(int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.BLACK_HOLE, "BlackHole", seq, lv, c, "BLACKHOLE");
         free = b;
         switch(typeSeq) {
             case 0:

@@ -41,8 +41,8 @@ public final class TechShipNullifier extends Tech {
     public float hitChance = 1.0f;
     private transient Color beamColor;
 
-    public TechShipNullifier (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SHIP_NULLIFIER, typeId, seq, lv, c, "SHIPNULLIFIER");
+    public TechShipNullifier (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.SHIP_NULLIFIER, "ShipNullifier", seq, lv, c, "SHIPNULLIFIER");
         free = b;
         switch(typeSeq) {
             case 0:

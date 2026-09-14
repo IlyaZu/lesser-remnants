@@ -29,8 +29,8 @@ public final class TechScanner extends Tech {
     public boolean scanPlanets = false;
     public boolean special = false;
 
-    public TechScanner (String typeId, int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SCANNER, typeId, seq, lv, c, "SCANNER");
+    public TechScanner (int lv, int seq, boolean b, TechCategory c) {
+        super(Tech.SCANNER, "Scanner", seq, lv, c, "SCANNER");
         free = b;
         switch(typeSeq) {
             case 0:
