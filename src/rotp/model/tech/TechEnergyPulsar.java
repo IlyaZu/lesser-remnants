@@ -27,7 +27,6 @@ import java.awt.image.BufferedImage;
 
 public final class TechEnergyPulsar extends Tech {
     private static final int FRAME_MS = 20;
-    public int type;
     public int firstShipDamage;
     public float extraShipDamage;
     public int range = 1;

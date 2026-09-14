@@ -30,8 +30,6 @@ import rotp.ui.combat.ShipBattleUI;
 
 public final class TechRepulsor extends Tech {
     private static final int FRAME_MS = 30;
-    public float range = 0;
-    public float move = 0;
     private transient Color beamColor;
 
     public TechRepulsor (int lv, int seq, boolean b, TechCategory c) {
@@ -39,8 +37,6 @@ public final class TechRepulsor extends Tech {
         free = b;
         switch(typeSeq) {
             case 0:
-                range = 1;
-                move = 1;
                 cost = 55;
                 size = 100;
                 power = 200;

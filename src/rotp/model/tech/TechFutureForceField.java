@@ -19,7 +19,6 @@ package rotp.model.tech;
 import rotp.model.empires.Empire;
 
 public final class TechFutureForceField extends Tech {
-    int number;
     public TechFutureForceField (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_FORCE_FIELD, "FutureForceField", seq, lv, c, "FUTUREFORCE");
         free = b;

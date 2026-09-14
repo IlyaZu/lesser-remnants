@@ -22,18 +22,10 @@ import rotp.model.ships.ShipSpecialCloaking;
 
 public final class TechCloaking extends Tech {
     public static float TRANSPARENCY = .2f;
-    public float range = 0;
-    public float move = 0;
 
     public TechCloaking (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.CLOAKING, "Cloaking", seq, lv, c, "CLOAK");
         free = b;
-        switch(typeSeq) {
-            case 0:
-                range = 1;
-                move = 1;
-                break;
-        }
     }
     
     @Override

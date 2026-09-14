@@ -23,7 +23,6 @@ import rotp.model.ships.ShipManeuver;
 
 public final class TechEngineWarp extends Tech {
     private int warp;
-    public String shName;
 
     public TechEngineWarp(int lv, int seq, boolean b, TechCategory c) {
         super(Tech.ENGINE_WARP, "EngineWarp", seq, lv, c, "ENGINE");

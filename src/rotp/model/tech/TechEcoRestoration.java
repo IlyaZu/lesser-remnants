@@ -21,8 +21,6 @@ import rotp.model.empires.Race;
 
 public final class TechEcoRestoration extends Tech {
     public static final int BASE_WASTE_ELIMINATED = 2;
-
-    public int type;
     public int wasteEliminated;
 
     public TechEcoRestoration (int lv, int seq, boolean b, TechCategory c) {
