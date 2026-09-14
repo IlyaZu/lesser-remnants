@@ -19,7 +19,6 @@ package rotp.model.tech;
 import rotp.model.empires.Empire;
 
 public final class TechFutureConstruction extends Tech {
-    int number;
     public TechFutureConstruction (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_CONSTRUCTION, "FutureConstruction", seq, lv, c, "FUTURECONST");
         free = b;

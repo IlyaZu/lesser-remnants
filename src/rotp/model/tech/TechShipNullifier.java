@@ -30,7 +30,6 @@ import rotp.ui.combat.ShipBattleUI;
 
 public final class TechShipNullifier extends Tech {
     private static final int FRAME_MS = 30;
-    public static final Color STASIS_COLOR = new Color(255,255,255,96);
     public int minComputerRed = 0;
     public int maxComputerRed = 0;
     public int minECMRed = 0;

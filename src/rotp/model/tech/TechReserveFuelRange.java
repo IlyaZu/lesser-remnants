@@ -22,7 +22,6 @@ import rotp.model.ships.ShipSpecialFuelRange;
 
 public final class TechReserveFuelRange extends Tech {
     private int range;
-    public boolean unlimited = false;
 
     public float range() { return range; }
 

@@ -88,7 +88,6 @@ public class Tech implements Base {
     private final TechCategory cat;
 
     public String iconFilename;
-    public String effectKey;
 
     private final String name;
     private final String detail;
