@@ -84,7 +84,7 @@ public class Tech implements Base {
     public final int techType;
     public final int typeSeq;
     public final int level;
-    public final int quintile;
+    private final int quintile;
     private final TechCategory cat;
 
     public String iconFilename;
