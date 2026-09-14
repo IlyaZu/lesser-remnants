@@ -28,7 +28,7 @@ public final class TechBlackHole extends Tech {
     public int range = 1;
 
     public TechBlackHole(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BLACK_HOLE, "BlackHole", seq, lv, c, "BLACKHOLE");
+        super(Tech.BLACK_HOLE, "BlackHole", seq, lv, c, "BLACKHOLE_");
         free = b;
         switch(typeSeq) {
             case 0:

@@ -24,7 +24,7 @@ public final class TechDisplacement extends Tech {
     public float missPct = 0;
 
     public TechDisplacement(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.DISPLACEMENT, "Displacement", seq, lv, c, "DISPLACEMENT");
+        super(Tech.DISPLACEMENT, "Displacement", seq, lv, c, "DISPLACEMENT_");
         free = b;
         switch(typeSeq) {
             case 0: missPct = .33f; break;

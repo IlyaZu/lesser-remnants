@@ -28,7 +28,7 @@ public final class TechBiologicalWeapon extends Tech {
     public int maxDamage;
 
     public TechBiologicalWeapon (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BIOLOGICAL_WEAPON, "BiologicalWeapon", seq, lv, c, "BIOWEAPON");
+        super(Tech.BIOLOGICAL_WEAPON, "BiologicalWeapon", seq, lv, c, "BIOWEAPON_");
         free = b;
         switch(typeSeq) {
             case 0:

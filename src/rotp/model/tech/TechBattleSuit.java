@@ -22,7 +22,7 @@ public final class TechBattleSuit extends Tech {
     public int groundCombatBonus;
 
     public TechBattleSuit (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BATTLE_SUIT, "BattleSuit", seq, lv, c, "BATTLESUIT");
+        super(Tech.BATTLE_SUIT, "BattleSuit", seq, lv, c, "BATTLESUIT_");
         free = b;
         switch(typeSeq) {
             case 0: groundCombatBonus = 0; break;

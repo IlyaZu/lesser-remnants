@@ -22,7 +22,7 @@ public final class TechPersonalShield extends Tech {
     public int groundAttackBonus = -1;
 
     public TechPersonalShield (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.PERSONAL_SHIELD, "PersonalShield", seq, lv, c, "PERSSHIELD");
+        super(Tech.PERSONAL_SHIELD, "PersonalShield", seq, lv, c, "PERSSHIELD_");
         free = b;
         switch(typeSeq) {
             case 0: groundAttackBonus = 0; break;

@@ -110,12 +110,12 @@ public class Tech implements Base {
         this.quintile = (level+4)/5;
         this.cat = category;
         
-        this.name = textKeyPrefix + "_" + typeSeq + "_NAME";
-        this.detail = textKeyPrefix + "_" + typeSeq + "_DETAIL";
-        this.shDesc = textKeyPrefix + "_" + typeSeq + "_BRIEF";
-        this.shDesc2 = textKeyPrefix + "_" + typeSeq + "_BRIEF2";
-        this.item = textKeyPrefix + "_" + typeSeq + "_ITEM";
-        this.item2 = textKeyPrefix + "_" + typeSeq + "_ITEM2";
+        this.name = textKeyPrefix + typeSeq + "_NAME";
+        this.detail = textKeyPrefix + typeSeq + "_DETAIL";
+        this.shDesc = textKeyPrefix + typeSeq + "_BRIEF";
+        this.shDesc2 = textKeyPrefix + typeSeq + "_BRIEF2";
+        this.item = textKeyPrefix + typeSeq + "_ITEM";
+        this.item2 = textKeyPrefix + typeSeq + "_ITEM2";
     }
     
     public String id() {

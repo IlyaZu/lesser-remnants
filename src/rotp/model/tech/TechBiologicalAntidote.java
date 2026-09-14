@@ -22,7 +22,7 @@ public final class TechBiologicalAntidote extends Tech {
     public int attackReduction;
 
     public TechBiologicalAntidote(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BIOLOGICAL_ANTIDOTE, "BiologicalAntidote", seq, lv, c, "BIOANTIDOTE");
+        super(Tech.BIOLOGICAL_ANTIDOTE, "BiologicalAntidote", seq, lv, c, "BIOANTIDOTE_");
         free = b;
         switch(typeSeq) {
             case 0: attackReduction = 1; break;

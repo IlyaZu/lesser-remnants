@@ -27,7 +27,7 @@ public final class TechMissileShield extends Tech {
     public MissileBaseMissileShield baseMissileShield;
 
     public TechMissileShield (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.MISSILE_SHIELD, "MissileShield", seq, lv, c, "MISSDEF");
+        super(Tech.MISSILE_SHIELD, "MissileShield", seq, lv, c, "MISSDEF_");
         free = b;
         baseMissileShield = new MissileBaseMissileShield(this);
         baseBlockAdjPerLevel = .01f;

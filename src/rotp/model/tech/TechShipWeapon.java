@@ -54,7 +54,7 @@ public final class TechShipWeapon extends Tech {
     protected String soundEffect() { return "ShipLaser"; }
 
     public TechShipWeapon(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SHIP_WEAPON, "ShipWeapon", seq, lv, c, "SHIPWPN");
+        super(Tech.SHIP_WEAPON, "ShipWeapon", seq, lv, c, "SHIPWPN_");
         free = b;
         dashStroke = 0;
 

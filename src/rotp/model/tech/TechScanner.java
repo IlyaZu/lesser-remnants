@@ -30,7 +30,7 @@ public final class TechScanner extends Tech {
     public boolean special = false;
 
     public TechScanner (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SCANNER, "Scanner", seq, lv, c, "SCANNER");
+        super(Tech.SCANNER, "Scanner", seq, lv, c, "SCANNER_");
         free = b;
         switch(typeSeq) {
             case 0:

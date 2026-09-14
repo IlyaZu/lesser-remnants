@@ -22,7 +22,7 @@ public final class TechCombatTransporter extends Tech {
     public float pct;
 
     public TechCombatTransporter(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.COMBAT_TRANSPORTER, "CombatTransporter", seq, lv, c, "COMBATTRANSPORT");
+        super(Tech.COMBAT_TRANSPORTER, "CombatTransporter", seq, lv, c, "COMBATTRANSPORT_");
         free = b;
         switch(typeSeq) {
             case 0: pct = .50f; break;

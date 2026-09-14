@@ -24,7 +24,7 @@ public final class TechAutomatedRepair extends Tech {
     public float repairAdj;
 
     public TechAutomatedRepair (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.AUTOMATED_REPAIR, "AutomatedRepair", seq, lv, c, "AUTOREPAIR");
+        super(Tech.AUTOMATED_REPAIR, "AutomatedRepair", seq, lv, c, "AUTOREPAIR_");
         free = b;
         switch(typeSeq) {
             case 0:

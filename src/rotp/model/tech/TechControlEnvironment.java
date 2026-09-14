@@ -26,7 +26,7 @@ public final class TechControlEnvironment extends Tech {
     private int hostilityAllowed;
 
     public TechControlEnvironment (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment", seq, lv, c, "CONTROLENV");
+        super(Tech.CONTROL_ENVIRONMENT, "ControlEnvironment", seq, lv, c, "CONTROLENV_");
         free = b;
         switch(typeSeq) {
             case 0: hostilityAllowed = PlanetType.HOSTILITY_MINIMAL; return;

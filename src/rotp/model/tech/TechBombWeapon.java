@@ -31,7 +31,7 @@ public final class TechBombWeapon extends Tech {
     public int damageHigh() { return damageHigh; }
 
     public TechBombWeapon(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.BOMB_WEAPON, "BombWeapon", seq, lv, c, "BOMB");
+        super(Tech.BOMB_WEAPON, "BombWeapon", seq, lv, c, "BOMB_");
         free = b;
         switch(typeSeq) {
             case 0:

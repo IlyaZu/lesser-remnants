@@ -36,7 +36,7 @@ public final class TechStasisField extends Tech {
     public int range = 1;
 
     public TechStasisField (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.STASIS_FIELD, "StasisField", seq, lv, c, "STASIS");
+        super(Tech.STASIS_FIELD, "StasisField", seq, lv, c, "STASIS_");
         free = b;
         switch(typeSeq) {
             case 0:
