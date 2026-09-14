@@ -41,7 +41,7 @@ public final class TechShipNullifier extends Tech {
     private transient Color beamColor;
 
     public TechShipNullifier (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SHIP_NULLIFIER, "ShipNullifier", seq, lv, c, "SHIPNULLIFIER");
+        super(Tech.SHIP_NULLIFIER, "ShipNullifier", seq, lv, c, "SHIPNULLIFIER_");
         free = b;
         switch(typeSeq) {
             case 0:

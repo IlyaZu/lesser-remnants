@@ -26,7 +26,7 @@ public final class TechDeflectorShield extends Tech {
     public MissileBaseShield baseShield;
 
     public TechDeflectorShield (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.DEFLECTOR_SHIELD, "DeflectorShield", seq, lv, c, "DEFLECTOR");
+        super(Tech.DEFLECTOR_SHIELD, "DeflectorShield", seq, lv, c, "DEFLECTOR_");
         free = b;
         baseShield = new MissileBaseShield(this);
 

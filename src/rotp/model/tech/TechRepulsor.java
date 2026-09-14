@@ -33,7 +33,7 @@ public final class TechRepulsor extends Tech {
     private transient Color beamColor;
 
     public TechRepulsor (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.REPULSOR, "Repulsor", seq, lv, c, "REPULSOR");
+        super(Tech.REPULSOR, "Repulsor", seq, lv, c, "REPULSOR_");
         free = b;
         switch(typeSeq) {
             case 0:

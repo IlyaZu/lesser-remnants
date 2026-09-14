@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechFutureForceField extends Tech {
     public TechFutureForceField (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_FORCE_FIELD, "FutureForceField", seq, lv, c, "FUTUREFORCE");
+        super(Tech.FUTURE_FORCE_FIELD, "FutureForceField", seq, lv, c, "FUTUREFORCE_");
         free = b;
     }
     @Override

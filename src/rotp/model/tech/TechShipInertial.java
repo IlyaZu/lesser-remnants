@@ -26,7 +26,7 @@ public final class TechShipInertial extends Tech {
     public float blackHoleEffectMod;
 
     public TechShipInertial(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.SHIP_INERTIAL, "ShipInertial", seq, lv, c, "SHIPINERTIAL");
+        super(Tech.SHIP_INERTIAL, "ShipInertial", seq, lv, c, "SHIPINERTIAL_");
         free = b;
         switch(typeSeq) {
             case 0:

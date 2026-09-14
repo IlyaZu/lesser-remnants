@@ -22,7 +22,7 @@ import rotp.model.ships.ShipSpecialTeleporter;
 
 public final class TechTeleporter extends Tech {
     public TechTeleporter(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.TELEPORTER, "Teleporter", seq, lv, c, "SUBSPACETEL");
+        super(Tech.TELEPORTER, "Teleporter", seq, lv, c, "SUBSPACETEL_");
         free = b;
     }
     @Override

@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechFuturePropulsion extends Tech {
     public TechFuturePropulsion (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_PROPULSION, "FuturePropulsion", seq, lv, c, "FUTUREPROP");
+        super(Tech.FUTURE_PROPULSION, "FuturePropulsion", seq, lv, c, "FUTUREPROP_");
         free = b;
     }
     @Override

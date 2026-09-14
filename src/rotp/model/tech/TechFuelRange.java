@@ -25,7 +25,7 @@ public final class TechFuelRange extends Tech {
     public float range()  { return range; }
 
     public TechFuelRange(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUEL_RANGE, "FuelRange", seq, lv, c, "FUELRANGE");
+        super(Tech.FUEL_RANGE, "FuelRange", seq, lv, c, "FUELRANGE_");
         free = b;
         switch(typeSeq) {
             case 0: range = 3;   break;

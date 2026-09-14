@@ -37,7 +37,7 @@ public final class TechTorpedoWeapon extends Tech {
     public String imageKey()   { return imageKey; }
 
     public TechTorpedoWeapon (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.TORPEDO_WEAPON, "TorpedoWeapon", seq, lv, c, "TORPEDO");
+        super(Tech.TORPEDO_WEAPON, "TorpedoWeapon", seq, lv, c, "TORPEDO_");
         free = b;
         turnsToFire = 2;
 
