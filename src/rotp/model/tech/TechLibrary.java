@@ -71,8 +71,7 @@ public final class TechLibrary implements Base {
     private void parseCategoryLine(String input) {
         // field #1 is category index (only field for now)
         int index = parseInt(input);
-        TechCategory newCat = new TechCategory();
-        newCat.index(index);
+        TechCategory newCat = new TechCategory(index);
         loadingCat = newCat;
         baseCategory[index] = newCat;
     }
