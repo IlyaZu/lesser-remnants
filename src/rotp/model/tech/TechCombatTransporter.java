@@ -24,10 +24,7 @@ public final class TechCombatTransporter extends Tech {
     public TechCombatTransporter(int lv, int seq, boolean b, TechCategory c) {
         super(Tech.COMBAT_TRANSPORTER, "CombatTransporter", seq, lv, c, "COMBATTRANSPORT_");
         free = b;
-        switch(typeSeq) {
-            case 0: pct = .50f; break;
-            case 1: pct = .75f; break;
-        }
+        pct = .50f;
     }
     
     @Override
