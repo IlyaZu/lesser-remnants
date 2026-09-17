@@ -46,17 +46,20 @@ public final class TechScanner extends Tech {
             case 1:
                 planetRange = 5;
                 shipRange = 1;
+                iconFilename = "TECH_SCANNER_1";
                 break;
             case 2:
                 planetRange = 7;
                 shipRange = 2;
                 knowETA = true;
+                iconFilename = "TECH_SCANNER_2";
                 break;
             case 3:
                 planetRange = 9;
                 shipRange = 3;
                 knowETA = true;
                 scanPlanets = true;
+                iconFilename = "TECH_SCANNER_3";
                 break;
         }
     }

@@ -30,9 +30,11 @@ public final class TechBeamFocus extends Tech {
         switch(typeSeq) {
             case 0:
                 rangeAdj = 3;
+                iconFilename = "TECH_HIGH_ENERGY_FOCUS";
                 break;
             case 1:
                 shieldAdj = 0.5f;
+                iconFilename = "TECH_ORACLE_INTERFACE";
                 break;
         }
     }

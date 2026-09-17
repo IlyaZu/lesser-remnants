@@ -47,6 +47,7 @@ public final class TechBombWeapon extends Tech {
                 cost = 5;
                 size = 50;
                 power = 10;
+                iconFilename = "TECH_FUSION_BOMB";
                 break;
             case 2:
                 damageLow = 10;
@@ -54,6 +55,7 @@ public final class TechBombWeapon extends Tech {
                 cost = 6;
                 size = 75;
                 power = 10;
+                iconFilename = "TECH_ANTIMATTER_BOMB";
                 break;
             case 3:
                 damageLow = 20;
@@ -61,6 +63,7 @@ public final class TechBombWeapon extends Tech {
                 cost = 9;
                 size = 140;
                 power = 10;
+                iconFilename = "TECH_OMEGA-V_BOMB";
                 break;
             case 4:
                 damageLow = 40;
@@ -68,6 +71,7 @@ public final class TechBombWeapon extends Tech {
                 cost = 10;
                 size = 200;
                 power = 10;
+                iconFilename = "TECH_NEUTRONIUM_BOMB";
                 break;
         }
     }

@@ -26,6 +26,7 @@ public final class TechStargate extends Tech {
         switch(typeSeq) {
             case 0:
                 cost = 3000;
+                iconFilename = "TECH_STARGATES";
                 break;
         }
     }

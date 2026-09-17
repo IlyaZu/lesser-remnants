@@ -26,9 +26,9 @@ public final class TechPersonalShield extends Tech {
         free = b;
         switch(typeSeq) {
             case 0: groundAttackBonus = 0; break;
-            case 1: groundAttackBonus = 10; break;
-            case 2: groundAttackBonus = 20; break;
-            case 3: groundAttackBonus = 30; break;
+            case 1: groundAttackBonus = 10; iconFilename = "TECH_PERSONAL_SHIELD_01"; break;
+            case 2: groundAttackBonus = 20; iconFilename = "TECH_PERSONAL_SHIELD_02"; break;
+            case 3: groundAttackBonus = 30; iconFilename = "TECH_PERSONAL_SHIELD_03"; break;
         }
     }
     @Override

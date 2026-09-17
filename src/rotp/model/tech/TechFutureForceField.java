@@ -22,6 +22,18 @@ public final class TechFutureForceField extends Tech {
     public TechFutureForceField (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_FORCE_FIELD, "FutureForceField", seq, lv, c, "FUTUREFORCE_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_01";
+            case 1 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_02";
+            case 2 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_03";
+            case 3 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_04";
+            case 4 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_05";
+            case 5 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_06";
+            case 6 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_07";
+            case 7 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_08";
+            case 8 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_09";
+            case 9 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_10";
+        }
     }
     @Override
     public boolean isFutureTech()  { return true; }

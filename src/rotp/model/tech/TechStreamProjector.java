@@ -51,6 +51,7 @@ public final class TechStreamProjector extends Tech {
                 extraArmorMod = .01f;
                 shipsPerExtraArmorMod = 2;
                 beamColor = new Color(255,0,0,64);
+                iconFilename = "TECH_ION_STREAM_PROJECTOR";
                 break;
             case 1:
                 range = 2;
@@ -62,6 +63,7 @@ public final class TechStreamProjector extends Tech {
                 extraArmorMod = .01f;
                 shipsPerExtraArmorMod = 1;
                 beamColor = new Color(255,0,255,64);
+                iconFilename = "TECH_NEUTRON_STREAM_PROJECTOR";
                 break;
         }
     }

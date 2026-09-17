@@ -32,9 +32,9 @@ public final class TechMissileShield extends Tech {
         baseMissileShield = new MissileBaseMissileShield(this);
         baseBlockAdjPerLevel = .01f;
         switch(typeSeq) {
-            case 0: baseBlockPct = .40f; break;
-            case 1: baseBlockPct = .75f; break;
-            case 2: baseBlockPct = 1.00f; break;
+            case 0: baseBlockPct = .40f; iconFilename = "TECH_MISSILE_SHIELD_01"; break;
+            case 1: baseBlockPct = .75f; iconFilename = "TECH_MISSILE_SHIELD_02"; break;
+            case 2: baseBlockPct = 1.00f; iconFilename = "TECH_MISSILE_SHIELD_03"; break;
         }
     }
     

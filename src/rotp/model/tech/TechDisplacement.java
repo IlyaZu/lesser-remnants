@@ -27,7 +27,7 @@ public final class TechDisplacement extends Tech {
         super(Tech.DISPLACEMENT, "Displacement", seq, lv, c, "DISPLACEMENT_");
         free = b;
         switch(typeSeq) {
-            case 0: missPct = .33f; break;
+            case 0: missPct = .33f; iconFilename = "TECH_DISPLACEMENT_DEVICE"; break;
         }
     }
     

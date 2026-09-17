@@ -42,42 +42,52 @@ public final class TechBattleComputer extends Tech {
             case 2:
                 mark = 2;
                 baseComputer.baseCost(73);
+                iconFilename = "TECH_BATTLE_COMPUTER_02";
                 break;
             case 3:
                 mark = 3;
                 baseComputer.baseCost(86);
+                iconFilename = "TECH_BATTLE_COMPUTER_03";
                 break;
             case 4:
                 mark = 4;
                 baseComputer.baseCost(99);
+                iconFilename = "TECH_BATTLE_COMPUTER_04";
                 break;
             case 5:
                 mark = 5;
                 baseComputer.baseCost(111);
+                iconFilename = "TECH_BATTLE_COMPUTER_05";
                 break;
             case 6:
                 mark = 6;
                 baseComputer.baseCost(124);
+                iconFilename = "TECH_BATTLE_COMPUTER_06";
                 break;
             case 7:
                 mark = 7;
                 baseComputer.baseCost(136);
+                iconFilename = "TECH_BATTLE_COMPUTER_07";
                 break;
             case 8:
                 mark = 8;
                 baseComputer.baseCost(149);
+                iconFilename = "TECH_BATTLE_COMPUTER_08";
                 break;
             case 9:
                 mark = 9;
                 baseComputer.baseCost(162);
+                iconFilename = "TECH_BATTLE_COMPUTER_09";
                 break;
             case 10:
                 mark = 10;
                 baseComputer.baseCost(174);
+                iconFilename = "TECH_BATTLE_COMPUTER_10";
                 break;
             case 11:
                 mark = 11;
                 baseComputer.baseCost(187);
+                iconFilename = "TECH_BATTLE_COMPUTER_11";
                 break;
         }
     }

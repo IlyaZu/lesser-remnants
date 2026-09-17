@@ -30,12 +30,12 @@ public final class TechControlEnvironment extends Tech {
         free = b;
         switch(typeSeq) {
             case 0: hostilityAllowed = PlanetType.HOSTILITY_MINIMAL; return;
-            case 1: hostilityAllowed = PlanetType.HOSTILITY_BARREN; return;
-            case 2: hostilityAllowed = PlanetType.HOSTILITY_TUNDRA; return;
-            case 3: hostilityAllowed = PlanetType.HOSTILITY_DEAD; return;
-            case 4: hostilityAllowed = PlanetType.HOSTILITY_INFERNO; return;
-            case 5: hostilityAllowed = PlanetType.HOSTILITY_TOXIC; return;
-            case 6: hostilityAllowed = PlanetType.HOSTILITY_RADIATED; return;
+            case 1: hostilityAllowed = PlanetType.HOSTILITY_BARREN; iconFilename = "TECH_CONTROL_BARREN"; return;
+            case 2: hostilityAllowed = PlanetType.HOSTILITY_TUNDRA; iconFilename = "TECH_CONTROL_TUNDRA"; return;
+            case 3: hostilityAllowed = PlanetType.HOSTILITY_DEAD; iconFilename = "TECH_CONTROL_DEAD"; return;
+            case 4: hostilityAllowed = PlanetType.HOSTILITY_INFERNO; iconFilename = "TECH_CONTROL_INFERNO"; return;
+            case 5: hostilityAllowed = PlanetType.HOSTILITY_TOXIC; iconFilename = "TECH_CONTROL_TOXIC"; return;
+            case 6: hostilityAllowed = PlanetType.HOSTILITY_RADIATED; iconFilename = "TECH_CONTROL_IRRADIATED"; return;
         }
     }
     

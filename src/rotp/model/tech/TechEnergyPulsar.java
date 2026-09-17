@@ -42,6 +42,7 @@ public final class TechEnergyPulsar extends Tech {
                 power = 250;
                 firstShipDamage = 5;
                 extraShipDamage = 0.5f;
+                iconFilename = "TECH_ENERGY_PULSAR";
                 break;
             case 1:
                 cost = 150;
@@ -49,6 +50,7 @@ public final class TechEnergyPulsar extends Tech {
                 power = 750;
                 firstShipDamage = 10;
                 extraShipDamage = 1.0f;
+                iconFilename = "TECH_IONIC_PULSAR";
                 break;
         }
     }

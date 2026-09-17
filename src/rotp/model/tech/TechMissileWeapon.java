@@ -69,6 +69,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 7;  range2 = 5;
                 baseMissile = new MissileBaseMissile(this, 38);
                 imageKey = "MISSILE_HYPER_V";
+                iconFilename = "TECH_HYPER-V_ROCKET";
                 break;
             case 2: // HYPER-X ROCKETS
                 damage = 8;
@@ -81,6 +82,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 7;  range2 = 5;
                 baseMissile = new MissileBaseMissile(this, 65);
                 imageKey = "MISSILE_HYPER_X";
+                iconFilename = "TECH_HYPER-X_ROCKET";
                 break;
             case 3: // SCATTER PACK V ROCKETS
                 damage = 6;
@@ -93,6 +95,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 7;  range2 = 5;
                 baseMissile = new MissileBaseMissile(this, 97);
                 imageKey = "MISSILE_SCATTER_PACK_V";
+                iconFilename = "TECH_SCATTER_PACK_V_MISSILE";
                 break;
             case 4: // MERCULITE MISSILES
                 damage = 10;
@@ -105,6 +108,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 8;  range2 = 6;
                 baseMissile = new MissileBaseMissile(this, 70);
                 imageKey = "MISSILE_MERCULITE";
+                iconFilename = "TECH_MERCULITE_MISSILE";
                 break;
             case 5: // STINGER MISSILES
                 damage = 15;
@@ -117,6 +121,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 9;  range2 = 7;
                 baseMissile = new MissileBaseMissile(this, 84);
                 imageKey = "MISSILE_STINGER";
+                iconFilename = "TECH_STINGER_MISSILE";
                 break;
             case 6: // SCATTER PACK VII MISSILES
                 damage = 10;
@@ -130,6 +135,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 8;  range2 = 6;
                 baseMissile = new MissileBaseMissile(this, 151);
                 imageKey = "MISSILE_SCATTER_PACK_VII";
+                iconFilename = "TECH_SCATTER_PACK_VII_MISSILE";
                 break;
             case 7: // PULSON MISSILES
                 damage = 20;
@@ -142,6 +148,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 10;  range2 = 8;
                 baseMissile = new MissileBaseMissile(this, 108);
                 imageKey = "MISSILE_PULSON";
+                iconFilename = "TECH_PULSON_MISSILE";
                 break;
             case 8: // HERCULAR MISSILES
                 damage = 25;
@@ -154,6 +161,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 10;  range2 = 9;
                 baseMissile = new MissileBaseMissile(this, 141);
                 imageKey = "MISSILE_HERCULAR";
+                iconFilename = "TECH_HERCULAR_MISSILE";
                 break;
             case 9: // ZEON MISSILES
                 damage = 30;
@@ -166,6 +174,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 10;  range2 = 10; // modnar: correct missile range
                 baseMissile = new MissileBaseMissile(this, 162);
                 imageKey = "MISSILE_ZEON";
+                iconFilename = "TECH_ZEON_MISSILE";
                 break;
             case 10: // SCATTER PACK X MISSILES
                 damage = 15;
@@ -179,6 +188,7 @@ public final class TechMissileWeapon extends Tech {
                 range = 9;  range2 = 7; // modnar: correct missile range
                 baseMissile = new MissileBaseMissile(this, 162);
                 imageKey = "MISSILE_SCATTER_PACK_X";
+                iconFilename = "TECH_SCATTER_PACK_X_MISSILE";
                 break;
         }
     }

@@ -44,36 +44,42 @@ public final class TechArmor extends Tech {
                 groundAttackBonus = 5;
                 transportHP = 22;
                 baseArmor.baseCost(36);
+                iconFilename = "TECH_ARMOR_DURALLOY";
                 break;
             case 2:
                 hitsAdj = 2;
                 groundAttackBonus = 10;
                 transportHP = 30;
                 baseArmor.baseCost(60);
+                iconFilename = "TECH_ARMOR_ZORTRIUM";
                 break;
             case 3:
                 hitsAdj = 2.5f;
                 groundAttackBonus = 15;
                 transportHP = 37;
                 baseArmor.baseCost(90);
+                iconFilename = "TECH_ARMOR_ANDRIUM";
                 break;
             case 4:
                 hitsAdj = 3;
                 groundAttackBonus = 20;
                 transportHP = 45;
                 baseArmor.baseCost(120);
+                iconFilename = "TECH_ARMOR_TRITANIUM";
                 break;
             case 5:
                 hitsAdj = 3.5f;
                 groundAttackBonus = 25;
                 transportHP = 52;
                 baseArmor.baseCost(150);
+                iconFilename = "TECH_ARMOR_ADAMANTIUM";
                 break;
             case 6:
                 hitsAdj = 4;
                 groundAttackBonus = 30;
                 transportHP = 60;
                 baseArmor.baseCost(180);
+                iconFilename = "TECH_ARMOR_NEUTRONIUM";
                 break;
         }
     }

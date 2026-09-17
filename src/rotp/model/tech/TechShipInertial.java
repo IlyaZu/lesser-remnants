@@ -33,11 +33,13 @@ public final class TechShipInertial extends Tech {
                 defenseBonus = 2;
                 combatSpeedBonus = 1;
                 blackHoleEffectMod = .15f;
+                iconFilename = "TECH_INERTIAL_STABILIZER";
                 break;
             case 1:
                 defenseBonus = 4;
                 combatSpeedBonus = 2;
                 blackHoleEffectMod = .3f;
+                iconFilename = "TECH_INERTIAL_NULLIFIER";
                 break;
         }
     }

@@ -25,8 +25,8 @@ public final class TechBiologicalAntidote extends Tech {
         super(Tech.BIOLOGICAL_ANTIDOTE, "BiologicalAntidote", seq, lv, c, "BIOANTIDOTE_");
         free = b;
         switch(typeSeq) {
-            case 0: attackReduction = 1; break;
-            case 1: attackReduction = 2; break;
+            case 0: attackReduction = 1; iconFilename = "TECH_BIOTOXIN_ANTIDOTE"; break;
+            case 1: attackReduction = 2; iconFilename = "TECH_UNIVERSAL_ANTIDOTE"; break;
         }
     }
     

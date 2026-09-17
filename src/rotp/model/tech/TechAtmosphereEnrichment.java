@@ -29,6 +29,7 @@ public final class TechAtmosphereEnrichment extends Tech {
             case 0:
                 cost = 150;
                 hostileTech = this;
+                iconFilename = "TECH_ATMO_TERRAFORM";
                 break;
         }
     }

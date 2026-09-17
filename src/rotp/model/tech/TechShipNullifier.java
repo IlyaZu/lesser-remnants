@@ -55,6 +55,7 @@ public final class TechShipNullifier extends Tech {
                 maxECMRed = 6;
                 range = 4;
                 beamColor = new Color(255,0,0,64);
+                iconFilename = "TECH_TECH_NULLIFIER";
                 break;
             case 1:
                 cost = 65;
@@ -65,6 +66,7 @@ public final class TechShipNullifier extends Tech {
                 manvRed = 2;
                 range = 3;
                 beamColor = new Color(0,255,0,64);
+                iconFilename = "TECH_WARP_DISSIPATOR";
                 break;
         }
     }

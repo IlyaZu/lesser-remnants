@@ -40,6 +40,7 @@ public final class TechRepulsor extends Tech {
                 cost = 55;
                 size = 100;
                 power = 200;
+                iconFilename = "TECH_REPULSOR_BEAM";
                 break;
         }
     }

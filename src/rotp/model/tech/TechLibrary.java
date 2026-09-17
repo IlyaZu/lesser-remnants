@@ -85,11 +85,9 @@ public final class TechLibrary implements Base {
         String techType = fields.get(1);
         int techSeq = parseInt(fields.get(2));
         boolean techFree = parseInt(fields.get(3)) == 1;
-        String iconName = fields.get(4);
 
         Tech newTech = newLoadedTech(researchLevel, techType, techSeq, techFree);
         if (newTech != null) {
-            newTech.iconFilename = iconName;
             loadingCat.addPossibleTech(newTech.id());
             techMap.put(newTech.id(), newTech);
         }

@@ -22,6 +22,18 @@ public final class TechFutureConstruction extends Tech {
     public TechFutureConstruction (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_CONSTRUCTION, "FutureConstruction", seq, lv, c, "FUTURECONST_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_01";
+            case 1 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_02";
+            case 2 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_03";
+            case 3 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_04";
+            case 4 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_05";
+            case 5 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_06";
+            case 6 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_07";
+            case 7 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_08";
+            case 8 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_09";
+            case 9 -> iconFilename = "TECH_FUTURE_CONSTRUCTION_10";
+        }
     }
     @Override
     public boolean isFutureTech()  { return true; }

@@ -51,6 +51,7 @@ public final class TechHandWeapon extends Tech {
                 deathType = COLLAPSE;
                 color = Color.yellow;
                 strokeSize = 1;
+                iconFilename = "TECH_HAND_LASER";
                 break;
             case 2: // ION RIFLE
                 rifle = true;
@@ -58,6 +59,7 @@ public final class TechHandWeapon extends Tech {
                 deathType = IMMOLATE;
                 color = Color.orange;
                 strokeSize = 2;
+                iconFilename = "TECH_ION_RIFLE";
                 break;
             case 3: // FUSION RIFLE
                 rifle = true;
@@ -65,6 +67,7 @@ public final class TechHandWeapon extends Tech {
                 deathType = IMMOLATE;
                 color = Color.red;
                 strokeSize = 2;
+                iconFilename = "TECH_FUSION_RIFLE";
                 break;
             case 4: // HAND PHASOR
                 rifle = false;
@@ -72,6 +75,7 @@ public final class TechHandWeapon extends Tech {
                 deathType = DISRUPT;
                 color = Color.white;
                 strokeSize = 2;
+                iconFilename = "TECH_HAND_PHASOR";
                 break;
             case 5: // PLASMA RIFLE
                 rifle = true;
@@ -79,6 +83,7 @@ public final class TechHandWeapon extends Tech {
                 deathType = VAPORIZE;
                 color = Color.blue;
                 strokeSize = 3;
+                iconFilename = "TECH_PLASMA_RIFLE";
                 break;
         }
     }

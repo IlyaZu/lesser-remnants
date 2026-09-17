@@ -26,14 +26,14 @@ public final class TechImprovedIndustrial extends Tech {
         super(Tech.IMPROVED_INDUSTRIAL, "ImprovedIndustrial", seq, lv, c, "IMPRINDUSTRY_");
         free = b;
         switch(typeSeq) {
-            case 0: factoryCost = 9; break;
-            case 1: factoryCost = 8; break;
-            case 2: factoryCost = 7; break;
-            case 3: factoryCost = 6; break;
-            case 4: factoryCost = 5; break;
-            case 5: factoryCost = 4; break;
-            case 6: factoryCost = 3; break;
-            case 7: factoryCost = 2; break;
+            case 0: factoryCost = 9; iconFilename = "TECH_IMPR_INDUSTRY_9"; break;
+            case 1: factoryCost = 8; iconFilename = "TECH_IMPR_INDUSTRY_8"; break;
+            case 2: factoryCost = 7; iconFilename = "TECH_IMPR_INDUSTRY_7"; break;
+            case 3: factoryCost = 6; iconFilename = "TECH_IMPR_INDUSTRY_6"; break;
+            case 4: factoryCost = 5; iconFilename = "TECH_IMPR_INDUSTRY_5"; break;
+            case 5: factoryCost = 4; iconFilename = "TECH_IMPR_INDUSTRY_4"; break;
+            case 6: factoryCost = 3; iconFilename = "TECH_IMPR_INDUSTRY_3"; break;
+            case 7: factoryCost = 2; iconFilename = "TECH_IMPR_INDUSTRY_2"; break;
         }
     }
     

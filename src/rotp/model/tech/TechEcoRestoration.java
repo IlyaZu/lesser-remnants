@@ -27,11 +27,11 @@ public final class TechEcoRestoration extends Tech {
         super(Tech.ECO_RESTORATION, "EcoRestoration", seq, lv, c, "ECORESTORATION_");
         free = b;
         switch(typeSeq) {
-            case 0: wasteEliminated = 2;  break;
-            case 1: wasteEliminated = 3;  break;
-            case 2: wasteEliminated = 5;  break;
-            case 3: wasteEliminated = 10; break;
-            case 4: wasteEliminated = 20; break;
+            case 0: wasteEliminated = 2; break;
+            case 1: wasteEliminated = 3; iconFilename = "TECH_ECO_RESTORATION_3"; break;
+            case 2: wasteEliminated = 5; iconFilename = "TECH_ECO_RESTORATION_5"; break;
+            case 3: wasteEliminated = 10; iconFilename = "TECH_ECO_RESTORATION_10"; break;
+            case 4: wasteEliminated = 20; iconFilename = "TECH_ECO_RESTORATION_20"; break;
         }
     }
     

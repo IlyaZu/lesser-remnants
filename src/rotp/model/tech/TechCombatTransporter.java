@@ -25,6 +25,7 @@ public final class TechCombatTransporter extends Tech {
         super(Tech.COMBAT_TRANSPORTER, "CombatTransporter", seq, lv, c, "COMBATTRANSPORT_");
         free = b;
         pct = .50f;
+        iconFilename = "TECH_COMBAT_TRANSPORTERS";
     }
     
     @Override
