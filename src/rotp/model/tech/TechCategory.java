@@ -49,7 +49,7 @@ public final class TechCategory implements Base, Serializable {
         return "";
     }
 
-    private int index;
+    private final int index;
     private int allocation = 0;
     private String currentTech;
     private boolean locked = false;
@@ -63,7 +63,6 @@ public final class TechCategory implements Base, Serializable {
     private boolean researchStarted = false;
 
     public int index()                     { return index; }
-    public void index(int i)               { index = i; }
     public List<String> knownTechs()       { return knownTechs; }
     public String currentTech()            { return currentTech; }
     public boolean currentTech(Tech t)        {
@@ -83,10 +82,12 @@ public final class TechCategory implements Base, Serializable {
     private float racialMod()             { return tree == null? 1.0f : tree.empire().techMod(index); }
     public float discoveryPct()           { return discoveryPct; }
 
-    public TechCategory() { }
+    public TechCategory(int index) {
+        this.index = index;
+    }
 
     public TechCategory (int i, TechTree tr, float p) {
-        index = i;
+        this(i);
         tree = tr;
         discoveryPct = p;
         if (!tree.spy())
