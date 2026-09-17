@@ -44,6 +44,7 @@ public final class TechStasisField extends Tech {
                 cost = 250;
                 size = 200;
                 power = 275;
+                iconFilename = "TECH_STASIS_FIELD";
                 break;
         }
     }

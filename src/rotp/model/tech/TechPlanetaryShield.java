@@ -26,10 +26,10 @@ public final class TechPlanetaryShield extends Tech {
         super(Tech.PLANETARY_SHIELD, "PlanetaryShield", seq, lv, c, "PLANETSHIELD_");
         free = b;
         switch(typeSeq) {
-            case 0: damage = 5;  break;
-            case 1: damage = 10; break;
-            case 2: damage = 15; break;
-            case 3: damage = 20; break;
+            case 0: damage = 5; iconFilename = "TECH_PLANETARY_SHIELD_V"; break;
+            case 1: damage = 10; iconFilename = "TECH_PLANETARY_SHIELD_X"; break;
+            case 2: damage = 15; iconFilename = "TECH_PLANETARY_SHIELD_XV"; break;
+            case 3: damage = 20; iconFilename = "TECH_PLANETARY_SHIELD_XX"; break;
         }
     }
     

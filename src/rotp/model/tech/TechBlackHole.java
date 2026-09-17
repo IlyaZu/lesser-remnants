@@ -35,6 +35,7 @@ public final class TechBlackHole extends Tech {
                 cost = 275;
                 size = 750;
                 power = 750;
+                iconFilename = "TECH_BLACK_HOLE_GENERATOR";
                 break;
         }
     }

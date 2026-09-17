@@ -27,11 +27,11 @@ public final class TechIndustrialWaste extends Tech {
         super(Tech.INDUSTRIAL_WASTE, "IndustrialWaste", seq, lv, c, "INDWASTE_");
         free = b;
         switch(typeSeq) {
-            case 0: wasteModifier = .80f; break;
-            case 1: wasteModifier = .60f; break;
-            case 2: wasteModifier = .40f; break;
-            case 3: wasteModifier = .20f; break;
-            case 4: wasteModifier = 0;   break;
+            case 0: wasteModifier = .80f; iconFilename = "TECH_WASTE_REDUCTION_80"; break;
+            case 1: wasteModifier = .60f; iconFilename = "TECH_WASTE_REDUCTION_60"; break;
+            case 2: wasteModifier = .40f; iconFilename = "TECH_WASTE_REDUCTION_40"; break;
+            case 3: wasteModifier = .20f; iconFilename = "TECH_WASTE_REDUCTION_20"; break;
+            case 4: wasteModifier = 0; iconFilename = "TECH_WASTE_REDUCTION_ELIM"; break;
         }
     }
     

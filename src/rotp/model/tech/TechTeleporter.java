@@ -24,6 +24,7 @@ public final class TechTeleporter extends Tech {
     public TechTeleporter(int lv, int seq, boolean b, TechCategory c) {
         super(Tech.TELEPORTER, "Teleporter", seq, lv, c, "SUBSPACETEL_");
         free = b;
+        iconFilename = "TECH_SUBSPACE_TELEPORTER";
     }
     @Override
     public boolean canBeMiniaturized()      { return true; }

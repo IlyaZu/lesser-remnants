@@ -38,42 +38,52 @@ public final class TechECMJammer extends Tech {
             case 1:
                 mark = 1;
                 baseECM.baseCost(62);
+                iconFilename = "TECH_ECM_JAMMER_01";
                 break;
             case 2:
                 mark = 2;
                 baseECM.baseCost(69);
+                iconFilename = "TECH_ECM_JAMMER_02";
                 break;
             case 3:
                 mark = 3;
                 baseECM.baseCost(76);
+                iconFilename = "TECH_ECM_JAMMER_03";
                 break;
             case 4:
                 mark = 4;
                 baseECM.baseCost(84);
+                iconFilename = "TECH_ECM_JAMMER_04";
                 break;
             case 5:
                 mark = 5;
                 baseECM.baseCost(91);
+                iconFilename = "TECH_ECM_JAMMER_05";
                 break;
             case 6:
                 mark = 6;
                 baseECM.baseCost(98);
+                iconFilename = "TECH_ECM_JAMMER_06";
                 break;
             case 7:
                 mark = 7;
                 baseECM.baseCost(105);
+                iconFilename = "TECH_ECM_JAMMER_07";
                 break;
             case 8:
                 mark = 8;
                 baseECM.baseCost(112);
+                iconFilename = "TECH_ECM_JAMMER_08";
                 break;
             case 9:
                 mark = 9;
                 baseECM.baseCost(120);
+                iconFilename = "TECH_ECM_JAMMER_09";
                 break;
             case 10:
                 mark = 10;
                 baseECM.baseCost(127);
+                iconFilename = "TECH_ECM_JAMMER_10";
                 break;
         }
     }

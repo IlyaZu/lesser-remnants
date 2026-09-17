@@ -22,6 +22,7 @@ public final class TechHyperspaceComm extends Tech {
     public TechHyperspaceComm(int lv, int seq, boolean b, TechCategory c) {
         super(Tech.HYPERSPACE_COMM, "HyperspaceComm", seq, lv, c, "HYPERSPACE_");
         free = b;
+        iconFilename = "TECH_HYPERSPACE_COMM";
     }
     @Override
     public void provideBenefits(Empire c) {

@@ -29,9 +29,11 @@ public final class TechAutomatedRepair extends Tech {
         switch(typeSeq) {
             case 0:
                 repairAdj = .15f;
+                iconFilename = "TECH_AUTOMATED_REPAIR_1";
                 break;
             case 1: default:
                 repairAdj = .3f;
+                iconFilename = "TECH_AUTOMATED_REPAIR_2";
                 break;
         }
     }

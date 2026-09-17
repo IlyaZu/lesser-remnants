@@ -29,14 +29,14 @@ public final class TechEngineWarp extends Tech {
         free = b;
         switch(typeSeq) {
             case 0: warp = 1; break;
-            case 1: warp = 2; break;
-            case 2: warp = 3; break;
-            case 3: warp = 4; break;
-            case 4: warp = 5; break;
-            case 5: warp = 6; break;
-            case 6: warp = 7; break;
-            case 7: warp = 8; break;
-            case 8: warp = 9; break;
+            case 1: warp = 2; iconFilename = "TECH_WARP_NUCLEAR"; break;
+            case 2: warp = 3; iconFilename = "TECH_WARP_SUBLIGHT"; break;
+            case 3: warp = 4; iconFilename = "TECH_WARP_FUSION"; break;
+            case 4: warp = 5; iconFilename = "TECH_WARP_IMPULSE"; break;
+            case 5: warp = 6; iconFilename = "TECH_WARP_ION"; break;
+            case 6: warp = 7; iconFilename = "TECH_WARP_ANTIMATTER"; break;
+            case 7: warp = 8; iconFilename = "TECH_WARP_INTERPHASED"; break;
+            case 8: warp = 9; iconFilename = "TECH_WARP_HYPER"; break;
         }
     }
     

@@ -82,6 +82,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 1;
                 heavyStroke = 2;
+                iconFilename = "TECH_GATLING_LASER";
                 break;
             case 2: // NEUTRON PELLET GUN
                 damageLow = 2;
@@ -94,6 +95,7 @@ public final class TechShipWeapon extends Tech {
                 beamStroke = 1;
                 heavyStroke = 2;
                 dashStroke = 1;
+                iconFilename = "TECH_NEUTRON_PELLET_GUN";
                 break;
             case 3: // ION CANNON
                 damageLow = 3;
@@ -107,6 +109,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.blue;
                 beamStroke = 1;
                 heavyStroke = 2;
+                iconFilename = "TECH_ION_CANNON";
                 break;
             case 4: // MASS DRIVER
                 damageLow = 5;
@@ -119,6 +122,7 @@ public final class TechShipWeapon extends Tech {
                 beamStroke = 1;
                 heavyStroke = 1;
                 dashStroke = 1;
+                iconFilename = "TECH_MASS_DRIVER";
                 break;
             case 5: // NEUTRON BLASTER
                 damageLow = 3;
@@ -132,6 +136,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.blue;
                 beamStroke = 2;
                 heavyStroke = 3;
+                iconFilename = "TECH_NEUTRON_BLASTER";
                 break;
             case 6: // GRAVITON BEAM
                 damageLow = 1;
@@ -143,6 +148,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.pink;
                 beamStroke = 2;
                 heavyStroke = 3;
+                iconFilename = "TECH_GRAVITON_BEAM";
                 break;
             case 7: // HARD BEAM
                 damageLow = 8;
@@ -155,6 +161,7 @@ public final class TechShipWeapon extends Tech {
                 beamStroke = 2;
                 heavyStroke = 2;
                 dashStroke = 2;
+                iconFilename = "TECH_HARD_BEAM";
                 break;
             case 8: // FUSION BEAM
                 damageLow = 4;
@@ -168,6 +175,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 2;
                 heavyStroke = 3;
+                iconFilename = "TECH_FUSION_BEAM";
                 break;
             case 9: // MEGABOLT CANNON
                 damageLow = 2;
@@ -179,6 +187,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_MEGABOLT_CANNON";
                 break;
             case 10: // PHASOR
                 damageLow = 5;
@@ -192,6 +201,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.orange;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_PULSE_PHASOR";
                 break;
             case 11: // AUTO-BLASTER
                 damageLow = 4;
@@ -203,6 +213,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_AUTO_BLASTER";
                 break;
             case 12: // TACHYON BEAM
                 damageLow = 1;
@@ -214,6 +225,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.pink;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_TACHYON_BEAM";
                 break;
             case 13: // GAUSS AUTO-CANNON
                 damageLow = 7;
@@ -227,6 +239,7 @@ public final class TechShipWeapon extends Tech {
                 beamStroke = 3;
                 heavyStroke = 3;
                 dashStroke = 2;
+                iconFilename = "TECH_GAUSS_AUTOCANNON";
                 break;
             case 14: // PARTICLE BEAM
                 damageLow = 10;
@@ -238,6 +251,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.gray;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_PARTICLE_BEAM";
                 break;
             case 15: // PLASMA CANNON
                 damageLow = 6;
@@ -248,6 +262,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_PLASMA_CANNON";
                 break;
             case 16: // DEATH RAY
                 range = 1;
@@ -260,6 +275,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.white;
                 beamStroke = 7;
                 heavyStroke = 7;
+                iconFilename = "TECH_DEATH_RAY";
                 break;
             case 17: // DISRUPTOR
                 damageLow = 10;
@@ -271,6 +287,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_DISRUPTOR";
                 break;
             case 18: // PULSE PHASOR
                 damageLow = 5;
@@ -282,6 +299,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.orange;
                 beamStroke = 3;
                 heavyStroke = 5;
+                iconFilename = "TECH_PULSE_PHASOR";
                 break;
             case 19: // TRI-FOCUS PLASMA CANNON
                 damageLow = 20;
@@ -292,6 +310,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.yellow;
                 beamStroke = 4;
                 heavyStroke = 6;
+                iconFilename = "TECH_TRI-FOCUS_PLASMA_CANNON";
                 break;
             case 20: // STELLAR CONVERTOR
                 damageLow = 10;
@@ -304,6 +323,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.white;
                 beamStroke = 4;
                 heavyStroke = 6;
+                iconFilename = "TECH_STELLAR_CONVERTOR";
                 break;
             case 21: // MAULER DEVICE
                 damageLow = 20;
@@ -314,6 +334,7 @@ public final class TechShipWeapon extends Tech {
                 beamColor = Color.white;
                 beamStroke = 5;
                 heavyStroke = 5;
+                iconFilename = "TECH_MAULER_DEVICE";
                 break;
             case 22: // AMOEBA STREAM
                 damageLow = 250;

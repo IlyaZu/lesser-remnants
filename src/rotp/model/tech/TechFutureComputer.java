@@ -22,6 +22,18 @@ public final class TechFutureComputer extends Tech {
     public TechFutureComputer (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_COMPUTER, "FutureComputer", seq, lv, c, "FUTURECOMP_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_COMPUTER_01";
+            case 1 -> iconFilename = "TECH_FUTURE_COMPUTER_02";
+            case 2 -> iconFilename = "TECH_FUTURE_COMPUTER_03";
+            case 3 -> iconFilename = "TECH_FUTURE_COMPUTER_04";
+            case 4 -> iconFilename = "TECH_FUTURE_COMPUTER_05";
+            case 5 -> iconFilename = "TECH_FUTURE_COMPUTER_06";
+            case 6 -> iconFilename = "TECH_FUTURE_COMPUTER_07";
+            case 7 -> iconFilename = "TECH_FUTURE_COMPUTER_08";
+            case 8 -> iconFilename = "TECH_FUTURE_COMPUTER_09";
+            case 9 -> iconFilename = "TECH_FUTURE_COMPUTER_10";
+        }
     }
     @Override
     public boolean isFutureTech()        { return true; }

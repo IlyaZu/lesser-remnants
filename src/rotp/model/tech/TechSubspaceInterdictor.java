@@ -22,6 +22,7 @@ public final class TechSubspaceInterdictor extends Tech {
     public TechSubspaceInterdictor(int lv, int seq, boolean b, TechCategory c) {
         super(Tech.SUBSPACE_INTERDICTOR, "SubspaceInterdictor", seq, lv, c, "SUBSPACEINT_");
         free = b;
+        iconFilename = "TECH_SUBSPACE_INTERDICTOR";
     }
     @Override
     public float warModeFactor()        { return 1.5f; }

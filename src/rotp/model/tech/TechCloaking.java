@@ -26,6 +26,7 @@ public final class TechCloaking extends Tech {
     public TechCloaking (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.CLOAKING, "Cloaking", seq, lv, c, "CLOAK_");
         free = b;
+        iconFilename = "TECH_CLOAKING_DEVICE";
     }
     
     @Override

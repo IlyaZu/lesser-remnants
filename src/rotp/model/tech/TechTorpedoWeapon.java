@@ -51,6 +51,7 @@ public final class TechTorpedoWeapon extends Tech {
                 computer = 4;
                 range = 8;
                 imageKey = "TORPEDO_ANTI_MATTER";
+                iconFilename = "TECH_ANTIMATTER_TORPEDO";
                 break;
             case 1: // HELLFIRE TORPEDOS
                 damage = 25;
@@ -62,6 +63,7 @@ public final class TechTorpedoWeapon extends Tech {
                 attacks = 4;
                 range = 10;
                 imageKey = "TORPEDO_HELLFIRE";
+                iconFilename = "TECH_HELLFIRE_TORPEDO";
                 break;
             case 2: // PROTON TORPEDOS
                 damage = 75;
@@ -72,6 +74,7 @@ public final class TechTorpedoWeapon extends Tech {
                 computer = 6;
                 range = 10;
                 imageKey = "TORPEDO_PROTON";
+                iconFilename = "TECH_PROTON_TORPEDO";
                 break;
             case 3: // PLASMA TORPEDOS
                 damage = 150;
@@ -83,6 +86,7 @@ public final class TechTorpedoWeapon extends Tech {
                 damageLoss = 15;
                 range = 10;
                 imageKey = "TORPEDO_PLASMA";
+                iconFilename = "TECH_PLASMA_TORPEDO";
                 break;
         }
     }

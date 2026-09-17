@@ -22,6 +22,18 @@ public final class TechFutureWeapon extends Tech {
     public TechFutureWeapon (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_WEAPON, "FutureWeapon", seq, lv, c, "FUTUREWEAPON_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_WEAPON_01";
+            case 1 -> iconFilename = "TECH_FUTURE_WEAPON_02";
+            case 2 -> iconFilename = "TECH_FUTURE_WEAPON_03";
+            case 3 -> iconFilename = "TECH_FUTURE_WEAPON_04";
+            case 4 -> iconFilename = "TECH_FUTURE_WEAPON_05";
+            case 5 -> iconFilename = "TECH_FUTURE_WEAPON_06";
+            case 6 -> iconFilename = "TECH_FUTURE_WEAPON_07";
+            case 7 -> iconFilename = "TECH_FUTURE_WEAPON_08";
+            case 8 -> iconFilename = "TECH_FUTURE_WEAPON_09";
+            case 9 -> iconFilename = "TECH_FUTURE_WEAPON_10";
+        }
     }
     @Override
     public boolean isFutureTech()  { return true; }

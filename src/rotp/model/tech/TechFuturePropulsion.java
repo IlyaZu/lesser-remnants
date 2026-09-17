@@ -22,6 +22,18 @@ public final class TechFuturePropulsion extends Tech {
     public TechFuturePropulsion (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_PROPULSION, "FuturePropulsion", seq, lv, c, "FUTUREPROP_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_PROPULSION_01";
+            case 1 -> iconFilename = "TECH_FUTURE_PROPULSION_02";
+            case 2 -> iconFilename = "TECH_FUTURE_PROPULSION_03";
+            case 3 -> iconFilename = "TECH_FUTURE_PROPULSION_04";
+            case 4 -> iconFilename = "TECH_FUTURE_PROPULSION_05";
+            case 5 -> iconFilename = "TECH_FUTURE_PROPULSION_06";
+            case 6 -> iconFilename = "TECH_FUTURE_PROPULSION_07";
+            case 7 -> iconFilename = "TECH_FUTURE_PROPULSION_08";
+            case 8 -> iconFilename = "TECH_FUTURE_PROPULSION_09";
+            case 9 -> iconFilename = "TECH_FUTURE_PROPULSION_10";
+        }
     }
     @Override
     public boolean isFutureTech()  { return true; }

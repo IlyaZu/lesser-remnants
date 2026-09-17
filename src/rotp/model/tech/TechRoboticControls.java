@@ -27,11 +27,11 @@ public final class TechRoboticControls extends Tech {
         super(Tech.ROBOTIC_CONTROLS, "RoboticControls", seq, lv, c, "ROBOTCTRL_");
         free = b;
         switch(typeSeq) {
-            case 0: mark = 3;  break;
-            case 1: mark = 4;  break;
-            case 2: mark = 5;  break;
-            case 3: mark = 6;  break;
-            case 4: mark = 7;  break;
+            case 0: mark = 3; iconFilename = "TECH_BATTLE_COMPUTER_03"; break;
+            case 1: mark = 4; iconFilename = "TECH_BATTLE_COMPUTER_04"; break;
+            case 2: mark = 5; iconFilename = "TECH_BATTLE_COMPUTER_05"; break;
+            case 3: mark = 6; iconFilename = "TECH_BATTLE_COMPUTER_06"; break;
+            case 4: mark = 7; iconFilename = "TECH_BATTLE_COMPUTER_07"; break;
         }
     }
     

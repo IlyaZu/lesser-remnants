@@ -26,9 +26,9 @@ public final class TechBattleSuit extends Tech {
         free = b;
         switch(typeSeq) {
             case 0: groundCombatBonus = 0; break;
-            case 1: groundCombatBonus = 10; break;
-            case 2: groundCombatBonus = 20; break;
-            case 3: groundCombatBonus = 30; break;
+            case 1: groundCombatBonus = 10; iconFilename = "TECH_BATTLE_SUIT"; break;
+            case 2: groundCombatBonus = 20; iconFilename = "TECH_ARMORED_EXOSKELETON"; break;
+            case 3: groundCombatBonus = 30; iconFilename = "TECH_POWERED_ARMOR"; break;
         }
     }
     @Override

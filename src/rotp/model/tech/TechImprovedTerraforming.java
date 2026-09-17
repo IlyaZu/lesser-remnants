@@ -32,38 +32,47 @@ public final class TechImprovedTerraforming extends Tech {
             case 0:
                 increase = 10;
                 costPerMillion = 5;
+                iconFilename = "TECH_IMPR_TERRAFORM_10";
                 break;
             case 1:
                 increase = 20;
                 costPerMillion = 5;
+                iconFilename = "TECH_IMPR_TERRAFORM_20";
                 break;
             case 2:
                 increase = 30;
                 costPerMillion = 4;
+                iconFilename = "TECH_IMPR_TERRAFORM_30";
                 break;
             case 3:
                 increase = 40;
                 costPerMillion = 4;
+                iconFilename = "TECH_IMPR_TERRAFORM_40";
                 break;
             case 4:
                 increase = 50;
                 costPerMillion = 3;
+                iconFilename = "TECH_IMPR_TERRAFORM_50";
                 break;
             case 5:
                 increase = 60;
                 costPerMillion = 3;
+                iconFilename = "TECH_IMPR_TERRAFORM_60";
                 break;
             case 6:
                 increase = 80;
                 costPerMillion = 2;
+                iconFilename = "TECH_IMPR_TERRAFORM_80";
                 break;
             case 7:
                 increase = 100;
                 costPerMillion = 2;
+                iconFilename = "TECH_IMPR_TERRAFORM_100";
                 break;
             case 8:
                 increase = 120;
                 costPerMillion = 2;
+                iconFilename = "TECH_IMPR_TERRAFORM_120";
                 break;
         }
     }

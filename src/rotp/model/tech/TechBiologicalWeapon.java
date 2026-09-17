@@ -37,6 +37,7 @@ public final class TechBiologicalWeapon extends Tech {
                 cost = 12;
                 size = 100;
                 power = 10;
+                iconFilename = "TECH_DEATH_SPORES";
                 break;
             case 1:
                 minDamage = 1;
@@ -44,6 +45,7 @@ public final class TechBiologicalWeapon extends Tech {
                 cost = 16;
                 size = 200;
                 power = 10;
+                iconFilename = "TECH_DOOM_VIRUS";
                 break;
             case 2:
                 minDamage = 1;
@@ -51,6 +53,7 @@ public final class TechBiologicalWeapon extends Tech {
                 cost = 20;
                 size = 300;
                 power = 10;
+                iconFilename = "TECH_BIO_TERMINATOR";
                 break;
         }
     }

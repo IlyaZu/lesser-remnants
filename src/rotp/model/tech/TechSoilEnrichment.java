@@ -33,12 +33,14 @@ public final class TechSoilEnrichment extends Tech {
                 planetaryIncrease = 25;
                 cost = 150;
                 environment = 2;
+                iconFilename = "TECH_SOIL_ENRICHMENT";
                 break;
             case 1:
                 growthMod = 2;
                 planetaryIncrease = 50;
                 cost = 300;
                 environment = 3;
+                iconFilename = "TECH_ADV_SOIL_ENRICHMENT";
                 break;
         }
     }

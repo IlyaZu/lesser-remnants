@@ -40,46 +40,57 @@ public final class TechDeflectorShield extends Tech {
                 damage = 1;
                 baseShield.baseCost(75);
                 free = true;
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_01";
                 break;
             case 2:
                 damage = 2;
                 baseShield.baseCost(89);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_02";
                 break;
             case 3:
                 damage = 3;
                 baseShield.baseCost(103);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_03";
                 break;
             case 4:
                 damage = 4;
                 baseShield.baseCost(117);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_04";
                 break;
             case 5:
                 damage = 5;
                 baseShield.baseCost(130);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_05";
                 break;
             case 6:
                 damage = 6;
                 baseShield.baseCost(144);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_06";
                 break;
             case 7:
                 damage = 7;
                 baseShield.baseCost(158);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_07";
                 break;
             case 8:
                 damage = 9;
                 baseShield.baseCost(172);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_09";
                 break;
             case 9:
                 damage = 11;
                 baseShield.baseCost(186);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_11";
                 break;
             case 10:
                 damage = 13;
                 baseShield.baseCost(199);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_13";
                 break;
             case 11:
                 damage = 15;
                 baseShield.baseCost(213);
+                iconFilename = "TECH_DEFLECTOR_SHIELDS_15";
                 break;
         }
     }

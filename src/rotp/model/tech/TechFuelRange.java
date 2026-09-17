@@ -28,16 +28,17 @@ public final class TechFuelRange extends Tech {
         super(Tech.FUEL_RANGE, "FuelRange", seq, lv, c, "FUELRANGE_");
         free = b;
         switch(typeSeq) {
-            case 0: range = 3;   break;
-            case 1: range = 4;   break;
-            case 2: range = 5;   break;
-            case 3: range = 6;   break;
-            case 4: range = 7;   break;
-            case 5: range = 8;   break;
-            case 6: range = 9;   break;
-            case 7: range = 10;  break;
+            case 0: range = 3; break;
+            case 1: range = 4; iconFilename = "TECH_FUEL_HYDROGEN"; break;
+            case 2: range = 5; iconFilename = "TECH_FUEL_DEUTERIUM"; break;
+            case 3: range = 6; iconFilename = "TECH_FUEL_IRRIDIUM"; break;
+            case 4: range = 7; iconFilename = "TECH_FUEL_DOTOMITE"; break;
+            case 5: range = 8; iconFilename = "TECH_FUEL_URIDIUM"; break;
+            case 6: range = 9; iconFilename = "TECH_FUEL_REAJAX"; break;
+            case 7: range = 10; iconFilename = "TECH_FUEL_TRILITHIUM"; break;
             case 8: range = 99999;
                     unlimited = true;
+                    iconFilename = "TECH_FUEL_THORIUM";
                     break;
         }
     }

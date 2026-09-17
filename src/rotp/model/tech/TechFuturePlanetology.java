@@ -22,6 +22,18 @@ public final class TechFuturePlanetology extends Tech {
     public TechFuturePlanetology (int lv, int seq, boolean b, TechCategory c) {
         super(Tech.FUTURE_PLANETOLOGY, "FuturePlanetology", seq, lv, c, "FUTUREPLANET_");
         free = b;
+        switch (seq) {
+            case 0 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_01";
+            case 1 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_02";
+            case 2 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_03";
+            case 3 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_04";
+            case 4 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_05";
+            case 5 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_06";
+            case 6 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_07";
+            case 7 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_08";
+            case 8 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_09";
+            case 9 -> iconFilename = "TECH_FUTURE_PLANETOLOGY_10";
+        }
     }
     @Override
     public boolean isFutureTech()  { return true; }

@@ -28,9 +28,11 @@ public final class TechCloning extends Tech {
         switch(typeSeq) {
             case 0:
                 growthCost = 10;
+                iconFilename = "TECH_CLONING";
                 break;
             case 1:
                 growthCost = 5;
+                iconFilename = "TECH_ADV_CLONING";
                 break;
         }
     }
