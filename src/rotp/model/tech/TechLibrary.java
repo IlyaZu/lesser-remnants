@@ -17,9 +17,8 @@
 package rotp.model.tech;
 
 import java.util.HashMap;
-import rotp.util.Base;
 
-public final class TechLibrary implements Base {
+public final class TechLibrary {
     public static final TechCategory[] baseCategory = new TechCategory[TechTree.NUM_CATEGORIES];
 
     private static final TechLibrary instance = new TechLibrary();
@@ -315,7 +314,6 @@ public final class TechLibrary implements Base {
         techMap.put(tech.id(), tech);
     }
     
-    @Override
     public Tech tech(String id) {
         return techMap.get(id);
     }
