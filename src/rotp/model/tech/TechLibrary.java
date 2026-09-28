@@ -19,13 +19,12 @@ package rotp.model.tech;
 import java.util.HashMap;
 
 public final class TechLibrary {
-    public static final TechCategory[] baseCategory = new TechCategory[TechTree.NUM_CATEGORIES];
-
     private static final TechLibrary instance = new TechLibrary();
     public static TechLibrary current() {
         return instance;
     }
 
+    private final TechCategory[] baseCategory = new TechCategory[TechTree.NUM_CATEGORIES];
     private final HashMap <String, Tech> techMap = new HashMap<>();
 
     private TechLibrary() {
@@ -312,6 +311,10 @@ public final class TechLibrary {
     private void addTech(Tech tech) {
         baseCategory[tech.categoryIndex()].addPossibleTech(tech.id());
         techMap.put(tech.id(), tech);
+    }
+    
+    public TechCategory techCategory(int index) {
+        return baseCategory[index];
     }
     
     public Tech tech(String id) {

@@ -158,10 +158,10 @@ public final class TechCategory implements Base, Serializable {
     }
 
     public List<String> possibleTechs()  { return possibleTechs; }
-    public List<String> allTechs()       { return TechLibrary.baseCategory[index].possibleTechs(); }
+    public List<String> allTechs()       { return TechLibrary.current().techCategory(index).possibleTechs(); }
 
     private void buildResearchList() {
-        TechCategory baseCat = TechLibrary.baseCategory[index];
+        TechCategory baseCat = TechLibrary.current().techCategory(index);
 
         Empire emp = tree.empire();
         possibleTechs.clear();
@@ -193,7 +193,7 @@ public final class TechCategory implements Base, Serializable {
         }
     }
     public void learnFreeTechs() {
-        TechCategory baseCat = TechLibrary.baseCategory[index];
+        TechCategory baseCat = TechLibrary.current().techCategory(index);
         for (int i=0; i<baseCat.possibleTechs.size(); i++) {
             String id = baseCat.possibleTechs.get(i);
             Tech t = tech(id);
