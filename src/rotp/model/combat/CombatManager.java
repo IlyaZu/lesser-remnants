@@ -670,36 +670,6 @@ public class CombatManager implements Base {
             }
         }
     }
-    public CombatEntity moveStackNearest(CombatEntity newStack, int x, int y) {
-        float minDist = Float.MAX_VALUE;
-        List<Integer> nearX = new ArrayList<>();
-        List<Integer> nearY = new ArrayList<>();
-        for (int x1=0;x1<=maxX;x1++) {
-            for (int y1=0;y1<=maxY;y1++) {
-                if (asteroidMap[x1][y1])
-                    continue;
-                float dist = distance(x, y,x1, y1);
-                if ((dist == 0) || (dist > minDist))
-                    continue;
-                CombatEntity prevStack = stackAt(x1,y1);
-                if ((prevStack != null) && !newStack.canEat(prevStack))
-                    continue;
-                if (dist < minDist) {
-                    nearX.clear();
-                    nearY.clear();
-                }
-                minDist = dist;
-                nearX.add(x1);
-                nearY.add(y1);
-            }
-        }
-        int index = roll(0, nearX.size()-1);
-        int tgtX = nearX.get(index);
-        int tgtY = nearY.get(index);
-        CombatEntity tgtStack = stackAt(tgtX, tgtY);
-        this.moveStack(newStack, tgtX, tgtY);
-        return tgtStack;
-    }
     private void scanShips() {
         // scan only if have scanners and NOT same civ as planet (already scanned)
         for (CombatEntity st : results.activeStacks()) {

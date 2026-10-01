@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2025 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
  */
 package rotp.model.galaxy;
 
+import rotp.model.ai.MonsterCaptain;
 import rotp.model.colony.Colony;
-import rotp.model.combat.CombatCrystal;
 import rotp.model.combat.CombatManager;
+import rotp.model.combat.CombatMonster;
 import rotp.model.events.RandomEventSpaceCrystal;
 import rotp.model.planet.PlanetType;
 
@@ -30,7 +31,7 @@ public class SpaceCrystal extends SpaceMonster {
     @Override
     public void initCombat(CombatManager manager) {
         combatStacks().clear();
-        combatStacks().add(new CombatCrystal());
+        combatStacks().add(CombatMonster.makeCrystal(new MonsterCaptain(), manager));
     }
     public void degradePlanet(StarSystem sys) {
         Colony col = sys.colony();

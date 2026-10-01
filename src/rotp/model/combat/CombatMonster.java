@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Copyright 2024-2025 Ilya Zushinskiy
+ * Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Arrays;
 import rotp.model.ai.interfaces.ShipCaptain;
 import rotp.model.ships.ShipSpecial;
 import rotp.model.ships.ShipSpecialBeamFocus;
+import rotp.model.ships.ShipSpecialBlackHole;
 import rotp.model.ships.ShipSpecialMissileShield;
 import rotp.model.ships.ShipSpecialRepair;
 import rotp.model.ships.ShipWeaponBeam;
@@ -29,6 +30,7 @@ import rotp.model.ships.ShipWeaponMissile;
 import rotp.model.ships.ShipWeaponTorpedo;
 import rotp.model.tech.TechAutomatedRepair;
 import rotp.model.tech.TechBeamFocus;
+import rotp.model.tech.TechBlackHole;
 import rotp.model.tech.TechLibrary;
 import rotp.model.tech.TechMissileShield;
 import rotp.model.tech.TechMissileWeapon;
@@ -57,6 +59,38 @@ public class CombatMonster extends CombatShip {
                 2, 12,
                 weaponGroup, specials,
                 ImageManager.current().image("ORION_GUARDIAN"), LabelManager.current().label("PLANET_ORION_GUARDIAN"),
+                captian, manager);
+    }
+    
+    public static CombatMonster makeAmoeba(ShipCaptain captian, CombatManager manager) {
+        List<WeaponGroup> weaponGroup = Arrays.asList(
+                new WeaponGroup(new ShipWeaponBeam((TechShipWeapon)TechLibrary.current().tech("ShipWeapon:22"), false), 1));
+        List<ShipSpecial> specials = Arrays.asList(
+                new ShipSpecialRepair((TechAutomatedRepair)TechLibrary.current().tech("AutomatedRepair:1")));
+        
+        return new CombatMonster(
+                1, 5000, 0,
+                10, 1, 1,
+                2, 12,
+                weaponGroup, specials,
+                ImageManager.current().image("SPACE_AMOEBA"), LabelManager.current().label("SPACE_AMOEBA"),
+                captian, manager);
+    }
+    
+    public static CombatMonster makeCrystal(ShipCaptain captian, CombatManager manager) {
+        List<WeaponGroup> weaponGroup = Arrays.asList(
+                new WeaponGroup(new ShipWeaponBeam((TechShipWeapon)TechLibrary.current().tech("ShipWeapon:23"), false), 10));
+        
+        List<ShipSpecial> specials = Arrays.asList(
+                new ShipSpecialBlackHole((TechBlackHole)TechLibrary.current().tech("BlackHole:0")),
+                new ShipSpecialMissileShield((TechMissileShield)TechLibrary.current().tech("MissileShield:2")));
+        
+        return new CombatMonster(
+                1, 7000, 5,
+                10, 1, 1,
+                2, 12,
+                weaponGroup, specials,
+                ImageManager.current().image("SPACE_CRYSTAL"), LabelManager.current().label("SPACE_CRYSTAL"),
                 captian, manager);
     }
     
