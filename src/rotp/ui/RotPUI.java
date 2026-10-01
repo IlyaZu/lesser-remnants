@@ -61,7 +61,6 @@ import rotp.ui.game.RaceIntroUI;
 import rotp.ui.game.SaveGameUI;
 import rotp.ui.game.SetupGalaxyUI;
 import rotp.ui.game.SetupRaceUI;
-import rotp.ui.game.StartOptionsUI;
 import rotp.ui.history.HistoryUI;
 import rotp.ui.main.MainUI;
 import rotp.ui.notifications.DiplomaticNotification;
@@ -201,7 +200,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     private final GameOverUI gameOverUI = new GameOverUI();
     private final ErrorUI errorUI = new ErrorUI();
     private final HelpUI helpUI = new HelpUI();
-    private final StartOptionsUI startOptionsUI = new StartOptionsUI();
     private final GameSettingsUI gameSettingsUI = new GameSettingsUI();
     private final LargeDialogPane dialogPane = new LargeDialogPane();
 
@@ -262,7 +260,6 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     public static RotPUI instance()                  { return instance; }
     public static HelpUI helpUI()                    { return instance.helpUI; }
-    public static StartOptionsUI startOptionsUI()    { return instance.startOptionsUI; }
     public static GameSettingsUI gameSettingsUI()    { return instance.gameSettingsUI; }
 
     @Override

@@ -24,7 +24,6 @@ import rotp.model.colony.Colony;
 import rotp.model.colony.ColonySpendingCategory;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.StarSystem;
-import static rotp.model.game.IGameOptions.RANDOM_EVENTS_OFF;
 import rotp.model.planet.Planet;
 import rotp.util.Base;
 
@@ -59,7 +58,7 @@ public class AITreasurer implements Base, Treasurer {
                 if (sys.colony().research().hasProject())
                     needToSolveEvent = true;
                 Planet pl = sys.planet();
-                if(!galaxy().options().selectedRandomEventOption().equals(RANDOM_EVENTS_OFF) && sys.colony().maxReserveUseable() > reserveGoal)
+                if(sys.colony().maxReserveUseable() > reserveGoal)
                     reserveGoal = sys.colony().maxReserveUseable();
                 if (pl.isResourcePoor() || pl.isResourceUltraPoor()) {
                     poorSystems.add(sys); // modnar: still make poorSystems list

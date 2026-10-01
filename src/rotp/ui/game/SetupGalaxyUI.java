@@ -50,7 +50,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     private BufferedImage backImg, playerRaceImg;
     private Rectangle backBox = new Rectangle();
     private Rectangle startBox = new Rectangle();
-    private Rectangle settingsBox = new Rectangle();
     private Rectangle shapeBox = new Rectangle();
     private Polygon shapeBoxL = new Polygon();
     private Polygon shapeBoxR = new Polygon();
@@ -254,20 +253,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         int x5c =diffBox.x+((diffBox.width-diffSW)/2);
         drawString(g,diffLbl, x5c, y5);
 
-        // settings button
         int cnr = s5;
-        g.setFont(narrowFont(20));
-        String text6 = text("SETUP_BUTTON_SETTINGS");
-        int sw6 = g.getFontMetrics().stringWidth(text6);
-        int x6 = settingsBox.x+((settingsBox.width-sw6)/2);
-        int y6 = settingsBox.y+settingsBox.height-s8;
-        Color c6 = hoverBox == settingsBox ? Color.yellow : GameUI.borderBrightColor();
-        drawShadowedString(g, text6, 2, x6, y6, GameUI.borderDarkColor(), c6);
-        Stroke prev = g.getStroke();
-        g.setStroke(stroke1);
-        g.drawRoundRect(settingsBox.x, settingsBox.y, settingsBox.width, settingsBox.height, cnr, cnr);
-        g.setStroke(prev);
-
         // left button
         g.setFont(narrowFont(30));
         String text1 = text("SETUP_BUTTON_BACK");
@@ -276,7 +262,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         int y1 = backBox.y+backBox.height-s12;
         Color c1 = hoverBox == backBox ? Color.yellow : GameUI.borderBrightColor();
         drawShadowedString(g, text1, 2, x1, y1, GameUI.borderDarkColor(), c1);
-        prev = g.getStroke();
+        Stroke prev = g.getStroke();
         g.setStroke(stroke1);
         g.drawRoundRect(backBox.x, backBox.y, backBox.width, backBox.height, cnr, cnr);
         g.setStroke(prev);
@@ -428,12 +414,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         if (click) softClick();
         newGameOptions().prevOpponent(i);
         repaint();
-    }
-    private void goToOptions() {
-        buttonClick();
-        StartOptionsUI optionsUI = RotPUI.startOptionsUI();
-        optionsUI.open(this);
-        release();
     }
     private void goToRaceSetup() {
         buttonClick();
@@ -651,14 +631,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.fill(diffBox);
 
         int cnr = s5;
-
-        // draw settings button
-        int smallButtonH = s30;
-        int smallButtonW = scaled(180);
-        settingsBox.setBounds(scaled(960), scaled(610), smallButtonW, smallButtonH);
-        g.setPaint(GameUI.buttonLeftBackground());
-        g.fillRoundRect(settingsBox.x, settingsBox.y, smallButtonW, smallButtonH, cnr, cnr);
-
         int buttonH = s45;
         int buttonW = scaled(220);
         // draw left button
@@ -701,8 +673,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             hoverBox = startBox;
         else if (backBox.contains(x,y))
             hoverBox = backBox;
-        else if (settingsBox.contains(x,y))
-            hoverBox = settingsBox;
         else if (shapeBoxL.contains(x,y))
             hoverBox = shapeBoxL;
         else if (shapeBoxR.contains(x,y))
@@ -762,8 +732,6 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             return;
         if (hoverBox == backBox)
             goToRaceSetup();
-        else if (hoverBox == settingsBox)
-            goToOptions();
         else if (hoverBox == startBox)
             startGame();
         else if (hoverBox == shapeBoxL)
