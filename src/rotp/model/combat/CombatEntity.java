@@ -470,20 +470,6 @@ public abstract class CombatEntity implements Base {
                 sleep(25-t1);
         }
     }
-    public void drawDamageTaken(float dmg, String result) {
-        if (!mgr.showAnimations())
-            return;
-        
-        int stW = mgr.ui.stackW();
-        int stH = mgr.ui.stackH();
-        int st1X = mgr.ui.stackX(this);
-        int st1Y = mgr.ui.stackY(this);
-        int x1 = st1X+stW/2;
-        int y1 = st1Y+stH/2;
-        Graphics2D g = (Graphics2D) mgr.ui.getGraphics();
-        drawAttackResult(g,x1,y1,x1, dmg,result);
-        mgr.ui.paintAllImmediately();
-    }
     public void drawAttackResult(Graphics g, int x1, int y1, int x0, float dmg, String result) {
         if (!mgr.showAnimations())
             return;
