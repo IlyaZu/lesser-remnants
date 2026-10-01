@@ -944,9 +944,7 @@ public class CombatManager implements Base {
         List<CombatEntity> stacks = new ArrayList<>(results.activeStacks());
         for (CombatEntity s: stacks) {
             int r = stack.ignoreRepulsors() || (s.empire == stack.empire) || s.inStasis ? 0 : s.repulsorRange();
-            if ((r == 0) && stack.canEat(s))
-                continue;
-            else if (r == 0)
+            if (r == 0)
                 valid[(s.y+1)*gridW+(s.x+1)] = false;
             else {
                 for (int x=0-r;x<=r;x++) {
