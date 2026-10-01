@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
-import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyEllipticalShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
 import rotp.model.galaxy.GalaxyShape;
@@ -51,7 +50,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGalaxyShape;
     
     private String selectedGameDifficulty;
-    private String selectedRandomEventOption;
     private int selectedNumberOpponents;
     private String selectedOpponentAIOption;
     private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
@@ -68,7 +66,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedOpponentAIOption = OPPONENT_AI_BASE;
         for (int i=0;i<specificOpponentAIOption.length;i++)
             specificOpponentAIOption[i] = OPPONENT_AI_BASE;
-        setToDefault();
         generateGalaxy();
     }
     private void resetSelectedOpponentRaces() {
@@ -97,10 +94,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedGameDifficulty()       { return selectedGameDifficulty; }
     @Override
     public void selectedGameDifficulty(String s) { selectedGameDifficulty = s; }
-    @Override
-    public String selectedRandomEventOption()       { return selectedRandomEventOption == null ? RANDOM_EVENTS_ON : selectedRandomEventOption; }
-    @Override
-    public void selectedRandomEventOption(String s) { selectedRandomEventOption = s; }
     @Override
     public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; }
     @Override
@@ -168,7 +161,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedGameDifficulty = opt.selectedGameDifficulty;
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
-        selectedRandomEventOption = opt.selectedRandomEventOption;
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
         if (opt.specificOpponentAIOption != null) {
@@ -264,15 +256,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return AI.BASE;
     }
     @Override
-    public boolean allowRandomEvent(RandomEvent ev) {
-        switch(selectedRandomEventOption()) {
-            case RANDOM_EVENTS_ON:  return true;
-            case RANDOM_EVENTS_OFF: return false;
-            case RANDOM_EVENTS_NO_MONSTERS: return !ev.monsterEvent();
-        }
-        return true;
-    }
-    @Override
     public Planet randomPlanet(StarSystem s) {
         Planet p = new Planet(s);
         String[] planetTypes = { "PLANET_NONE", "PLANET_RADIATED", "PLANET_TOXIC", "PLANET_INFERNO",
@@ -346,14 +329,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         return list;
     }
     @Override
-    public List<String> randomEventOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(RANDOM_EVENTS_ON);
-        list.add(RANDOM_EVENTS_NO_MONSTERS);
-        list.add(RANDOM_EVENTS_OFF);
-        return list;
-    }
-    @Override
     public List<String> opponentAIOptions() {
         List<String> list = new ArrayList<>();
         list.add(OPPONENT_AI_BASE);
@@ -386,10 +361,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public List<Integer> possibleColors() {
         return new ArrayList<>(colors);
-    }
-    @Override
-    public void setToDefault() {
-        selectedRandomEventOption = RANDOM_EVENTS_ON;
     }
     private void generateGalaxy() {
         int numEmpires = selectedNumberOpponents()+1;

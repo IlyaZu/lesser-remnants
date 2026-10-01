@@ -19,7 +19,6 @@ package rotp.model.game;
 import java.awt.Color;
 import java.util.List;
 import rotp.model.empires.Empire;
-import rotp.model.events.RandomEvent;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.planet.Planet;
@@ -41,10 +40,6 @@ public interface IGameOptions {
     public static final String DIFFICULTY_HARD    = "SETUP_DIFFICULTY_HARD";
     public static final String DIFFICULTY_HARDER  = "SETUP_DIFFICULTY_HARDER";
     public static final String DIFFICULTY_HARDEST = "SETUP_DIFFICULTY_HARDEST";
-
-    public static final String RANDOM_EVENTS_ON  = "SETUP_RANDOM_EVENTS_ON";
-    public static final String RANDOM_EVENTS_OFF = "SETUP_RANDOM_EVENTS_OFF";
-    public static final String RANDOM_EVENTS_NO_MONSTERS = "SETUP_RANDOM_EVENTS_NO_MONSTERS";
     
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_XILMI      = "SETUP_OPPONENT_AI_XILMI";
@@ -53,12 +48,10 @@ public interface IGameOptions {
     public boolean isAutoPlay();
     public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
     public int selectedAI(Empire e);
-    public void setToDefault();
 
     public int numberStarSystems();
     public int numberNebula();
     public List<Integer> possibleColors();
-    public boolean allowRandomEvent(RandomEvent ev);
     public Planet randomPlanet(StarSystem s);
     public void randomizeColors();
     public GalaxyShape galaxyShape();
@@ -69,7 +62,6 @@ public interface IGameOptions {
     // selectable options
     public List<String> galaxySizeOptions();
     public List<String> galaxyShapeOptions();
-    public List<String> randomEventOptions();
     public List<String> opponentAIOptions();
     public List<String> specificOpponentAIOptions();
     
@@ -82,8 +74,6 @@ public interface IGameOptions {
     public void selectedGalaxySize(String s);
     public String selectedGalaxyShape();
     public void selectedGalaxyShape(String s);
-    public String selectedRandomEventOption();
-    public void selectedRandomEventOption(String s);
     public String selectedOpponentAIOption();
     public void selectedOpponentAIOption(String s);
     public String specificOpponentAIOption(int empId);
@@ -151,11 +141,6 @@ public interface IGameOptions {
         List<String> opts = opponentAIOptions();
         int index = opts.indexOf(selectedOpponentAIOption())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default String nextRandomEventOption() {
-        List<String> opts = randomEventOptions();
-        int index = opts.indexOf(selectedRandomEventOption())+1;
-        return index >= opts.size() ? opts.get(0) : opts.get(index);
     }
     default void nextSpecificOpponentAI(int i) {
         List<String> allAIs = specificOpponentAIOptions();

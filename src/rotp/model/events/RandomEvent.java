@@ -1,5 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
+ * Modifications Copyright 2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,5 +27,4 @@ public interface RandomEvent {
     default int minimumTurn()  { return RandomEvents.START_TURN; }
     default String systemKey() { return ""; }
     default String statusMessage() { return ""; }
-    default boolean monsterEvent() { return false; }
 }
