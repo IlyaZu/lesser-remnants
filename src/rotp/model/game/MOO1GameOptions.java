@@ -100,7 +100,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public void selectedOpponentAIOption(String s) { selectedOpponentAIOption = s; }
     @Override
     public String specificOpponentAIOption(int n)  {
-            if ((specificOpponentAIOption == null) || (specificOpponentAIOption.length < n))
+            if (specificOpponentAIOption.length < n)
                 return selectedOpponentAIOption();
             else
                 return specificOpponentAIOption[n];
@@ -163,10 +163,8 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
 
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
         
-        if (opt.specificOpponentAIOption != null) {
-            for (int i=0;i<specificOpponentAIOption.length;i++)
-                specificOpponentAIOption[i] = opt.specificOpponentAIOption[i];
-        }
+        for (int i=0;i<specificOpponentAIOption.length;i++)
+            specificOpponentAIOption[i] = opt.specificOpponentAIOption[i];
         
         if (opt.player != null)
             player.copy(opt.player);
