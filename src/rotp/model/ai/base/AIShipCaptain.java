@@ -243,32 +243,28 @@ public class AIShipCaptain implements Base, ShipCaptain {
     public static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt) {
         if (!st.isArmed())
             return null;
-        int r = st.optimalFiringRange(tgt);
-        return findBestPathToAttack(st, tgt, r);
-    }
-    public static FlightPath findBestPathToAttack(CombatEntity st, CombatEntity tgt, int range) {
+        int range = st.optimalFiringRange(tgt);
         if (st.movePointsTo(tgt) <= range) {
             return new FlightPath();
         }
-        int r = range;
         if (tgt.isColony() && st.hasBombs())
-            r = 1;
+            range = 1;
 
         List<FlightPath> validPaths = new ArrayList<>();
         FlightPath bestPath = null;
         
         if (st.x > tgt.x) {
             if (st.y > tgt.y) {
-                for (int x1=tgt.x+r; x1>=tgt.x-r; x1--) {
-                    for (int y1=tgt.y+r; y1>=tgt.y-r; y1--) {
+                for (int x1=tgt.x+range; x1>=tgt.x-range; x1--) {
+                    for (int y1=tgt.y+range; y1>=tgt.y-range; y1--) {
                         if (st.mgr.validSquare(x1,y1))
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
             }
             else {
-                for (int x1=tgt.x+r; x1>=tgt.x-r; x1--) {
-                    for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
+                for (int x1=tgt.x+range; x1>=tgt.x-range; x1--) {
+                    for (int y1=tgt.y-range; y1<=tgt.y+range; y1++) {
                         if (st.mgr.validSquare(x1,y1))
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
@@ -277,16 +273,16 @@ public class AIShipCaptain implements Base, ShipCaptain {
         }
         else {
             if (st.y > tgt.y) {
-                for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
-                    for (int y1=tgt.y+r; y1>=tgt.y-r; y1--) {
+                for (int x1=tgt.x-range; x1<=tgt.x+range; x1++) {
+                    for (int y1=tgt.y+range; y1>=tgt.y-range; y1--) {
                         if (st.mgr.validSquare(x1,y1))
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
                 }
             }
             else {
-                for (int x1=tgt.x-r; x1<=tgt.x+r; x1++) {
-                    for (int y1=tgt.y-r; y1<=tgt.y+r; y1++) {
+                for (int x1=tgt.x-range; x1<=tgt.x+range; x1++) {
+                    for (int y1=tgt.y-range; y1<=tgt.y+range; y1++) {
                         if (st.mgr.validSquare(x1,y1))
                             bestPath = allValidPaths(st.x,st.y,x1,y1,14,st, validPaths, bestPath); // get all valid paths to this point
                     }
