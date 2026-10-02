@@ -17,7 +17,6 @@
 package rotp.model.combat;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import rotp.model.ai.interfaces.ShipCaptain;
@@ -51,8 +50,6 @@ public abstract class CombatEntity implements Base {
     public int origNum = 0;
     public int x = 0;
     public int y = 0;
-    public float scale = 1.0f;
-    public float brighten = 0.0f;
     public int attackLevel = 0;
     public int missileDefense = 0;
     public int beamDefense = 0;
@@ -543,36 +540,8 @@ public abstract class CombatEntity implements Base {
         int y1 = y;
         int w1 = (int)(scale0*w0);
         int h1 = (int)(scale0*h0);
-
-        if (scale != 1.0f) {
-            int prevW = w1;
-            int prevH = h1;
-            w1 = (int) (w1*scale);
-            h1 = (int) (h1*scale);
-            x1 = x1 +(prevW-w1)/2;
-            y1 = y1 +(prevH-h1)/2;
-        }
         
         Composite prevComp = g.getComposite();
-        BufferedImage overlayImg = null;
-        if (brighten > 0) {
-            overlayImg = newBufferedImage(w1,h1);
-            Graphics2D g0 = (Graphics2D) overlayImg.getGraphics();
-            if (transparency < 1) {
-                AlphaComposite ac = java.awt.AlphaComposite.getInstance(AlphaComposite.SRC_OVER,max(0,transparency));
-                g0.setComposite(ac);
-            }
-            if (reversed)  // XOR
-                g0.drawImage(img, 0, 0, w1, h1, w0, 0, 0, h0, ui);
-            else
-                g0.drawImage(img, 0, 0, w1, h1, 0, 0, w0, h0, ui);
-            AlphaComposite ac = java.awt.AlphaComposite.getInstance(AlphaComposite.SRC_IN,min(1,brighten));
-            g0.setComposite(ac);
-            g0.setColor(Color.white);
-            g0.fillRect(0, 0, w1, h1);
-            g0.setComposite(prevComp);
-            g0.dispose();
-        }
         
         if (transparency < 1) {
             AlphaComposite ac = java.awt.AlphaComposite.getInstance(AlphaComposite.SRC_OVER,max(0,transparency));
@@ -584,8 +553,6 @@ public abstract class CombatEntity implements Base {
             g.drawImage(img, x1, y1, x1+w1, y1+h1, 0, 0, w0, h0, ui);
         
         g.setComposite(prevComp);
-        if (overlayImg != null)
-            g.drawImage(overlayImg, x1, y1, ui);
             
         int y2 = y+stackH-BasePanel.s5;
         g.setFont(narrowFont(16));

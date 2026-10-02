@@ -587,15 +587,6 @@ public class CombatShip extends CombatEntity {
 
         int s1 = scaled(1);
         int s2 = scaled(2);
-        
-        if (scale != 1.0f) {
-            int prevW = w1;
-            int prevH = h1;
-            w1 = (int) (w1*scale);
-            h1 = (int) (h1*scale);
-            x1 = x1 +(prevW-w1)/2;
-            y1 = y1 +(prevH-h1)/2;
-        }
 
         Composite prevComp = g.getComposite();
         if (transparency < 1) {
