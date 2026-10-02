@@ -68,7 +68,6 @@ public abstract class CombatEntity implements Base {
     public boolean attacked = false;
     public CombatEntity target;
     public int distance = 0;
-    public Image image;
     public boolean reversed = false;
     public boolean visible = true;
     public float transparency = 1;

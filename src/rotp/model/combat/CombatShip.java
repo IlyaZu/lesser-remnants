@@ -61,6 +61,7 @@ public class CombatShip extends CombatEntity {
     
     private CombatEntity ward;
 
+    private final Image image;
     private final String name;
     
     public CombatShip(int count, float hits, float shield,
