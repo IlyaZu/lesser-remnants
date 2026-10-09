@@ -613,13 +613,13 @@ public class AIScientist implements Base, Scientist {
     @Override
     public float baseValue(TechECMJammer t) {
         TechECMJammer curr = empire.tech().topECMJammerTech();
-        float currMark = curr == null ? 0 : curr.mark;
+        float currEcm = curr == null ? 0 : curr.ecm();
 
-        if (currMark >= t.mark)
+        if (currEcm >= t.ecm())
             return 0;
 
         // scale add'l prevention assuming mark 10 is best (level 50)
-        float val = 5 * (t.mark - currMark);
+        float val = 5 * (t.ecm() - currEcm);
         // technologists love outsmarting others
         if (empire.leader().isTechnologist())
             val *= 1.5;

@@ -22,7 +22,7 @@ import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipECM;
 
 public final class TechECMJammer extends Tech {
-    public int mark;
+    private int mark;
     public MissileBaseECM baseECM;
 
     public TechECMJammer (int lv, int seq, boolean b, TechCategory c) {
@@ -88,6 +88,9 @@ public final class TechECMJammer extends Tech {
         }
     }
     
+    public int ecm() {
+        return mark;
+    }
     @Override
     public boolean canBeMiniaturized()      { return true; }
     @Override
