@@ -84,8 +84,6 @@ public class CombatColony extends CombatEntity {
     public boolean selectBestWeapon(CombatEntity target)       { return (num > 0) && !missileFired; }
     @Override
     public boolean isColony()         { return true; }
-    @Override
-    public String name()              { return colony.name(); }
     private MissileBase missileBase()  { return colony.defense().missileBase(); }
     @Override
     public float designCost()          { return  missileBase().cost(colony.empire()); }

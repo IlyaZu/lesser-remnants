@@ -58,10 +58,6 @@ public class CombatMissile extends CombatEntity {
         turnsLeft = MAX_TURNS;
         moveRate = target.maxMove() == 0 ? maxMove : maxMove / target.maxMove();
     }
-    @Override
-    public String fullName() {
-        return num + ":" + missile.name() + "-" + Integer.toHexString(hashCode());
-    }
 
     @Override
     public int maxFiringRange(CombatEntity tgt)           { return 0; }
@@ -69,8 +65,6 @@ public class CombatMissile extends CombatEntity {
     public int optimalFiringRange(CombatEntity tgt)       { return 0; }
     @Override
     public boolean isMissile()            { return true; }
-    @Override
-    public String name()                  { return missile.name(); }
     @Override
     public boolean isArmed()              { return true; }
     @Override

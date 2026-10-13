@@ -75,9 +75,6 @@ public abstract class CombatEntity implements Base {
     public String shortString() {
         return toString() + " at:" + x + "," + y;
     }
-    public String fullName()            { return num + ":" + raceName() + " " + name(); }
-    private String raceName()            { return empire != null ? empire.raceName() : name(); }
-    public abstract String name();
     public int initiative()           { return 0; }
     public boolean isEmpireShip()       { return false; }
     public boolean isColony()           { return false; }
@@ -515,7 +512,6 @@ public abstract class CombatEntity implements Base {
             else
                 c0 = cWhite[i];
             g.setColor(c0);
-            //drawBorderedString(g, displayStr, x2, y2, cWhite[i], c0);
             drawString(g,displayStr, x2, y2);
             x2 += dx;
             y2 += dy;

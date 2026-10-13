@@ -155,8 +155,6 @@ public class CombatShip extends CombatEntity {
     }
     
     @Override
-    public String name()             { return str(num)+":"+name; }
-    @Override
     public CombatEntity ward()             { return ward; }
     @Override
     public boolean hasWard()              { return ward != null; }
