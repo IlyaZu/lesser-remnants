@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2023-2024 Ilya Zushinskiy
+ * Modifications Copyright 2023-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,6 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     public boolean validTarget(CombatEntity tgt) {
         if (!tgt.isEmpireShip())
             return false;
-        if (tgt.immuneToStasis())
-            return false;
         return !tgt.cloaked;
     }
     @Override
@@ -51,8 +49,6 @@ public final class ShipSpecialStasisField extends ShipSpecial {
     public void becomeDestroyed()  { breakStasis(); }
     @Override
     public void fireUpon(CombatEntity source, CombatEntity tgt, int count)   {
-        if (tgt.immuneToStasis())
-            return;
         if (tgt.isEmpireShip()) {
             target = (CombatEmpireShip) tgt;
             tech().drawSpecialAttack(source, target, 1, 0);

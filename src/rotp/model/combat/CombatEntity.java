@@ -116,7 +116,6 @@ public abstract class CombatEntity implements Base {
     public boolean canMove()        { return (move > 0) || canTeleport(); }
     public boolean canFireWeapon()  { return false; }
     public boolean canFireWeaponAtTarget(CombatEntity st)  { return false; }
-    public boolean immuneToStasis() { return false; }
     public float autoMissPct()      { return 0; }
     public boolean interceptsMissile(ShipWeaponMissileType wpn)  { return random() < missileInterceptPct(wpn);}
     public float missileInterceptPct(ShipWeaponMissileType wpn)  { return 0; }
