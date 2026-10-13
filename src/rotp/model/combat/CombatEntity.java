@@ -45,21 +45,21 @@ public abstract class CombatEntity implements Base {
     public CombatManager mgr;
     public ShipCaptain captain;
     private final List<CombatMissile> targetingMissiles = new ArrayList<>();
-    public int num = 0;
     public int origNum = 0;
+    public int num = 0;
     public int x = 0;
     public int y = 0;
+    public float offsetX = 0;
+    public float offsetY = 0;
     public int attackLevel = 0;
     public int missileDefense = 0;
     public int beamDefense = 0;
-    public float offsetX = 0;
-    public float offsetY = 0;
+    public float shield = 0;
     public float startingMaxHits = 1;
     public float maxHits = 1;
+    public float hits = 0;
     public float maxMove = 0;
     public float move = 0;
-    public float shield = 0;
-    public float hits = 0;
     public float repairPct = 0;
     public boolean inStasis = false;
     public boolean cloaked = false;
@@ -82,8 +82,8 @@ public abstract class CombatEntity implements Base {
     public boolean isEmpireShip()       { return false; }
     public boolean isColony()           { return false; }
     public boolean isMonster()          { return false; }
-    public boolean isPlayerControlled() { return (empire != null) && empire.isPlayerControlled(); }
     public boolean isMissile()          { return false; }
+    public boolean isPlayerControlled() { return (empire != null) && empire.isPlayerControlled(); }
     public boolean destroyed()          { return ((num < 1) || (maxHits <= 0)); }
     public boolean isArmed()            { return false; }
     public CombatEntity ward()           { return null; }
