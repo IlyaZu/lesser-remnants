@@ -716,7 +716,7 @@ public class CombatManager implements Base {
 
         if (st.isMissile()) {
             CombatMissile miss =(CombatMissile) st;
-            miss.target.addMissile(miss);
+            miss.target.missiles().add(miss);
             return;
         }
         results.activeStacks().add(st);
