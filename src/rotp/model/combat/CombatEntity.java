@@ -109,7 +109,6 @@ public abstract class CombatEntity implements Base {
 
     public float maxHits()          { return maxHits; }
     public float maxMove()          { return maxMove; }
-    public float totalHits()        { return maxHits * num; }
     public boolean canMove()        { return (move > 0) || canTeleport(); }
     public boolean canFireWeapon()  { return false; }
     public boolean canFireWeaponAtTarget(CombatEntity st)  { return false; }
