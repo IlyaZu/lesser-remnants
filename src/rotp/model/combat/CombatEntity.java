@@ -146,7 +146,6 @@ public abstract class CombatEntity implements Base {
 
     public void reverse()                           { reversed = !reversed; }
     public List<CombatMissile> missiles()       { return targetingMissiles; }
-    public void addMissile(CombatMissile miss)  { targetingMissiles.add(miss); }
 
     public boolean isTurnComplete() {
         if (inStasis)
