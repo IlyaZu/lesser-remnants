@@ -44,7 +44,7 @@ public class ShipWeaponMissileType extends ShipWeapon {
                 drawUnsuccessfulAttack(source, target);
             return;
         }
-        if (target.interceptsMissile(this))
+        if (random() < target.missileInterceptPct(this))
         {
             if(target.mgr.showAnimations())
                 drawUnsuccessfulAttack(source, target);
