@@ -129,7 +129,6 @@ public abstract class CombatEntity implements Base {
     public void fireWeapon(CombatEntity target)       {  }
     public int maxFiringRange(CombatEntity tgt)       { return 1; }
     public int optimalFiringRange(CombatEntity tgt)   { return 1; }
-    public float maxDamage()                         { return 0; }
     public float shieldLevel()                       { return shield; }
     public float rotateRadians(CombatEntity target)   { return radiansTo(target) + ((float)Math.PI/2); }
 

@@ -146,4 +146,7 @@ public class CombatMissile extends CombatEntity {
         String cnt = str(num);
         drawBorderedString(g, cnt, 2, x1, y2, Color.black, Color.yellow);
     }
+    public float maxDamage() {
+        return missile.maxDamage();
+    }
 }
