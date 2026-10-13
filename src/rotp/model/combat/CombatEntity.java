@@ -113,7 +113,6 @@ public abstract class CombatEntity implements Base {
     public boolean canFireWeapon()  { return false; }
     public boolean canFireWeaponAtTarget(CombatEntity st)  { return false; }
     public float autoMissPct()      { return 0; }
-    public boolean interceptsMissile(ShipWeaponMissileType wpn)  { return random() < missileInterceptPct(wpn);}
     public float missileInterceptPct(ShipWeaponMissileType wpn)  { return 0; }
     public int missileDefense()     { return cloaked ? missileDefense +5 : missileDefense; }
     public int beamDefense()        { return cloaked ? beamDefense + 5 : beamDefense; }
