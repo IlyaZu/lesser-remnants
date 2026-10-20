@@ -87,7 +87,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
     private float population = 0;
     private float previousPopulation = 0;
     private int rebels = 0;
-    private float captives = 0;
     private float reserveIncomeBC = 0;
     private boolean rebellion = false;
     private boolean quarantined = false;
@@ -864,7 +863,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
             return;
         }
         
-        captives = population() - rebels;
+        float captives = population() - rebels;
         population(rebels);
 
         if (population() > 0) {
@@ -876,7 +875,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         rebels = (int) population();
         population(rebels + captives);
-        captives = 0;
 
         // are there rebels left?
         if (rebels > 0)
@@ -1144,7 +1142,6 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         population(0);
         rebels = 0;
-        captives = 0;
         rebellion = false;
         planet.addAlienFactories(empire.id, (int) industry().factories());
 
