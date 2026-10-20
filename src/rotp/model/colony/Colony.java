@@ -882,7 +882,7 @@ public final class Colony implements Base, IMappedObject, Serializable {
 
         empire.setRecalcDistances();
         rebellion = false;
-        population(max(1, tr.size() + population));
+        population(min(planet.currentSize(), max(1, tr.size() + population)));
         tr.size(0);
     }
     public void resistTransport(Transport tr) {
