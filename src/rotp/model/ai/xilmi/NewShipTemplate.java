@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024-2025 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,10 @@
  */
 package rotp.model.ai.xilmi;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Iterator;
-
 import rotp.model.ai.interfaces.ShipDesigner;
 
 import rotp.model.empires.Empire;
@@ -44,7 +41,6 @@ import rotp.model.ships.ShipWeapon;
 import rotp.model.ships.ShipWeaponMissileType;
 import rotp.model.tech.Tech;
 import rotp.model.tech.TechBiologicalWeapon;
-import rotp.model.tech.TechTree;
 import rotp.util.Base;
 
 public class NewShipTemplate implements Base {
@@ -54,10 +50,6 @@ public class NewShipTemplate implements Base {
 
     // indices for race shipDesignMods
     public static final int MODULE_SPACE = 4;
-    
-    public static void nameShipDesign(ShipDesigner ai, ShipDesign d) {
-        instance.nameDesign(ai, d);
-    }
     
     public static ShipDesign newFighterDesign(ShipDesigner ai) {
         return instance.bestDesign(ai, DesignType.FIGHTER);
@@ -176,23 +168,6 @@ public class NewShipTemplate implements Base {
         }
         // lastKey is design with greatest damage
         return designSorter.get(designSorter.lastKey());
-    }
-    
-    public void nameDesign(ShipDesigner ai, ShipDesign d)
-    {
-        String nameToUse = "";
-        if(!ai.empire().allColonizedSystems().isEmpty())
-            nameToUse = ai.empire().allColonizedSystems().get((int)random(ai.empire().allColonizedSystems().size())).name();
-        List<String> shipNames = ai.empire().race().shipNames(d.size());
-        nameToUse += " " + shipNames.get((int)random(shipNames.size()));
-        String Before = nameToUse;
-        int numeral = 2;
-        while(ai.lab().designNamed(nameToUse) != null)
-        {
-            nameToUse = Before + " " + numeral;
-            numeral++;
-        }
-        d.name(nameToUse);
     }
 
     private ShipDesign newDesign(ShipDesigner ai, DesignType role, int size) {
@@ -724,31 +699,6 @@ public class NewShipTemplate implements Base {
         }
         return remainingSpace;
     }
- 
-    public static List<TechTree> assessRivalsTech(Empire emp, int rivalsNum) {
-        List<TechTree> rivalTech = new ArrayList<>();
-        SortedMap<Float, EmpireView> relationsMap = new TreeMap<>();
-
-        // sorting all known empires by the relations with them, ascending
-        for (EmpireView ev : emp.empireViews()) {
-            if (ev != null)
-                relationsMap.put(ev.embassy().relations(), ev);
-        }
-
-        // yeah, sorry, that was the most straightforward Java-ish method I found to get top three
-        if (!relationsMap.isEmpty()) {
-            Iterator<EmpireView> worstNeighbors = relationsMap.values().iterator();
-            for (int i = 0; (i < rivalsNum) && (worstNeighbors.hasNext()); i++) {
-                rivalTech.add(worstNeighbors.next().spies().tech());
-            }
-        }
-        
-        // if we have less known empires than rivalsNum, add ourselves into the list
-        if (rivalTech.size() < rivalsNum) {
-            rivalTech.add(emp.tech());
-        }
-        return rivalTech;
-    }
     
 // ********* FUNCTIONS SETTING ANTI-SHIP AND ANTI-PLANET WEAPONS ********** //
 
@@ -874,23 +824,5 @@ public class NewShipTemplate implements Base {
             scoreMod = totalPopulationCost / (totalMissileBaseCost + totalPopulationCost);
         }
         return scoreMod;
-    }
-    public float weaponSpace(ShipDesign d)
-    {
-        float totalWeaponSpace = 0;
-        for (int i=0; i<maxWeapons(); i++)
-        {
-            totalWeaponSpace += d.weapon(i).space(d) * d.wpnCount(i);
-        }
-        return totalWeaponSpace;
-    }
-    public float specialSpace(ShipDesign d)
-    {
-        float totalSpecialSpace = 0;
-        for (int i=0; i<maxSpecials(); i++)
-        {
-            totalSpecialSpace += d.special(i).space(d) * d.wpnCount(i);
-        }
-        return totalSpecialSpace;
     }
 }
