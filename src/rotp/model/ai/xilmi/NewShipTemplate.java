@@ -46,10 +46,10 @@ import rotp.util.Base;
 public class NewShipTemplate implements Base {
     private static final NewShipTemplate instance = new NewShipTemplate();
 
-    enum DesignType { FIGHTER, BOMBER, DESTROYER }
+    private enum DesignType { FIGHTER, BOMBER, DESTROYER }
 
     // indices for race shipDesignMods
-    public static final int MODULE_SPACE = 4;
+    private static final int MODULE_SPACE = 4;
     
     public static ShipDesign newFighterDesign(ShipDesigner ai) {
         return instance.bestDesign(ai, DesignType.FIGHTER);

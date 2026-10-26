@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * Modifications Copyright 2024 Ilya Zushinskiy
+ * Modifications Copyright 2024-2026 Ilya Zushinskiy
  * 
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,23 +52,23 @@ public class NewShipTemplate implements Base {
     enum DesignType { FIGHTER, BOMBER, DESTROYER }
 
     // indices for race shipDesignMods
-    public static final int COST_MULT_S = 0;
-    public static final int COST_MULT_M = 1;
-    public static final int COST_MULT_L = 2;
-    public static final int COST_MULT_H = 3;
-    public static final int MODULE_SPACE = 4;
-    public static final int SHIELD_WEIGHT_FB = 5;
-    public static final int SHIELD_WEIGHT_D = 6;
-    public static final int ECM_WEIGHT_FD = 7;
-    public static final int ECM_WEIGHT_B = 8;
-    public static final int MANEUVER_WEIGHT_BD = 9;
-    public static final int MANEUVER_WEIGHT_F = 10;
-    public static final int ARMOR_WEIGHT_FB = 11;
-    public static final int ARMOR_WEIGHT_D = 12;
-    public static final int SPECIALS_WEIGHT = 13;
-    public static final int SPEED_MATCHING = 14;
-    public static final int REINFORCED_ARMOR = 15;
-    public static final int BIO_WEAPONS = 16;
+    private static final int COST_MULT_S = 0;
+    private static final int COST_MULT_M = 1;
+    private static final int COST_MULT_L = 2;
+    private static final int COST_MULT_H = 3;
+    private static final int MODULE_SPACE = 4;
+    private static final int SHIELD_WEIGHT_FB = 5;
+    private static final int SHIELD_WEIGHT_D = 6;
+    private static final int ECM_WEIGHT_FD = 7;
+    private static final int ECM_WEIGHT_B = 8;
+    private static final int MANEUVER_WEIGHT_BD = 9;
+    private static final int MANEUVER_WEIGHT_F = 10;
+    private static final int ARMOR_WEIGHT_FB = 11;
+    private static final int ARMOR_WEIGHT_D = 12;
+    private static final int SPECIALS_WEIGHT = 13;
+    private static final int SPEED_MATCHING = 14;
+    private static final int REINFORCED_ARMOR = 15;
+    private static final int BIO_WEAPONS = 16;
     public static final int PREF_PULSARS = 17;
     public static final int PREF_CLOAK = 18;
     public static final int PREF_REPAIR = 19;
@@ -526,7 +526,7 @@ public class NewShipTemplate implements Base {
         return totalShipProduction;
     }
 
-    public static List<TechTree> assessRivalsTech(Empire emp, int rivalsNum) {
+    private static List<TechTree> assessRivalsTech(Empire emp, int rivalsNum) {
         List<TechTree> rivalTech = new ArrayList<>();
         SortedMap<Float, EmpireView> relationsMap = new TreeMap<>();
 
@@ -552,7 +552,7 @@ public class NewShipTemplate implements Base {
     }
 
     // probably both buildShipTargetList and buildColonyTargetList should be templated or something
-    public static List<EnemyShipTarget> buildShipTargetList(List<TechTree> rivals) {
+    private static List<EnemyShipTarget> buildShipTargetList(List<TechTree> rivals) {
         List<EnemyShipTarget> shipTargets = new ArrayList<>();
 
         for (TechTree tt : rivals) {
@@ -561,7 +561,7 @@ public class NewShipTemplate implements Base {
         }
         return shipTargets;
     }
-    public static List<EnemyColonyTarget> buildColonyTargetList(List<TechTree> rivals) {
+    private static List<EnemyColonyTarget> buildColonyTargetList(List<TechTree> rivals) {
         List<EnemyColonyTarget> colonyTargets = new ArrayList<>();
         
         for (TechTree tt : rivals) {
@@ -780,7 +780,7 @@ public class NewShipTemplate implements Base {
         }
         d.perTurnDamage(minDamage);
     }
-    public static void setPerTurnBombDamage(ShipDesign d, Empire emp) {
+    private static void setPerTurnBombDamage(ShipDesign d, Empire emp) {
         List<EnemyColonyTarget> targets = buildColonyTargetList(assessRivalsTech(emp,3));  // may prove a source of bugs, needs access to a built target list
         float minDamage = Float.MAX_VALUE;
         for (EnemyColonyTarget tgt: targets) {
@@ -790,7 +790,7 @@ public class NewShipTemplate implements Base {
         d.perTurnDamage(minDamage);
     }
 
-    public static float estimatedShipDamage(ShipDesign d, EnemyShipTarget target) {
+    private static float estimatedShipDamage(ShipDesign d, EnemyShipTarget target) {
         List<ShipSpecial> rangeSpecials = new ArrayList<>();
         for (int i=0;i<ShipDesign.maxSpecials();i++) {
             ShipSpecial sp = d.special(i);
@@ -821,7 +821,7 @@ public class NewShipTemplate implements Base {
         }
         return totalDamage;
     }
-    public static float estimatedBombDamage(ShipDesign d, EnemyColonyTarget target) {
+    private static float estimatedBombDamage(ShipDesign d, EnemyColonyTarget target) {
         float totalDamage = 0;
         for (int i=0;i<ShipDesign.maxWeapons();i++) {
             float wpnDamage;
@@ -849,7 +849,7 @@ public class NewShipTemplate implements Base {
         else
             return dmgSpecs.remove(0);
     }
-    class DesignDamageSpec {
+    private class DesignDamageSpec {
         public int numWeapons = 0;
         public ShipWeapon weapon;
         public ShipSpecial special;
