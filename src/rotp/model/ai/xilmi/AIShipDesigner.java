@@ -33,7 +33,6 @@ import rotp.model.ships.ShipWeapon;
 import rotp.util.Base;
 
 public class AIShipDesigner implements Base, ShipDesigner {
-    private static final int OBS_DESTROYER_TURNS = 20;
     //ail: I have more slots available for bombers and fighters, so I can increase the time until they are obsolete
     private static final int OBS_FIGHTER_TURNS = 32;
     private static final int OBS_BOMBER_TURNS = 24;
@@ -440,15 +439,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.setFighterDesign(newDesign, slot);
         }
     }
-    public void updateDestroyerDesign() {
-        ShipDesignLab lab = lab();
-        ShipDesign currDesign = lab.destroyerDesign();
-        if(currDesign.active() && currDesign.isDestroyer())
-        {
-            currDesign.becomeObsolete(OBS_DESTROYER_TURNS);
-            ScrapDesign(currDesign);
-        }
-    }
     @Override
     public ShipDesign newScoutDesign() {
         ShipDesignLab lab = lab();
@@ -461,9 +451,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.nameDesign(design);
         lab.iconifyDesign(design);
         return design;
-    }
-    public ShipDesign newColonyDesign() {
-        return newColonyDesign(!empire.contactedEmpires().isEmpty(), false);
     }
     public ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
         ShipDesignLab lab = lab();
