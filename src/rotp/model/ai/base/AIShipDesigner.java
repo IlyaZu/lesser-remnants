@@ -108,7 +108,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             }
         }
     }
-    public void updateScoutDesign() {
+    private void updateScoutDesign() {
         ShipDesignLab lab = lab();
         
         // if we are not using scouts anymore, quit
@@ -129,7 +129,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.scrapDesign(currDesign);
         lab.setScoutDesign(newScout, currSlot);
     }
-    public void updateColonyDesign() {
+    private void updateColonyDesign() {
         ShipDesignLab lab = lab();
         ShipDesign currDesign = lab.colonyDesign();
         int currSlot = currDesign.id();
@@ -166,7 +166,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             return;
         }
     }
-    public void updateBomberDesign() {
+    private void updateBomberDesign() {
         ShipDesignLab lab = lab();
         
         // recalculate current design's damage vs. current targets
@@ -245,7 +245,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             return;
         }
     }
-    public void updateFighterDesign() {
+    private void updateFighterDesign() {
         ShipDesignLab lab = lab();
         
         // recalculate current design's damage vs. current targets
@@ -323,7 +323,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             return;
         }
     }
-    public void updateDestroyerDesign() {
+    private void updateDestroyerDesign() {
         ShipDesignLab lab = lab();
         
         // recalculate current design's damage vs. current targets
@@ -416,7 +416,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.iconifyDesign(design);
         return design;
     }
-    public ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
+    private ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
         ShipDesignLab lab = lab();
         ShipDesign design = lab.newBlankDesign(ShipDesign.LARGE);
         design.special(0, bestColonySpecial());

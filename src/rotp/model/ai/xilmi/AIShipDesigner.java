@@ -164,7 +164,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         }
     }
 
-    public void updateScoutDesign() {
+    private void updateScoutDesign() {
         ShipDesignLab lab = lab();
         // if we are not using scouts anymore, quit
         ShipDesign currDesign = BestDesignToScout();
@@ -202,7 +202,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.setScoutDesign(newScout, slot);
         }
     }
-    public void updateColonyDesign() {
+    private void updateColonyDesign() {
         ShipDesignLab lab = lab();
         ShipDesign currDesign = BestDesignToColonize();
         
@@ -250,7 +250,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.setColonyDesign(newDesign, slot);
         }
     }
-    public void updateBomberDesign() {
+    private void updateBomberDesign() {
         ShipDesignLab lab = lab();
         
         // recalculate current design's damage vs. current targets
@@ -335,7 +335,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.setBomberDesign(newDesign, slot);
         }
     }
-    public void updateFighterDesign() {
+    private void updateFighterDesign() {
         ShipDesignLab lab = lab();
         
         boolean needRange = false;
@@ -452,7 +452,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.iconifyDesign(design);
         return design;
     }
-    public ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
+    private ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
         ShipDesignLab lab = lab();
         ShipDesign design = lab.newBlankDesign(ShipDesign.LARGE);
         lab().nameDesign(design);
@@ -647,7 +647,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             return false;
         return true;
     }
-    public void ScrapDesign(ShipDesign d)
+    private void ScrapDesign(ShipDesign d)
     {
         if(lab().canScrapADesign())
             lab().scrapDesign(d);
@@ -820,7 +820,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             d.obsolete(true);
         }
     }
-    ShipWeapon MainWeapon(ShipDesign d)
+    private ShipWeapon MainWeapon(ShipDesign d)
     {
         ShipWeapon weaponWithMostSpace = null;
         float highestWeaponSpace = 0;
