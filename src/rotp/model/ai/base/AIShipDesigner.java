@@ -416,9 +416,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.iconifyDesign(design);
         return design;
     }
-    public ShipDesign newColonyDesign() {
-        return newColonyDesign(!empire.contactedEmpires().isEmpty(), false);
-    }
     public ShipDesign newColonyDesign(boolean weaponNeeded, boolean extendedRangeNeeded) {
         ShipDesignLab lab = lab();
         ShipDesign design = lab.newBlankDesign(ShipDesign.LARGE);
