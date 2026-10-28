@@ -62,7 +62,7 @@ public class AI implements Base {
         switch(aiType) {
             case XILMI:
                 general =        new rotp.model.ai.xilmi.AIGeneral(empire);
-                captain =        new rotp.model.ai.xilmi.AIShipCaptain(empire);
+                captain =        new rotp.model.ai.base.AIShipCaptain(empire);
                 governor =       new rotp.model.ai.xilmi.AIGovernor(empire);
                 scientist =      new rotp.model.ai.xilmi.AIScientist(empire);
                 diplomat =       new rotp.model.ai.xilmi.AIXilmiDiplomat(empire);
