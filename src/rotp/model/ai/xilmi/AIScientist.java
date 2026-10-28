@@ -458,12 +458,12 @@ public class AIScientist implements Base, Scientist {
         
         for(Tech t : techs)
         {
-            int type = t.techType;
+            String type = t.typeId();
             Tech highestOfType = t;
             int highestLevel = 0;
             for(Tech inner : techs)
             {
-                if(inner.techType == type)
+                if(inner.isType(type))
                 {
                     if(inner.level > highestLevel)
                     {
@@ -506,10 +506,10 @@ public class AIScientist implements Base, Scientist {
     }
     private boolean isImportant(Tech t)
     {
-        if(t.techType == Tech.ENGINE_WARP
-            || t.techType == Tech.ROBOTIC_CONTROLS
-            || t.techType == Tech.CLOAKING
-            || t.techType == Tech.SOIL_ENRICHMENT)
+        if(t.isType(Tech.ENGINE_WARP)
+            || t.isType(Tech.ROBOTIC_CONTROLS)
+            || t.isType(Tech.CLOAKING)
+            || t.isType(Tech.SOIL_ENRICHMENT))
             return true;
         return false;
     }

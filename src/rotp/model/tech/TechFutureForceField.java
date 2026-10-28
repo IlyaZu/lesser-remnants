@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechFutureForceField extends Tech {
     public TechFutureForceField (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_FORCE_FIELD, "FutureForceField", seq, lv, c, "FUTUREFORCE_");
+        super(Tech.FUTURE_FORCE_FIELD, seq, lv, c, "FUTUREFORCE_");
         free = b;
         switch (seq) {
             case 0 -> iconFilename = "TECH_FUTURE_FORCE_FIELD_01";

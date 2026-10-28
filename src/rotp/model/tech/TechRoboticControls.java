@@ -24,7 +24,7 @@ public final class TechRoboticControls extends Tech {
     public int mark;
 
     public TechRoboticControls (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ROBOTIC_CONTROLS, "RoboticControls", seq, lv, c, "ROBOTCTRL_");
+        super(Tech.ROBOTIC_CONTROLS, seq, lv, c, "ROBOTCTRL_");
         free = b;
         switch(typeSeq) {
             case 0: mark = 3; iconFilename = "TECH_BATTLE_COMPUTER_03"; break;

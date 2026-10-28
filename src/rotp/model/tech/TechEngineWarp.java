@@ -25,7 +25,7 @@ public final class TechEngineWarp extends Tech {
     private int warp;
 
     public TechEngineWarp(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.ENGINE_WARP, "EngineWarp", seq, lv, c, "ENGINE_");
+        super(Tech.ENGINE_WARP, seq, lv, c, "ENGINE_");
         free = b;
         switch(typeSeq) {
             case 0: warp = 1; break;
@@ -69,7 +69,7 @@ public final class TechEngineWarp extends Tech {
         // when engine tech is learned, ship maneuvers for all
         // lower engine techs become available. Add them if the
         // design lab does nothave them yet.
-        for (Tech t: c.tech().allTechsOfType(techType)) {
+        for (Tech t: c.tech().allTechsOfType(typeId())) {
             TechEngineWarp tech = (TechEngineWarp) t;
             if (tech.level <= level) {
                 if (!c.shipLab().hasManeuverForTech(tech)) {

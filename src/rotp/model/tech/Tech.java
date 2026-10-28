@@ -29,59 +29,59 @@ public class Tech implements Base {
     private static final float miniSlowRate = .97164f;
     private static final float miniFastRate = .933033f;
 
-    public static final int ARMOR = 1;
-    public static final int ATMOSPHERE_ENRICHMENT = 2;
-    public static final int AUTOMATED_REPAIR = 3;
-    public static final int BATTLE_COMPUTER = 4;
-    public static final int BATTLE_SUIT = 5;
-    public static final int BEAM_FOCUS = 6;
-    public static final int BIOLOGICAL_ANTIDOTE = 7;
-    public static final int BIOLOGICAL_WEAPON = 8;
-    public static final int BLACK_HOLE = 9;
-    public static final int BOMB_WEAPON = 10;
-    public static final int CLOAKING = 11;
-    public static final int CLONING = 12;
-    public static final int COMBAT_TRANSPORTER = 13;
-    public static final int CONTROL_ENVIRONMENT = 14;
-    public static final int DEFLECTOR_SHIELD = 15;
-    public static final int DISPLACEMENT = 16;
-    public static final int ECM_JAMMER = 17;
-    public static final int ECO_RESTORATION = 18;
-    public static final int ENERGY_PULSAR = 19;
-    public static final int ENGINE_WARP = 20;
-    public static final int FUEL_RANGE = 21;
-    public static final int HAND_WEAPON = 22;
-    public static final int HYPERSPACE_COMM = 23;
-    public static final int IMPROVED_INDUSTRIAL = 24;
-    public static final int IMPROVED_TERRAFORMING = 25;
-    public static final int INDUSTRIAL_WASTE = 26;
-    public static final int MISSILE_SHIELD = 27;
-    public static final int MISSILE_WEAPON = 28;
-    public static final int PERSONAL_SHIELD = 29;
-    public static final int PLANETARY_SHIELD = 30;
-    public static final int REPULSOR = 31;
-    public static final int RESERVE_FUEL_RANGE = 32;
-    public static final int ROBOTIC_CONTROLS = 33;
-    public static final int SCANNER = 34;
-    public static final int SHIP_INERTIAL = 35;
-    public static final int SHIP_NULLIFIER = 36;
-    public static final int SHIP_WEAPON = 37;
-    public static final int SOIL_ENRICHMENT = 38;
-    public static final int STARGATE = 39;
-    public static final int STASIS_FIELD = 40;
-    public static final int STREAM_PROJECTOR = 41;
-    public static final int SUBSPACE_INTERDICTOR = 42;
-    public static final int TELEPORTER = 43;
-    public static final int TORPEDO_WEAPON = 44;
-    public static final int FUTURE_COMPUTER = 90;
-    public static final int FUTURE_CONSTRUCTION = 91;
-    public static final int FUTURE_FORCE_FIELD = 92;
-    public static final int FUTURE_PLANETOLOGY = 93;
-    public static final int FUTURE_PROPULSION = 94;
-    public static final int FUTURE_WEAPON = 95;
+    public static final String ARMOR = "Armor";
+    public static final String ATMOSPHERE_ENRICHMENT = "AtmosphereEnrichment";
+    public static final String AUTOMATED_REPAIR = "AutomatedRepair";
+    public static final String BATTLE_COMPUTER = "BattleComputer";
+    public static final String BATTLE_SUIT = "BattleSuit";
+    public static final String BEAM_FOCUS = "BeamFocus";
+    public static final String BIOLOGICAL_ANTIDOTE = "BiologicalAntidote";
+    public static final String BIOLOGICAL_WEAPON = "BiologicalWeapon";
+    public static final String BLACK_HOLE = "BlackHole";
+    public static final String BOMB_WEAPON = "BombWeapon";
+    public static final String CLOAKING = "Cloaking";
+    public static final String CLONING = "Cloning";
+    public static final String COMBAT_TRANSPORTER = "CombatTransporter";
+    public static final String CONTROL_ENVIRONMENT = "ControlEnvironment";
+    public static final String DEFLECTOR_SHIELD = "DeflectorShield";
+    public static final String DISPLACEMENT = "Displacement";
+    public static final String ECM_JAMMER = "ECMJammer";
+    public static final String ECO_RESTORATION = "EcoRestoration";
+    public static final String ENERGY_PULSAR = "EnergyPulsar";
+    public static final String ENGINE_WARP = "EngineWarp";
+    public static final String FUEL_RANGE = "FuelRange";
+    public static final String HAND_WEAPON = "HandWeapon";
+    public static final String HYPERSPACE_COMM = "HyperspaceComm";
+    public static final String IMPROVED_INDUSTRIAL = "ImprovedIndustrial";
+    public static final String IMPROVED_TERRAFORMING = "ImprovedTerraforming";
+    public static final String INDUSTRIAL_WASTE = "IndustrialWaste";
+    public static final String MISSILE_SHIELD = "MissileShield";
+    public static final String MISSILE_WEAPON = "MissileWeapon";
+    public static final String PERSONAL_SHIELD = "PersonalShield";
+    public static final String PLANETARY_SHIELD = "PlanetaryShield";
+    public static final String REPULSOR = "Repulsor";
+    public static final String RESERVE_FUEL_RANGE = "ReserveFuelRange";
+    public static final String ROBOTIC_CONTROLS = "RoboticControls";
+    public static final String SCANNER = "Scanner";
+    public static final String SHIP_INERTIAL = "ShipInertial";
+    public static final String SHIP_NULLIFIER = "ShipNullifier";
+    public static final String SHIP_WEAPON = "ShipWeapon";
+    public static final String SOIL_ENRICHMENT = "SoilEnrichment";
+    public static final String STARGATE = "Stargate";
+    public static final String STASIS_FIELD = "StasisField";
+    public static final String STREAM_PROJECTOR = "StreamProjector";
+    public static final String SUBSPACE_INTERDICTOR = "SubspaceInterdictor";
+    public static final String TELEPORTER = "Teleporter";
+    public static final String TORPEDO_WEAPON = "TorpedoWeapon";
+    public static final String FUTURE_COMPUTER = "FutureComputer";
+    public static final String FUTURE_CONSTRUCTION = "FutureConstruction";
+    public static final String FUTURE_FORCE_FIELD = "FutureForceField";
+    public static final String FUTURE_PLANETOLOGY = "FuturePlanetology";
+    public static final String FUTURE_PROPULSION = "FuturePropulsion";
+    public static final String FUTURE_WEAPON = "FutureWeapon";
 
     private final String id;
-    public final int techType;
+    private final String typeId;
     public final int typeSeq;
     public final int level;
     private final int quintile;
@@ -102,8 +102,8 @@ public class Tech implements Base {
     public float size = 0;
     public float power = 0;
 
-    public Tech(int techType, String typeId, int typeSeq, int level, TechCategory category, String textKeyPrefix) {
-        this.techType = techType;
+    public Tech(String typeId, int typeSeq, int level, TechCategory category, String textKeyPrefix) {
+        this.typeId = typeId;
         this.id = typeId + ":" + typeSeq;
         this.typeSeq = typeSeq;
         this.level = level;
@@ -120,6 +120,10 @@ public class Tech implements Base {
     
     public String id() {
         return id;
+    }
+    
+    public String typeId() {
+        return typeId;
     }
     
     public int categoryIndex() {
@@ -147,7 +151,7 @@ public class Tech implements Base {
     public boolean isFutureTech()           { return false; }
     public boolean isObsolete(Empire c)     { return false; }
 
-    public boolean isType(int type)         { return techType == type; }
+    public boolean isType(String type)         { return typeId.equals(type); }
 
     public float warModeFactor()           { return 1; }
     public float expansionModeFactor()     { return 1; }

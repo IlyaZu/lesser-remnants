@@ -23,7 +23,7 @@ public final class TechPlanetaryShield extends Tech {
     public int damage;
 
     public TechPlanetaryShield (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.PLANETARY_SHIELD, "PlanetaryShield", seq, lv, c, "PLANETSHIELD_");
+        super(Tech.PLANETARY_SHIELD, seq, lv, c, "PLANETSHIELD_");
         free = b;
         switch(typeSeq) {
             case 0: damage = 5; iconFilename = "TECH_PLANETARY_SHIELD_V"; break;
