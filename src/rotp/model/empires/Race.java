@@ -112,7 +112,6 @@ public class Race implements Base, Serializable {
     public String homeworldPlanetType;
     public int homeworldSize;
     public String preferredShipSet;
-    public int preferredShipSize = 2;
     private int shipAttackBonus = 0;
     private int shipDefenseBonus = 0;
     private int shipInitiativeBonus = 0;
@@ -359,17 +358,6 @@ public class Race implements Base, Serializable {
     }
     public boolean isHostile(PlanetType pt) {
         return ignoresPlanetEnvironment() ? false : pt.hostileToTerrans();
-    }
-    public int preferredShipSize()    { return preferredShipSize; }
-    public int randomShipSize() {
-        float r = random();
-        if (r <= .5)
-            return preferredShipSize;
-
-        if (r <= .75)
-            return Math.min(preferredShipSize+1, ShipDesign.MAX_SIZE);
-
-        return max(preferredShipSize-1, 0);
     }
     public int randomLeaderAttitude() {
         float r = random();

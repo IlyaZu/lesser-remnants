@@ -16,7 +16,6 @@
  */
 package rotp.model.ai.xilmi;
 
-import java.util.List;
 import rotp.model.ai.interfaces.ShipDesigner;
 import rotp.model.empires.Empire;
 import rotp.model.empires.EmpireView;
@@ -505,62 +504,6 @@ public class AIShipDesigner implements Base, ShipDesigner {
             design.special(2, cloak);
         lab.iconifyDesign(design);
         return design;
-    }
-    @Override
-    public int optimalShipFighterSize() {
-        int preferredSize = empire.preferredShipSize();
-        if (preferredSize == ShipDesign.SMALL)
-            return preferredSize;
-
-        List<StarSystem> systems = empire.allColonizedSystems();
-        float maxProd = 0;
-        for (StarSystem sys: systems)
-            maxProd = max(sys.colony().production(), maxProd);
-
-        int maxSize = ShipDesign.SMALL;
-        if (maxProd >= 1500)
-            maxSize = ShipDesign.HUGE;
-        else if (maxProd >= 300)
-            maxSize = ShipDesign.LARGE;
-        else if (maxProd >= 60)
-            maxSize = ShipDesign.MEDIUM;
-        return min(preferredSize, maxSize);
-    }
-    @Override
-    public int optimalShipBomberSize() {
-        int preferredSize = empire.preferredShipSize()+1;
-        if (preferredSize == ShipDesign.LARGE)
-            return ShipDesign.LARGE;
-
-        List<StarSystem> systems = empire.allColonizedSystems();
-        float maxProd = 0;
-        for (StarSystem sys: systems)
-            maxProd = max(sys.colony().production(), maxProd);
-
-        int maxSize = ShipDesign.MEDIUM;
-        if (maxProd >= 1000)
-            maxSize = ShipDesign.HUGE;
-        else if (maxProd >= 200)
-            maxSize = ShipDesign.LARGE;
-        return min(preferredSize, maxSize);
-    }
-    @Override
-    public int optimalShipDestroyerSize() {
-        int preferredSize = empire.preferredShipSize()+1;
-        if (preferredSize == ShipDesign.LARGE)
-            return ShipDesign.LARGE;
-
-        List<StarSystem> systems = empire.allColonizedSystems();
-        float maxProd = 0;
-        for (StarSystem sys: systems)
-            maxProd = max(sys.colony().production(), maxProd);
-
-        int maxSize = ShipDesign.MEDIUM;
-        if (maxProd >= 1000)
-            maxSize = ShipDesign.HUGE;
-        else if (maxProd >= 200)
-            maxSize = ShipDesign.LARGE;
-        return min(preferredSize, maxSize);
     }
     @Override
     public ShipDesign newFighterDesign(int size) {

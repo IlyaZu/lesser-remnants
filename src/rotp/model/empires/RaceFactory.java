@@ -265,7 +265,6 @@ public enum RaceFactory implements Base {
     }
     private void parseRaceShipSize(Race r, List<String> vals) {
         r.preferredShipSet = vals.get(0);
-        r.preferredShipSize = parseInt(vals.get(1));
     }
     private void parseRaceShipMods(Race r, List<String> vals) {
         r.shipAttackBonus(parseInt(vals.get(0)));

@@ -29,10 +29,6 @@ public interface ShipDesigner {
     
     void nextTurn();
     
-    int optimalShipDestroyerSize();
-    int optimalShipFighterSize();
-    int optimalShipBomberSize();
-    
     ShipDesign newScoutDesign();
     ShipDesign newFighterDesign(int size);
     ShipDesign newBomberDesign(int size);
