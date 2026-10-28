@@ -20,7 +20,7 @@ import rotp.model.empires.Empire;
 
 public final class TechFuturePropulsion extends Tech {
     public TechFuturePropulsion (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.FUTURE_PROPULSION, "FuturePropulsion", seq, lv, c, "FUTUREPROP_");
+        super(Tech.FUTURE_PROPULSION, seq, lv, c, "FUTUREPROP_");
         free = b;
         switch (seq) {
             case 0 -> iconFilename = "TECH_FUTURE_PROPULSION_01";

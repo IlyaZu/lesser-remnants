@@ -26,7 +26,7 @@ public final class TechImprovedTerraforming extends Tech {
 
     public int increase()   { return increase; }
     public TechImprovedTerraforming(int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.IMPROVED_TERRAFORMING, "ImprovedTerraforming", seq, lv, c, "IMPRTFORM_");
+        super(Tech.IMPROVED_TERRAFORMING, seq, lv, c, "IMPRTFORM_");
         free = b;
         switch(typeSeq) {
             case 0:

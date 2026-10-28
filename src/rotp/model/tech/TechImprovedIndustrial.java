@@ -23,7 +23,7 @@ public final class TechImprovedIndustrial extends Tech {
     public float factoryCost;
 
     public TechImprovedIndustrial (int lv, int seq, boolean b, TechCategory c) {
-        super(Tech.IMPROVED_INDUSTRIAL, "ImprovedIndustrial", seq, lv, c, "IMPRINDUSTRY_");
+        super(Tech.IMPROVED_INDUSTRIAL, seq, lv, c, "IMPRINDUSTRY_");
         free = b;
         switch(typeSeq) {
             case 0: factoryCost = 9; iconFilename = "TECH_IMPR_INDUSTRY_9"; break;

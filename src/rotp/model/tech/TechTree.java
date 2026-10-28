@@ -498,7 +498,7 @@ public final class TechTree implements Base, Serializable {
     public boolean knows(Tech t) {
         return t == null ? true : category[t.categoryIndex()].knownTechs().contains(t.id());
     }
-    public boolean knowsTechOfType(int type) {
+    public boolean knowsTechOfType(String type) {
         for (TechCategory cat: category) {
             for (String id: cat.knownTechs()) {
                 if (tech(id).isType(type))
@@ -514,7 +514,7 @@ public final class TechTree implements Base, Serializable {
             techs.addAll(cat.knownTechs());
         return techs;
     }
-    public List<Tech> allTechsOfType(int type) {
+    public List<Tech> allTechsOfType(String type) {
         List<Tech> techs = new ArrayList<>();
         TechCategory[] cats = category;
         for (TechCategory cat: cats) {
