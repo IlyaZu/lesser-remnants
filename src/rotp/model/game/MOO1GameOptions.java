@@ -52,7 +52,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     private String selectedGameDifficulty;
     private int selectedNumberOpponents;
     private String selectedOpponentAIOption;
-    private final String[] specificOpponentAIOption = new String[MAX_OPPONENTS+1];
     
     private transient GalaxyShape galaxyShape;
 
@@ -64,8 +63,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedPlayerRace(random(startingRaceOptions()));
         selectedGameDifficulty = DIFFICULTY_EASY;
         selectedOpponentAIOption = OPPONENT_AI_BASE;
-        for (int i=0;i<specificOpponentAIOption.length;i++)
-            specificOpponentAIOption[i] = OPPONENT_AI_BASE;
         generateGalaxy();
     }
     private void resetSelectedOpponentRaces() {
@@ -98,18 +95,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; }
     @Override
     public void selectedOpponentAIOption(String s) { selectedOpponentAIOption = s; }
-    @Override
-    public String specificOpponentAIOption(int n)  {
-            if (specificOpponentAIOption.length < n)
-                return selectedOpponentAIOption();
-            else
-                return specificOpponentAIOption[n];
-    }
-    @Override
-    public void specificOpponentAIOption(String s, int n) {
-        if (n < specificOpponentAIOption.length)
-            specificOpponentAIOption[n] = s;
-    }
     @Override
     public int selectedNumberOpponents()         { return selectedNumberOpponents; }
     @Override
@@ -162,9 +147,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         selectedNumberOpponents = opt.selectedNumberOpponents;
 
         selectedOpponentAIOption = opt.selectedOpponentAIOption;
-        
-        for (int i=0;i<specificOpponentAIOption.length;i++)
-            specificOpponentAIOption[i] = opt.specificOpponentAIOption[i];
         
         if (opt.player != null)
             player.copy(opt.player);
@@ -243,12 +225,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             switch(selectedOpponentAIOption()) {
                 case OPPONENT_AI_BASE:   return AI.BASE;
                 case OPPONENT_AI_XILMI:  return AI.XILMI;
-                case OPPONENT_AI_SELECTABLE:
-                    String specificAI = specificOpponentAIOption(e.id);
-                    switch(specificAI) {
-                        case OPPONENT_AI_BASE:   return AI.BASE;
-                        case OPPONENT_AI_XILMI:  return AI.XILMI;
-                    }
             }
         }
         return AI.BASE;
@@ -328,14 +304,6 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public List<String> opponentAIOptions() {
-        List<String> list = new ArrayList<>();
-        list.add(OPPONENT_AI_BASE);
-        list.add(OPPONENT_AI_XILMI);
-        list.add(OPPONENT_AI_SELECTABLE);
-        return list;
-    }
-    @Override
-    public List<String> specificOpponentAIOptions() {
         List<String> list = new ArrayList<>();
         list.add(OPPONENT_AI_BASE);
         list.add(OPPONENT_AI_XILMI);
