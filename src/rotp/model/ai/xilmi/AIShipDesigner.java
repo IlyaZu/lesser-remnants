@@ -438,8 +438,7 @@ public class AIShipDesigner implements Base, ShipDesigner {
             lab.setFighterDesign(newDesign, slot);
         }
     }
-    @Override
-    public ShipDesign newScoutDesign() {
+    private ShipDesign newScoutDesign() {
         ShipDesignLab lab = lab();
         ShipDesign design = lab.newBlankDesign(ShipDesign.SMALL);
         design.engine(lab.fastestEngine());
@@ -505,22 +504,14 @@ public class AIShipDesigner implements Base, ShipDesigner {
         lab.iconifyDesign(design);
         return design;
     }
-    @Override
-    public ShipDesign newFighterDesign(int size) {
+    private ShipDesign newFighterDesign(int size) {
         ShipDesign design = NewShipTemplate.newFighterDesign(this);
         design.mission(ShipDesign.FIGHTER);
         return design;
     }
-    @Override
-    public ShipDesign newBomberDesign(int size) {
+    private ShipDesign newBomberDesign(int size) {
         ShipDesign design = NewShipTemplate.newBomberDesign(this);
         design.mission(ShipDesign.BOMBER);
-        return design;
-    }
-    @Override
-    public ShipDesign newDestroyerDesign(int size) {
-        ShipDesign design = NewShipTemplate.newDestroyerDesign(this);
-        design.mission(ShipDesign.DESTROYER);
         return design;
     }
     @Override
