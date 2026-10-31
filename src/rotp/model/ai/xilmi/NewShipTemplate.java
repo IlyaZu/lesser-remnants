@@ -46,7 +46,7 @@ import rotp.util.Base;
 public class NewShipTemplate implements Base {
     private static final NewShipTemplate instance = new NewShipTemplate();
 
-    private enum DesignType { FIGHTER, BOMBER, DESTROYER }
+    private enum DesignType { FIGHTER, BOMBER }
 
     // indices for race shipDesignMods
     private static final int MODULE_SPACE = 4;
@@ -56,9 +56,6 @@ public class NewShipTemplate implements Base {
     }
     public static ShipDesign newBomberDesign(ShipDesigner ai) {
         return instance.bestDesign(ai, DesignType.BOMBER);
-    }
-    public static ShipDesign newDestroyerDesign(ShipDesigner ai) {
-        return instance.bestDesign(ai, DesignType.DESTROYER);
     }
 
     private ShipDesign bestDesign(ShipDesigner ai, DesignType role) {
@@ -177,8 +174,7 @@ public class NewShipTemplate implements Base {
         ai.lab().nameDesign(d);
         setFastestEngine(ai, d);
         // battle computers are always the priority in MOO1 mechanics
-        if(role != DesignType.DESTROYER)
-            setBestBattleComputer(ai, d);
+        setBestBattleComputer(ai, d);
         
         float totalSpace = d.availableSpace();
         Race race = ai.empire().dataRace();
@@ -344,10 +340,6 @@ public class NewShipTemplate implements Base {
                 setFittingManeuver(ai, d, maneuverSpace, sameSpeedAllowed);
                 setFittingECM(ai, d, ecmSpace);
                 break;
-            case DESTROYER:
-                setFittingArmor(ai, d, armorSpace, reinforcedArmorAllowed);
-                setFittingManeuver(ai, d, maneuverSpace, sameSpeedAllowed);
-                break;
             case FIGHTER:
             default:
                 setFittingSpecial(ai, d, specialsSpace, specials, false);
@@ -385,17 +377,12 @@ public class NewShipTemplate implements Base {
                 setOptimalWeapon(ai, d, d.availableSpace(), 1, false, false, false, topSpeed, avgECM, bestSHD, antiDote, false, avgHP);
                 bestNonBomb = setOptimalWeapon(ai, d, d.availableSpace(), 3, needRange, true, false, topSpeed, avgECM, bestSHD, antiDote, true, avgHP); // even though bombs should use all space, this is run in case of it running into the max-required-bombs per design-limit
                 break;
-            case DESTROYER:
-                bestNonBomb = setOptimalWeapon(ai, d, d.availableSpace(), 4, needRange, true, false, topSpeed, avgECM, bestSHD, antiDote, true, avgHP); // uses slots 0-3
             case FIGHTER:
             default:
                 setOptimalWeapon(ai, d, d.availableSpace() * hybridBombRatio, 1, false, false, false, topSpeed, avgECM, bestSHD, antiDote, false, avgHP);
                 bestNonBomb = setOptimalWeapon(ai, d, d.availableSpace(), 4, needRange, true, false, topSpeed, avgECM, bestSHD, antiDote, false, avgHP); // uses slots 0-3
                 break;
         }
-        //Since destroyer is always tiny and we want to make sure we have a weapon, the computer is added afterwards
-        if(role == DesignType.DESTROYER)
-            setBestBattleComputer(ai, d);
         ai.lab().iconifyDesign(d);
         for (int i = 0; i <= 2; ++i) {
             if (d.special(i) != null) {
