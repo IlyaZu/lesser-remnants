@@ -43,10 +43,8 @@ public interface IGameOptions {
     
     public static final String OPPONENT_AI_BASE       = "SETUP_OPPONENT_AI_BASE";
     public static final String OPPONENT_AI_XILMI      = "SETUP_OPPONENT_AI_XILMI";
-    public static final String OPPONENT_AI_SELECTABLE = "SETUP_OPPONENT_AI_SELECT";
     
     public boolean isAutoPlay();
-    public default boolean selectableAI()        { return selectedOpponentAIOption().equals(OPPONENT_AI_SELECTABLE); }
     public int selectedAI(Empire e);
 
     public int numberStarSystems();
@@ -63,7 +61,6 @@ public interface IGameOptions {
     public List<String> galaxySizeOptions();
     public List<String> galaxyShapeOptions();
     public List<String> opponentAIOptions();
-    public List<String> specificOpponentAIOptions();
     
     public List<String> gameDifficultyOptions();
     public int maximumOpponentsOptions();
@@ -76,8 +73,6 @@ public interface IGameOptions {
     public void selectedGalaxyShape(String s);
     public String selectedOpponentAIOption();
     public void selectedOpponentAIOption(String s);
-    public String specificOpponentAIOption(int empId);
-    public void specificOpponentAIOption(String s, int empId);
     
     public String selectedGameDifficulty();
     public void selectedGameDifficulty(String s);
@@ -141,28 +136,6 @@ public interface IGameOptions {
         List<String> opts = opponentAIOptions();
         int index = opts.indexOf(selectedOpponentAIOption())-1;
         return index < 0 ? opts.get(opts.size()-1) : opts.get(index);
-    }
-    default void nextSpecificOpponentAI(int i) {
-        List<String> allAIs = specificOpponentAIOptions();
-        String currAI = specificOpponentAIOption(i);
-        
-        int nextIndex = currAI == null ? 0 : allAIs.indexOf(currAI)+1;
-        if (nextIndex >= allAIs.size())
-            nextIndex = 0;
-        
-        String nextAI = allAIs.get(nextIndex);
-        specificOpponentAIOption(nextAI, i);
-    }
-    default void prevSpecificOpponentAI(int i) {
-        List<String> allAIs = specificOpponentAIOptions();
-        String currAI = specificOpponentAIOption(i);
-        
-        int nextIndex = currAI == null ? 0 : allAIs.indexOf(currAI)-1;
-        if (nextIndex < 0)
-            nextIndex = allAIs.size()-1;
-        
-        String nextAI = allAIs.get(nextIndex);
-        specificOpponentAIOption(nextAI, i);
     }
     default void nextOpponent(int i) {
         String player = selectedPlayerRace();
